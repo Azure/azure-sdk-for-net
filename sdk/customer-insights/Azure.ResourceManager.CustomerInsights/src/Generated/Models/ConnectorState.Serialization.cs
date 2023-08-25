@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static ConnectorState ToConnectorState(this string value)
         {
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return ConnectorState.Creating;
-            if (string.Equals(value, "Created", StringComparison.InvariantCultureIgnoreCase)) return ConnectorState.Created;
-            if (string.Equals(value, "Ready", StringComparison.InvariantCultureIgnoreCase)) return ConnectorState.Ready;
-            if (string.Equals(value, "Expiring", StringComparison.InvariantCultureIgnoreCase)) return ConnectorState.Expiring;
-            if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return ConnectorState.Deleting;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return ConnectorState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return ConnectorState.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Created")) return ConnectorState.Created;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ready")) return ConnectorState.Ready;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Expiring")) return ConnectorState.Expiring;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return ConnectorState.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return ConnectorState.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectorState value.");
         }
     }

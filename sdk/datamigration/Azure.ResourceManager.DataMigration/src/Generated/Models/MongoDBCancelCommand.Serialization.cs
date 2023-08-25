@@ -18,42 +18,44 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
-                writer.WritePropertyName("input");
+                writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            writer.WritePropertyName("commandType");
+            writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MongoDBCancelCommand DeserializeMongoDBCancelCommand(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MongoDBCommandInput> input = default;
             CommandType commandType = default;
             Optional<IReadOnlyList<ODataError>> errors = default;
             Optional<CommandState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("input"))
+                if (property.NameEquals("input"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     input = MongoDBCommandInput.DeserializeMongoDBCommandInput(property.Value);
                     continue;
                 }
-                if (property.NameEquals("commandType"))
+                if (property.NameEquals("commandType"u8))
                 {
                     commandType = new CommandType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ODataError> array = new List<ODataError>();
@@ -64,11 +66,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new CommandState(property.Value.GetString());

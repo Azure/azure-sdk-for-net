@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Reservations
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
+        ///
         /// </summary>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
+        ///
         /// </summary>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

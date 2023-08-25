@@ -5,14 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> A class to add extension methods to ArmResource. </summary>
     internal partial class ArmResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _informationProtectionPoliciesClientDiagnostics;
+        private InformationProtectionPoliciesRestOperations _informationProtectionPoliciesRestClient;
+        private ClientDiagnostics _securitySubAssessmentSubAssessmentsClientDiagnostics;
+        private SubAssessmentsRestOperations _securitySubAssessmentSubAssessmentsRestClient;
+        private ClientDiagnostics _securityAssessmentAssessmentsClientDiagnostics;
+        private AssessmentsRestOperations _securityAssessmentAssessmentsRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="ArmResourceExtensionClient"/> class for mocking. </summary>
         protected ArmResourceExtensionClient()
         {
@@ -24,6 +37,13 @@ namespace Azure.ResourceManager.SecurityCenter
         internal ArmResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics InformationProtectionPoliciesClientDiagnostics => _informationProtectionPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private InformationProtectionPoliciesRestOperations InformationProtectionPoliciesRestClient => _informationProtectionPoliciesRestClient ??= new InformationProtectionPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SecuritySubAssessmentSubAssessmentsClientDiagnostics => _securitySubAssessmentSubAssessmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecuritySubAssessmentResource.ResourceType.Namespace, Diagnostics);
+        private SubAssessmentsRestOperations SecuritySubAssessmentSubAssessmentsRestClient => _securitySubAssessmentSubAssessmentsRestClient ??= new SubAssessmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecuritySubAssessmentResource.ResourceType));
+        private ClientDiagnostics SecurityAssessmentAssessmentsClientDiagnostics => _securityAssessmentAssessmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAssessmentResource.ResourceType.Namespace, Diagnostics);
+        private AssessmentsRestOperations SecurityAssessmentAssessmentsRestClient => _securityAssessmentAssessmentsRestClient ??= new AssessmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecurityAssessmentResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -42,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource" /> object. </returns>
         public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting()
         {
-            return new AdvancedThreatProtectionSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Security/advancedThreatProtectionSettings/current"));
+            return new AdvancedThreatProtectionSettingResource(Client, Id.AppendProviderResource("Microsoft.Security", "advancedThreatProtectionSettings", "current"));
         }
 
         /// <summary> Gets a collection of DeviceSecurityGroupResources in the ArmResource. </summary>
@@ -66,6 +86,13 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new SecurityAssessmentCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of GovernanceRuleResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of GovernanceRuleResources and their operations over a GovernanceRuleResource. </returns>
+        public virtual GovernanceRuleCollection GetGovernanceRules()
+        {
+            return GetCachedClient(Client => new GovernanceRuleCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of SqlVulnerabilityAssessmentScanResources in the ArmResource. </summary>
         /// <returns> An object representing collection of SqlVulnerabilityAssessmentScanResources and their operations over a SqlVulnerabilityAssessmentScanResource. </returns>
         public virtual SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans()
@@ -78,6 +105,202 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules()
         {
             return GetCachedClient(Client => new SqlVulnerabilityAssessmentBaselineRuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Details of the information protection policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies/{informationProtectionPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InformationProtectionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
+        /// <param name="informationProtectionPolicy"> Information protection policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<InformationProtectionPolicy>> CreateOrUpdateInformationProtectionPolicyAsync(InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
+        {
+            using var scope = InformationProtectionPoliciesClientDiagnostics.CreateScope("ArmResourceExtensionClient.CreateOrUpdateInformationProtectionPolicy");
+            scope.Start();
+            try
+            {
+                var response = await InformationProtectionPoliciesRestClient.CreateOrUpdateAsync(Id, informationProtectionPolicyName, informationProtectionPolicy, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Details of the information protection policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies/{informationProtectionPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InformationProtectionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
+        /// <param name="informationProtectionPolicy"> Information protection policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<InformationProtectionPolicy> CreateOrUpdateInformationProtectionPolicy(InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
+        {
+            using var scope = InformationProtectionPoliciesClientDiagnostics.CreateScope("ArmResourceExtensionClient.CreateOrUpdateInformationProtectionPolicy");
+            scope.Start();
+            try
+            {
+                var response = InformationProtectionPoliciesRestClient.CreateOrUpdate(Id, informationProtectionPolicyName, informationProtectionPolicy, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Information protection policies of a specific management group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InformationProtectionPolicies_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="InformationProtectionPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<InformationProtectionPolicy> GetInformationProtectionPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => InformationProtectionPoliciesRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformationProtectionPoliciesRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, InformationProtectionPolicy.DeserializeInformationProtectionPolicy, InformationProtectionPoliciesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Information protection policies of a specific management group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InformationProtectionPolicies_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InformationProtectionPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<InformationProtectionPolicy> GetInformationProtectionPolicies(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => InformationProtectionPoliciesRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformationProtectionPoliciesRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, InformationProtectionPolicy.DeserializeInformationProtectionPolicy, InformationProtectionPoliciesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get security sub-assessments on all your scanned resources inside a subscription scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/subAssessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_ListAll</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecuritySubAssessmentResource> GetSecuritySubAssessmentsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), SecuritySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecuritySubAssessments", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get security sub-assessments on all your scanned resources inside a subscription scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/subAssessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_ListAll</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecuritySubAssessmentResource> GetSecuritySubAssessments(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), SecuritySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecuritySubAssessments", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get security assessments on all your scanned resources inside a scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecurityAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityAssessmentResource> GetSecurityAssessmentsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAssessmentAssessmentsRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAssessmentAssessmentsRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAssessmentResource(Client, SecurityAssessmentData.DeserializeSecurityAssessmentData(e)), SecurityAssessmentAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecurityAssessments", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get security assessments on all your scanned resources inside a scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityAssessmentResource> GetSecurityAssessments(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAssessmentAssessmentsRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAssessmentAssessmentsRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAssessmentResource(Client, SecurityAssessmentData.DeserializeSecurityAssessmentData(e)), SecurityAssessmentAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecurityAssessments", "value", "nextLink", cancellationToken);
         }
     }
 }

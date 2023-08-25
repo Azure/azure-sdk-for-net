@@ -13,7 +13,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NetworkProfile data model. </summary>
+    /// <summary>
+    /// A class representing the NetworkProfile data model.
+    /// Network profile resource.
+    /// </summary>
     public partial class NetworkProfileData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkProfileData. </summary>

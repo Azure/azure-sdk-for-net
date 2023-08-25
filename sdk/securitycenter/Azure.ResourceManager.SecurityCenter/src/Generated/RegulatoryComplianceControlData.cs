@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the RegulatoryComplianceControl data model. </summary>
+    /// <summary>
+    /// A class representing the RegulatoryComplianceControl data model.
+    /// Regulatory compliance control details and state
+    /// </summary>
     public partial class RegulatoryComplianceControlData : ResourceData
     {
         /// <summary> Initializes a new instance of RegulatoryComplianceControlData. </summary>
@@ -25,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> The description of the regulatory compliance control. </param>
-        /// <param name="state"> Aggregative state based on the control&apos;s supported assessments states. </param>
+        /// <param name="state"> Aggregative state based on the control's supported assessments states. </param>
         /// <param name="passedAssessments"> The number of supported regulatory compliance assessments of the given control with a passed state. </param>
         /// <param name="failedAssessments"> The number of supported regulatory compliance assessments of the given control with a failed state. </param>
         /// <param name="skippedAssessments"> The number of supported regulatory compliance assessments of the given control with a skipped state. </param>
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> The description of the regulatory compliance control. </summary>
         public string Description { get; }
-        /// <summary> Aggregative state based on the control&apos;s supported assessments states. </summary>
+        /// <summary> Aggregative state based on the control's supported assessments states. </summary>
         public RegulatoryComplianceState? State { get; set; }
         /// <summary> The number of supported regulatory compliance assessments of the given control with a passed state. </summary>
         public int? PassedAssessments { get; }

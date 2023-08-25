@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PerformanceCounters))
             {
-                writer.WritePropertyName("performanceCounters");
+                writer.WritePropertyName("performanceCounters"u8);
                 writer.WriteStartArray();
                 foreach (var item in PerformanceCounters)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(WindowsEventLogs))
             {
-                writer.WritePropertyName("windowsEventLogs");
+                writer.WritePropertyName("windowsEventLogs"u8);
                 writer.WriteStartArray();
                 foreach (var item in WindowsEventLogs)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(Syslog))
             {
-                writer.WritePropertyName("syslog");
+                writer.WritePropertyName("syslog"u8);
                 writer.WriteStartArray();
                 foreach (var item in Syslog)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
-                writer.WritePropertyName("extensions");
+                writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(LogFiles))
             {
-                writer.WritePropertyName("logFiles");
+                writer.WritePropertyName("logFiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogFiles)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(IisLogs))
             {
-                writer.WritePropertyName("iisLogs");
+                writer.WritePropertyName("iisLogs"u8);
                 writer.WriteStartArray();
                 foreach (var item in IisLogs)
                 {
@@ -76,24 +76,66 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(WindowsFirewallLogs))
+            {
+                writer.WritePropertyName("windowsFirewallLogs"u8);
+                writer.WriteStartArray();
+                foreach (var item in WindowsFirewallLogs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PrometheusForwarder))
+            {
+                writer.WritePropertyName("prometheusForwarder"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrometheusForwarder)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PlatformTelemetry))
+            {
+                writer.WritePropertyName("platformTelemetry"u8);
+                writer.WriteStartArray();
+                foreach (var item in PlatformTelemetry)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DataImports))
+            {
+                writer.WritePropertyName("dataImports"u8);
+                writer.WriteObjectValue(DataImports);
+            }
             writer.WriteEndObject();
         }
 
         internal static DataSourcesSpec DeserializeDataSourcesSpec(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PerfCounterDataSource>> performanceCounters = default;
             Optional<IList<WindowsEventLogDataSource>> windowsEventLogs = default;
             Optional<IList<SyslogDataSource>> syslog = default;
             Optional<IList<ExtensionDataSource>> extensions = default;
             Optional<IList<LogFilesDataSource>> logFiles = default;
             Optional<IList<IisLogsDataSource>> iisLogs = default;
+            Optional<IList<WindowsFirewallLogsDataSource>> windowsFirewallLogs = default;
+            Optional<IList<PrometheusForwarderDataSource>> prometheusForwarder = default;
+            Optional<IList<PlatformTelemetryDataSource>> platformTelemetry = default;
+            Optional<DataSourcesSpecDataImports> dataImports = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("performanceCounters"))
+                if (property.NameEquals("performanceCounters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PerfCounterDataSource> array = new List<PerfCounterDataSource>();
@@ -104,11 +146,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     performanceCounters = array;
                     continue;
                 }
-                if (property.NameEquals("windowsEventLogs"))
+                if (property.NameEquals("windowsEventLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WindowsEventLogDataSource> array = new List<WindowsEventLogDataSource>();
@@ -119,11 +160,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     windowsEventLogs = array;
                     continue;
                 }
-                if (property.NameEquals("syslog"))
+                if (property.NameEquals("syslog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SyslogDataSource> array = new List<SyslogDataSource>();
@@ -134,11 +174,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     syslog = array;
                     continue;
                 }
-                if (property.NameEquals("extensions"))
+                if (property.NameEquals("extensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExtensionDataSource> array = new List<ExtensionDataSource>();
@@ -149,11 +188,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     extensions = array;
                     continue;
                 }
-                if (property.NameEquals("logFiles"))
+                if (property.NameEquals("logFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogFilesDataSource> array = new List<LogFilesDataSource>();
@@ -164,11 +202,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     logFiles = array;
                     continue;
                 }
-                if (property.NameEquals("iisLogs"))
+                if (property.NameEquals("iisLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IisLogsDataSource> array = new List<IisLogsDataSource>();
@@ -179,8 +216,59 @@ namespace Azure.ResourceManager.Monitor.Models
                     iisLogs = array;
                     continue;
                 }
+                if (property.NameEquals("windowsFirewallLogs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WindowsFirewallLogsDataSource> array = new List<WindowsFirewallLogsDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(WindowsFirewallLogsDataSource.DeserializeWindowsFirewallLogsDataSource(item));
+                    }
+                    windowsFirewallLogs = array;
+                    continue;
+                }
+                if (property.NameEquals("prometheusForwarder"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PrometheusForwarderDataSource> array = new List<PrometheusForwarderDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PrometheusForwarderDataSource.DeserializePrometheusForwarderDataSource(item));
+                    }
+                    prometheusForwarder = array;
+                    continue;
+                }
+                if (property.NameEquals("platformTelemetry"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PlatformTelemetryDataSource> array = new List<PlatformTelemetryDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PlatformTelemetryDataSource.DeserializePlatformTelemetryDataSource(item));
+                    }
+                    platformTelemetry = array;
+                    continue;
+                }
+                if (property.NameEquals("dataImports"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataImports = DataSourcesSpecDataImports.DeserializeDataSourcesSpecDataImports(property.Value);
+                    continue;
+                }
             }
-            return new DataSourcesSpec(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs));
+            return new DataSourcesSpec(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs), Optional.ToList(windowsFirewallLogs), Optional.ToList(prometheusForwarder), Optional.ToList(platformTelemetry), dataImports.Value);
         }
     }
 }

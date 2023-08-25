@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Replicas))
             {
-                writer.WritePropertyName("replicas");
+                writer.WritePropertyName("replicas"u8);
                 writer.WriteStartArray();
                 foreach (var item in Replicas)
                 {
@@ -31,14 +31,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static AvailabilityGroupConfiguration DeserializeAvailabilityGroupConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AvailabilityGroupReplica>> replicas = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("replicas"))
+                if (property.NameEquals("replicas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailabilityGroupReplica> array = new List<AvailabilityGroupReplica>();

@@ -4,7 +4,7 @@ To use these samples, you'll first need to set up resources. See [getting starte
 
 ## Import the namespaces
 
-```C# Snippet:RouteImportNamespace
+```C# Snippet:RouteImportNamespaces
 using Azure.Core.GeoJson;
 using Azure.Maps.Routing;
 using Azure.Maps.Routing.Models;

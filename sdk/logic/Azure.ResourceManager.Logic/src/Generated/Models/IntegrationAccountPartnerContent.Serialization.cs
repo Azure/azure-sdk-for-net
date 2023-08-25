@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(B2B))
             {
-                writer.WritePropertyName("b2b");
+                writer.WritePropertyName("b2b"u8);
                 writer.WriteObjectValue(B2B);
             }
             writer.WriteEndObject();
@@ -25,14 +25,17 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountPartnerContent DeserializeIntegrationAccountPartnerContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<B2BPartnerContent> b2b = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("b2b"))
+                if (property.NameEquals("b2b"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     b2b = B2BPartnerContent.DeserializeB2BPartnerContent(property.Value);

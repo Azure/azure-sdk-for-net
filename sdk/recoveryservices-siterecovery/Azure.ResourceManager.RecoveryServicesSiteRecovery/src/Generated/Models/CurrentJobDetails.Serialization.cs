@@ -15,26 +15,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static CurrentJobDetails DeserializeCurrentJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobName = default;
-            Optional<string> jobId = default;
+            Optional<ResourceIdentifier> jobId = default;
             Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobName"))
+                if (property.NameEquals("jobName"u8))
                 {
                     jobName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"))
-                {
-                    jobId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("jobId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    jobId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("startTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");

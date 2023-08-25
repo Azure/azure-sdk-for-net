@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementEmailTemplate data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementEmailTemplate data model.
+    /// Email Template details.
+    /// </summary>
     public partial class ApiManagementEmailTemplateData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementEmailTemplateData. </summary>

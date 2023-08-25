@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            writer.WritePropertyName("firewallMode");
+            writer.WritePropertyName("firewallMode"u8);
             writer.WriteStringValue(FirewallMode.ToString());
-            writer.WritePropertyName("ruleSetType");
+            writer.WritePropertyName("ruleSetType"u8);
             writer.WriteStringValue(RuleSetType);
-            writer.WritePropertyName("ruleSetVersion");
+            writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
             if (Optional.IsCollectionDefined(DisabledRuleGroups))
             {
-                writer.WritePropertyName("disabledRuleGroups");
+                writer.WritePropertyName("disabledRuleGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in DisabledRuleGroups)
                 {
@@ -36,27 +36,27 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(RequestBodyCheck))
             {
-                writer.WritePropertyName("requestBodyCheck");
+                writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
             if (Optional.IsDefined(MaxRequestBodySize))
             {
-                writer.WritePropertyName("maxRequestBodySize");
+                writer.WritePropertyName("maxRequestBodySize"u8);
                 writer.WriteNumberValue(MaxRequestBodySize.Value);
             }
             if (Optional.IsDefined(MaxRequestBodySizeInKb))
             {
-                writer.WritePropertyName("maxRequestBodySizeInKb");
+                writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
             if (Optional.IsDefined(FileUploadLimitInMb))
             {
-                writer.WritePropertyName("fileUploadLimitInMb");
+                writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
             if (Optional.IsCollectionDefined(Exclusions))
             {
-                writer.WritePropertyName("exclusions");
+                writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayWebApplicationFirewallConfiguration DeserializeApplicationGatewayWebApplicationFirewallConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             ApplicationGatewayFirewallMode firewallMode = default;
             string ruleSetType = default;
@@ -81,31 +85,30 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<ApplicationGatewayFirewallExclusion>> exclusions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("firewallMode"))
+                if (property.NameEquals("firewallMode"u8))
                 {
                     firewallMode = new ApplicationGatewayFirewallMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ruleSetType"))
+                if (property.NameEquals("ruleSetType"u8))
                 {
                     ruleSetType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleSetVersion"))
+                if (property.NameEquals("ruleSetVersion"u8))
                 {
                     ruleSetVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("disabledRuleGroups"))
+                if (property.NameEquals("disabledRuleGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationGatewayFirewallDisabledRuleGroup> array = new List<ApplicationGatewayFirewallDisabledRuleGroup>();
@@ -116,51 +119,46 @@ namespace Azure.ResourceManager.Network.Models
                     disabledRuleGroups = array;
                     continue;
                 }
-                if (property.NameEquals("requestBodyCheck"))
+                if (property.NameEquals("requestBodyCheck"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestBodyCheck = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxRequestBodySize"))
+                if (property.NameEquals("maxRequestBodySize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxRequestBodySize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxRequestBodySizeInKb"))
+                if (property.NameEquals("maxRequestBodySizeInKb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxRequestBodySizeInKb = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fileUploadLimitInMb"))
+                if (property.NameEquals("fileUploadLimitInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileUploadLimitInMb = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("exclusions"))
+                if (property.NameEquals("exclusions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationGatewayFirewallExclusion> array = new List<ApplicationGatewayFirewallExclusion>();

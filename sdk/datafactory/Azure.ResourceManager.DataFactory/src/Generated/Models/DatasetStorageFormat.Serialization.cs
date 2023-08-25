@@ -15,25 +15,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Serializer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Serializer.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("serializer"u8);
+                JsonSerializer.Serialize(writer, Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Deserializer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Deserializer.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("deserializer"u8);
+                JsonSerializer.Serialize(writer, Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -49,6 +41,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetStorageFormat DeserializeDatasetStorageFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -15,41 +15,45 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("download");
+            writer.WritePropertyName("download"u8);
             writer.WriteBooleanValue(IsDownloadEnabled);
-            writer.WritePropertyName("dash");
+            writer.WritePropertyName("dash"u8);
             writer.WriteBooleanValue(IsDashEnabled);
-            writer.WritePropertyName("hls");
+            writer.WritePropertyName("hls"u8);
             writer.WriteBooleanValue(IsHlsEnabled);
-            writer.WritePropertyName("smoothStreaming");
+            writer.WritePropertyName("smoothStreaming"u8);
             writer.WriteBooleanValue(IsSmoothStreamingEnabled);
             writer.WriteEndObject();
         }
 
         internal static MediaEnabledProtocols DeserializeMediaEnabledProtocols(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool download = default;
             bool dash = default;
             bool hls = default;
             bool smoothStreaming = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("download"))
+                if (property.NameEquals("download"u8))
                 {
                     download = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dash"))
+                if (property.NameEquals("dash"u8))
                 {
                     dash = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("hls"))
+                if (property.NameEquals("hls"u8))
                 {
                     hls = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("smoothStreaming"))
+                if (property.NameEquals("smoothStreaming"u8))
                 {
                     smoothStreaming = property.Value.GetBoolean();
                     continue;

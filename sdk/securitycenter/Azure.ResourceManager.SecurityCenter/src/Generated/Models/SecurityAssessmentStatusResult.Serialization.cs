@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("code");
+            writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
             if (Optional.IsDefined(Cause))
             {
-                writer.WritePropertyName("cause");
+                writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAssessmentStatusResult DeserializeSecurityAssessmentStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> firstEvaluationDate = default;
             Optional<DateTimeOffset> statusChangeDate = default;
             SecurityAssessmentStatusCode code = default;
@@ -40,37 +44,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstEvaluationDate"))
+                if (property.NameEquals("firstEvaluationDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstEvaluationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("statusChangeDate"))
+                if (property.NameEquals("statusChangeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusChangeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = new SecurityAssessmentStatusCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cause"))
+                if (property.NameEquals("cause"u8))
                 {
                     cause = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

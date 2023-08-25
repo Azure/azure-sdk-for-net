@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="vmSizeProperties">Specifies the properties for
         /// customizing the size of the virtual machine. Minimum api-version:
-        /// 2021-11-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in
-        /// [VM Customization](https://aka.ms/vmcustomization) for more
+        /// 2021-11-01. Please follow the instructions in [VM
+        /// Customization](https://aka.ms/vmcustomization) for more
         /// details.</param>
         public VirtualMachineScaleSetHardwareProfile(VMSizeProperties vmSizeProperties = default(VMSizeProperties))
         {
@@ -49,10 +49,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the properties for customizing the size of
-        /// the virtual machine. Minimum api-version: 2021-11-01.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Please follow the instructions
-        /// in [VM Customization](https://aka.ms/vmcustomization) for more
-        /// details.
+        /// the virtual machine. Minimum api-version: 2021-11-01. Please follow
+        /// the instructions in [VM
+        /// Customization](https://aka.ms/vmcustomization) for more details.
         /// </summary>
         [JsonProperty(PropertyName = "vmSizeProperties")]
         public VMSizeProperties VmSizeProperties { get; set; }

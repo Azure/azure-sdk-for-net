@@ -18,25 +18,25 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsDefined(DefaultRedirectUri))
             {
-                writer.WritePropertyName("defaultRedirectUrl");
+                writer.WritePropertyName("defaultRedirectUrl"u8);
                 writer.WriteStringValue(DefaultRedirectUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DefaultCustomBlockResponseStatusCode))
             {
                 if (DefaultCustomBlockResponseStatusCode != null)
                 {
-                    writer.WritePropertyName("defaultCustomBlockResponseStatusCode");
-                    writer.WriteStringValue(DefaultCustomBlockResponseStatusCode.Value.ToString());
+                    writer.WritePropertyName("defaultCustomBlockResponseStatusCode"u8);
+                    writer.WriteNumberValue(DefaultCustomBlockResponseStatusCode.Value.ToSerialInt32());
                 }
                 else
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (DefaultCustomBlockResponseBody != null)
                 {
-                    writer.WritePropertyName("defaultCustomBlockResponseBody");
+                    writer.WritePropertyName("defaultCustomBlockResponseBody"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DefaultCustomBlockResponseBody);
 #else
@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static WafPolicySettings DeserializeWafPolicySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyEnabledState> enabledState = default;
             Optional<PolicyMode> mode = default;
             Optional<Uri> defaultRedirectUri = default;
@@ -71,37 +75,34 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<BinaryData> defaultCustomBlockResponseBody = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabledState"))
+                if (property.NameEquals("enabledState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledState = new PolicyEnabledState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new PolicyMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultRedirectUrl"))
+                if (property.NameEquals("defaultRedirectUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultRedirectUri = null;
                         continue;
                     }
                     defaultRedirectUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultCustomBlockResponseStatusCode"))
+                if (property.NameEquals("defaultCustomBlockResponseStatusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     defaultCustomBlockResponseStatusCode = new PolicySettingsDefaultCustomBlockResponseStatusCode(property.Value.GetInt32());
                     continue;
                 }
-                if (property.NameEquals("defaultCustomBlockResponseBody"))
+                if (property.NameEquals("defaultCustomBlockResponseBody"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -10,28 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("domainNameLabel");
+            writer.WritePropertyName("domainNameLabel"u8);
             writer.WriteStringValue(DomainNameLabel);
+            if (Optional.IsDefined(DomainNameLabelScope))
+            {
+                writer.WritePropertyName("domainNameLabelScope"u8);
+                writer.WriteStringValue(DomainNameLabelScope.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DeserializeVirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string domainNameLabel = default;
+            Optional<DomainNameLabelScopeType> domainNameLabelScope = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainNameLabel"))
+                if (property.NameEquals("domainNameLabel"u8))
                 {
                     domainNameLabel = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("domainNameLabelScope"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    domainNameLabelScope = new DomainNameLabelScopeType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(domainNameLabel);
+            return new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(domainNameLabel, Optional.ToNullable(domainNameLabelScope));
         }
     }
 }

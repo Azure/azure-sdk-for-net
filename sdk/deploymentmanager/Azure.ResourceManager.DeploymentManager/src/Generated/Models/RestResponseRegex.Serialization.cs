@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Matches))
             {
-                writer.WritePropertyName("matches");
+                writer.WritePropertyName("matches"u8);
                 writer.WriteStartArray();
                 foreach (var item in Matches)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             }
             if (Optional.IsDefined(MatchQuantifier))
             {
-                writer.WritePropertyName("matchQuantifier");
+                writer.WritePropertyName("matchQuantifier"u8);
                 writer.WriteStringValue(MatchQuantifier.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -36,15 +36,18 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static RestResponseRegex DeserializeRestResponseRegex(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> matches = default;
             Optional<RestMatchQuantifier> matchQuantifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("matches"))
+                if (property.NameEquals("matches"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -55,11 +58,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     matches = array;
                     continue;
                 }
-                if (property.NameEquals("matchQuantifier"))
+                if (property.NameEquals("matchQuantifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     matchQuantifier = property.Value.GetString().ToRestMatchQuantifier();

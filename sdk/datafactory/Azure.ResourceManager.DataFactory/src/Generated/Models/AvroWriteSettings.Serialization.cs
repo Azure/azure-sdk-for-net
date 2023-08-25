@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,33 +20,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecordName))
             {
-                writer.WritePropertyName("recordName");
+                writer.WritePropertyName("recordName"u8);
                 writer.WriteStringValue(RecordName);
             }
             if (Optional.IsDefined(RecordNamespace))
             {
-                writer.WritePropertyName("recordNamespace");
+                writer.WritePropertyName("recordNamespace"u8);
                 writer.WriteStringValue(RecordNamespace);
             }
             if (Optional.IsDefined(MaxRowsPerFile))
             {
-                writer.WritePropertyName("maxRowsPerFile");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxRowsPerFile);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxRowsPerFile.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("maxRowsPerFile"u8);
+                JsonSerializer.Serialize(writer, MaxRowsPerFile);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
-                writer.WritePropertyName("fileNamePrefix");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileNamePrefix);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileNamePrefix.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("fileNamePrefix"u8);
+                JsonSerializer.Serialize(writer, FileNamePrefix);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatWriteSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -61,46 +54,48 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AvroWriteSettings DeserializeAvroWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recordName = default;
             Optional<string> recordNamespace = default;
-            Optional<BinaryData> maxRowsPerFile = default;
-            Optional<BinaryData> fileNamePrefix = default;
+            Optional<DataFactoryElement<int>> maxRowsPerFile = default;
+            Optional<DataFactoryElement<string>> fileNamePrefix = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordName"))
+                if (property.NameEquals("recordName"u8))
                 {
                     recordName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recordNamespace"))
+                if (property.NameEquals("recordNamespace"u8))
                 {
                     recordNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxRowsPerFile"))
+                if (property.NameEquals("maxRowsPerFile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxRowsPerFile = BinaryData.FromString(property.Value.GetRawText());
+                    maxRowsPerFile = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("fileNamePrefix"))
+                if (property.NameEquals("fileNamePrefix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileNamePrefix = BinaryData.FromString(property.Value.GetRawText());
+                    fileNamePrefix = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -50,8 +49,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Return trial status for subscription by region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkTrialAvailability
-        /// Operation Id: Locations_CheckTrialAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkTrialAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckTrialAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="sku"> The sku to check for trial availability. </param>
@@ -74,8 +81,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Return trial status for subscription by region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkTrialAvailability
-        /// Operation Id: Locations_CheckTrialAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkTrialAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckTrialAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="sku"> The sku to check for trial availability. </param>
@@ -98,8 +113,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Return quota for subscription by region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability
-        /// Operation Id: Locations_CheckQuotaAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckQuotaAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -121,8 +144,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Return quota for subscription by region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability
-        /// Operation Id: Locations_CheckQuotaAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckQuotaAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -144,86 +175,46 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// List private clouds in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/privateClouds
-        /// Operation Id: PrivateClouds_ListInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/privateClouds</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateClouds_ListInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvsPrivateCloudResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvsPrivateClouds");
-                scope.Start();
-                try
-                {
-                    var response = await AvsPrivateCloudPrivateCloudsRestClient.ListInSubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvsPrivateCloudResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvsPrivateClouds");
-                scope.Start();
-                try
-                {
-                    var response = await AvsPrivateCloudPrivateCloudsRestClient.ListInSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), AvsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvsPrivateClouds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List private clouds in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/privateClouds
-        /// Operation Id: PrivateClouds_ListInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/privateClouds</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateClouds_ListInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsPrivateCloudResource> GetAvsPrivateClouds(CancellationToken cancellationToken = default)
         {
-            Page<AvsPrivateCloudResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvsPrivateClouds");
-                scope.Start();
-                try
-                {
-                    var response = AvsPrivateCloudPrivateCloudsRestClient.ListInSubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvsPrivateCloudResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvsPrivateClouds");
-                scope.Start();
-                try
-                {
-                    var response = AvsPrivateCloudPrivateCloudsRestClient.ListInSubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), AvsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvsPrivateClouds", "value", "nextLink", cancellationToken);
         }
     }
 }

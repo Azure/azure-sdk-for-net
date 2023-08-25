@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(RuleSequence))
             {
-                writer.WritePropertyName("ruleSequence");
+                writer.WritePropertyName("ruleSequence"u8);
                 writer.WriteNumberValue(RuleSequence.Value);
             }
             if (Optional.IsCollectionDefined(Conditions))
             {
-                writer.WritePropertyName("conditions");
+                writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(ActionSet))
             {
-                writer.WritePropertyName("actionSet");
+                writer.WritePropertyName("actionSet"u8);
                 writer.WriteObjectValue(ActionSet);
             }
             writer.WriteEndObject();
@@ -46,32 +46,34 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayRewriteRule DeserializeApplicationGatewayRewriteRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> ruleSequence = default;
             Optional<IList<ApplicationGatewayRewriteRuleCondition>> conditions = default;
             Optional<ApplicationGatewayRewriteRuleActionSet> actionSet = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleSequence"))
+                if (property.NameEquals("ruleSequence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ruleSequence = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("conditions"))
+                if (property.NameEquals("conditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationGatewayRewriteRuleCondition> array = new List<ApplicationGatewayRewriteRuleCondition>();
@@ -82,11 +84,10 @@ namespace Azure.ResourceManager.Network.Models
                     conditions = array;
                     continue;
                 }
-                if (property.NameEquals("actionSet"))
+                if (property.NameEquals("actionSet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value);

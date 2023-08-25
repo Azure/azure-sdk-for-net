@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Request to perform a single operation on a batch of instances. Exactly one of &quot;get&quot;, &quot;put&quot;, &quot;update&quot; or &quot;delete&quot; must be set. </summary>
+    /// <summary> Request to perform a single operation on a batch of instances. Exactly one of "get", "put", "update" or "delete" must be set. </summary>
     internal partial class InstancesBatchRequest
     {
         /// <summary> Initializes a new instance of InstancesBatchRequest. </summary>

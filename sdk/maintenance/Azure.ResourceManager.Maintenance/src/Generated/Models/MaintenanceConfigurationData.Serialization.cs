@@ -16,84 +16,12 @@ namespace Azure.ResourceManager.Maintenance
 {
     public partial class MaintenanceConfigurationData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Namespace))
-            {
-                writer.WritePropertyName("namespace");
-                writer.WriteStringValue(Namespace);
-            }
-            if (Optional.IsCollectionDefined(ExtensionProperties))
-            {
-                writer.WritePropertyName("extensionProperties");
-                writer.WriteStartObject();
-                foreach (var item in ExtensionProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(MaintenanceScope))
-            {
-                writer.WritePropertyName("maintenanceScope");
-                writer.WriteStringValue(MaintenanceScope.Value.ToString());
-            }
-            if (Optional.IsDefined(Visibility))
-            {
-                writer.WritePropertyName("visibility");
-                writer.WriteStringValue(Visibility.Value.ToString());
-            }
-            writer.WritePropertyName("maintenanceWindow");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startDateTime");
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (Optional.IsDefined(ExpireOn))
-            {
-                writer.WritePropertyName("expirationDateTime");
-                writer.WriteStringValue(ExpireOn.Value, "O");
-            }
-            if (Optional.IsDefined(Duration))
-            {
-                writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration.Value, "c");
-            }
-            if (Optional.IsDefined(TimeZone))
-            {
-                writer.WritePropertyName("timeZone");
-                writer.WriteStringValue(TimeZone);
-            }
-            if (Optional.IsDefined(RecurEvery))
-            {
-                writer.WritePropertyName("recurEvery");
-                writer.WriteStringValue(RecurEvery);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -104,6 +32,7 @@ namespace Azure.ResourceManager.Maintenance
             Optional<IDictionary<string, string>> extensionProperties = default;
             Optional<MaintenanceScope> maintenanceScope = default;
             Optional<MaintenanceConfigurationVisibility> visibility = default;
+            Optional<MaintenancePatchConfiguration> installPatches = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             Optional<TimeSpan> duration = default;
@@ -111,11 +40,10 @@ namespace Azure.ResourceManager.Maintenance
             Optional<string> recurEvery = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -126,37 +54,36 @@ namespace Azure.ResourceManager.Maintenance
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,16 +92,15 @@ namespace Azure.ResourceManager.Maintenance
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("namespace"))
+                        if (property0.NameEquals("namespace"u8))
                         {
                             @namespace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("extensionProperties"))
+                        if (property0.NameEquals("extensionProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -185,27 +111,34 @@ namespace Azure.ResourceManager.Maintenance
                             extensionProperties = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("maintenanceScope"))
+                        if (property0.NameEquals("maintenanceScope"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maintenanceScope = new MaintenanceScope(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("visibility"))
+                        if (property0.NameEquals("visibility"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             visibility = new MaintenanceConfigurationVisibility(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("maintenanceWindow"))
+                        if (property0.NameEquals("installPatches"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            installPatches = MaintenancePatchConfiguration.DeserializeMaintenancePatchConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("maintenanceWindow"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -214,42 +147,39 @@ namespace Azure.ResourceManager.Maintenance
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("startDateTime"))
+                                if (property1.NameEquals("startDateTime"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     startDateTime = property1.Value.GetDateTimeOffset("O");
                                     continue;
                                 }
-                                if (property1.NameEquals("expirationDateTime"))
+                                if (property1.NameEquals("expirationDateTime"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     expirationDateTime = property1.Value.GetDateTimeOffset("O");
                                     continue;
                                 }
-                                if (property1.NameEquals("duration"))
+                                if (property1.NameEquals("duration"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     duration = property1.Value.GetTimeSpan("c");
                                     continue;
                                 }
-                                if (property1.NameEquals("timeZone"))
+                                if (property1.NameEquals("timeZone"u8))
                                 {
                                     timeZone = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("recurEvery"))
+                                if (property1.NameEquals("recurEvery"u8))
                                 {
                                     recurEvery = property1.Value.GetString();
                                     continue;
@@ -261,7 +191,7 @@ namespace Azure.ResourceManager.Maintenance
                     continue;
                 }
             }
-            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
+            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), installPatches.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
         }
     }
 }

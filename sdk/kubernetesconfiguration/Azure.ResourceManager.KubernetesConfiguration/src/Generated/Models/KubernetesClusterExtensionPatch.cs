@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         /// <summary> Flag to note if this extension participates in auto upgrade of minor version, or not. </summary>
         public bool? AutoUpgradeMinorVersion { get; set; }
-        /// <summary> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is &apos;true&apos;. </summary>
+        /// <summary> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </summary>
         public string ReleaseTrain { get; set; }
-        /// <summary> Version of the extension for this extension, if it is &apos;pinned&apos; to a specific version. autoUpgradeMinorVersion must be &apos;false&apos;. </summary>
+        /// <summary> Version of the extension for this extension, if it is 'pinned' to a specific version. autoUpgradeMinorVersion must be 'false'. </summary>
         public string Version { get; set; }
         /// <summary> Configuration settings, as name-value pairs for configuring this extension. </summary>
         public IDictionary<string, string> ConfigurationSettings { get; set; }

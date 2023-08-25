@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string PredefinedValue = "Predefined";
         private const string CustomValue = "Custom";
+        private const string CustomV2Value = "CustomV2";
 
         /// <summary> Predefined. </summary>
         public static ApplicationGatewaySslPolicyType Predefined { get; } = new ApplicationGatewaySslPolicyType(PredefinedValue);
         /// <summary> Custom. </summary>
         public static ApplicationGatewaySslPolicyType Custom { get; } = new ApplicationGatewaySslPolicyType(CustomValue);
+        /// <summary> CustomV2. </summary>
+        public static ApplicationGatewaySslPolicyType CustomV2 { get; } = new ApplicationGatewaySslPolicyType(CustomV2Value);
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyType"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewaySslPolicyType left, ApplicationGatewaySslPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyType"/> values are not the same. </summary>

@@ -15,13 +15,15 @@ namespace Azure.Storage.Blobs.Models
         {
             ArchiveStatus.RehydratePendingToHot => "rehydrate-pending-to-hot",
             ArchiveStatus.RehydratePendingToCool => "rehydrate-pending-to-cool",
+            ArchiveStatus.RehydratePendingToCold => "rehydrate-pending-to-cold",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArchiveStatus value.")
         };
 
         public static ArchiveStatus ToArchiveStatus(this string value)
         {
-            if (string.Equals(value, "rehydrate-pending-to-hot", StringComparison.InvariantCultureIgnoreCase)) return ArchiveStatus.RehydratePendingToHot;
-            if (string.Equals(value, "rehydrate-pending-to-cool", StringComparison.InvariantCultureIgnoreCase)) return ArchiveStatus.RehydratePendingToCool;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-hot")) return ArchiveStatus.RehydratePendingToHot;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-cool")) return ArchiveStatus.RehydratePendingToCool;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-cold")) return ArchiveStatus.RehydratePendingToCold;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArchiveStatus value.");
         }
     }

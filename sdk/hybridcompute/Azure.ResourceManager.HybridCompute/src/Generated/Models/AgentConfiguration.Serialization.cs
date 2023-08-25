@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static AgentConfiguration DeserializeAgentConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> proxyUrl = default;
             Optional<IReadOnlyList<string>> incomingConnectionsPorts = default;
             Optional<IReadOnlyList<ConfigurationExtension>> extensionsAllowList = default;
@@ -26,21 +30,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<AgentConfigurationMode> configMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("proxyUrl"))
+                if (property.NameEquals("proxyUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        proxyUrl = null;
                         continue;
                     }
                     proxyUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("incomingConnectionsPorts"))
+                if (property.NameEquals("incomingConnectionsPorts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -51,11 +53,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     incomingConnectionsPorts = array;
                     continue;
                 }
-                if (property.NameEquals("extensionsAllowList"))
+                if (property.NameEquals("extensionsAllowList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConfigurationExtension> array = new List<ConfigurationExtension>();
@@ -66,11 +67,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     extensionsAllowList = array;
                     continue;
                 }
-                if (property.NameEquals("extensionsBlockList"))
+                if (property.NameEquals("extensionsBlockList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConfigurationExtension> array = new List<ConfigurationExtension>();
@@ -81,11 +81,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     extensionsBlockList = array;
                     continue;
                 }
-                if (property.NameEquals("proxyBypass"))
+                if (property.NameEquals("proxyBypass"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -96,21 +95,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     proxyBypass = array;
                     continue;
                 }
-                if (property.NameEquals("extensionsEnabled"))
+                if (property.NameEquals("extensionsEnabled"u8))
                 {
                     extensionsEnabled = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("guestConfigurationEnabled"))
+                if (property.NameEquals("guestConfigurationEnabled"u8))
                 {
                     guestConfigurationEnabled = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configMode"))
+                if (property.NameEquals("configMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configMode = new AgentConfigurationMode(property.Value.GetString());

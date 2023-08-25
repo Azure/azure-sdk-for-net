@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Training related configuration.
-    /// Serialized Name: TrainingSettings
-    /// </summary>
+    /// <summary> Training related configuration. </summary>
     public partial class MachineLearningTrainingSettings
     {
         /// <summary> Initializes a new instance of MachineLearningTrainingSettings. </summary>
@@ -21,35 +18,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningTrainingSettings. </summary>
-        /// <param name="isDnnTrainingEnabled">
-        /// Enable recommendation of DNN models.
-        /// Serialized Name: TrainingSettings.enableDnnTraining
-        /// </param>
-        /// <param name="isModelExplainabilityEnabled">
-        /// Flag to turn on explainability on best model.
-        /// Serialized Name: TrainingSettings.enableModelExplainability
-        /// </param>
-        /// <param name="isOnnxCompatibleModelsEnabled">
-        /// Flag for enabling onnx compatible models.
-        /// Serialized Name: TrainingSettings.enableOnnxCompatibleModels
-        /// </param>
-        /// <param name="isStackEnsembleEnabled">
-        /// Enable stack ensemble run.
-        /// Serialized Name: TrainingSettings.enableStackEnsemble
-        /// </param>
-        /// <param name="isVoteEnsembleEnabled">
-        /// Enable voting ensemble run.
-        /// Serialized Name: TrainingSettings.enableVoteEnsemble
-        /// </param>
+        /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
+        /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
+        /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>
+        /// <param name="isStackEnsembleEnabled"> Enable stack ensemble run. </param>
+        /// <param name="isVoteEnsembleEnabled"> Enable voting ensemble run. </param>
         /// <param name="ensembleModelDownloadTimeout">
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
-        /// Serialized Name: TrainingSettings.ensembleModelDownloadTimeout
         /// </param>
-        /// <param name="stackEnsembleSettings">
-        /// Stack ensemble settings for stack ensemble run.
-        /// Serialized Name: TrainingSettings.stackEnsembleSettings
-        /// </param>
+        /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
         internal MachineLearningTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings)
         {
             IsDnnTrainingEnabled = isDnnTrainingEnabled;
@@ -61,41 +39,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             StackEnsembleSettings = stackEnsembleSettings;
         }
 
-        /// <summary>
-        /// Enable recommendation of DNN models.
-        /// Serialized Name: TrainingSettings.enableDnnTraining
-        /// </summary>
+        /// <summary> Enable recommendation of DNN models. </summary>
         public bool? IsDnnTrainingEnabled { get; set; }
-        /// <summary>
-        /// Flag to turn on explainability on best model.
-        /// Serialized Name: TrainingSettings.enableModelExplainability
-        /// </summary>
+        /// <summary> Flag to turn on explainability on best model. </summary>
         public bool? IsModelExplainabilityEnabled { get; set; }
-        /// <summary>
-        /// Flag for enabling onnx compatible models.
-        /// Serialized Name: TrainingSettings.enableOnnxCompatibleModels
-        /// </summary>
+        /// <summary> Flag for enabling onnx compatible models. </summary>
         public bool? IsOnnxCompatibleModelsEnabled { get; set; }
-        /// <summary>
-        /// Enable stack ensemble run.
-        /// Serialized Name: TrainingSettings.enableStackEnsemble
-        /// </summary>
+        /// <summary> Enable stack ensemble run. </summary>
         public bool? IsStackEnsembleEnabled { get; set; }
-        /// <summary>
-        /// Enable voting ensemble run.
-        /// Serialized Name: TrainingSettings.enableVoteEnsemble
-        /// </summary>
+        /// <summary> Enable voting ensemble run. </summary>
         public bool? IsVoteEnsembleEnabled { get; set; }
         /// <summary>
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
-        /// Serialized Name: TrainingSettings.ensembleModelDownloadTimeout
         /// </summary>
         public TimeSpan? EnsembleModelDownloadTimeout { get; set; }
-        /// <summary>
-        /// Stack ensemble settings for stack ensemble run.
-        /// Serialized Name: TrainingSettings.stackEnsembleSettings
-        /// </summary>
+        /// <summary> Stack ensemble settings for stack ensemble run. </summary>
         public MachineLearningStackEnsembleSettings StackEnsembleSettings { get; set; }
     }
 }

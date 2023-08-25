@@ -28,7 +28,7 @@
     <ProjectReference Include="@(SampleApplications)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
     <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
-  
+
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
   <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
 
@@ -54,7 +54,7 @@
 
   <Target Name="GenerateTests">
     <MSBuild Projects="@(ProjectReference)"
-             Targets="GenerateTest"
+             Targets="GenerateTests"
              BuildInParallel="$(BuildInParallel)"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />
@@ -79,6 +79,25 @@
             BuildInParallel="$(BuildInParallel)"
             SkipNonexistentProjects="false"
             SkipNonexistentTargets="true" />
+  </Target>
+
+  <Target Name="GetCodeGenProjects">
+    <MSBuild Projects="@(ProjectReference)"
+            Targets="GetCodeGenProjects"
+            BuildInParallel="$(BuildInParallel)"
+            SkipNonexistentProjects="false"
+            SkipNonexistentTargets="true">
+      <Output ItemName="ProjectsToInclude" TaskParameter="TargetOutputs"/>
+    </MSBuild>
+    <RemoveDuplicates Inputs="@(ProjectsToInclude->Replace($(RepoRoot), ''))">
+      <Output TaskParameter="Filtered" ItemName="ProjectsToIncludeFitered"/>
+    </RemoveDuplicates>
+    <Message Text="Write to file $(OutputProjectFilePath)" Importance="high"/>
+    <Message Text="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" Importance="high"/>
+    <ItemGroup>
+      <_WriteToLines Include="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(OutputProjectFilePath)" Lines="@(_WriteToLines)" />
   </Target>
 
   <Target Name="ProjectDependsOn">

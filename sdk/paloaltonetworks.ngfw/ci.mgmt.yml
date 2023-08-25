@@ -1,0 +1,22 @@
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/paloaltonetworks.ngfw/ci.mgmt.yml
+    - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: paloaltonetworks.ngfw
+    BuildSnippets: false
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.PaloAltoNetworks.Ngfw
+      safeName: AzureResourceManagerPaloAltoNetworksNgfw

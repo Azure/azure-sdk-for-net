@@ -39,12 +39,14 @@ namespace Azure.Core.Samples
                     return message.Response;
                 });
         }
-#if SNIPPET
-        // async version omitted for brevity
-    }
-#endif
-        #endregion
 
+#if SNIPPET
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            // async version omitted for brevity
+            throw new NotImplementedException();
+        }
+#else
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await Policy.Handle<IOException>()
@@ -71,5 +73,7 @@ namespace Azure.Core.Samples
                     return message.Response;
                 });
         }
+#endif
     }
+    #endregion
 }

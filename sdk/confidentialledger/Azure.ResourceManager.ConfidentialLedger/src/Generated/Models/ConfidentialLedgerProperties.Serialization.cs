@@ -17,14 +17,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(RunningState))
+            {
+                writer.WritePropertyName("runningState"u8);
+                writer.WriteStringValue(RunningState.Value.ToString());
+            }
             if (Optional.IsDefined(LedgerType))
             {
-                writer.WritePropertyName("ledgerType");
+                writer.WritePropertyName("ledgerType"u8);
                 writer.WriteStringValue(LedgerType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AadBasedSecurityPrincipals))
             {
-                writer.WritePropertyName("aadBasedSecurityPrincipals");
+                writer.WritePropertyName("aadBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();
                 foreach (var item in AadBasedSecurityPrincipals)
                 {
@@ -34,7 +39,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
             if (Optional.IsCollectionDefined(CertBasedSecurityPrincipals))
             {
-                writer.WritePropertyName("certBasedSecurityPrincipals");
+                writer.WritePropertyName("certBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();
                 foreach (var item in CertBasedSecurityPrincipals)
                 {
@@ -47,71 +52,80 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static ConfidentialLedgerProperties DeserializeConfidentialLedgerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ledgerName = default;
             Optional<Uri> ledgerUri = default;
             Optional<Uri> identityServiceUri = default;
             Optional<string> ledgerInternalNamespace = default;
+            Optional<ConfidentialLedgerRunningState> runningState = default;
             Optional<ConfidentialLedgerType> ledgerType = default;
             Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
             Optional<IList<AadBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
             Optional<IList<CertBasedSecurityPrincipal>> certBasedSecurityPrincipals = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ledgerName"))
+                if (property.NameEquals("ledgerName"u8))
                 {
                     ledgerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ledgerUri"))
+                if (property.NameEquals("ledgerUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        ledgerUri = null;
                         continue;
                     }
                     ledgerUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identityServiceUri"))
+                if (property.NameEquals("identityServiceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        identityServiceUri = null;
                         continue;
                     }
                     identityServiceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ledgerInternalNamespace"))
+                if (property.NameEquals("ledgerInternalNamespace"u8))
                 {
                     ledgerInternalNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ledgerType"))
+                if (property.NameEquals("runningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    runningState = new ConfidentialLedgerRunningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("ledgerType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     ledgerType = new ConfidentialLedgerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ConfidentialLedgerProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("aadBasedSecurityPrincipals"))
+                if (property.NameEquals("aadBasedSecurityPrincipals"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AadBasedSecurityPrincipal> array = new List<AadBasedSecurityPrincipal>();
@@ -122,11 +136,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     aadBasedSecurityPrincipals = array;
                     continue;
                 }
-                if (property.NameEquals("certBasedSecurityPrincipals"))
+                if (property.NameEquals("certBasedSecurityPrincipals"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CertBasedSecurityPrincipal> array = new List<CertBasedSecurityPrincipal>();
@@ -138,7 +151,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals));
+            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(runningState), Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals));
         }
     }
 }

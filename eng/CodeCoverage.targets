@@ -94,14 +94,4 @@
   <ItemGroup>
     <SourceRoot Include="$([MSBuild]::EnsureTrailingSlash($(NuGetPackageRoot)))" />
   </ItemGroup>
-
-  <Target Name="CoverletGetPathMap"
-          DependsOnTargets="InitializeSourceRootMappedPaths"
-          Returns="@(_LocalTopLevelSourceRoot)"
-          Condition="'$(DeterministicSourcePaths)' == 'true' and $([MSBuild]::VersionLessThan('$(TargetFrameworkVersion)', '3.1'))">
-    <ItemGroup>
-      <_LocalTopLevelSourceRoot Include="@(SourceRoot)"
-                                Condition="'%(SourceRoot.NestedRoot)' == ''"/>
-    </ItemGroup>
-  </Target>
 </Project>

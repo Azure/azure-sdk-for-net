@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static UpgradeOperationInvoker ToUpgradeOperationInvoker(this string value)
         {
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return UpgradeOperationInvoker.Unknown;
-            if (string.Equals(value, "User", StringComparison.InvariantCultureIgnoreCase)) return UpgradeOperationInvoker.User;
-            if (string.Equals(value, "Platform", StringComparison.InvariantCultureIgnoreCase)) return UpgradeOperationInvoker.Platform;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return UpgradeOperationInvoker.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "User")) return UpgradeOperationInvoker.User;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Platform")) return UpgradeOperationInvoker.Platform;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UpgradeOperationInvoker value.");
         }
     }

@@ -18,42 +18,42 @@ namespace Azure.ResourceManager.TrafficManager.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProfileMonitorStatus))
             {
-                writer.WritePropertyName("profileMonitorStatus");
+                writer.WritePropertyName("profileMonitorStatus"u8);
                 writer.WriteStringValue(ProfileMonitorStatus.Value.ToString());
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
-                writer.WritePropertyName("intervalInSeconds");
+                writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
             if (Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeoutInSeconds");
+                writer.WritePropertyName("timeoutInSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(ToleratedNumberOfFailures))
             {
-                writer.WritePropertyName("toleratedNumberOfFailures");
+                writer.WritePropertyName("toleratedNumberOfFailures"u8);
                 writer.WriteNumberValue(ToleratedNumberOfFailures.Value);
             }
             if (Optional.IsCollectionDefined(CustomHeaders))
             {
-                writer.WritePropertyName("customHeaders");
+                writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomHeaders)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             if (Optional.IsCollectionDefined(ExpectedStatusCodeRanges))
             {
-                writer.WritePropertyName("expectedStatusCodeRanges");
+                writer.WritePropertyName("expectedStatusCodeRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExpectedStatusCodeRanges)
                 {
@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerMonitorConfig DeserializeTrafficManagerMonitorConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TrafficManagerProfileMonitorStatus> profileMonitorStatus = default;
             Optional<TrafficManagerMonitorProtocol> protocol = default;
             Optional<long> port = default;
@@ -87,76 +91,69 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Optional<IList<ExpectedStatusCodeRangeInfo>> expectedStatusCodeRanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profileMonitorStatus"))
+                if (property.NameEquals("profileMonitorStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     profileMonitorStatus = new TrafficManagerProfileMonitorStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new TrafficManagerMonitorProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("intervalInSeconds"))
+                if (property.NameEquals("intervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     intervalInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("timeoutInSeconds"))
+                if (property.NameEquals("timeoutInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeoutInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("toleratedNumberOfFailures"))
+                if (property.NameEquals("toleratedNumberOfFailures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     toleratedNumberOfFailures = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("customHeaders"))
+                if (property.NameEquals("customHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TrafficManagerMonitorConfigCustomHeaderInfo> array = new List<TrafficManagerMonitorConfigCustomHeaderInfo>();
@@ -167,11 +164,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     customHeaders = array;
                     continue;
                 }
-                if (property.NameEquals("expectedStatusCodeRanges"))
+                if (property.NameEquals("expectedStatusCodeRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExpectedStatusCodeRangeInfo> array = new List<ExpectedStatusCodeRangeInfo>();

@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentSelectionMark")]
     public partial class DocumentSelectionMark
     {
         /// <summary>
@@ -42,7 +41,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             get => throw new InvalidOperationException();
             set
             {
-                BoundingPolygon = ClientCommon.CovertToListOfPointF(value);
+                BoundingPolygon = ClientCommon.ConvertToListOfPointF(value);
             }
         }
 

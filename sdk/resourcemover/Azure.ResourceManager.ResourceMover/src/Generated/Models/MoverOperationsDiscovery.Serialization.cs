@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverOperationsDiscovery DeserializeMoverOperationsDiscovery(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> isDataAction = default;
             Optional<MoverDisplayInfo> display = default;
@@ -22,41 +26,38 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDataAction"))
+                if (property.NameEquals("isDataAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDataAction = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("display"))
+                if (property.NameEquals("display"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     display = MoverDisplayInfo.DeserializeMoverDisplayInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("origin"))
+                if (property.NameEquals("origin"u8))
                 {
                     origin = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = BinaryData.FromString(property.Value.GetRawText());

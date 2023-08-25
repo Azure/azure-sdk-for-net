@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary> A class representing the RedisPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the RedisPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class RedisPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of RedisPrivateEndpointConnectionData. </summary>

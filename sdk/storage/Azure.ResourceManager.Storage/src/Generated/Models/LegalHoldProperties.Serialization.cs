@@ -15,26 +15,28 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static LegalHoldProperties DeserializeLegalHoldProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> hasLegalHold = default;
             Optional<IReadOnlyList<LegalHoldTag>> tags = default;
             Optional<ProtectedAppendWritesHistory> protectedAppendWritesHistory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hasLegalHold"))
+                if (property.NameEquals("hasLegalHold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasLegalHold = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LegalHoldTag> array = new List<LegalHoldTag>();
@@ -45,11 +47,10 @@ namespace Azure.ResourceManager.Storage.Models
                     tags = array;
                     continue;
                 }
-                if (property.NameEquals("protectedAppendWritesHistory"))
+                if (property.NameEquals("protectedAppendWritesHistory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value);

@@ -22,54 +22,54 @@ namespace Azure.ResourceManager.Batch
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(VmSize))
             {
-                writer.WritePropertyName("vmSize");
+                writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
             if (Optional.IsDefined(DeploymentConfiguration))
             {
-                writer.WritePropertyName("deploymentConfiguration");
+                writer.WritePropertyName("deploymentConfiguration"u8);
                 writer.WriteObjectValue(DeploymentConfiguration);
             }
             if (Optional.IsDefined(ScaleSettings))
             {
-                writer.WritePropertyName("scaleSettings");
+                writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
             }
             if (Optional.IsDefined(InterNodeCommunication))
             {
-                writer.WritePropertyName("interNodeCommunication");
+                writer.WritePropertyName("interNodeCommunication"u8);
                 writer.WriteStringValue(InterNodeCommunication.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkConfiguration))
             {
-                writer.WritePropertyName("networkConfiguration");
+                writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
             if (Optional.IsDefined(TaskSlotsPerNode))
             {
-                writer.WritePropertyName("taskSlotsPerNode");
+                writer.WritePropertyName("taskSlotsPerNode"u8);
                 writer.WriteNumberValue(TaskSlotsPerNode.Value);
             }
             if (Optional.IsDefined(TaskSchedulingPolicy))
             {
-                writer.WritePropertyName("taskSchedulingPolicy");
+                writer.WritePropertyName("taskSchedulingPolicy"u8);
                 writer.WriteObjectValue(TaskSchedulingPolicy);
             }
             if (Optional.IsCollectionDefined(UserAccounts))
             {
-                writer.WritePropertyName("userAccounts");
+                writer.WritePropertyName("userAccounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserAccounts)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Batch
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Batch
             }
             if (Optional.IsDefined(StartTask))
             {
-                writer.WritePropertyName("startTask");
+                writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask);
             }
             if (Optional.IsCollectionDefined(Certificates))
             {
-                writer.WritePropertyName("certificates");
+                writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch
             }
             if (Optional.IsCollectionDefined(ApplicationPackages))
             {
-                writer.WritePropertyName("applicationPackages");
+                writer.WritePropertyName("applicationPackages"u8);
                 writer.WriteStartArray();
                 foreach (var item in ApplicationPackages)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Batch
             }
             if (Optional.IsCollectionDefined(ApplicationLicenses))
             {
-                writer.WritePropertyName("applicationLicenses");
+                writer.WritePropertyName("applicationLicenses"u8);
                 writer.WriteStartArray();
                 foreach (var item in ApplicationLicenses)
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Batch
             }
             if (Optional.IsCollectionDefined(MountConfiguration))
             {
-                writer.WritePropertyName("mountConfiguration");
+                writer.WritePropertyName("mountConfiguration"u8);
                 writer.WriteStartArray();
                 foreach (var item in MountConfiguration)
                 {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch
             }
             if (Optional.IsDefined(TargetNodeCommunicationMode))
             {
-                writer.WritePropertyName("targetNodeCommunicationMode");
+                writer.WritePropertyName("targetNodeCommunicationMode"u8);
                 writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -143,6 +143,10 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchAccountPoolData DeserializeBatchAccountPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -178,52 +182,49 @@ namespace Azure.ResourceManager.Batch
             Optional<NodeCommunicationMode?> currentNodeCommunicationMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -232,171 +233,155 @@ namespace Azure.ResourceManager.Batch
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastModified"))
+                        if (property0.NameEquals("lastModified"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModified = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"))
+                        if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new BatchAccountPoolProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningStateTransitionTime"))
+                        if (property0.NameEquals("provisioningStateTransitionTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningStateTransitionTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("allocationState"))
+                        if (property0.NameEquals("allocationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allocationState = property0.Value.GetString().ToBatchAccountPoolAllocationState();
                             continue;
                         }
-                        if (property0.NameEquals("allocationStateTransitionTime"))
+                        if (property0.NameEquals("allocationStateTransitionTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allocationStateTransitionTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("vmSize"))
+                        if (property0.NameEquals("vmSize"u8))
                         {
                             vmSize = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deploymentConfiguration"))
+                        if (property0.NameEquals("deploymentConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("currentDedicatedNodes"))
+                        if (property0.NameEquals("currentDedicatedNodes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentDedicatedNodes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("currentLowPriorityNodes"))
+                        if (property0.NameEquals("currentLowPriorityNodes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentLowPriorityNodes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("scaleSettings"))
+                        if (property0.NameEquals("scaleSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scaleSettings = BatchAccountPoolScaleSettings.DeserializeBatchAccountPoolScaleSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("autoScaleRun"))
+                        if (property0.NameEquals("autoScaleRun"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoScaleRun = BatchAccountPoolAutoScaleRun.DeserializeBatchAccountPoolAutoScaleRun(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("interNodeCommunication"))
+                        if (property0.NameEquals("interNodeCommunication"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             interNodeCommunication = property0.Value.GetString().ToInterNodeCommunicationState();
                             continue;
                         }
-                        if (property0.NameEquals("networkConfiguration"))
+                        if (property0.NameEquals("networkConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkConfiguration = BatchNetworkConfiguration.DeserializeBatchNetworkConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("taskSlotsPerNode"))
+                        if (property0.NameEquals("taskSlotsPerNode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             taskSlotsPerNode = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("taskSchedulingPolicy"))
+                        if (property0.NameEquals("taskSchedulingPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             taskSchedulingPolicy = TaskSchedulingPolicy.DeserializeTaskSchedulingPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("userAccounts"))
+                        if (property0.NameEquals("userAccounts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BatchUserAccount> array = new List<BatchUserAccount>();
@@ -407,11 +392,10 @@ namespace Azure.ResourceManager.Batch
                             userAccounts = array;
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BatchAccountPoolMetadataItem> array = new List<BatchAccountPoolMetadataItem>();
@@ -422,21 +406,19 @@ namespace Azure.ResourceManager.Batch
                             metadata = array;
                             continue;
                         }
-                        if (property0.NameEquals("startTask"))
+                        if (property0.NameEquals("startTask"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTask = BatchAccountPoolStartTask.DeserializeBatchAccountPoolStartTask(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("certificates"))
+                        if (property0.NameEquals("certificates"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BatchCertificateReference> array = new List<BatchCertificateReference>();
@@ -447,11 +429,10 @@ namespace Azure.ResourceManager.Batch
                             certificates = array;
                             continue;
                         }
-                        if (property0.NameEquals("applicationPackages"))
+                        if (property0.NameEquals("applicationPackages"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BatchApplicationPackageReference> array = new List<BatchApplicationPackageReference>();
@@ -462,11 +443,10 @@ namespace Azure.ResourceManager.Batch
                             applicationPackages = array;
                             continue;
                         }
-                        if (property0.NameEquals("applicationLicenses"))
+                        if (property0.NameEquals("applicationLicenses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -477,21 +457,19 @@ namespace Azure.ResourceManager.Batch
                             applicationLicenses = array;
                             continue;
                         }
-                        if (property0.NameEquals("resizeOperationStatus"))
+                        if (property0.NameEquals("resizeOperationStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resizeOperationStatus = BatchResizeOperationStatus.DeserializeBatchResizeOperationStatus(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("mountConfiguration"))
+                        if (property0.NameEquals("mountConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BatchMountConfiguration> array = new List<BatchMountConfiguration>();
@@ -502,17 +480,16 @@ namespace Azure.ResourceManager.Batch
                             mountConfiguration = array;
                             continue;
                         }
-                        if (property0.NameEquals("targetNodeCommunicationMode"))
+                        if (property0.NameEquals("targetNodeCommunicationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetNodeCommunicationMode = property0.Value.GetString().ToNodeCommunicationMode();
                             continue;
                         }
-                        if (property0.NameEquals("currentNodeCommunicationMode"))
+                        if (property0.NameEquals("currentNodeCommunicationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

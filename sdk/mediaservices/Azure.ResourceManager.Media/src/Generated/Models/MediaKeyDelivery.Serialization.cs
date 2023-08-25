@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AccessControl))
             {
-                writer.WritePropertyName("accessControl");
+                writer.WritePropertyName("accessControl"u8);
                 writer.WriteObjectValue(AccessControl);
             }
             writer.WriteEndObject();
@@ -25,14 +25,17 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaKeyDelivery DeserializeMediaKeyDelivery(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaAccessControl> accessControl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessControl"))
+                if (property.NameEquals("accessControl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accessControl = MediaAccessControl.DeserializeMediaAccessControl(property.Value);

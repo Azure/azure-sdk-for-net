@@ -17,22 +17,22 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConditionOperator))
             {
-                writer.WritePropertyName("conditionOperator");
+                writer.WritePropertyName("conditionOperator"u8);
                 writer.WriteStringValue(ConditionOperator.Value.ToString());
             }
             if (Optional.IsDefined(SmartDetectionCondition))
             {
-                writer.WritePropertyName("smartDetectionCondition");
+                writer.WritePropertyName("smartDetectionCondition"u8);
                 writer.WriteObjectValue(SmartDetectionCondition);
             }
             if (Optional.IsDefined(HardThresholdCondition))
             {
-                writer.WritePropertyName("hardThresholdCondition");
+                writer.WritePropertyName("hardThresholdCondition"u8);
                 writer.WriteObjectValue(HardThresholdCondition);
             }
             if (Optional.IsDefined(ChangeThresholdCondition))
             {
-                writer.WritePropertyName("changeThresholdCondition");
+                writer.WritePropertyName("changeThresholdCondition"u8);
                 writer.WriteObjectValue(ChangeThresholdCondition);
             }
             writer.WriteEndObject();
@@ -40,47 +40,47 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricWholeSeriesDetectionCondition DeserializeMetricWholeSeriesDetectionCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectionConditionOperator> conditionOperator = default;
             Optional<SmartDetectionCondition> smartDetectionCondition = default;
             Optional<HardThresholdCondition> hardThresholdCondition = default;
             Optional<ChangeThresholdCondition> changeThresholdCondition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("conditionOperator"))
+                if (property.NameEquals("conditionOperator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     conditionOperator = new DetectionConditionOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("smartDetectionCondition"))
+                if (property.NameEquals("smartDetectionCondition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     smartDetectionCondition = Models.SmartDetectionCondition.DeserializeSmartDetectionCondition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("hardThresholdCondition"))
+                if (property.NameEquals("hardThresholdCondition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hardThresholdCondition = Models.HardThresholdCondition.DeserializeHardThresholdCondition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("changeThresholdCondition"))
+                if (property.NameEquals("changeThresholdCondition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     changeThresholdCondition = Models.ChangeThresholdCondition.DeserializeChangeThresholdCondition(property.Value);

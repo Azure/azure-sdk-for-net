@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionReservationTransaction DeserializeConsumptionReservationTransaction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -47,11 +51,10 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<decimal> overage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -62,32 +65,31 @@ namespace Azure.ResourceManager.Consumption.Models
                     tags = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,151 +98,144 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("eventDate"))
+                        if (property0.NameEquals("eventDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("reservationOrderId"))
+                        if (property0.NameEquals("reservationOrderId"u8))
                         {
                             reservationOrderId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("eventType"))
+                        if (property0.NameEquals("eventType"u8))
                         {
                             eventType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("quantity"))
+                        if (property0.NameEquals("quantity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             quantity = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("amount"))
+                        if (property0.NameEquals("amount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             amount = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("currency"))
+                        if (property0.NameEquals("currency"u8))
                         {
                             currency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reservationOrderName"))
+                        if (property0.NameEquals("reservationOrderName"u8))
                         {
                             reservationOrderName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("purchasingEnrollment"))
+                        if (property0.NameEquals("purchasingEnrollment"u8))
                         {
                             purchasingEnrollment = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("purchasingSubscriptionGuid"))
+                        if (property0.NameEquals("purchasingSubscriptionGuid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purchasingSubscriptionGuid = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("purchasingSubscriptionName"))
+                        if (property0.NameEquals("purchasingSubscriptionName"u8))
                         {
                             purchasingSubscriptionName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("armSkuName"))
+                        if (property0.NameEquals("armSkuName"u8))
                         {
                             armSkuName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("term"))
+                        if (property0.NameEquals("term"u8))
                         {
                             term = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("region"))
+                        if (property0.NameEquals("region"u8))
                         {
                             region = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("accountName"))
+                        if (property0.NameEquals("accountName"u8))
                         {
                             accountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("accountOwnerEmail"))
+                        if (property0.NameEquals("accountOwnerEmail"u8))
                         {
                             accountOwnerEmail = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("departmentName"))
+                        if (property0.NameEquals("departmentName"u8))
                         {
                             departmentName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("costCenter"))
+                        if (property0.NameEquals("costCenter"u8))
                         {
                             costCenter = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("currentEnrollment"))
+                        if (property0.NameEquals("currentEnrollment"u8))
                         {
                             currentEnrollment = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingFrequency"))
+                        if (property0.NameEquals("billingFrequency"u8))
                         {
                             billingFrequency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingMonth"))
+                        if (property0.NameEquals("billingMonth"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingMonth = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("monetaryCommitment"))
+                        if (property0.NameEquals("monetaryCommitment"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             monetaryCommitment = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("overage"))
+                        if (property0.NameEquals("overage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             overage = property0.Value.GetDecimal();

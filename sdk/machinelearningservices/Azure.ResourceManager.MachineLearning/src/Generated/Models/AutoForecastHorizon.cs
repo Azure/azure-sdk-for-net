@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Forecast horizon determined automatically by system.
-    /// Serialized Name: AutoForecastHorizon
-    /// </summary>
+    /// <summary> Forecast horizon determined automatically by system. </summary>
     public partial class AutoForecastHorizon : ForecastHorizon
     {
         /// <summary> Initializes a new instance of AutoForecastHorizon. </summary>
@@ -20,10 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AutoForecastHorizon. </summary>
-        /// <param name="mode">
-        /// [Required] Set forecast horizon value selection mode.
-        /// Serialized Name: ForecastHorizon.mode
-        /// </param>
+        /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
         internal AutoForecastHorizon(ForecastHorizonMode mode) : base(mode)
         {
             Mode = mode;

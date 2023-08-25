@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SynchronizationMode))
             {
-                writer.WritePropertyName("synchronizationMode");
+                writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
             }
             writer.WriteEndObject();

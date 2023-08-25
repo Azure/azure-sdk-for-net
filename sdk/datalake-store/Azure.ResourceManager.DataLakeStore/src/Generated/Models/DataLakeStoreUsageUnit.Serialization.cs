@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         public static DataLakeStoreUsageUnit ToDataLakeStoreUsageUnit(this string value)
         {
-            if (string.Equals(value, "Count", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreUsageUnit.Count;
-            if (string.Equals(value, "Bytes", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreUsageUnit.Bytes;
-            if (string.Equals(value, "Seconds", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreUsageUnit.Seconds;
-            if (string.Equals(value, "Percent", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreUsageUnit.Percent;
-            if (string.Equals(value, "CountsPerSecond", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreUsageUnit.CountsPerSecond;
-            if (string.Equals(value, "BytesPerSecond", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreUsageUnit.BytesPerSecond;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count")) return DataLakeStoreUsageUnit.Count;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Bytes")) return DataLakeStoreUsageUnit.Bytes;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Seconds")) return DataLakeStoreUsageUnit.Seconds;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Percent")) return DataLakeStoreUsageUnit.Percent;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CountsPerSecond")) return DataLakeStoreUsageUnit.CountsPerSecond;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BytesPerSecond")) return DataLakeStoreUsageUnit.BytesPerSecond;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeStoreUsageUnit value.");
         }
     }

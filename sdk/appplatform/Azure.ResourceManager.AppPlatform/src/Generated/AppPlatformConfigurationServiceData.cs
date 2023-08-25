@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformConfigurationService data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformConfigurationService data model.
+    /// Application Configuration Service resource
+    /// </summary>
     public partial class AppPlatformConfigurationServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformConfigurationServiceData. </summary>

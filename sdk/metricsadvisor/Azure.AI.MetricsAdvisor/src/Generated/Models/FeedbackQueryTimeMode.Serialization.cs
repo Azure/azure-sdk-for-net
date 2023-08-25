@@ -11,11 +11,10 @@ namespace Azure.AI.MetricsAdvisor
 {
     internal static partial class FeedbackQueryTimeModeExtensions
     {
-
         public static FeedbackQueryTimeMode ToFeedbackQueryTimeMode(this string value)
         {
-            if (string.Equals(value, "MetricTimestamp", StringComparison.InvariantCultureIgnoreCase)) return FeedbackQueryTimeMode.MetricTimestamp;
-            if (string.Equals(value, "FeedbackCreatedTime", StringComparison.InvariantCultureIgnoreCase)) return FeedbackQueryTimeMode.FeedbackCreatedOn;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MetricTimestamp")) return FeedbackQueryTimeMode.MetricTimestamp;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FeedbackCreatedTime")) return FeedbackQueryTimeMode.FeedbackCreatedOn;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FeedbackQueryTimeMode value.");
         }
     }

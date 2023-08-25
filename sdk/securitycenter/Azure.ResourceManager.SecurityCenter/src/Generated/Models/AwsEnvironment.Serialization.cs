@@ -17,31 +17,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OrganizationalData))
             {
-                writer.WritePropertyName("organizationalData");
+                writer.WritePropertyName("organizationalData"u8);
                 writer.WriteObjectValue(OrganizationalData);
             }
-            writer.WritePropertyName("environmentType");
+            writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AwsEnvironment DeserializeAwsEnvironment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AwsOrganizationalInfo> organizationalData = default;
             EnvironmentType environmentType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("organizationalData"))
+                if (property.NameEquals("organizationalData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("environmentType"))
+                if (property.NameEquals("environmentType"u8))
                 {
                     environmentType = new EnvironmentType(property.Value.GetString());
                     continue;

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Exchange))
             {
-                writer.WritePropertyName("exchange");
+                writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
             if (Optional.IsDefined(SharePoint))
             {
-                writer.WritePropertyName("sharePoint");
+                writer.WritePropertyName("sharePoint"u8);
                 writer.WriteObjectValue(SharePoint);
             }
             if (Optional.IsDefined(Teams))
             {
-                writer.WritePropertyName("teams");
+                writer.WritePropertyName("teams"u8);
                 writer.WriteObjectValue(Teams);
             }
             writer.WriteEndObject();
@@ -35,36 +35,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsOfficeDataConnectorDataTypes DeserializeSecurityInsightsOfficeDataConnectorDataTypes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OfficeDataConnectorDataTypesExchange> exchange = default;
             Optional<OfficeDataConnectorDataTypesSharePoint> sharePoint = default;
             Optional<OfficeDataConnectorDataTypesTeams> teams = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exchange"))
+                if (property.NameEquals("exchange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     exchange = OfficeDataConnectorDataTypesExchange.DeserializeOfficeDataConnectorDataTypesExchange(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sharePoint"))
+                if (property.NameEquals("sharePoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sharePoint = OfficeDataConnectorDataTypesSharePoint.DeserializeOfficeDataConnectorDataTypesSharePoint(property.Value);
                     continue;
                 }
-                if (property.NameEquals("teams"))
+                if (property.NameEquals("teams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     teams = OfficeDataConnectorDataTypesTeams.DeserializeOfficeDataConnectorDataTypesTeams(property.Value);

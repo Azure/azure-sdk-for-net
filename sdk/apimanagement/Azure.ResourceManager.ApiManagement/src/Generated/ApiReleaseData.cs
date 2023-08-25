@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiRelease data model. </summary>
+    /// <summary>
+    /// A class representing the ApiRelease data model.
+    /// ApiRelease details.
+    /// </summary>
     public partial class ApiReleaseData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiReleaseData. </summary>

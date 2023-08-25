@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.ComponentModel;
 using System.Text.Json;
 using System.Threading;
 using Azure.Core;
@@ -76,7 +76,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets the digital thumbprint of the certificate which can be used to uniquely identify it.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public byte[] X509Thumbprint { get; internal set; }
+
+        /// <summary>
+        /// Gets the digital thumbprint of the certificate as a hexadecimal string which can be used to uniquely identify it.
+        /// </summary>
+        public string X509ThumbprintString => X509Thumbprint.ToHexString();
 
         /// <summary>
         /// Gets the tags applied to the certificate.

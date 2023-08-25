@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the ScriptExecution data model. </summary>
+    /// <summary>
+    /// A class representing the ScriptExecution data model.
+    /// An instance of a script executed by a user - custom or AVS
+    /// </summary>
     public partial class ScriptExecutionData : ResourceData
     {
         /// <summary> Initializes a new instance of ScriptExecutionData. </summary>

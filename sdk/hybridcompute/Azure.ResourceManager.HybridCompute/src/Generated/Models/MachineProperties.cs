@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="osName"> The Operating System running on the hybrid machine. </param>
         /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
         /// <param name="osType"> The type of Operating System (windows/linux). </param>
-        /// <param name="vmUuid"> Specifies the Arc Machine&apos;s unique SMBIOS ID. </param>
+        /// <param name="vmUuid"> Specifies the Arc Machine's unique SMBIOS ID. </param>
         /// <param name="osSku"> Specifies the Operating System product SKU. </param>
         /// <param name="domainName"> Specifies the Windows domain name. </param>
         /// <param name="adFqdn"> Specifies the AD fully qualified display name. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public string OSVersion { get; }
         /// <summary> The type of Operating System (windows/linux). </summary>
         public string OSType { get; set; }
-        /// <summary> Specifies the Arc Machine&apos;s unique SMBIOS ID. </summary>
+        /// <summary> Specifies the Arc Machine's unique SMBIOS ID. </summary>
         public string VmUuid { get; }
         /// <summary> Specifies the Operating System product SKU. </summary>
         public string OSSku { get; }

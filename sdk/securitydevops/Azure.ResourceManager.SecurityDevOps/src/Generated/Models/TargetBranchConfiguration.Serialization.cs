@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Names))
             {
-                writer.WritePropertyName("names");
+                writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
                 foreach (var item in Names)
                 {
@@ -31,14 +31,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static TargetBranchConfiguration DeserializeTargetBranchConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> names = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("names"))
+                if (property.NameEquals("names"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static WhatIfPropertyChangeType ToWhatIfPropertyChangeType(this string value)
         {
-            if (string.Equals(value, "Create", StringComparison.InvariantCultureIgnoreCase)) return WhatIfPropertyChangeType.Create;
-            if (string.Equals(value, "Delete", StringComparison.InvariantCultureIgnoreCase)) return WhatIfPropertyChangeType.Delete;
-            if (string.Equals(value, "Modify", StringComparison.InvariantCultureIgnoreCase)) return WhatIfPropertyChangeType.Modify;
-            if (string.Equals(value, "Array", StringComparison.InvariantCultureIgnoreCase)) return WhatIfPropertyChangeType.Array;
-            if (string.Equals(value, "NoEffect", StringComparison.InvariantCultureIgnoreCase)) return WhatIfPropertyChangeType.NoEffect;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Create")) return WhatIfPropertyChangeType.Create;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete")) return WhatIfPropertyChangeType.Delete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Modify")) return WhatIfPropertyChangeType.Modify;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Array")) return WhatIfPropertyChangeType.Array;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoEffect")) return WhatIfPropertyChangeType.NoEffect;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WhatIfPropertyChangeType value.");
         }
     }

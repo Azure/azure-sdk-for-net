@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageAccountEndpoints DeserializeStorageAccountEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> blob = default;
             Optional<Uri> queue = default;
             Optional<Uri> table = default;
@@ -25,81 +29,73 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<StorageAccountInternetEndpoints> internetEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blob"))
+                if (property.NameEquals("blob"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blob = null;
                         continue;
                     }
                     blob = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queue"))
+                if (property.NameEquals("queue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        queue = null;
                         continue;
                     }
                     queue = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("table"))
+                if (property.NameEquals("table"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        table = null;
                         continue;
                     }
                     table = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("file"))
+                if (property.NameEquals("file"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        file = null;
                         continue;
                     }
                     file = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("web"))
+                if (property.NameEquals("web"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        web = null;
                         continue;
                     }
                     web = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dfs"))
+                if (property.NameEquals("dfs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dfs = null;
                         continue;
                     }
                     dfs = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("microsoftEndpoints"))
+                if (property.NameEquals("microsoftEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     microsoftEndpoints = StorageAccountMicrosoftEndpoints.DeserializeStorageAccountMicrosoftEndpoints(property.Value);
                     continue;
                 }
-                if (property.NameEquals("internetEndpoints"))
+                if (property.NameEquals("internetEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     internetEndpoints = StorageAccountInternetEndpoints.DeserializeStorageAccountInternetEndpoints(property.Value);

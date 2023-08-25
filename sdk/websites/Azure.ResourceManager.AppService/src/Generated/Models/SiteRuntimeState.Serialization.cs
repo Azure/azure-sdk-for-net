@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static SiteRuntimeState ToSiteRuntimeState(this string value)
         {
-            if (string.Equals(value, "UNKNOWN", StringComparison.InvariantCultureIgnoreCase)) return SiteRuntimeState.Unknown;
-            if (string.Equals(value, "READY", StringComparison.InvariantCultureIgnoreCase)) return SiteRuntimeState.Ready;
-            if (string.Equals(value, "STOPPED", StringComparison.InvariantCultureIgnoreCase)) return SiteRuntimeState.Stopped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UNKNOWN")) return SiteRuntimeState.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "READY")) return SiteRuntimeState.Ready;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "STOPPED")) return SiteRuntimeState.Stopped;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteRuntimeState value.");
         }
     }

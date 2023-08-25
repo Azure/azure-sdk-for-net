@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static ShareFileRangeWriteType ToShareFileRangeWriteType(this string value)
         {
-            if (string.Equals(value, "update", StringComparison.InvariantCultureIgnoreCase)) return ShareFileRangeWriteType.Update;
-            if (string.Equals(value, "clear", StringComparison.InvariantCultureIgnoreCase)) return ShareFileRangeWriteType.Clear;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "update")) return ShareFileRangeWriteType.Update;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "clear")) return ShareFileRangeWriteType.Clear;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareFileRangeWriteType value.");
         }
     }

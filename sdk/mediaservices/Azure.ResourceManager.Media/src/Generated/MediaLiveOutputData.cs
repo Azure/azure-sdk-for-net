@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaLiveOutput data model. </summary>
+    /// <summary>
+    /// A class representing the MediaLiveOutput data model.
+    /// The Live Output.
+    /// </summary>
     public partial class MediaLiveOutputData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaLiveOutputData. </summary>
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="description"> The description of the live output. </param>
         /// <param name="assetName"> The asset that the live output will write to. </param>
         /// <param name="archiveWindowLength"> ISO 8601 time between 1 minute to 25 hours to indicate the maximum content length that can be archived in the asset for this live output. This also sets the maximum content length for the rewind window. For example, use PT1H30M to indicate 1 hour and 30 minutes of archive window. </param>
-        /// <param name="rewindWindowLength"> ISO 8601 time between 1 minute to the duration of archiveWindowLength to control seek-able window length during Live. The service won&apos;t use this property once LiveOutput stops. The archived VOD will have full content with original ArchiveWindowLength. For example, use PT1H30M to indicate 1 hour and 30 minutes of rewind window length. Service will use implicit default value 30m only if Live Event enables LL. </param>
+        /// <param name="rewindWindowLength"> ISO 8601 time between 1 minute to the duration of archiveWindowLength to control seek-able window length during Live. The service won't use this property once LiveOutput stops. The archived VOD will have full content with original ArchiveWindowLength. For example, use PT1H30M to indicate 1 hour and 30 minutes of rewind window length. Service will use implicit default value 30m only if Live Event enables LL. </param>
         /// <param name="manifestName"> The manifest file name. If not provided, the service will generate one automatically. </param>
         /// <param name="hls"> HTTP Live Streaming (HLS) packing setting for the live output. </param>
         /// <param name="outputSnapTime"> The initial timestamp that the live output will start at, any content before this value will not be archived. </param>
@@ -57,7 +60,7 @@ namespace Azure.ResourceManager.Media
         public string AssetName { get; set; }
         /// <summary> ISO 8601 time between 1 minute to 25 hours to indicate the maximum content length that can be archived in the asset for this live output. This also sets the maximum content length for the rewind window. For example, use PT1H30M to indicate 1 hour and 30 minutes of archive window. </summary>
         public TimeSpan? ArchiveWindowLength { get; set; }
-        /// <summary> ISO 8601 time between 1 minute to the duration of archiveWindowLength to control seek-able window length during Live. The service won&apos;t use this property once LiveOutput stops. The archived VOD will have full content with original ArchiveWindowLength. For example, use PT1H30M to indicate 1 hour and 30 minutes of rewind window length. Service will use implicit default value 30m only if Live Event enables LL. </summary>
+        /// <summary> ISO 8601 time between 1 minute to the duration of archiveWindowLength to control seek-able window length during Live. The service won't use this property once LiveOutput stops. The archived VOD will have full content with original ArchiveWindowLength. For example, use PT1H30M to indicate 1 hour and 30 minutes of rewind window length. Service will use implicit default value 30m only if Live Event enables LL. </summary>
         public TimeSpan? RewindWindowLength { get; set; }
         /// <summary> The manifest file name. If not provided, the service will generate one automatically. </summary>
         public string ManifestName { get; set; }

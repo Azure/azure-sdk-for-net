@@ -554,6 +554,24 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task CreateAsync_PublicAccess_None()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            await container.CreateAsync(publicAccessType: PublicAccessType.None);
+
+            // Assert
+            Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
+            Assert.AreEqual(PublicAccessType.None, response.Value.PublicAccess);
+
+            // Cleanup
+            await container.DeleteIfExistsAsync();
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_Error()
         {
             // Arrange

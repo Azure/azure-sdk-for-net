@@ -14,25 +14,27 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteMatrixSummary DeserializeRouteMatrixSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> successfulRoutes = default;
             Optional<int> totalRoutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("successfulRoutes"))
+                if (property.NameEquals("successfulRoutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     successfulRoutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalRoutes"))
+                if (property.NameEquals("totalRoutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalRoutes = property.Value.GetInt32();

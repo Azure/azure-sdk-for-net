@@ -15,11 +15,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dimensionName");
+            writer.WritePropertyName("dimensionName"u8);
             writer.WriteStringValue(DimensionName);
             if (Optional.IsDefined(DimensionValueFilter))
             {
-                writer.WritePropertyName("dimensionValueFilter");
+                writer.WritePropertyName("dimensionValueFilter"u8);
                 writer.WriteStringValue(DimensionValueFilter);
             }
             writer.WriteEndObject();

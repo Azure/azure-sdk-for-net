@@ -89,10 +89,15 @@ namespace Compute.Tests
         }
 
         protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView, bool hasManagedDisks = false,
-            string dedicatedHostReferenceId = null)
+            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null, string expectedHyperVGeneration = null, string dedicatedHostReferenceId = null)
         {
             Assert.NotNull(vmScaleSetVMInstanceView);
             Assert.Contains(vmScaleSetVMInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
+
+            Assert.Equal(expectedComputerName, vmScaleSetVMInstanceView.ComputerName, StringComparer.OrdinalIgnoreCase);
+            Assert.Equal(expectedOSName, vmScaleSetVMInstanceView.OsName, StringComparer.OrdinalIgnoreCase);
+            Assert.Equal(expectedOSVersion, vmScaleSetVMInstanceView.OsVersion, StringComparer.OrdinalIgnoreCase);
+            Assert.Equal(expectedHyperVGeneration, vmScaleSetVMInstanceView.HyperVGeneration, StringComparer.OrdinalIgnoreCase);
 
             if (!hasManagedDisks)
             {

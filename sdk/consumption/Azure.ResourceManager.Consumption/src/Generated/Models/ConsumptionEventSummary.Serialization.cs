@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag");
+                writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EventType))
             {
-                writer.WritePropertyName("eventType");
+                writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionEventSummary DeserializeConsumptionEventSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -65,42 +69,40 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,191 +111,175 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("transactionDate"))
+                        if (property0.NameEquals("transactionDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             transactionDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("newCredit"))
+                        if (property0.NameEquals("newCredit"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             newCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("adjustments"))
+                        if (property0.NameEquals("adjustments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             adjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("creditExpired"))
+                        if (property0.NameEquals("creditExpired"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creditExpired = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("charges"))
+                        if (property0.NameEquals("charges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             charges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("closedBalance"))
+                        if (property0.NameEquals("closedBalance"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("eventType"))
+                        if (property0.NameEquals("eventType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventType = new ConsumptionEventType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("invoiceNumber"))
+                        if (property0.NameEquals("invoiceNumber"u8))
                         {
                             invoiceNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingProfileId"))
+                        if (property0.NameEquals("billingProfileId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingProfileId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("billingProfileDisplayName"))
+                        if (property0.NameEquals("billingProfileDisplayName"u8))
                         {
                             billingProfileDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lotId"))
+                        if (property0.NameEquals("lotId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lotId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("lotSource"))
+                        if (property0.NameEquals("lotSource"u8))
                         {
                             lotSource = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("canceledCredit"))
+                        if (property0.NameEquals("canceledCredit"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             canceledCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("creditCurrency"))
+                        if (property0.NameEquals("creditCurrency"u8))
                         {
                             creditCurrency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingCurrency"))
+                        if (property0.NameEquals("billingCurrency"u8))
                         {
                             billingCurrency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reseller"))
+                        if (property0.NameEquals("reseller"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("creditExpiredInBillingCurrency"))
+                        if (property0.NameEquals("creditExpiredInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creditExpiredInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("newCreditInBillingCurrency"))
+                        if (property0.NameEquals("newCreditInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             newCreditInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("adjustmentsInBillingCurrency"))
+                        if (property0.NameEquals("adjustmentsInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             adjustmentsInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("chargesInBillingCurrency"))
+                        if (property0.NameEquals("chargesInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             chargesInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("closedBalanceInBillingCurrency"))
+                        if (property0.NameEquals("closedBalanceInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);

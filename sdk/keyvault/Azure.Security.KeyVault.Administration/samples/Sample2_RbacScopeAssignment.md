@@ -14,7 +14,7 @@ You can also get the object Id for your currently signed in account by running t
 az ad signed-in-user show --query objectId
 ```
 
-A role definition Id can be obtained from the `Id` property of one of the role definitions returned from `GetRoleAssignments`.
+A role definition Id can be obtained from the `Id` property of one of the role definitions returned from `GetRoleDefinitions`.
 
 ```C# Snippet:CreateRoleAssignmentKeysScope
 string definitionIdToAssign = "<roleDefinitionId>";

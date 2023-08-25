@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Secrets))
             {
-                writer.WritePropertyName("secrets");
+                writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(ActiveRevisionsMode))
             {
-                writer.WritePropertyName("activeRevisionsMode");
+                writer.WritePropertyName("activeRevisionsMode"u8);
                 writer.WriteStringValue(ActiveRevisionsMode.Value.ToString());
             }
             if (Optional.IsDefined(Ingress))
             {
-                writer.WritePropertyName("ingress");
+                writer.WritePropertyName("ingress"u8);
                 writer.WriteObjectValue(Ingress);
             }
             if (Optional.IsCollectionDefined(Registries))
             {
-                writer.WritePropertyName("registries");
+                writer.WritePropertyName("registries"u8);
                 writer.WriteStartArray();
                 foreach (var item in Registries)
                 {
@@ -48,32 +48,41 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(Dapr))
             {
-                writer.WritePropertyName("dapr");
+                writer.WritePropertyName("dapr"u8);
                 writer.WriteObjectValue(Dapr);
             }
             if (Optional.IsDefined(MaxInactiveRevisions))
             {
-                writer.WritePropertyName("maxInactiveRevisions");
+                writer.WritePropertyName("maxInactiveRevisions"u8);
                 writer.WriteNumberValue(MaxInactiveRevisions.Value);
+            }
+            if (Optional.IsDefined(Service))
+            {
+                writer.WritePropertyName("service"u8);
+                writer.WriteObjectValue(Service);
             }
             writer.WriteEndObject();
         }
 
         internal static ContainerAppConfiguration DeserializeContainerAppConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ContainerAppWritableSecret>> secrets = default;
             Optional<ContainerAppActiveRevisionsMode> activeRevisionsMode = default;
             Optional<ContainerAppIngressConfiguration> ingress = default;
             Optional<IList<ContainerAppRegistryCredentials>> registries = default;
             Optional<ContainerAppDaprConfiguration> dapr = default;
             Optional<int> maxInactiveRevisions = default;
+            Optional<Service> service = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secrets"))
+                if (property.NameEquals("secrets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppWritableSecret> array = new List<ContainerAppWritableSecret>();
@@ -84,31 +93,28 @@ namespace Azure.ResourceManager.AppContainers.Models
                     secrets = array;
                     continue;
                 }
-                if (property.NameEquals("activeRevisionsMode"))
+                if (property.NameEquals("activeRevisionsMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activeRevisionsMode = new ContainerAppActiveRevisionsMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ingress"))
+                if (property.NameEquals("ingress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingress = ContainerAppIngressConfiguration.DeserializeContainerAppIngressConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("registries"))
+                if (property.NameEquals("registries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppRegistryCredentials> array = new List<ContainerAppRegistryCredentials>();
@@ -119,28 +125,35 @@ namespace Azure.ResourceManager.AppContainers.Models
                     registries = array;
                     continue;
                 }
-                if (property.NameEquals("dapr"))
+                if (property.NameEquals("dapr"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dapr = ContainerAppDaprConfiguration.DeserializeContainerAppDaprConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("maxInactiveRevisions"))
+                if (property.NameEquals("maxInactiveRevisions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxInactiveRevisions = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("service"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    service = Service.DeserializeService(property.Value);
+                    continue;
+                }
             }
-            return new ContainerAppConfiguration(Optional.ToList(secrets), Optional.ToNullable(activeRevisionsMode), ingress.Value, Optional.ToList(registries), dapr.Value, Optional.ToNullable(maxInactiveRevisions));
+            return new ContainerAppConfiguration(Optional.ToList(secrets), Optional.ToNullable(activeRevisionsMode), ingress.Value, Optional.ToList(registries), dapr.Value, Optional.ToNullable(maxInactiveRevisions), service.Value);
         }
     }
 }

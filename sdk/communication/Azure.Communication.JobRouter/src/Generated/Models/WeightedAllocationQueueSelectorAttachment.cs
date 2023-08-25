@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Describes multiple sets of label selectors, of which one will be selected and attached according to a weighting. </summary>
+    /// <summary> Describes multiple sets of queue selectors, of which one will be selected and attached according to a weighting. </summary>
     public partial class WeightedAllocationQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
-        /// <param name="kind"> The type discriminator describing the type of label selector attachment. </param>
+        /// <param name="kind"> The type discriminator describing the type of queue selector attachment. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
         internal WeightedAllocationQueueSelectorAttachment(string kind, IList<QueueWeightedAllocation> allocations) : base(kind)
         {

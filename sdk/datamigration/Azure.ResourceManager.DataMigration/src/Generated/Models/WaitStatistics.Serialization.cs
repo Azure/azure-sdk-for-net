@@ -14,31 +14,33 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static WaitStatistics DeserializeWaitStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> waitType = default;
             Optional<float> waitTimeMs = default;
             Optional<long> waitCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("waitType"))
+                if (property.NameEquals("waitType"u8))
                 {
                     waitType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("waitTimeMs"))
+                if (property.NameEquals("waitTimeMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     waitTimeMs = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("waitCount"))
+                if (property.NameEquals("waitCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     waitCount = property.Value.GetInt64();

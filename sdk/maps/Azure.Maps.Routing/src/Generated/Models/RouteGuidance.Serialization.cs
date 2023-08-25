@@ -15,15 +15,18 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteGuidance DeserializeRouteGuidance(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RouteInstruction>> instructions = default;
             Optional<IReadOnlyList<RouteInstructionGroup>> instructionGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instructions"))
+                if (property.NameEquals("instructions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteInstruction> array = new List<RouteInstruction>();
@@ -34,11 +37,10 @@ namespace Azure.Maps.Routing.Models
                     instructions = array;
                     continue;
                 }
-                if (property.NameEquals("instructionGroups"))
+                if (property.NameEquals("instructionGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteInstructionGroup> array = new List<RouteInstructionGroup>();

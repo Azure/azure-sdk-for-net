@@ -19,8 +19,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests.Samples
             // IAsyncCollector allows sending multiple events in a single function invocation
             await eventHubProducerClient.SendAsync(new[]
             {
-                new EventData(new BinaryData($"Event 1 added at: {DateTime.Now}")),
-                new EventData(new BinaryData($"Event 2 added at: {DateTime.Now}"))
+                new EventData($"Event 1 added at: {DateTime.Now}"),
+                new EventData($"Event 2 added at: {DateTime.Now}")
             });
         }
         #endregion

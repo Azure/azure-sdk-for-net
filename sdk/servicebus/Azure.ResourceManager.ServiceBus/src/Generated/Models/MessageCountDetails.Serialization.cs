@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static MessageCountDetails DeserializeMessageCountDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> activeMessageCount = default;
             Optional<long> deadLetterMessageCount = default;
             Optional<long> scheduledMessageCount = default;
@@ -21,51 +25,46 @@ namespace Azure.ResourceManager.ServiceBus.Models
             Optional<long> transferDeadLetterMessageCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activeMessageCount"))
+                if (property.NameEquals("activeMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activeMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("deadLetterMessageCount"))
+                if (property.NameEquals("deadLetterMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deadLetterMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("scheduledMessageCount"))
+                if (property.NameEquals("scheduledMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("transferMessageCount"))
+                if (property.NameEquals("transferMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("transferDeadLetterMessageCount"))
+                if (property.NameEquals("transferDeadLetterMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferDeadLetterMessageCount = property.Value.GetInt64();

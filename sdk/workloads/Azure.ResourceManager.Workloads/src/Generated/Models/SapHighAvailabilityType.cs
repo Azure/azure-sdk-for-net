@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The high availability Type. AvailabilitySet guarantees 99.95% availability. Availability Zone guarantees 99.99% availability. </summary>
+    /// <summary> The high availability type (AvailabilitySet or AvailabilityZone). </summary>
     public readonly partial struct SapHighAvailabilityType : IEquatable<SapHighAvailabilityType>
     {
         private readonly string _value;

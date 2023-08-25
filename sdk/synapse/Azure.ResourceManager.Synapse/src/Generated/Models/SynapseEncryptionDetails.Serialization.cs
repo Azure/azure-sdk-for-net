@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Cmk))
             {
-                writer.WritePropertyName("cmk");
+                writer.WritePropertyName("cmk"u8);
                 writer.WriteObjectValue(Cmk);
             }
             writer.WriteEndObject();
@@ -25,25 +25,27 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseEncryptionDetails DeserializeSynapseEncryptionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> doubleEncryptionEnabled = default;
             Optional<WorkspaceCustomerManagedKeyDetails> cmk = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("doubleEncryptionEnabled"))
+                if (property.NameEquals("doubleEncryptionEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     doubleEncryptionEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cmk"))
+                if (property.NameEquals("cmk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cmk = WorkspaceCustomerManagedKeyDetails.DeserializeWorkspaceCustomerManagedKeyDetails(property.Value);

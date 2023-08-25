@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             VpnAuthenticationTypes = new ChangeTrackingList<VpnAuthenticationType>();
             VpnClientIPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             RadiusServers = new ChangeTrackingList<RadiusServer>();
+            VngClientConnectionConfigurations = new ChangeTrackingList<VngClientConnectionConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VpnClientConfiguration. </summary>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="aadTenant"> The AADTenant property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
         /// <param name="aadAudience"> The AADAudience property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
         /// <param name="aadIssuer"> The AADIssuer property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
-        internal VpnClientConfiguration(AddressSpace vpnClientAddressPool, IList<VpnClientRootCertificate> vpnClientRootCertificates, IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnClientProtocol> vpnClientProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<IPsecPolicy> vpnClientIPsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, string aadTenant, string aadAudience, string aadIssuer)
+        /// <param name="vngClientConnectionConfigurations"> per ip address pool connection policy for virtual network gateway P2S client. </param>
+        internal VpnClientConfiguration(AddressSpace vpnClientAddressPool, IList<VpnClientRootCertificate> vpnClientRootCertificates, IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnClientProtocol> vpnClientProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<IPsecPolicy> vpnClientIPsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, string aadTenant, string aadAudience, string aadIssuer, IList<VngClientConnectionConfiguration> vngClientConnectionConfigurations)
         {
             VpnClientAddressPool = vpnClientAddressPool;
             VpnClientRootCertificates = vpnClientRootCertificates;
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.Network.Models
             AadTenant = aadTenant;
             AadAudience = aadAudience;
             AadIssuer = aadIssuer;
+            VngClientConnectionConfigurations = vngClientConnectionConfigurations;
         }
 
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
@@ -88,5 +91,7 @@ namespace Azure.ResourceManager.Network.Models
         public string AadAudience { get; set; }
         /// <summary> The AADIssuer property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </summary>
         public string AadIssuer { get; set; }
+        /// <summary> per ip address pool connection policy for virtual network gateway P2S client. </summary>
+        public IList<VngClientConnectionConfiguration> VngClientConnectionConfigurations { get; }
     }
 }

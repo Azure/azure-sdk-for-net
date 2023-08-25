@@ -17,37 +17,41 @@ namespace Azure.ResourceManager.Confluent.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FirstName))
             {
-                writer.WritePropertyName("firstName");
+                writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
             if (Optional.IsDefined(LastName))
             {
-                writer.WritePropertyName("lastName");
+                writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            writer.WritePropertyName("emailAddress");
+            writer.WritePropertyName("emailAddress"u8);
             writer.WriteStringValue(EmailAddress);
             writer.WriteEndObject();
         }
 
         internal static ConfluentUserDetail DeserializeConfluentUserDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> firstName = default;
             Optional<string> lastName = default;
             string emailAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstName"))
+                if (property.NameEquals("firstName"u8))
                 {
                     firstName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastName"))
+                if (property.NameEquals("lastName"u8))
                 {
                     lastName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailAddress"))
+                if (property.NameEquals("emailAddress"u8))
                 {
                     emailAddress = property.Value.GetString();
                     continue;

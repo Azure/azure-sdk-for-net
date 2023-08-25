@@ -14,31 +14,33 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems DeserializeComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metric = default;
             Optional<long> value = default;
             Optional<double> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metric"))
+                if (property.NameEquals("metric"u8))
                 {
                     metric = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("percentage"))
+                if (property.NameEquals("percentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     percentage = property.Value.GetDouble();

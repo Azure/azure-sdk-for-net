@@ -18,67 +18,74 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Model))
             {
-                writer.WritePropertyName("model");
+                writer.WritePropertyName("model"u8);
                 writer.WriteObjectValue(Model);
             }
             if (Optional.IsDefined(ScaleSettings))
             {
-                writer.WritePropertyName("scaleSettings");
+                writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
             }
             if (Optional.IsDefined(RaiPolicyName))
             {
-                writer.WritePropertyName("raiPolicyName");
+                writer.WritePropertyName("raiPolicyName"u8);
                 writer.WriteStringValue(RaiPolicyName);
+            }
+            if (Optional.IsDefined(VersionUpgradeOption))
+            {
+                writer.WritePropertyName("versionUpgradeOption"u8);
+                writer.WriteStringValue(VersionUpgradeOption.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static CognitiveServicesAccountDeploymentProperties DeserializeCognitiveServicesAccountDeploymentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesAccountDeploymentProvisioningState> provisioningState = default;
             Optional<CognitiveServicesAccountDeploymentModel> model = default;
             Optional<CognitiveServicesAccountDeploymentScaleSettings> scaleSettings = default;
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
             Optional<string> raiPolicyName = default;
             Optional<ServiceAccountCallRateLimit> callRateLimit = default;
+            Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rateLimits = default;
+            Optional<DeploymentModelVersionUpgradeOption> versionUpgradeOption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new CognitiveServicesAccountDeploymentProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("model"))
+                if (property.NameEquals("model"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scaleSettings"))
+                if (property.NameEquals("scaleSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -89,23 +96,45 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     capabilities = dictionary;
                     continue;
                 }
-                if (property.NameEquals("raiPolicyName"))
+                if (property.NameEquals("raiPolicyName"u8))
                 {
                     raiPolicyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callRateLimit"))
+                if (property.NameEquals("callRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
                     continue;
                 }
+                if (property.NameEquals("rateLimits"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ServiceAccountThrottlingRule> array = new List<ServiceAccountThrottlingRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item));
+                    }
+                    rateLimits = array;
+                    continue;
+                }
+                if (property.NameEquals("versionUpgradeOption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    versionUpgradeOption = new DeploymentModelVersionUpgradeOption(property.Value.GetString());
+                    continue;
+                }
             }
-            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value);
+            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value, Optional.ToList(rateLimits), Optional.ToNullable(versionUpgradeOption));
         }
     }
 }

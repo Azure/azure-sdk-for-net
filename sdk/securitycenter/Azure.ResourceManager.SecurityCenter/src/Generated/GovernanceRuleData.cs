@@ -13,12 +13,16 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the GovernanceRule data model. </summary>
+    /// <summary>
+    /// A class representing the GovernanceRule data model.
+    /// Governance rule over a given scope
+    /// </summary>
     public partial class GovernanceRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of GovernanceRuleData. </summary>
         public GovernanceRuleData()
         {
+            ExcludedScopes = new ChangeTrackingList<string>();
             ConditionSets = new ChangeTrackingList<BinaryData>();
         }
 
@@ -27,19 +31,24 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> display name of the governanceRule. </param>
-        /// <param name="description"> description of the governanceRule. </param>
+        /// <param name="tenantId"> The tenantId (GUID). </param>
+        /// <param name="displayName"> Display name of the governance rule. </param>
+        /// <param name="description"> Description of the governance rule. </param>
         /// <param name="remediationTimeframe"> Governance rule remediation timeframe - this is the time that will affect on the grace-period duration e.g. 7.00:00:00 - means 7 days. </param>
         /// <param name="isGracePeriod"> Defines whether there is a grace period on the governance rule. </param>
-        /// <param name="rulePriority"> The governance rule priority, priority to the lower number. Rules with the same priority on the same subscription will not be allowed. </param>
+        /// <param name="rulePriority"> The governance rule priority, priority to the lower number. Rules with the same priority on the same scope will not be allowed. </param>
         /// <param name="isDisabled"> Defines whether the rule is active/inactive. </param>
         /// <param name="ruleType"> The rule type of the governance rule, defines the source of the rule e.g. Integrated. </param>
         /// <param name="sourceResourceType"> The governance rule source, what the rule affects, e.g. Assessments. </param>
+        /// <param name="excludedScopes"> Excluded scopes, filter out the descendants of the scope (on management scopes). </param>
         /// <param name="conditionSets"> The governance rule conditionSets - see examples. </param>
-        /// <param name="ownerSource"> The Owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </param>
+        /// <param name="includeMemberScopes"> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </param>
+        /// <param name="ownerSource"> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </param>
         /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
-        internal GovernanceRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string remediationTimeframe, bool? isGracePeriod, int? rulePriority, bool? isDisabled, GovernanceRuleType? ruleType, GovernanceRuleSourceResourceType? sourceResourceType, IList<BinaryData> conditionSets, GovernanceRuleOwnerSource ownerSource, GovernanceRuleEmailNotification governanceEmailNotification) : base(id, name, resourceType, systemData)
+        /// <param name="metadata"> The governance rule metadata. </param>
+        internal GovernanceRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, string description, string remediationTimeframe, bool? isGracePeriod, int? rulePriority, bool? isDisabled, GovernanceRuleType? ruleType, GovernanceRuleSourceResourceType? sourceResourceType, IList<string> excludedScopes, IList<BinaryData> conditionSets, bool? includeMemberScopes, GovernanceRuleOwnerSource ownerSource, GovernanceRuleEmailNotification governanceEmailNotification, GovernanceRuleMetadata metadata) : base(id, name, resourceType, systemData)
         {
+            TenantId = tenantId;
             DisplayName = displayName;
             Description = description;
             RemediationTimeframe = remediationTimeframe;
@@ -48,20 +57,25 @@ namespace Azure.ResourceManager.SecurityCenter
             IsDisabled = isDisabled;
             RuleType = ruleType;
             SourceResourceType = sourceResourceType;
+            ExcludedScopes = excludedScopes;
             ConditionSets = conditionSets;
+            IncludeMemberScopes = includeMemberScopes;
             OwnerSource = ownerSource;
             GovernanceEmailNotification = governanceEmailNotification;
+            Metadata = metadata;
         }
 
-        /// <summary> display name of the governanceRule. </summary>
+        /// <summary> The tenantId (GUID). </summary>
+        public Guid? TenantId { get; }
+        /// <summary> Display name of the governance rule. </summary>
         public string DisplayName { get; set; }
-        /// <summary> description of the governanceRule. </summary>
+        /// <summary> Description of the governance rule. </summary>
         public string Description { get; set; }
         /// <summary> Governance rule remediation timeframe - this is the time that will affect on the grace-period duration e.g. 7.00:00:00 - means 7 days. </summary>
         public string RemediationTimeframe { get; set; }
         /// <summary> Defines whether there is a grace period on the governance rule. </summary>
         public bool? IsGracePeriod { get; set; }
-        /// <summary> The governance rule priority, priority to the lower number. Rules with the same priority on the same subscription will not be allowed. </summary>
+        /// <summary> The governance rule priority, priority to the lower number. Rules with the same priority on the same scope will not be allowed. </summary>
         public int? RulePriority { get; set; }
         /// <summary> Defines whether the rule is active/inactive. </summary>
         public bool? IsDisabled { get; set; }
@@ -69,6 +83,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public GovernanceRuleType? RuleType { get; set; }
         /// <summary> The governance rule source, what the rule affects, e.g. Assessments. </summary>
         public GovernanceRuleSourceResourceType? SourceResourceType { get; set; }
+        /// <summary> Excluded scopes, filter out the descendants of the scope (on management scopes). </summary>
+        public IList<string> ExcludedScopes { get; }
         /// <summary>
         /// The governance rule conditionSets - see examples
         /// <para>
@@ -100,9 +116,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </para>
         /// </summary>
         public IList<BinaryData> ConditionSets { get; }
-        /// <summary> The Owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </summary>
+        /// <summary> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </summary>
+        public bool? IncludeMemberScopes { get; set; }
+        /// <summary> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </summary>
         public GovernanceRuleOwnerSource OwnerSource { get; set; }
         /// <summary> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </summary>
         public GovernanceRuleEmailNotification GovernanceEmailNotification { get; set; }
+        /// <summary> The governance rule metadata. </summary>
+        public GovernanceRuleMetadata Metadata { get; set; }
     }
 }

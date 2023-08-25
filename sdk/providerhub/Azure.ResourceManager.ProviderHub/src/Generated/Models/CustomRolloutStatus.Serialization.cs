@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CompletedRegions))
             {
-                writer.WritePropertyName("completedRegions");
+                writer.WritePropertyName("completedRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in CompletedRegions)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsCollectionDefined(FailedOrSkippedRegions))
             {
-                writer.WritePropertyName("failedOrSkippedRegions");
+                writer.WritePropertyName("failedOrSkippedRegions"u8);
                 writer.WriteStartObject();
                 foreach (var item in FailedOrSkippedRegions)
                 {
@@ -42,30 +42,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutStatus DeserializeCustomRolloutStatus(JsonElement element)
         {
-            Optional<IList<string>> completedRegions = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<AzureLocation>> completedRegions = default;
             Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("completedRegions"))
+                if (property.NameEquals("completedRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     completedRegions = array;
                     continue;
                 }
-                if (property.NameEquals("failedOrSkippedRegions"))
+                if (property.NameEquals("failedOrSkippedRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ExtendedErrorInfo> dictionary = new Dictionary<string, ExtendedErrorInfo>();

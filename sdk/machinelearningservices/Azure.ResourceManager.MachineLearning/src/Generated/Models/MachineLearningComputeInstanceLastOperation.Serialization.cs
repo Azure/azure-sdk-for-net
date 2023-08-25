@@ -15,47 +15,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeInstanceLastOperation DeserializeMachineLearningComputeInstanceLastOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningOperationName> operationName = default;
             Optional<DateTimeOffset> operationTime = default;
             Optional<MachineLearningOperationStatus> operationStatus = default;
             Optional<MachineLearningOperationTrigger> operationTrigger = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationName"))
+                if (property.NameEquals("operationName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operationName = new MachineLearningOperationName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("operationTime"))
+                if (property.NameEquals("operationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("operationStatus"))
+                if (property.NameEquals("operationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operationStatus = new MachineLearningOperationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("operationTrigger"))
+                if (property.NameEquals("operationTrigger"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operationTrigger = new MachineLearningOperationTrigger(property.Value.GetString());

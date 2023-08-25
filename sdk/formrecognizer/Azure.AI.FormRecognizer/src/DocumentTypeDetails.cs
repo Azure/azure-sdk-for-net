@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentTypeDetails")]
     public partial class DocumentTypeDetails
     {
         /// <summary> Description of the document semantic schema. </summary>

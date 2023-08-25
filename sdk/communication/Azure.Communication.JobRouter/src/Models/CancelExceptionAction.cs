@@ -14,10 +14,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
         /// <param name="note"> (Optional) Customer supplied note, e.g., cancellation reason. </param>
         /// <param name="dispositionCode"> (Optional) Customer supplied disposition code for specifying any short label. </param>
-        public CancelExceptionAction(string note = default, string dispositionCode = default)
+        public CancelExceptionAction(string note = default, string dispositionCode = default) : this(null, note, dispositionCode)
         {
-            Note = note;
-            DispositionCode = dispositionCode;
         }
     }
 }

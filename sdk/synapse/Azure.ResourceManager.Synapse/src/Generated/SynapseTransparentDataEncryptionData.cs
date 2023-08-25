@@ -11,7 +11,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseTransparentDataEncryption data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseTransparentDataEncryption data model.
+    /// Represents a Sql pool transparent data encryption configuration.
+    /// </summary>
     public partial class SynapseTransparentDataEncryptionData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseTransparentDataEncryptionData. </summary>

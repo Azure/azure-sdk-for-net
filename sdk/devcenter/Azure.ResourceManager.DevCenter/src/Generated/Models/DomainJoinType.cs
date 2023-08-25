@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string HybridAzureADJoinValue = "HybridAzureADJoin";
-        private const string AzureADJoinValue = "AzureADJoin";
+        private const string HybridAadJoinValue = "HybridAzureADJoin";
+        private const string AadJoinValue = "AzureADJoin";
 
         /// <summary> HybridAzureADJoin. </summary>
-        public static DomainJoinType HybridAzureADJoin { get; } = new DomainJoinType(HybridAzureADJoinValue);
+        public static DomainJoinType HybridAadJoin { get; } = new DomainJoinType(HybridAadJoinValue);
         /// <summary> AzureADJoin. </summary>
-        public static DomainJoinType AzureADJoin { get; } = new DomainJoinType(AzureADJoinValue);
+        public static DomainJoinType AadJoin { get; } = new DomainJoinType(AadJoinValue);
         /// <summary> Determines if two <see cref="DomainJoinType"/> values are the same. </summary>
         public static bool operator ==(DomainJoinType left, DomainJoinType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainJoinType"/> values are not the same. </summary>

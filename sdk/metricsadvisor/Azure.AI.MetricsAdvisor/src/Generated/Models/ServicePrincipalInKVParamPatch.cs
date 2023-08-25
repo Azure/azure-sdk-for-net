@@ -21,9 +21,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string KeyVaultClientId { get; set; }
         /// <summary> The Client Secret to access the Key Vault. </summary>
         public string KeyVaultClientSecret { get; set; }
-        /// <summary> The secret name of the service principal&apos;s client Id in the Key Vault. </summary>
+        /// <summary> The secret name of the service principal's client Id in the Key Vault. </summary>
         public string ServicePrincipalIdNameInKV { get; set; }
-        /// <summary> The secret name of the service principal&apos;s client secret in the Key Vault. </summary>
+        /// <summary> The secret name of the service principal's client secret in the Key Vault. </summary>
         public string ServicePrincipalSecretNameInKV { get; set; }
         /// <summary> The tenant id of your service principal. </summary>
         public string TenantId { get; set; }

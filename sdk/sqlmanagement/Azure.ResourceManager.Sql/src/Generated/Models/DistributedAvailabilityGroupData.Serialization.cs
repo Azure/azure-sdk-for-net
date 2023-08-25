@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetDatabase))
             {
-                writer.WritePropertyName("targetDatabase");
+                writer.WritePropertyName("targetDatabase"u8);
                 writer.WriteStringValue(TargetDatabase);
             }
             if (Optional.IsDefined(SourceEndpoint))
             {
-                writer.WritePropertyName("sourceEndpoint");
+                writer.WritePropertyName("sourceEndpoint"u8);
                 writer.WriteStringValue(SourceEndpoint);
             }
             if (Optional.IsDefined(PrimaryAvailabilityGroupName))
             {
-                writer.WritePropertyName("primaryAvailabilityGroupName");
+                writer.WritePropertyName("primaryAvailabilityGroupName"u8);
                 writer.WriteStringValue(PrimaryAvailabilityGroupName);
             }
             if (Optional.IsDefined(SecondaryAvailabilityGroupName))
             {
-                writer.WritePropertyName("secondaryAvailabilityGroupName");
+                writer.WritePropertyName("secondaryAvailabilityGroupName"u8);
                 writer.WriteStringValue(SecondaryAvailabilityGroupName);
             }
             if (Optional.IsDefined(ReplicationMode))
             {
-                writer.WritePropertyName("replicationMode");
+                writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static DistributedAvailabilityGroupData DeserializeDistributedAvailabilityGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -67,32 +71,31 @@ namespace Azure.ResourceManager.Sql
             Optional<string> lastHardenedLsn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,72 +104,68 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("targetDatabase"))
+                        if (property0.NameEquals("targetDatabase"u8))
                         {
                             targetDatabase = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sourceEndpoint"))
+                        if (property0.NameEquals("sourceEndpoint"u8))
                         {
                             sourceEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("primaryAvailabilityGroupName"))
+                        if (property0.NameEquals("primaryAvailabilityGroupName"u8))
                         {
                             primaryAvailabilityGroupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("secondaryAvailabilityGroupName"))
+                        if (property0.NameEquals("secondaryAvailabilityGroupName"u8))
                         {
                             secondaryAvailabilityGroupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("replicationMode"))
+                        if (property0.NameEquals("replicationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicationMode = new DistributedAvailabilityGroupReplicationMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("distributedAvailabilityGroupId"))
+                        if (property0.NameEquals("distributedAvailabilityGroupId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             distributedAvailabilityGroupId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("sourceReplicaId"))
+                        if (property0.NameEquals("sourceReplicaId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceReplicaId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("targetReplicaId"))
+                        if (property0.NameEquals("targetReplicaId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetReplicaId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("linkState"))
+                        if (property0.NameEquals("linkState"u8))
                         {
                             linkState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastHardenedLsn"))
+                        if (property0.NameEquals("lastHardenedLsn"u8))
                         {
                             lastHardenedLsn = property0.Value.GetString();
                             continue;

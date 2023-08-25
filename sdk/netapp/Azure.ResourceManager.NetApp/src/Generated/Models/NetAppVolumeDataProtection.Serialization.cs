@@ -17,61 +17,77 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Backup))
             {
-                writer.WritePropertyName("backup");
+                writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup);
             }
             if (Optional.IsDefined(Replication))
             {
-                writer.WritePropertyName("replication");
+                writer.WritePropertyName("replication"u8);
                 writer.WriteObjectValue(Replication);
             }
             if (Optional.IsDefined(Snapshot))
             {
-                writer.WritePropertyName("snapshot");
+                writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
+            }
+            if (Optional.IsDefined(VolumeRelocation))
+            {
+                writer.WritePropertyName("volumeRelocation"u8);
+                writer.WriteObjectValue(VolumeRelocation);
             }
             writer.WriteEndObject();
         }
 
         internal static NetAppVolumeDataProtection DeserializeNetAppVolumeDataProtection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetAppVolumeBackupConfiguration> backup = default;
             Optional<NetAppReplicationObject> replication = default;
             Optional<VolumeSnapshotProperties> snapshot = default;
+            Optional<NetAppVolumeRelocationProperties> volumeRelocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backup"))
+                if (property.NameEquals("backup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("replication"))
+                if (property.NameEquals("replication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replication = NetAppReplicationObject.DeserializeNetAppReplicationObject(property.Value);
                     continue;
                 }
-                if (property.NameEquals("snapshot"))
+                if (property.NameEquals("snapshot"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("volumeRelocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    volumeRelocation = NetAppVolumeRelocationProperties.DeserializeNetAppVolumeRelocationProperties(property.Value);
+                    continue;
+                }
             }
-            return new NetAppVolumeDataProtection(backup.Value, replication.Value, snapshot.Value);
+            return new NetAppVolumeDataProtection(backup.Value, replication.Value, snapshot.Value, volumeRelocation.Value);
         }
     }
 }

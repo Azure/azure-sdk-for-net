@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupShortName))
             {
-                writer.WritePropertyName("groupShortName");
+                writer.WritePropertyName("groupShortName"u8);
                 writer.WriteStringValue(GroupShortName);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(EmailReceivers))
             {
-                writer.WritePropertyName("emailReceivers");
+                writer.WritePropertyName("emailReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in EmailReceivers)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(SmsReceivers))
             {
-                writer.WritePropertyName("smsReceivers");
+                writer.WritePropertyName("smsReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in SmsReceivers)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(WebhookReceivers))
             {
-                writer.WritePropertyName("webhookReceivers");
+                writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in WebhookReceivers)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(ItsmReceivers))
             {
-                writer.WritePropertyName("itsmReceivers");
+                writer.WritePropertyName("itsmReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ItsmReceivers)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(AzureAppPushReceivers))
             {
-                writer.WritePropertyName("azureAppPushReceivers");
+                writer.WritePropertyName("azureAppPushReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in AzureAppPushReceivers)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(AutomationRunbookReceivers))
             {
-                writer.WritePropertyName("automationRunbookReceivers");
+                writer.WritePropertyName("automationRunbookReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in AutomationRunbookReceivers)
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(VoiceReceivers))
             {
-                writer.WritePropertyName("voiceReceivers");
+                writer.WritePropertyName("voiceReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in VoiceReceivers)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(LogicAppReceivers))
             {
-                writer.WritePropertyName("logicAppReceivers");
+                writer.WritePropertyName("logicAppReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogicAppReceivers)
                 {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(AzureFunctionReceivers))
             {
-                writer.WritePropertyName("azureFunctionReceivers");
+                writer.WritePropertyName("azureFunctionReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in AzureFunctionReceivers)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(ArmRoleReceivers))
             {
-                writer.WritePropertyName("armRoleReceivers");
+                writer.WritePropertyName("armRoleReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ArmRoleReceivers)
                 {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(EventHubReceivers))
             {
-                writer.WritePropertyName("eventHubReceivers");
+                writer.WritePropertyName("eventHubReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in EventHubReceivers)
                 {
@@ -159,6 +159,10 @@ namespace Azure.ResourceManager.Monitor
 
         internal static ActionGroupData DeserializeActionGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -180,11 +184,10 @@ namespace Azure.ResourceManager.Monitor
             Optional<IList<MonitorEventHubReceiver>> eventHubReceivers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -195,37 +198,36 @@ namespace Azure.ResourceManager.Monitor
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -234,26 +236,24 @@ namespace Azure.ResourceManager.Monitor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("groupShortName"))
+                        if (property0.NameEquals("groupShortName"u8))
                         {
                             groupShortName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("emailReceivers"))
+                        if (property0.NameEquals("emailReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorEmailReceiver> array = new List<MonitorEmailReceiver>();
@@ -264,11 +264,10 @@ namespace Azure.ResourceManager.Monitor
                             emailReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("smsReceivers"))
+                        if (property0.NameEquals("smsReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorSmsReceiver> array = new List<MonitorSmsReceiver>();
@@ -279,11 +278,10 @@ namespace Azure.ResourceManager.Monitor
                             smsReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("webhookReceivers"))
+                        if (property0.NameEquals("webhookReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorWebhookReceiver> array = new List<MonitorWebhookReceiver>();
@@ -294,11 +292,10 @@ namespace Azure.ResourceManager.Monitor
                             webhookReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("itsmReceivers"))
+                        if (property0.NameEquals("itsmReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorItsmReceiver> array = new List<MonitorItsmReceiver>();
@@ -309,11 +306,10 @@ namespace Azure.ResourceManager.Monitor
                             itsmReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("azureAppPushReceivers"))
+                        if (property0.NameEquals("azureAppPushReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorAzureAppPushReceiver> array = new List<MonitorAzureAppPushReceiver>();
@@ -324,11 +320,10 @@ namespace Azure.ResourceManager.Monitor
                             azureAppPushReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("automationRunbookReceivers"))
+                        if (property0.NameEquals("automationRunbookReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorAutomationRunbookReceiver> array = new List<MonitorAutomationRunbookReceiver>();
@@ -339,11 +334,10 @@ namespace Azure.ResourceManager.Monitor
                             automationRunbookReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("voiceReceivers"))
+                        if (property0.NameEquals("voiceReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorVoiceReceiver> array = new List<MonitorVoiceReceiver>();
@@ -354,11 +348,10 @@ namespace Azure.ResourceManager.Monitor
                             voiceReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("logicAppReceivers"))
+                        if (property0.NameEquals("logicAppReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorLogicAppReceiver> array = new List<MonitorLogicAppReceiver>();
@@ -369,11 +362,10 @@ namespace Azure.ResourceManager.Monitor
                             logicAppReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("azureFunctionReceivers"))
+                        if (property0.NameEquals("azureFunctionReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorAzureFunctionReceiver> array = new List<MonitorAzureFunctionReceiver>();
@@ -384,11 +376,10 @@ namespace Azure.ResourceManager.Monitor
                             azureFunctionReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("armRoleReceivers"))
+                        if (property0.NameEquals("armRoleReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorArmRoleReceiver> array = new List<MonitorArmRoleReceiver>();
@@ -399,11 +390,10 @@ namespace Azure.ResourceManager.Monitor
                             armRoleReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("eventHubReceivers"))
+                        if (property0.NameEquals("eventHubReceivers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MonitorEventHubReceiver> array = new List<MonitorEventHubReceiver>();

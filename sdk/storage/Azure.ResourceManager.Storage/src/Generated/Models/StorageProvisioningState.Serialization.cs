@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StorageProvisioningState ToStorageProvisioningState(this string value)
         {
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return StorageProvisioningState.Creating;
-            if (string.Equals(value, "ResolvingDNS", StringComparison.InvariantCultureIgnoreCase)) return StorageProvisioningState.ResolvingDns;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return StorageProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return StorageProvisioningState.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ResolvingDNS")) return StorageProvisioningState.ResolvingDns;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return StorageProvisioningState.Succeeded;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageProvisioningState value.");
         }
     }

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageId))
             {
-                writer.WritePropertyName("storageId");
+                writer.WritePropertyName("storageId"u8);
                 writer.WriteStringValue(StorageId);
             }
             if (Optional.IsDefined(StoragePath))
             {
-                writer.WritePropertyName("storagePath");
+                writer.WritePropertyName("storagePath"u8);
                 writer.WriteStringValue(StoragePath);
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("filePath");
+                writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
             writer.WriteEndObject();
@@ -35,27 +35,30 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PacketCaptureStorageLocation DeserializePacketCaptureStorageLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> storageId = default;
             Optional<string> storagePath = default;
             Optional<string> filePath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageId"))
+                if (property.NameEquals("storageId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storagePath"))
+                if (property.NameEquals("storagePath"u8))
                 {
                     storagePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filePath"))
+                if (property.NameEquals("filePath"u8))
                 {
                     filePath = property.Value.GetString();
                     continue;

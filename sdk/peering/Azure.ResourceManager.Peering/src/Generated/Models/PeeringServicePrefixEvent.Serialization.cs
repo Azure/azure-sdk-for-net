@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static PeeringServicePrefixEvent DeserializePeeringServicePrefixEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> eventTimestamp = default;
             Optional<string> eventType = default;
             Optional<string> eventSummary = default;
@@ -22,32 +26,31 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<string> eventDescription = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventTimestamp"))
+                if (property.NameEquals("eventTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("eventType"))
+                if (property.NameEquals("eventType"u8))
                 {
                     eventType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventSummary"))
+                if (property.NameEquals("eventSummary"u8))
                 {
                     eventSummary = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventLevel"))
+                if (property.NameEquals("eventLevel"u8))
                 {
                     eventLevel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventDescription"))
+                if (property.NameEquals("eventDescription"u8))
                 {
                     eventDescription = property.Value.GetString();
                     continue;

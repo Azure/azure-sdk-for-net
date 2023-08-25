@@ -13,12 +13,15 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> A class representing the DiskPoolIscsiTarget data model. </summary>
+    /// <summary>
+    /// A class representing the DiskPoolIscsiTarget data model.
+    /// Response for iSCSI Target requests.
+    /// </summary>
     public partial class DiskPoolIscsiTargetData : ResourceData
     {
         /// <summary> Initializes a new instance of DiskPoolIscsiTargetData. </summary>
         /// <param name="aclMode"> Mode for Target connectivity. </param>
-        /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:server&quot;. </param>
+        /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:server". </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="status"> Operational status of the iSCSI Target. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetIqn"/> is null. </exception>
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="aclMode"> Mode for Target connectivity. </param>
         /// <param name="staticAcls"> Access Control List (ACL) for an iSCSI Target; defines LUN masking policy. </param>
         /// <param name="luns"> List of LUNs to be exposed through iSCSI Target. </param>
-        /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:server&quot;. </param>
+        /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:server". </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="status"> Operational status of the iSCSI Target. </param>
         /// <param name="endpoints"> List of private IPv4 addresses to connect to the iSCSI Target. </param>
@@ -78,7 +81,7 @@ namespace Azure.ResourceManager.StoragePool
         public IList<DiskPoolIscsiTargetPortalGroupAcl> StaticAcls { get; }
         /// <summary> List of LUNs to be exposed through iSCSI Target. </summary>
         public IList<ManagedDiskIscsiLun> Luns { get; }
-        /// <summary> iSCSI Target IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:server&quot;. </summary>
+        /// <summary> iSCSI Target IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:server". </summary>
         public string TargetIqn { get; set; }
         /// <summary> State of the operation on the resource. </summary>
         public DiskPoolIscsiTargetProvisioningState ProvisioningState { get; }

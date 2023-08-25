@@ -17,61 +17,77 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IPAddressType))
             {
-                writer.WritePropertyName("ipAddressType");
+                writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
             if (Optional.IsDefined(LoadBalancerBackendAddressPoolId))
             {
-                writer.WritePropertyName("loadBalancerBackendAddressPoolId");
+                writer.WritePropertyName("loadBalancerBackendAddressPoolId"u8);
                 writer.WriteStringValue(LoadBalancerBackendAddressPoolId);
             }
             if (Optional.IsDefined(LoadBalancerInboundNatPoolId))
             {
-                writer.WritePropertyName("loadBalancerInboundNatPoolId");
+                writer.WritePropertyName("loadBalancerInboundNatPoolId"u8);
                 writer.WriteStringValue(LoadBalancerInboundNatPoolId);
+            }
+            if (Optional.IsDefined(ApplicationGatewayBackendAddressPoolId))
+            {
+                writer.WritePropertyName("applicationGatewayBackendAddressPoolId"u8);
+                writer.WriteStringValue(ApplicationGatewayBackendAddressPoolId);
             }
             writer.WriteEndObject();
         }
 
         internal static NodeTypeFrontendConfiguration DeserializeNodeTypeFrontendConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NodeTypeFrontendConfigurationIPAddressType> ipAddressType = default;
             Optional<ResourceIdentifier> loadBalancerBackendAddressPoolId = default;
             Optional<ResourceIdentifier> loadBalancerInboundNatPoolId = default;
+            Optional<ResourceIdentifier> applicationGatewayBackendAddressPoolId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddressType"))
+                if (property.NameEquals("ipAddressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipAddressType = new NodeTypeFrontendConfigurationIPAddressType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadBalancerBackendAddressPoolId"))
+                if (property.NameEquals("loadBalancerBackendAddressPoolId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerBackendAddressPoolId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadBalancerInboundNatPoolId"))
+                if (property.NameEquals("loadBalancerInboundNatPoolId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerInboundNatPoolId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("applicationGatewayBackendAddressPoolId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    applicationGatewayBackendAddressPoolId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
             }
-            return new NodeTypeFrontendConfiguration(Optional.ToNullable(ipAddressType), loadBalancerBackendAddressPoolId.Value, loadBalancerInboundNatPoolId.Value);
+            return new NodeTypeFrontendConfiguration(Optional.ToNullable(ipAddressType), loadBalancerBackendAddressPoolId.Value, loadBalancerInboundNatPoolId.Value, applicationGatewayBackendAddressPoolId.Value);
         }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    /// <summary> A class representing the PostgreSqlServerKey data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlServerKey data model.
+    /// A PostgreSQL Server key.
+    /// </summary>
     public partial class PostgreSqlServerKeyData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlServerKeyData. </summary>
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of encryption protector used to protect the key. </param>
-        /// <param name="serverKeyType"> The key type like &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The key type like 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the key. </param>
         /// <param name="createdOn"> The key creation date. </param>
         internal PostgreSqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, PostgreSqlServerKeyType? serverKeyType, Uri uri, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.PostgreSql
 
         /// <summary> Kind of encryption protector used to protect the key. </summary>
         public string Kind { get; }
-        /// <summary> The key type like &apos;AzureKeyVault&apos;. </summary>
+        /// <summary> The key type like 'AzureKeyVault'. </summary>
         public PostgreSqlServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the key. </summary>
         public Uri Uri { get; set; }

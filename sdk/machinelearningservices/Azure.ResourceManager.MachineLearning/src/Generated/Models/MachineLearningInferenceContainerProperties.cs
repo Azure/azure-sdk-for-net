@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningInferenceContainerProperties.
-    /// Serialized Name: InferenceContainerProperties
-    /// </summary>
+    /// <summary> The MachineLearningInferenceContainerProperties. </summary>
     public partial class MachineLearningInferenceContainerProperties
     {
         /// <summary> Initializes a new instance of MachineLearningInferenceContainerProperties. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningInferenceContainerProperties. </summary>
-        /// <param name="livenessRoute">
-        /// The route to check the liveness of the inference server container.
-        /// Serialized Name: InferenceContainerProperties.livenessRoute
-        /// </param>
-        /// <param name="readinessRoute">
-        /// The route to check the readiness of the inference server container.
-        /// Serialized Name: InferenceContainerProperties.readinessRoute
-        /// </param>
-        /// <param name="scoringRoute">
-        /// The port to send the scoring requests to, within the inference server container.
-        /// Serialized Name: InferenceContainerProperties.scoringRoute
-        /// </param>
+        /// <param name="livenessRoute"> The route to check the liveness of the inference server container. </param>
+        /// <param name="readinessRoute"> The route to check the readiness of the inference server container. </param>
+        /// <param name="scoringRoute"> The port to send the scoring requests to, within the inference server container. </param>
         internal MachineLearningInferenceContainerProperties(MachineLearningInferenceContainerRoute livenessRoute, MachineLearningInferenceContainerRoute readinessRoute, MachineLearningInferenceContainerRoute scoringRoute)
         {
             LivenessRoute = livenessRoute;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ScoringRoute = scoringRoute;
         }
 
-        /// <summary>
-        /// The route to check the liveness of the inference server container.
-        /// Serialized Name: InferenceContainerProperties.livenessRoute
-        /// </summary>
+        /// <summary> The route to check the liveness of the inference server container. </summary>
         public MachineLearningInferenceContainerRoute LivenessRoute { get; set; }
-        /// <summary>
-        /// The route to check the readiness of the inference server container.
-        /// Serialized Name: InferenceContainerProperties.readinessRoute
-        /// </summary>
+        /// <summary> The route to check the readiness of the inference server container. </summary>
         public MachineLearningInferenceContainerRoute ReadinessRoute { get; set; }
-        /// <summary>
-        /// The port to send the scoring requests to, within the inference server container.
-        /// Serialized Name: InferenceContainerProperties.scoringRoute
-        /// </summary>
+        /// <summary> The port to send the scoring requests to, within the inference server container. </summary>
         public MachineLearningInferenceContainerRoute ScoringRoute { get; set; }
     }
 }

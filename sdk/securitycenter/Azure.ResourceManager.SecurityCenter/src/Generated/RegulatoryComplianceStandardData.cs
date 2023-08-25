@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the RegulatoryComplianceStandard data model. </summary>
+    /// <summary>
+    /// A class representing the RegulatoryComplianceStandard data model.
+    /// Regulatory compliance standard details and state
+    /// </summary>
     public partial class RegulatoryComplianceStandardData : ResourceData
     {
         /// <summary> Initializes a new instance of RegulatoryComplianceStandardData. </summary>
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Aggregative state based on the standard&apos;s supported controls states. </param>
+        /// <param name="state"> Aggregative state based on the standard's supported controls states. </param>
         /// <param name="passedControls"> The number of supported regulatory compliance controls of the given standard with a passed state. </param>
         /// <param name="failedControls"> The number of supported regulatory compliance controls of the given standard with a failed state. </param>
         /// <param name="skippedControls"> The number of supported regulatory compliance controls of the given standard with a skipped state. </param>
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
             UnsupportedControls = unsupportedControls;
         }
 
-        /// <summary> Aggregative state based on the standard&apos;s supported controls states. </summary>
+        /// <summary> Aggregative state based on the standard's supported controls states. </summary>
         public RegulatoryComplianceState? State { get; set; }
         /// <summary> The number of supported regulatory compliance controls of the given standard with a passed state. </summary>
         public int? PassedControls { get; }

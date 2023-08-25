@@ -14,43 +14,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareCbtPolicyDetails DeserializeVMwareCbtPolicyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> recoveryPointHistoryInMinutes = default;
             Optional<int> appConsistentFrequencyInMinutes = default;
             Optional<int> crashConsistentFrequencyInMinutes = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointHistoryInMinutes"))
+                if (property.NameEquals("recoveryPointHistoryInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointHistoryInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("appConsistentFrequencyInMinutes"))
+                if (property.NameEquals("appConsistentFrequencyInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("crashConsistentFrequencyInMinutes"))
+                if (property.NameEquals("crashConsistentFrequencyInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crashConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

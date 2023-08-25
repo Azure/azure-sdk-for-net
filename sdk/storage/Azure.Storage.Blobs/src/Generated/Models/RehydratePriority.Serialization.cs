@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Models
 
         public static RehydratePriority ToRehydratePriority(this string value)
         {
-            if (string.Equals(value, "High", StringComparison.InvariantCultureIgnoreCase)) return RehydratePriority.High;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return RehydratePriority.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "High")) return RehydratePriority.High;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return RehydratePriority.Standard;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RehydratePriority value.");
         }
     }

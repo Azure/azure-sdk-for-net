@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the DscNodeConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the DscNodeConfiguration data model.
+    /// Definition of the dsc node configuration.
+    /// </summary>
     public partial class DscNodeConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of DscNodeConfigurationData. </summary>

@@ -1,14 +1,35 @@
 # Release History
 
-## 4.5.0-beta.2 (Unreleased)
+## 4.6.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Added `CertificateProperties.X509ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `CertificateProperties.X509Thumbprint` has been hidden but is still available.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- When a Key Vault is moved to another tenant, the client is reauthenticated.
+
 ### Other Changes
+
+## 4.5.1 (2023-03-31)
+
+### Bugs Fixed
+
+- Correctly serialize `CertificateIssuer.OrganizationId` property ([#35245](https://github.com/Azure/azure-sdk-for-net/issues/35245))
+
+## 4.5.0 (2023-03-14)
+
+### Breaking Changes
+
+- Service version "7.4-preview.1" is not supported.
+
+### Other Changes
+
+- The default service version is now "7.4".
 
 ## 4.5.0-beta.1 (2022-11-09)
 

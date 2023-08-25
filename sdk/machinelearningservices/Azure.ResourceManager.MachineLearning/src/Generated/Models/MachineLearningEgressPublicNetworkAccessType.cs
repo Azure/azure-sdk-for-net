@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum to determine whether PublicNetworkAccess is Enabled or Disabled for egress of a deployment.
-    /// Serialized Name: EgressPublicNetworkAccessType
-    /// </summary>
+    /// <summary> Enum to determine whether PublicNetworkAccess is Enabled or Disabled for egress of a deployment. </summary>
     public readonly partial struct MachineLearningEgressPublicNetworkAccessType : IEquatable<MachineLearningEgressPublicNetworkAccessType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: EgressPublicNetworkAccessType.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static MachineLearningEgressPublicNetworkAccessType Enabled { get; } = new MachineLearningEgressPublicNetworkAccessType(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: EgressPublicNetworkAccessType.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static MachineLearningEgressPublicNetworkAccessType Disabled { get; } = new MachineLearningEgressPublicNetworkAccessType(DisabledValue);
         /// <summary> Determines if two <see cref="MachineLearningEgressPublicNetworkAccessType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningEgressPublicNetworkAccessType left, MachineLearningEgressPublicNetworkAccessType right) => left.Equals(right);

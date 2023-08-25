@@ -1,12 +1,56 @@
 # Release History
 
-## 1.2.0 (2023-01-17)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- New data connection cosmosdb
-- Ability to create cluster with LanguageExtension
-- Get available skus by location
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.4.0 (2023-07-05)
+
+### Features Added
+
+- Introduced Cluster Migrate functionality.
+- Introduced Database invite follower functionality.
+- Introduced Database CMK functionality.
+
+### Other Changes
+
+- Upgraded to Azure API version 2023-05-02.
+
+## 1.4.0-beta.1 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.3.0 (2023-02-12)
+
+### Features Added
+
+- Introduce management of table functions sharing for follower database
+- Introduce new SKU
+
+### Other Changes
+
+- Upgraded API version to 2022-12-29.
+
+## 1.2.0 (2023-01-10)
+
+### Features Added
+
+- Supported CosmosDB data connection.
+- Supported cluster creation with LanguageExtensionImage.
+- Added method `GetSkus` to get available skus by location.
 
 ### Other Changes
 

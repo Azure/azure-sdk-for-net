@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ComputeVmProperties DeserializeComputeVmProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ComputeVmInstanceViewStatus>> statuses = default;
             Optional<string> osType = default;
             Optional<string> vmSize = default;
@@ -24,11 +28,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<IReadOnlyList<ComputeDataDisk>> dataDisks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("statuses"))
+                if (property.NameEquals("statuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ComputeVmInstanceViewStatus> array = new List<ComputeVmInstanceViewStatus>();
@@ -39,31 +42,30 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     statuses = array;
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmSize"))
+                if (property.NameEquals("vmSize"u8))
                 {
                     vmSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkInterfaceId"))
+                if (property.NameEquals("networkInterfaceId"u8))
                 {
                     networkInterfaceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osDiskId"))
+                if (property.NameEquals("osDiskId"u8))
                 {
                     osDiskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataDiskIds"))
+                if (property.NameEquals("dataDiskIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -74,11 +76,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     dataDiskIds = array;
                     continue;
                 }
-                if (property.NameEquals("dataDisks"))
+                if (property.NameEquals("dataDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ComputeDataDisk> array = new List<ComputeDataDisk>();

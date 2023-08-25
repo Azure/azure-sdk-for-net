@@ -20,31 +20,31 @@ namespace Azure.ResourceManager.Orbital
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(ReservationStartOn))
             {
-                writer.WritePropertyName("reservationStartTime");
+                writer.WritePropertyName("reservationStartTime"u8);
                 writer.WriteStringValue(ReservationStartOn.Value, "O");
             }
             if (Optional.IsDefined(ReservationEndOn))
             {
-                writer.WritePropertyName("reservationEndTime");
+                writer.WritePropertyName("reservationEndTime"u8);
                 writer.WriteStringValue(ReservationEndOn.Value, "O");
             }
             if (Optional.IsDefined(GroundStationName))
             {
-                writer.WritePropertyName("groundStationName");
+                writer.WritePropertyName("groundStationName"u8);
                 writer.WriteStringValue(GroundStationName);
             }
             if (Optional.IsDefined(ContactProfile))
             {
-                writer.WritePropertyName("contactProfile");
+                writer.WritePropertyName("contactProfile"u8);
                 JsonSerializer.Serialize(writer, ContactProfile);
             }
             writer.WriteEndObject();
@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Orbital
 
         internal static OrbitalContactData DeserializeOrbitalContactData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -77,42 +81,40 @@ namespace Azure.ResourceManager.Orbital
             Optional<WritableSubResource> contactProfile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,161 +123,146 @@ namespace Azure.ResourceManager.Orbital
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new OrbitalProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new OrbitalContactStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("reservationStartTime"))
+                        if (property0.NameEquals("reservationStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reservationStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("reservationEndTime"))
+                        if (property0.NameEquals("reservationEndTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reservationEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("rxStartTime"))
+                        if (property0.NameEquals("rxStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rxStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("rxEndTime"))
+                        if (property0.NameEquals("rxEndTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rxEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("txStartTime"))
+                        if (property0.NameEquals("txStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             txStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("txEndTime"))
+                        if (property0.NameEquals("txEndTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             txEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("errorMessage"))
+                        if (property0.NameEquals("errorMessage"u8))
                         {
                             errorMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("maximumElevationDegrees"))
+                        if (property0.NameEquals("maximumElevationDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maximumElevationDegrees = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("startAzimuthDegrees"))
+                        if (property0.NameEquals("startAzimuthDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startAzimuthDegrees = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("endAzimuthDegrees"))
+                        if (property0.NameEquals("endAzimuthDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endAzimuthDegrees = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("groundStationName"))
+                        if (property0.NameEquals("groundStationName"u8))
                         {
                             groundStationName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("startElevationDegrees"))
+                        if (property0.NameEquals("startElevationDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startElevationDegrees = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("endElevationDegrees"))
+                        if (property0.NameEquals("endElevationDegrees"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endElevationDegrees = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("antennaConfiguration"))
+                        if (property0.NameEquals("antennaConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             antennaConfiguration = OrbitalContactAntennaConfiguration.DeserializeOrbitalContactAntennaConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("contactProfile"))
+                        if (property0.NameEquals("contactProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             contactProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());

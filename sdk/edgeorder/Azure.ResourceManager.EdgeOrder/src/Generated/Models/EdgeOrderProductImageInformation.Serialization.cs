@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static EdgeOrderProductImageInformation DeserializeEdgeOrderProductImageInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeOrderProductImageType> imageType = default;
             Optional<Uri> imageUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageType"))
+                if (property.NameEquals("imageType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageType = new EdgeOrderProductImageType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("imageUrl"))
+                if (property.NameEquals("imageUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        imageUrl = null;
                         continue;
                     }
                     imageUrl = new Uri(property.Value.GetString());

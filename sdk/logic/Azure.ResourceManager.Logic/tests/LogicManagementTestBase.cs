@@ -57,14 +57,19 @@ namespace Azure.ResourceManager.Logic.Tests
 
         protected async Task<LogicWorkflowResource> CreateLogicWorkflow(ResourceGroupResource resourceGroup, ResourceIdentifier integrationAccountIdentifier, string logicWorkflowName)
         {
+            LogicWorkflowData data = ConstructLogicWorkflowData(resourceGroup.Data.Location, integrationAccountIdentifier);
+            var workflow = await resourceGroup.GetLogicWorkflows().CreateOrUpdateAsync(WaitUntil.Completed, logicWorkflowName, data);
+            return workflow.Value;
+        }
+
+        protected LogicWorkflowData ConstructLogicWorkflowData(AzureLocation location, ResourceIdentifier integrationAccountIdentifier)
+        {
             byte[] definition = File.ReadAllBytes(@"TestData/WorkflowDefinition.json");
-            LogicWorkflowData data = new LogicWorkflowData(resourceGroup.Data.Location)
+            return new LogicWorkflowData(location)
             {
                 Definition = new BinaryData(definition),
                 IntegrationAccount = new LogicResourceReference() { Id = integrationAccountIdentifier },
             };
-            var workflow = await resourceGroup.GetLogicWorkflows().CreateOrUpdateAsync(WaitUntil.Completed, logicWorkflowName, data);
-            return workflow.Value;
         }
 
         protected async Task<VirtualNetworkResource> CreateDefaultNetwork(ResourceGroupResource resourceGroup, string vnetName)

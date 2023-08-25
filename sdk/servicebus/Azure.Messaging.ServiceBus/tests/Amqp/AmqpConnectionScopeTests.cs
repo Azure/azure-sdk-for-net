@@ -27,6 +27,18 @@ namespace Azure.Messaging.ServiceBus.Tests
     public class AmqpConnectionScopeTests
     {
         /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorValidatesTheIdleTimeout()
+        {
+            var endpoint = new Uri("amqp://some.place.com");
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            Assert.That(() => new AmqpConnectionScope(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, TimeSpan.FromMilliseconds(-1)), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpConnectionScope.CalculateLinkAuthorizationRefreshInterval" />
         ///   method.
         /// </summary>
@@ -160,8 +172,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ItExpr.IsAny<ServiceBusTransportType>(),
                 ItExpr.IsAny<IWebProxy>(),
                 ItExpr.IsAny<string>(),
-                ItExpr.IsAny<TimeSpan>(),
-                ItExpr.IsAny<ServiceBusTransportMetrics>())
+                ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.FromResult(mockConnection))
                 .Verifiable();
 
@@ -229,8 +240,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ItExpr.IsAny<ServiceBusTransportType>(),
                 ItExpr.IsAny<IWebProxy>(),
                 ItExpr.IsAny<string>(),
-                ItExpr.IsAny<TimeSpan>(),
-                ItExpr.IsAny<ServiceBusTransportMetrics>())
+                ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.FromResult(mockConnection))
                 .Verifiable();
 
@@ -377,8 +387,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                                                 ServiceBusTransportType transportType,
                                                                                 IWebProxy proxy,
                                                                                 string scopeIdentifier,
-                                                                                TimeSpan timeout,
-                                                                                ServiceBusTransportMetrics metrics)
+                                                                                TimeSpan timeout)
             {
                 return Task.FromResult(MockConnection.Object);
             }

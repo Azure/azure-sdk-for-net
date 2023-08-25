@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         public static FluidRelayKeyName ToFluidRelayKeyName(this string value)
         {
-            if (string.Equals(value, "key1", StringComparison.InvariantCultureIgnoreCase)) return FluidRelayKeyName.PrimaryKey;
-            if (string.Equals(value, "key2", StringComparison.InvariantCultureIgnoreCase)) return FluidRelayKeyName.SecondaryKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key1")) return FluidRelayKeyName.PrimaryKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key2")) return FluidRelayKeyName.SecondaryKey;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FluidRelayKeyName value.");
         }
     }

@@ -20,8 +20,8 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
 
         public static Association ToAssociation(this string value)
         {
-            if (string.Equals(value, "subject", StringComparison.InvariantCultureIgnoreCase)) return Association.Subject;
-            if (string.Equals(value, "other", StringComparison.InvariantCultureIgnoreCase)) return Association.Other;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "subject")) return Association.Subject;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "other")) return Association.Other;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Association value.");
         }
     }

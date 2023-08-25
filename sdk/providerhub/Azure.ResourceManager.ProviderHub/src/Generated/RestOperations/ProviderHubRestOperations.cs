@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-09-01-preview";
+            _apiVersion = apiVersion ?? "2020-11-20";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        internal HttpMessage CreateCheckinManifestRequest(string subscriptionId, string providerNamespace, CheckinManifestParams checkinManifestParams)
+        internal HttpMessage CreateCheckinManifestRequest(string subscriptionId, string providerNamespace, CheckinManifestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.ProviderHub
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkinManifestParams);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -136,17 +136,17 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> Checkin the manifest. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="checkinManifestParams"> The required body parameters supplied to the checkin manifest operation. </param>
+        /// <param name="content"> The required body parameters supplied to the checkin manifest operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="checkinManifestParams"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckinManifestInfo>> CheckinManifestAsync(string subscriptionId, string providerNamespace, CheckinManifestParams checkinManifestParams, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckinManifestInfo>> CheckinManifestAsync(string subscriptionId, string providerNamespace, CheckinManifestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNull(checkinManifestParams, nameof(checkinManifestParams));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckinManifestRequest(subscriptionId, providerNamespace, checkinManifestParams);
+            using var message = CreateCheckinManifestRequest(subscriptionId, providerNamespace, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -165,17 +165,17 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> Checkin the manifest. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="checkinManifestParams"> The required body parameters supplied to the checkin manifest operation. </param>
+        /// <param name="content"> The required body parameters supplied to the checkin manifest operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="checkinManifestParams"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckinManifestInfo> CheckinManifest(string subscriptionId, string providerNamespace, CheckinManifestParams checkinManifestParams, CancellationToken cancellationToken = default)
+        public Response<CheckinManifestInfo> CheckinManifest(string subscriptionId, string providerNamespace, CheckinManifestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNull(checkinManifestParams, nameof(checkinManifestParams));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckinManifestRequest(subscriptionId, providerNamespace, checkinManifestParams);
+            using var message = CreateCheckinManifestRequest(subscriptionId, providerNamespace, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

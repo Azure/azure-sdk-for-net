@@ -1,24 +1,15 @@
-﻿Installing AutoRest version: 2.0.4283
+﻿Installing AutoRest version: v2
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/matthchr/azure-rest-api-specs/blob/feature/march-2020-dataplane-swagger-changes/specification/batch/data-plane/readme.md --csharp --version=2.0.4283 --reflect-api-versions --tag=package-2020-03.11.0 --csharp.output-folder=C:\work\github\azure-sdk-for-net\sdk\batch\Microsoft.Azure.Batch\src\GeneratedProtocol
-2020-03-03 19:30:34 UTC
+cmd.exe /c autorest.cmd https://github.com/jingjlii/azure-rest-api-specs/blob/release-batch-Microsoft.Batch-2023-05-01/specification/batch/data-plane/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\Users\jingjli.FAREAST\CodeBase\azure-sdk-for-net\sdk
+Autorest CSharp Version: 2.3.101
+2023-05-05 10:25:51 UTC
 Azure-rest-api-specs repository information
-GitHub fork: matthchr
-Branch:      feature/march-2020-dataplane-swagger-changes
-Commit:      997542077e619c5185c29a1543bcfd24570f271d
+GitHub fork: jingjlii
+Branch:      release-batch-Microsoft.Batch-2023-05-01
+Commit:      7823c54009dcc44734667560d74fe14f1151d2ed
 AutoRest information
-Requested version: 2.0.4283
-Bootstrapper version:    autorest@2.0.4283
-(node:80764) UnhandledPromiseRejectionWarning: TypeError: volume[member].bind is not a function
-    at patchFilesystem (C:\Users\matthchr\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:277:43)
-    at C:\Users\matthchr\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:281:18
-    at Object.global.staticloader.undo (C:\Users\matthchr\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:163:7)
-    at process.exit (C:\Users\matthchr\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:170:27)
-    at main (C:\Users\matthchr\.autorest\@microsoft.azure_autorest-core@2.0.4283\node_modules\@microsoft.azure\autorest-core\dist\app.js:514:21)
-(node:80764) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 90)
-(node:80764) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
-Shutting Down
-Shutting Down
+Requested version: 2.0.4421
+Bootstrapper version:    autorest@2.0.4413

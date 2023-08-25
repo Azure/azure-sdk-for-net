@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static ShareDestinationFormatType ToShareDestinationFormatType(this string value)
         {
-            if (string.Equals(value, "UnknownType", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.UnknownType;
-            if (string.Equals(value, "HCS", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.Hcs;
-            if (string.Equals(value, "BlockBlob", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.BlockBlob;
-            if (string.Equals(value, "PageBlob", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.PageBlob;
-            if (string.Equals(value, "AzureFile", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.AzureFile;
-            if (string.Equals(value, "ManagedDisk", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.ManagedDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UnknownType")) return ShareDestinationFormatType.UnknownType;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HCS")) return ShareDestinationFormatType.Hcs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlockBlob")) return ShareDestinationFormatType.BlockBlob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PageBlob")) return ShareDestinationFormatType.PageBlob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureFile")) return ShareDestinationFormatType.AzureFile;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManagedDisk")) return ShareDestinationFormatType.ManagedDisk;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareDestinationFormatType value.");
         }
     }

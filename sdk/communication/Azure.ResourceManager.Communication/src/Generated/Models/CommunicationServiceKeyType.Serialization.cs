@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Communication.Models
 
         public static CommunicationServiceKeyType ToCommunicationServiceKeyType(this string value)
         {
-            if (string.Equals(value, "Primary", StringComparison.InvariantCultureIgnoreCase)) return CommunicationServiceKeyType.Primary;
-            if (string.Equals(value, "Secondary", StringComparison.InvariantCultureIgnoreCase)) return CommunicationServiceKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return CommunicationServiceKeyType.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return CommunicationServiceKeyType.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CommunicationServiceKeyType value.");
         }
     }

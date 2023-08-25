@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HotCachePeriod))
             {
-                writer.WritePropertyName("hotCachePeriod");
+                writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
             writer.WriteEndObject();
@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoReadOnlyFollowingDatabase DeserializeKustoReadOnlyFollowingDatabase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             KustoKind kind = default;
             ResourceIdentifier id = default;
@@ -53,49 +57,48 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
             Optional<string> originalDatabaseName = default;
             Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
+            Optional<SuspensionDetails> suspensionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new KustoKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,96 +107,98 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new KustoProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("softDeletePeriod"))
+                        if (property0.NameEquals("softDeletePeriod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             softDeletePeriod = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("hotCachePeriod"))
+                        if (property0.NameEquals("hotCachePeriod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hotCachePeriod = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("statistics"))
+                        if (property0.NameEquals("statistics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("leaderClusterResourceId"))
+                        if (property0.NameEquals("leaderClusterResourceId"u8))
                         {
                             leaderClusterResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("attachedDatabaseConfigurationName"))
+                        if (property0.NameEquals("attachedDatabaseConfigurationName"u8))
                         {
                             attachedDatabaseConfigurationName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("principalsModificationKind"))
+                        if (property0.NameEquals("principalsModificationKind"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             principalsModificationKind = new KustoDatabasePrincipalsModificationKind(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("tableLevelSharingProperties"))
+                        if (property0.NameEquals("tableLevelSharingProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("originalDatabaseName"))
+                        if (property0.NameEquals("originalDatabaseName"u8))
                         {
                             originalDatabaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("databaseShareOrigin"))
+                        if (property0.NameEquals("databaseShareOrigin"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             databaseShareOrigin = new KustoDatabaseShareOrigin(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("suspensionDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            suspensionDetails = SuspensionDetails.DeserializeSuspensionDetails(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin));
+            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin), suspensionDetails.Value);
         }
     }
 }

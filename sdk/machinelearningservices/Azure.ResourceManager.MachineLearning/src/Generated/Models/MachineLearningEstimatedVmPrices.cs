@@ -12,25 +12,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The estimated price info for using a VM.
-    /// Serialized Name: EstimatedVMPrices
-    /// </summary>
+    /// <summary> The estimated price info for using a VM. </summary>
     public partial class MachineLearningEstimatedVmPrices
     {
         /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrices. </summary>
-        /// <param name="billingCurrency">
-        /// Three lettered code specifying the currency of the VM price. Example: USD
-        /// Serialized Name: EstimatedVMPrices.billingCurrency
-        /// </param>
-        /// <param name="unitOfMeasure">
-        /// The unit of time measurement for the specified VM price. Example: OneHour
-        /// Serialized Name: EstimatedVMPrices.unitOfMeasure
-        /// </param>
-        /// <param name="values">
-        /// The list of estimated prices for using a VM of a particular OS type, tier, etc.
-        /// Serialized Name: EstimatedVMPrices.values
-        /// </param>
+        /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
+        /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
+        /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal MachineLearningEstimatedVmPrices(MachineLearningBillingCurrency billingCurrency, MachineLearningUnitOfMeasure unitOfMeasure, IEnumerable<MachineLearningEstimatedVmPrice> values)
         {
@@ -42,18 +30,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrices. </summary>
-        /// <param name="billingCurrency">
-        /// Three lettered code specifying the currency of the VM price. Example: USD
-        /// Serialized Name: EstimatedVMPrices.billingCurrency
-        /// </param>
-        /// <param name="unitOfMeasure">
-        /// The unit of time measurement for the specified VM price. Example: OneHour
-        /// Serialized Name: EstimatedVMPrices.unitOfMeasure
-        /// </param>
-        /// <param name="values">
-        /// The list of estimated prices for using a VM of a particular OS type, tier, etc.
-        /// Serialized Name: EstimatedVMPrices.values
-        /// </param>
+        /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
+        /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
+        /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>
         internal MachineLearningEstimatedVmPrices(MachineLearningBillingCurrency billingCurrency, MachineLearningUnitOfMeasure unitOfMeasure, IReadOnlyList<MachineLearningEstimatedVmPrice> values)
         {
             BillingCurrency = billingCurrency;
@@ -61,20 +40,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Values = values;
         }
 
-        /// <summary>
-        /// Three lettered code specifying the currency of the VM price. Example: USD
-        /// Serialized Name: EstimatedVMPrices.billingCurrency
-        /// </summary>
+        /// <summary> Three lettered code specifying the currency of the VM price. Example: USD. </summary>
         public MachineLearningBillingCurrency BillingCurrency { get; }
-        /// <summary>
-        /// The unit of time measurement for the specified VM price. Example: OneHour
-        /// Serialized Name: EstimatedVMPrices.unitOfMeasure
-        /// </summary>
+        /// <summary> The unit of time measurement for the specified VM price. Example: OneHour. </summary>
         public MachineLearningUnitOfMeasure UnitOfMeasure { get; }
-        /// <summary>
-        /// The list of estimated prices for using a VM of a particular OS type, tier, etc.
-        /// Serialized Name: EstimatedVMPrices.values
-        /// </summary>
+        /// <summary> The list of estimated prices for using a VM of a particular OS type, tier, etc. </summary>
         public IReadOnlyList<MachineLearningEstimatedVmPrice> Values { get; }
     }
 }

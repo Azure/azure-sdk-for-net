@@ -7,6 +7,8 @@ Project("{F2AA3AEC-369A-49BB-A66C-9CA2098B4C52}") = "Azure.ResourceManager.Peeri
 EndProject
 Project("{F2AA3AEC-369A-49BB-A66C-9CA2098B4C52}") = "Azure.ResourceManager.Peering.Tests", "tests\Azure.ResourceManager.Peering.Tests.csproj", "{8D47082F-3E3C-43C4-BAEB-93184FA5D31B}"
 EndProject
+Project("{F2AA3AEC-369A-49BB-A66C-9CA2098B4C52}") = "Azure.ResourceManager.Peering.Samples", "samples\Azure.ResourceManager.Peering.Samples.csproj", "{414365B8-CB71-4021-877E-8435E141BDE1}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the LogAnalyticsQuery data model. </summary>
+    /// <summary>
+    /// A class representing the LogAnalyticsQuery data model.
+    /// A Log Analytics QueryPack-Query definition.
+    /// </summary>
     public partial class LogAnalyticsQueryData : ResourceData
     {
         /// <summary> Initializes a new instance of LogAnalyticsQueryData. </summary>

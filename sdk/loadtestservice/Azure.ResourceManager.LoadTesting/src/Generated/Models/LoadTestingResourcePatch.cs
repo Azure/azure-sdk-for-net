@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <summary> Description of the resource. </summary>
         public string Description { get; set; }
         /// <summary> CMK Encryption property. </summary>
-        public CustomerManagedKeyEncryptionProperties Encryption { get; set; }
+        public LoadTestingCmkEncryptionProperties Encryption { get; set; }
     }
 }

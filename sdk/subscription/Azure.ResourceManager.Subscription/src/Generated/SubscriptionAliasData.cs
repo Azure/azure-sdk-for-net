@@ -11,7 +11,10 @@ using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription
 {
-    /// <summary> A class representing the SubscriptionAlias data model. </summary>
+    /// <summary>
+    /// A class representing the SubscriptionAlias data model.
+    /// Subscription Information with the alias.
+    /// </summary>
     public partial class SubscriptionAliasData : ResourceData
     {
         /// <summary> Initializes a new instance of SubscriptionAliasData. </summary>

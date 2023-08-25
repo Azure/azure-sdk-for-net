@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static StopSellOffersPlansNotificationsResult DeserializeStopSellOffersPlansNotificationsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> offerId = default;
             Optional<string> displayName = default;
             Optional<bool> isEntire = default;
@@ -26,51 +30,47 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyList<string>> subscriptionsIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offerId"))
+                if (property.NameEquals("offerId"u8))
                 {
                     offerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEntire"))
+                if (property.NameEquals("isEntire"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEntire = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("messageCode"))
+                if (property.NameEquals("messageCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messageCode = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("icon"))
+                if (property.NameEquals("icon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        icon = null;
                         continue;
                     }
                     icon = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("plans"))
+                if (property.NameEquals("plans"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PlanNotificationDetails> array = new List<PlanNotificationDetails>();
@@ -81,21 +81,19 @@ namespace Azure.ResourceManager.Marketplace.Models
                     plans = array;
                     continue;
                 }
-                if (property.NameEquals("publicContext"))
+                if (property.NameEquals("publicContext"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicContext = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subscriptionsIds"))
+                if (property.NameEquals("subscriptionsIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

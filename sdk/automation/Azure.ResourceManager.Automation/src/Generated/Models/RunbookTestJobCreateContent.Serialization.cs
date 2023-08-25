@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(RunOn))
             {
-                writer.WritePropertyName("runOn");
+                writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
             writer.WriteEndObject();

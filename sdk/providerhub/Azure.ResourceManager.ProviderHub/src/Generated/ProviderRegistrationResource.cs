@@ -37,8 +37,6 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly ProviderRegistrationsRestOperations _providerRegistrationRestClient;
         private readonly ClientDiagnostics _defaultClientDiagnostics;
         private readonly ProviderHubRestOperations _defaultRestClient;
-        private readonly ClientDiagnostics _resourceActionsClientDiagnostics;
-        private readonly ResourceActionsRestOperations _resourceActionsRestClient;
         private readonly ProviderRegistrationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ProviderRegistrationResource"/> class for mocking. </summary>
@@ -65,15 +63,13 @@ namespace Azure.ResourceManager.ProviderHub
             _providerRegistrationRestClient = new ProviderRegistrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerRegistrationApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _defaultRestClient = new ProviderHubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _resourceActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _resourceActionsRestClient = new ResourceActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations";
+        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -105,8 +101,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the custom rollout details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}
-        /// Operation Id: CustomRollouts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomRollouts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -120,8 +124,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the custom rollout details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}
-        /// Operation Id: CustomRollouts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomRollouts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,8 +154,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the default rollout details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}
-        /// Operation Id: DefaultRollouts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultRollouts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,8 +177,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the default rollout details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}
-        /// Operation Id: DefaultRollouts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultRollouts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +207,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the notification registration details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/notificationRegistrations/{notificationRegistrationName}
-        /// Operation Id: NotificationRegistrations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/notificationRegistrations/{notificationRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationRegistrations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,8 +230,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the notification registration details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/notificationRegistrations/{notificationRegistrationName}
-        /// Operation Id: NotificationRegistrations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/notificationRegistrations/{notificationRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationRegistrations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,8 +260,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets a resource type details in the given subscription and provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}
-        /// Operation Id: ResourceTypeRegistrations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -231,8 +283,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets a resource type details in the given subscription and provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}
-        /// Operation Id: ResourceTypeRegistrations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -246,8 +306,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the provider registration details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}
-        /// Operation Id: ProviderRegistrations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderRegistrations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ProviderRegistrationResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -270,8 +338,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the provider registration details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}
-        /// Operation Id: ProviderRegistrations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderRegistrations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ProviderRegistrationResource> Get(CancellationToken cancellationToken = default)
@@ -294,8 +370,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Deletes a provider registration.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}
-        /// Operation Id: ProviderRegistrations_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderRegistrations_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -320,8 +404,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Deletes a provider registration.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}
-        /// Operation Id: ProviderRegistrations_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderRegistrations_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -346,8 +438,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Creates or updates the provider registration.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}
-        /// Operation Id: ProviderRegistrations_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderRegistrations_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The provider registration properties supplied to the CreateOrUpdate operation. </param>
@@ -376,8 +476,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Creates or updates the provider registration.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}
-        /// Operation Id: ProviderRegistrations_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderRegistrations_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The provider registration properties supplied to the CreateOrUpdate operation. </param>
@@ -406,8 +514,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Generates the manifest for the given provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateManifest
-        /// Operation Id: GenerateManifest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateManifest</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ResourceProviderManifest>> GenerateManifestAsync(CancellationToken cancellationToken = default)
@@ -428,8 +544,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Generates the manifest for the given provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateManifest
-        /// Operation Id: GenerateManifest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateManifest</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceProviderManifest> GenerateManifest(CancellationToken cancellationToken = default)
@@ -450,21 +574,29 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Checkin the manifest.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/checkinManifest
-        /// Operation Id: CheckinManifest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/checkinManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckinManifest</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="checkinManifestParams"> The required body parameters supplied to the checkin manifest operation. </param>
+        /// <param name="content"> The required body parameters supplied to the checkin manifest operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkinManifestParams"/> is null. </exception>
-        public virtual async Task<Response<CheckinManifestInfo>> CheckinManifestAsync(CheckinManifestParams checkinManifestParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CheckinManifestInfo>> CheckinManifestAsync(CheckinManifestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkinManifestParams, nameof(checkinManifestParams));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("ProviderRegistrationResource.CheckinManifest");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.CheckinManifestAsync(Id.SubscriptionId, Id.Name, checkinManifestParams, cancellationToken).ConfigureAwait(false);
+                var response = await _defaultRestClient.CheckinManifestAsync(Id.SubscriptionId, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -476,142 +608,30 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Checkin the manifest.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/checkinManifest
-        /// Operation Id: CheckinManifest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/checkinManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckinManifest</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="checkinManifestParams"> The required body parameters supplied to the checkin manifest operation. </param>
+        /// <param name="content"> The required body parameters supplied to the checkin manifest operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkinManifestParams"/> is null. </exception>
-        public virtual Response<CheckinManifestInfo> CheckinManifest(CheckinManifestParams checkinManifestParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CheckinManifestInfo> CheckinManifest(CheckinManifestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkinManifestParams, nameof(checkinManifestParams));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("ProviderRegistrationResource.CheckinManifest");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.CheckinManifest(Id.SubscriptionId, Id.Name, checkinManifestParams, cancellationToken);
+                var response = _defaultRestClient.CheckinManifest(Id.SubscriptionId, Id.Name, content, cancellationToken);
                 return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generates the operations api for the given provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateOperations
-        /// Operation Id: ProviderRegistrations_GenerateOperations
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationsDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationsDefinition> GenerateOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<OperationsDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _providerRegistrationRestClient.GenerateOperationsAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Generates the operations api for the given provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateOperations
-        /// Operation Id: ProviderRegistrations_GenerateOperations
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationsDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationsDefinition> GenerateOperations(CancellationToken cancellationToken = default)
-        {
-            Page<OperationsDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateOperations");
-                scope.Start();
-                try
-                {
-                    var response = _providerRegistrationRestClient.GenerateOperations(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Deletes resources.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourceActions/{resourceActionName}/deleteResources
-        /// Operation Id: ResourceActions_DeleteResources
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceActionName"> The resource action name. </param>
-        /// <param name="properties"> The properties supplied to the DeleteResources operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceActionName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<ResourceManagementAction>> DeleteResourcesResourceActionAsync(WaitUntil waitUntil, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceActionName, nameof(resourceActionName));
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            using var scope = _resourceActionsClientDiagnostics.CreateScope("ProviderRegistrationResource.DeleteResourcesResourceAction");
-            scope.Start();
-            try
-            {
-                var response = await _resourceActionsRestClient.DeleteResourcesAsync(Id.SubscriptionId, Id.Name, resourceActionName, properties, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ResourceManagementAction>(new ResourceManagementActionOperationSource(), _resourceActionsClientDiagnostics, Pipeline, _resourceActionsRestClient.CreateDeleteResourcesRequest(Id.SubscriptionId, Id.Name, resourceActionName, properties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes resources.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourceActions/{resourceActionName}/deleteResources
-        /// Operation Id: ResourceActions_DeleteResources
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceActionName"> The resource action name. </param>
-        /// <param name="properties"> The properties supplied to the DeleteResources operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceActionName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<ResourceManagementAction> DeleteResourcesResourceAction(WaitUntil waitUntil, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceActionName, nameof(resourceActionName));
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            using var scope = _resourceActionsClientDiagnostics.CreateScope("ProviderRegistrationResource.DeleteResourcesResourceAction");
-            scope.Start();
-            try
-            {
-                var response = _resourceActionsRestClient.DeleteResources(Id.SubscriptionId, Id.Name, resourceActionName, properties, cancellationToken);
-                var operation = new ProviderHubArmOperation<ResourceManagementAction>(new ResourceManagementActionOperationSource(), _resourceActionsClientDiagnostics, Pipeline, _resourceActionsRestClient.CreateDeleteResourcesRequest(Id.SubscriptionId, Id.Name, resourceActionName, properties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

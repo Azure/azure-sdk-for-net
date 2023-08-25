@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    /// <summary> A class representing the PostgreSqlConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlConfiguration data model.
+    /// Represents a Configuration.
+    /// </summary>
     public partial class PostgreSqlConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlConfigurationData. </summary>

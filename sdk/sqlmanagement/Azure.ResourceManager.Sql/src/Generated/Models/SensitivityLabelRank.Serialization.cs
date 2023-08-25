@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static SensitivityLabelRank ToSensitivityLabelRank(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return SensitivityLabelRank.None;
-            if (string.Equals(value, "Low", StringComparison.InvariantCultureIgnoreCase)) return SensitivityLabelRank.Low;
-            if (string.Equals(value, "Medium", StringComparison.InvariantCultureIgnoreCase)) return SensitivityLabelRank.Medium;
-            if (string.Equals(value, "High", StringComparison.InvariantCultureIgnoreCase)) return SensitivityLabelRank.High;
-            if (string.Equals(value, "Critical", StringComparison.InvariantCultureIgnoreCase)) return SensitivityLabelRank.Critical;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return SensitivityLabelRank.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Low")) return SensitivityLabelRank.Low;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Medium")) return SensitivityLabelRank.Medium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "High")) return SensitivityLabelRank.High;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical")) return SensitivityLabelRank.Critical;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SensitivityLabelRank value.");
         }
     }

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 if (HealthProbeSettings != null)
                 {
-                    writer.WritePropertyName("healthProbeSettings");
+                    writer.WritePropertyName("healthProbeSettings"u8);
                     writer.WriteObjectValue(HealthProbeSettings);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(Origins))
             {
-                writer.WritePropertyName("origins");
+                writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
                 {
-                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8);
                     writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
                 }
                 else
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
-                    writer.WritePropertyName("responseBasedOriginErrorDetectionSettings");
+                    writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
                     writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
                 }
                 else

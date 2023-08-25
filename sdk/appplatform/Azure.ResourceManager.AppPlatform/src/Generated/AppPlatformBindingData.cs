@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformBinding data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformBinding data model.
+    /// Binding resource payload
+    /// </summary>
     public partial class AppPlatformBindingData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformBindingData. </summary>

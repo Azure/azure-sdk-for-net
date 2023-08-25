@@ -16,6 +16,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static SearchAddressResultItem DeserializeSearchAddressResultItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchAddressResultType> type = default;
             Optional<string> id = default;
             Optional<double> score = default;
@@ -33,101 +37,92 @@ namespace Azure.Maps.Search.Models
             Optional<int> detourTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new SearchAddressResultType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("score"))
+                if (property.NameEquals("score"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     score = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("dist"))
+                if (property.NameEquals("dist"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dist = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("info"))
+                if (property.NameEquals("info"u8))
                 {
                     info = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entityType"))
+                if (property.NameEquals("entityType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     entityType = new GeographicEntity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("poi"))
+                if (property.NameEquals("poi"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     poi = PointOfInterest.DeserializePointOfInterest(property.Value);
                     continue;
                 }
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     address = MapsAddress.DeserializeMapsAddress(property.Value);
                     continue;
                 }
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     position = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
                     continue;
                 }
-                if (property.NameEquals("viewport"))
+                if (property.NameEquals("viewport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     viewport = BoundingBox.DeserializeBoundingBox(property.Value);
                     continue;
                 }
-                if (property.NameEquals("entryPoints"))
+                if (property.NameEquals("entryPoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FacilityEntryPoint> array = new List<FacilityEntryPoint>();
@@ -138,41 +133,37 @@ namespace Azure.Maps.Search.Models
                     entryPoints = array;
                     continue;
                 }
-                if (property.NameEquals("addressRanges"))
+                if (property.NameEquals("addressRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     addressRanges = AddressRanges.DeserializeAddressRanges(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataSources"))
+                if (property.NameEquals("dataSources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataSources = MapsDataSource.DeserializeMapsDataSource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("matchType"))
+                if (property.NameEquals("matchType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     matchType = new MapsSearchMatchType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("detourTime"))
+                if (property.NameEquals("detourTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     detourTime = property.Value.GetInt32();

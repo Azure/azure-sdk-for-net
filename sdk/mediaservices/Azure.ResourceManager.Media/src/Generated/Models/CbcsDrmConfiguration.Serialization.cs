@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FairPlay))
             {
-                writer.WritePropertyName("fairPlay");
+                writer.WritePropertyName("fairPlay"u8);
                 writer.WriteObjectValue(FairPlay);
             }
             if (Optional.IsDefined(PlayReady))
             {
-                writer.WritePropertyName("playReady");
+                writer.WritePropertyName("playReady"u8);
                 writer.WriteObjectValue(PlayReady);
             }
             if (Optional.IsDefined(Widevine))
             {
-                writer.WritePropertyName("widevine");
+                writer.WritePropertyName("widevine"u8);
                 writer.WriteObjectValue(Widevine);
             }
             writer.WriteEndObject();
@@ -35,36 +35,37 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CbcsDrmConfiguration DeserializeCbcsDrmConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamingPolicyFairPlayConfiguration> fairPlay = default;
             Optional<StreamingPolicyPlayReadyConfiguration> playReady = default;
             Optional<StreamingPolicyWidevineConfiguration> widevine = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fairPlay"))
+                if (property.NameEquals("fairPlay"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fairPlay = StreamingPolicyFairPlayConfiguration.DeserializeStreamingPolicyFairPlayConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("playReady"))
+                if (property.NameEquals("playReady"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     playReady = StreamingPolicyPlayReadyConfiguration.DeserializeStreamingPolicyPlayReadyConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("widevine"))
+                if (property.NameEquals("widevine"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     widevine = StreamingPolicyWidevineConfiguration.DeserializeStreamingPolicyWidevineConfiguration(property.Value);

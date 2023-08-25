@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal static ResourceStatus DeserializeResourceStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> status = default;
             Optional<string> reason = default;
@@ -23,36 +27,35 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<DateTimeOffset> lastUpdatedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     severity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedAt"))
+                if (property.NameEquals("lastUpdatedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedAt = property.Value.GetDateTimeOffset("O");

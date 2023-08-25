@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,116 +44,100 @@ namespace Azure.ResourceManager.Attestation
 
         /// <summary>
         /// Returns a list of attestation providers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders
-        /// Operation Id: AttestationProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AttestationProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AttestationProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAttestationProviders");
-                scope.Start();
-                try
-                {
-                    var response = await AttestationProviderRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationProviderResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of attestation providers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders
-        /// Operation Id: AttestationProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationProviderResource> GetAttestationProviders(CancellationToken cancellationToken = default)
         {
-            Page<AttestationProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AttestationProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAttestationProviders");
-                scope.Start();
-                try
-                {
-                    var response = AttestationProviderRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationProviderResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get the default provider
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders
-        /// Operation Id: AttestationProviders_ListDefault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_ListDefault</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AttestationProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AttestationProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider");
-                scope.Start();
-                try
-                {
-                    var response = await AttestationProviderRestClient.ListDefaultAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationProviderResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get the default provider
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders
-        /// Operation Id: AttestationProviders_ListDefault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_ListDefault</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationProviderResource> GetAttestationProvidersByDefaultProvider(CancellationToken cancellationToken = default)
         {
-            Page<AttestationProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AttestationProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider");
-                scope.Start();
-                try
-                {
-                    var response = AttestationProviderRestClient.ListDefault(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationProviderResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get the default provider by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider
-        /// Operation Id: AttestationProviders_GetDefaultByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_GetDefaultByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the default provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,8 +159,16 @@ namespace Azure.ResourceManager.Attestation
 
         /// <summary>
         /// Get the default provider by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider
-        /// Operation Id: AttestationProviders_GetDefaultByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_GetDefaultByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the default provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

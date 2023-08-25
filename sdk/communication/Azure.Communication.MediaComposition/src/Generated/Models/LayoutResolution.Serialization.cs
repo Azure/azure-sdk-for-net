@@ -15,25 +15,29 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("width");
+            writer.WritePropertyName("width"u8);
             writer.WriteNumberValue(Width);
-            writer.WritePropertyName("height");
+            writer.WritePropertyName("height"u8);
             writer.WriteNumberValue(Height);
             writer.WriteEndObject();
         }
 
         internal static LayoutResolution DeserializeLayoutResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int width = default;
             int height = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("width"))
+                if (property.NameEquals("width"u8))
                 {
                     width = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("height"))
+                if (property.NameEquals("height"u8))
                 {
                     height = property.Value.GetInt32();
                     continue;

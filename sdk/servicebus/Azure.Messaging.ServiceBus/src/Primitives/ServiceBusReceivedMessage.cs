@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
 using Azure.Core.Amqp;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 
 namespace Azure.Messaging.ServiceBus
@@ -41,6 +42,22 @@ namespace Azure.Messaging.ServiceBus
 
         internal ServiceBusReceivedMessage(): this(body: default)
         { }
+
+        /// <summary>
+        /// Constructs a <see cref="ServiceBusReceivedMessage"/> from its serialized AMQP form.
+        /// </summary>
+        /// <param name="message">The AMQP message.</param>
+        /// <param name="lockTokenBytes">The lock token bytes.</param>
+        /// <returns>The constructed <see cref="ServiceBusReceivedMessage"/>.</returns>
+        public static ServiceBusReceivedMessage FromAmqpMessage(AmqpAnnotatedMessage message, BinaryData lockTokenBytes)
+        {
+            var receivedMessage = new ServiceBusReceivedMessage(message);
+            if (GuidUtilities.TryParseGuidBytes(lockTokenBytes, out Guid lockToken))
+            {
+                receivedMessage.LockTokenGuid = lockToken;
+            }
+            return receivedMessage;
+        }
 
         /// <summary>
         /// Indicates whether the user has settled the message as part of their callback.
@@ -179,12 +196,14 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string ReplyTo => AmqpMessage.Properties.ReplyTo?.ToString();
 
-        /// <summary>Gets the date and time in UTC at which the message will be enqueued. This
-        /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.</summary>
-        /// <value>The scheduled enqueue time in UTC. This value is for delayed message sending.
-        /// It is utilized to delay messages sending to a specific time in the future.</value>
-        /// <remarks> Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
-        /// depends on the queue's workload and its state.</remarks>
+        /// <summary>
+        /// Gets or sets the date and time, in UTC, at which the message should be made available to receivers. This property does not control when a message is sent by the
+        /// client. Sending happens immediately when `SendAsync` is called.  Service Bus will hide the message from receivers until the the requested time.
+        /// </summary>
+        /// <value>
+        /// The date and time, in UTC, at which the message should be available to receivers. This time may not be exact; the actual time depends on the entity's workload and state.
+        /// </value>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/message-sequencing#scheduled-messages">Scheduled messages</seealso>
         public DateTimeOffset ScheduledEnqueueTime => AmqpMessage.GetScheduledEnqueueTime();
 
         /// <summary>
@@ -427,10 +446,6 @@ namespace Azure.Messaging.ServiceBus
                 }
 
                 return ServiceBusMessageState.Active;
-            }
-            internal set
-            {
-                AmqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = value;
             }
         }
 

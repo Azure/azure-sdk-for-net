@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DisabledSslProtocols))
             {
-                writer.WritePropertyName("disabledSslProtocols");
+                writer.WritePropertyName("disabledSslProtocols"u8);
                 writer.WriteStartArray();
                 foreach (var item in DisabledSslProtocols)
                 {
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(PolicyType))
             {
-                writer.WritePropertyName("policyType");
+                writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
             if (Optional.IsDefined(PolicyName))
             {
-                writer.WritePropertyName("policyName");
+                writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName.Value.ToString());
             }
             if (Optional.IsCollectionDefined(CipherSuites))
             {
-                writer.WritePropertyName("cipherSuites");
+                writer.WritePropertyName("cipherSuites"u8);
                 writer.WriteStartArray();
                 foreach (var item in CipherSuites)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(MinProtocolVersion))
             {
-                writer.WritePropertyName("minProtocolVersion");
+                writer.WritePropertyName("minProtocolVersion"u8);
                 writer.WriteStringValue(MinProtocolVersion.Value.ToString());
             }
             writer.WriteEndObject();
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewaySslPolicy DeserializeApplicationGatewaySslPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ApplicationGatewaySslProtocol>> disabledSslProtocols = default;
             Optional<ApplicationGatewaySslPolicyType> policyType = default;
             Optional<ApplicationGatewaySslPolicyName> policyName = default;
@@ -63,11 +67,10 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("disabledSslProtocols"))
+                if (property.NameEquals("disabledSslProtocols"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationGatewaySslProtocol> array = new List<ApplicationGatewaySslProtocol>();
@@ -78,31 +81,28 @@ namespace Azure.ResourceManager.Network.Models
                     disabledSslProtocols = array;
                     continue;
                 }
-                if (property.NameEquals("policyType"))
+                if (property.NameEquals("policyType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyType = new ApplicationGatewaySslPolicyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyName = new ApplicationGatewaySslPolicyName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cipherSuites"))
+                if (property.NameEquals("cipherSuites"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationGatewaySslCipherSuite> array = new List<ApplicationGatewaySslCipherSuite>();
@@ -113,11 +113,10 @@ namespace Azure.ResourceManager.Network.Models
                     cipherSuites = array;
                     continue;
                 }
-                if (property.NameEquals("minProtocolVersion"))
+                if (property.NameEquals("minProtocolVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minProtocolVersion = new ApplicationGatewaySslProtocol(property.Value.GetString());

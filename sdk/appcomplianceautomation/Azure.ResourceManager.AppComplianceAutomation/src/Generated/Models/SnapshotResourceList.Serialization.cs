@@ -16,15 +16,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static SnapshotResourceList DeserializeSnapshotResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SnapshotResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SnapshotResourceData> array = new List<SnapshotResourceData>();
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

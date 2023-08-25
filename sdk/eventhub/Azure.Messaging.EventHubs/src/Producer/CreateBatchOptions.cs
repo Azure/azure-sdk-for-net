@@ -23,7 +23,9 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <value>
         ///   The desired limit, in bytes, for the size of the associated event batch.  If <c>null</c>,
-        ///   the maximum size allowed by the active transport will be used.
+        ///   the maximum size allowed by the associated Event Hub will be used.
+        ///
+        ///   The default maximum size will be set to the maximum allowed by the Event Hub.
         /// </value>
         ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested size is less than 24.</exception>

@@ -14,25 +14,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static NetworkStatusContractWithLocation DeserializeNetworkStatusContractWithLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<NetworkStatusContract> networkStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkStatus"))
+                if (property.NameEquals("networkStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkStatus = NetworkStatusContract.DeserializeNetworkStatusContract(property.Value);

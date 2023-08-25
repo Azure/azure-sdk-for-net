@@ -55,13 +55,19 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// configuration for the location.</param>
         /// <param name="gatewayRegionalUrl">Gateway URL of the API Management
         /// service in the Region.</param>
+        /// <param name="natGatewayState">Property can be used to enable NAT
+        /// Gateway for this API Management service. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="outboundPublicIPAddresses">Outbound public IPV4
+        /// address prefixes associated with NAT Gateway deployed service.
+        /// Available only for Premium SKU on stv2 platform.</param>
         /// <param name="disableGateway">Property only valid for an Api
         /// Management service deployed in multiple locations. This can be used
         /// to disable the gateway in this additional location.</param>
         /// <param name="platformVersion">Compute Platform Version running the
         /// service. Possible values include: 'undetermined', 'stv1', 'stv2',
         /// 'mtv1'</param>
-        public AdditionalLocation(string location, ApiManagementServiceSkuProperties sku, IList<string> zones = default(IList<string>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), string publicIpAddressId = default(string), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), string gatewayRegionalUrl = default(string), bool? disableGateway = default(bool?), string platformVersion = default(string))
+        public AdditionalLocation(string location, ApiManagementServiceSkuProperties sku, IList<string> zones = default(IList<string>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), string publicIpAddressId = default(string), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), string gatewayRegionalUrl = default(string), string natGatewayState = default(string), IList<string> outboundPublicIPAddresses = default(IList<string>), bool? disableGateway = default(bool?), string platformVersion = default(string))
         {
             Location = location;
             Sku = sku;
@@ -71,6 +77,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             PublicIpAddressId = publicIpAddressId;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             GatewayRegionalUrl = gatewayRegionalUrl;
+            NatGatewayState = natGatewayState;
+            OutboundPublicIPAddresses = outboundPublicIPAddresses;
             DisableGateway = disableGateway;
             PlatformVersion = platformVersion;
             CustomInit();
@@ -137,6 +145,22 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "gatewayRegionalUrl")]
         public string GatewayRegionalUrl { get; private set; }
+
+        /// <summary>
+        /// Gets or sets property can be used to enable NAT Gateway for this
+        /// API Management service. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "natGatewayState")]
+        public string NatGatewayState { get; set; }
+
+        /// <summary>
+        /// Gets outbound public IPV4 address prefixes associated with NAT
+        /// Gateway deployed service. Available only for Premium SKU on stv2
+        /// platform.
+        /// </summary>
+        [JsonProperty(PropertyName = "outboundPublicIPAddresses")]
+        public IList<string> OutboundPublicIPAddresses { get; private set; }
 
         /// <summary>
         /// Gets or sets property only valid for an Api Management service

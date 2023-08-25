@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchPrivateLinkServiceConnectionStatus ToBatchPrivateLinkServiceConnectionStatus(this string value)
         {
-            if (string.Equals(value, "Approved", StringComparison.InvariantCultureIgnoreCase)) return BatchPrivateLinkServiceConnectionStatus.Approved;
-            if (string.Equals(value, "Pending", StringComparison.InvariantCultureIgnoreCase)) return BatchPrivateLinkServiceConnectionStatus.Pending;
-            if (string.Equals(value, "Rejected", StringComparison.InvariantCultureIgnoreCase)) return BatchPrivateLinkServiceConnectionStatus.Rejected;
-            if (string.Equals(value, "Disconnected", StringComparison.InvariantCultureIgnoreCase)) return BatchPrivateLinkServiceConnectionStatus.Disconnected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved")) return BatchPrivateLinkServiceConnectionStatus.Approved;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return BatchPrivateLinkServiceConnectionStatus.Pending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected")) return BatchPrivateLinkServiceConnectionStatus.Rejected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected")) return BatchPrivateLinkServiceConnectionStatus.Disconnected;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchPrivateLinkServiceConnectionStatus value.");
         }
     }

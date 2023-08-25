@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static EdgeProfileSubscription DeserializeEdgeProfileSubscription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> registrationId = default;
             Optional<ResourceIdentifier> id = default;
             Optional<DataBoxEdgeSubscriptionState> state = default;
@@ -28,47 +32,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<IReadOnlyList<SubscriptionRegisteredFeatures>> registeredFeatures = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registrationId"))
+                if (property.NameEquals("registrationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registrationId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new DataBoxEdgeSubscriptionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("registrationDate"))
+                if (property.NameEquals("registrationDate"u8))
                 {
                     registrationDate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,36 +78,34 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("tenantId"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("locationPlacementId"))
+                        if (property0.NameEquals("locationPlacementId"u8))
                         {
                             locationPlacementId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("quotaId"))
+                        if (property0.NameEquals("quotaId"u8))
                         {
                             quotaId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serializedDetails"))
+                        if (property0.NameEquals("serializedDetails"u8))
                         {
                             serializedDetails = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("registeredFeatures"))
+                        if (property0.NameEquals("registeredFeatures"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubscriptionRegisteredFeatures> array = new List<SubscriptionRegisteredFeatures>();

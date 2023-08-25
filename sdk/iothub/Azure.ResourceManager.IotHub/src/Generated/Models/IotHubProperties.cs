@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
         /// <param name="ipFilterRules"> The IP filter rules. </param>
         /// <param name="networkRuleSets"> Network Rule Set Properties of IotHub. </param>
-        /// <param name="minTlsVersion"> Specifies the minimum TLS version to support for this hub. Can be set to &quot;1.2&quot; to have clients that use a TLS version below 1.2 to be rejected. </param>
+        /// <param name="minTlsVersion"> Specifies the minimum TLS version to support for this hub. Can be set to "1.2" to have clients that use a TLS version below 1.2 to be rejected. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="state"> The hub state. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public IList<IotHubIPFilterRule> IPFilterRules { get; }
         /// <summary> Network Rule Set Properties of IotHub. </summary>
         public IotHubNetworkRuleSetProperties NetworkRuleSets { get; set; }
-        /// <summary> Specifies the minimum TLS version to support for this hub. Can be set to &quot;1.2&quot; to have clients that use a TLS version below 1.2 to be rejected. </summary>
+        /// <summary> Specifies the minimum TLS version to support for this hub. Can be set to "1.2" to have clients that use a TLS version below 1.2 to be rejected. </summary>
         public string MinTlsVersion { get; set; }
         /// <summary> Private endpoint connections created on this IotHub. </summary>
         public IList<IotHubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }

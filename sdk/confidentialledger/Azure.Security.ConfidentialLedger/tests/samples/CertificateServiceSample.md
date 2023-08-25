@@ -6,7 +6,7 @@ However, if specific customizations are needed to the client option's `Transport
 Because Confidential Ledgers use self-signed certificates securely generated and stored in an SGX enclave, the certificate for each Confidential Ledger must first be retrieved from the Confidential Ledger Identity Service.
 
 ```C# Snippet:GetIdentity
-Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
+Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com"); // The hostname from the identityServiceUri
 var identityClient = new ConfidentialLedgerCertificateClient(identityServiceEndpoint);
 
 // Get the ledger's  TLS certificate for our ledger.

@@ -4,14 +4,10 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.DataMovement;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -28,28 +24,24 @@ namespace Azure.Storage.DataMovement
         internal DataTransfer _dataTransfer { get; set; }
 
         /// <summary>
-        /// Cancellation Token Source
-        ///
-        /// Will be initialized when the tasks are running.
-        ///
-        /// Will be disposed of once all tasks of the job have completed or have been cancelled.
-        /// </summary>
-        internal CancellationTokenSource _cancellationTokenSource { get; set; }
-
-        /// <summary>
         /// Plan file writer for the respective job
         /// </summary>
         internal TransferCheckpointer _checkpointer { get; set; }
 
         /// <summary>
+        /// Internal progress tracker for tracking and reporting progress of the transfer
+        /// </summary>
+        internal TransferProgressTracker _progressTracker;
+
+        /// <summary>
         /// Source resource
         /// </summary>
-        internal StorageResource _sourceResource;
+        internal StorageResourceItem _sourceResource;
 
         /// <summary>
         /// Destination Resource
         /// </summary>
-        internal StorageResource _destinationResource;
+        internal StorageResourceItem _destinationResource;
 
         /// <summary>
         /// Source resource
@@ -88,17 +80,14 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The error handling options
         /// </summary>
-        internal ErrorHandlingOptions _errorHandling;
+        internal DataTransferErrorMode _errorMode;
 
         /// <summary>
         /// Determines how files are created or if they should be overwritten if they already exists
         /// </summary>
-        internal StorageResourceCreateMode _createMode;
+        internal StorageResourceCreationPreference _creationPreference;
 
-        /// <summary>
-        /// Transfer Status for the job.
-        /// </summary>
-        internal StorageTransferStatus _transferStatus;
+        private object _statusLock = new object();
 
         /// <summary>
         /// To help set the job status when all job parts have completed.
@@ -121,19 +110,21 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// If the transfer has any failed events that occur the event will get added to this handler.
         /// </summary>
-        public SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler { get; internal set; }
+        public SyncAsyncEventHandler<TransferItemFailedEventArgs> TransferFailedEventHandler { get; internal set; }
 
         /// <summary>
         /// Number of single transfers skipped during Transfer due to no overwrite allowed as specified in
-        /// <see cref="StorageResourceCreateMode.Skip"/>
+        /// <see cref="StorageResourceCreationPreference.SkipIfExists"/>
         /// </summary>
-        public SyncAsyncEventHandler<TransferSkippedEventArgs> TransferSkippedEventHandler { get; internal set; }
+        public SyncAsyncEventHandler<TransferItemSkippedEventArgs> TransferSkippedEventHandler { get; internal set; }
 
         /// <summary>
-        /// If a single transfer within the resource contianer gets transferred successfully the event
+        /// If a single transfer within the resource container gets transferred successfully the event
         /// will get added to this handler
         /// </summary>
-        public SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler { get; internal set; }
+        public SyncAsyncEventHandler<TransferItemCompletedEventArgs> TransferItemCompletedEventHandler { get; internal set; }
+
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// Array pools for reading from streams to upload
@@ -143,6 +134,12 @@ namespace Azure.Storage.DataMovement
 
         public List<JobPartInternal> _jobParts;
         internal bool _enumerationComplete;
+        private int _pendingJobParts;
+        private bool _jobPartPaused;
+        private bool _jobPartFailed;
+        private bool _jobPartSkipped;
+
+        public CancellationToken _cancellationToken { get; internal set; }
 
         /// <summary>
         /// Constructor for mocking
@@ -151,36 +148,41 @@ namespace Azure.Storage.DataMovement
         {
         }
 
-        internal TransferJobInternal(
+        private TransferJobInternal(
             DataTransfer dataTransfer,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkPointer,
-            ErrorHandlingOptions errorHandling,
-            StorageResourceCreateMode createMode,
+            DataTransferErrorMode errorHandling,
+            StorageResourceCreationPreference creationPreference,
             ArrayPool<byte> arrayPool,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
-            SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
-            SyncAsyncEventHandler<TransferSkippedEventArgs> skippedEventHandler,
-            SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler)
+            SyncAsyncEventHandler<TransferItemFailedEventArgs> failedEventHandler,
+            SyncAsyncEventHandler<TransferItemSkippedEventArgs> skippedEventHandler,
+            SyncAsyncEventHandler<TransferItemCompletedEventArgs> singleTransferEventHandler,
+            ClientDiagnostics clientDiagnostics)
         {
+            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
-            _errorHandling = errorHandling;
-            _createMode = createMode;
+            _dataTransfer._state.TrySetTransferStatus(DataTransferStatus.Queued);
+            _errorMode = errorHandling;
             _checkpointer = checkPointer;
+            _creationPreference = creationPreference;
             QueueChunkTask = queueChunkTask;
-            _transferStatus = StorageTransferStatus.Queued;
             _hasFailures = false;
             _hasSkipped = false;
-
-            _cancellationTokenSource = new CancellationTokenSource();
             _arrayPool = arrayPool;
             _jobParts = new List<JobPartInternal>();
             _enumerationComplete = false;
+            _pendingJobParts = 0;
+            _cancellationToken = dataTransfer._state.CancellationTokenSource.Token;
 
+            JobPartStatusEvents += JobPartEvent;
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
             TransferSkippedEventHandler = skippedEventHandler;
-            SingleTransferCompletedEventHandler = singleTransferEventHandler;
+            TransferItemCompletedEventHandler = singleTransferEventHandler;
+            ClientDiagnostics = clientDiagnostics;
         }
 
         /// <summary>
@@ -188,29 +190,32 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal TransferJobInternal(
             DataTransfer dataTransfer,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
-            SingleTransferOptions transferOptions,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingOptions errorHandling,
-            ArrayPool<byte> arrayPool)
+            DataTransferErrorMode errorHandling,
+            ArrayPool<byte> arrayPool,
+            ClientDiagnostics clientDiagnostics)
             : this(dataTransfer,
                   queueChunkTask,
                   checkpointer,
                   errorHandling,
-                  transferOptions.CreateMode,
+                  transferOptions.CreationPreference,
                   arrayPool,
                   transferOptions.GetTransferStatus(),
                   transferOptions.GetFailed(),
                   transferOptions.GetSkipped(),
-                  default)
+                  default,
+                  clientDiagnostics)
         {
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _isSingleResource = true;
             _initialTransferSize = transferOptions?.InitialTransferSize;
             _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
         }
 
         /// <summary>
@@ -220,25 +225,30 @@ namespace Azure.Storage.DataMovement
             DataTransfer dataTransfer,
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
-            ContainerTransferOptions transferOptions,
+            DataTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingOptions errorHandling,
-            ArrayPool<byte> arrayPool)
+            DataTransferErrorMode errorHandling,
+            ArrayPool<byte> arrayPool,
+            ClientDiagnostics clientDiagnostics)
             : this(dataTransfer,
                   queueChunkTask,
                   checkpointer,
                   errorHandling,
-                  transferOptions.CreateMode,
+                  transferOptions.CreationPreference,
                   arrayPool,
                   transferOptions.GetTransferStatus(),
                   transferOptions.GetFailed(),
                   transferOptions.GetSkipped(),
-                  transferOptions.GetCompleted())
+                  transferOptions.GetCompleted(),
+                  clientDiagnostics)
         {
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _isSingleResource = false;
+            _initialTransferSize = transferOptions?.InitialTransferSize;
+            _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
         }
 
         public void Dispose()
@@ -255,36 +265,65 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Pauses all job parts within the job.
-        /// </summary>
-        public async Task PauseTransferJobAsync()
-        {
-            TriggerJobCancellation();
-            await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Resume respective job
-        /// </summary>
-        /// <param name="sourceCredential"></param>
-        /// <param name="destinationCredential"></param>
-        public abstract void ProcessResumeTransfer(
-            object sourceCredential = default,
-            object destinationCredential = default);
-
-        /// <summary>
         /// Processes the job to job parts
         /// </summary>
         /// <returns>An IEnumerable that contains the job parts</returns>
         public abstract IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync();
 
-        public void TriggerJobCancellation()
+        /// <summary>
+        /// Triggers the cancellation for the Job Part.
+        ///
+        /// If the status is set to <see cref="DataTransferStatus.Paused"/>
+        /// and any chunks is still processing to be cancelled is will be set to <see cref="DataTransferStatus.PauseInProgress"/>
+        /// until the chunks finish then it will be set to <see cref="DataTransferStatus.Paused"/>.
+        ///
+        /// If the status is set to <see cref="DataTransferStatus.CompletedWithFailedTransfers"/>
+        /// and any chunks is still processing to be cancelled is will be set to <see cref="DataTransferStatus.CancellationInProgress"/>
+        /// until the chunks finish then it will be set to <see cref="DataTransferStatus.CompletedWithFailedTransfers"/>.
+        /// </summary>
+        /// <returns>The task to wait until the cancellation has been triggered.</returns>
+        public async Task TriggerJobCancellationAsync()
         {
-            DisposeHandlers();
-            if (!_cancellationTokenSource.IsCancellationRequested)
+            if (!_dataTransfer._state.CancellationTokenSource.IsCancellationRequested)
             {
-                _cancellationTokenSource.Cancel();
+                await OnJobStatusChangedAsync(DataTransferStatus.CancellationInProgress).ConfigureAwait(false);
+                _dataTransfer._state.TriggerCancellation();
             }
+        }
+
+        /// <summary>
+        /// Invokes Failed Argument Event.
+        /// </summary>
+        /// <param name="ex">The exception which caused the failed argument event to be raised.</param>
+        /// <returns></returns>
+        public async virtual Task InvokeFailedArgAsync(Exception ex)
+        {
+            if (ex is not OperationCanceledException)
+            {
+                if (TransferFailedEventHandler != null)
+                {
+                    // TODO: change to RaiseAsync
+                    await TransferFailedEventHandler.RaiseAsync(
+                        new TransferItemFailedEventArgs(
+                            _dataTransfer.Id,
+                            _sourceResource,
+                            _destinationResource,
+                            ex,
+                            false,
+                            _cancellationToken),
+                        nameof(TransferJobInternal),
+                        nameof(TransferFailedEventHandler),
+                        ClientDiagnostics)
+                        .ConfigureAwait(false);
+                }
+            }
+            // Trigger job cancellation if the failed handler is enabled
+            await TriggerJobCancellationAsync().ConfigureAwait(false);
+
+            // If we're failing from a Transfer Job point, it means we have aborted the job
+            // at the listing phase. However it's possible that some job parts may be in flight
+            // and we have to check if they're finished cleaning up yet.
+            await CheckAndUpdateStatusAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -293,89 +332,197 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async Task JobPartEvent(TransferStatusEventArgs args)
         {
-            if (args.StorageTransferStatus == StorageTransferStatus.Completed
-                && _transferStatus < StorageTransferStatus.Completed)
+            DataTransferStatus jobPartStatus = args.StorageTransferStatus;
+            DataTransferStatus jobStatus = _dataTransfer._state.GetTransferStatus();
+
+            // Keep track of paused, failed, and skipped which we will use to determine final job status
+            if (jobPartStatus == DataTransferStatus.Paused)
             {
+                _jobPartPaused = true;
+            }
+            else if (jobPartStatus == DataTransferStatus.CompletedWithFailedTransfers)
+            {
+                _jobPartFailed = true;
+            }
+            else if (jobPartStatus == DataTransferStatus.CompletedWithSkippedTransfers)
+            {
+                _jobPartSkipped = true;
+            }
+
+            // Cancel the entire job if one job part fails and StopOnFailure is set
+            if (_errorMode == DataTransferErrorMode.StopOnAnyFailure &&
+                jobPartStatus == DataTransferStatus.CompletedWithFailedTransfers &&
+                jobStatus != DataTransferStatus.CancellationInProgress &&
+                jobStatus != DataTransferStatus.CompletedWithFailedTransfers &&
+                jobStatus != DataTransferStatus.CompletedWithSkippedTransfers &&
+                jobStatus != DataTransferStatus.Completed)
+            {
+                await TriggerJobCancellationAsync().ConfigureAwait(false);
+                jobStatus = _dataTransfer._state.GetTransferStatus();
+            }
+
+            if ((jobPartStatus == DataTransferStatus.Paused ||
+                 jobPartStatus == DataTransferStatus.Completed ||
+                 jobPartStatus == DataTransferStatus.CompletedWithSkippedTransfers ||
+                 jobPartStatus == DataTransferStatus.CompletedWithFailedTransfers)
+                && (jobStatus == DataTransferStatus.Queued ||
+                    jobStatus == DataTransferStatus.InProgress ||
+                    jobStatus == DataTransferStatus.PauseInProgress ||
+                    jobStatus == DataTransferStatus.CancellationInProgress))
+            {
+                Interlocked.Decrement(ref _pendingJobParts);
+
                 if (_enumerationComplete)
                 {
-                    await CheckAndUpdateCompletedStatus().ConfigureAwait(false);
+                    await CheckAndUpdateStatusAsync().ConfigureAwait(false);
                 }
-            }
-            else if (args.StorageTransferStatus == StorageTransferStatus.Paused &&
-                    _transferStatus == StorageTransferStatus.Paused)
-            {
-                await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);
-            }
-            else if (args.StorageTransferStatus > _transferStatus)
-            {
-                await OnJobStatusChangedAsync(args.StorageTransferStatus).ConfigureAwait(false);
             }
         }
 
-        public async Task OnJobStatusChangedAsync(StorageTransferStatus status)
+        public async Task OnJobStatusChangedAsync(DataTransferStatus status)
         {
-            //TODO: change to RaiseAsync after implementing ClientDiagnostics for TransferManager
-            if (_transferStatus != status)
+            bool statusChanged = false;
+            lock (_statusLock)
             {
-                _transferStatus = status;
+                statusChanged = _dataTransfer._state.TrySetTransferStatus(status);
+            }
+            if (statusChanged)
+            {
+                // If we are in a final state, dispose the JobPartEvent handlers
+                if (status == DataTransferStatus.Completed ||
+                    status == DataTransferStatus.CompletedWithSkippedTransfers ||
+                    status == DataTransferStatus.CompletedWithFailedTransfers ||
+                    status == DataTransferStatus.Paused)
+                {
+                    DisposeHandlers();
+                }
+
                 if (TransferStatusEventHandler != null)
                 {
-                    await TransferStatusEventHandler.Invoke(
+                    await TransferStatusEventHandler.RaiseAsync(
                         new TransferStatusEventArgs(
                             transferId: _dataTransfer.Id,
                             transferStatus: status,
                             isRunningSynchronously: false,
-                            cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
+                            cancellationToken: _cancellationToken),
+                        nameof(TransferJobInternal),
+                        nameof(TransferStatusEventHandler),
+                        ClientDiagnostics).ConfigureAwait(false);
                 }
-                await _dataTransfer._state.SetTransferStatus(status).ConfigureAwait(false);
+                await SetCheckpointerStatus(status).ConfigureAwait(false);
             }
         }
 
-        public async Task OnJobPartStatusChangedAsync(StorageTransferStatus status)
+        public async Task OnJobPartStatusChangedAsync(DataTransferStatus status)
         {
             //TODO: change to RaiseAsync after implementing ClientDiagnostics for TransferManager
-            await JobPartStatusEvents.Invoke(
+            await JobPartStatusEvents.RaiseAsync(
                 new TransferStatusEventArgs(
                     transferId: _dataTransfer.Id,
                     transferStatus: status,
                     isRunningSynchronously: false,
-                    cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
+                    cancellationToken: _cancellationToken),
+                nameof(TransferJobInternal),
+                nameof(JobPartStatusEvents),
+                ClientDiagnostics)
+                .ConfigureAwait(false);
+        }
+
+        internal async virtual Task SetCheckpointerStatus(DataTransferStatus status)
+        {
+            await _checkpointer.SetJobTransferStatusAsync(
+                transferId: _dataTransfer.Id,
+                status: status).ConfigureAwait(false);
         }
 
         internal async Task OnEnumerationComplete()
         {
-            if (_jobParts.Count == 0)
+            // If there were no job parts enumerated and we haven't already aborted/completed the job.
+            if (_jobParts.Count == 0 &&
+                _dataTransfer.TransferStatus != DataTransferStatus.Paused &&
+                _dataTransfer.TransferStatus != DataTransferStatus.CompletedWithSkippedTransfers &&
+                _dataTransfer.TransferStatus != DataTransferStatus.CompletedWithFailedTransfers &&
+                _dataTransfer.TransferStatus != DataTransferStatus.Completed)
             {
-                // no files to perform a transfer.
-                await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
-            }
-            await CheckAndUpdateCompletedStatus().ConfigureAwait(false);
-        }
-
-        internal async Task CheckAndUpdateCompletedStatus()
-        {
-            // The respective job part has completed, however does not mean we set
-            // the entire job to completed.
-            if (_jobParts.All((JobPartInternal x) =>
-                (x.JobPartStatus == StorageTransferStatus.Completed ||
-                 x.JobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers ||
-                 x.JobPartStatus == StorageTransferStatus.CompletedWithSkippedTransfers)))
-            {
-                if (_jobParts.Any((JobPartInternal x) =>
-                    x.JobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers))
+                if (_dataTransfer.TransferStatus == DataTransferStatus.PauseInProgress)
                 {
-                    await OnJobStatusChangedAsync(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
+                    // If we paused before we were able to list, set the status properly.
+                    await OnJobStatusChangedAsync(DataTransferStatus.Paused).ConfigureAwait(false);
                 }
-                else if (_jobParts.Any((JobPartInternal x) =>
-                    x.JobPartStatus == StorageTransferStatus.CompletedWithSkippedTransfers))
+                else if (_dataTransfer.TransferStatus == DataTransferStatus.CancellationInProgress)
                 {
-                    await OnJobStatusChangedAsync(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
+                    // If we aborted before we were able to list, set the status properly.
+                    await OnJobStatusChangedAsync(DataTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
                 }
                 else
                 {
-                    await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
+                    await OnJobStatusChangedAsync(DataTransferStatus.Completed).ConfigureAwait(false);
                 }
             }
+            await CheckAndUpdateStatusAsync().ConfigureAwait(false);
+        }
+
+        internal async Task CheckAndUpdateStatusAsync()
+        {
+            // If we had a failure or pause during listing, we need to set the status correctly.
+            // This is in the case that we weren't able to begin listing any job parts yet.
+            if (_jobParts.Count == 0)
+            {
+                if (_dataTransfer.TransferStatus == DataTransferStatus.PauseInProgress)
+                {
+                    await OnJobStatusChangedAsync(DataTransferStatus.Paused).ConfigureAwait(false);
+                }
+                else if (_dataTransfer.TransferStatus == DataTransferStatus.CancellationInProgress)
+                {
+                    await OnJobStatusChangedAsync(DataTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
+                }
+                return;
+            }
+
+            // If there are no more pending job parts, complete the job
+            if (_pendingJobParts == 0)
+            {
+                if (_jobPartPaused)
+                {
+                    await OnJobStatusChangedAsync(DataTransferStatus.Paused).ConfigureAwait(false);
+                }
+                else if (_jobPartFailed)
+                {
+                    await OnJobStatusChangedAsync(DataTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
+                }
+                else if (_jobPartSkipped)
+                {
+                    await OnJobStatusChangedAsync(DataTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
+                }
+                else
+                {
+                    await OnJobStatusChangedAsync(DataTransferStatus.Completed).ConfigureAwait(false);
+                }
+            }
+        }
+
+        public void AppendJobPart(JobPartInternal jobPart)
+        {
+            _jobParts.Add(jobPart);
+
+            // Job parts can come from resuming a transfer and therefore may already be complete
+            DataTransferStatus status = jobPart.JobPartStatus;
+            if (status != DataTransferStatus.CompletedWithSkippedTransfers &&
+                status != DataTransferStatus.CompletedWithFailedTransfers &&
+                status != DataTransferStatus.Completed)
+            {
+                Interlocked.Increment(ref _pendingJobParts);
+            }
+        }
+
+        internal List<string> GetJobPartSourceResourcePaths()
+        {
+            return _jobParts.Select( x => x._sourceResource.Uri.GetPath() ).ToList();
+        }
+
+        internal void QueueJobPart()
+        {
+            _progressTracker.IncrementQueuedFiles();
         }
     }
 }

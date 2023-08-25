@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningWorkspaceDiagnoseResult DeserializeMachineLearningWorkspaceDiagnoseResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningDiagnoseResultValue> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = MachineLearningDiagnoseResultValue.DeserializeMachineLearningDiagnoseResultValue(property.Value);

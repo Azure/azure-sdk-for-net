@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary> Initializes a new instance of TimeSeriesInterpolation. </summary>
-        /// <param name="kind"> The type of interpolation technique : &quot;Linear&quot; or &quot;Step&quot;. </param>
+        /// <param name="kind"> The type of interpolation technique : "Linear" or "Step". </param>
         /// <param name="boundary"> The time range to the left and right of the search span to be used for Interpolation. This is helpful in scenarios where the data points are missing close to the start or end of the input search span. Can be null. </param>
         internal TimeSeriesInterpolation(InterpolationKind? kind, InterpolationBoundary boundary)
         {
@@ -24,7 +24,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Boundary = boundary;
         }
 
-        /// <summary> The type of interpolation technique : &quot;Linear&quot; or &quot;Step&quot;. </summary>
+        /// <summary> The type of interpolation technique : "Linear" or "Step". </summary>
         public InterpolationKind? Kind { get; set; }
         /// <summary> The time range to the left and right of the search span to be used for Interpolation. This is helpful in scenarios where the data points are missing close to the start or end of the input search span. Can be null. </summary>
         public InterpolationBoundary Boundary { get; set; }

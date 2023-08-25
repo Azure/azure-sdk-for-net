@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static CalculatePriceResultProperties DeserializeCalculatePriceResultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CalculatePriceResultPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
             Optional<double> netTotal = default;
             Optional<double> taxTotal = default;
@@ -29,101 +33,92 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<IReadOnlyList<PaymentDetail>> paymentSchedule = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingCurrencyTotal"))
+                if (property.NameEquals("billingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingCurrencyTotal = CalculatePriceResultPropertiesBillingCurrencyTotal.DeserializeCalculatePriceResultPropertiesBillingCurrencyTotal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("netTotal"))
+                if (property.NameEquals("netTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netTotal = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("taxTotal"))
+                if (property.NameEquals("taxTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     taxTotal = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("grandTotal"))
+                if (property.NameEquals("grandTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     grandTotal = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("isTaxIncluded"))
+                if (property.NameEquals("isTaxIncluded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isTaxIncluded = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isBillingPartnerManaged"))
+                if (property.NameEquals("isBillingPartnerManaged"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isBillingPartnerManaged = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("reservationOrderId"))
+                if (property.NameEquals("reservationOrderId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reservationOrderId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("skuTitle"))
+                if (property.NameEquals("skuTitle"u8))
                 {
                     skuTitle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skuDescription"))
+                if (property.NameEquals("skuDescription"u8))
                 {
                     skuDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pricingCurrencyTotal"))
+                if (property.NameEquals("pricingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pricingCurrencyTotal = CalculatePriceResultPropertiesPricingCurrencyTotal.DeserializeCalculatePriceResultPropertiesPricingCurrencyTotal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("paymentSchedule"))
+                if (property.NameEquals("paymentSchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PaymentDetail> array = new List<PaymentDetail>();

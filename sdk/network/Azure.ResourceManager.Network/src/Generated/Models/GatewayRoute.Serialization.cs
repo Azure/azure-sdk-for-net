@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static GatewayRoute DeserializeGatewayRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localAddress = default;
             Optional<string> network = default;
             Optional<string> nextHop = default;
@@ -23,41 +27,40 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> weight = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("localAddress"))
+                if (property.NameEquals("localAddress"u8))
                 {
                     localAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("network"))
+                if (property.NameEquals("network"u8))
                 {
                     network = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextHop"))
+                if (property.NameEquals("nextHop"u8))
                 {
                     nextHop = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourcePeer"))
+                if (property.NameEquals("sourcePeer"u8))
                 {
                     sourcePeer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("origin"))
+                if (property.NameEquals("origin"u8))
                 {
                     origin = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("asPath"))
+                if (property.NameEquals("asPath"u8))
                 {
                     asPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("weight"))
+                if (property.NameEquals("weight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     weight = property.Value.GetInt32();

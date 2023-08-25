@@ -119,7 +119,7 @@ namespace Azure.Batch.Unit.Tests
                 OnTaskFailure = OnTaskFailure.PerformExitOptionsJobAction
             };
 
-            Assert.Equal(jobSchedule.Id, jobScheduleId); // can set an unbound object
+            Assert.Equal(jobScheduleId, jobSchedule.Id); // can set an unbound object
             Assert.Equal(jobSchedule.Metadata.First().Name, metadataItem.Name);
             Assert.Equal(jobSchedule.Metadata.First().Value, metadataItem.Value);
             Assert.Equal(OnAllTasksComplete.TerminateJob, jobSchedule.JobSpecification.OnAllTasksComplete);
@@ -224,7 +224,7 @@ namespace Azure.Batch.Unit.Tests
 
 
             Assert.Throws<InvalidOperationException>(() => cloudJob.Url); // cannot read a Url since it's unbound at this point.
-            Assert.Equal(cloudJob.Id, jobId); // can set an unbound object
+            Assert.Equal(jobId, cloudJob.Id); // can set an unbound object
             Assert.Equal(cloudJob.Metadata.First().Name, metadataItem.Name);
             Assert.Equal(cloudJob.Metadata.First().Value, metadataItem.Value);
             Assert.Equal(OnAllTasksComplete.NoAction, cloudJob.OnAllTasksComplete);
@@ -344,7 +344,7 @@ namespace Azure.Batch.Unit.Tests
             const string osFamily = "2";
             const string virtualMachineSize = "4";
             const string displayName = "Testing-pool";
-            
+
             boundJob.PoolInformation = new PoolInformation
             {
                 AutoPoolSpecification = new AutoPoolSpecification

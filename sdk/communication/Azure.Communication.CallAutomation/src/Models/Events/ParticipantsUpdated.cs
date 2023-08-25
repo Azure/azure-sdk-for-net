@@ -16,21 +16,25 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of ParticipantsUpdatedEvent. </summary>
         internal ParticipantsUpdated()
         {
-            Participants = new ChangeTrackingList<CommunicationIdentifier>();
+            Participants = new ChangeTrackingList<CallParticipant>();
         }
 
         /// <summary> Initializes a new instance of ParticipantsUpdatedEvent. </summary>
         /// <param name="internalEvent"> Internal Representation of the ParticipantsUpdatedEvent. </param>
         internal ParticipantsUpdated(ParticipantsUpdatedInternal internalEvent)
         {
-            Participants = internalEvent.Participants.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
+            Participants = internalEvent.Participants.Select(t => new CallParticipant(t)).ToList();
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;
+            SequenceNumber = internalEvent.SequenceNumber;
         }
 
         /// <summary> List of current participants in the call. </summary>
-        public IReadOnlyList<CommunicationIdentifier> Participants { get; }
+        public IReadOnlyList<CallParticipant> Participants { get; }
+
+        /// <summary> Sequence number to indicate order of ParticipantsUpdated events. </summary>
+        public int? SequenceNumber { get; }
 
         /// <summary>
         /// Deserialize <see cref="ParticipantsUpdated"/> event.

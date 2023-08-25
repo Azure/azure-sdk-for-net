@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServiceUsageState ToAppServiceUsageState(this string value)
         {
-            if (string.Equals(value, "Normal", StringComparison.InvariantCultureIgnoreCase)) return AppServiceUsageState.Normal;
-            if (string.Equals(value, "Exceeded", StringComparison.InvariantCultureIgnoreCase)) return AppServiceUsageState.Exceeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Normal")) return AppServiceUsageState.Normal;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Exceeded")) return AppServiceUsageState.Exceeded;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceUsageState value.");
         }
     }

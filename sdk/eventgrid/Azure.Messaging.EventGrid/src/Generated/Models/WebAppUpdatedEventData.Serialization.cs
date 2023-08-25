@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static WebAppUpdatedEventData DeserializeWebAppUpdatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppEventTypeDetail> appEventTypeDetail = default;
             Optional<string> name = default;
             Optional<string> clientRequestId = default;
@@ -26,42 +30,41 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> verb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appEventTypeDetail"))
+                if (property.NameEquals("appEventTypeDetail"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appEventTypeDetail = AppEventTypeDetail.DeserializeAppEventTypeDetail(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientRequestId"))
+                if (property.NameEquals("clientRequestId"u8))
                 {
                     clientRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationRequestId"))
+                if (property.NameEquals("correlationRequestId"u8))
                 {
                     correlationRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("verb"))
+                if (property.NameEquals("verb"u8))
                 {
                     verb = property.Value.GetString();
                     continue;

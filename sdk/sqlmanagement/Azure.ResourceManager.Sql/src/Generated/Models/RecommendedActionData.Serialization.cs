@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteObjectValue(State);
             }
             writer.WriteEndObject();
@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static RecommendedActionData DeserializeRecommendedActionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -63,47 +67,45 @@ namespace Azure.ResourceManager.Sql
             Optional<IReadOnlyDictionary<string, BinaryData>> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,186 +114,168 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("recommendationReason"))
+                        if (property0.NameEquals("recommendationReason"u8))
                         {
                             recommendationReason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("validSince"))
+                        if (property0.NameEquals("validSince"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validSince = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastRefresh"))
+                        if (property0.NameEquals("lastRefresh"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastRefresh = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = RecommendedActionStateInfo.DeserializeRecommendedActionStateInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("isExecutableAction"))
+                        if (property0.NameEquals("isExecutableAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isExecutableAction = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isRevertableAction"))
+                        if (property0.NameEquals("isRevertableAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isRevertableAction = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isArchivedAction"))
+                        if (property0.NameEquals("isArchivedAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isArchivedAction = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("executeActionStartTime"))
+                        if (property0.NameEquals("executeActionStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             executeActionStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("executeActionDuration"))
+                        if (property0.NameEquals("executeActionDuration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             executeActionDuration = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("revertActionStartTime"))
+                        if (property0.NameEquals("revertActionStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             revertActionStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("revertActionDuration"))
+                        if (property0.NameEquals("revertActionDuration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             revertActionDuration = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("executeActionInitiatedBy"))
+                        if (property0.NameEquals("executeActionInitiatedBy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             executeActionInitiatedBy = property0.Value.GetString().ToRecommendedActionInitiatedBy();
                             continue;
                         }
-                        if (property0.NameEquals("executeActionInitiatedTime"))
+                        if (property0.NameEquals("executeActionInitiatedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             executeActionInitiatedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("revertActionInitiatedBy"))
+                        if (property0.NameEquals("revertActionInitiatedBy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             revertActionInitiatedBy = property0.Value.GetString().ToRecommendedActionInitiatedBy();
                             continue;
                         }
-                        if (property0.NameEquals("revertActionInitiatedTime"))
+                        if (property0.NameEquals("revertActionInitiatedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             revertActionInitiatedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("score"))
+                        if (property0.NameEquals("score"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             score = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("implementationDetails"))
+                        if (property0.NameEquals("implementationDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             implementationDetails = RecommendedActionImplementationInfo.DeserializeRecommendedActionImplementationInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("errorDetails"))
+                        if (property0.NameEquals("errorDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errorDetails = RecommendedActionErrorInfo.DeserializeRecommendedActionErrorInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("estimatedImpact"))
+                        if (property0.NameEquals("estimatedImpact"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RecommendedActionImpactRecord> array = new List<RecommendedActionImpactRecord>();
@@ -302,11 +286,10 @@ namespace Azure.ResourceManager.Sql
                             estimatedImpact = array;
                             continue;
                         }
-                        if (property0.NameEquals("observedImpact"))
+                        if (property0.NameEquals("observedImpact"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RecommendedActionImpactRecord> array = new List<RecommendedActionImpactRecord>();
@@ -317,11 +300,10 @@ namespace Azure.ResourceManager.Sql
                             observedImpact = array;
                             continue;
                         }
-                        if (property0.NameEquals("timeSeries"))
+                        if (property0.NameEquals("timeSeries"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RecommendedActionMetricInfo> array = new List<RecommendedActionMetricInfo>();
@@ -332,11 +314,10 @@ namespace Azure.ResourceManager.Sql
                             timeSeries = array;
                             continue;
                         }
-                        if (property0.NameEquals("linkedObjects"))
+                        if (property0.NameEquals("linkedObjects"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -347,17 +328,23 @@ namespace Azure.ResourceManager.Sql
                             linkedObjects = array;
                             continue;
                         }
-                        if (property0.NameEquals("details"))
+                        if (property0.NameEquals("details"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             details = dictionary;
                             continue;

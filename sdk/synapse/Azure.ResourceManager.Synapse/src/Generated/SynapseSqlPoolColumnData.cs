@@ -11,7 +11,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseSqlPoolColumn data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseSqlPoolColumn data model.
+    /// A Sql pool column resource.
+    /// </summary>
     public partial class SynapseSqlPoolColumnData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseSqlPoolColumnData. </summary>

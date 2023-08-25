@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal SparkJobDefinitionExecuteSparkJobDefinitionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation<SparkBatchJob> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal<SparkBatchJob>(clientDiagnostics, nextLinkOperation, response, "SparkJobDefinitionExecuteSparkJobDefinitionOperation");
+            _operation = new OperationInternal<SparkBatchJob>(nextLinkOperation, clientDiagnostics, response, "SparkJobDefinitionExecuteSparkJobDefinitionOperation");
         }
 
         /// <inheritdoc />

@@ -18,26 +18,41 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DeviceContent))
             {
-                writer.WritePropertyName("deviceContent");
+                writer.WritePropertyName("deviceContent"u8);
                 writer.WriteStartObject();
                 foreach (var item in DeviceContent)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(ModulesContent))
             {
-                writer.WritePropertyName("modulesContent");
+                writer.WritePropertyName("modulesContent"u8);
                 writer.WriteStartObject();
                 foreach (var item in ModulesContent)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartObject();
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteObjectValue(item0.Value);
                     }
                     writer.WriteEndObject();
@@ -46,11 +61,16 @@ namespace Azure.IoT.Hub.Service.Models
             }
             if (Optional.IsCollectionDefined(ModuleContent))
             {
-                writer.WritePropertyName("moduleContent");
+                writer.WritePropertyName("moduleContent"u8);
                 writer.WriteStartObject();
                 foreach (var item in ModuleContent)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -60,57 +80,86 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static ConfigurationContent DeserializeConfigurationContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, object>> deviceContent = default;
             Optional<IDictionary<string, IDictionary<string, object>>> modulesContent = default;
             Optional<IDictionary<string, object>> moduleContent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceContent"))
+                if (property.NameEquals("deviceContent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     deviceContent = dictionary;
                     continue;
                 }
-                if (property.NameEquals("modulesContent"))
+                if (property.NameEquals("modulesContent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, IDictionary<string, object>> dictionary = new Dictionary<string, IDictionary<string, object>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        Dictionary<string, object> dictionary0 = new Dictionary<string, object>();
-                        foreach (var property1 in property0.Value.EnumerateObject())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary0.Add(property1.Name, property1.Value.GetObject());
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, dictionary0);
+                        else
+                        {
+                            Dictionary<string, object> dictionary0 = new Dictionary<string, object>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary0.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary0.Add(property1.Name, property1.Value.GetObject());
+                                }
+                            }
+                            dictionary.Add(property0.Name, dictionary0);
+                        }
                     }
                     modulesContent = dictionary;
                     continue;
                 }
-                if (property.NameEquals("moduleContent"))
+                if (property.NameEquals("moduleContent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     moduleContent = dictionary;
                     continue;

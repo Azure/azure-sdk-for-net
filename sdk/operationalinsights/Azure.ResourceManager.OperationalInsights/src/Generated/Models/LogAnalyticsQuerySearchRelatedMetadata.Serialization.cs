@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             if (Optional.IsCollectionDefined(ResourceTypes))
             {
-                writer.WritePropertyName("resourceTypes");
+                writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             if (Optional.IsCollectionDefined(Solutions))
             {
-                writer.WritePropertyName("solutions");
+                writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Solutions)
                 {

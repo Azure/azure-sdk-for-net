@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GallerySource))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(GallerySource);
             }
             if (Optional.IsDefined(OSDiskImage))
             {
-                writer.WritePropertyName("osDiskImage");
+                writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
-                writer.WritePropertyName("dataDiskImages");
+                writer.WritePropertyName("dataDiskImages"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
@@ -41,36 +41,37 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImageVersionStorageProfile DeserializeGalleryImageVersionStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GalleryArtifactVersionFullSource> source = default;
             Optional<GalleryOSDiskImage> osDiskImage = default;
             Optional<IList<GalleryDataDiskImage>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("osDiskImage"))
+                if (property.NameEquals("osDiskImage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDiskImages"))
+                if (property.NameEquals("dataDiskImages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GalleryDataDiskImage> array = new List<GalleryDataDiskImage>();

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBox
 {
-    /// <summary> A class representing the DataBoxJob data model. </summary>
+    /// <summary>
+    /// A class representing the DataBoxJob data model.
+    /// Job Resource.
+    /// </summary>
     public partial class DataBoxJobData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataBoxJobData. </summary>
@@ -41,6 +44,8 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="isCancellable"> Describes whether the job is cancellable or not. </param>
         /// <param name="isDeletable"> Describes whether the job is deletable or not. </param>
         /// <param name="isShippingAddressEditable"> Describes whether the shipping address is editable or not. </param>
+        /// <param name="reverseShippingDetailsUpdate"> The Editable status for Reverse Shipping Address and Contact Info. </param>
+        /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
         /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
         /// <param name="status"> Name of the stage which is in progress. </param>
         /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
@@ -56,12 +61,14 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
-        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             TransferType = transferType;
             IsCancellable = isCancellable;
             IsDeletable = isDeletable;
             IsShippingAddressEditable = isShippingAddressEditable;
+            ReverseShippingDetailsUpdate = reverseShippingDetailsUpdate;
+            ReverseTransportPreferenceUpdate = reverseTransportPreferenceUpdate;
             IsPrepareToShipEnabled = isPrepareToShipEnabled;
             Status = status;
             StartOn = startOn;
@@ -83,6 +90,10 @@ namespace Azure.ResourceManager.DataBox
         public bool? IsDeletable { get; }
         /// <summary> Describes whether the shipping address is editable or not. </summary>
         public bool? IsShippingAddressEditable { get; }
+        /// <summary> The Editable status for Reverse Shipping Address and Contact Info. </summary>
+        public ReverseShippingDetailsEditStatus? ReverseShippingDetailsUpdate { get; }
+        /// <summary> The Editable status for Reverse Transport preferences. </summary>
+        public ReverseTransportPreferenceEditStatus? ReverseTransportPreferenceUpdate { get; }
         /// <summary> Is Prepare To Ship Enabled on this job. </summary>
         public bool? IsPrepareToShipEnabled { get; }
         /// <summary> Name of the stage which is in progress. </summary>

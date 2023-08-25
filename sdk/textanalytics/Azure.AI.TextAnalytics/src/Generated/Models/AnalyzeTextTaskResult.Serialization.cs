@@ -13,11 +13,14 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static AnalyzeTextTaskResult DeserializeAnalyzeTextTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "DynamicClassificationResults": return DynamicClassificationTaskResult.DeserializeDynamicClassificationTaskResult(element);
                     case "EntityLinkingResults": return EntityLinkingTaskResult.DeserializeEntityLinkingTaskResult(element);
                     case "EntityRecognitionResults": return EntitiesTaskResult.DeserializeEntitiesTaskResult(element);
                     case "KeyPhraseExtractionResults": return KeyPhraseTaskResult.DeserializeKeyPhraseTaskResult(element);

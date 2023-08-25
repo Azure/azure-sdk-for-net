@@ -102,7 +102,7 @@ EventHubsNamespaceResource eventHubNamespace = await namespaceCollection.GetAsyn
 await eventHubNamespace.AddTagAsync("key","value");
 ```
 
-For more detailed examples, take a look at [samples](https://github.com/yukun-dong/azure-sdk-for-net/tree/eventhub-2018-01-preview/sdk/eventhub/Azure.ResourceManager.EventHubs/samples) we have available.
+For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.ResourceManager.EventHubs/samples) we have available.
 
 ## Troubleshooting
 
@@ -113,7 +113,7 @@ For more detailed examples, take a look at [samples](https://github.com/yukun-do
 
 ### More sample code
 
-- [Managing EventHubs](https://github.com/yukun-dong/azure-sdk-for-net/blob/eventhub-2018-01-preview/sdk/eventhub/Azure.ResourceManager.EventHubs/samples/Sample1_ManagingEventHubs.md)
+- [Managing EventHubs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.ResourceManager.EventHubs/samples/Sample1_ManagingEventHubs.md)
 
 ### More Documentation
 

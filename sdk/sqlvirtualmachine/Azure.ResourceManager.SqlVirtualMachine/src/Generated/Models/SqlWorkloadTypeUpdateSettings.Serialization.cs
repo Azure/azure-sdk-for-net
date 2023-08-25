@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlWorkloadType))
             {
-                writer.WritePropertyName("sqlWorkloadType");
+                writer.WritePropertyName("sqlWorkloadType"u8);
                 writer.WriteStringValue(SqlWorkloadType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,14 +25,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlWorkloadTypeUpdateSettings DeserializeSqlWorkloadTypeUpdateSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlWorkloadType> sqlWorkloadType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlWorkloadType"))
+                if (property.NameEquals("sqlWorkloadType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sqlWorkloadType = new SqlWorkloadType(property.Value.GetString());

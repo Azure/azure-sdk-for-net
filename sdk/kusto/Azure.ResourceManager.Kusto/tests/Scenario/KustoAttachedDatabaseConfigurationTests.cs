@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         protected async Task SetUp()
         {
             await BaseSetUp(database: true);
-            DatabaseData = (KustoReadWriteDatabase)Database.Data;
 
+            DatabaseData = (KustoReadWriteDatabase)Database.Data;
             FollowingCluster = (await ResourceGroup.GetKustoClusterAsync(TE.FollowingClusterName)).Value;
         }
 
@@ -35,16 +35,9 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var attachedDatabaseConfigurationCollection = FollowingCluster.GetKustoAttachedDatabaseConfigurations();
 
-            var attachedDatabaseConfigurationName =
-                GenerateAssetName("sdkAttachedDatabaseConfiguration");
+            var attachedDatabaseConfigurationName = GenerateAssetName("sdkAttachedDatabaseConfiguration");
 
-            var attachedDatabaseConfigurationDataCreate = new KustoAttachedDatabaseConfigurationData
-            {
-                ClusterResourceId = Cluster.Id,
-                DatabaseName = TE.DatabaseName,
-                DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace,
-                Location = Location
-            };
+            var attachedDatabaseConfigurationDataCreate = new KustoAttachedDatabaseConfigurationData {ClusterResourceId = Cluster.Id, DatabaseName = TE.DatabaseName, DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace, Location = Location};
 
             var attachedDatabaseConfigurationDataUpdate = new KustoAttachedDatabaseConfigurationData
             {
@@ -54,12 +47,14 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 Location = Location,
                 TableLevelSharingProperties = new KustoDatabaseTableLevelSharingProperties
                 {
-                    TablesToInclude = { "include" },
-                    TablesToExclude = { "exclude" },
-                    ExternalTablesToInclude = { "externalInclude" },
-                    ExternalTablesToExclude = { "externalExclude" },
-                    MaterializedViewsToInclude = { "materializedViewInclude" },
-                    MaterializedViewsToExclude = { "materializedViewExclude" }
+                    TablesToInclude = {"include"},
+                    TablesToExclude = {"exclude"},
+                    ExternalTablesToInclude = {"externalInclude"},
+                    ExternalTablesToExclude = {"externalExclude"},
+                    MaterializedViewsToInclude = {"materializedViewInclude"},
+                    MaterializedViewsToExclude = {"materializedViewExclude"},
+                    FunctionsToInclude = {"functionsToInclude"},
+                    FunctionsToExclude = {"functionsToExclude"}
                 }
             };
 
@@ -104,13 +99,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             await attachedDatabaseConfigurationCollection.CreateOrUpdateAsync(WaitUntil.Completed,
                 attachedDatabaseConfigurationName,
-                new KustoAttachedDatabaseConfigurationData
-                {
-                    ClusterResourceId = Cluster.Id,
-                    DatabaseName = TE.DatabaseName,
-                    DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace,
-                    Location = Location
-                });
+                new KustoAttachedDatabaseConfigurationData {ClusterResourceId = Cluster.Id, DatabaseName = TE.DatabaseName, DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace, Location = Location});
 
             var followerDatabaseDefinition = await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync();
 
@@ -123,6 +112,15 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             Assert.IsNull(await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync());
 
             await ValidateReadWriteDatabase(false);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task DatabaseInviteFollowerTest()
+        {
+            var content = new DatabaseInviteFollowerContent("user@contoso.com");
+            var invitation = await Database.InviteFollowerDatabaseAsync(content).ConfigureAwait(false);
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(invitation.Value.GeneratedInvitation));
         }
 
         private async Task ReadOnlyFollowingDatabaseResourceTests(KustoDatabaseResource followingDatabase)
@@ -188,6 +186,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             CollectionAssert.AreEqual(expected.ExternalTablesToInclude, actual.ExternalTablesToInclude);
             CollectionAssert.AreEqual(expected.MaterializedViewsToExclude, actual.MaterializedViewsToExclude);
             CollectionAssert.AreEqual(expected.MaterializedViewsToInclude, actual.MaterializedViewsToInclude);
+            CollectionAssert.AreEqual(expected.FunctionsToInclude, actual.FunctionsToInclude);
+            CollectionAssert.AreEqual(expected.FunctionsToExclude, actual.FunctionsToExclude);
         }
 
         private void ValidateReadOnlyFollowingDatabase(

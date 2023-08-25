@@ -14,33 +14,52 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static PerNodeExtensionState DeserializePerNodeExtensionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> extension = default;
+            Optional<string> typeHandlerVersion = default;
             Optional<NodeExtensionState> state = default;
+            Optional<HciExtensionInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extension"))
+                if (property.NameEquals("extension"u8))
                 {
                     extension = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("typeHandlerVersion"u8))
+                {
+                    typeHandlerVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new NodeExtensionState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("instanceView"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instanceView = HciExtensionInstanceView.DeserializeHciExtensionInstanceView(property.Value);
+                    continue;
+                }
             }
-            return new PerNodeExtensionState(name.Value, extension.Value, Optional.ToNullable(state));
+            return new PerNodeExtensionState(name.Value, extension.Value, typeHandlerVersion.Value, Optional.ToNullable(state), instanceView.Value);
         }
     }
 }

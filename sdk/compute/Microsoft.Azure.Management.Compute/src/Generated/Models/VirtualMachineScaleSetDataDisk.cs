@@ -39,19 +39,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="createOption">The create option. Possible values
         /// include: 'FromImage', 'Empty', 'Attach'</param>
         /// <param name="name">The disk name.</param>
-        /// <param name="caching">Specifies the caching requirements.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt;
-        /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
-        /// 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <param name="caching">Specifies the caching requirements. Possible
+        /// values are: **None,** **ReadOnly,** **ReadWrite.** The default
+        /// values are: **None for Standard storage. ReadOnly for Premium
+        /// storage.**. Possible values include: 'None', 'ReadOnly',
+        /// 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
         /// <param name="diskSizeGB">Specifies the size of an empty data disk
         /// in gigabytes. This element can be used to overwrite the size of the
-        /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; diskSizeGB is
-        /// the number of bytes x 1024^3 for the disk and the value cannot be
-        /// larger than 1023</param>
+        /// disk in a virtual machine image. The property diskSizeGB is the
+        /// number of bytes x 1024^3 for the disk and the value cannot be
+        /// larger than 1023.</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
         /// <param name="diskIOPSReadWrite">Specifies the Read-Write IOPS for
         /// the managed disk. Should be used only when StorageAccountType is
@@ -105,14 +104,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int Lun { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the caching requirements.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **None**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadOnly**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadWrite**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
-        /// 'None', 'ReadOnly', 'ReadWrite'
+        /// Gets or sets specifies the caching requirements. Possible values
+        /// are: **None,** **ReadOnly,** **ReadWrite.** The default values are:
+        /// **None for Standard storage. ReadOnly for Premium storage.**.
+        /// Possible values include: 'None', 'ReadOnly', 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
@@ -134,9 +129,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the size of an empty data disk in gigabytes.
         /// This element can be used to overwrite the size of the disk in a
-        /// virtual machine image. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-        /// diskSizeGB is the number of bytes x 1024^3 for the disk and the
-        /// value cannot be larger than 1023
+        /// virtual machine image. The property diskSizeGB is the number of
+        /// bytes x 1024^3 for the disk and the value cannot be larger than
+        /// 1023.
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("isAdmin");
+            writer.WritePropertyName("isAdmin"u8);
             writer.WriteBooleanValue(IsAdmin);
-            writer.WritePropertyName("certificateCommonName");
+            writer.WritePropertyName("certificateCommonName"u8);
             writer.WriteStringValue(CertificateCommonName);
-            writer.WritePropertyName("certificateIssuerThumbprint");
+            writer.WritePropertyName("certificateIssuerThumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CertificateIssuerThumbprint);
 #else
@@ -31,22 +31,26 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterClientCertificateCommonName DeserializeClusterClientCertificateCommonName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isAdmin = default;
             string certificateCommonName = default;
             BinaryData certificateIssuerThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isAdmin"))
+                if (property.NameEquals("isAdmin"u8))
                 {
                     isAdmin = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("certificateCommonName"))
+                if (property.NameEquals("certificateCommonName"u8))
                 {
                     certificateCommonName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificateIssuerThumbprint"))
+                if (property.NameEquals("certificateIssuerThumbprint"u8))
                 {
                     certificateIssuerThumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;

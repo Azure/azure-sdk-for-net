@@ -105,7 +105,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -126,14 +126,15 @@ Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
 {
-    UnivariateEntireDetectionResult result = client.DetectUnivariateEntireSeries(request);
+    Response response = client.DetectUnivariateEntireSeries(request.ToRequestContent());
+    JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
     bool hasAnomaly = false;
     for (int i = 0; i < request.Series.Count; ++i)
     {
-        if (result.IsAnomaly[i])
+        if (result.GetProperty("isAnomaly")[i].GetBoolean())
         {
-            Console.WriteLine("An anomaly was detected at index: {0}.", i);
+            Console.WriteLine($"An anomaly was detected at index: {i}.");
             hasAnomaly = true;
         }
     }
@@ -144,12 +145,12 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Entire detection failed: {0}", ex.Message));
+    Console.WriteLine($"Entire detection failed: {ex.Message}");
     throw;
 }
 catch (Exception ex)
 {
-    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    Console.WriteLine($"Detection error. {ex.Message}");
     throw;
 }
 ```
@@ -175,12 +176,12 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
+    Console.WriteLine($"Last detection failed: {ex.Message}");
     throw;
 }
 catch (Exception ex)
 {
-    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    Console.WriteLine($"Detection error. {ex.Message}");
     throw;
 }
 ```
@@ -257,7 +258,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [anomalydetector_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src
 [anomalydetector_docs]: https://docs.microsoft.com/azure/cognitive-services/anomaly-detector/
-[anomalydetector_refdocs]: https://azure.github.io/azure-sdk-for-net/anomalydetector.html
+[anomalydetector_refdocs]: https://azure.github.io/azure-sdk-for-net/cognitiveservices.html
 [anomalydetector_nuget_package]: https://www.nuget.org/packages/Azure.AI.AnomalyDetector
 [anomaly_detector_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/AnomalyDetectorClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity

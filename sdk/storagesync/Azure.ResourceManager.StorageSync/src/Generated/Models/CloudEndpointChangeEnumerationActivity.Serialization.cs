@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudEndpointChangeEnumerationActivity DeserializeCloudEndpointChangeEnumerationActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<CloudEndpointChangeEnumerationActivityState> operationState = default;
             Optional<int> statusCode = default;
@@ -30,131 +34,118 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<int> deletesProgressPercent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimestamp"))
+                if (property.NameEquals("lastUpdatedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("operationState"))
+                if (property.NameEquals("operationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operationState = new CloudEndpointChangeEnumerationActivityState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startedTimestamp"))
+                if (property.NameEquals("startedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("processedFilesCount"))
+                if (property.NameEquals("processedFilesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     processedFilesCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("processedDirectoriesCount"))
+                if (property.NameEquals("processedDirectoriesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     processedDirectoriesCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalFilesCount"))
+                if (property.NameEquals("totalFilesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalFilesCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalDirectoriesCount"))
+                if (property.NameEquals("totalDirectoriesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalDirectoriesCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalSizeBytes"))
+                if (property.NameEquals("totalSizeBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalSizeBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("progressPercent"))
+                if (property.NameEquals("progressPercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     progressPercent = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minutesRemaining"))
+                if (property.NameEquals("minutesRemaining"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minutesRemaining = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalCountsState"))
+                if (property.NameEquals("totalCountsState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalCountsState = new CloudEndpointChangeEnumerationTotalCountsState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deletesProgressPercent"))
+                if (property.NameEquals("deletesProgressPercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletesProgressPercent = property.Value.GetInt32();

@@ -7,6 +7,8 @@ Project("{9DCA5ED9-9CDD-442E-8456-D3BC9D99322A}") = "Azure.ResourceManager.Netwo
 EndProject
 Project("{9DCA5ED9-9CDD-442E-8456-D3BC9D99322A}") = "Azure.ResourceManager.NetworkFunction.Tests", "tests\Azure.ResourceManager.NetworkFunction.Tests.csproj", "{F5922679-9A27-4384-943A-73F58102E957}"
 EndProject
+Project("{9DCA5ED9-9CDD-442E-8456-D3BC9D99322A}") = "Azure.ResourceManager.NetworkFunction.Samples", "samples\Azure.ResourceManager.NetworkFunction.Samples.csproj", "{E91523CF-C49E-4706-9168-389A945B8660}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

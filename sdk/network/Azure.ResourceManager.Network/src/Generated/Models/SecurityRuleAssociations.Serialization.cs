@@ -16,37 +16,38 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SecurityRuleAssociations DeserializeSecurityRuleAssociations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetworkInterfaceAssociation> networkInterfaceAssociation = default;
             Optional<SubnetAssociation> subnetAssociation = default;
             Optional<IReadOnlyList<SecurityRuleData>> defaultSecurityRules = default;
             Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkInterfaceAssociation"))
+                if (property.NameEquals("networkInterfaceAssociation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkInterfaceAssociation = NetworkInterfaceAssociation.DeserializeNetworkInterfaceAssociation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("subnetAssociation"))
+                if (property.NameEquals("subnetAssociation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnetAssociation = SubnetAssociation.DeserializeSubnetAssociation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("defaultSecurityRules"))
+                if (property.NameEquals("defaultSecurityRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityRuleData> array = new List<SecurityRuleData>();
@@ -57,11 +58,10 @@ namespace Azure.ResourceManager.Network.Models
                     defaultSecurityRules = array;
                     continue;
                 }
-                if (property.NameEquals("effectiveSecurityRules"))
+                if (property.NameEquals("effectiveSecurityRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EffectiveNetworkSecurityRule> array = new List<EffectiveNetworkSecurityRule>();

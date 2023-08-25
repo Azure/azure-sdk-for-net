@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A class representing the AppConfigurationPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the AppConfigurationPrivateLinkResource data model.
+    /// A resource that supports private link capabilities.
+    /// </summary>
     public partial class AppConfigurationPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceData. </summary>

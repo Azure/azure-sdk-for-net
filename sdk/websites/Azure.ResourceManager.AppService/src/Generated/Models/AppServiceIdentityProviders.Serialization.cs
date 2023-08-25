@@ -18,47 +18,47 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureActiveDirectory))
             {
-                writer.WritePropertyName("azureActiveDirectory");
+                writer.WritePropertyName("azureActiveDirectory"u8);
                 writer.WriteObjectValue(AzureActiveDirectory);
             }
             if (Optional.IsDefined(Facebook))
             {
-                writer.WritePropertyName("facebook");
+                writer.WritePropertyName("facebook"u8);
                 writer.WriteObjectValue(Facebook);
             }
             if (Optional.IsDefined(GitHub))
             {
-                writer.WritePropertyName("gitHub");
+                writer.WritePropertyName("gitHub"u8);
                 writer.WriteObjectValue(GitHub);
             }
             if (Optional.IsDefined(Google))
             {
-                writer.WritePropertyName("google");
+                writer.WritePropertyName("google"u8);
                 writer.WriteObjectValue(Google);
             }
             if (Optional.IsDefined(LegacyMicrosoftAccount))
             {
-                writer.WritePropertyName("legacyMicrosoftAccount");
+                writer.WritePropertyName("legacyMicrosoftAccount"u8);
                 writer.WriteObjectValue(LegacyMicrosoftAccount);
             }
             if (Optional.IsDefined(Twitter))
             {
-                writer.WritePropertyName("twitter");
+                writer.WritePropertyName("twitter"u8);
                 writer.WriteObjectValue(Twitter);
             }
             if (Optional.IsDefined(Apple))
             {
-                writer.WritePropertyName("apple");
+                writer.WritePropertyName("apple"u8);
                 writer.WriteObjectValue(Apple);
             }
             if (Optional.IsDefined(AzureStaticWebApps))
             {
-                writer.WritePropertyName("azureStaticWebApps");
+                writer.WritePropertyName("azureStaticWebApps"u8);
                 writer.WriteObjectValue(AzureStaticWebApps);
             }
             if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
-                writer.WritePropertyName("customOpenIdConnectProviders");
+                writer.WritePropertyName("customOpenIdConnectProviders"u8);
                 writer.WriteStartObject();
                 foreach (var item in CustomOpenIdConnectProviders)
                 {
@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceIdentityProviders DeserializeAppServiceIdentityProviders(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppServiceAadProvider> azureActiveDirectory = default;
             Optional<AppServiceFacebookProvider> facebook = default;
             Optional<AppServiceGitHubProvider> gitHub = default;
@@ -83,91 +87,82 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IDictionary<string, CustomOpenIdConnectProvider>> customOpenIdConnectProviders = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureActiveDirectory"))
+                if (property.NameEquals("azureActiveDirectory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureActiveDirectory = AppServiceAadProvider.DeserializeAppServiceAadProvider(property.Value);
                     continue;
                 }
-                if (property.NameEquals("facebook"))
+                if (property.NameEquals("facebook"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     facebook = AppServiceFacebookProvider.DeserializeAppServiceFacebookProvider(property.Value);
                     continue;
                 }
-                if (property.NameEquals("gitHub"))
+                if (property.NameEquals("gitHub"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gitHub = AppServiceGitHubProvider.DeserializeAppServiceGitHubProvider(property.Value);
                     continue;
                 }
-                if (property.NameEquals("google"))
+                if (property.NameEquals("google"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     google = AppServiceGoogleProvider.DeserializeAppServiceGoogleProvider(property.Value);
                     continue;
                 }
-                if (property.NameEquals("legacyMicrosoftAccount"))
+                if (property.NameEquals("legacyMicrosoftAccount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     legacyMicrosoftAccount = LegacyMicrosoftAccount.DeserializeLegacyMicrosoftAccount(property.Value);
                     continue;
                 }
-                if (property.NameEquals("twitter"))
+                if (property.NameEquals("twitter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     twitter = AppServiceTwitterProvider.DeserializeAppServiceTwitterProvider(property.Value);
                     continue;
                 }
-                if (property.NameEquals("apple"))
+                if (property.NameEquals("apple"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     apple = AppServiceAppleProvider.DeserializeAppServiceAppleProvider(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureStaticWebApps"))
+                if (property.NameEquals("azureStaticWebApps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureStaticWebApps = AppServiceStaticWebAppsProvider.DeserializeAppServiceStaticWebAppsProvider(property.Value);
                     continue;
                 }
-                if (property.NameEquals("customOpenIdConnectProviders"))
+                if (property.NameEquals("customOpenIdConnectProviders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, CustomOpenIdConnectProvider> dictionary = new Dictionary<string, CustomOpenIdConnectProvider>();

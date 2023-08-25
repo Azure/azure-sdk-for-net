@@ -17,38 +17,38 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointType");
+            writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("endpointUrl");
+                writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(MaxEventsPerBatch))
             {
-                writer.WritePropertyName("maxEventsPerBatch");
+                writer.WritePropertyName("maxEventsPerBatch"u8);
                 writer.WriteNumberValue(MaxEventsPerBatch.Value);
             }
             if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
             {
-                writer.WritePropertyName("preferredBatchSizeInKilobytes");
+                writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
                 writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
             }
             if (Optional.IsDefined(AzureActiveDirectoryTenantId))
             {
-                writer.WritePropertyName("azureActiveDirectoryTenantId");
+                writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId.Value);
             }
             if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
             {
-                writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri");
+                writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(UriOrAzureActiveDirectoryApplicationId);
             }
             if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
             {
-                writer.WritePropertyName("deliveryAttributeMappings");
+                writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in DeliveryAttributeMappings)
                 {
@@ -56,12 +56,21 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            {
+                writer.WritePropertyName("minimumTlsVersionAllowed"u8);
+                writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static WebHookEventSubscriptionDestination DeserializeWebHookEventSubscriptionDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointType endpointType = default;
             Optional<Uri> endpointUri = default;
             Optional<Uri> endpointBaseUri = default;
@@ -70,14 +79,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<Guid> azureActiveDirectoryTenantId = default;
             Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
             Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
+            Optional<TlsVersion> minimumTlsVersionAllowed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointType"))
+                if (property.NameEquals("endpointType"u8))
                 {
                     endpointType = new EndpointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,66 +96,60 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("endpointUrl"))
+                        if (property0.NameEquals("endpointUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpointUri = null;
                                 continue;
                             }
                             endpointUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("endpointBaseUrl"))
+                        if (property0.NameEquals("endpointBaseUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpointBaseUri = null;
                                 continue;
                             }
                             endpointBaseUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("maxEventsPerBatch"))
+                        if (property0.NameEquals("maxEventsPerBatch"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxEventsPerBatch = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("preferredBatchSizeInKilobytes"))
+                        if (property0.NameEquals("preferredBatchSizeInKilobytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             preferredBatchSizeInKilobytes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("azureActiveDirectoryTenantId"))
+                        if (property0.NameEquals("azureActiveDirectoryTenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureActiveDirectoryTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("azureActiveDirectoryApplicationIdOrUri"))
+                        if (property0.NameEquals("azureActiveDirectoryApplicationIdOrUri"u8))
                         {
                             azureActiveDirectoryApplicationIdOrUri = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deliveryAttributeMappings"))
+                        if (property0.NameEquals("deliveryAttributeMappings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();
@@ -156,11 +160,20 @@ namespace Azure.ResourceManager.EventGrid.Models
                             deliveryAttributeMappings = array;
                             continue;
                         }
+                        if (property0.NameEquals("minimumTlsVersionAllowed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minimumTlsVersionAllowed = new TlsVersion(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings));
+            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings), Optional.ToNullable(minimumTlsVersionAllowed));
         }
     }
 }

@@ -16,14 +16,17 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static SyncGroupArray DeserializeSyncGroupArray(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageSyncGroupData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StorageSyncGroupData> array = new List<StorageSyncGroupData>();

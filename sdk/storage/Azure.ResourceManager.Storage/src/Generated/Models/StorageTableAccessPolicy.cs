@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageTableAccessPolicy
     {
         /// <summary> Initializes a new instance of StorageTableAccessPolicy. </summary>
-        /// <param name="permission"> Required. List of abbreviated permissions. Supported permission values include &apos;r&apos;,&apos;a&apos;,&apos;u&apos;,&apos;d&apos;. </param>
+        /// <param name="permission"> Required. List of abbreviated permissions. Supported permission values include 'r','a','u','d'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> is null. </exception>
         public StorageTableAccessPolicy(string permission)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageTableAccessPolicy. </summary>
         /// <param name="startOn"> Start time of the access policy. </param>
         /// <param name="expireOn"> Expiry time of the access policy. </param>
-        /// <param name="permission"> Required. List of abbreviated permissions. Supported permission values include &apos;r&apos;,&apos;a&apos;,&apos;u&apos;,&apos;d&apos;. </param>
+        /// <param name="permission"> Required. List of abbreviated permissions. Supported permission values include 'r','a','u','d'. </param>
         internal StorageTableAccessPolicy(DateTimeOffset? startOn, DateTimeOffset? expireOn, string permission)
         {
             StartOn = startOn;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Expiry time of the access policy. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> Required. List of abbreviated permissions. Supported permission values include &apos;r&apos;,&apos;a&apos;,&apos;u&apos;,&apos;d&apos;. </summary>
+        /// <summary> Required. List of abbreviated permissions. Supported permission values include 'r','a','u','d'. </summary>
         public string Permission { get; set; }
     }
 }

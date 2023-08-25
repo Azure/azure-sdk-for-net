@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationRefundResponseProperties. </summary>
+    /// <summary> The refund properties of reservation. </summary>
     public partial class ReservationRefundResponseProperties
     {
         /// <summary> Initializes a new instance of ReservationRefundResponseProperties. </summary>
@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationRefundResponseProperties. </summary>
         /// <param name="sessionId"> Refund session identifier. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
-        /// <param name="billingRefundAmount"></param>
-        /// <param name="pricingRefundAmount"></param>
+        /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="pricingRefundAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="policyResult"> Refund policy result. </param>
         /// <param name="billingInformation"> billing information. </param>
         internal ReservationRefundResponseProperties(Guid? sessionId, int? quantity, PurchasePrice billingRefundAmount, PurchasePrice pricingRefundAmount, RefundPolicyResult policyResult, ReservationRefundBillingInformation billingInformation)
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public Guid? SessionId { get; }
         /// <summary> Quantity to be returned. </summary>
         public int? Quantity { get; }
-        /// <summary> Gets the billing refund amount. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingRefundAmount { get; }
-        /// <summary> Gets the pricing refund amount. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice PricingRefundAmount { get; }
         /// <summary> Refund policy result. </summary>
         internal RefundPolicyResult PolicyResult { get; }

@@ -1,10 +1,21 @@
 # Release History
 
-## 12.8.0-beta.1 (Unreleased)
+## 12.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.8.1 (2023-08-15)
+
+### Bugs Fixed
+- Fixed the URL returned by `TableClient.Uri` when connecting to Azurite
+
+## 12.8.0 (2023-02-08)
 
 ### Bugs Fixed
 - Fixed an issue where LINQ predicates containing New expressions, such as `ent => ent.TimeStamp > new DateTimeOffset(...)`, threw an exception.

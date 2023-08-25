@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="description"> A description about this provider. </param>
         /// <param name="providerType"> Provider type. </param>
         /// <param name="company"> Company name. </param>
-        /// <param name="defaultEndpoint"> Provider&apos;s default endpoint. </param>
+        /// <param name="defaultEndpoint"> Provider's default endpoint. </param>
         /// <param name="aad"> Azure Active Directory info. </param>
-        /// <param name="managedApplication"> Provider&apos;s Managed-Application info. </param>
+        /// <param name="managedApplication"> Provider's Managed-Application info. </param>
         /// <param name="targets"> The list of targets available from this provider. </param>
         /// <param name="skus"> The list of skus available from this provider. </param>
         /// <param name="quotaDimensions"> The list of quota dimensions from the provider. </param>
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Quantum.Models
         public string ProviderType { get; }
         /// <summary> Company name. </summary>
         public string Company { get; }
-        /// <summary> Provider&apos;s default endpoint. </summary>
+        /// <summary> Provider's default endpoint. </summary>
         public string DefaultEndpoint { get; }
         /// <summary> Azure Active Directory info. </summary>
         public ProviderPropertiesAad Aad { get; }
-        /// <summary> Provider&apos;s Managed-Application info. </summary>
+        /// <summary> Provider's Managed-Application info. </summary>
         public ProviderPropertiesManagedApplication ManagedApplication { get; }
         /// <summary> The list of targets available from this provider. </summary>
         public IReadOnlyList<TargetDescription> Targets { get; }

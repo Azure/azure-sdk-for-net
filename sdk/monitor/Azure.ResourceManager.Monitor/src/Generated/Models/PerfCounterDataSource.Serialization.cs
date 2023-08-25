@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Streams))
             {
-                writer.WritePropertyName("streams");
+                writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
                 foreach (var item in Streams)
                 {
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(SamplingFrequencyInSeconds))
             {
-                writer.WritePropertyName("samplingFrequencyInSeconds");
+                writer.WritePropertyName("samplingFrequencyInSeconds"u8);
                 writer.WriteNumberValue(SamplingFrequencyInSeconds.Value);
             }
             if (Optional.IsCollectionDefined(CounterSpecifiers))
             {
-                writer.WritePropertyName("counterSpecifiers");
+                writer.WritePropertyName("counterSpecifiers"u8);
                 writer.WriteStartArray();
                 foreach (var item in CounterSpecifiers)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -51,17 +51,20 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static PerfCounterDataSource DeserializePerfCounterDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PerfCounterDataSourceStream>> streams = default;
             Optional<int> samplingFrequencyInSeconds = default;
             Optional<IList<string>> counterSpecifiers = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streams"))
+                if (property.NameEquals("streams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PerfCounterDataSourceStream> array = new List<PerfCounterDataSourceStream>();
@@ -72,21 +75,19 @@ namespace Azure.ResourceManager.Monitor.Models
                     streams = array;
                     continue;
                 }
-                if (property.NameEquals("samplingFrequencyInSeconds"))
+                if (property.NameEquals("samplingFrequencyInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     samplingFrequencyInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("counterSpecifiers"))
+                if (property.NameEquals("counterSpecifiers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     counterSpecifiers = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

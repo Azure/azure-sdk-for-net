@@ -19,7 +19,7 @@ namespace Azure.Core.TestFramework
             string operationTypeName,
             IEnumerable<KeyValuePair<string, string>> scopeAttributes,
             DelayStrategy pollingStrategy)
-            : base(clientDiagnostics, operation, responseFactory(), operationTypeName, scopeAttributes, pollingStrategy)
+            : base(operation, clientDiagnostics, responseFactory(), operationTypeName, scopeAttributes, pollingStrategy)
         { }
 
         public List<TimeSpan> DelaysPassedToWait { get; set; } = new();

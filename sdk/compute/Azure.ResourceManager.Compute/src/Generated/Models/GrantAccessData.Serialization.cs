@@ -15,14 +15,19 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("access");
+            writer.WritePropertyName("access"u8);
             writer.WriteStringValue(Access.ToString());
-            writer.WritePropertyName("durationInSeconds");
+            writer.WritePropertyName("durationInSeconds"u8);
             writer.WriteNumberValue(DurationInSeconds);
             if (Optional.IsDefined(GetSecureVmGuestStateSas))
             {
-                writer.WritePropertyName("getSecureVMGuestStateSAS");
+                writer.WritePropertyName("getSecureVMGuestStateSAS"u8);
                 writer.WriteBooleanValue(GetSecureVmGuestStateSas.Value);
+            }
+            if (Optional.IsDefined(FileFormat))
+            {
+                writer.WritePropertyName("fileFormat"u8);
+                writer.WriteStringValue(FileFormat.Value.ToString());
             }
             writer.WriteEndObject();
         }

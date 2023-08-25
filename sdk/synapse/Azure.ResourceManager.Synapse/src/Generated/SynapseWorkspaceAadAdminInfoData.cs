@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseWorkspaceAadAdminInfo data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseWorkspaceAadAdminInfo data model.
+    /// Workspace active directory administrator
+    /// </summary>
     public partial class SynapseWorkspaceAadAdminInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseWorkspaceAadAdminInfoData. </summary>

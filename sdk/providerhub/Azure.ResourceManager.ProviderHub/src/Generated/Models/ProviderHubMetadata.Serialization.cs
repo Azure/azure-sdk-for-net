@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
-                writer.WritePropertyName("providerAuthorizations");
+                writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProviderAuthorizations)
                 {
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(ProviderAuthentication))
             {
-                writer.WritePropertyName("providerAuthentication");
+                writer.WritePropertyName("providerAuthentication"u8);
                 writer.WriteObjectValue(ProviderAuthentication);
             }
             if (Optional.IsDefined(ThirdPartyProviderAuthorization))
             {
-                writer.WritePropertyName("thirdPartyProviderAuthorization");
+                writer.WritePropertyName("thirdPartyProviderAuthorization"u8);
                 writer.WriteObjectValue(ThirdPartyProviderAuthorization);
             }
             writer.WriteEndObject();
@@ -41,16 +41,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ProviderHubMetadata DeserializeProviderHubMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
-            Optional<ProviderHubMetadataProviderAuthentication> providerAuthentication = default;
-            Optional<ProviderHubMetadataThirdPartyProviderAuthorization> thirdPartyProviderAuthorization = default;
+            Optional<ResourceProviderAuthentication> providerAuthentication = default;
+            Optional<ThirdPartyProviderAuthorization> thirdPartyProviderAuthorization = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("providerAuthorizations"))
+                if (property.NameEquals("providerAuthorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceProviderAuthorization> array = new List<ResourceProviderAuthorization>();
@@ -61,24 +64,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     providerAuthorizations = array;
                     continue;
                 }
-                if (property.NameEquals("providerAuthentication"))
+                if (property.NameEquals("providerAuthentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerAuthentication = ProviderHubMetadataProviderAuthentication.DeserializeProviderHubMetadataProviderAuthentication(property.Value);
+                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value);
                     continue;
                 }
-                if (property.NameEquals("thirdPartyProviderAuthorization"))
+                if (property.NameEquals("thirdPartyProviderAuthorization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    thirdPartyProviderAuthorization = ProviderHubMetadataThirdPartyProviderAuthorization.DeserializeProviderHubMetadataThirdPartyProviderAuthorization(property.Value);
+                    thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(property.Value);
                     continue;
                 }
             }

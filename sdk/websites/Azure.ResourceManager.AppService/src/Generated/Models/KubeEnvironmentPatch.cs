@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="appLogsConfiguration">
         /// Cluster configuration which enables the log daemon to export
-        /// app logs to a destination. Currently only &quot;log-analytics&quot; is
+        /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </param>
         /// <param name="aksResourceId"></param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         public ArcConfiguration ArcConfiguration { get; set; }
         /// <summary>
         /// Cluster configuration which enables the log daemon to export
-        /// app logs to a destination. Currently only &quot;log-analytics&quot; is
+        /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </summary>
         public AppLogsConfiguration AppLogsConfiguration { get; set; }

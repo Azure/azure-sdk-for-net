@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceDatabaseName");
+            writer.WritePropertyName("sourceDatabaseName"u8);
             writer.WriteStringValue(SourceDatabaseName);
             writer.WriteEndObject();
         }
 
         internal static MigrateMISyncCompleteCommandInput DeserializeMigrateMISyncCompleteCommandInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sourceDatabaseName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceDatabaseName"))
+                if (property.NameEquals("sourceDatabaseName"u8))
                 {
                     sourceDatabaseName = property.Value.GetString();
                     continue;

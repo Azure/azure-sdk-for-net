@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PrefixMatch))
             {
-                writer.WritePropertyName("prefixMatch");
+                writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrefixMatch)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             if (Optional.IsDefined(MinCreationTime))
             {
-                writer.WritePropertyName("minCreationTime");
+                writer.WritePropertyName("minCreationTime"u8);
                 writer.WriteStringValue(MinCreationTime);
             }
             writer.WriteEndObject();
@@ -36,15 +36,18 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ObjectReplicationPolicyFilter DeserializeObjectReplicationPolicyFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> prefixMatch = default;
             Optional<string> minCreationTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prefixMatch"))
+                if (property.NameEquals("prefixMatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
                     prefixMatch = array;
                     continue;
                 }
-                if (property.NameEquals("minCreationTime"))
+                if (property.NameEquals("minCreationTime"u8))
                 {
                     minCreationTime = property.Value.GetString();
                     continue;

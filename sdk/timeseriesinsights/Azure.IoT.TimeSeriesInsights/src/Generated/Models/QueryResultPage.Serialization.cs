@@ -16,17 +16,20 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static QueryResultPage DeserializeQueryResultPage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DateTimeOffset>> timestamps = default;
             Optional<IReadOnlyList<PropertyValues>> properties = default;
             Optional<double> progress = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamps"))
+                if (property.NameEquals("timestamps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DateTimeOffset> array = new List<DateTimeOffset>();
@@ -37,11 +40,10 @@ namespace Azure.IoT.TimeSeriesInsights
                     timestamps = array;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PropertyValues> array = new List<PropertyValues>();
@@ -52,17 +54,16 @@ namespace Azure.IoT.TimeSeriesInsights
                     properties = array;
                     continue;
                 }
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     progress = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;

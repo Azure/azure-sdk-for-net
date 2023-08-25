@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static CopyLogDetails DeserializeCopyLogDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("copyLogDetailsType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

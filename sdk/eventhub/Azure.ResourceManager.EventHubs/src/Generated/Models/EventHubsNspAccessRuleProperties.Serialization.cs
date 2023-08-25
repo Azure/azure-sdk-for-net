@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EventHubsNspAccessRuleProperties DeserializeEventHubsNspAccessRuleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventHubsNspAccessRuleDirection> direction = default;
             Optional<IReadOnlyList<string>> addressPrefixes = default;
             Optional<IReadOnlyList<SubResource>> subscriptions = default;
@@ -23,21 +27,19 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<IReadOnlyList<string>> fullyQualifiedDomainNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     direction = new EventHubsNspAccessRuleDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("addressPrefixes"))
+                if (property.NameEquals("addressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -48,11 +50,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                     addressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("subscriptions"))
+                if (property.NameEquals("subscriptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SubResource> array = new List<SubResource>();
@@ -63,11 +64,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                     subscriptions = array;
                     continue;
                 }
-                if (property.NameEquals("networkSecurityPerimeters"))
+                if (property.NameEquals("networkSecurityPerimeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EventHubsNetworkSecurityPerimeter> array = new List<EventHubsNetworkSecurityPerimeter>();
@@ -78,11 +78,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                     networkSecurityPerimeters = array;
                     continue;
                 }
-                if (property.NameEquals("fullyQualifiedDomainNames"))
+                if (property.NameEquals("fullyQualifiedDomainNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    /// <summary> A class representing the ManagedNetworkGroup data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedNetworkGroup data model.
+    /// The Managed Network Group resource
+    /// </summary>
     public partial class ManagedNetworkGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedNetworkGroupData. </summary>

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,104 +20,60 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnDelimiter))
             {
-                writer.WritePropertyName("columnDelimiter");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ColumnDelimiter);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ColumnDelimiter.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("columnDelimiter"u8);
+                JsonSerializer.Serialize(writer, ColumnDelimiter);
             }
             if (Optional.IsDefined(RowDelimiter))
             {
-                writer.WritePropertyName("rowDelimiter");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RowDelimiter);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RowDelimiter.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("rowDelimiter"u8);
+                JsonSerializer.Serialize(writer, RowDelimiter);
             }
             if (Optional.IsDefined(EscapeChar))
             {
-                writer.WritePropertyName("escapeChar");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EscapeChar);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EscapeChar.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("escapeChar"u8);
+                JsonSerializer.Serialize(writer, EscapeChar);
             }
             if (Optional.IsDefined(QuoteChar))
             {
-                writer.WritePropertyName("quoteChar");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(QuoteChar);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(QuoteChar.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("quoteChar"u8);
+                JsonSerializer.Serialize(writer, QuoteChar);
             }
             if (Optional.IsDefined(NullValue))
             {
-                writer.WritePropertyName("nullValue");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NullValue);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NullValue.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("nullValue"u8);
+                JsonSerializer.Serialize(writer, NullValue);
             }
             if (Optional.IsDefined(EncodingName))
             {
-                writer.WritePropertyName("encodingName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncodingName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncodingName.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("encodingName"u8);
+                JsonSerializer.Serialize(writer, EncodingName);
             }
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
-                writer.WritePropertyName("treatEmptyAsNull");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TreatEmptyAsNull);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TreatEmptyAsNull.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("treatEmptyAsNull"u8);
+                JsonSerializer.Serialize(writer, TreatEmptyAsNull);
             }
             if (Optional.IsDefined(SkipLineCount))
             {
-                writer.WritePropertyName("skipLineCount");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SkipLineCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SkipLineCount.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("skipLineCount"u8);
+                JsonSerializer.Serialize(writer, SkipLineCount);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
-                writer.WritePropertyName("firstRowAsHeader");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FirstRowAsHeader);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FirstRowAsHeader.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("firstRowAsHeader"u8);
+                JsonSerializer.Serialize(writer, FirstRowAsHeader);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Serializer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Serializer.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("serializer"u8);
+                JsonSerializer.Serialize(writer, Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Deserializer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Deserializer.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("deserializer"u8);
+                JsonSerializer.Serialize(writer, Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -132,135 +89,128 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetTextFormat DeserializeDatasetTextFormat(JsonElement element)
         {
-            Optional<BinaryData> columnDelimiter = default;
-            Optional<BinaryData> rowDelimiter = default;
-            Optional<BinaryData> escapeChar = default;
-            Optional<BinaryData> quoteChar = default;
-            Optional<BinaryData> nullValue = default;
-            Optional<BinaryData> encodingName = default;
-            Optional<BinaryData> treatEmptyAsNull = default;
-            Optional<BinaryData> skipLineCount = default;
-            Optional<BinaryData> firstRowAsHeader = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<string>> columnDelimiter = default;
+            Optional<DataFactoryElement<string>> rowDelimiter = default;
+            Optional<DataFactoryElement<string>> escapeChar = default;
+            Optional<DataFactoryElement<string>> quoteChar = default;
+            Optional<DataFactoryElement<string>> nullValue = default;
+            Optional<DataFactoryElement<string>> encodingName = default;
+            Optional<DataFactoryElement<bool>> treatEmptyAsNull = default;
+            Optional<DataFactoryElement<int>> skipLineCount = default;
+            Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
             string type = default;
-            Optional<BinaryData> serializer = default;
-            Optional<BinaryData> deserializer = default;
+            Optional<DataFactoryElement<string>> serializer = default;
+            Optional<DataFactoryElement<string>> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columnDelimiter"))
+                if (property.NameEquals("columnDelimiter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    columnDelimiter = BinaryData.FromString(property.Value.GetRawText());
+                    columnDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("rowDelimiter"))
+                if (property.NameEquals("rowDelimiter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rowDelimiter = BinaryData.FromString(property.Value.GetRawText());
+                    rowDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("escapeChar"))
+                if (property.NameEquals("escapeChar"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    escapeChar = BinaryData.FromString(property.Value.GetRawText());
+                    escapeChar = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("quoteChar"))
+                if (property.NameEquals("quoteChar"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    quoteChar = BinaryData.FromString(property.Value.GetRawText());
+                    quoteChar = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("nullValue"))
+                if (property.NameEquals("nullValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nullValue = BinaryData.FromString(property.Value.GetRawText());
+                    nullValue = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("encodingName"))
+                if (property.NameEquals("encodingName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encodingName = BinaryData.FromString(property.Value.GetRawText());
+                    encodingName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("treatEmptyAsNull"))
+                if (property.NameEquals("treatEmptyAsNull"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    treatEmptyAsNull = BinaryData.FromString(property.Value.GetRawText());
+                    treatEmptyAsNull = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("skipLineCount"))
+                if (property.NameEquals("skipLineCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    skipLineCount = BinaryData.FromString(property.Value.GetRawText());
+                    skipLineCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("firstRowAsHeader"))
+                if (property.NameEquals("firstRowAsHeader"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    firstRowAsHeader = BinaryData.FromString(property.Value.GetRawText());
+                    firstRowAsHeader = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serializer"))
+                if (property.NameEquals("serializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serializer = BinaryData.FromString(property.Value.GetRawText());
+                    serializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("deserializer"))
+                if (property.NameEquals("deserializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    deserializer = BinaryData.FromString(property.Value.GetRawText());
+                    deserializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

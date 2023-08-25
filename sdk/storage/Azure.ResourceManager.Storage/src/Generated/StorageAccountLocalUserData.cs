@@ -12,7 +12,10 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the StorageAccountLocalUser data model. </summary>
+    /// <summary>
+    /// A class representing the StorageAccountLocalUser data model.
+    /// The local user associated with the storage accounts.
+    /// </summary>
     public partial class StorageAccountLocalUserData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageAccountLocalUserData. </summary>

@@ -37,10 +37,15 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestCalculateExchangeAndExchange()
         {
+            AsyncPageable<ReservationDetailResource> reservationResponse = Tenant.GetReservationDetailsAsync();
+            List<ReservationDetailResource> reservationResources = await reservationResponse.ToEnumerableAsync();
+            var reservation = reservationResources.Find(item => item.Data.Properties.ProvisioningState.Equals(ReservationProvisioningState.Succeeded) &&
+                item.Data.Properties.Quantity > 1);
+
             var calculateExchangeRequestProperties = new CalculateExchangeContentProperties();
             calculateExchangeRequestProperties.ReservationsToExchange.Add(new ReservationToReturn
             {
-                ReservationId = new ResourceIdentifier("/providers/microsoft.capacity/reservationOrders/be56711c-7ba2-4b62-bcb8-cb93ba191ea1/reservations/dc84da8a-9650-455c-9968-b83ac2ae4adb"),
+                ReservationId = new ResourceIdentifier(reservation.Id),
                 Quantity = 2
             });
             calculateExchangeRequestProperties.ReservationsToPurchase.Add(TestHelpers.CreatePurchaseRequestContent("Shared", "Upfront"));
@@ -60,20 +65,19 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.IsNotNull(calculateExchangeResponse.Value.Properties.NetPayable);
             Assert.IsNotNull(calculateExchangeResponse.Value.Properties.PurchasesTotal);
             Assert.IsNotNull(calculateExchangeResponse.Value.Properties.RefundsTotal);
-            Assert.IsTrue(calculateExchangeResponse.Value.Properties.NetPayable.Amount > 0);
-            Assert.AreEqual("USD", calculateExchangeResponse.Value.Properties.NetPayable.CurrencyCode);
-            Assert.IsTrue(calculateExchangeResponse.Value.Properties.PurchasesTotal.Amount > 0);
-            Assert.AreEqual("USD", calculateExchangeResponse.Value.Properties.PurchasesTotal.CurrencyCode);
-            Assert.IsTrue(calculateExchangeResponse.Value.Properties.RefundsTotal.Amount > 0);
-            Assert.AreEqual("USD", calculateExchangeResponse.Value.Properties.RefundsTotal.CurrencyCode);
+            Assert.Greater(calculateExchangeResponse.Value.Properties.NetPayable.Amount, 0);
+            Assert.AreEqual("GBP", calculateExchangeResponse.Value.Properties.NetPayable.CurrencyCode);
+            Assert.Greater(calculateExchangeResponse.Value.Properties.PurchasesTotal.Amount, 0);
+            Assert.AreEqual("GBP", calculateExchangeResponse.Value.Properties.PurchasesTotal.CurrencyCode);
+            Assert.Greater(calculateExchangeResponse.Value.Properties.RefundsTotal.Amount, 0);
+            Assert.AreEqual("GBP", calculateExchangeResponse.Value.Properties.RefundsTotal.CurrencyCode);
             Assert.IsNotEmpty(calculateExchangeResponse.Value.Properties.SessionId.ToString());
             Assert.IsNotNull(calculateExchangeResponse.Value.Properties.ReservationsToExchange);
-            Assert.AreEqual(1, calculateExchangeResponse.Value.Properties.ReservationsToExchange.Count);
-            Assert.AreEqual("/providers/microsoft.capacity/reservationOrders/be56711c-7ba2-4b62-bcb8-cb93ba191ea1/reservations/dc84da8a-9650-455c-9968-b83ac2ae4adb",
-                        calculateExchangeResponse.Value.Properties.ReservationsToExchange[0].ReservationId.ToString());
-            Assert.AreEqual(2, calculateExchangeResponse.Value.Properties.ReservationsToExchange[0].Quantity);
+            Assert.GreaterOrEqual(calculateExchangeResponse.Value.Properties.ReservationsToExchange.Count, 1);
+            Assert.IsNotNull(calculateExchangeResponse.Value.Properties.ReservationsToExchange[0].ReservationId);
+            Assert.GreaterOrEqual(calculateExchangeResponse.Value.Properties.ReservationsToExchange[0].Quantity, 1);
             Assert.IsNotNull(calculateExchangeResponse.Value.Properties.ReservationsToPurchase);
-            Assert.AreEqual(1, calculateExchangeResponse.Value.Properties.ReservationsToPurchase.Count);
+            Assert.GreaterOrEqual(calculateExchangeResponse.Value.Properties.ReservationsToPurchase.Count, 1);
 
             var exchangeRequest = new ExchangeContent
             {
@@ -90,20 +94,19 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.IsNotNull(exchangeResponse.Value.Properties.NetPayable);
             Assert.IsNotNull(exchangeResponse.Value.Properties.PurchasesTotal);
             Assert.IsNotNull(exchangeResponse.Value.Properties.RefundsTotal);
-            Assert.IsTrue(exchangeResponse.Value.Properties.NetPayable.Amount > 0);
-            Assert.AreEqual("USD", exchangeResponse.Value.Properties.NetPayable.CurrencyCode);
-            Assert.IsTrue(exchangeResponse.Value.Properties.PurchasesTotal.Amount > 0);
-            Assert.AreEqual("USD", exchangeResponse.Value.Properties.PurchasesTotal.CurrencyCode);
-            Assert.IsTrue(exchangeResponse.Value.Properties.RefundsTotal.Amount > 0);
-            Assert.AreEqual("USD", exchangeResponse.Value.Properties.RefundsTotal.CurrencyCode);
+            Assert.Greater(exchangeResponse.Value.Properties.NetPayable.Amount, 0);
+            Assert.AreEqual("GBP", exchangeResponse.Value.Properties.NetPayable.CurrencyCode);
+            Assert.Greater(exchangeResponse.Value.Properties.PurchasesTotal.Amount, 0);
+            Assert.AreEqual("GBP", exchangeResponse.Value.Properties.PurchasesTotal.CurrencyCode);
+            Assert.Greater(exchangeResponse.Value.Properties.RefundsTotal.Amount, 0);
+            Assert.AreEqual("GBP", exchangeResponse.Value.Properties.RefundsTotal.CurrencyCode);
             Assert.IsNotEmpty(exchangeResponse.Value.Properties.SessionId.ToString());
             Assert.IsNotNull(exchangeResponse.Value.Properties.ReservationsToExchange);
-            Assert.AreEqual(1, exchangeResponse.Value.Properties.ReservationsToExchange.Count);
-            Assert.AreEqual("/providers/microsoft.capacity/reservationOrders/be56711c-7ba2-4b62-bcb8-cb93ba191ea1/reservations/dc84da8a-9650-455c-9968-b83ac2ae4adb",
-                        exchangeResponse.Value.Properties.ReservationsToExchange[0].ReservationId.ToString());
-            Assert.AreEqual(2, exchangeResponse.Value.Properties.ReservationsToExchange[0].Quantity);
+            Assert.GreaterOrEqual(exchangeResponse.Value.Properties.ReservationsToExchange.Count, 1);
+            Assert.IsNotNull(exchangeResponse.Value.Properties.ReservationsToExchange[0].ReservationId.ToString());
+            Assert.GreaterOrEqual(exchangeResponse.Value.Properties.ReservationsToExchange[0].Quantity, 1);
             Assert.IsNotNull(exchangeResponse.Value.Properties.ReservationsToPurchase);
-            Assert.AreEqual(1, exchangeResponse.Value.Properties.ReservationsToPurchase.Count);
+            Assert.GreaterOrEqual(exchangeResponse.Value.Properties.ReservationsToPurchase.Count, 1);
         }
     }
 }

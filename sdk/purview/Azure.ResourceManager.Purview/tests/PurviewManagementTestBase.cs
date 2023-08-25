@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.Purview.Tests
     public class PurviewManagementTestBase : ManagementRecordedTestBase<PurviewManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        protected const string ResourceGroupNamePrefix = "PurviewRG";
+        protected AzureLocation DefaultLocation = AzureLocation.EastUS;
 
         protected PurviewManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -30,10 +32,11 @@ namespace Azure.ResourceManager.Purview.Tests
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName(ResourceGroupNamePrefix);
+            ResourceGroupData input = new ResourceGroupData(DefaultLocation);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }

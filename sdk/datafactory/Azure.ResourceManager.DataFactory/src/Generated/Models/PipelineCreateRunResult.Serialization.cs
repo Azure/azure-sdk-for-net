@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static PipelineCreateRunResult DeserializePipelineCreateRunResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid runId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
                     runId = property.Value.GetGuid();
                     continue;

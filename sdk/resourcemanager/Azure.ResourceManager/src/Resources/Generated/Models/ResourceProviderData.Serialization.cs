@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources
     {
         internal static ResourceProviderData DeserializeResourceProviderData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> @namespace = default;
             Optional<string> registrationState = default;
@@ -24,36 +28,34 @@ namespace Azure.ResourceManager.Resources
             Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registrationState"))
+                if (property.NameEquals("registrationState"u8))
                 {
                     registrationState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registrationPolicy"))
+                if (property.NameEquals("registrationPolicy"u8))
                 {
                     registrationPolicy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceTypes"))
+                if (property.NameEquals("resourceTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
@@ -64,11 +66,10 @@ namespace Azure.ResourceManager.Resources
                     resourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("providerAuthorizationConsentState"))
+                if (property.NameEquals("providerAuthorizationConsentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerAuthorizationConsentState = new ProviderAuthorizationConsentState(property.Value.GetString());

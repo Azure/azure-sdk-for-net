@@ -15,21 +15,25 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("workspaceId");
+            writer.WritePropertyName("workspaceId"u8);
             writer.WriteStringValue(WorkspaceId);
-            writer.WritePropertyName("connectionId");
+            writer.WritePropertyName("connectionId"u8);
             writer.WriteStringValue(ConnectionId);
-            writer.WritePropertyName("ticketConfiguration");
+            writer.WritePropertyName("ticketConfiguration"u8);
             writer.WriteStringValue(TicketConfiguration);
-            writer.WritePropertyName("region");
+            writer.WritePropertyName("region"u8);
             writer.WriteStringValue(Region);
             writer.WriteEndObject();
         }
 
         internal static MonitorItsmReceiver DeserializeMonitorItsmReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string workspaceId = default;
             string connectionId = default;
@@ -37,27 +41,27 @@ namespace Azure.ResourceManager.Monitor.Models
             AzureLocation region = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     workspaceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionId"))
+                if (property.NameEquals("connectionId"u8))
                 {
                     connectionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ticketConfiguration"))
+                if (property.NameEquals("ticketConfiguration"u8))
                 {
                     ticketConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("region"))
+                if (property.NameEquals("region"u8))
                 {
                     region = new AzureLocation(property.Value.GetString());
                     continue;

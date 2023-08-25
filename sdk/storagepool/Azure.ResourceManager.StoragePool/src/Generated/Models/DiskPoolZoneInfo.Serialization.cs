@@ -15,16 +15,19 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static DiskPoolZoneInfo DeserializeDiskPoolZoneInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> availabilityZones = default;
             Optional<IReadOnlyList<string>> additionalCapabilities = default;
             Optional<StoragePoolSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("availabilityZones"))
+                if (property.NameEquals("availabilityZones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -35,11 +38,10 @@ namespace Azure.ResourceManager.StoragePool.Models
                     availabilityZones = array;
                     continue;
                 }
-                if (property.NameEquals("additionalCapabilities"))
+                if (property.NameEquals("additionalCapabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -50,11 +52,10 @@ namespace Azure.ResourceManager.StoragePool.Models
                     additionalCapabilities = array;
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);

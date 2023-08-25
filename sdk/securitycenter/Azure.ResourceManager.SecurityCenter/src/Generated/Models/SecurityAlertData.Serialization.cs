@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ExtendedProperties))
             {
-                writer.WritePropertyName("extendedProperties");
+                writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in ExtendedProperties)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsDefined(SupportingEvidence))
             {
-                writer.WritePropertyName("supportingEvidence");
+                writer.WritePropertyName("supportingEvidence"u8);
                 writer.WriteObjectValue(SupportingEvidence);
             }
             writer.WriteEndObject();
@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityAlertData DeserializeSecurityAlertData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -76,32 +80,31 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SecurityAlertSupportingEvidence> supportingEvidence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,81 +113,76 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("alertType"))
+                        if (property0.NameEquals("alertType"u8))
                         {
                             alertType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("systemAlertId"))
+                        if (property0.NameEquals("systemAlertId"u8))
                         {
                             systemAlertId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("productComponentName"))
+                        if (property0.NameEquals("productComponentName"u8))
                         {
                             productComponentName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("alertDisplayName"))
+                        if (property0.NameEquals("alertDisplayName"u8))
                         {
                             alertDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("severity"))
+                        if (property0.NameEquals("severity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             severity = new SecurityAlertSeverity(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("intent"))
+                        if (property0.NameEquals("intent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             intent = new KillChainIntent(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("startTimeUtc"))
+                        if (property0.NameEquals("startTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endTimeUtc"))
+                        if (property0.NameEquals("endTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("resourceIdentifiers"))
+                        if (property0.NameEquals("resourceIdentifiers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SecurityAlertResourceIdentifier> array = new List<SecurityAlertResourceIdentifier>();
@@ -195,11 +193,10 @@ namespace Azure.ResourceManager.SecurityCenter
                             resourceIdentifiers = array;
                             continue;
                         }
-                        if (property0.NameEquals("remediationSteps"))
+                        if (property0.NameEquals("remediationSteps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -210,81 +207,82 @@ namespace Azure.ResourceManager.SecurityCenter
                             remediationSteps = array;
                             continue;
                         }
-                        if (property0.NameEquals("vendorName"))
+                        if (property0.NameEquals("vendorName"u8))
                         {
                             vendorName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new SecurityAlertStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("extendedLinks"))
+                        if (property0.NameEquals("extendedLinks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IDictionary<string, string>> array = new List<IDictionary<string, string>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                                foreach (var property1 in item.EnumerateObject())
+                                if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(property1.Name, property1.Value.GetString());
+                                    array.Add(null);
                                 }
-                                array.Add(dictionary);
+                                else
+                                {
+                                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                                    foreach (var property1 in item.EnumerateObject())
+                                    {
+                                        dictionary.Add(property1.Name, property1.Value.GetString());
+                                    }
+                                    array.Add(dictionary);
+                                }
                             }
                             extendedLinks = array;
                             continue;
                         }
-                        if (property0.NameEquals("alertUri"))
+                        if (property0.NameEquals("alertUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                alertUri = null;
                                 continue;
                             }
                             alertUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("timeGeneratedUtc"))
+                        if (property0.NameEquals("timeGeneratedUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeGeneratedUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("productName"))
+                        if (property0.NameEquals("productName"u8))
                         {
                             productName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("processingEndTimeUtc"))
+                        if (property0.NameEquals("processingEndTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             processingEndTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("entities"))
+                        if (property0.NameEquals("entities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SecurityAlertEntity> array = new List<SecurityAlertEntity>();
@@ -295,26 +293,24 @@ namespace Azure.ResourceManager.SecurityCenter
                             entities = array;
                             continue;
                         }
-                        if (property0.NameEquals("isIncident"))
+                        if (property0.NameEquals("isIncident"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isIncident = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("correlationKey"))
+                        if (property0.NameEquals("correlationKey"u8))
                         {
                             correlationKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("extendedProperties"))
+                        if (property0.NameEquals("extendedProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -325,16 +321,15 @@ namespace Azure.ResourceManager.SecurityCenter
                             extendedProperties = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("compromisedEntity"))
+                        if (property0.NameEquals("compromisedEntity"u8))
                         {
                             compromisedEntity = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("techniques"))
+                        if (property0.NameEquals("techniques"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -345,11 +340,10 @@ namespace Azure.ResourceManager.SecurityCenter
                             techniques = array;
                             continue;
                         }
-                        if (property0.NameEquals("subTechniques"))
+                        if (property0.NameEquals("subTechniques"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -360,11 +354,10 @@ namespace Azure.ResourceManager.SecurityCenter
                             subTechniques = array;
                             continue;
                         }
-                        if (property0.NameEquals("supportingEvidence"))
+                        if (property0.NameEquals("supportingEvidence"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             supportingEvidence = SecurityAlertSupportingEvidence.DeserializeSecurityAlertSupportingEvidence(property0.Value);

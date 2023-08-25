@@ -14,25 +14,27 @@ namespace Azure.Maps.Search.Models
     {
         internal static BatchResultSummary DeserializeBatchResultSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> successfulRequests = default;
             Optional<int> totalRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("successfulRequests"))
+                if (property.NameEquals("successfulRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     successfulRequests = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalRequests"))
+                if (property.NameEquals("totalRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalRequests = property.Value.GetInt32();

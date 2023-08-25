@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static LinuxJavaContainerSettings DeserializeLinuxJavaContainerSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> java11Runtime = default;
             Optional<string> java8Runtime = default;
             Optional<bool> isPreview = default;
@@ -25,71 +29,65 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isEarlyAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("java11Runtime"))
+                if (property.NameEquals("java11Runtime"u8))
                 {
                     java11Runtime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("java8Runtime"))
+                if (property.NameEquals("java8Runtime"u8))
                 {
                     java8Runtime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPreview"))
+                if (property.NameEquals("isPreview"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPreview = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDeprecated"))
+                if (property.NameEquals("isDeprecated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDeprecated = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isHidden"))
+                if (property.NameEquals("isHidden"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isHidden = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("endOfLifeDate"))
+                if (property.NameEquals("endOfLifeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endOfLifeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isAutoUpdate"))
+                if (property.NameEquals("isAutoUpdate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAutoUpdate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isEarlyAccess"))
+                if (property.NameEquals("isEarlyAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEarlyAccess = property.Value.GetBoolean();

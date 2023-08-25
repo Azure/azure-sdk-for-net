@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
             if (Optional.IsCollectionDefined(Dataset))
             {
-                writer.WritePropertyName("dataset");
+                writer.WritePropertyName("dataset"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dataset)
                 {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
             if (Optional.IsDefined(DataProviderMetadata))
             {
-                writer.WritePropertyName("dataProviderMetadata");
+                writer.WritePropertyName("dataProviderMetadata"u8);
                 writer.WriteObjectValue(DataProviderMetadata);
             }
             writer.WriteEndObject();
@@ -46,27 +46,29 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticsProperties DeserializeContainerAppDiagnosticsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppDiagnosticsMetadata> metadata = default;
             Optional<IList<ContainerAppDiagnosticsDataApiResult>> dataset = default;
             Optional<ContainerAppDiagnosticsStatus> status = default;
             Optional<ContainerAppDiagnosticDataProviderMetadata> dataProviderMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = ContainerAppDiagnosticsMetadata.DeserializeContainerAppDiagnosticsMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataset"))
+                if (property.NameEquals("dataset"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppDiagnosticsDataApiResult> array = new List<ContainerAppDiagnosticsDataApiResult>();
@@ -77,21 +79,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                     dataset = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = ContainerAppDiagnosticsStatus.DeserializeContainerAppDiagnosticsStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataProviderMetadata"))
+                if (property.NameEquals("dataProviderMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataProviderMetadata = ContainerAppDiagnosticDataProviderMetadata.DeserializeContainerAppDiagnosticDataProviderMetadata(property.Value);

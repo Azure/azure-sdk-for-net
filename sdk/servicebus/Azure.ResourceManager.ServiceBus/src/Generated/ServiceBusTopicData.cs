@@ -12,7 +12,10 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing the ServiceBusTopic data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceBusTopic data model.
+    /// Description of topic resource.
+    /// </summary>
     public partial class ServiceBusTopicData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusTopicData. </summary>

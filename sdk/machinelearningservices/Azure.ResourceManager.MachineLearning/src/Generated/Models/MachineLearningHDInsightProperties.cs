@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// HDInsight compute properties
-    /// Serialized Name: HDInsightProperties
-    /// </summary>
+    /// <summary> HDInsight compute properties. </summary>
     public partial class MachineLearningHDInsightProperties
     {
         /// <summary> Initializes a new instance of MachineLearningHDInsightProperties. </summary>
@@ -19,39 +18,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningHDInsightProperties. </summary>
-        /// <param name="sshPort">
-        /// Port open for ssh connections on the master node of the cluster.
-        /// Serialized Name: HDInsightProperties.sshPort
-        /// </param>
-        /// <param name="address">
-        /// Public IP address of the master node of the cluster.
-        /// Serialized Name: HDInsightProperties.address
-        /// </param>
-        /// <param name="administratorAccount">
-        /// Admin credentials for master node of the cluster
-        /// Serialized Name: HDInsightProperties.administratorAccount
-        /// </param>
-        internal MachineLearningHDInsightProperties(int? sshPort, string address, MachineLearningVmSshCredentials administratorAccount)
+        /// <param name="sshPort"> Port open for ssh connections on the master node of the cluster. </param>
+        /// <param name="address"> Public IP address of the master node of the cluster. </param>
+        /// <param name="administratorAccount"> Admin credentials for master node of the cluster. </param>
+        internal MachineLearningHDInsightProperties(int? sshPort, IPAddress address, MachineLearningVmSshCredentials administratorAccount)
         {
             SshPort = sshPort;
             Address = address;
             AdministratorAccount = administratorAccount;
         }
 
-        /// <summary>
-        /// Port open for ssh connections on the master node of the cluster.
-        /// Serialized Name: HDInsightProperties.sshPort
-        /// </summary>
+        /// <summary> Port open for ssh connections on the master node of the cluster. </summary>
         public int? SshPort { get; set; }
-        /// <summary>
-        /// Public IP address of the master node of the cluster.
-        /// Serialized Name: HDInsightProperties.address
-        /// </summary>
-        public string Address { get; set; }
-        /// <summary>
-        /// Admin credentials for master node of the cluster
-        /// Serialized Name: HDInsightProperties.administratorAccount
-        /// </summary>
+        /// <summary> Public IP address of the master node of the cluster. </summary>
+        public IPAddress Address { get; set; }
+        /// <summary> Admin credentials for master node of the cluster. </summary>
         public MachineLearningVmSshCredentials AdministratorAccount { get; set; }
     }
 }

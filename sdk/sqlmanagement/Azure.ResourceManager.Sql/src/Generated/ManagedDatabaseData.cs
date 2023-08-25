@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedDatabase data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedDatabase data model.
+    /// A managed database resource.
+    /// </summary>
     public partial class ManagedDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>
@@ -39,15 +42,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="createMode"> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </param>
         /// <param name="storageContainerUri"> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </param>
         /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
+        /// <param name="crossSubscriptionSourceDatabaseId"> The resource identifier of the cross-subscription source database associated with create operation of this database. </param>
         /// <param name="restorableDroppedDatabaseId"> The restorable dropped database resource id to restore when creating this database. </param>
-        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be &apos;SharedAccessSignature&apos; or &apos;ManagedIdentity&apos;; if not specified &apos;SharedAccessSignature&apos; is assumed. </param>
+        /// <param name="crossSubscriptionRestorableDroppedDatabaseId"> The restorable cross-subscription dropped database resource id to restore when creating this database. </param>
+        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </param>
         /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </param>
         /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
         /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
         /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
         /// <param name="allowAutoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
         /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
+        /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
+        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Collation = collation;
             Status = status;
@@ -59,7 +66,9 @@ namespace Azure.ResourceManager.Sql
             CreateMode = createMode;
             StorageContainerUri = storageContainerUri;
             SourceDatabaseId = sourceDatabaseId;
+            CrossSubscriptionSourceDatabaseId = crossSubscriptionSourceDatabaseId;
             RestorableDroppedDatabaseId = restorableDroppedDatabaseId;
+            CrossSubscriptionRestorableDroppedDatabaseId = crossSubscriptionRestorableDroppedDatabaseId;
             StorageContainerIdentity = storageContainerIdentity;
             StorageContainerSasToken = storageContainerSasToken;
             FailoverGroupId = failoverGroupId;
@@ -67,6 +76,8 @@ namespace Azure.ResourceManager.Sql
             LongTermRetentionBackupResourceId = longTermRetentionBackupResourceId;
             AllowAutoCompleteRestore = allowAutoCompleteRestore;
             LastBackupName = lastBackupName;
+            CrossSubscriptionTargetManagedInstanceId = crossSubscriptionTargetManagedInstanceId;
+            IsLedgerOn = isLedgerOn;
         }
 
         /// <summary> Collation of the managed database. </summary>
@@ -89,9 +100,13 @@ namespace Azure.ResourceManager.Sql
         public Uri StorageContainerUri { get; set; }
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
         public ResourceIdentifier SourceDatabaseId { get; set; }
+        /// <summary> The resource identifier of the cross-subscription source database associated with create operation of this database. </summary>
+        public ResourceIdentifier CrossSubscriptionSourceDatabaseId { get; set; }
         /// <summary> The restorable dropped database resource id to restore when creating this database. </summary>
         public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
-        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be &apos;SharedAccessSignature&apos; or &apos;ManagedIdentity&apos;; if not specified &apos;SharedAccessSignature&apos; is assumed. </summary>
+        /// <summary> The restorable cross-subscription dropped database resource id to restore when creating this database. </summary>
+        public ResourceIdentifier CrossSubscriptionRestorableDroppedDatabaseId { get; set; }
+        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </summary>
         public string StorageContainerIdentity { get; set; }
         /// <summary> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </summary>
         public string StorageContainerSasToken { get; set; }
@@ -105,5 +120,9 @@ namespace Azure.ResourceManager.Sql
         public bool? AllowAutoCompleteRestore { get; set; }
         /// <summary> Last backup file name for restore of this managed database. </summary>
         public string LastBackupName { get; set; }
+        /// <summary> Target managed instance id used in cross-subscription restore. </summary>
+        public ResourceIdentifier CrossSubscriptionTargetManagedInstanceId { get; set; }
+        /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
+        public bool? IsLedgerOn { get; set; }
     }
 }

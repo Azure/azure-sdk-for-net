@@ -14,31 +14,33 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BillingType billingType = "Unknown";
             Optional<double> multiplier = default;
             Optional<EdgeOrderProductChargingType> chargingType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingType"))
+                if (property.NameEquals("billingType"u8))
                 {
                     billingType = new BillingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("multiplier"))
+                if (property.NameEquals("multiplier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     multiplier = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("chargingType"))
+                if (property.NameEquals("chargingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     chargingType = new EdgeOrderProductChargingType(property.Value.GetString());

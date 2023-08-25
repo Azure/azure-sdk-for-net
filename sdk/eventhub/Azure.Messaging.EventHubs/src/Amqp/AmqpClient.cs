@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Security.Authentication;
@@ -227,11 +228,11 @@ namespace Azure.Messaging.EventHubs.Amqp
             var failedAttemptCount = 0;
             var retryDelay = default(TimeSpan?);
             var link = default(RequestResponseAmqpLink);
-            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
                 var tryTimeout = retryPolicy.CalculateTryTimeout(0);
+                var stopWatch = ValueStopwatch.StartNew();
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
@@ -246,7 +247,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (!ManagementLink.TryGetOpenedObject(out link))
                         {
-                            link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
+                            link = await ManagementLink.GetOrCreateAsync(tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
                         }
 
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -274,7 +275,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
-                            stopWatch = ValueStopwatch.StartNew();
                         }
                         else if (ex is AmqpException)
                         {
@@ -327,11 +327,10 @@ namespace Azure.Messaging.EventHubs.Amqp
             var token = default(string);
             var link = default(RequestResponseAmqpLink);
 
-            var stopWatch = ValueStopwatch.StartNew();
-
             try
             {
                 var tryTimeout = retryPolicy.CalculateTryTimeout(0);
+                var stopWatch = ValueStopwatch.StartNew();
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
@@ -346,7 +345,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (!ManagementLink.TryGetOpenedObject(out link))
                         {
-                            link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
+                            link = await ManagementLink.GetOrCreateAsync(tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
                         }
 
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -374,7 +373,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
-                            stopWatch = ValueStopwatch.StartNew();
                         }
                         else if (ex is AmqpException)
                         {
@@ -573,17 +571,5 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             return activeToken.Token;
         }
-
-        /// <summary>
-        ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
-        /// </summary>
-        ///
-        /// <param name="firstOption">The first option to consider.</param>
-        /// <param name="secondOption">The second option to consider.</param>
-        ///
-        /// <returns></returns>
-        ///
-        private static TimeSpan UseMinimum(TimeSpan firstOption,
-                                           TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
     }
 }

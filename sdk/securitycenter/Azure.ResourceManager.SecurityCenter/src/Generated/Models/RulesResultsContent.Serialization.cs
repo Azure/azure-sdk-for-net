@@ -17,19 +17,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LatestScan))
             {
-                writer.WritePropertyName("latestScan");
+                writer.WritePropertyName("latestScan"u8);
                 writer.WriteBooleanValue(LatestScan.Value);
             }
             if (Optional.IsCollectionDefined(Results))
             {
-                writer.WritePropertyName("results");
+                writer.WritePropertyName("results"u8);
                 writer.WriteStartObject();
                 foreach (var item in Results)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteStartArray();
                         foreach (var item1 in item0)
                         {

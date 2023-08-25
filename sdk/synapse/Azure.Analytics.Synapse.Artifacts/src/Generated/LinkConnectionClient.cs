@@ -65,13 +65,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="linkConnection"> Link connection resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LinkConnectionResource>> CreateOrUpdateLinkConnectionAsync(string linkConnectionName, LinkConnectionResource linkConnection, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkConnectionResource>> CreateOrUpdateAsync(string linkConnectionName, LinkConnectionResource linkConnection, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.CreateOrUpdateLinkConnection");
+            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                return await RestClient.CreateOrUpdateLinkConnectionAsync(linkConnectionName, linkConnection, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateOrUpdateAsync(linkConnectionName, linkConnection, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -84,13 +84,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="linkConnection"> Link connection resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LinkConnectionResource> CreateOrUpdateLinkConnection(string linkConnectionName, LinkConnectionResource linkConnection, CancellationToken cancellationToken = default)
+        public virtual Response<LinkConnectionResource> CreateOrUpdate(string linkConnectionName, LinkConnectionResource linkConnection, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.CreateOrUpdateLinkConnection");
+            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                return RestClient.CreateOrUpdateLinkConnection(linkConnectionName, linkConnection, cancellationToken);
+                return RestClient.CreateOrUpdate(linkConnectionName, linkConnection, cancellationToken);
             }
             catch (Exception e)
             {
@@ -102,13 +102,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LinkConnectionResource>> GetLinkConnectionAsync(string linkConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkConnectionResource>> GetAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.GetLinkConnection");
+            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetLinkConnectionAsync(linkConnectionName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetAsync(linkConnectionName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -120,13 +120,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LinkConnectionResource> GetLinkConnection(string linkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<LinkConnectionResource> Get(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.GetLinkConnection");
+            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Get");
             scope.Start();
             try
             {
-                return RestClient.GetLinkConnection(linkConnectionName, cancellationToken);
+                return RestClient.Get(linkConnectionName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -138,13 +138,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Delete a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteLinkConnectionAsync(string linkConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.DeleteLinkConnection");
+            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Delete");
             scope.Start();
             try
             {
-                return await RestClient.DeleteLinkConnectionAsync(linkConnectionName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteAsync(linkConnectionName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -156,13 +156,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Delete a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteLinkConnection(string linkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response Delete(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.DeleteLinkConnection");
+            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Delete");
             scope.Start();
             try
             {
-                return RestClient.DeleteLinkConnection(linkConnectionName, cancellationToken);
+                return RestClient.Delete(linkConnectionName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -209,7 +209,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Start a link connection. </summary>
+        /// <summary> Start a link connection. It may take a few minutes from Starting to Running, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StartAsync(string linkConnectionName, CancellationToken cancellationToken = default)
@@ -227,7 +227,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Start a link connection. </summary>
+        /// <summary> Start a link connection. It may take a few minutes from Starting to Running, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Start(string linkConnectionName, CancellationToken cancellationToken = default)
@@ -245,7 +245,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Stop a link connection. </summary>
+        /// <summary> Stop a link connection. It may take a few minutes from Stopping to stopped, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StopAsync(string linkConnectionName, CancellationToken cancellationToken = default)
@@ -263,7 +263,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Stop a link connection. </summary>
+        /// <summary> Stop a link connection. It may take a few minutes from Stopping to stopped, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Stop(string linkConnectionName, CancellationToken cancellationToken = default)
@@ -429,78 +429,94 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> List link connections. </summary>
+        /// <summary> Pause a link connection. It may take a few minutes from Pausing to Paused, monitor the status with LinkConnection_GetDetailedStatus. </summary>
+        /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<LinkConnectionResource> ListLinkConnectionsByWorkspaceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PauseAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LinkConnectionResource>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Pause");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.ListLinkConnectionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListLinkConnectionsByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return await RestClient.PauseAsync(linkConnectionName, cancellationToken).ConfigureAwait(false);
             }
-            async Task<Page<LinkConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.ListLinkConnectionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListLinkConnectionsByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Pause a link connection. It may take a few minutes from Pausing to Paused, monitor the status with LinkConnection_GetDetailedStatus. </summary>
+        /// <param name="linkConnectionName"> The link connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Pause(string linkConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Pause");
+            scope.Start();
+            try
+            {
+                return RestClient.Pause(linkConnectionName, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resume a link connection. It may take a few minutes from Resuming to Running, monitor the status with LinkConnection_GetDetailedStatus. </summary>
+        /// <param name="linkConnectionName"> The link connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> ResumeAsync(string linkConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Resume");
+            scope.Start();
+            try
+            {
+                return await RestClient.ResumeAsync(linkConnectionName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resume a link connection. It may take a few minutes from Resuming to Running, monitor the status with LinkConnection_GetDetailedStatus. </summary>
+        /// <param name="linkConnectionName"> The link connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Resume(string linkConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Resume");
+            scope.Start();
+            try
+            {
+                return RestClient.Resume(linkConnectionName, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List link connections. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<LinkConnectionResource> ListLinkConnectionsByWorkspace(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LinkConnectionResource> ListByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            Page<LinkConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.ListLinkConnectionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListLinkConnectionsByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LinkConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.ListLinkConnectionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListLinkConnectionsByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary> List link connections. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<LinkConnectionResource> ListByWorkspace(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", cancellationToken);
         }
     }
 }

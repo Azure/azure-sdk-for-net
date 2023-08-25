@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(BatchItems))
             {
-                writer.WritePropertyName("batchItems");
+                writer.WritePropertyName("batchItems"u8);
                 writer.WriteStartArray();
                 foreach (var item in BatchItems)
                 {

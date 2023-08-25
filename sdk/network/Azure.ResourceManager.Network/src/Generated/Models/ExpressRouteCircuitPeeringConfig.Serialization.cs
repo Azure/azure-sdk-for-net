@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AdvertisedPublicPrefixes))
             {
-                writer.WritePropertyName("advertisedPublicPrefixes");
+                writer.WritePropertyName("advertisedPublicPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdvertisedPublicPrefixes)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(AdvertisedCommunities))
             {
-                writer.WritePropertyName("advertisedCommunities");
+                writer.WritePropertyName("advertisedCommunities"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdvertisedCommunities)
                 {
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(LegacyMode))
             {
-                writer.WritePropertyName("legacyMode");
+                writer.WritePropertyName("legacyMode"u8);
                 writer.WriteNumberValue(LegacyMode.Value);
             }
             if (Optional.IsDefined(CustomerASN))
             {
-                writer.WritePropertyName("customerASN");
+                writer.WritePropertyName("customerASN"u8);
                 writer.WriteNumberValue(CustomerASN.Value);
             }
             if (Optional.IsDefined(RoutingRegistryName))
             {
-                writer.WritePropertyName("routingRegistryName");
+                writer.WritePropertyName("routingRegistryName"u8);
                 writer.WriteStringValue(RoutingRegistryName);
             }
             writer.WriteEndObject();
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteCircuitPeeringConfig DeserializeExpressRouteCircuitPeeringConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> advertisedPublicPrefixes = default;
             Optional<IList<string>> advertisedCommunities = default;
             Optional<ExpressRouteCircuitPeeringAdvertisedPublicPrefixState> advertisedPublicPrefixesState = default;
@@ -64,11 +68,10 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> routingRegistryName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("advertisedPublicPrefixes"))
+                if (property.NameEquals("advertisedPublicPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -79,11 +82,10 @@ namespace Azure.ResourceManager.Network.Models
                     advertisedPublicPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("advertisedCommunities"))
+                if (property.NameEquals("advertisedCommunities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -94,37 +96,34 @@ namespace Azure.ResourceManager.Network.Models
                     advertisedCommunities = array;
                     continue;
                 }
-                if (property.NameEquals("advertisedPublicPrefixesState"))
+                if (property.NameEquals("advertisedPublicPrefixesState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     advertisedPublicPrefixesState = new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("legacyMode"))
+                if (property.NameEquals("legacyMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     legacyMode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("customerASN"))
+                if (property.NameEquals("customerASN"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customerASN = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("routingRegistryName"))
+                if (property.NameEquals("routingRegistryName"u8))
                 {
                     routingRegistryName = property.Value.GetString();
                     continue;

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseDataMaskingRule data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseDataMaskingRule data model.
+    /// Represents a Sql pool data masking rule.
+    /// </summary>
     public partial class SynapseDataMaskingRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseDataMaskingRuleData. </summary>
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="kind"> The kind of Data Masking Rule. Metadata, used for Azure portal. </param>
         /// <param name="ruleId"> The rule Id. </param>
         /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
-        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn&apos;t already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
+        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
         /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
         /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
         /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.Synapse
         public string RuleId { get; }
         /// <summary> The alias name. This is a legacy parameter and is no longer used. </summary>
         public string AliasName { get; set; }
-        /// <summary> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn&apos;t already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </summary>
+        /// <summary> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </summary>
         public SynapseDataMaskingRuleState? RuleState { get; set; }
         /// <summary> The schema name on which the data masking rule is applied. </summary>
         public string SchemaName { get; set; }

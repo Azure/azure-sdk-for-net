@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    /// <summary> A class representing the HybridComputePrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the HybridComputePrivateEndpointConnection data model.
+    /// A private endpoint connection
+    /// </summary>
     public partial class HybridComputePrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridComputePrivateEndpointConnectionData. </summary>

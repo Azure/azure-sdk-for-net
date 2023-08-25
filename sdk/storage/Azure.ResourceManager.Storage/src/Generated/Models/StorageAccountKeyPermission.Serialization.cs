@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StorageAccountKeyPermission ToStorageAccountKeyPermission(this string value)
         {
-            if (string.Equals(value, "Read", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountKeyPermission.Read;
-            if (string.Equals(value, "Full", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountKeyPermission.Full;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Read")) return StorageAccountKeyPermission.Read;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Full")) return StorageAccountKeyPermission.Full;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountKeyPermission value.");
         }
     }

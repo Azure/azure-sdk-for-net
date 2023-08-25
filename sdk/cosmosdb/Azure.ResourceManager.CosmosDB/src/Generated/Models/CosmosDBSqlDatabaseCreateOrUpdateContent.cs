@@ -35,22 +35,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a SQL database. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal CosmosDBSqlDatabaseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBSqlDatabaseResourceInfo resource, CosmosDBCreateUpdateConfig options) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> Identity for the resource. </param>
+        internal CosmosDBSqlDatabaseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBSqlDatabaseResourceInfo resource, CosmosDBCreateUpdateConfig options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
+            Identity = identity;
         }
 
         /// <summary> The standard JSON format of a SQL database. </summary>
-        internal CosmosDBSqlDatabaseResourceInfo Resource { get; set; }
-        /// <summary> Name of the Cosmos DB SQL database. </summary>
-        public string ResourceDatabaseName
-        {
-            get => Resource is null ? default : Resource.DatabaseName;
-            set => Resource = new CosmosDBSqlDatabaseResourceInfo(value);
-        }
-
+        public CosmosDBSqlDatabaseResourceInfo Resource { get; set; }
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
         public CosmosDBCreateUpdateConfig Options { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

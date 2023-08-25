@@ -16,10 +16,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static PricingList DeserializePricingList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SecurityCenterPricingData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SecurityCenterPricingData> array = new List<SecurityCenterPricingData>();
                     foreach (var item in property.Value.EnumerateArray())

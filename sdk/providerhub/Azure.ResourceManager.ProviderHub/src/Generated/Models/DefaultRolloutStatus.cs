@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="nextTrafficRegion"></param>
         /// <param name="nextTrafficRegionScheduledOn"></param>
         /// <param name="subscriptionReregistrationResult"></param>
-        internal DefaultRolloutStatus(IList<string> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult) : base(completedRegions, failedOrSkippedRegions)
+        internal DefaultRolloutStatus(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult) : base(completedRegions, failedOrSkippedRegions)
         {
             NextTrafficRegion = nextTrafficRegion;
             NextTrafficRegionScheduledOn = nextTrafficRegionScheduledOn;

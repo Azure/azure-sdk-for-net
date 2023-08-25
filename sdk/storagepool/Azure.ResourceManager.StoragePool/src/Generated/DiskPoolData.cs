@@ -15,13 +15,16 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> A class representing the DiskPool data model. </summary>
+    /// <summary>
+    /// A class representing the DiskPool data model.
+    /// Response for Disk Pool request.
+    /// </summary>
     public partial class DiskPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskPoolData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
-        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </param>
+        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
         /// <param name="status"> Operational status of the Disk Pool. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityZones"/> or <paramref name="subnetId"/> is null. </exception>
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
         /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
-        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </param>
+        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
         /// <param name="status"> Operational status of the Disk Pool. </param>
         /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.StoragePool
         public IReadOnlyList<string> ManagedByExtended { get; }
         /// <summary> State of the operation on the resource. </summary>
         public DiskPoolIscsiTargetProvisioningState ProvisioningState { get; }
-        /// <summary> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </summary>
+        /// <summary> Logical zone for Disk Pool resource; example: ["1"]. </summary>
         public IList<string> AvailabilityZones { get; }
         /// <summary> Operational status of the Disk Pool. </summary>
         public StoragePoolOperationalStatus Status { get; set; }

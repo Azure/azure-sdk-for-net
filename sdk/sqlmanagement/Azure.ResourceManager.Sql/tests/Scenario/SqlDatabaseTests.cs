@@ -11,13 +11,13 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Sql.Tests.Scenario
+namespace Azure.ResourceManager.Sql.Tests
 {
-    public class SqlDatabaseTests : SqlManagementClientBase
+    public class SqlDatabaseTests : SqlManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-        private static AzureLocation Location = new AzureLocation("eastus2euap", "East US 2 EUAP");
+        private static AzureLocation Location = new AzureLocation("eastus2", "East US 2");
 
         public SqlDatabaseTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             // create Sql Server
             string serverName = Recording.GenerateAssetName("sql-server-");
             var sqlServer = await CreateDefaultSqlServer(serverName, Location, _resourceGroup);
-            AlwaysEncryptedEnclaveType[] enclaveTypes = { AlwaysEncryptedEnclaveType.Default, AlwaysEncryptedEnclaveType.VBS };
+            SqlAlwaysEncryptedEnclaveType[] enclaveTypes = { SqlAlwaysEncryptedEnclaveType.Default, SqlAlwaysEncryptedEnclaveType.Vbs };
 
-            foreach (AlwaysEncryptedEnclaveType enclaveType in enclaveTypes)
+            foreach (SqlAlwaysEncryptedEnclaveType enclaveType in enclaveTypes)
             {
                 string preferredEnclaveType = enclaveType.ToString();
                 string databaseName = Recording.GenerateAssetName($"sql-database-{preferredEnclaveType}-");

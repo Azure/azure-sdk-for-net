@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (PrimaryKey != null)
                 {
-                    writer.WritePropertyName("primaryKey");
+                    writer.WritePropertyName("primaryKey"u8);
                     writer.WriteStringValue(PrimaryKey);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (SecondaryKey != null)
                 {
-                    writer.WritePropertyName("secondaryKey");
+                    writer.WritePropertyName("secondaryKey"u8);
                     writer.WriteStringValue(SecondaryKey);
                 }
                 else
@@ -44,11 +44,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEndpointAuthKeys DeserializeMachineLearningEndpointAuthKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryKey"))
+                if (property.NameEquals("primaryKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     primaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"))
+                if (property.NameEquals("secondaryKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

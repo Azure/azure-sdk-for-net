@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the VirtualDesktop data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualDesktop data model.
+    /// Schema for Desktop properties.
+    /// </summary>
     public partial class VirtualDesktopData : ResourceData
     {
         /// <summary> Initializes a new instance of VirtualDesktopData. </summary>

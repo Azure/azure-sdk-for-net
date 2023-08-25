@@ -14,6 +14,10 @@ namespace Azure.Core
     /// </summary>
     public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
     {
+        private const string RetryAfterHeaderName = "Retry-After";
+        private const string RetryAfterMsHeaderName = "retry-after-ms";
+        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
+
         private readonly Response _response;
 
         internal ResponseHeaders(Response response)
@@ -38,7 +42,28 @@ namespace Azure.Core
         /// <summary>
         /// Gets the parsed value of "Content-Length" header.
         /// </summary>
-        public int? ContentLength => TryGetValue(HttpHeader.Names.ContentLength, out string? stringValue) ? int.Parse(stringValue, CultureInfo.InvariantCulture) : (int?)null;
+        public int? ContentLength
+        {
+            get
+            {
+                if (!TryGetValue(HttpHeader.Names.ContentLength, out string? stringValue))
+                {
+                    return null;
+                }
+
+                if (!int.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out int intValue))
+                {
+                    throw new OverflowException($"Failed to parse value of 'Content-Length' header: '{stringValue}'.  If value exceeds {int.MaxValue}, please use 'Response.Headers.ContentLengthLong' instead.");
+                }
+
+                return intValue;
+            }
+        }
+
+        /// <summary>
+        /// Gets the parsed value of "Content-Length" header as a long.
+        /// </summary>
+        public long? ContentLengthLong => TryGetValue(HttpHeader.Names.ContentLength, out string? stringValue) ? long.Parse(stringValue, CultureInfo.InvariantCulture) : null;
 
         /// <summary>
         /// Gets the parsed value of "ETag" header.
@@ -49,6 +74,39 @@ namespace Azure.Core
         /// Gets the value of "x-ms-request-id" header.
         /// </summary>
         public string? RequestId => TryGetValue(HttpHeader.Names.XMsRequestId, out string? value) ? value : null;
+
+        /// <summary>
+        /// Gets the value of the retry after header, one of "Retry-After", "retry-after-ms", or "x-ms-retry-after-ms".
+        /// </summary>
+        internal TimeSpan? RetryAfter
+        {
+            get
+            {
+                if (TryGetValue(RetryAfterMsHeaderName, out var retryAfterValue) ||
+                    TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
+                {
+                    if (int.TryParse(retryAfterValue, out var delaySeconds))
+                    {
+                        return TimeSpan.FromMilliseconds(delaySeconds);
+                    }
+                }
+
+                if (TryGetValue(RetryAfterHeaderName, out retryAfterValue))
+                {
+                    if (int.TryParse(retryAfterValue, out var delaySeconds))
+                    {
+                        return TimeSpan.FromSeconds(delaySeconds);
+                    }
+
+                    if (DateTimeOffset.TryParse(retryAfterValue, out DateTimeOffset delayTime))
+                    {
+                        return delayTime - DateTimeOffset.Now;
+                    }
+                }
+
+                return default;
+            }
+        }
 
         /// <summary>
         /// Returns an enumerator that iterates through the <see cref="ResponseHeaders"/>.

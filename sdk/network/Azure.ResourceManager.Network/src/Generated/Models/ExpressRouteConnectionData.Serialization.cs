@@ -19,44 +19,49 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
-                writer.WritePropertyName("expressRouteCircuitPeering");
+                writer.WritePropertyName("expressRouteCircuitPeering"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
             }
             if (Optional.IsDefined(AuthorizationKey))
             {
-                writer.WritePropertyName("authorizationKey");
+                writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
             if (Optional.IsDefined(RoutingWeight))
             {
-                writer.WritePropertyName("routingWeight");
+                writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
             if (Optional.IsDefined(EnableInternetSecurity))
             {
-                writer.WritePropertyName("enableInternetSecurity");
+                writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
             if (Optional.IsDefined(ExpressRouteGatewayBypass))
             {
-                writer.WritePropertyName("expressRouteGatewayBypass");
+                writer.WritePropertyName("expressRouteGatewayBypass"u8);
                 writer.WriteBooleanValue(ExpressRouteGatewayBypass.Value);
+            }
+            if (Optional.IsDefined(EnablePrivateLinkFastPath))
+            {
+                writer.WritePropertyName("enablePrivateLinkFastPath"u8);
+                writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
             }
             if (Optional.IsDefined(RoutingConfiguration))
             {
-                writer.WritePropertyName("routingConfiguration");
+                writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(RoutingConfiguration);
             }
             writer.WriteEndObject();
@@ -65,6 +70,10 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteConnectionData DeserializeExpressRouteConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -74,35 +83,34 @@ namespace Azure.ResourceManager.Network
             Optional<int> routingWeight = default;
             Optional<bool> enableInternetSecurity = default;
             Optional<bool> expressRouteGatewayBypass = default;
+            Optional<bool> enablePrivateLinkFastPath = default;
             Optional<RoutingConfiguration> routingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,66 +119,69 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("expressRouteCircuitPeering"))
+                        if (property0.NameEquals("expressRouteCircuitPeering"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("authorizationKey"))
+                        if (property0.NameEquals("authorizationKey"u8))
                         {
                             authorizationKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("routingWeight"))
+                        if (property0.NameEquals("routingWeight"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             routingWeight = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("enableInternetSecurity"))
+                        if (property0.NameEquals("enableInternetSecurity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableInternetSecurity = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("expressRouteGatewayBypass"))
+                        if (property0.NameEquals("expressRouteGatewayBypass"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expressRouteGatewayBypass = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("routingConfiguration"))
+                        if (property0.NameEquals("enablePrivateLinkFastPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enablePrivateLinkFastPath = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("routingConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
@@ -180,7 +191,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(provisioningState), expressRouteCircuitPeering, authorizationKey.Value, Optional.ToNullable(routingWeight), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(expressRouteGatewayBypass), routingConfiguration.Value);
+            return new ExpressRouteConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(provisioningState), expressRouteCircuitPeering, authorizationKey.Value, Optional.ToNullable(routingWeight), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath), routingConfiguration.Value);
         }
     }
 }

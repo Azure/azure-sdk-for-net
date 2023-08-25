@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the ManagedClusterUpgradeProfile data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedClusterUpgradeProfile data model.
+    /// The list of available upgrades for compute pools.
+    /// </summary>
     public partial class ManagedClusterUpgradeProfileData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedClusterUpgradeProfileData. </summary>

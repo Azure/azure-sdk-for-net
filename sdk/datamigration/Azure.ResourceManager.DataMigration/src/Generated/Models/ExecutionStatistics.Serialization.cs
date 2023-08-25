@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ExecutionStatistics DeserializeExecutionStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> executionCount = default;
             Optional<float> cpuTimeMs = default;
             Optional<float> elapsedTimeMs = default;
@@ -23,41 +27,37 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<string>> sqlErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("executionCount"))
+                if (property.NameEquals("executionCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     executionCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cpuTimeMs"))
+                if (property.NameEquals("cpuTimeMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cpuTimeMs = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("elapsedTimeMs"))
+                if (property.NameEquals("elapsedTimeMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     elapsedTimeMs = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("waitStats"))
+                if (property.NameEquals("waitStats"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, WaitStatistics> dictionary = new Dictionary<string, WaitStatistics>();
@@ -68,21 +68,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                     waitStats = dictionary;
                     continue;
                 }
-                if (property.NameEquals("hasErrors"))
+                if (property.NameEquals("hasErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasErrors = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sqlErrors"))
+                if (property.NameEquals("sqlErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

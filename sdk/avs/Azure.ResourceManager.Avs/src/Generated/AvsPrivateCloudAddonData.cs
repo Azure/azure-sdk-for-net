@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the AvsPrivateCloudAddon data model. </summary>
+    /// <summary>
+    /// A class representing the AvsPrivateCloudAddon data model.
+    /// An addon resource
+    /// </summary>
     public partial class AvsPrivateCloudAddonData : ResourceData
     {
         /// <summary> Initializes a new instance of AvsPrivateCloudAddonData. </summary>

@@ -103,74 +103,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<DataFlowResource> GetDataFlowsByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataFlowResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlowsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDataFlowsByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataFlowResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlowsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDataFlowsByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetDataFlowsByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetDataFlowsByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowResource.DeserializeDataFlowResource, _clientDiagnostics, _pipeline, "DataFlowClient.GetDataFlowsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists data flows. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<DataFlowResource> GetDataFlowsByWorkspace(CancellationToken cancellationToken = default)
         {
-            Page<DataFlowResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlowsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDataFlowsByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataFlowResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlowsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDataFlowsByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetDataFlowsByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetDataFlowsByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowResource.DeserializeDataFlowResource, _clientDiagnostics, _pipeline, "DataFlowClient.GetDataFlowsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a data flow. </summary>

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("headerActionType");
+            writer.WritePropertyName("headerActionType"u8);
             writer.WriteStringValue(HeaderActionType.ToString());
-            writer.WritePropertyName("headerName");
+            writer.WritePropertyName("headerName"u8);
             writer.WriteStringValue(HeaderName);
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
@@ -29,22 +29,26 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RulesEngineHeaderAction DeserializeRulesEngineHeaderAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RulesEngineHeaderActionType headerActionType = default;
             string headerName = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("headerActionType"))
+                if (property.NameEquals("headerActionType"u8))
                 {
                     headerActionType = new RulesEngineHeaderActionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("headerName"))
+                if (property.NameEquals("headerName"u8))
                 {
                     headerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

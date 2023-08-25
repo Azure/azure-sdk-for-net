@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Body))
             {
-                writer.WritePropertyName("body");
+                writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
             if (Optional.IsCollectionDefined(AppProperties))
             {
-                writer.WritePropertyName("appProperties");
+                writer.WritePropertyName("appProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in AppProperties)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             if (Optional.IsCollectionDefined(SystemProperties))
             {
-                writer.WritePropertyName("systemProperties");
+                writer.WritePropertyName("systemProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in SystemProperties)
                 {

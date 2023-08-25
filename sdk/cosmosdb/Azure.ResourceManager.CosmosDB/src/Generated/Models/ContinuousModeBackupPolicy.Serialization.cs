@@ -15,11 +15,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            if (Optional.IsDefined(ContinuousModeProperties))
+            {
+                writer.WritePropertyName("continuousModeProperties"u8);
+                writer.WriteObjectValue(ContinuousModeProperties);
+            }
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
             if (Optional.IsDefined(MigrationState))
             {
-                writer.WritePropertyName("migrationState");
+                writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);
             }
             writer.WriteEndObject();
@@ -27,27 +32,40 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ContinuousModeBackupPolicy DeserializeContinuousModeBackupPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ContinuousModeProperties> continuousModeProperties = default;
             BackupPolicyType type = default;
             Optional<BackupPolicyMigrationState> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("continuousModeProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    continuousModeProperties = ContinuousModeProperties.DeserializeContinuousModeProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
                 {
                     type = new BackupPolicyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("migrationState"))
+                if (property.NameEquals("migrationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value);
                     continue;
                 }
             }
-            return new ContinuousModeBackupPolicy(type, migrationState.Value);
+            return new ContinuousModeBackupPolicy(type, migrationState.Value, continuousModeProperties.Value);
         }
     }
 }

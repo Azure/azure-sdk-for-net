@@ -15,9 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceCertificateDetails DeserializeAppServiceCertificateDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> version = default;
             Optional<string> serialNumber = default;
-            Optional<BinaryData> thumbprint = default;
+            Optional<string> thumbprint = default;
             Optional<string> subject = default;
             Optional<DateTimeOffset> notBefore = default;
             Optional<DateTimeOffset> notAfter = default;
@@ -26,67 +30,59 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> rawData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     version = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("serialNumber"))
+                if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
+                    thumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subject"))
+                if (property.NameEquals("subject"u8))
                 {
                     subject = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("notBefore"))
+                if (property.NameEquals("notBefore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     notBefore = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("notAfter"))
+                if (property.NameEquals("notAfter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     notAfter = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("signatureAlgorithm"))
+                if (property.NameEquals("signatureAlgorithm"u8))
                 {
                     signatureAlgorithm = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issuer"))
+                if (property.NameEquals("issuer"u8))
                 {
                     issuer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rawData"))
+                if (property.NameEquals("rawData"u8))
                 {
                     rawData = property.Value.GetString();
                     continue;

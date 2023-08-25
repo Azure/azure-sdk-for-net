@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static FunctionAppRuntimeSettings DeserializeFunctionAppRuntimeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> runtimeVersion = default;
             Optional<bool> remoteDebuggingSupported = default;
             Optional<AppInsightsWebAppStackSettings> appInsightsSettings = default;
@@ -32,46 +36,42 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isDefault = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("runtimeVersion"))
+                if (property.NameEquals("runtimeVersion"u8))
                 {
                     runtimeVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remoteDebuggingSupported"))
+                if (property.NameEquals("remoteDebuggingSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     remoteDebuggingSupported = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("appInsightsSettings"))
+                if (property.NameEquals("appInsightsSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appInsightsSettings = AppInsightsWebAppStackSettings.DeserializeAppInsightsWebAppStackSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("gitHubActionSettings"))
+                if (property.NameEquals("gitHubActionSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gitHubActionSettings = GitHubActionWebAppStackSettings.DeserializeGitHubActionWebAppStackSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("appSettingsDictionary"))
+                if (property.NameEquals("appSettingsDictionary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -82,21 +82,19 @@ namespace Azure.ResourceManager.AppService.Models
                     appSettingsDictionary = dictionary;
                     continue;
                 }
-                if (property.NameEquals("siteConfigPropertiesDictionary"))
+                if (property.NameEquals("siteConfigPropertiesDictionary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     siteConfigPropertiesDictionary = SiteConfigPropertiesDictionary.DeserializeSiteConfigPropertiesDictionary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("supportedFunctionsExtensionVersions"))
+                if (property.NameEquals("supportedFunctionsExtensionVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -107,71 +105,64 @@ namespace Azure.ResourceManager.AppService.Models
                     supportedFunctionsExtensionVersions = array;
                     continue;
                 }
-                if (property.NameEquals("isPreview"))
+                if (property.NameEquals("isPreview"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPreview = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDeprecated"))
+                if (property.NameEquals("isDeprecated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDeprecated = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isHidden"))
+                if (property.NameEquals("isHidden"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isHidden = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("endOfLifeDate"))
+                if (property.NameEquals("endOfLifeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endOfLifeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isAutoUpdate"))
+                if (property.NameEquals("isAutoUpdate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAutoUpdate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isEarlyAccess"))
+                if (property.NameEquals("isEarlyAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEarlyAccess = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDefault"))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDefault = property.Value.GetBoolean();

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MigrationOperationId))
             {
-                writer.WritePropertyName("migrationOperationId");
+                writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId.Value);
             }
             writer.WriteEndObject();

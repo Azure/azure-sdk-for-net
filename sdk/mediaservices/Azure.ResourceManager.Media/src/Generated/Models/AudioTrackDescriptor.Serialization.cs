@@ -17,16 +17,20 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ChannelMapping))
             {
-                writer.WritePropertyName("channelMapping");
+                writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
 
         internal static AudioTrackDescriptor DeserializeAudioTrackDescriptor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -39,17 +43,16 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = "#Microsoft.Media.AudioTrackDescriptor";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("channelMapping"))
+                if (property.NameEquals("channelMapping"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     channelMapping = new ChannelMapping(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

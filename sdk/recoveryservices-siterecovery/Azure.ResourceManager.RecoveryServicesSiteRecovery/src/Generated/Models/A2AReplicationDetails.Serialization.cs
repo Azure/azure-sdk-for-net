@@ -16,13 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AReplicationDetails DeserializeA2AReplicationDetails(JsonElement element)
         {
-            Optional<string> fabricObjectId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> fabricObjectId = default;
             Optional<string> initialPrimaryZone = default;
-            Optional<string> initialPrimaryFabricLocation = default;
+            Optional<AzureLocation> initialPrimaryFabricLocation = default;
             Optional<string> initialRecoveryZone = default;
-            Optional<ExtendedLocation> initialPrimaryExtendedLocation = default;
-            Optional<ExtendedLocation> initialRecoveryExtendedLocation = default;
-            Optional<string> initialRecoveryFabricLocation = default;
+            Optional<SiteRecoveryExtendedLocation> initialPrimaryExtendedLocation = default;
+            Optional<SiteRecoveryExtendedLocation> initialRecoveryExtendedLocation = default;
+            Optional<AzureLocation> initialRecoveryFabricLocation = default;
             Optional<string> multiVmGroupId = default;
             Optional<string> multiVmGroupName = default;
             Optional<MultiVmGroupCreateOption> multiVmGroupCreateOption = default;
@@ -30,123 +34,131 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<A2AProtectedDiskDetails>> protectedDisks = default;
             Optional<IReadOnlyList<A2AUnprotectedDiskDetails>> unprotectedDisks = default;
             Optional<IReadOnlyList<A2AProtectedManagedDiskDetails>> protectedManagedDisks = default;
-            Optional<string> recoveryBootDiagStorageAccountId = default;
-            Optional<string> primaryFabricLocation = default;
-            Optional<string> recoveryFabricLocation = default;
+            Optional<ResourceIdentifier> recoveryBootDiagStorageAccountId = default;
+            Optional<AzureLocation> primaryFabricLocation = default;
+            Optional<AzureLocation> recoveryFabricLocation = default;
             Optional<string> osType = default;
             Optional<string> recoveryAzureVmSize = default;
             Optional<string> recoveryAzureVmName = default;
-            Optional<string> recoveryAzureResourceGroupId = default;
+            Optional<ResourceIdentifier> recoveryAzureResourceGroupId = default;
             Optional<string> recoveryCloudService = default;
             Optional<string> recoveryAvailabilitySet = default;
-            Optional<string> selectedRecoveryAzureNetworkId = default;
-            Optional<string> selectedTfoAzureNetworkId = default;
+            Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
+            Optional<ResourceIdentifier> selectedTfoAzureNetworkId = default;
             Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
-            Optional<AzureToAzureVmSyncedConfigDetails> vmSyncedConfigDetails = default;
+            Optional<A2AVmSyncedConfigDetails> vmSyncedConfigDetails = default;
             Optional<int> monitoringPercentageCompletion = default;
             Optional<string> monitoringJobType = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> agentVersion = default;
-            Optional<DateTimeOffset> agentExpiryDate = default;
+            Optional<DateTimeOffset> agentExpireOn = default;
             Optional<bool> isReplicationAgentUpdateRequired = default;
-            Optional<DateTimeOffset> agentCertificateExpiryDate = default;
+            Optional<DateTimeOffset> agentCertificateExpireOn = default;
             Optional<bool> isReplicationAgentCertificateUpdateRequired = default;
-            Optional<string> recoveryFabricObjectId = default;
+            Optional<ResourceIdentifier> recoveryFabricObjectId = default;
             Optional<string> vmProtectionState = default;
             Optional<string> vmProtectionStateDescription = default;
             Optional<string> lifecycleId = default;
-            Optional<string> testFailoverRecoveryFabricObjectId = default;
+            Optional<ResourceIdentifier> testFailoverRecoveryFabricObjectId = default;
             Optional<long> rpoInSeconds = default;
             Optional<DateTimeOffset> lastRpoCalculatedTime = default;
             Optional<string> primaryAvailabilityZone = default;
             Optional<string> recoveryAvailabilityZone = default;
-            Optional<ExtendedLocation> primaryExtendedLocation = default;
-            Optional<ExtendedLocation> recoveryExtendedLocation = default;
-            Optional<VmEncryptionType> vmEncryptionType = default;
+            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
+            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            Optional<SiteRecoveryVmEncryptionType> vmEncryptionType = default;
             Optional<string> tfoAzureVmName = default;
             Optional<string> recoveryAzureGeneration = default;
-            Optional<string> recoveryProximityPlacementGroupId = default;
+            Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
             Optional<AutoProtectionOfDataDisk> autoProtectionOfDataDisk = default;
-            Optional<string> recoveryVirtualMachineScaleSetId = default;
-            Optional<string> recoveryCapacityReservationGroupId = default;
+            Optional<ResourceIdentifier> recoveryVirtualMachineScaleSetId = default;
+            Optional<ResourceIdentifier> recoveryCapacityReservationGroupId = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fabricObjectId"))
+                if (property.NameEquals("fabricObjectId"u8))
                 {
-                    fabricObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("initialPrimaryZone"))
+                if (property.NameEquals("initialPrimaryZone"u8))
                 {
                     initialPrimaryZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialPrimaryFabricLocation"))
+                if (property.NameEquals("initialPrimaryFabricLocation"u8))
                 {
-                    initialPrimaryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    initialPrimaryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("initialRecoveryZone"))
+                if (property.NameEquals("initialRecoveryZone"u8))
                 {
                     initialRecoveryZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialPrimaryExtendedLocation"))
+                if (property.NameEquals("initialPrimaryExtendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    initialPrimaryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("initialRecoveryExtendedLocation"))
+                if (property.NameEquals("initialRecoveryExtendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    initialRecoveryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("initialRecoveryFabricLocation"))
+                if (property.NameEquals("initialRecoveryFabricLocation"u8))
                 {
-                    initialRecoveryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    initialRecoveryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupId"))
+                if (property.NameEquals("multiVmGroupId"u8))
                 {
                     multiVmGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupName"))
+                if (property.NameEquals("multiVmGroupName"u8))
                 {
                     multiVmGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupCreateOption"))
+                if (property.NameEquals("multiVmGroupCreateOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     multiVmGroupCreateOption = new MultiVmGroupCreateOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("managementId"))
+                if (property.NameEquals("managementId"u8))
                 {
                     managementId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedDisks"))
+                if (property.NameEquals("protectedDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<A2AProtectedDiskDetails> array = new List<A2AProtectedDiskDetails>();
@@ -157,11 +169,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("unprotectedDisks"))
+                if (property.NameEquals("unprotectedDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<A2AUnprotectedDiskDetails> array = new List<A2AUnprotectedDiskDetails>();
@@ -172,11 +183,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     unprotectedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("protectedManagedDisks"))
+                if (property.NameEquals("protectedManagedDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<A2AProtectedManagedDiskDetails> array = new List<A2AProtectedManagedDiskDetails>();
@@ -187,66 +197,89 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectedManagedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryBootDiagStorageAccountId"))
+                if (property.NameEquals("recoveryBootDiagStorageAccountId"u8))
                 {
-                    recoveryBootDiagStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryBootDiagStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryFabricLocation"))
+                if (property.NameEquals("primaryFabricLocation"u8))
                 {
-                    primaryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricLocation"))
+                if (property.NameEquals("recoveryFabricLocation"u8))
                 {
-                    recoveryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureVMSize"))
+                if (property.NameEquals("recoveryAzureVMSize"u8))
                 {
                     recoveryAzureVmSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureVMName"))
+                if (property.NameEquals("recoveryAzureVMName"u8))
                 {
                     recoveryAzureVmName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureResourceGroupId"))
+                if (property.NameEquals("recoveryAzureResourceGroupId"u8))
                 {
-                    recoveryAzureResourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryAzureResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryCloudService"))
+                if (property.NameEquals("recoveryCloudService"u8))
                 {
                     recoveryCloudService = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAvailabilitySet"))
+                if (property.NameEquals("recoveryAvailabilitySet"u8))
                 {
                     recoveryAvailabilitySet = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("selectedRecoveryAzureNetworkId"))
-                {
-                    selectedRecoveryAzureNetworkId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("selectedTfoAzureNetworkId"))
-                {
-                    selectedTfoAzureNetworkId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("vmNics"))
+                if (property.NameEquals("selectedRecoveryAzureNetworkId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    selectedRecoveryAzureNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("selectedTfoAzureNetworkId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    selectedTfoAzureNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("vmNics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     List<VmNicDetails> array = new List<VmNicDetails>();
@@ -257,213 +290,220 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     vmNics = array;
                     continue;
                 }
-                if (property.NameEquals("vmSyncedConfigDetails"))
+                if (property.NameEquals("vmSyncedConfigDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vmSyncedConfigDetails = AzureToAzureVmSyncedConfigDetails.DeserializeAzureToAzureVmSyncedConfigDetails(property.Value);
+                    vmSyncedConfigDetails = A2AVmSyncedConfigDetails.DeserializeA2AVmSyncedConfigDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("monitoringPercentageCompletion"))
+                if (property.NameEquals("monitoringPercentageCompletion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monitoringPercentageCompletion = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("monitoringJobType"))
+                if (property.NameEquals("monitoringJobType"u8))
                 {
                     monitoringJobType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"))
+                if (property.NameEquals("lastHeartbeat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastHeartbeat = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentExpiryDate"))
+                if (property.NameEquals("agentExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    agentExpiryDate = property.Value.GetDateTimeOffset("O");
+                    agentExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isReplicationAgentUpdateRequired"))
+                if (property.NameEquals("isReplicationAgentUpdateRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isReplicationAgentUpdateRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("agentCertificateExpiryDate"))
+                if (property.NameEquals("agentCertificateExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    agentCertificateExpiryDate = property.Value.GetDateTimeOffset("O");
+                    agentCertificateExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isReplicationAgentCertificateUpdateRequired"))
+                if (property.NameEquals("isReplicationAgentCertificateUpdateRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isReplicationAgentCertificateUpdateRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricObjectId"))
+                if (property.NameEquals("recoveryFabricObjectId"u8))
                 {
-                    recoveryFabricObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryFabricObjectId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vmProtectionState"))
+                if (property.NameEquals("vmProtectionState"u8))
                 {
                     vmProtectionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionStateDescription"))
+                if (property.NameEquals("vmProtectionStateDescription"u8))
                 {
                     vmProtectionStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lifecycleId"))
+                if (property.NameEquals("lifecycleId"u8))
                 {
                     lifecycleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testFailoverRecoveryFabricObjectId"))
-                {
-                    testFailoverRecoveryFabricObjectId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("rpoInSeconds"))
+                if (property.NameEquals("testFailoverRecoveryFabricObjectId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    testFailoverRecoveryFabricObjectId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("rpoInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     rpoInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastRpoCalculatedTime"))
+                if (property.NameEquals("lastRpoCalculatedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastRpoCalculatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("primaryAvailabilityZone"))
+                if (property.NameEquals("primaryAvailabilityZone"u8))
                 {
                     primaryAvailabilityZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAvailabilityZone"))
+                if (property.NameEquals("recoveryAvailabilityZone"u8))
                 {
                     recoveryAvailabilityZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryExtendedLocation"))
+                if (property.NameEquals("primaryExtendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recoveryExtendedLocation"))
+                if (property.NameEquals("recoveryExtendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recoveryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vmEncryptionType"))
+                if (property.NameEquals("vmEncryptionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vmEncryptionType = new VmEncryptionType(property.Value.GetString());
+                    vmEncryptionType = new SiteRecoveryVmEncryptionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tfoAzureVMName"))
+                if (property.NameEquals("tfoAzureVMName"u8))
                 {
                     tfoAzureVmName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureGeneration"))
+                if (property.NameEquals("recoveryAzureGeneration"u8))
                 {
                     recoveryAzureGeneration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryProximityPlacementGroupId"))
-                {
-                    recoveryProximityPlacementGroupId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("autoProtectionOfDataDisk"))
+                if (property.NameEquals("recoveryProximityPlacementGroupId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recoveryProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("autoProtectionOfDataDisk"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     autoProtectionOfDataDisk = new AutoProtectionOfDataDisk(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryVirtualMachineScaleSetId"))
+                if (property.NameEquals("recoveryVirtualMachineScaleSetId"u8))
                 {
-                    recoveryVirtualMachineScaleSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryVirtualMachineScaleSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryCapacityReservationGroupId"))
+                if (property.NameEquals("recoveryCapacityReservationGroupId"u8))
                 {
-                    recoveryCapacityReservationGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryCapacityReservationGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
             }
-            return new A2AReplicationDetails(instanceType, fabricObjectId.Value, initialPrimaryZone.Value, initialPrimaryFabricLocation.Value, initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, initialRecoveryFabricLocation.Value, multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToNullable(multiVmGroupCreateOption), managementId.Value, Optional.ToList(protectedDisks), Optional.ToList(unprotectedDisks), Optional.ToList(protectedManagedDisks), recoveryBootDiagStorageAccountId.Value, primaryFabricLocation.Value, recoveryFabricLocation.Value, osType.Value, recoveryAzureVmSize.Value, recoveryAzureVmName.Value, recoveryAzureResourceGroupId.Value, recoveryCloudService.Value, recoveryAvailabilitySet.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, Optional.ToList(vmNics), vmSyncedConfigDetails.Value, Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(lastHeartbeat), agentVersion.Value, Optional.ToNullable(agentExpiryDate), Optional.ToNullable(isReplicationAgentUpdateRequired), Optional.ToNullable(agentCertificateExpiryDate), Optional.ToNullable(isReplicationAgentCertificateUpdateRequired), recoveryFabricObjectId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value, testFailoverRecoveryFabricObjectId.Value, Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), primaryAvailabilityZone.Value, recoveryAvailabilityZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(vmEncryptionType), tfoAzureVmName.Value, recoveryAzureGeneration.Value, recoveryProximityPlacementGroupId.Value, Optional.ToNullable(autoProtectionOfDataDisk), recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value);
+            return new A2AReplicationDetails(instanceType, fabricObjectId.Value, initialPrimaryZone.Value, Optional.ToNullable(initialPrimaryFabricLocation), initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialRecoveryFabricLocation), multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToNullable(multiVmGroupCreateOption), managementId.Value, Optional.ToList(protectedDisks), Optional.ToList(unprotectedDisks), Optional.ToList(protectedManagedDisks), recoveryBootDiagStorageAccountId.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation), osType.Value, recoveryAzureVmSize.Value, recoveryAzureVmName.Value, recoveryAzureResourceGroupId.Value, recoveryCloudService.Value, recoveryAvailabilitySet.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, Optional.ToList(vmNics), vmSyncedConfigDetails.Value, Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(lastHeartbeat), agentVersion.Value, Optional.ToNullable(agentExpireOn), Optional.ToNullable(isReplicationAgentUpdateRequired), Optional.ToNullable(agentCertificateExpireOn), Optional.ToNullable(isReplicationAgentCertificateUpdateRequired), recoveryFabricObjectId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value, testFailoverRecoveryFabricObjectId.Value, Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), primaryAvailabilityZone.Value, recoveryAvailabilityZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(vmEncryptionType), tfoAzureVmName.Value, recoveryAzureGeneration.Value, recoveryProximityPlacementGroupId.Value, Optional.ToNullable(autoProtectionOfDataDisk), recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value);
         }
     }
 }

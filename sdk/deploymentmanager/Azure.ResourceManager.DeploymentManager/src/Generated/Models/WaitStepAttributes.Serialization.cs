@@ -16,17 +16,21 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("duration");
+            writer.WritePropertyName("duration"u8);
             writer.WriteStringValue(Duration, "P");
             writer.WriteEndObject();
         }
 
         internal static WaitStepAttributes DeserializeWaitStepAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan duration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("duration"))
+                if (property.NameEquals("duration"u8))
                 {
                     duration = property.Value.GetTimeSpan("P");
                     continue;

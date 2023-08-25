@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("virtualMachines");
+            writer.WritePropertyName("virtualMachines"u8);
             writer.WriteStartArray();
             foreach (var item in VirtualMachines)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("startTimeUtc");
+            writer.WritePropertyName("startTimeUtc"u8);
             writer.WriteStringValue(StartOn, "O");
-            writer.WritePropertyName("requestor");
+            writer.WritePropertyName("requestor"u8);
             writer.WriteStringValue(Requestor);
             if (Optional.IsDefined(Justification))
             {
-                writer.WritePropertyName("justification");
+                writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
             writer.WriteEndObject();
@@ -38,13 +38,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static JitNetworkAccessRequestInfo DeserializeJitNetworkAccessRequestInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<JitNetworkAccessRequestVirtualMachine> virtualMachines = default;
             DateTimeOffset startTimeUtc = default;
             string requestor = default;
             Optional<string> justification = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualMachines"))
+                if (property.NameEquals("virtualMachines"u8))
                 {
                     List<JitNetworkAccessRequestVirtualMachine> array = new List<JitNetworkAccessRequestVirtualMachine>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -54,17 +58,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     virtualMachines = array;
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"))
+                if (property.NameEquals("startTimeUtc"u8))
                 {
                     startTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("requestor"))
+                if (property.NameEquals("requestor"u8))
                 {
                     requestor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("justification"))
+                if (property.NameEquals("justification"u8))
                 {
                     justification = property.Value.GetString();
                     continue;

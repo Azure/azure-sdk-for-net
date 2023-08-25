@@ -30,17 +30,7 @@ extends:
   parameters:
     SDKType: client
     ServiceDirectory: search
-    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Search.Documents
       safeName: AzureSearchDocuments
-    # Skip track 1 Microsoft.Azure.* packages for the release jobs
-    # - name: Microsoft.Azure.Search
-    #   safeName: MicrosoftAzureSearch
-    # - name: Microsoft.Azure.Search.Common
-    #   safeName: MicrosoftAzureSearchCommon
-    # - name: Microsoft.Azure.Search.Data
-    #   safeName: MicrosoftAzureSearchData
-    # - name: Microsoft.Azure.Search.Service
-    #   safeName: MicrosoftAzureSearchService

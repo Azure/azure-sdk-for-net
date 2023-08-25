@@ -204,9 +204,12 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='gatewayName'>
             /// The name of the gateway.
             /// </param>
-            public static VpnGateway Reset(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName)
+            /// <param name='ipConfigurationId'>
+            /// VpnGateway ipConfigurationId to specify the gateway instance.
+            /// </param>
+            public static VpnGateway Reset(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, string ipConfigurationId = default(string))
             {
-                return operations.ResetAsync(resourceGroupName, gatewayName).GetAwaiter().GetResult();
+                return operations.ResetAsync(resourceGroupName, gatewayName, ipConfigurationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,12 +224,15 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='gatewayName'>
             /// The name of the gateway.
             /// </param>
+            /// <param name='ipConfigurationId'>
+            /// VpnGateway ipConfigurationId to specify the gateway instance.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VpnGateway> ResetAsync(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VpnGateway> ResetAsync(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, string ipConfigurationId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ResetWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ResetWithHttpMessagesAsync(resourceGroupName, gatewayName, ipConfigurationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -533,9 +539,12 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='gatewayName'>
             /// The name of the gateway.
             /// </param>
-            public static VpnGateway BeginReset(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName)
+            /// <param name='ipConfigurationId'>
+            /// VpnGateway ipConfigurationId to specify the gateway instance.
+            /// </param>
+            public static VpnGateway BeginReset(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, string ipConfigurationId = default(string))
             {
-                return operations.BeginResetAsync(resourceGroupName, gatewayName).GetAwaiter().GetResult();
+                return operations.BeginResetAsync(resourceGroupName, gatewayName, ipConfigurationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -550,12 +559,15 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='gatewayName'>
             /// The name of the gateway.
             /// </param>
+            /// <param name='ipConfigurationId'>
+            /// VpnGateway ipConfigurationId to specify the gateway instance.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VpnGateway> BeginResetAsync(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VpnGateway> BeginResetAsync(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, string ipConfigurationId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginResetWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginResetWithHttpMessagesAsync(resourceGroupName, gatewayName, ipConfigurationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

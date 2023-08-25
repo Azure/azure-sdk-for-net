@@ -10,7 +10,10 @@ using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    /// <summary> A class representing the TrafficManagerUserMetric data model. </summary>
+    /// <summary>
+    /// A class representing the TrafficManagerUserMetric data model.
+    /// Class representing Traffic Manager User Metrics.
+    /// </summary>
     public partial class TrafficManagerUserMetricData : TrafficManagerProxyResourceData
     {
         /// <summary> Initializes a new instance of TrafficManagerUserMetricData. </summary>

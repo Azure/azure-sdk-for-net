@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(WeekDays))
             {
-                writer.WritePropertyName("weekDays");
+                writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
                 foreach (var item in WeekDays)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsCollectionDefined(MonthDays))
             {
-                writer.WritePropertyName("monthDays");
+                writer.WritePropertyName("monthDays"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonthDays)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsCollectionDefined(MonthlyOccurrences))
             {
-                writer.WritePropertyName("monthlyOccurrences");
+                writer.WritePropertyName("monthlyOccurrences"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
@@ -51,16 +51,19 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationAdvancedSchedule DeserializeAutomationAdvancedSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> weekDays = default;
             Optional<IList<int>> monthDays = default;
             Optional<IList<AutomationAdvancedScheduleMonthlyOccurrence>> monthlyOccurrences = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("weekDays"))
+                if (property.NameEquals("weekDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -71,11 +74,10 @@ namespace Azure.ResourceManager.Automation.Models
                     weekDays = array;
                     continue;
                 }
-                if (property.NameEquals("monthDays"))
+                if (property.NameEquals("monthDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -86,11 +88,10 @@ namespace Azure.ResourceManager.Automation.Models
                     monthDays = array;
                     continue;
                 }
-                if (property.NameEquals("monthlyOccurrences"))
+                if (property.NameEquals("monthlyOccurrences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AutomationAdvancedScheduleMonthlyOccurrence> array = new List<AutomationAdvancedScheduleMonthlyOccurrence>();

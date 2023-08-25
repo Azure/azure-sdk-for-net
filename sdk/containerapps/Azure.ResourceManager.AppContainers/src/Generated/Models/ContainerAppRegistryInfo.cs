@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App registry information. </summary>
@@ -18,18 +16,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppRegistryInfo. </summary>
-        /// <param name="registryUri"> registry server Url. </param>
+        /// <param name="registryServer"> registry server Url. </param>
         /// <param name="registryUserName"> registry username. </param>
         /// <param name="registryPassword"> registry secret. </param>
-        internal ContainerAppRegistryInfo(Uri registryUri, string registryUserName, string registryPassword)
+        internal ContainerAppRegistryInfo(string registryServer, string registryUserName, string registryPassword)
         {
-            RegistryUri = registryUri;
+            RegistryServer = registryServer;
             RegistryUserName = registryUserName;
             RegistryPassword = registryPassword;
         }
 
         /// <summary> registry server Url. </summary>
-        public Uri RegistryUri { get; set; }
+        public string RegistryServer { get; set; }
         /// <summary> registry username. </summary>
         public string RegistryUserName { get; set; }
         /// <summary> registry secret. </summary>

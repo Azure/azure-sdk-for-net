@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageAzureV2PolicyDetails DeserializeInMageAzureV2PolicyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> crashConsistentFrequencyInMinutes = default;
             Optional<int> recoveryPointThresholdInMinutes = default;
             Optional<int> recoveryPointHistory = default;
@@ -22,52 +26,48 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("crashConsistentFrequencyInMinutes"))
+                if (property.NameEquals("crashConsistentFrequencyInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crashConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointThresholdInMinutes"))
+                if (property.NameEquals("recoveryPointThresholdInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointThresholdInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointHistory"))
+                if (property.NameEquals("recoveryPointHistory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointHistory = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("appConsistentFrequencyInMinutes"))
+                if (property.NameEquals("appConsistentFrequencyInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("multiVmSyncStatus"))
+                if (property.NameEquals("multiVmSyncStatus"u8))
                 {
                     multiVmSyncStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

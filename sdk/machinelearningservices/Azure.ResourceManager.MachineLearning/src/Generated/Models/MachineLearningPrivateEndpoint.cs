@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The Private Endpoint resource.
-    /// Serialized Name: PrivateEndpoint
-    /// </summary>
+    /// <summary> The Private Endpoint resource. </summary>
     public partial class MachineLearningPrivateEndpoint
     {
         /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
-        /// <param name="id">
-        /// The ARM identifier for Private Endpoint
-        /// Serialized Name: PrivateEndpoint.id
-        /// </param>
-        /// <param name="subnetArmId">
-        /// The ARM identifier for Subnet resource that private endpoint links to
-        /// Serialized Name: PrivateEndpoint.subnetArmId
-        /// </param>
+        /// <param name="id"> The ARM identifier for Private Endpoint. </param>
+        /// <param name="subnetArmId"> The ARM identifier for Subnet resource that private endpoint links to. </param>
         internal MachineLearningPrivateEndpoint(ResourceIdentifier id, ResourceIdentifier subnetArmId)
         {
             Id = id;
             SubnetArmId = subnetArmId;
         }
 
-        /// <summary>
-        /// The ARM identifier for Private Endpoint
-        /// Serialized Name: PrivateEndpoint.id
-        /// </summary>
+        /// <summary> The ARM identifier for Private Endpoint. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// The ARM identifier for Subnet resource that private endpoint links to
-        /// Serialized Name: PrivateEndpoint.subnetArmId
-        /// </summary>
+        /// <summary> The ARM identifier for Subnet resource that private endpoint links to. </summary>
         public ResourceIdentifier SubnetArmId { get; }
     }
 }

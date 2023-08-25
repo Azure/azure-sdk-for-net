@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UserId))
             {
-                writer.WritePropertyName("userId");
+                writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
             if (Optional.IsDefined(AccountInfo))
             {
-                writer.WritePropertyName("accountInfo");
+                writer.WritePropertyName("accountInfo"u8);
                 writer.WriteObjectValue(AccountInfo);
             }
             if (Optional.IsDefined(EnvironmentInfo))
             {
-                writer.WritePropertyName("environmentInfo");
+                writer.WritePropertyName("environmentInfo"u8);
                 writer.WriteObjectValue(EnvironmentInfo);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
-                writer.WritePropertyName("singleSignOnProperties");
+                writer.WritePropertyName("singleSignOnProperties"u8);
                 writer.WriteObjectValue(SingleSignOnProperties);
             }
             writer.WriteEndObject();
@@ -40,42 +40,43 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceEnvironmentProperties DeserializeDynatraceEnvironmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userId = default;
             Optional<DynatraceAccountInfo> accountInfo = default;
             Optional<DynatraceEnvironmentInfo> environmentInfo = default;
             Optional<DynatraceSingleSignOnProperties> singleSignOnProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userId"))
+                if (property.NameEquals("userId"u8))
                 {
                     userId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountInfo"))
+                if (property.NameEquals("accountInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accountInfo = DynatraceAccountInfo.DeserializeDynatraceAccountInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("environmentInfo"))
+                if (property.NameEquals("environmentInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     environmentInfo = DynatraceEnvironmentInfo.DeserializeDynatraceEnvironmentInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("singleSignOnProperties"))
+                if (property.NameEquals("singleSignOnProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     singleSignOnProperties = DynatraceSingleSignOnProperties.DeserializeDynatraceSingleSignOnProperties(property.Value);

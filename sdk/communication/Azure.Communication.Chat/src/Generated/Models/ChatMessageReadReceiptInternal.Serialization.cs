@@ -16,22 +16,26 @@ namespace Azure.Communication.Chat
     {
         internal static ChatMessageReadReceiptInternal DeserializeChatMessageReadReceiptInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string chatMessageId = default;
             DateTimeOffset readOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("senderCommunicationIdentifier"))
+                if (property.NameEquals("senderCommunicationIdentifier"u8))
                 {
                     senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("chatMessageId"))
+                if (property.NameEquals("chatMessageId"u8))
                 {
                     chatMessageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("readOn"))
+                if (property.NameEquals("readOn"u8))
                 {
                     readOn = property.Value.GetDateTimeOffset("O");
                     continue;

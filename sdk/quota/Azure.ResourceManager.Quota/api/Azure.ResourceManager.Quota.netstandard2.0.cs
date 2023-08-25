@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Quota
     public partial class CurrentUsagesBaseData : Azure.ResourceManager.Models.ResourceData
     {
         internal CurrentUsagesBaseData() { }
-        public Azure.ResourceManager.Quota.Models.UsagesProperties Properties { get { throw null; } }
+        public Azure.ResourceManager.Quota.Models.QuotaUsagesProperties Properties { get { throw null; } }
     }
     public partial class CurrentUsagesBaseResource : Azure.ResourceManager.ArmResource
     {
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Quota
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.CurrentUsagesBaseResource>> GetCurrentUsagesBaseAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Quota.CurrentUsagesBaseResource GetCurrentUsagesBaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Quota.CurrentUsagesBaseCollection GetCurrentUsagesBases(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Quota.Models.OperationResponse> GetQuotaOperations(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Quota.Models.OperationResponse> GetQuotaOperationsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetQuotaOperations(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetQuotaOperationsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Quota.QuotaRequestDetailResource> GetQuotaRequestDetail(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Quota.QuotaRequestDetailResource GetQuotaRequestDetailResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Quota
         public string Message { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.QuotaRequestState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? RequestSubmitOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quota.Models.SubRequest> Value { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail> Value { get { throw null; } }
     }
     public partial class QuotaRequestDetailResource : Azure.ResourceManager.ArmResource
     {
@@ -112,30 +112,29 @@ namespace Azure.ResourceManager.Quota
 }
 namespace Azure.ResourceManager.Quota.Models
 {
-    public abstract partial class LimitJsonObject
+    public static partial class ArmQuotaModelFactory
     {
-        protected LimitJsonObject() { }
+        public static Azure.ResourceManager.Quota.CurrentQuotaLimitBaseData CurrentQuotaLimitBaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Quota.CurrentUsagesBaseData CurrentUsagesBaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaUsagesProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaOperationDisplay QuotaOperationDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaOperationResult QuotaOperationResult(string name = null, Azure.ResourceManager.Quota.Models.QuotaOperationDisplay display = null, string origin = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaProperties QuotaProperties(Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject limit = null, string unit = null, Azure.ResourceManager.Quota.Models.QuotaRequestResourceName name = null, string resourceTypeName = null, System.TimeSpan? quotaPeriod = default(System.TimeSpan?), bool? isQuotaApplicable = default(bool?), System.BinaryData properties = null) { throw null; }
+        public static Azure.ResourceManager.Quota.QuotaRequestDetailData QuotaRequestDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaRequestState? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestState?), string message = null, Azure.ResourceManager.Quota.Models.ServiceErrorDetail error = null, System.DateTimeOffset? requestSubmitOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail> value = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaRequestResourceName QuotaRequestResourceName(string value = null, string localizedValue = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail QuotaSubRequestDetail(Azure.ResourceManager.Quota.Models.QuotaRequestResourceName name = null, string resourceTypeName = null, string unit = null, Azure.ResourceManager.Quota.Models.QuotaRequestState? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestState?), string message = null, System.Guid? subRequestId = default(System.Guid?), Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject limit = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaUsagesObject QuotaUsagesObject(int value = 0, Azure.ResourceManager.Quota.Models.QuotaUsagesType? usagesType = default(Azure.ResourceManager.Quota.Models.QuotaUsagesType?)) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaUsagesProperties QuotaUsagesProperties(Azure.ResourceManager.Quota.Models.QuotaUsagesObject usages = null, string unit = null, Azure.ResourceManager.Quota.Models.QuotaRequestResourceName name = null, string resourceTypeName = null, System.TimeSpan? quotaPeriod = default(System.TimeSpan?), bool? isQuotaApplicable = default(bool?), System.BinaryData properties = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.ServiceErrorDetail ServiceErrorDetail(string code = null, string message = null) { throw null; }
     }
-    public partial class LimitObject : Azure.ResourceManager.Quota.Models.LimitJsonObject
+    public abstract partial class QuotaLimitJsonObject
     {
-        public LimitObject(int value) { }
+        protected QuotaLimitJsonObject() { }
+    }
+    public partial class QuotaLimitObject : Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject
+    {
+        public QuotaLimitObject(int value) { }
         public Azure.ResourceManager.Quota.Models.QuotaLimitType? LimitType { get { throw null; } set { } }
         public int Value { get { throw null; } set { } }
-    }
-    public partial class OperationDisplay
-    {
-        internal OperationDisplay() { }
-        public string Description { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string Provider { get { throw null; } }
-        public string Resource { get { throw null; } }
-    }
-    public partial class OperationResponse
-    {
-        internal OperationResponse() { }
-        public Azure.ResourceManager.Quota.Models.OperationDisplay Display { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Origin { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QuotaLimitType : System.IEquatable<Azure.ResourceManager.Quota.Models.QuotaLimitType>
@@ -155,16 +154,37 @@ namespace Azure.ResourceManager.Quota.Models
         public static bool operator !=(Azure.ResourceManager.Quota.Models.QuotaLimitType left, Azure.ResourceManager.Quota.Models.QuotaLimitType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class QuotaOperationDisplay
+    {
+        internal QuotaOperationDisplay() { }
+        public string Description { get { throw null; } }
+        public string Operation { get { throw null; } }
+        public string Provider { get { throw null; } }
+        public string Resource { get { throw null; } }
+    }
+    public partial class QuotaOperationResult
+    {
+        internal QuotaOperationResult() { }
+        public Azure.ResourceManager.Quota.Models.QuotaOperationDisplay Display { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Origin { get { throw null; } }
+    }
     public partial class QuotaProperties
     {
         public QuotaProperties() { }
         public bool? IsQuotaApplicable { get { throw null; } }
-        public Azure.ResourceManager.Quota.Models.LimitJsonObject Limit { get { throw null; } set { } }
-        public Azure.ResourceManager.Quota.Models.ResourceName Name { get { throw null; } set { } }
+        public Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject Limit { get { throw null; } set { } }
+        public Azure.ResourceManager.Quota.Models.QuotaRequestResourceName Name { get { throw null; } set { } }
         public System.BinaryData Properties { get { throw null; } set { } }
-        public string QuotaPeriod { get { throw null; } }
-        public string ResourceType { get { throw null; } set { } }
+        public System.TimeSpan? QuotaPeriod { get { throw null; } }
+        public string ResourceTypeName { get { throw null; } set { } }
         public string Unit { get { throw null; } }
+    }
+    public partial class QuotaRequestResourceName
+    {
+        public QuotaRequestResourceName() { }
+        public string LocalizedValue { get { throw null; } }
+        public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QuotaRequestState : System.IEquatable<Azure.ResourceManager.Quota.Models.QuotaRequestState>
@@ -187,62 +207,56 @@ namespace Azure.ResourceManager.Quota.Models
         public static bool operator !=(Azure.ResourceManager.Quota.Models.QuotaRequestState left, Azure.ResourceManager.Quota.Models.QuotaRequestState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceName
+    public partial class QuotaSubRequestDetail
     {
-        public ResourceName() { }
-        public string LocalizedValue { get { throw null; } }
-        public string Value { get { throw null; } set { } }
+        internal QuotaSubRequestDetail() { }
+        public Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject Limit { get { throw null; } }
+        public string Message { get { throw null; } }
+        public Azure.ResourceManager.Quota.Models.QuotaRequestResourceName Name { get { throw null; } }
+        public Azure.ResourceManager.Quota.Models.QuotaRequestState? ProvisioningState { get { throw null; } }
+        public string ResourceTypeName { get { throw null; } }
+        public System.Guid? SubRequestId { get { throw null; } }
+        public string Unit { get { throw null; } }
+    }
+    public partial class QuotaUsagesObject
+    {
+        internal QuotaUsagesObject() { }
+        public Azure.ResourceManager.Quota.Models.QuotaUsagesType? UsagesType { get { throw null; } }
+        public int Value { get { throw null; } }
+    }
+    public partial class QuotaUsagesProperties
+    {
+        internal QuotaUsagesProperties() { }
+        public bool? IsQuotaApplicable { get { throw null; } }
+        public Azure.ResourceManager.Quota.Models.QuotaRequestResourceName Name { get { throw null; } }
+        public System.BinaryData Properties { get { throw null; } }
+        public System.TimeSpan? QuotaPeriod { get { throw null; } }
+        public string ResourceTypeName { get { throw null; } }
+        public string Unit { get { throw null; } }
+        public Azure.ResourceManager.Quota.Models.QuotaUsagesObject Usages { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct QuotaUsagesType : System.IEquatable<Azure.ResourceManager.Quota.Models.QuotaUsagesType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public QuotaUsagesType(string value) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaUsagesType Combined { get { throw null; } }
+        public static Azure.ResourceManager.Quota.Models.QuotaUsagesType Individual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Quota.Models.QuotaUsagesType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Quota.Models.QuotaUsagesType left, Azure.ResourceManager.Quota.Models.QuotaUsagesType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quota.Models.QuotaUsagesType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Quota.Models.QuotaUsagesType left, Azure.ResourceManager.Quota.Models.QuotaUsagesType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ServiceErrorDetail
     {
         internal ServiceErrorDetail() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
-    }
-    public partial class SubRequest
-    {
-        internal SubRequest() { }
-        public Azure.ResourceManager.Quota.Models.LimitJsonObject Limit { get { throw null; } }
-        public string Message { get { throw null; } }
-        public Azure.ResourceManager.Quota.Models.ResourceName Name { get { throw null; } }
-        public Azure.ResourceManager.Quota.Models.QuotaRequestState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public string SubRequestId { get { throw null; } }
-        public string Unit { get { throw null; } }
-    }
-    public partial class UsagesObject
-    {
-        internal UsagesObject() { }
-        public Azure.ResourceManager.Quota.Models.UsagesType? UsagesType { get { throw null; } }
-        public int Value { get { throw null; } }
-    }
-    public partial class UsagesProperties
-    {
-        internal UsagesProperties() { }
-        public bool? IsQuotaApplicable { get { throw null; } }
-        public Azure.ResourceManager.Quota.Models.ResourceName Name { get { throw null; } }
-        public System.BinaryData Properties { get { throw null; } }
-        public string QuotaPeriod { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public string Unit { get { throw null; } }
-        public Azure.ResourceManager.Quota.Models.UsagesObject Usages { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UsagesType : System.IEquatable<Azure.ResourceManager.Quota.Models.UsagesType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UsagesType(string value) { throw null; }
-        public static Azure.ResourceManager.Quota.Models.UsagesType Combined { get { throw null; } }
-        public static Azure.ResourceManager.Quota.Models.UsagesType Individual { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Quota.Models.UsagesType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Quota.Models.UsagesType left, Azure.ResourceManager.Quota.Models.UsagesType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Quota.Models.UsagesType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Quota.Models.UsagesType left, Azure.ResourceManager.Quota.Models.UsagesType right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

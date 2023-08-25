@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Primary metrics for InstanceSegmentation tasks.
-    /// Serialized Name: InstanceSegmentationPrimaryMetrics
-    /// </summary>
+    /// <summary> Primary metrics for InstanceSegmentation tasks. </summary>
     public readonly partial struct InstanceSegmentationPrimaryMetric : IEquatable<InstanceSegmentationPrimaryMetric>
     {
         private readonly string _value;
@@ -30,7 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Mean Average Precision (MAP) is the average of AP (Average Precision).
         /// AP is calculated for each class and averaged to get the MAP.
-        /// Serialized Name: InstanceSegmentationPrimaryMetrics.MeanAveragePrecision
         /// </summary>
         public static InstanceSegmentationPrimaryMetric MeanAveragePrecision { get; } = new InstanceSegmentationPrimaryMetric(MeanAveragePrecisionValue);
         /// <summary> Determines if two <see cref="InstanceSegmentationPrimaryMetric"/> values are the same. </summary>

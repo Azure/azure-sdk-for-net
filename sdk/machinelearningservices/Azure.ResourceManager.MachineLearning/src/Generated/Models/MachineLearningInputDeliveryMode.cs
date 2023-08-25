@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum to determine the input data delivery mode.
-    /// Serialized Name: InputDeliveryMode
-    /// </summary>
+    /// <summary> Enum to determine the input data delivery mode. </summary>
     public readonly partial struct MachineLearningInputDeliveryMode : IEquatable<MachineLearningInputDeliveryMode>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EvalMountValue = "EvalMount";
         private const string EvalDownloadValue = "EvalDownload";
 
-        /// <summary>
-        /// ReadOnlyMount
-        /// Serialized Name: InputDeliveryMode.ReadOnlyMount
-        /// </summary>
+        /// <summary> ReadOnlyMount. </summary>
         public static MachineLearningInputDeliveryMode ReadOnlyMount { get; } = new MachineLearningInputDeliveryMode(ReadOnlyMountValue);
-        /// <summary>
-        /// ReadWriteMount
-        /// Serialized Name: InputDeliveryMode.ReadWriteMount
-        /// </summary>
+        /// <summary> ReadWriteMount. </summary>
         public static MachineLearningInputDeliveryMode ReadWriteMount { get; } = new MachineLearningInputDeliveryMode(ReadWriteMountValue);
-        /// <summary>
-        /// Download
-        /// Serialized Name: InputDeliveryMode.Download
-        /// </summary>
+        /// <summary> Download. </summary>
         public static MachineLearningInputDeliveryMode Download { get; } = new MachineLearningInputDeliveryMode(DownloadValue);
-        /// <summary>
-        /// Direct
-        /// Serialized Name: InputDeliveryMode.Direct
-        /// </summary>
+        /// <summary> Direct. </summary>
         public static MachineLearningInputDeliveryMode Direct { get; } = new MachineLearningInputDeliveryMode(DirectValue);
-        /// <summary>
-        /// EvalMount
-        /// Serialized Name: InputDeliveryMode.EvalMount
-        /// </summary>
+        /// <summary> EvalMount. </summary>
         public static MachineLearningInputDeliveryMode EvalMount { get; } = new MachineLearningInputDeliveryMode(EvalMountValue);
-        /// <summary>
-        /// EvalDownload
-        /// Serialized Name: InputDeliveryMode.EvalDownload
-        /// </summary>
+        /// <summary> EvalDownload. </summary>
         public static MachineLearningInputDeliveryMode EvalDownload { get; } = new MachineLearningInputDeliveryMode(EvalDownloadValue);
         /// <summary> Determines if two <see cref="MachineLearningInputDeliveryMode"/> values are the same. </summary>
         public static bool operator ==(MachineLearningInputDeliveryMode left, MachineLearningInputDeliveryMode right) => left.Equals(right);

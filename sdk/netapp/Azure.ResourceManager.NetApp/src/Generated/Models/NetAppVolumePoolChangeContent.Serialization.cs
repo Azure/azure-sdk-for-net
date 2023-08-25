@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("newPoolResourceId");
+            writer.WritePropertyName("newPoolResourceId"u8);
             writer.WriteStringValue(NewPoolResourceId);
             writer.WriteEndObject();
         }

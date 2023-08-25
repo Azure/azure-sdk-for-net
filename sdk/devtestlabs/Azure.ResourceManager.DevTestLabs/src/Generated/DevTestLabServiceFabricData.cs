@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabServiceFabric data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabServiceFabric data model.
+    /// A Service Fabric.
+    /// </summary>
     public partial class DevTestLabServiceFabricData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabServiceFabricData. </summary>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="externalServiceFabricId"> The backing service fabric resource&apos;s id. </param>
+        /// <param name="externalServiceFabricId"> The backing service fabric resource's id. </param>
         /// <param name="environmentId"> The resource id of the environment under which the service fabric resource is present. </param>
         /// <param name="applicableSchedule"> The applicable schedule for the virtual machine. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary> The backing service fabric resource&apos;s id. </summary>
+        /// <summary> The backing service fabric resource's id. </summary>
         public string ExternalServiceFabricId { get; set; }
         /// <summary> The resource id of the environment under which the service fabric resource is present. </summary>
         public string EnvironmentId { get; set; }

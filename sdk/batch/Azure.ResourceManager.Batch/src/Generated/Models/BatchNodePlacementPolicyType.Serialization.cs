@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchNodePlacementPolicyType ToBatchNodePlacementPolicyType(this string value)
         {
-            if (string.Equals(value, "Regional", StringComparison.InvariantCultureIgnoreCase)) return BatchNodePlacementPolicyType.Regional;
-            if (string.Equals(value, "Zonal", StringComparison.InvariantCultureIgnoreCase)) return BatchNodePlacementPolicyType.Zonal;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Regional")) return BatchNodePlacementPolicyType.Regional;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zonal")) return BatchNodePlacementPolicyType.Zonal;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNodePlacementPolicyType value.");
         }
     }

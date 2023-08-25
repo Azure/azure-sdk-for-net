@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    /// <summary> A class representing the StepResource data model. </summary>
+    /// <summary>
+    /// A class representing the StepResource data model.
+    /// The resource representation of a rollout step.
+    /// </summary>
     public partial class StepResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StepResourceData. </summary>

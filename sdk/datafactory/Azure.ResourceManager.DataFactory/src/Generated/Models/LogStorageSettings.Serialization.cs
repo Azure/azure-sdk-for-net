@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,34 +18,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("linkedServiceName");
-            writer.WriteObjectValue(LinkedServiceName);
-            if (Optional.IsDefined(Path))
+            writer.WritePropertyName("linkedServiceName"u8);
+            JsonSerializer.Serialize(writer, LinkedServiceName); if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Path);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Path.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("path"u8);
+                JsonSerializer.Serialize(writer, Path);
             }
             if (Optional.IsDefined(LogLevel))
             {
-                writer.WritePropertyName("logLevel");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(LogLevel);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogLevel.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("logLevel"u8);
+                JsonSerializer.Serialize(writer, LogLevel);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
-                writer.WritePropertyName("enableReliableLogging");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EnableReliableLogging);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableReliableLogging.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("enableReliableLogging"u8);
+                JsonSerializer.Serialize(writer, EnableReliableLogging);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -60,47 +48,48 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LogStorageSettings DeserializeLogStorageSettings(JsonElement element)
         {
-            FactoryLinkedServiceReference linkedServiceName = default;
-            Optional<BinaryData> path = default;
-            Optional<BinaryData> logLevel = default;
-            Optional<BinaryData> enableReliableLogging = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            Optional<DataFactoryElement<string>> path = default;
+            Optional<DataFactoryElement<string>> logLevel = default;
+            Optional<DataFactoryElement<bool>> enableReliableLogging = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    path = BinaryData.FromString(property.Value.GetRawText());
+                    path = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("logLevel"))
+                if (property.NameEquals("logLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logLevel = BinaryData.FromString(property.Value.GetRawText());
+                    logLevel = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("enableReliableLogging"))
+                if (property.NameEquals("enableReliableLogging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableReliableLogging = BinaryData.FromString(property.Value.GetRawText());
+                    enableReliableLogging = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

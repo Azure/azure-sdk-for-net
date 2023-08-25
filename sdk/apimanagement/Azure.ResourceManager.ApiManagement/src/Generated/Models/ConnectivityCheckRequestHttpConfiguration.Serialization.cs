@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Method))
             {
-                writer.WritePropertyName("method");
+                writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ValidStatusCodes))
             {
-                writer.WritePropertyName("validStatusCodes");
+                writer.WritePropertyName("validStatusCodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidStatusCodes)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {

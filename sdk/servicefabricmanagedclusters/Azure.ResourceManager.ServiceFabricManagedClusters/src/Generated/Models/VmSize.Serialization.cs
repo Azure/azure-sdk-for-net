@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static VmSize DeserializeVmSize(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> size = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;

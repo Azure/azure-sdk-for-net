@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static NotificationLevel ToNotificationLevel(this string value)
         {
-            if (string.Equals(value, "Critical", StringComparison.InvariantCultureIgnoreCase)) return NotificationLevel.Critical;
-            if (string.Equals(value, "Warning", StringComparison.InvariantCultureIgnoreCase)) return NotificationLevel.Warning;
-            if (string.Equals(value, "Information", StringComparison.InvariantCultureIgnoreCase)) return NotificationLevel.Information;
-            if (string.Equals(value, "NonUrgentSuggestion", StringComparison.InvariantCultureIgnoreCase)) return NotificationLevel.NonUrgentSuggestion;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical")) return NotificationLevel.Critical;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return NotificationLevel.Warning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Information")) return NotificationLevel.Information;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonUrgentSuggestion")) return NotificationLevel.NonUrgentSuggestion;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NotificationLevel value.");
         }
     }

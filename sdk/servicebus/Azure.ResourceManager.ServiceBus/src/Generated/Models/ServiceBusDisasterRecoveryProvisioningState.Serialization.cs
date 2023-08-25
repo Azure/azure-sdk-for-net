@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         public static ServiceBusDisasterRecoveryProvisioningState ToServiceBusDisasterRecoveryProvisioningState(this string value)
         {
-            if (string.Equals(value, "Accepted", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusDisasterRecoveryProvisioningState.Accepted;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusDisasterRecoveryProvisioningState.Succeeded;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusDisasterRecoveryProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return ServiceBusDisasterRecoveryProvisioningState.Accepted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return ServiceBusDisasterRecoveryProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return ServiceBusDisasterRecoveryProvisioningState.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusDisasterRecoveryProvisioningState value.");
         }
     }

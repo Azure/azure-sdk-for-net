@@ -14,24 +14,38 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppWorkloadProfile
     {
         /// <summary> Initializes a new instance of ContainerAppWorkloadProfile. </summary>
+        /// <param name="name"> Workload profile type for the workloads to run on. </param>
         /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
-        /// <param name="minimumCount"> The minimum capacity. </param>
-        /// <param name="maximumCount"> The maximum capacity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadProfileType"/> is null. </exception>
-        public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="workloadProfileType"/> is null. </exception>
+        public ContainerAppWorkloadProfile(string name, string workloadProfileType)
         {
+            Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(workloadProfileType, nameof(workloadProfileType));
 
+            Name = name;
             WorkloadProfileType = workloadProfileType;
-            MinimumCount = minimumCount;
-            MaximumCount = maximumCount;
+        }
+
+        /// <summary> Initializes a new instance of ContainerAppWorkloadProfile. </summary>
+        /// <param name="name"> Workload profile type for the workloads to run on. </param>
+        /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
+        /// <param name="minimumNodeCount"> The minimum capacity. </param>
+        /// <param name="maximumNodeCount"> The maximum capacity. </param>
+        internal ContainerAppWorkloadProfile(string name, string workloadProfileType, int? minimumNodeCount, int? maximumNodeCount)
+        {
+            Name = name;
+            WorkloadProfileType = workloadProfileType;
+            MinimumNodeCount = minimumNodeCount;
+            MaximumNodeCount = maximumNodeCount;
         }
 
         /// <summary> Workload profile type for the workloads to run on. </summary>
+        public string Name { get; set; }
+        /// <summary> Workload profile type for the workloads to run on. </summary>
         public string WorkloadProfileType { get; set; }
         /// <summary> The minimum capacity. </summary>
-        public int MinimumCount { get; set; }
+        public int? MinimumNodeCount { get; set; }
         /// <summary> The maximum capacity. </summary>
-        public int MaximumCount { get; set; }
+        public int? MaximumNodeCount { get; set; }
     }
 }

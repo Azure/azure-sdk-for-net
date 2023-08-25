@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PublicKeys))
             {
-                writer.WritePropertyName("publicKeys");
+                writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
@@ -31,14 +31,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static LinuxProfilePropertiesSsh DeserializeLinuxProfilePropertiesSsh(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LinuxProfilePropertiesSshPublicKeysItem>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicKeys"))
+                if (property.NameEquals("publicKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LinuxProfilePropertiesSshPublicKeysItem> array = new List<LinuxProfilePropertiesSshPublicKeysItem>();

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DataActions))
             {
-                writer.WritePropertyName("dataActions");
+                writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataActions)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(NotDataActions))
             {
-                writer.WritePropertyName("notDataActions");
+                writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotDataActions)
                 {
@@ -41,15 +41,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBSqlRolePermission DeserializeCosmosDBSqlRolePermission(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> dataActions = default;
             Optional<IList<string>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataActions"))
+                if (property.NameEquals("dataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -60,11 +63,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     dataActions = array;
                     continue;
                 }
-                if (property.NameEquals("notDataActions"))
+                if (property.NameEquals("notDataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -55,6 +55,11 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in models)
             {
+                if (item == null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                    continue;
+                }
                 content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
@@ -69,7 +74,7 @@ namespace Azure.DigitalTwins.Core
         /// * 400 Bad Request
         ///   * DTDLParserError - The models provided are not valid DTDL.
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         ///   * ModelVersionNotSupported - The version of DTDL used is not supported.
         /// * 409 Conflict
         ///   * ModelAlreadyExists - The model provided already exists.
@@ -102,7 +107,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -113,7 +118,7 @@ namespace Azure.DigitalTwins.Core
         /// * 400 Bad Request
         ///   * DTDLParserError - The models provided are not valid DTDL.
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         ///   * ModelVersionNotSupported - The version of DTDL used is not supported.
         /// * 409 Conflict
         ///   * ModelAlreadyExists - The model provided already exists.
@@ -146,7 +151,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -158,7 +163,7 @@ namespace Azure.DigitalTwins.Core
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/models", false);
-            if (dependenciesFor != null)
+            if (dependenciesFor != null && Optional.IsCollectionDefined(dependenciesFor))
             {
                 foreach (var param in dependenciesFor)
                 {
@@ -185,7 +190,7 @@ namespace Azure.DigitalTwins.Core
         /// * 200 OK
         /// * 400 Bad Request
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         /// * 404 Not Found
         ///   * ModelNotFound - The model was not found.
         /// </summary>
@@ -207,7 +212,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -217,7 +222,7 @@ namespace Azure.DigitalTwins.Core
         /// * 200 OK
         /// * 400 Bad Request
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         /// * 404 Not Found
         ///   * ModelNotFound - The model was not found.
         /// </summary>
@@ -239,7 +244,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -296,7 +301,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -334,7 +339,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -355,6 +360,11 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in updateModel)
             {
+                if (item == null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                    continue;
+                }
                 content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
@@ -398,7 +408,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -438,7 +448,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -487,7 +497,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -521,7 +531,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -548,7 +558,7 @@ namespace Azure.DigitalTwins.Core
         /// * 200 OK
         /// * 400 Bad Request
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         /// * 404 Not Found
         ///   * ModelNotFound - The model was not found.
         /// </summary>
@@ -577,7 +587,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -587,7 +597,7 @@ namespace Azure.DigitalTwins.Core
         /// * 200 OK
         /// * 400 Bad Request
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         /// * 404 Not Found
         ///   * ModelNotFound - The model was not found.
         /// </summary>
@@ -616,7 +626,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

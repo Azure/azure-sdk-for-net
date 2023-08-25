@@ -17,12 +17,12 @@ namespace Azure.Core.TestFramework.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UriRegex))
             {
-                writer.WritePropertyName("uriRegex");
+                writer.WritePropertyName("uriRegex"u8);
                 writer.WriteStringValue(UriRegex);
             }
             if (Optional.IsDefined(ResponseHeader))
             {
-                writer.WritePropertyName("responseHeader");
+                writer.WritePropertyName("responseHeader"u8);
                 writer.WriteObjectValue(ResponseHeader);
             }
             writer.WriteEndObject();

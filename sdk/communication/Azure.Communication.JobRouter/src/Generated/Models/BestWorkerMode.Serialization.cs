@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -17,23 +18,29 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             if (Optional.IsDefined(ScoringRule))
             {
-                writer.WritePropertyName("scoringRule");
+                writer.WritePropertyName("scoringRule"u8);
                 writer.WriteObjectValue(ScoringRule);
             }
             if (Optional.IsDefined(ScoringRuleOptions))
             {
-                writer.WritePropertyName("scoringRuleOptions");
+                writer.WritePropertyName("scoringRuleOptions"u8);
                 writer.WriteObjectValue(ScoringRuleOptions);
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            writer.WritePropertyName("minConcurrentOffers");
-            writer.WriteNumberValue(MinConcurrentOffers);
-            writer.WritePropertyName("maxConcurrentOffers");
-            writer.WriteNumberValue(MaxConcurrentOffers);
+            if (Optional.IsDefined(MinConcurrentOffers))
+            {
+                writer.WritePropertyName("minConcurrentOffers"u8);
+                writer.WriteNumberValue(MinConcurrentOffers);
+            }
+            if (Optional.IsDefined(MaxConcurrentOffers))
+            {
+                writer.WritePropertyName("maxConcurrentOffers"u8);
+                writer.WriteNumberValue(MaxConcurrentOffers);
+            }
             if (Optional.IsDefined(BypassSelectors))
             {
-                writer.WritePropertyName("bypassSelectors");
+                writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
             }
             writer.WriteEndObject();
@@ -41,54 +48,63 @@ namespace Azure.Communication.JobRouter
 
         internal static BestWorkerMode DeserializeBestWorkerMode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RouterRule> scoringRule = default;
             Optional<ScoringRuleOptions> scoringRuleOptions = default;
             string kind = default;
-            int minConcurrentOffers = default;
-            int maxConcurrentOffers = default;
+            Optional<int> minConcurrentOffers = default;
+            Optional<int> maxConcurrentOffers = default;
             Optional<bool> bypassSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scoringRule"))
+                if (property.NameEquals("scoringRule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scoringRule = RouterRule.DeserializeRouterRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scoringRuleOptions"))
+                if (property.NameEquals("scoringRuleOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scoringRuleOptions = ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
+                    scoringRuleOptions = Models.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minConcurrentOffers"))
-                {
-                    minConcurrentOffers = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("maxConcurrentOffers"))
-                {
-                    maxConcurrentOffers = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("bypassSelectors"))
+                if (property.NameEquals("minConcurrentOffers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    minConcurrentOffers = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxConcurrentOffers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConcurrentOffers = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("bypassSelectors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     bypassSelectors = property.Value.GetBoolean();

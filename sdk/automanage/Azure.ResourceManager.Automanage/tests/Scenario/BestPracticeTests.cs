@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string profileName = "AzureBestPracticesProduction";
 
             // fetch tenant collection
-            var collection = Tenant.GetBestPractices();
+            var collection = Tenant.GetAutomanageBestPractices();
             var profile = await collection.GetAsync(profileName);
 
             // assert
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string profileName = "AzureBestPracticesDevTest";
 
             // fetch tenant collection
-            var collection = Tenant.GetBestPractices();
+            var collection = Tenant.GetAutomanageBestPractices();
             var profile = await collection.GetAsync(profileName);
 
             // assert
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         public async Task CanGetAllBestPracticesProfiles()
         {
             // fetch tenant collection
-            var collection = Tenant.GetBestPractices();
+            var collection = Tenant.GetAutomanageBestPractices();
             var profiles = collection.GetAllAsync();
 
             int count = 0;

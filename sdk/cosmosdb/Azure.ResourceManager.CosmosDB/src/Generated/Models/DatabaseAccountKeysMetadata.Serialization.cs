@@ -14,47 +14,47 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static DatabaseAccountKeysMetadata DeserializeDatabaseAccountKeysMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AccountKeyMetadata> primaryMasterKey = default;
             Optional<AccountKeyMetadata> secondaryMasterKey = default;
             Optional<AccountKeyMetadata> primaryReadonlyMasterKey = default;
             Optional<AccountKeyMetadata> secondaryReadonlyMasterKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryMasterKey"))
+                if (property.NameEquals("primaryMasterKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("secondaryMasterKey"))
+                if (property.NameEquals("secondaryMasterKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secondaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("primaryReadonlyMasterKey"))
+                if (property.NameEquals("primaryReadonlyMasterKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("secondaryReadonlyMasterKey"))
+                if (property.NameEquals("secondaryReadonlyMasterKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secondaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);

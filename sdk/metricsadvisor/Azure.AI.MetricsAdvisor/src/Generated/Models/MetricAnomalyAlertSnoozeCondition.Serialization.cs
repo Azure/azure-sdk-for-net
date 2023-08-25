@@ -15,33 +15,37 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("autoSnooze");
+            writer.WritePropertyName("autoSnooze"u8);
             writer.WriteNumberValue(AutoSnooze);
-            writer.WritePropertyName("snoozeScope");
+            writer.WritePropertyName("snoozeScope"u8);
             writer.WriteStringValue(SnoozeScope.ToString());
-            writer.WritePropertyName("onlyForSuccessive");
+            writer.WritePropertyName("onlyForSuccessive"u8);
             writer.WriteBooleanValue(IsOnlyForSuccessive);
             writer.WriteEndObject();
         }
 
         internal static MetricAnomalyAlertSnoozeCondition DeserializeMetricAnomalyAlertSnoozeCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int autoSnooze = default;
             SnoozeScope snoozeScope = default;
             bool onlyForSuccessive = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("autoSnooze"))
+                if (property.NameEquals("autoSnooze"u8))
                 {
                     autoSnooze = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("snoozeScope"))
+                if (property.NameEquals("snoozeScope"u8))
                 {
                     snoozeScope = new SnoozeScope(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("onlyForSuccessive"))
+                if (property.NameEquals("onlyForSuccessive"u8))
                 {
                     onlyForSuccessive = property.Value.GetBoolean();
                     continue;

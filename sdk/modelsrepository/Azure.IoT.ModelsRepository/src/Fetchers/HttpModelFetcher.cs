@@ -175,7 +175,7 @@ namespace Azure.IoT.ModelsRepository.Fetchers
                             return GetContent(message.Response.ContentStream);
                         }
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)
@@ -203,7 +203,7 @@ namespace Azure.IoT.ModelsRepository.Fetchers
                             return await GetContentAsync(message.Response.ContentStream, cancellationToken).ConfigureAwait(false);
                         }
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)

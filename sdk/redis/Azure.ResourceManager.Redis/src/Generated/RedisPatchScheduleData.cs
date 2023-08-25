@@ -14,7 +14,10 @@ using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary> A class representing the RedisPatchSchedule data model. </summary>
+    /// <summary>
+    /// A class representing the RedisPatchSchedule data model.
+    /// Response to put/get patch schedules for Redis cache.
+    /// </summary>
     public partial class RedisPatchScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of RedisPatchScheduleData. </summary>

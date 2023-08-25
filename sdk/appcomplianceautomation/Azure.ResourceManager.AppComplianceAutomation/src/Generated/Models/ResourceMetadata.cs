@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> Single resource Id&apos;s metadata. </summary>
+    /// <summary> Single resource Id's metadata. </summary>
     public partial class ResourceMetadata
     {
         /// <summary> Initializes a new instance of ResourceMetadata. </summary>
-        /// <param name="resourceId"> Resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </param>
+        /// <param name="resourceId"> Resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ResourceMetadata(string resourceId)
         {
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of ResourceMetadata. </summary>
-        /// <param name="resourceId"> Resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </param>
+        /// <param name="resourceId"> Resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceKind"> Resource kind. </param>
         /// <param name="resourceName"> Resource name. </param>
-        /// <param name="tags"> Resource&apos;s tag type. </param>
+        /// <param name="tags"> Resource's tag type. </param>
         internal ResourceMetadata(string resourceId, string resourceType, string resourceKind, string resourceName, IDictionary<string, string> tags)
         {
             ResourceId = resourceId;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Tags = tags;
         }
 
-        /// <summary> Resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </summary>
+        /// <summary> Resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </summary>
         public string ResourceId { get; set; }
         /// <summary> Resource type. </summary>
         public string ResourceType { get; set; }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public string ResourceKind { get; set; }
         /// <summary> Resource name. </summary>
         public string ResourceName { get; set; }
-        /// <summary> Resource&apos;s tag type. </summary>
+        /// <summary> Resource's tag type. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

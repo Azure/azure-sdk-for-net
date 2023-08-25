@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
-    /// <summary> A class representing the SystemAssignedIdentity data model. </summary>
+    /// <summary>
+    /// A class representing the SystemAssignedIdentity data model.
+    /// Describes a system assigned identity resource.
+    /// </summary>
     public partial class SystemAssignedIdentityData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SystemAssignedIdentityData. </summary>

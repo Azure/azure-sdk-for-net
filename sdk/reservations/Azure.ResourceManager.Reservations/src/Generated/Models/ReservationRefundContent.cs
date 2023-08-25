@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationRefundContent. </summary>
+    /// <summary> Request containing information needed for returning reservation. </summary>
     public partial class ReservationRefundContent
     {
         /// <summary> Initializes a new instance of ReservationRefundContent. </summary>
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Properties needed for refund request including the session id from calculate refund, the scope, the reservation to be returned and the return reason. </summary>
         public ReservationRefundRequestProperties Properties { get; set; }
     }
 }

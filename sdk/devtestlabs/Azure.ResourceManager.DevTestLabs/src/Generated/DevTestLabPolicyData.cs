@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabPolicy data model.
+    /// A Policy.
+    /// </summary>
     public partial class DevTestLabPolicyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabPolicyData. </summary>

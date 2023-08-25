@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementGroup data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementGroup data model.
+    /// Contract details.
+    /// </summary>
     public partial class ApiManagementGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementGroupData. </summary>

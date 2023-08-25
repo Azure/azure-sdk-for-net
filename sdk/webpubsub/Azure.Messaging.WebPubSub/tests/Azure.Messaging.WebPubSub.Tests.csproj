@@ -24,7 +24,7 @@
     <Folder Include="SessionRecords\" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework) == 'net461'">
+  <ItemGroup Condition="$(TargetFramework) == 'net462'">
     <Reference Include="System.Web" />
   </ItemGroup>
 </Project>

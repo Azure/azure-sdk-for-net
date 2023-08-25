@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ResourceGraph.Models;
 using Azure.ResourceManager.Resources;
 
@@ -18,19 +19,34 @@ namespace Azure.ResourceManager.ResourceGraph
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceGraph. </summary>
     public static partial class ResourceGraphExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
         }
 
         /// <summary>
         /// Queries the resources managed by Azure Resource Manager for scopes specified in the request.
-        /// Request Path: /providers/Microsoft.ResourceGraph/resources
-        /// Operation Id: Resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceGraph/resources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Resources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying query and its options. </param>
@@ -40,13 +56,21 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).GetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).GetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Queries the resources managed by Azure Resource Manager for scopes specified in the request.
-        /// Request Path: /providers/Microsoft.ResourceGraph/resources
-        /// Operation Id: Resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceGraph/resources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Resources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying query and its options. </param>
@@ -56,13 +80,21 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).GetResources(content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetResources(content, cancellationToken);
         }
 
         /// <summary>
         /// List all snapshots of a resource for a given time interval.
-        /// Request Path: /providers/Microsoft.ResourceGraph/resourcesHistory
-        /// Operation Id: ResourcesHistory
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceGraph/resourcesHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcesHistory</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying the query and its options. </param>
@@ -72,13 +104,21 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).GetResourceHistoryAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).GetResourceHistoryAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// List all snapshots of a resource for a given time interval.
-        /// Request Path: /providers/Microsoft.ResourceGraph/resourcesHistory
-        /// Operation Id: ResourcesHistory
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceGraph/resourcesHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcesHistory</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying the query and its options. </param>
@@ -88,7 +128,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).GetResourceHistory(content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetResourceHistory(content, cancellationToken);
         }
     }
 }

@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmApplicationPackageSupportUris DeserializeArmApplicationPackageSupportUris(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> publicAzure = default;
             Optional<Uri> governmentCloud = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicAzure"))
+                if (property.NameEquals("publicAzure"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        publicAzure = null;
                         continue;
                     }
                     publicAzure = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("governmentCloud"))
+                if (property.NameEquals("governmentCloud"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        governmentCloud = null;
                         continue;
                     }
                     governmentCloud = new Uri(property.Value.GetString());

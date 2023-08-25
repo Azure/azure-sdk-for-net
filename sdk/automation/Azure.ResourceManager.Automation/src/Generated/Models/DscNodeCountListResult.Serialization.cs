@@ -15,15 +15,18 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DscNodeCountListResult DeserializeDscNodeCountListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DscNodeCount>> value = default;
             Optional<int> totalCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DscNodeCount> array = new List<DscNodeCount>();
@@ -34,11 +37,10 @@ namespace Azure.ResourceManager.Automation.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("totalCount"))
+                if (property.NameEquals("totalCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalCount = property.Value.GetInt32();

@@ -15,36 +15,37 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static LastMitigationActionOnJob DeserializeLastMitigationActionOnJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> actionDateTimeInUtc = default;
             Optional<bool> isPerformedByCustomer = default;
             Optional<CustomerResolutionCode> customerResolution = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionDateTimeInUtc"))
+                if (property.NameEquals("actionDateTimeInUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionDateTimeInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isPerformedByCustomer"))
+                if (property.NameEquals("isPerformedByCustomer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPerformedByCustomer = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("customerResolution"))
+                if (property.NameEquals("customerResolution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customerResolution = property.Value.GetString().ToCustomerResolutionCode();

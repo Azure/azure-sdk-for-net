@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("notificationEndpoints");
+            writer.WritePropertyName("notificationEndpoints"u8);
             writer.WriteStartArray();
             foreach (var item in NotificationEndpoints)
             {
@@ -28,10 +28,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationNotificationPolicy DeserializeArmApplicationNotificationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ArmApplicationNotificationEndpoint> notificationEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("notificationEndpoints"))
+                if (property.NameEquals("notificationEndpoints"u8))
                 {
                     List<ArmApplicationNotificationEndpoint> array = new List<ArmApplicationNotificationEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())

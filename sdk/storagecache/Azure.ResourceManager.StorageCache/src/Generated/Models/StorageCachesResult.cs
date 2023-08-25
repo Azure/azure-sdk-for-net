@@ -11,7 +11,7 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> Result of the request to list Caches. It contains a list of Caches and a URL link to get the next set of results. </summary>
+    /// <summary> Result of the request to list caches. It contains a list of caches and a URL link to get the next set of results. </summary>
     internal partial class StorageCachesResult
     {
         /// <summary> Initializes a new instance of StorageCachesResult. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCachesResult. </summary>
-        /// <param name="nextLink"> URL to get the next set of Cache list results, if there are any. </param>
+        /// <param name="nextLink"> URL to get the next set of cache list results, if there are any. </param>
         /// <param name="value"> List of Caches. </param>
         internal StorageCachesResult(string nextLink, IReadOnlyList<StorageCacheData> value)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Value = value;
         }
 
-        /// <summary> URL to get the next set of Cache list results, if there are any. </summary>
+        /// <summary> URL to get the next set of cache list results, if there are any. </summary>
         public string NextLink { get; }
         /// <summary> List of Caches. </summary>
         public IReadOnlyList<StorageCacheData> Value { get; }

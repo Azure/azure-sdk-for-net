@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationModule data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationModule data model.
+    /// Definition of the module type.
+    /// </summary>
     public partial class AutomationModuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AutomationModuleData. </summary>

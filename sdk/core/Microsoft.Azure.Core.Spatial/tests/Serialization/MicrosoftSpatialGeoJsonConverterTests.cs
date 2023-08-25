@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             foreach (GeographyGeoJson geographyGeoJson in GeographyGeoJsons)
             {
-                // Very strange issue when serializing on net461. If you don't pass the inputType, CanConvert receives Geography
+                // Very strange issue when serializing on net462. If you don't pass the inputType, CanConvert receives Geography
                 // as the typeToConvert, which actually needs to return false.
                 string geoJson = JsonSerializer.Serialize(geographyGeoJson.Geography, geographyGeoJson.Geography.GetType(), options);
 

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicySummaryResults DeserializePolicySummaryResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> queryResultsUri = default;
             Optional<int> nonCompliantResources = default;
             Optional<int> nonCompliantPolicies = default;
@@ -24,41 +28,37 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<IReadOnlyList<ComplianceDetail>> policyGroupDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queryResultsUri"))
+                if (property.NameEquals("queryResultsUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        queryResultsUri = null;
                         continue;
                     }
                     queryResultsUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nonCompliantResources"))
+                if (property.NameEquals("nonCompliantResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nonCompliantResources = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nonCompliantPolicies"))
+                if (property.NameEquals("nonCompliantPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nonCompliantPolicies = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resourceDetails"))
+                if (property.NameEquals("resourceDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ComplianceDetail> array = new List<ComplianceDetail>();
@@ -69,11 +69,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     resourceDetails = array;
                     continue;
                 }
-                if (property.NameEquals("policyDetails"))
+                if (property.NameEquals("policyDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ComplianceDetail> array = new List<ComplianceDetail>();
@@ -84,11 +83,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyDetails = array;
                     continue;
                 }
-                if (property.NameEquals("policyGroupDetails"))
+                if (property.NameEquals("policyGroupDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ComplianceDetail> array = new List<ComplianceDetail>();

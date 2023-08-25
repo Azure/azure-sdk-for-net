@@ -12,13 +12,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> Report&apos;s properties. </summary>
+    /// <summary> Report's properties. </summary>
     public partial class ReportProperties
     {
         /// <summary> Initializes a new instance of ReportProperties. </summary>
         /// <param name="timeZone">
-        /// Report collection trigger time&apos;s time zone, the available list can be obtained by executing &quot;Get-TimeZone -ListAvailable&quot; in PowerShell.
-        /// An example of valid timezone id is &quot;Pacific Standard Time&quot;.
+        /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
+        /// An example of valid timezone id is "Pacific Standard Time".
         /// </param>
         /// <param name="triggerOn"> Report collection trigger time. </param>
         /// <param name="resources"> List of resource data. </param>
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of ReportProperties. </summary>
         /// <param name="id"> Report id in database. </param>
         /// <param name="status"> Report status. </param>
-        /// <param name="tenantId"> Report&apos;s tenant id. </param>
+        /// <param name="tenantId"> Report's tenant id. </param>
         /// <param name="reportName"> Report name. </param>
         /// <param name="offerGuid"> Report offer Guid. </param>
         /// <param name="timeZone">
-        /// Report collection trigger time&apos;s time zone, the available list can be obtained by executing &quot;Get-TimeZone -ListAvailable&quot; in PowerShell.
-        /// An example of valid timezone id is &quot;Pacific Standard Time&quot;.
+        /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
+        /// An example of valid timezone id is "Pacific Standard Time".
         /// </param>
         /// <param name="triggerOn"> Report collection trigger time. </param>
         /// <param name="nextTriggerOn"> Report next collection trigger time. </param>
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public string Id { get; }
         /// <summary> Report status. </summary>
         public ReportStatus? Status { get; }
-        /// <summary> Report&apos;s tenant id. </summary>
+        /// <summary> Report's tenant id. </summary>
         public Guid? TenantId { get; }
         /// <summary> Report name. </summary>
         public string ReportName { get; }
         /// <summary> Report offer Guid. </summary>
         public string OfferGuid { get; set; }
         /// <summary>
-        /// Report collection trigger time&apos;s time zone, the available list can be obtained by executing &quot;Get-TimeZone -ListAvailable&quot; in PowerShell.
-        /// An example of valid timezone id is &quot;Pacific Standard Time&quot;.
+        /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
+        /// An example of valid timezone id is "Pacific Standard Time".
         /// </summary>
         public string TimeZone { get; set; }
         /// <summary> Report collection trigger time. </summary>

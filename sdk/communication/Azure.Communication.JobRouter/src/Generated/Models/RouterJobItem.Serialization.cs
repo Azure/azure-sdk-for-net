@@ -14,27 +14,30 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static RouterJobItem DeserializeRouterJobItem(JsonElement element)
         {
-            Optional<RouterJob> routerJob = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<RouterJob> job = default;
             Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("routerJob"))
+                if (property.NameEquals("job"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    routerJob = RouterJob.DeserializeRouterJob(property.Value);
+                    job = RouterJob.DeserializeRouterJob(property.Value);
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;
                 }
             }
-            return new RouterJobItem(routerJob.Value, etag.Value);
+            return new RouterJobItem(job.Value, etag.Value);
         }
     }
 }

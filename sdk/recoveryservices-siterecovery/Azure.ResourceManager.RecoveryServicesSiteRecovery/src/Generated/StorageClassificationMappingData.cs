@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the StorageClassificationMapping data model. </summary>
+    /// <summary>
+    /// A class representing the StorageClassificationMapping data model.
+    /// Storage mapping object.
+    /// </summary>
     public partial class StorageClassificationMappingData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageClassificationMappingData. </summary>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <summary> Properties of the storage mapping object. </summary>
         internal StorageClassificationMappingProperties Properties { get; }
         /// <summary> Target storage object Id. </summary>
-        public string TargetStorageClassificationId
+        public ResourceIdentifier TargetStorageClassificationId
         {
             get => Properties?.TargetStorageClassificationId;
         }

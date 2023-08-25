@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FilterData))
             {
-                writer.WritePropertyName("filterData");
+                writer.WritePropertyName("filterData"u8);
                 writer.WriteStringValue(FilterData);
             }
             writer.WriteEndObject();

@@ -15,9 +15,9 @@ namespace Azure.MixedReality.RemoteRendering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("maxLeaseTimeMinutes");
+            writer.WritePropertyName("maxLeaseTimeMinutes"u8);
             writer.WriteNumberValue(MaxLeaseTimeMinutes);
-            writer.WritePropertyName("size");
+            writer.WritePropertyName("size"u8);
             writer.WriteStringValue(Size.ToString());
             writer.WriteEndObject();
         }

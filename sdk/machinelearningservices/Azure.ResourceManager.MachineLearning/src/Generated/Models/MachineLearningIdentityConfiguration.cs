@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for identity configuration.
-    /// Serialized Name: IdentityConfiguration
     /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningIdentityConfiguration. </summary>
-        /// <param name="identityType">
-        /// [Required] Specifies the type of identity framework.
-        /// Serialized Name: IdentityConfiguration.identityType
-        /// </param>
+        /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
         internal MachineLearningIdentityConfiguration(IdentityConfigurationType identityType)
         {
             IdentityType = identityType;
         }
 
-        /// <summary>
-        /// [Required] Specifies the type of identity framework.
-        /// Serialized Name: IdentityConfiguration.identityType
-        /// </summary>
+        /// <summary> [Required] Specifies the type of identity framework. </summary>
         internal IdentityConfigurationType IdentityType { get; set; }
     }
 }

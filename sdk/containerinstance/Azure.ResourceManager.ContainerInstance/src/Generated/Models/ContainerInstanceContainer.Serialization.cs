@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("image");
+            writer.WritePropertyName("image"u8);
             writer.WriteStringValue(Image);
             if (Optional.IsCollectionDefined(Command))
             {
-                writer.WritePropertyName("command");
+                writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
                 foreach (var item in Command)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             if (Optional.IsCollectionDefined(Ports))
             {
-                writer.WritePropertyName("ports");
+                writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
                 foreach (var item in Ports)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
-                writer.WritePropertyName("environmentVariables");
+                writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("resources");
+            writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources);
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
-                writer.WritePropertyName("volumeMounts");
+                writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
@@ -66,13 +66,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             if (Optional.IsDefined(LivenessProbe))
             {
-                writer.WritePropertyName("livenessProbe");
+                writer.WritePropertyName("livenessProbe"u8);
                 writer.WriteObjectValue(LivenessProbe);
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
-                writer.WritePropertyName("readinessProbe");
+                writer.WritePropertyName("readinessProbe"u8);
                 writer.WriteObjectValue(ReadinessProbe);
+            }
+            if (Optional.IsDefined(SecurityContext))
+            {
+                writer.WritePropertyName("securityContext"u8);
+                writer.WriteObjectValue(SecurityContext);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -80,6 +85,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerInstanceContainer DeserializeContainerInstanceContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string image = default;
             Optional<IList<string>> command = default;
@@ -90,14 +99,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<IList<ContainerVolumeMount>> volumeMounts = default;
             Optional<ContainerProbe> livenessProbe = default;
             Optional<ContainerProbe> readinessProbe = default;
+            Optional<ContainerSecurityContextDefinition> securityContext = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,16 +116,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("image"))
+                        if (property0.NameEquals("image"u8))
                         {
                             image = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("command"))
+                        if (property0.NameEquals("command"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -126,11 +135,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             command = array;
                             continue;
                         }
-                        if (property0.NameEquals("ports"))
+                        if (property0.NameEquals("ports"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerPort> array = new List<ContainerPort>();
@@ -141,11 +149,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             ports = array;
                             continue;
                         }
-                        if (property0.NameEquals("environmentVariables"))
+                        if (property0.NameEquals("environmentVariables"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerEnvironmentVariable> array = new List<ContainerEnvironmentVariable>();
@@ -156,26 +163,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             environmentVariables = array;
                             continue;
                         }
-                        if (property0.NameEquals("instanceView"))
+                        if (property0.NameEquals("instanceView"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             instanceView = ContainerInstanceView.DeserializeContainerInstanceView(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("resources"))
+                        if (property0.NameEquals("resources"u8))
                         {
                             resources = ContainerResourceRequirements.DeserializeContainerResourceRequirements(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("volumeMounts"))
+                        if (property0.NameEquals("volumeMounts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerVolumeMount> array = new List<ContainerVolumeMount>();
@@ -186,31 +191,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             volumeMounts = array;
                             continue;
                         }
-                        if (property0.NameEquals("livenessProbe"))
+                        if (property0.NameEquals("livenessProbe"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             livenessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("readinessProbe"))
+                        if (property0.NameEquals("readinessProbe"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readinessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("securityContext"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ContainerInstanceContainer(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value);
+            return new ContainerInstanceContainer(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value, securityContext.Value);
         }
     }
 }

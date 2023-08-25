@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateOrUpdateRoleDefinitionOptions"/> class using a generated role definition name.
+        /// Initializes a new instance of the <see cref="CreateOrUpdateRoleDefinitionOptions"/> class using the specified role definition name.
         /// </summary>
         /// <param name="roleScope">The <see cref="KeyVaultRoleScope"/> to which the definition applies.</param>
         /// <param name="roleDefinitionName">The unique role definition name. If the named role definition is already defined it will be updated.</param>

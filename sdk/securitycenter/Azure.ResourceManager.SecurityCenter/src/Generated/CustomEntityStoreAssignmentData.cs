@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the CustomEntityStoreAssignment data model. </summary>
+    /// <summary>
+    /// A class representing the CustomEntityStoreAssignment data model.
+    /// Custom entity store assignment
+    /// </summary>
     public partial class CustomEntityStoreAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of CustomEntityStoreAssignmentData. </summary>

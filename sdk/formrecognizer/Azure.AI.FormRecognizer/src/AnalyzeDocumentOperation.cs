@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
 
-        /// <summary>The ID of the model to use for recognizing document values.</summary>
+        /// <summary>The ID of the model to use for analyzing documents.</summary>
         private readonly string _modelId;
 
         /// <summary>An ID representing the operation that can be used along with <see cref="_modelId"/> to poll for the status of the long-running operation.</summary>
@@ -76,7 +76,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
 
             // TODO: Use regex to parse ids.
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
@@ -103,12 +103,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        /// <param name="postResponse">Response from the POSt request that initiated the operation.</param>
+        /// <param name="postResponse">Response from the POST request that initiated the operation.</param>
         internal AnalyzeDocumentOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
+            _operationInternal = new(this, _diagnostics, rawResponse: postResponse);
 
             // TODO: Use regex to parse ids.
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
@@ -184,8 +184,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<AnalyzeResult>> IOperation<AnalyzeResult>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeResultOperation> response = async
-                ? await _serviceClient.GetAnalyzeDocumentResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.GetAnalyzeDocumentResult(_modelId, _resultId, cancellationToken);
+                ? await _serviceClient.DocumentModelsGetAnalyzeResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.DocumentModelsGetAnalyzeResult(_modelId, _resultId, cancellationToken);
 
             AnalyzeResultOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();
@@ -197,9 +197,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             else if (status == AnalyzeResultOperationStatus.Failed)
             {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
-                    .ConfigureAwait(false);
+                RequestFailedException requestFailedException = ClientCommon.CreateExceptionForFailedOperation(rawResponse, response.Value.Error);
 
                 return OperationState<AnalyzeResult>.Failure(rawResponse, requestFailedException);
             }

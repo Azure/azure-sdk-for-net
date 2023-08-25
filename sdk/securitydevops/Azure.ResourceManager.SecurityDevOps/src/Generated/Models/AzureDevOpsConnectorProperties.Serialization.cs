@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(Authorization))
             {
-                writer.WritePropertyName("authorization");
+                writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
             if (Optional.IsCollectionDefined(Orgs))
             {
-                writer.WritePropertyName("orgs");
+                writer.WritePropertyName("orgs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Orgs)
                 {
@@ -41,36 +41,37 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsConnectorProperties DeserializeAzureDevOpsConnectorProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<AuthorizationInfo> authorization = default;
             Optional<IList<AzureDevOpsOrgMetadata>> orgs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authorization"))
+                if (property.NameEquals("authorization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authorization = AuthorizationInfo.DeserializeAuthorizationInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("orgs"))
+                if (property.NameEquals("orgs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AzureDevOpsOrgMetadata> array = new List<AzureDevOpsOrgMetadata>();

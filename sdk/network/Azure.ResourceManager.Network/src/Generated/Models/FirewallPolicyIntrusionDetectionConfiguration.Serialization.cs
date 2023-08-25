@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SignatureOverrides))
             {
-                writer.WritePropertyName("signatureOverrides");
+                writer.WritePropertyName("signatureOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in SignatureOverrides)
                 {
@@ -28,11 +28,21 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(BypassTrafficSettings))
             {
-                writer.WritePropertyName("bypassTrafficSettings");
+                writer.WritePropertyName("bypassTrafficSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in BypassTrafficSettings)
                 {
                     writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PrivateRanges))
+            {
+                writer.WritePropertyName("privateRanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateRanges)
+                {
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -41,15 +51,19 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyIntrusionDetectionConfiguration DeserializeFirewallPolicyIntrusionDetectionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FirewallPolicyIntrusionDetectionSignatureSpecification>> signatureOverrides = default;
             Optional<IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>> bypassTrafficSettings = default;
+            Optional<IList<string>> privateRanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("signatureOverrides"))
+                if (property.NameEquals("signatureOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FirewallPolicyIntrusionDetectionSignatureSpecification> array = new List<FirewallPolicyIntrusionDetectionSignatureSpecification>();
@@ -60,11 +74,10 @@ namespace Azure.ResourceManager.Network.Models
                     signatureOverrides = array;
                     continue;
                 }
-                if (property.NameEquals("bypassTrafficSettings"))
+                if (property.NameEquals("bypassTrafficSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> array = new List<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>();
@@ -75,8 +88,22 @@ namespace Azure.ResourceManager.Network.Models
                     bypassTrafficSettings = array;
                     continue;
                 }
+                if (property.NameEquals("privateRanges"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    privateRanges = array;
+                    continue;
+                }
             }
-            return new FirewallPolicyIntrusionDetectionConfiguration(Optional.ToList(signatureOverrides), Optional.ToList(bypassTrafficSettings));
+            return new FirewallPolicyIntrusionDetectionConfiguration(Optional.ToList(signatureOverrides), Optional.ToList(bypassTrafficSettings), Optional.ToList(privateRanges));
         }
     }
 }

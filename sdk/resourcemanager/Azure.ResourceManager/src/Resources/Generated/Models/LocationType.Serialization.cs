@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static LocationType ToLocationType(this string value)
         {
-            if (string.Equals(value, "Region", StringComparison.InvariantCultureIgnoreCase)) return LocationType.Region;
-            if (string.Equals(value, "EdgeZone", StringComparison.InvariantCultureIgnoreCase)) return LocationType.EdgeZone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Region")) return LocationType.Region;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EdgeZone")) return LocationType.EdgeZone;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LocationType value.");
         }
     }

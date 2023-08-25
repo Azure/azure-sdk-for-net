@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Document.Samples
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 #if SNIPPET
             Uri sourceUri = new Uri("<source SAS URI>");
-            Uri targetUri = new Uri("<target SAS URI>")
+            Uri targetUri = new Uri("<target SAS URI>");
 #else
             Uri sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
             Uri targetUri = await CreateTargetContainerAsync();

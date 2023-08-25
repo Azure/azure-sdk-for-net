@@ -18,28 +18,32 @@ namespace Azure.Messaging.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(Topic))
             {
-                writer.WritePropertyName("topic");
+                writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
             }
-            writer.WritePropertyName("subject");
+            writer.WritePropertyName("subject"u8);
             writer.WriteStringValue(Subject);
-            writer.WritePropertyName("data");
+            writer.WritePropertyName("data"u8);
             Data.WriteTo(writer);
-            writer.WritePropertyName("eventType");
+            writer.WritePropertyName("eventType"u8);
             writer.WriteStringValue(EventType);
-            writer.WritePropertyName("eventTime");
+            writer.WritePropertyName("eventTime"u8);
             writer.WriteStringValue(EventTime, "O");
-            writer.WritePropertyName("dataVersion");
+            writer.WritePropertyName("dataVersion"u8);
             writer.WriteStringValue(DataVersion);
             writer.WriteEndObject();
         }
 
         internal static EventGridEventInternal DeserializeEventGridEventInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<string> topic = default;
             string subject = default;
@@ -50,42 +54,42 @@ namespace Azure.Messaging.EventGrid.Models
             string dataVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topic"))
+                if (property.NameEquals("topic"u8))
                 {
                     topic = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subject"))
+                if (property.NameEquals("subject"u8))
                 {
                     subject = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     data = property.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("eventType"))
+                if (property.NameEquals("eventType"u8))
                 {
                     eventType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventTime"))
+                if (property.NameEquals("eventTime"u8))
                 {
                     eventTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("metadataVersion"))
+                if (property.NameEquals("metadataVersion"u8))
                 {
                     metadataVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataVersion"))
+                if (property.NameEquals("dataVersion"u8))
                 {
                     dataVersion = property.Value.GetString();
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Disks))
             {
-                writer.WritePropertyName("disks");
+                writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
@@ -31,15 +31,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static StorageProfile DeserializeStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualDisk>> disks = default;
             Optional<IReadOnlyList<VirtualScsiController>> scsiControllers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("disks"))
+                if (property.NameEquals("disks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualDisk> array = new List<VirtualDisk>();
@@ -50,11 +53,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     disks = array;
                     continue;
                 }
-                if (property.NameEquals("scsiControllers"))
+                if (property.NameEquals("scsiControllers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualScsiController> array = new List<VirtualScsiController>();

@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName");
+            writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(SourceType.ToString());
-            writer.WritePropertyName("certificateType");
+            writer.WritePropertyName("certificateType"u8);
             writer.WriteStringValue(CertificateType.ToString());
             writer.WriteEndObject();
         }
 
         internal static CdnCertificateSource DeserializeCdnCertificateSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CdnCertificateSourceType typeName = default;
             CdnManagedCertificateType certificateType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = new CdnCertificateSourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certificateType"))
+                if (property.NameEquals("certificateType"u8))
                 {
                     certificateType = new CdnManagedCertificateType(property.Value.GetString());
                     continue;

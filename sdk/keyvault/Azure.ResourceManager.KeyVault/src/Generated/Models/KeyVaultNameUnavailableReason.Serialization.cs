@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         public static KeyVaultNameUnavailableReason ToKeyVaultNameUnavailableReason(this string value)
         {
-            if (string.Equals(value, "AccountNameInvalid", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultNameUnavailableReason.AccountNameInvalid;
-            if (string.Equals(value, "AlreadyExists", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccountNameInvalid")) return KeyVaultNameUnavailableReason.AccountNameInvalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return KeyVaultNameUnavailableReason.AlreadyExists;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultNameUnavailableReason value.");
         }
     }

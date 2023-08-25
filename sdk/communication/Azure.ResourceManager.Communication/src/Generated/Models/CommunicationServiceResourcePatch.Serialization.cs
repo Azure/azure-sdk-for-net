@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LinkedDomains))
             {
-                writer.WritePropertyName("linkedDomains");
+                writer.WritePropertyName("linkedDomains"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkedDomains)
                 {

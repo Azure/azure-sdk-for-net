@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> A class representing the KustoDatabasePrincipalAssignment data model. </summary>
+    /// <summary>
+    /// A class representing the KustoDatabasePrincipalAssignment data model.
+    /// Class representing a database principal assignment.
+    /// </summary>
     public partial class KustoDatabasePrincipalAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of KustoDatabasePrincipalAssignmentData. </summary>

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsDefined(SourceAddressPrefix))
             {
-                writer.WritePropertyName("sourceAddressPrefix");
+                writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
             if (Optional.IsDefined(DestinationPortRange))
             {
-                writer.WritePropertyName("destinationPortRange");
+                writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteNumberValue(DestinationPortRange.Value);
             }
             writer.WriteEndObject();
@@ -35,31 +35,33 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static InboundSecurityRules DeserializeInboundSecurityRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InboundSecurityRulesProtocol> protocol = default;
             Optional<string> sourceAddressPrefix = default;
             Optional<int> destinationPortRange = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new InboundSecurityRulesProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceAddressPrefix"))
+                if (property.NameEquals("sourceAddressPrefix"u8))
                 {
                     sourceAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationPortRange"))
+                if (property.NameEquals("destinationPortRange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationPortRange = property.Value.GetInt32();

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         public static SecurityInsightsAlertRuleTriggerOperator ToSecurityInsightsAlertRuleTriggerOperator(this string value)
         {
-            if (string.Equals(value, "GreaterThan", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsAlertRuleTriggerOperator.GreaterThan;
-            if (string.Equals(value, "LessThan", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsAlertRuleTriggerOperator.LessThan;
-            if (string.Equals(value, "Equal", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsAlertRuleTriggerOperator.Equal;
-            if (string.Equals(value, "NotEqual", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsAlertRuleTriggerOperator.NotEqual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThan")) return SecurityInsightsAlertRuleTriggerOperator.GreaterThan;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThan")) return SecurityInsightsAlertRuleTriggerOperator.LessThan;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Equal")) return SecurityInsightsAlertRuleTriggerOperator.Equal;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotEqual")) return SecurityInsightsAlertRuleTriggerOperator.NotEqual;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsAlertRuleTriggerOperator value.");
         }
     }

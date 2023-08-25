@@ -103,7 +103,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// A list of recognized selection marks contained in this page.
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         public IReadOnlyList<FormSelectionMark> SelectionMarks { get; }
 

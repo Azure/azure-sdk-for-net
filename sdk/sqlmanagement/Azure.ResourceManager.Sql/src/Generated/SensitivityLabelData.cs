@@ -11,7 +11,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SensitivityLabel data model. </summary>
+    /// <summary>
+    /// A class representing the SensitivityLabel data model.
+    /// A sensitivity label.
+    /// </summary>
     public partial class SensitivityLabelData : ResourceData
     {
         /// <summary> Initializes a new instance of SensitivityLabelData. </summary>

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         public static QueryStringCachingBehavior ToQueryStringCachingBehavior(this string value)
         {
-            if (string.Equals(value, "NotSet", StringComparison.InvariantCultureIgnoreCase)) return QueryStringCachingBehavior.NotSet;
-            if (string.Equals(value, "IgnoreQueryString", StringComparison.InvariantCultureIgnoreCase)) return QueryStringCachingBehavior.IgnoreQueryString;
-            if (string.Equals(value, "BypassCaching", StringComparison.InvariantCultureIgnoreCase)) return QueryStringCachingBehavior.BypassCaching;
-            if (string.Equals(value, "UseQueryString", StringComparison.InvariantCultureIgnoreCase)) return QueryStringCachingBehavior.UseQueryString;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSet")) return QueryStringCachingBehavior.NotSet;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IgnoreQueryString")) return QueryStringCachingBehavior.IgnoreQueryString;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BypassCaching")) return QueryStringCachingBehavior.BypassCaching;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UseQueryString")) return QueryStringCachingBehavior.UseQueryString;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryStringCachingBehavior value.");
         }
     }

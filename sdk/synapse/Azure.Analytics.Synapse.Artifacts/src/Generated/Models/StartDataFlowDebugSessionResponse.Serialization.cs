@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(JobVersion))
             {
-                writer.WritePropertyName("jobVersion");
+                writer.WritePropertyName("jobVersion"u8);
                 writer.WriteStringValue(JobVersion);
             }
             writer.WriteEndObject();
@@ -28,10 +28,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static StartDataFlowDebugSessionResponse DeserializeStartDataFlowDebugSessionResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobVersion"))
+                if (property.NameEquals("jobVersion"u8))
                 {
                     jobVersion = property.Value.GetString();
                     continue;

@@ -15,21 +15,24 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicExpressionErrorInfo DeserializeLogicExpressionErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string message = default;
             Optional<IReadOnlyList<LogicExpressionErrorInfo>> details = default;
             string code = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogicExpressionErrorInfo> array = new List<LogicExpressionErrorInfo>();
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
                     details = array;
                     continue;
                 }
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;

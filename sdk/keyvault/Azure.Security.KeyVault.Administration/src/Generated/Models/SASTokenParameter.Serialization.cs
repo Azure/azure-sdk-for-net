@@ -15,9 +15,9 @@ namespace Azure.Security.KeyVault.Administration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageResourceUri");
+            writer.WritePropertyName("storageResourceUri"u8);
             writer.WriteStringValue(StorageResourceUri);
-            writer.WritePropertyName("token");
+            writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
             writer.WriteEndObject();
         }

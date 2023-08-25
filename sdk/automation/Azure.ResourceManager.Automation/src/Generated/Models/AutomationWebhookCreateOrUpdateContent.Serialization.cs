@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Automation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("isEnabled");
+                writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expiryTime");
+                writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(Runbook))
             {
-                writer.WritePropertyName("runbook");
+                writer.WritePropertyName("runbook"u8);
                 writer.WriteObjectValue(Runbook);
             }
             if (Optional.IsDefined(RunOn))
             {
-                writer.WritePropertyName("runOn");
+                writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
             writer.WriteEndObject();

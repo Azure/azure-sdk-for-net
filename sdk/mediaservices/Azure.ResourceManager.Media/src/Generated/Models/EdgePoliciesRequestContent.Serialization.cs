@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DeviceId))
             {
-                writer.WritePropertyName("deviceId");
+                writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
             writer.WriteEndObject();

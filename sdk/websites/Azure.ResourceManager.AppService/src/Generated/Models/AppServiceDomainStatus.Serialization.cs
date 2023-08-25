@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServiceDomainStatus ToAppServiceDomainStatus(this string value)
         {
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Unknown;
-            if (string.Equals(value, "Active", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Active;
-            if (string.Equals(value, "Awaiting", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Awaiting;
-            if (string.Equals(value, "Cancelled", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Cancelled;
-            if (string.Equals(value, "Confiscated", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Confiscated;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Disabled;
-            if (string.Equals(value, "Excluded", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Excluded;
-            if (string.Equals(value, "Expired", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Expired;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Failed;
-            if (string.Equals(value, "Held", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Held;
-            if (string.Equals(value, "Locked", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Locked;
-            if (string.Equals(value, "Parked", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Parked;
-            if (string.Equals(value, "Pending", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Pending;
-            if (string.Equals(value, "Reserved", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Reserved;
-            if (string.Equals(value, "Reverted", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Reverted;
-            if (string.Equals(value, "Suspended", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Suspended;
-            if (string.Equals(value, "Transferred", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Transferred;
-            if (string.Equals(value, "Unlocked", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Unlocked;
-            if (string.Equals(value, "Unparked", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Unparked;
-            if (string.Equals(value, "Updated", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.Updated;
-            if (string.Equals(value, "JsonConverterFailed", StringComparison.InvariantCultureIgnoreCase)) return AppServiceDomainStatus.JsonConverterFailed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return AppServiceDomainStatus.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Active")) return AppServiceDomainStatus.Active;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Awaiting")) return AppServiceDomainStatus.Awaiting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return AppServiceDomainStatus.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Confiscated")) return AppServiceDomainStatus.Confiscated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return AppServiceDomainStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Excluded")) return AppServiceDomainStatus.Excluded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Expired")) return AppServiceDomainStatus.Expired;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return AppServiceDomainStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Held")) return AppServiceDomainStatus.Held;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Locked")) return AppServiceDomainStatus.Locked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Parked")) return AppServiceDomainStatus.Parked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return AppServiceDomainStatus.Pending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Reserved")) return AppServiceDomainStatus.Reserved;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Reverted")) return AppServiceDomainStatus.Reverted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Suspended")) return AppServiceDomainStatus.Suspended;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Transferred")) return AppServiceDomainStatus.Transferred;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unlocked")) return AppServiceDomainStatus.Unlocked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unparked")) return AppServiceDomainStatus.Unparked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Updated")) return AppServiceDomainStatus.Updated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "JsonConverterFailed")) return AppServiceDomainStatus.JsonConverterFailed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceDomainStatus value.");
         }
     }

@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -34,16 +37,20 @@ namespace Azure.Core
         /// <param name="applicationId">An optional value to be prepended to the <see cref="TelemetryDetails"/>.
         /// This value overrides the behavior of the <see cref="DiagnosticsOptions.ApplicationId"/> property for the <see cref="HttpMessage"/> it is applied to.</param>
         public TelemetryDetails(Assembly assembly, string? applicationId = null)
+            : this(assembly, applicationId, new RuntimeInformationWrapper())
+        { }
+
+        internal TelemetryDetails(Assembly assembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default)
         {
             Argument.AssertNotNull(assembly, nameof(assembly));
-            if ( applicationId?.Length > MaxApplicationIdLength)
+            if (applicationId?.Length > MaxApplicationIdLength)
             {
                 throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
             }
 
             Assembly = assembly;
             ApplicationId = applicationId;
-            _userAgent = GenerateUserAgentString(assembly, applicationId);
+            _userAgent = GenerateUserAgentString(assembly, applicationId, runtimeInformation);
         }
 
         /// <summary>
@@ -56,7 +63,7 @@ namespace Azure.Core
             message.SetProperty(typeof(UserAgentValueKey), ToString());
         }
 
-        internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)
+        internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default)
         {
             const string PackagePrefix = "Azure.";
 
@@ -80,7 +87,8 @@ namespace Azure.Core
             {
                 version = version.Substring(0, hashSeparator);
             }
-            var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
+            runtimeInformation ??= new RuntimeInformationWrapper();
+            var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})");
 
             return applicationId != null
                 ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
@@ -91,5 +99,67 @@ namespace Azure.Core
         /// The properly formatted UserAgent string based on this <see cref="TelemetryDetails"/> instance.
         /// </summary>
         public override string ToString() => _userAgent;
+
+        /// <summary>
+        /// If the ProductInformation is not in the proper format, this escapes any ')' , '(' or '\' characters per https://www.rfc-editor.org/rfc/rfc7230#section-3.2.6
+        /// </summary>
+        /// <param name="productInfo">The ProductInfo portion of the UserAgent</param>
+        /// <returns></returns>
+        private static string EscapeProductInformation(string productInfo)
+        {
+            // If the string is already valid, we don't need to escape anything
+            bool success = false;
+            try
+            {
+                success = ProductInfoHeaderValue.TryParse(productInfo, out var _);
+            }
+            catch (Exception)
+            {
+                // Invalid values can throw in Framework due to https://github.com/dotnet/runtime/issues/28558
+                // Treat this as a failure to parse.
+            }
+            if (success)
+            {
+                return productInfo;
+            }
+
+            var sb = new StringBuilder(productInfo.Length + 2);
+            sb.Append('(');
+            // exclude the first and last characters, which are the enclosing parentheses
+            for (int i = 1; i < productInfo.Length - 1; i++)
+            {
+                char c = productInfo[i];
+                if (c == ')' || c == '(')
+                {
+                    sb.Append('\\');
+                }
+                // If we see a \, we don't need to escape it if it's followed by a '\', '(', or ')', because it is already escaped.
+                else if (c == '\\')
+                {
+                    if (i + 1 < (productInfo.Length - 1))
+                    {
+                        char next = productInfo[i + 1];
+                        if (next == '\\' || next == '(' || next == ')')
+                        {
+                            sb.Append(c);
+                            sb.Append(next);
+                            i++;
+                            continue;
+                        }
+                        else
+                        {
+                            sb.Append('\\');
+                        }
+                    }
+                    else
+                    {
+                        sb.Append('\\');
+                    }
+                }
+                sb.Append(c);
+            }
+            sb.Append(')');
+            return sb.ToString();
+        }
     }
 }

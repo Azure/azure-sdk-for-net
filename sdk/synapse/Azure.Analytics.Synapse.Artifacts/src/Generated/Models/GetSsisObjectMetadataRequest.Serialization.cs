@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MetadataPath))
             {
-                writer.WritePropertyName("metadataPath");
+                writer.WritePropertyName("metadataPath"u8);
                 writer.WriteStringValue(MetadataPath);
             }
             writer.WriteEndObject();
@@ -28,10 +28,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static GetSsisObjectMetadataRequest DeserializeGetSsisObjectMetadataRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metadataPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadataPath"))
+                if (property.NameEquals("metadataPath"u8))
                 {
                     metadataPath = property.Value.GetString();
                     continue;

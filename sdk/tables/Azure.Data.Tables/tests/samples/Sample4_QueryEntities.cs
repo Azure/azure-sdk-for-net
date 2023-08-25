@@ -60,13 +60,9 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample4QueryEntitiesFilterWithQueryFilter
             // The CreateQueryFilter method is also available to assist with properly formatting and escaping OData queries.
-#if SNIPPET
-            Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
-#else
-            queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
-#endif
+            var queryResultsFilter2 = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
             // Iterate the <see cref="Pageable"> to access all queried entities.
-            foreach (TableEntity qEntity in queryResultsFilter)
+            foreach (TableEntity qEntity in queryResultsFilter2)
             {
                 Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
             }
@@ -112,8 +108,8 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:TablesSample4QueryPagination
 
             string continuationToken = null;
-            bool hadResults = true;
-            while (hadResults)
+            bool moreResultsAvailable = true;
+            while (moreResultsAvailable)
             {
                 Page<TableEntity> page = tableClient
                     .Query<TableEntity>()
@@ -128,7 +124,7 @@ namespace Azure.Data.Tables.Samples
                 continuationToken = page.ContinuationToken;
 
                 IReadOnlyList<TableEntity> pageResults = page.Values;
-                hadResults = pageResults.Any();
+                moreResultsAvailable = pageResults.Any() && continuationToken != null;
 
                 // Print out the results for this page.
                 foreach (TableEntity result in pageResults)

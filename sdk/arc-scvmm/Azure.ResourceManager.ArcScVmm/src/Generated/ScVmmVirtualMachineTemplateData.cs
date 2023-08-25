@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    /// <summary> A class representing the ScVmmVirtualMachineTemplate data model. </summary>
+    /// <summary>
+    /// A class representing the ScVmmVirtualMachineTemplate data model.
+    /// The VirtualMachineTemplates resource definition.
+    /// </summary>
     public partial class ScVmmVirtualMachineTemplateData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScVmmVirtualMachineTemplateData. </summary>
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="osType"> Gets or sets the type of the os. </param>
         /// <param name="osName"> Gets or sets os name. </param>
         /// <param name="computerName"> Gets or sets computer name. </param>
-        /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine&apos;s memory, in MB. </param>
+        /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
         /// <param name="cpuCount"> Gets or sets the desired number of vCPUs for the vm. </param>
         /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
         /// <param name="dynamicMemoryEnabled"> Gets or sets a value indicating whether to enable dynamic memory or not. </param>
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.ArcScVmm
         public string OSName { get; }
         /// <summary> Gets or sets computer name. </summary>
         public string ComputerName { get; }
-        /// <summary> MemoryMB is the desired size of a virtual machine&apos;s memory, in MB. </summary>
+        /// <summary> MemoryMB is the desired size of a virtual machine's memory, in MB. </summary>
         public int? MemoryMB { get; }
         /// <summary> Gets or sets the desired number of vCPUs for the vm. </summary>
         public int? CpuCount { get; }

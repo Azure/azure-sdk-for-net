@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SSL-enabled hostname. </summary>
@@ -21,15 +19,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Hostname. </param>
         /// <param name="sslState"> SSL type. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
-        /// <param name="thumbprint"> SSL certificate thumbprint. </param>
+        /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
         /// <param name="toUpdate"> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </param>
         /// <param name="hostType"> Indicates whether the hostname is a standard or repository hostname. </param>
-        internal HostNameSslState(string name, HostNameBindingSslState? sslState, string virtualIP, BinaryData thumbprint, bool? toUpdate, AppServiceHostType? hostType)
+        internal HostNameSslState(string name, HostNameBindingSslState? sslState, string virtualIP, string thumbprintString, bool? toUpdate, AppServiceHostType? hostType)
         {
             Name = name;
             SslState = sslState;
             VirtualIP = virtualIP;
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
             ToUpdate = toUpdate;
             HostType = hostType;
         }
@@ -40,37 +38,8 @@ namespace Azure.ResourceManager.AppService.Models
         public HostNameBindingSslState? SslState { get; set; }
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
         public string VirtualIP { get; set; }
-        /// <summary>
-        /// SSL certificate thumbprint.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Thumbprint { get; set; }
+        /// <summary> SSL certificate thumbprint. </summary>
+        public string ThumbprintString { get; set; }
         /// <summary> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </summary>
         public bool? ToUpdate { get; set; }
         /// <summary> Indicates whether the hostname is a standard or repository hostname. </summary>

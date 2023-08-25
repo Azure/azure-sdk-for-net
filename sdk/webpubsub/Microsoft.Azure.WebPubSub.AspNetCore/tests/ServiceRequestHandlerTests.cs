@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if NETCOREAPP3_1_OR_GREATER
+#if NETCOREAPP
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,7 +29,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var provider = new ServiceCollection()
                 .AddLogging()
                 .AddWebPubSub(x => x.ServiceEndpoint = new($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"))
-                .Services
                 .BuildServiceProvider();
             _adaptor = provider.GetRequiredService<ServiceRequestHandlerAdapter>();
         }

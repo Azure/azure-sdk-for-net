@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("radiusServerAddress");
+            writer.WritePropertyName("radiusServerAddress"u8);
             writer.WriteStringValue(RadiusServerAddress);
             if (Optional.IsDefined(RadiusServerScore))
             {
-                writer.WritePropertyName("radiusServerScore");
+                writer.WritePropertyName("radiusServerScore"u8);
                 writer.WriteNumberValue(RadiusServerScore.Value);
             }
             if (Optional.IsDefined(RadiusServerSecret))
             {
-                writer.WritePropertyName("radiusServerSecret");
+                writer.WritePropertyName("radiusServerSecret"u8);
                 writer.WriteStringValue(RadiusServerSecret);
             }
             writer.WriteEndObject();
@@ -32,27 +32,30 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static RadiusServer DeserializeRadiusServer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string radiusServerAddress = default;
             Optional<long> radiusServerScore = default;
             Optional<string> radiusServerSecret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("radiusServerAddress"))
+                if (property.NameEquals("radiusServerAddress"u8))
                 {
                     radiusServerAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("radiusServerScore"))
+                if (property.NameEquals("radiusServerScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     radiusServerScore = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("radiusServerSecret"))
+                if (property.NameEquals("radiusServerSecret"u8))
                 {
                     radiusServerSecret = property.Value.GetString();
                     continue;

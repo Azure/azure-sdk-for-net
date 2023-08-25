@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> BackupStatus request. </summary>
@@ -16,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Container Type - VM, SQLPaaS, DPM, AzureFileShare... </summary>
-        public DataSourceType? ResourceType { get; set; }
+        public BackupDataSourceType? ResourceType { get; set; }
         /// <summary> Entire ARM resource id of the resource. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Protectable Item Logical Name. </summary>
         public string PoLogicalName { get; set; }
     }

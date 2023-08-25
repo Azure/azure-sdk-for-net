@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningFlavorData.
-    /// Serialized Name: FlavorData
-    /// </summary>
+    /// <summary> The MachineLearningFlavorData. </summary>
     public partial class MachineLearningFlavorData
     {
         /// <summary> Initializes a new instance of MachineLearningFlavorData. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningFlavorData. </summary>
-        /// <param name="data">
-        /// Model flavor-specific data.
-        /// Serialized Name: FlavorData.data
-        /// </param>
+        /// <param name="data"> Model flavor-specific data. </param>
         internal MachineLearningFlavorData(IDictionary<string, string> data)
         {
             Data = data;
         }
 
-        /// <summary>
-        /// Model flavor-specific data.
-        /// Serialized Name: FlavorData.data
-        /// </summary>
+        /// <summary> Model flavor-specific data. </summary>
         public IDictionary<string, string> Data { get; set; }
     }
 }

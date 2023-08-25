@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DesiredState))
             {
-                writer.WritePropertyName("desiredState");
+                writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -25,25 +25,27 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseGrantSqlControlToManagedIdentity DeserializeSynapseGrantSqlControlToManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseDesiredState> desiredState = default;
             Optional<SynapseGrantSqlControlToManagedIdentityState> actualState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("desiredState"))
+                if (property.NameEquals("desiredState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     desiredState = property.Value.GetString().ToSynapseDesiredState();
                     continue;
                 }
-                if (property.NameEquals("actualState"))
+                if (property.NameEquals("actualState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actualState = property.Value.GetString().ToSynapseGrantSqlControlToManagedIdentityState();

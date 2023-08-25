@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudTieringSpaceSavings DeserializeCloudTieringSpaceSavings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<long> volumeSizeBytes = default;
             Optional<long> totalSizeCloudBytes = default;
@@ -23,61 +27,55 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<long> spaceSavingsBytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimestamp"))
+                if (property.NameEquals("lastUpdatedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("volumeSizeBytes"))
+                if (property.NameEquals("volumeSizeBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     volumeSizeBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalSizeCloudBytes"))
+                if (property.NameEquals("totalSizeCloudBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalSizeCloudBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cachedSizeBytes"))
+                if (property.NameEquals("cachedSizeBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cachedSizeBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("spaceSavingsPercent"))
+                if (property.NameEquals("spaceSavingsPercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spaceSavingsPercent = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("spaceSavingsBytes"))
+                if (property.NameEquals("spaceSavingsBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spaceSavingsBytes = property.Value.GetInt64();

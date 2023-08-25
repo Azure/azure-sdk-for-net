@@ -7,6 +7,8 @@ Project("{27203A77-39F0-4E0B-BA27-58D9E879ECA7}") = "Azure.ResourceManager.Mixed
 EndProject
 Project("{27203A77-39F0-4E0B-BA27-58D9E879ECA7}") = "Azure.ResourceManager.MixedReality.Tests", "tests\Azure.ResourceManager.MixedReality.Tests.csproj", "{B2EC6130-E353-40CC-8783-5E0B44ABD4E6}"
 EndProject
+Project("{27203A77-39F0-4E0B-BA27-58D9E879ECA7}") = "Azure.ResourceManager.MixedReality.Samples", "samples\Azure.ResourceManager.MixedReality.Samples.csproj", "{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

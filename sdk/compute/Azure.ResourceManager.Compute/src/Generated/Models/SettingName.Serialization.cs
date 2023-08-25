@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static SettingName ToSettingName(this string value)
         {
-            if (string.Equals(value, "AutoLogon", StringComparison.InvariantCultureIgnoreCase)) return SettingName.AutoLogon;
-            if (string.Equals(value, "FirstLogonCommands", StringComparison.InvariantCultureIgnoreCase)) return SettingName.FirstLogonCommands;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AutoLogon")) return SettingName.AutoLogon;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FirstLogonCommands")) return SettingName.FirstLogonCommands;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SettingName value.");
         }
     }

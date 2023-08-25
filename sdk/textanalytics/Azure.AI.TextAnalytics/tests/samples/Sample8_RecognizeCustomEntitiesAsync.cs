@@ -13,24 +13,27 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task RecognizeCustomEntitiesAsync()
         {
-            // Create a text analytics client.
-            string endpoint = TestEnvironment.StaticEndpoint;
-            string apiKey = TestEnvironment.StaticApiKey;
+            TestEnvironment.IgnoreIfNotPublicCloud();
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            Uri endpoint = new(TestEnvironment.StaticEndpoint);
+            AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions(true));
 
-            #region Snippet:RecognizeCustomEntitiesActionAsync
-            // Create input documents.
-            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                                We tried again today and it was amazing. Everyone in my family liked the trail although
-                                it was too challenging for the less athletic among us.";
+            #region Snippet:Sample8_RecognizeCustomEntitiesAsync
+            string documentA =
+                "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+                + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+                + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+                + " athletic among us.";
 
-            string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
-                                our anniversary so they helped me organize a little surprise for my partner.
-                                The room was clean and with the decoration I requested. It was perfect!";
+            string documentB =
+                "Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about our anniversary"
+                + " so they helped me organize a little surprise for my partner. The room was clean and with the"
+                + " decoration I requested. It was perfect!";
 
-            var batchDocuments = new List<TextDocumentInput>
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<TextDocumentInput> batchedDocuments = new()
             {
                 new TextDocumentInput("1", documentA)
                 {
@@ -42,70 +45,61 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            // prepare actions.
+            // Specify the project and deployment names of the desired custom model. To train your own custom model to
+            // recognize custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition.
 #if SNIPPET
-            // To train a model to recognize your custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition
             string projectName = "<projectName>";
             string deploymentName = "<deploymentName>";
-            var actions = new TextAnalyticsActions()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(projectName, deploymentName)
-                }
-            };
 #else
-            var actions = new TextAnalyticsActions()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                }
-            };
+            string projectName = TestEnvironment.RecognizeCustomEntitiesProjectName;
+            string deploymentName = TestEnvironment.RecognizeCustomEntitiesDeploymentName;
 #endif
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
-
-            await operation.WaitForCompletionAsync();
+            // Perform the text analysis operation.
+            RecognizeCustomEntitiesOperation operation = await client.RecognizeCustomEntitiesAsync(WaitUntil.Completed, batchedDocuments, projectName, deploymentName);
             #endregion
 
-            #region Snippet:RecognizeCustomEntitiesActionOperationStatus
-            // View operation status.
-            Console.WriteLine($"AnalyzeActions operation has completed");
+            Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
+
+            // View the operation status.
             Console.WriteLine($"Created On   : {operation.CreatedOn}");
             Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
             Console.WriteLine($"Id           : {operation.Id}");
             Console.WriteLine($"Status       : {operation.Status}");
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
-            #endregion
 
-            #region Snippet:RecognizeCustomEntitiesActionAsyncViewResults
-
-            await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
+            #region Snippet:Sample8_RecognizeCustomEntitiesAsync_ViewResults
+            await foreach (RecognizeCustomEntitiesResultCollection documentsInPage in operation.Value)
             {
-                IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesActionResults = documentsInPage.RecognizeCustomEntitiesResults;
-                foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResult in customEntitiesActionResults)
+                foreach (RecognizeEntitiesResult documentResult in documentsInPage)
                 {
-                    Console.WriteLine($" Action name: {customEntitiesActionResult.ActionName}");
-                    int docNumber = 1;
-                    foreach (RecognizeEntitiesResult documentResults in customEntitiesActionResult.DocumentsResults)
-                    {
-                        Console.WriteLine($" Document #{docNumber++}");
-                        Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
+                    Console.WriteLine($"Result for document with Id = \"{documentResult.Id}\":");
 
-                        foreach (CategorizedEntity entity in documentResults.Entities)
-                        {
-                            Console.WriteLine($"  Entity: {entity.Text}");
-                            Console.WriteLine($"  Category: {entity.Category}");
-                            Console.WriteLine($"  Offset: {entity.Offset}");
-                            Console.WriteLine($"  Length: {entity.Length}");
-                            Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                            Console.WriteLine($"  SubCategory: {entity.SubCategory}");
-                        }
-                        Console.WriteLine("");
+                    if (documentResult.HasError)
+                    {
+                        Console.WriteLine($"  Error!");
+                        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                        Console.WriteLine();
+                        continue;
                     }
+
+                    Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
+
+                    foreach (CategorizedEntity entity in documentResult.Entities)
+                    {
+                        Console.WriteLine($"  Entity: {entity.Text}");
+                        Console.WriteLine($"  Category: {entity.Category}");
+                        Console.WriteLine($"  Offset: {entity.Offset}");
+                        Console.WriteLine($"  Length: {entity.Length}");
+                        Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
+                        Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                        Console.WriteLine();
+                    }
+
+                    Console.WriteLine();
                 }
             }
             #endregion

@@ -10,20 +10,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DataCollectionRuleMetadata
+    public partial class DataCollectionRuleMetadata
     {
         internal static DataCollectionRuleMetadata DeserializeDataCollectionRuleMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provisionedBy = default;
+            Optional<string> provisionedByResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisionedBy"))
+                if (property.NameEquals("provisionedBy"u8))
                 {
                     provisionedBy = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("provisionedByResourceId"u8))
+                {
+                    provisionedByResourceId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DataCollectionRuleMetadata(provisionedBy.Value);
+            return new DataCollectionRuleMetadata(provisionedBy.Value, provisionedByResourceId.Value);
         }
     }
 }

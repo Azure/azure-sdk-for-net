@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FieldName))
             {
-                writer.WritePropertyName("fieldName");
+                writer.WritePropertyName("fieldName"u8);
                 writer.WriteStringValue(FieldName);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SemanticField DeserializeSemanticField(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fieldName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fieldName"))
+                if (property.NameEquals("fieldName"u8))
                 {
                     fieldName = property.Value.GetString();
                     continue;

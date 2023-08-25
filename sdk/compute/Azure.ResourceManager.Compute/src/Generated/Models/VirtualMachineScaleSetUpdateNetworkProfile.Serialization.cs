@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HealthProbe))
             {
-                writer.WritePropertyName("healthProbe");
+                writer.WritePropertyName("healthProbe"u8);
                 JsonSerializer.Serialize(writer, HealthProbe);
             }
             if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
-                writer.WritePropertyName("networkInterfaceConfigurations");
+                writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceConfigurations)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(NetworkApiVersion))
             {
-                writer.WritePropertyName("networkApiVersion");
+                writer.WritePropertyName("networkApiVersion"u8);
                 writer.WriteStringValue(NetworkApiVersion.Value.ToString());
             }
             writer.WriteEndObject();

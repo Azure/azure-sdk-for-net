@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="destinations"> List of destinations for this data flow. </param>
         /// <param name="transformKql"> The KQL query to transform stream data. </param>
         /// <param name="outputStream"> The output stream of the transform. Only required if the transform changes data to a different stream. </param>
-        internal DataFlow(IList<DataFlowStream> streams, IList<string> destinations, string transformKql, string outputStream)
+        /// <param name="builtInTransform"> The builtIn transform to transform stream data. </param>
+        internal DataFlow(IList<DataFlowStream> streams, IList<string> destinations, string transformKql, string outputStream, string builtInTransform)
         {
             Streams = streams;
             Destinations = destinations;
             TransformKql = transformKql;
             OutputStream = outputStream;
+            BuiltInTransform = builtInTransform;
         }
 
         /// <summary> List of streams for this data flow. </summary>
@@ -41,5 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string TransformKql { get; set; }
         /// <summary> The output stream of the transform. Only required if the transform changes data to a different stream. </summary>
         public string OutputStream { get; set; }
+        /// <summary> The builtIn transform to transform stream data. </summary>
+        public string BuiltInTransform { get; set; }
     }
 }

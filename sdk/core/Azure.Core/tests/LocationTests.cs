@@ -13,7 +13,7 @@ namespace Azure.Core.Tests
         [TestCase("WestUS4", "WestUS4", null)]
         [TestCase("West US 2", "westus2", "West US 2")]
         [TestCase("WEst Us 2", "westus2", "West US 2")]
-        [TestCase("West Us 3", "westus3", "West Us 3")]
+        [TestCase("West Us 3", "westus3", "West US 3")]
         [TestCase("West-Us 2", "west-us2", "West-Us 2")]
         [TestCase(" West Us 2", "westus2", "West US 2")]
         [TestCase(" ", "", " ")]

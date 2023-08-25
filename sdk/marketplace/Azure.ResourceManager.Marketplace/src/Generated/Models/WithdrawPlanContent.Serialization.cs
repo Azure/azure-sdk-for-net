@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Marketplace.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PlanId))
             {
-                writer.WritePropertyName("planId");
+                writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
             if (Optional.IsDefined(PublisherId))
             {
-                writer.WritePropertyName("publisherId");
+                writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
             writer.WriteEndObject();

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="configFilePath">
         /// The path of the config file containing auth settings if they come from a file.
-        /// If the path is relative, base will the site&apos;s root directory.
+        /// If the path is relative, base will the site's root directory.
         /// </param>
         internal AuthPlatform(bool? isEnabled, string runtimeVersion, string configFilePath)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string RuntimeVersion { get; set; }
         /// <summary>
         /// The path of the config file containing auth settings if they come from a file.
-        /// If the path is relative, base will the site&apos;s root directory.
+        /// If the path is relative, base will the site's root directory.
         /// </summary>
         public string ConfigFilePath { get; set; }
     }

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the PartnerRegistration data model. </summary>
+    /// <summary>
+    /// A class representing the PartnerRegistration data model.
+    /// Information about a partner registration.
+    /// </summary>
     public partial class PartnerRegistrationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PartnerRegistrationData. </summary>

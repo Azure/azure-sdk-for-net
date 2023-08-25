@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> A class representing the IntegrationAccountSchema data model. </summary>
+    /// <summary>
+    /// A class representing the IntegrationAccountSchema data model.
+    /// The integration account schema.
+    /// </summary>
     public partial class IntegrationAccountSchemaData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IntegrationAccountSchemaData. </summary>

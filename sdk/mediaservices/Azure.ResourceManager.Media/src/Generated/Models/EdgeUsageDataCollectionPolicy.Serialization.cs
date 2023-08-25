@@ -15,37 +15,39 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static EdgeUsageDataCollectionPolicy DeserializeEdgeUsageDataCollectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataCollectionFrequency = default;
             Optional<string> dataReportingFrequency = default;
             Optional<TimeSpan> maxAllowedUnreportedUsageDuration = default;
             Optional<EdgeUsageDataEventHub> eventHubDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataCollectionFrequency"))
+                if (property.NameEquals("dataCollectionFrequency"u8))
                 {
                     dataCollectionFrequency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataReportingFrequency"))
+                if (property.NameEquals("dataReportingFrequency"u8))
                 {
                     dataReportingFrequency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxAllowedUnreportedUsageDuration"))
+                if (property.NameEquals("maxAllowedUnreportedUsageDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxAllowedUnreportedUsageDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("eventHubDetails"))
+                if (property.NameEquals("eventHubDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventHubDetails = EdgeUsageDataEventHub.DeserializeEdgeUsageDataEventHub(property.Value);

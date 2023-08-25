@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    /// <summary> A class representing the TargetType data model. </summary>
+    /// <summary>
+    /// A class representing the TargetType data model.
+    /// Model that represents a Target Type resource.
+    /// </summary>
     public partial class TargetTypeData : ResourceData
     {
         /// <summary> Initializes a new instance of TargetTypeData. </summary>

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static ServiceAccountThrottlingRule DeserializeServiceAccountThrottlingRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> key = default;
             Optional<float> renewalPeriod = default;
             Optional<float> count = default;
@@ -23,56 +27,51 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<IReadOnlyList<ServiceAccountThrottlingMatchPattern>> matchPatterns = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("renewalPeriod"))
+                if (property.NameEquals("renewalPeriod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     renewalPeriod = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("minCount"))
+                if (property.NameEquals("minCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("dynamicThrottlingEnabled"))
+                if (property.NameEquals("dynamicThrottlingEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dynamicThrottlingEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("matchPatterns"))
+                if (property.NameEquals("matchPatterns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceAccountThrottlingMatchPattern> array = new List<ServiceAccountThrottlingMatchPattern>();

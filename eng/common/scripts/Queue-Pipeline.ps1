@@ -17,7 +17,7 @@ pipeline.
 Pipline definition ID
 
 .PARAMETER CancelPreviousBuilds
-Requires a value for SourceBranch. Cancel previous builds before queuing the new 
+Requires a value for SourceBranch. Cancel previous builds before queuing the new
 build.
 
 .PARAMETER VsoQueuedPipelines
@@ -55,17 +55,24 @@ param(
 
   [boolean]$CancelPreviousBuilds=$false,
 
-  [Parameter(Mandatory = $false)]
   [string]$VsoQueuedPipelines,
 
-  [Parameter(Mandatory = $true)]
+  # Already base 64 encoded authentication token
   [string]$Base64EncodedAuthToken,
+
+  # Unencoded authentication token
+  [string]$AuthToken,
 
   [Parameter(Mandatory = $false)]
   [string]$BuildParametersJson
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
+
+if (!$Base64EncodedAuthToken)
+{
+  $Base64EncodedAuthToken = Get-Base64EncodedToken $AuthToken
+}
 
 # Skip if SourceBranch is empty because it we cannot generate a target branch
 # name from an empty string.
@@ -105,11 +112,16 @@ catch {
   exit 1
 }
 
+if (!$resp.definition) {
+  LogError "Invalid queue build response: $resp"
+  exit 1
+}
+
 LogDebug "Pipeline [ $($resp.definition.name) ] queued at [ $($resp._links.web.href) ]"
 
 if ($VsoQueuedPipelines) {
   $enVarValue = [System.Environment]::GetEnvironmentVariable($VsoQueuedPipelines)
-  $QueuedPipelineLinks = if ($enVarValue) { 
+  $QueuedPipelineLinks = if ($enVarValue) {
     "$enVarValue<br>[$($resp.definition.name)]($($resp._links.web.href))"
   }else {
     "[$($resp.definition.name)]($($resp._links.web.href))"

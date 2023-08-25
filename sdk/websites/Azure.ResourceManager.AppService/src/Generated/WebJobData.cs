@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the WebJob data model. </summary>
+    /// <summary>
+    /// A class representing the WebJob data model.
+    /// Web Job Information.
+    /// </summary>
     public partial class WebJobData : ResourceData
     {
         /// <summary> Initializes a new instance of WebJobData. </summary>

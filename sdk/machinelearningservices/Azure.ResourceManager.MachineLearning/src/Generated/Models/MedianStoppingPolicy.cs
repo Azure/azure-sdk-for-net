@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Defines an early termination policy based on running averages of the primary metric of all runs
-    /// Serialized Name: MedianStoppingPolicy
-    /// </summary>
+    /// <summary> Defines an early termination policy based on running averages of the primary metric of all runs. </summary>
     public partial class MedianStoppingPolicy : MachineLearningEarlyTerminationPolicy
     {
         /// <summary> Initializes a new instance of MedianStoppingPolicy. </summary>
@@ -20,18 +17,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MedianStoppingPolicy. </summary>
-        /// <param name="delayEvaluation">
-        /// Number of intervals by which to delay the first evaluation.
-        /// Serialized Name: EarlyTerminationPolicy.delayEvaluation
-        /// </param>
-        /// <param name="evaluationInterval">
-        /// Interval (number of runs) between policy evaluations.
-        /// Serialized Name: EarlyTerminationPolicy.evaluationInterval
-        /// </param>
-        /// <param name="policyType">
-        /// [Required] Name of policy configuration
-        /// Serialized Name: EarlyTerminationPolicy.policyType
-        /// </param>
+        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
+        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <param name="policyType"> [Required] Name of policy configuration. </param>
         internal MedianStoppingPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType) : base(delayEvaluation, evaluationInterval, policyType)
         {
             PolicyType = policyType;

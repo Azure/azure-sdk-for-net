@@ -15,25 +15,27 @@ namespace Azure.Maps.Search.Models
     {
         internal static ReverseSearchCrossStreetAddressResult DeserializeReverseSearchCrossStreetAddressResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchSummary> summary = default;
             Optional<IReadOnlyList<ReverseSearchCrossStreetAddressResultItem>> addresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = SearchSummary.DeserializeSearchSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("addresses"))
+                if (property.NameEquals("addresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReverseSearchCrossStreetAddressResultItem> array = new List<ReverseSearchCrossStreetAddressResultItem>();

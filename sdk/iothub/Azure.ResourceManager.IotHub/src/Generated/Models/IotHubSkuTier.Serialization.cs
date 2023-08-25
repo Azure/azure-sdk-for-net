@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.IotHub.Models
 
         public static IotHubSkuTier ToIotHubSkuTier(this string value)
         {
-            if (string.Equals(value, "Free", StringComparison.InvariantCultureIgnoreCase)) return IotHubSkuTier.Free;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return IotHubSkuTier.Standard;
-            if (string.Equals(value, "Basic", StringComparison.InvariantCultureIgnoreCase)) return IotHubSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return IotHubSkuTier.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return IotHubSkuTier.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return IotHubSkuTier.Basic;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubSkuTier value.");
         }
     }

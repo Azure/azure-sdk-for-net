@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DevCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkConnectionId))
             {
-                writer.WritePropertyName("networkConnectionId");
+                writer.WritePropertyName("networkConnectionId"u8);
                 writer.WriteStringValue(NetworkConnectionId);
             }
             writer.WriteEndObject();
@@ -30,43 +30,46 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static AttachedNetworkConnectionData DeserializeAttachedNetworkConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> networkConnectionId = default;
-            Optional<string> networkConnectionLocation = default;
-            Optional<HealthCheckStatus> healthCheckStatus = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> networkConnectionId = default;
+            Optional<AzureLocation> networkConnectionLocation = default;
+            Optional<DevCenterHealthCheckStatus> healthCheckStatus = default;
             Optional<DomainJoinType> domainJoinType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,36 +78,46 @@ namespace Azure.ResourceManager.DevCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("networkConnectionId"))
-                        {
-                            networkConnectionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("networkConnectionLocation"))
-                        {
-                            networkConnectionLocation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("healthCheckStatus"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            healthCheckStatus = new HealthCheckStatus(property0.Value.GetString());
+                            provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("domainJoinType"))
+                        if (property0.NameEquals("networkConnectionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            networkConnectionId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("networkConnectionLocation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkConnectionLocation = new AzureLocation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("healthCheckStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            healthCheckStatus = new DevCenterHealthCheckStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("domainJoinType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             domainJoinType = new DomainJoinType(property0.Value.GetString());
@@ -114,7 +127,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, provisioningState.Value, networkConnectionId.Value, networkConnectionLocation.Value, Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType));
+            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), networkConnectionId.Value, Optional.ToNullable(networkConnectionLocation), Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType));
         }
     }
 }

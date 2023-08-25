@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public IDictionary<string, string> CustomHeaders { get; }
         /// <summary> The status of the webhook at the time the operation was called. </summary>
         public ContainerRegistryWebhookStatus? Status { get; set; }
-        /// <summary> The scope of repositories where the event can be triggered. For example, &apos;foo:*&apos; means events for all tags under repository &apos;foo&apos;. &apos;foo:bar&apos; means events for &apos;foo:bar&apos; only. &apos;foo&apos; is equivalent to &apos;foo:latest&apos;. Empty means all events. </summary>
+        /// <summary> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </summary>
         public string Scope { get; set; }
         /// <summary> The list of actions that trigger the webhook to post notifications. </summary>
         public IList<ContainerRegistryWebhookAction> Actions { get; }

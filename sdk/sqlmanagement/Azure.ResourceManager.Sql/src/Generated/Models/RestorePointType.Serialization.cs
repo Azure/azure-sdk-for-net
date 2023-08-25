@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static RestorePointType ToRestorePointType(this string value)
         {
-            if (string.Equals(value, "CONTINUOUS", StringComparison.InvariantCultureIgnoreCase)) return RestorePointType.Continuous;
-            if (string.Equals(value, "DISCRETE", StringComparison.InvariantCultureIgnoreCase)) return RestorePointType.Discrete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CONTINUOUS")) return RestorePointType.Continuous;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DISCRETE")) return RestorePointType.Discrete;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RestorePointType value.");
         }
     }

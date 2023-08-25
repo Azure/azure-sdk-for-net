@@ -17,43 +17,61 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CentralServerVmId))
             {
-                writer.WritePropertyName("centralServerVmId");
+                writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
             }
-            writer.WritePropertyName("configurationType");
+            if (Optional.IsDefined(ManagedRgStorageAccountName))
+            {
+                writer.WritePropertyName("managedRgStorageAccountName"u8);
+                writer.WriteStringValue(ManagedRgStorageAccountName);
+            }
+            writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DiscoveryConfiguration DeserializeDiscoveryConfiguration(JsonElement element)
         {
-            Optional<string> centralServerVmId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> centralServerVmId = default;
+            Optional<string> managedRgStorageAccountName = default;
             Optional<AzureLocation> appLocation = default;
             SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("centralServerVmId"))
-                {
-                    centralServerVmId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("appLocation"))
+                if (property.NameEquals("centralServerVmId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    centralServerVmId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("managedRgStorageAccountName"u8))
+                {
+                    managedRgStorageAccountName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("appLocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("configurationType"))
+                if (property.NameEquals("configurationType"u8))
                 {
                     configurationType = new SapConfigurationType(property.Value.GetString());
                     continue;
                 }
             }
-            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, Optional.ToNullable(appLocation));
+            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, managedRgStorageAccountName.Value, Optional.ToNullable(appLocation));
         }
     }
 }

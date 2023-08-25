@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("actions");
+            writer.WritePropertyName("actions"u8);
             writer.WriteObjectValue(Actions);
             if (Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
             }
             writer.WriteEndObject();
@@ -27,20 +27,23 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyDefinition DeserializeManagementPolicyDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagementPolicyAction actions = default;
             Optional<ManagementPolicyFilter> filters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     actions = ManagementPolicyAction.DeserializeManagementPolicyAction(property.Value);
                     continue;
                 }
-                if (property.NameEquals("filters"))
+                if (property.NameEquals("filters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filters = ManagementPolicyFilter.DeserializeManagementPolicyFilter(property.Value);

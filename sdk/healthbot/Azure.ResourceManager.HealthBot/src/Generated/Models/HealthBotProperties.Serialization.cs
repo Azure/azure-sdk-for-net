@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultProperties))
             {
-                writer.WritePropertyName("keyVaultProperties");
+                writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
             writer.WriteEndObject();
@@ -26,31 +26,33 @@ namespace Azure.ResourceManager.HealthBot.Models
 
         internal static HealthBotProperties DeserializeHealthBotProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provisioningState = default;
             Optional<Uri> botManagementPortalLink = default;
             Optional<HealthBotKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("botManagementPortalLink"))
+                if (property.NameEquals("botManagementPortalLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        botManagementPortalLink = null;
                         continue;
                     }
                     botManagementPortalLink = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultProperties"))
+                if (property.NameEquals("keyVaultProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyVaultProperties = HealthBotKeyVaultProperties.DeserializeHealthBotKeyVaultProperties(property.Value);

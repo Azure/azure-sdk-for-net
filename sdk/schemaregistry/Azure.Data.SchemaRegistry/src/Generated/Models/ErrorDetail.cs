@@ -15,7 +15,7 @@ namespace Azure.Data.SchemaRegistry.Models
     internal partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        /// <param name="code"> Type of error. </param>
+        /// <param name="code"> Server-defined error code. </param>
         /// <param name="message"> Brief description of error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ErrorDetail(string code, string message)
@@ -29,7 +29,7 @@ namespace Azure.Data.SchemaRegistry.Models
         }
 
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        /// <param name="code"> Type of error. </param>
+        /// <param name="code"> Server-defined error code. </param>
         /// <param name="message"> Brief description of error. </param>
         /// <param name="details"> Error message details to help user understand/debug failure. </param>
         internal ErrorDetail(string code, string message, IReadOnlyList<ErrorDetail> details)
@@ -39,7 +39,7 @@ namespace Azure.Data.SchemaRegistry.Models
             Details = details;
         }
 
-        /// <summary> Type of error. </summary>
+        /// <summary> Server-defined error code. </summary>
         public string Code { get; }
         /// <summary> Brief description of error. </summary>
         public string Message { get; }

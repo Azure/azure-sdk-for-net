@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupName))
             {
-                writer.WritePropertyName("groupName");
+                writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
             if (Optional.IsDefined(GroupId))
             {
-                writer.WritePropertyName("groupId");
+                writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static ClientGroupInfo DeserializeClientGroupInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupName = default;
             Optional<string> groupId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupName"))
+                if (property.NameEquals("groupName"u8))
                 {
                     groupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;

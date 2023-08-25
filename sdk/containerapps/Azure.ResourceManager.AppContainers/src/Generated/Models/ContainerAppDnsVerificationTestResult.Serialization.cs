@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         public static ContainerAppDnsVerificationTestResult ToContainerAppDnsVerificationTestResult(this string value)
         {
-            if (string.Equals(value, "Passed", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppDnsVerificationTestResult.Passed;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppDnsVerificationTestResult.Failed;
-            if (string.Equals(value, "Skipped", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppDnsVerificationTestResult.Skipped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Passed")) return ContainerAppDnsVerificationTestResult.Passed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return ContainerAppDnsVerificationTestResult.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped")) return ContainerAppDnsVerificationTestResult.Skipped;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppDnsVerificationTestResult value.");
         }
     }

@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabVirtualMachineState ToLabVirtualMachineState(this string value)
         {
-            if (string.Equals(value, "Stopped", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineState.Stopped;
-            if (string.Equals(value, "Starting", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineState.Starting;
-            if (string.Equals(value, "Running", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineState.Running;
-            if (string.Equals(value, "Stopping", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineState.Stopping;
-            if (string.Equals(value, "ResettingPassword", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineState.ResettingPassword;
-            if (string.Equals(value, "Reimaging", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineState.Reimaging;
-            if (string.Equals(value, "Redeploying", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineState.Redeploying;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopped")) return LabVirtualMachineState.Stopped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Starting")) return LabVirtualMachineState.Starting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running")) return LabVirtualMachineState.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopping")) return LabVirtualMachineState.Stopping;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ResettingPassword")) return LabVirtualMachineState.ResettingPassword;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Reimaging")) return LabVirtualMachineState.Reimaging;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Redeploying")) return LabVirtualMachineState.Redeploying;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabVirtualMachineState value.");
         }
     }

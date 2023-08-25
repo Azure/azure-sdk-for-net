@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownRetentionPolicy. </summary>
-    internal partial class UnknownRetentionPolicy : RetentionPolicy
+    internal partial class UnknownRetentionPolicy : BackupRetentionPolicy
     {
         /// <summary> Initializes a new instance of UnknownRetentionPolicy. </summary>
         /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>

@@ -18,36 +18,41 @@ namespace Azure.ResourceManager.EventGrid
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ChannelType))
             {
-                writer.WritePropertyName("channelType");
+                writer.WritePropertyName("channelType"u8);
                 writer.WriteStringValue(ChannelType.Value.ToString());
             }
             if (Optional.IsDefined(PartnerTopicInfo))
             {
-                writer.WritePropertyName("partnerTopicInfo");
+                writer.WritePropertyName("partnerTopicInfo"u8);
                 writer.WriteObjectValue(PartnerTopicInfo);
+            }
+            if (Optional.IsDefined(PartnerDestinationInfo))
+            {
+                writer.WritePropertyName("partnerDestinationInfo"u8);
+                writer.WriteObjectValue(PartnerDestinationInfo);
             }
             if (Optional.IsDefined(MessageForActivation))
             {
-                writer.WritePropertyName("messageForActivation");
+                writer.WritePropertyName("messageForActivation"u8);
                 writer.WriteStringValue(MessageForActivation);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(ReadinessState))
             {
-                writer.WritePropertyName("readinessState");
+                writer.WritePropertyName("readinessState"u8);
                 writer.WriteStringValue(ReadinessState.Value.ToString());
             }
             if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
-                writer.WritePropertyName("expirationTimeIfNotActivatedUtc");
+                writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
             writer.WriteEndObject();
@@ -56,44 +61,48 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static PartnerNamespaceChannelData DeserializePartnerNamespaceChannelData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<PartnerNamespaceChannelType> channelType = default;
             Optional<PartnerTopicInfo> partnerTopicInfo = default;
+            Optional<PartnerDestinationInfo> partnerDestinationInfo = default;
             Optional<string> messageForActivation = default;
             Optional<PartnerNamespaceChannelProvisioningState> provisioningState = default;
             Optional<PartnerTopicReadinessState> readinessState = default;
             Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,56 +111,60 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("channelType"))
+                        if (property0.NameEquals("channelType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             channelType = new PartnerNamespaceChannelType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("partnerTopicInfo"))
+                        if (property0.NameEquals("partnerTopicInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             partnerTopicInfo = PartnerTopicInfo.DeserializePartnerTopicInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("messageForActivation"))
+                        if (property0.NameEquals("partnerDestinationInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            partnerDestinationInfo = PartnerDestinationInfo.DeserializePartnerDestinationInfo(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("messageForActivation"u8))
                         {
                             messageForActivation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new PartnerNamespaceChannelProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("readinessState"))
+                        if (property0.NameEquals("readinessState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readinessState = new PartnerTopicReadinessState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("expirationTimeIfNotActivatedUtc"))
+                        if (property0.NameEquals("expirationTimeIfNotActivatedUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationTimeIfNotActivatedUtc = property0.Value.GetDateTimeOffset("O");
@@ -161,7 +174,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Optional.ToNullable(channelType), partnerTopicInfo.Value, messageForActivation.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(readinessState), Optional.ToNullable(expirationTimeIfNotActivatedUtc));
+            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Optional.ToNullable(channelType), partnerTopicInfo.Value, partnerDestinationInfo.Value, messageForActivation.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(readinessState), Optional.ToNullable(expirationTimeIfNotActivatedUtc));
         }
     }
 }

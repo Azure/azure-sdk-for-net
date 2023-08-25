@@ -15,15 +15,18 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static BillingAccountPolicyProperties DeserializeBillingAccountPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ServiceTenant>> serviceTenants = default;
             Optional<bool> allowTransfers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceTenants"))
+                if (property.NameEquals("serviceTenants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceTenant> array = new List<ServiceTenant>();
@@ -34,11 +37,10 @@ namespace Azure.ResourceManager.Subscription.Models
                     serviceTenants = array;
                     continue;
                 }
-                if (property.NameEquals("allowTransfers"))
+                if (property.NameEquals("allowTransfers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowTransfers = property.Value.GetBoolean();

@@ -14,8 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2ACrossClusterMigrationReplicationDetails DeserializeA2ACrossClusterMigrationReplicationDetails(JsonElement element)
         {
-            Optional<string> fabricObjectId = default;
-            Optional<string> primaryFabricLocation = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> fabricObjectId = default;
+            Optional<AzureLocation> primaryFabricLocation = default;
             Optional<string> osType = default;
             Optional<string> vmProtectionState = default;
             Optional<string> vmProtectionStateDescription = default;
@@ -23,43 +27,51 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fabricObjectId"))
+                if (property.NameEquals("fabricObjectId"u8))
                 {
-                    fabricObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryFabricLocation"))
+                if (property.NameEquals("primaryFabricLocation"u8))
                 {
-                    primaryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionState"))
+                if (property.NameEquals("vmProtectionState"u8))
                 {
                     vmProtectionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionStateDescription"))
+                if (property.NameEquals("vmProtectionStateDescription"u8))
                 {
                     vmProtectionStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lifecycleId"))
+                if (property.NameEquals("lifecycleId"u8))
                 {
                     lifecycleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
             }
-            return new A2ACrossClusterMigrationReplicationDetails(instanceType, fabricObjectId.Value, primaryFabricLocation.Value, osType.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value);
+            return new A2ACrossClusterMigrationReplicationDetails(instanceType, fabricObjectId.Value, Optional.ToNullable(primaryFabricLocation), osType.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value);
         }
     }
 }

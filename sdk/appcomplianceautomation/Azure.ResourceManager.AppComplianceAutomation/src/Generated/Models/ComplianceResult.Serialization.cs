@@ -15,20 +15,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static ComplianceResult DeserializeComplianceResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> complianceName = default;
             Optional<IReadOnlyList<Category>> categories = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("complianceName"))
+                if (property.NameEquals("complianceName"u8))
                 {
                     complianceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Category> array = new List<Category>();

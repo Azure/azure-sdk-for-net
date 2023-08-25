@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Participant ID.
         /// </summary>
-        [JsonPropertyName("participantRawId")]
+        [JsonPropertyName("participantRawID")]
         public string ParticipantRawId { get; set; }
         /// <summary>
         /// Indicates if the received audio buffer contains only silence.

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// The IP address type.
-    /// 
+    ///
     /// </summary>
     public readonly partial struct NodeTypeFrontendConfigurationIPAddressType : IEquatable<NodeTypeFrontendConfigurationIPAddressType>
     {

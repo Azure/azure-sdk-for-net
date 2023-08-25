@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabNotificationChannel data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabNotificationChannel data model.
+    /// A notification.
+    /// </summary>
     public partial class DevTestLabNotificationChannelData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabNotificationChannelData. </summary>

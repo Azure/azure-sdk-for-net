@@ -49,6 +49,18 @@ namespace Azure.ResourceManager.Tests
         }
 
         [TestCase]
+        public void TestDeserializerNoneWithEmptyStringIds()
+        {
+            var identityJsonProperty = DeserializerHelper("NoneEmptyStringIds.json");
+#if DEBUG
+            Assert.Throws<JsonException>(delegate { ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value); });
+#else
+            ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value);
+            Assert.AreEqual(ManagedServiceIdentityType.None, back.ManagedServiceIdentityType);
+#endif
+        }
+
+        [TestCase]
         public void TestDeserializerValidInnerExtraField()
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedInnerExtraField.json");

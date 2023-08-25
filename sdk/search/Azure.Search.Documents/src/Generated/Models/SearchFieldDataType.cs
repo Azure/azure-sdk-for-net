@@ -30,6 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string DateTimeOffsetValue = "Edm.DateTimeOffset";
         private const string GeographyPointValue = "Edm.GeographyPoint";
         private const string ComplexValue = "Edm.ComplexType";
+        private const string SingleValue = "Edm.Single";
         /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are the same. </summary>
         public static bool operator ==(SearchFieldDataType left, SearchFieldDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are not the same. </summary>

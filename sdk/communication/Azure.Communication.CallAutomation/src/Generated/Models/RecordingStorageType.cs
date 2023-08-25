@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Recording storage mode. `External` enables bring your own storage. </summary>
+    /// <summary> Defines the type of external storage. </summary>
     public readonly partial struct RecordingStorageType : IEquatable<RecordingStorageType>
     {
         private readonly string _value;
@@ -23,12 +23,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         private const string AcsValue = "acs";
-        private const string AzureBlobValue = "azureBlob";
+        private const string BlobStorageValue = "blobStorage";
 
         /// <summary> acs. </summary>
         public static RecordingStorageType Acs { get; } = new RecordingStorageType(AcsValue);
-        /// <summary> azureBlob. </summary>
-        public static RecordingStorageType AzureBlob { get; } = new RecordingStorageType(AzureBlobValue);
+        /// <summary> blobStorage. </summary>
+        public static RecordingStorageType BlobStorage { get; } = new RecordingStorageType(BlobStorageValue);
         /// <summary> Determines if two <see cref="RecordingStorageType"/> values are the same. </summary>
         public static bool operator ==(RecordingStorageType left, RecordingStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingStorageType"/> values are not the same. </summary>

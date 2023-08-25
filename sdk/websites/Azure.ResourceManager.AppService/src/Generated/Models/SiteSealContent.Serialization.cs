@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsLightTheme))
             {
-                writer.WritePropertyName("lightTheme");
+                writer.WritePropertyName("lightTheme"u8);
                 writer.WriteBooleanValue(IsLightTheme.Value);
             }
             if (Optional.IsDefined(Locale))
             {
-                writer.WritePropertyName("locale");
+                writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
             }
             writer.WriteEndObject();

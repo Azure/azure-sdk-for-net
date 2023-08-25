@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static PermissionType ToPermissionType(this string value)
         {
-            if (string.Equals(value, "Read", StringComparison.InvariantCultureIgnoreCase)) return PermissionType.Read;
-            if (string.Equals(value, "Write", StringComparison.InvariantCultureIgnoreCase)) return PermissionType.Write;
-            if (string.Equals(value, "Manage", StringComparison.InvariantCultureIgnoreCase)) return PermissionType.Manage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Read")) return PermissionType.Read;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Write")) return PermissionType.Write;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manage")) return PermissionType.Manage;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PermissionType value.");
         }
     }

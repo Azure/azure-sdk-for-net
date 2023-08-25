@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static AdvancedThreatProtectionState ToAdvancedThreatProtectionState(this string value)
         {
-            if (string.Equals(value, "New", StringComparison.InvariantCultureIgnoreCase)) return AdvancedThreatProtectionState.New;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return AdvancedThreatProtectionState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return AdvancedThreatProtectionState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "New")) return AdvancedThreatProtectionState.New;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return AdvancedThreatProtectionState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return AdvancedThreatProtectionState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AdvancedThreatProtectionState value.");
         }
     }

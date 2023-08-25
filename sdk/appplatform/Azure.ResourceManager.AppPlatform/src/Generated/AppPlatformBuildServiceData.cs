@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformBuildService data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformBuildService data model.
+    /// Build service resource payload
+    /// </summary>
     public partial class AppPlatformBuildServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformBuildServiceData. </summary>

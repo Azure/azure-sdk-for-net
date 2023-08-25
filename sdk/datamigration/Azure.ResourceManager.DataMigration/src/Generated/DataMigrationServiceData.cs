@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary> A class representing the DataMigrationService data model. </summary>
+    /// <summary>
+    /// A class representing the DataMigrationService data model.
+    /// A Database Migration Service resource
+    /// </summary>
     public partial class DataMigrationServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataMigrationServiceData. </summary>
@@ -30,9 +33,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> HTTP strong entity tag value. Ignored if submitted. </param>
-        /// <param name="kind"> The resource kind. Only &apos;vm&apos; (the default) is supported. </param>
+        /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
         /// <param name="sku"> Service SKU. </param>
-        /// <param name="provisioningState"> The resource&apos;s provisioning state. </param>
+        /// <param name="provisioningState"> The resource's provisioning state. </param>
         /// <param name="publicKey"> The public key of the service, used to encrypt secrets sent to the service. </param>
         /// <param name="virtualSubnetId"> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </param>
         /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
@@ -53,11 +56,11 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary> HTTP strong entity tag value. Ignored if submitted. </summary>
         public ETag? ETag { get; set; }
-        /// <summary> The resource kind. Only &apos;vm&apos; (the default) is supported. </summary>
+        /// <summary> The resource kind. Only 'vm' (the default) is supported. </summary>
         public string Kind { get; set; }
         /// <summary> Service SKU. </summary>
         public ServiceSku Sku { get; set; }
-        /// <summary> The resource&apos;s provisioning state. </summary>
+        /// <summary> The resource's provisioning state. </summary>
         public ServiceProvisioningState? ProvisioningState { get; }
         /// <summary> The public key of the service, used to encrypt secrets sent to the service. </summary>
         public string PublicKey { get; set; }

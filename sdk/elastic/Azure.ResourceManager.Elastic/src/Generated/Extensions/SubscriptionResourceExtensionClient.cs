@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,86 +42,46 @@ namespace Azure.ResourceManager.Elastic
 
         /// <summary>
         /// List all monitors under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors
-        /// Operation Id: Monitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticMonitorResource> GetElasticMonitorResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ElasticMonitorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ElasticMonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetElasticMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = await ElasticMonitorResourceMonitorsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ElasticMonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ElasticMonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetElasticMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = await ElasticMonitorResourceMonitorsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), ElasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetElasticMonitorResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all monitors under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors
-        /// Operation Id: Monitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticMonitorResource> GetElasticMonitorResources(CancellationToken cancellationToken = default)
         {
-            Page<ElasticMonitorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ElasticMonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetElasticMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = ElasticMonitorResourceMonitorsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ElasticMonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ElasticMonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetElasticMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = ElasticMonitorResourceMonitorsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), ElasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetElasticMonitorResources", "value", "nextLink", cancellationToken);
         }
     }
 }

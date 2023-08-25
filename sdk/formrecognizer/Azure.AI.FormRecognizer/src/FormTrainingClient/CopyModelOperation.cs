@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.Training
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
             _targetModelId = targetModelId;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
 
             string[] substrs = operationId.Split('/');
 
@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Training
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
             _targetModelId = targetModelId;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
 
             string[] substrs = operationLocation.Split('/');
 
@@ -197,9 +197,7 @@ namespace Azure.AI.FormRecognizer.Training
             }
             else if (status == OperationStatus.Failed)
             {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.CopyResult.Errors)
-                    .ConfigureAwait(false);
+                RequestFailedException requestFailedException = ClientCommon.CreateExceptionForFailedOperation(rawResponse, response.Value.CopyResult.Errors);
 
                 return OperationState<CustomFormModelInfo>.Failure(rawResponse, requestFailedException);
             }

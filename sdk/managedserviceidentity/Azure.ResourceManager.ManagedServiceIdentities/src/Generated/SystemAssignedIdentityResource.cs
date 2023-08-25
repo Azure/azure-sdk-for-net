@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary>
         /// Gets the systemAssignedIdentity available under the specified RP scope.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedIdentity/identities/default
-        /// Operation Id: SystemAssignedIdentities_GetByScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedIdentity/identities/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemAssignedIdentities_GetByScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SystemAssignedIdentityResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary>
         /// Gets the systemAssignedIdentity available under the specified RP scope.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedIdentity/identities/default
-        /// Operation Id: SystemAssignedIdentities_GetByScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedIdentity/identities/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemAssignedIdentities_GetByScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SystemAssignedIdentityResource> Get(CancellationToken cancellationToken = default)

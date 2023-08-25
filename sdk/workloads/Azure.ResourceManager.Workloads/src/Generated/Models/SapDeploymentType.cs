@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The deployment Type. </summary>
+    /// <summary> The type of SAP deployment, single server or Three tier. </summary>
     public readonly partial struct SapDeploymentType : IEquatable<SapDeploymentType>
     {
         private readonly string _value;

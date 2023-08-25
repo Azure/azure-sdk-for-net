@@ -17,22 +17,27 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidateOnly))
             {
-                writer.WritePropertyName("validateOnly");
+                writer.WritePropertyName("validateOnly"u8);
                 writer.WriteBooleanValue(ValidateOnly.Value);
             }
             if (Optional.IsCollectionDefined(MoverResources))
             {
-                writer.WritePropertyName("moveResources");
+                writer.WritePropertyName("moveResources"u8);
                 writer.WriteStartArray();
                 foreach (var item in MoverResources)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MoverResourceInputType))
             {
-                writer.WritePropertyName("moveResourceInputType");
+                writer.WritePropertyName("moveResourceInputType"u8);
                 writer.WriteStringValue(MoverResourceInputType.Value.ToString());
             }
             writer.WriteEndObject();

@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static SecretsCollection DeserializeSecretsCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerAppSecret> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<ContainerAppSecret> array = new List<ContainerAppSecret>();
                     foreach (var item in property.Value.EnumerateArray())

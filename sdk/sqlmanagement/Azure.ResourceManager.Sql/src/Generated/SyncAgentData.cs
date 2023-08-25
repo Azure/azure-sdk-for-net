@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SyncAgent data model. </summary>
+    /// <summary>
+    /// A class representing the SyncAgent data model.
+    /// An Azure SQL Database sync agent.
+    /// </summary>
     public partial class SyncAgentData : ResourceData
     {
         /// <summary> Initializes a new instance of SyncAgentData. </summary>

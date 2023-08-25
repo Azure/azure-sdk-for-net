@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static GeoBackupPolicyState ToGeoBackupPolicyState(this string value)
         {
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return GeoBackupPolicyState.Disabled;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return GeoBackupPolicyState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return GeoBackupPolicyState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return GeoBackupPolicyState.Enabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GeoBackupPolicyState value.");
         }
     }

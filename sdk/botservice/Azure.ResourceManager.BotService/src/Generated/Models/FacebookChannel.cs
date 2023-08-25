@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Facebook channel definition. </summary>
-    public partial class FacebookChannel : Channel
+    public partial class FacebookChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of FacebookChannel. </summary>
         public FacebookChannel()

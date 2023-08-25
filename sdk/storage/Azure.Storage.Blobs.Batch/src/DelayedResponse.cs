@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// BlobRestClient.Group.OperationName_CreateResponse methods which
         /// correctly throw when necessary.
         /// </summary>
-        private readonly Func<Response, Task<Response>> _processResponse;
+        private readonly Func<Response, Response> _processResponse;
 
         /// <summary>
         /// Gets the live Response or throws an InvalidOperationException if
@@ -50,7 +50,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional function that can be used to process the response.  It
         /// is responsible for parsing response bodies and throwing exceptions.
         /// </param>
-        public DelayedResponse(HttpMessage message, Func<Response, Task<Response>> processResponse = null)
+        public DelayedResponse(HttpMessage message, Func<Response, Response> processResponse = null)
         {
             // Have the BatchPipelineTransport associate this response with the
             // message when it's sent.
@@ -66,7 +66,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A value indicating whether or not we should throw for Response
         /// failures.
         /// </param>
-        public async Task SetLiveResponse(Response live, bool throwOnFailure)
+        public void SetLiveResponse(Response live, bool throwOnFailure)
         {
             _live = live;
 
@@ -74,7 +74,7 @@ namespace Azure.Storage.Blobs.Specialized
             // tries to catch the exception but then interrogate raw responses
             if (throwOnFailure && _processResponse != null)
             {
-                _live = await _processResponse(_live).ConfigureAwait(false);
+                _live = _processResponse(_live);
             }
         }
 

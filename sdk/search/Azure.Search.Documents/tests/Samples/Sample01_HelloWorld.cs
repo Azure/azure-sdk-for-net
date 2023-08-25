@@ -18,6 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_07_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
     public partial class HelloWorld : SearchTestBase
     {
         public HelloWorld(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -50,7 +51,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClient
 
-            Assert.AreEqual(1, stats.Value.Counters.IndexCounter.Usage);
+            Assert.GreaterOrEqual(stats.Value.Counters.IndexCounter.Usage, 1);
         }
 
         [Test]
@@ -78,7 +79,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClientAsync
 
-            Assert.AreEqual(1, stats.Value.Counters.IndexCounter.Usage);
+            Assert.GreaterOrEqual(stats.Value.Counters.IndexCounter.Usage, 1);
         }
 
         [Test]

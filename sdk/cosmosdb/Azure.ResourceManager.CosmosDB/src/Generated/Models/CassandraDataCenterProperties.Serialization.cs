@@ -19,64 +19,83 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(DataCenterLocation))
             {
-                writer.WritePropertyName("dataCenterLocation");
+                writer.WritePropertyName("dataCenterLocation"u8);
                 writer.WriteStringValue(DataCenterLocation.Value);
             }
             if (Optional.IsDefined(DelegatedSubnetId))
             {
-                writer.WritePropertyName("delegatedSubnetId");
+                writer.WritePropertyName("delegatedSubnetId"u8);
                 writer.WriteStringValue(DelegatedSubnetId);
             }
             if (Optional.IsDefined(NodeCount))
             {
-                writer.WritePropertyName("nodeCount");
+                writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
             if (Optional.IsDefined(Base64EncodedCassandraYamlFragment))
             {
-                writer.WritePropertyName("base64EncodedCassandraYamlFragment");
+                writer.WritePropertyName("base64EncodedCassandraYamlFragment"u8);
                 writer.WriteStringValue(Base64EncodedCassandraYamlFragment);
             }
             if (Optional.IsDefined(ManagedDiskCustomerKeyUri))
             {
-                writer.WritePropertyName("managedDiskCustomerKeyUri");
+                writer.WritePropertyName("managedDiskCustomerKeyUri"u8);
                 writer.WriteStringValue(ManagedDiskCustomerKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BackupStorageCustomerKeyUri))
             {
-                writer.WritePropertyName("backupStorageCustomerKeyUri");
+                writer.WritePropertyName("backupStorageCustomerKeyUri"u8);
                 writer.WriteStringValue(BackupStorageCustomerKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
             if (Optional.IsDefined(DiskSku))
             {
-                writer.WritePropertyName("diskSku");
+                writer.WritePropertyName("diskSku"u8);
                 writer.WriteStringValue(DiskSku);
             }
             if (Optional.IsDefined(DiskCapacity))
             {
-                writer.WritePropertyName("diskCapacity");
+                writer.WritePropertyName("diskCapacity"u8);
                 writer.WriteNumberValue(DiskCapacity.Value);
             }
             if (Optional.IsDefined(DoesSupportAvailabilityZone))
             {
-                writer.WritePropertyName("availabilityZone");
+                writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
+            }
+            if (Optional.IsDefined(AuthenticationMethodLdapProperties))
+            {
+                writer.WritePropertyName("authenticationMethodLdapProperties"u8);
+                writer.WriteObjectValue(AuthenticationMethodLdapProperties);
+            }
+            if (Optional.IsDefined(Deallocated))
+            {
+                writer.WritePropertyName("deallocated"u8);
+                writer.WriteBooleanValue(Deallocated.Value);
+            }
+            if (Optional.IsDefined(ProvisionError))
+            {
+                writer.WritePropertyName("provisionError"u8);
+                writer.WriteObjectValue(ProvisionError);
             }
             writer.WriteEndObject();
         }
 
         internal static CassandraDataCenterProperties DeserializeCassandraDataCenterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CassandraProvisioningState> provisioningState = default;
             Optional<AzureLocation> dataCenterLocation = default;
             Optional<ResourceIdentifier> delegatedSubnetId = default;
@@ -89,53 +108,51 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> diskSku = default;
             Optional<int> diskCapacity = default;
             Optional<bool> availabilityZone = default;
+            Optional<AuthenticationMethodLdapProperties> authenticationMethodLdapProperties = default;
+            Optional<bool> deallocated = default;
+            Optional<CassandraError> provisionError = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new CassandraProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataCenterLocation"))
+                if (property.NameEquals("dataCenterLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataCenterLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("delegatedSubnetId"))
+                if (property.NameEquals("delegatedSubnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delegatedSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nodeCount"))
+                if (property.NameEquals("nodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("seedNodes"))
+                if (property.NameEquals("seedNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraDataCenterSeedNode> array = new List<CassandraDataCenterSeedNode>();
@@ -146,63 +163,86 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     seedNodes = array;
                     continue;
                 }
-                if (property.NameEquals("base64EncodedCassandraYamlFragment"))
+                if (property.NameEquals("base64EncodedCassandraYamlFragment"u8))
                 {
                     base64EncodedCassandraYamlFragment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedDiskCustomerKeyUri"))
+                if (property.NameEquals("managedDiskCustomerKeyUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        managedDiskCustomerKeyUri = null;
                         continue;
                     }
                     managedDiskCustomerKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backupStorageCustomerKeyUri"))
+                if (property.NameEquals("backupStorageCustomerKeyUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        backupStorageCustomerKeyUri = null;
                         continue;
                     }
                     backupStorageCustomerKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskSku"))
+                if (property.NameEquals("diskSku"u8))
                 {
                     diskSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskCapacity"))
+                if (property.NameEquals("diskCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskCapacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("availabilityZone"))
+                if (property.NameEquals("availabilityZone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availabilityZone = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("authenticationMethodLdapProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authenticationMethodLdapProperties = AuthenticationMethodLdapProperties.DeserializeAuthenticationMethodLdapProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("deallocated"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deallocated = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("provisionError"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisionError = CassandraError.DeserializeCassandraError(property.Value);
+                    continue;
+                }
             }
-            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone));
+            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone), authenticationMethodLdapProperties.Value, Optional.ToNullable(deallocated), provisionError.Value);
         }
     }
 }

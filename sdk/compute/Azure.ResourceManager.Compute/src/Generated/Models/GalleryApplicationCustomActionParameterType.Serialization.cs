@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static GalleryApplicationCustomActionParameterType ToGalleryApplicationCustomActionParameterType(this string value)
         {
-            if (string.Equals(value, "String", StringComparison.InvariantCultureIgnoreCase)) return GalleryApplicationCustomActionParameterType.String;
-            if (string.Equals(value, "ConfigurationDataBlob", StringComparison.InvariantCultureIgnoreCase)) return GalleryApplicationCustomActionParameterType.ConfigurationDataBlob;
-            if (string.Equals(value, "LogOutputBlob", StringComparison.InvariantCultureIgnoreCase)) return GalleryApplicationCustomActionParameterType.LogOutputBlob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "String")) return GalleryApplicationCustomActionParameterType.String;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ConfigurationDataBlob")) return GalleryApplicationCustomActionParameterType.ConfigurationDataBlob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LogOutputBlob")) return GalleryApplicationCustomActionParameterType.LogOutputBlob;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GalleryApplicationCustomActionParameterType value.");
         }
     }

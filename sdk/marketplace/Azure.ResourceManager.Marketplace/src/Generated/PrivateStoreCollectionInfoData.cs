@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary> A class representing the PrivateStoreCollectionInfo data model. </summary>
+    /// <summary>
+    /// A class representing the PrivateStoreCollectionInfo data model.
+    /// The Collection data structure.
+    /// </summary>
     public partial class PrivateStoreCollectionInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="systemData"> The systemData. </param>
         /// <param name="collectionId"> Gets collection Id. </param>
         /// <param name="collectionName"> Gets or sets collection name. </param>
-        /// <param name="claim"> Gets or sets the association with Commercial&apos;s Billing Account. </param>
+        /// <param name="claim"> Gets or sets the association with Commercial's Billing Account. </param>
         /// <param name="areAllSubscriptionsSelected"> Indicating whether all subscriptions are selected (=true) or not (=false). </param>
         /// <param name="areAllItemsApproved"> Indicating whether all items are approved for this collection (=true) or not (=false). </param>
         /// <param name="approveAllItemsModifiedOn"> Gets the modified date of all items approved. </param>
@@ -52,7 +55,7 @@ namespace Azure.ResourceManager.Marketplace
         public Guid? CollectionId { get; }
         /// <summary> Gets or sets collection name. </summary>
         public string CollectionName { get; set; }
-        /// <summary> Gets or sets the association with Commercial&apos;s Billing Account. </summary>
+        /// <summary> Gets or sets the association with Commercial's Billing Account. </summary>
         public string Claim { get; set; }
         /// <summary> Indicating whether all subscriptions are selected (=true) or not (=false). </summary>
         public bool? AreAllSubscriptionsSelected { get; set; }

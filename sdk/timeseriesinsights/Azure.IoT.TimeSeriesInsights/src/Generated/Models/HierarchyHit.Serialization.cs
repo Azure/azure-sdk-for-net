@@ -14,31 +14,33 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static HierarchyHit DeserializeHierarchyHit(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> cumulativeInstanceCount = default;
             Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cumulativeInstanceCount"))
+                if (property.NameEquals("cumulativeInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cumulativeInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("hierarchyNodes"))
+                if (property.NameEquals("hierarchyNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hierarchyNodes = SearchHierarchyNodesResponse.DeserializeSearchHierarchyNodesResponse(property.Value);

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerStorageEditionCapability DeserializeMySqlFlexibleServerStorageEditionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<long> minStorageSize = default;
             Optional<long> maxStorageSize = default;
@@ -21,46 +25,42 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<long> maxBackupRetentionDays = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minStorageSize"))
+                if (property.NameEquals("minStorageSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minStorageSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxStorageSize"))
+                if (property.NameEquals("maxStorageSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxStorageSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("minBackupRetentionDays"))
+                if (property.NameEquals("minBackupRetentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minBackupRetentionDays = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxBackupRetentionDays"))
+                if (property.NameEquals("maxBackupRetentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxBackupRetentionDays = property.Value.GetInt64();

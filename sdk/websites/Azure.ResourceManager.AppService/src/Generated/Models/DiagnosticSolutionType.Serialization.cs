@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static DiagnosticSolutionType ToDiagnosticSolutionType(this string value)
         {
-            if (string.Equals(value, "QuickSolution", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticSolutionType.QuickSolution;
-            if (string.Equals(value, "DeepInvestigation", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticSolutionType.DeepInvestigation;
-            if (string.Equals(value, "BestPractices", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticSolutionType.BestPractices;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QuickSolution")) return DiagnosticSolutionType.QuickSolution;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeepInvestigation")) return DiagnosticSolutionType.DeepInvestigation;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BestPractices")) return DiagnosticSolutionType.BestPractices;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DiagnosticSolutionType value.");
         }
     }

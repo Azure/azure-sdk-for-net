@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxConcurrentRequestsPerInstance))
             {
-                writer.WritePropertyName("maxConcurrentRequestsPerInstance");
+                writer.WritePropertyName("maxConcurrentRequestsPerInstance"u8);
                 writer.WriteNumberValue(MaxConcurrentRequestsPerInstance.Value);
             }
             if (Optional.IsDefined(MaxQueueWait))
             {
-                writer.WritePropertyName("maxQueueWait");
+                writer.WritePropertyName("maxQueueWait"u8);
                 writer.WriteStringValue(MaxQueueWait.Value, "P");
             }
             if (Optional.IsDefined(RequestTimeout))
             {
-                writer.WritePropertyName("requestTimeout");
+                writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteStringValue(RequestTimeout.Value, "P");
             }
             writer.WriteEndObject();
@@ -36,36 +36,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningOnlineRequestSettings DeserializeMachineLearningOnlineRequestSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxConcurrentRequestsPerInstance = default;
             Optional<TimeSpan> maxQueueWait = default;
             Optional<TimeSpan> requestTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxConcurrentRequestsPerInstance"))
+                if (property.NameEquals("maxConcurrentRequestsPerInstance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentRequestsPerInstance = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxQueueWait"))
+                if (property.NameEquals("maxQueueWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxQueueWait = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("requestTimeout"))
+                if (property.NameEquals("requestTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestTimeout = property.Value.GetTimeSpan("P");

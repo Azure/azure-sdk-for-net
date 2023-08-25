@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,16 +18,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Count);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Count.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("count"u8);
+                JsonSerializer.Serialize(writer, Count);
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
-                writer.WritePropertyName("intervalInSeconds");
+                writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -35,25 +31,27 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RetryPolicy DeserializeRetryPolicy(JsonElement element)
         {
-            Optional<BinaryData> count = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<int>> count = default;
             Optional<int> intervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    count = BinaryData.FromString(property.Value.GetRawText());
+                    count = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("intervalInSeconds"))
+                if (property.NameEquals("intervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     intervalInSeconds = property.Value.GetInt32();

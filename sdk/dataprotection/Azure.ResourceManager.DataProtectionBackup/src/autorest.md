@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/33d5054122e52490eef9925d6cbe801f28b88e18/specification/dataprotection/resource-manager/readme.md
-tag: package-2022-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/0724e72994ed3c77f76ed0bfa2df3b1f0c33a41b/specification/dataprotection/resource-manager/readme.md
+tag: package-2023-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -91,6 +91,7 @@ rename-mapping:
   AzureBackupRecoveryPoint: DataProtectionBackupRecoveryPointProperties
   AzureBackupDiscreteRecoveryPoint: DataProtectionBackupDiscreteRecoveryPointProperties
   AzureBackupDiscreteRecoveryPoint.recoveryPointTime: RecoverOn
+  AzureBackupDiscreteRecoveryPoint.expiryTime: ExpireOn
   BackupInstanceResource: DataProtectionBackupInstance
   BackupInstance: DataProtectionBackupInstanceProperties
   BackupInstance.datasourceAuthCredentials: DataSourceAuthCredentials
@@ -98,7 +99,7 @@ rename-mapping:
   TriggerBackupRequest.backupRuleOptions: BackupRules
   OperationExtendedInfo: DataProtectionOperationExtendedInfo
   OperationJobExtendedInfo: DataProtectionOperationJobExtendedInfo
-  OperationJobExtendedInfo.jobId: -|uuid
+  OperationJobExtendedInfo.jobId: JobResourceId|arm-id
   AzureBackupFindRestorableTimeRangesRequest: BackupFindRestorableTimeRangeContent
   AzureBackupFindRestorableTimeRangesRequest.startTime: StartOn|date-time
   AzureBackupFindRestorableTimeRangesRequest.endTime: EndOn|date-time
@@ -117,7 +118,6 @@ rename-mapping:
   ValidateRestoreRequestObject: BackupValidateRestoreContent
   BackupVaultResource: DataProtectionBackupVault
   BackupVault: DataProtectionBackupVaultProperties
-  PatchResourceRequestInput: DataProtectionBackupPatch
   ValidateForBackupRequest: AdhocBackupValidateContent
   BaseBackupPolicyResource: DataProtectionBackupPolicy
   BaseBackupPolicy: DataProtectionBackupPolicyPropertiesBase
@@ -172,11 +172,13 @@ rename-mapping:
   Datasource.resourceID: -|arm-id
   Datasource.resourceLocation: -|azure-location
   Datasource.resourceType: -|resource-type
+  Datasource.resourceUri: ResourceUriString
   DatasourceSet: DataSourceSetInfo
   DatasourceSet.datasourceType: DataSourceType
   DatasourceSet.resourceID: -|arm-id
   DatasourceSet.resourceLocation: -|azure-location
   DatasourceSet.resourceType: -|resource-type
+  DatasourceSet.resourceUri: ResourceUriString
   PolicyInfo: BackupInstancePolicyInfo
   PolicyInfo.policyId: -|arm-id
   ValidationType: BackupValidationType
@@ -210,6 +212,7 @@ rename-mapping:
   ResourceGuardOperation: ResourceGuardOperationDetails
   ResourceGuardOperation.requestResourceType: -|resource-type
   TargetDetails: RestoreFilesTargetDetails
+  TargetDetails.targetResourceArmId: -|arm-id
   RestoreJobRecoveryPointDetails.recoveryPointTime: RecoverOn
   RestoreTargetInfo.datasourceInfo: DataSourceInfo
   RestoreTargetInfo.datasourceSetInfo: DataSourceSetInfo
@@ -220,6 +223,29 @@ rename-mapping:
   SyncType: BackupInstanceSyncType
   ScheduleBasedBackupCriteria.daysOfTheWeek: DaysOfWeek
   ScheduleBasedBackupCriteria.weeksOfTheMonth: WeeksOfMonth
+  DeletedBackupInstanceResource: DeletedDataProtectionBackupInstance
+  DeletedBackupInstance: DeletedDataProtectionBackupInstanceProperties
+  BackupDatasourceParameters: BackupDataSourceSettings
+  BlobBackupDatasourceParameters: BlobBackupDataSourceSettings
+  KubernetesClusterBackupDatasourceParameters: KubernetesClusterBackupDataSourceSettings
+  KubernetesClusterBackupDatasourceParameters.snapshotVolumes: IsSnapshotVolumesEnabled
+  KubernetesClusterBackupDatasourceParameters.includeClusterScopeResources: IsClusterScopeResourcesIncluded
+  KubernetesClusterRestoreCriteria.includeClusterScopeResources: IsClusterScopeResourcesIncluded
+  CrossSubscriptionRestoreState: DataProtectionBackupCrossSubscriptionRestoreState
+  DeletionInfo: BackupInstanceDeletionInfo
+  DeletionInfo.deletionTime: DeleteOn|date-time
+  DeletionInfo.billingEndDate: BillingEndOn|date-time
+  DeletionInfo.scheduledPurgeTime: ScheduledPurgeOn|date-time
+  ExistingResourcePolicy: KubernetesClusterRestoreExistingResourcePolicy
+  ImmutabilityState: BackupVaultImmutabilityState
+  PatchBackupVaultInput: DataProtectionBackupVaultPatchProperties
+  PolicyParameters: BackupInstancePolicySettings
+  PolicyParameters.backupDatasourceParametersList: BackupDataSourceParametersList
+  SecuritySettings: BackupVaultSecuritySettings
+  SoftDeleteSettings: BackupVaultSoftDeleteSettings
+  SoftDeleteState: BackupVaultSoftDeleteState
+  UnlockDeleteRequest: DataProtectionUnlockDeleteContent
+  UnlockDeleteResponse: DataProtectionUnlockDeleteResult
 
 directive:
 # Correct the type of properties
@@ -328,4 +354,9 @@ directive:
     where: $.paths
     transform: >
       $['/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport'].post.parameters[3]['x-ms-client-name'] = 'content';
+# revert the format change of SubscriptionIdParameter in common type V4 to avoid breaking changes
+  - from: types.json
+    where: $.parameters
+    transform: >
+      delete $.SubscriptionIdParameter.format;
 ```

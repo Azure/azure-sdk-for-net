@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Optional.IsDefined(WorkloadProfileCategory))
             {
-                writer.WritePropertyName("category");
-                writer.WriteStringValue(Category.Value.ToString());
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(WorkloadProfileCategory);
             }
             if (Optional.IsDefined(MeterType))
             {
-                writer.WritePropertyName("meterType");
+                writer.WritePropertyName("meterType"u8);
                 writer.WriteStringValue(MeterType);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
@@ -35,33 +35,32 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppBillingMeterProperties DeserializeContainerAppBillingMeterProperties(JsonElement element)
         {
-            Optional<ContainerAppBillingMeterCategory> category = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> category = default;
             Optional<string> meterType = default;
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    category = new ContainerAppBillingMeterCategory(property.Value.GetString());
+                    category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meterType"))
+                if (property.NameEquals("meterType"u8))
                 {
                     meterType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerAppBillingMeterProperties(Optional.ToNullable(category), meterType.Value, displayName.Value);
+            return new ContainerAppBillingMeterProperties(category.Value, meterType.Value, displayName.Value);
         }
     }
 }

@@ -22,6 +22,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
+        public void InstantiateDocumentFieldWithBooleanAndNoValue()
+        {
+            var field = new DocumentField(DocumentFieldType.Boolean);
+
+            Assert.AreEqual(DocumentFieldType.Boolean, field.ExpectedFieldType);
+            Assert.AreEqual(DocumentFieldType.Unknown, field.FieldType);
+            Assert.Throws<InvalidOperationException>(() => field.Value.AsBoolean());
+        }
+
+        [Test]
         public void InstantiateDocumentFieldWithCountryRegionAndNoValue()
         {
             var field = new DocumentField(DocumentFieldType.CountryRegion);

@@ -21,12 +21,10 @@ namespace Azure.Communication.JobRouter.Models
         internal DistributionPolicyItem(DistributionPolicy distributionPolicy, string etag)
         {
             DistributionPolicy = distributionPolicy;
-            Etag = etag;
+            _etag = etag;
         }
 
         /// <summary> Policy governing how jobs are distributed to workers. </summary>
         public DistributionPolicy DistributionPolicy { get; }
-        /// <summary> (Optional) The Concurrency Token. </summary>
-        public string Etag { get; }
     }
 }

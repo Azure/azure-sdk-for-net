@@ -18,7 +18,7 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SupportedProtocols))
             {
-                writer.WritePropertyName("supportedProtocols");
+                writer.WritePropertyName("supportedProtocols"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedProtocols)
                 {
@@ -28,42 +28,42 @@ namespace Azure.Communication.ShortCodes.Models
             }
             if (Optional.IsDefined(Recurrence))
             {
-                writer.WritePropertyName("recurrence");
+                writer.WritePropertyName("recurrence"u8);
                 writer.WriteStringValue(Recurrence.Value.ToString());
             }
             if (Optional.IsDefined(HelpMessage))
             {
-                writer.WritePropertyName("helpMessage");
+                writer.WritePropertyName("helpMessage"u8);
                 writer.WriteStringValue(HelpMessage);
             }
             if (Optional.IsDefined(OptOutMessage))
             {
-                writer.WritePropertyName("optOutMessage");
+                writer.WritePropertyName("optOutMessage"u8);
                 writer.WriteStringValue(OptOutMessage);
             }
             if (Optional.IsDefined(OptInMessage))
             {
-                writer.WritePropertyName("optInMessage");
+                writer.WritePropertyName("optInMessage"u8);
                 writer.WriteStringValue(OptInMessage);
             }
             if (Optional.IsDefined(OptInReply))
             {
-                writer.WritePropertyName("optInReply");
+                writer.WritePropertyName("optInReply"u8);
                 writer.WriteStringValue(OptInReply);
             }
             if (Optional.IsDefined(ConfirmationMessage))
             {
-                writer.WritePropertyName("confirmationMessage");
+                writer.WritePropertyName("confirmationMessage"u8);
                 writer.WriteStringValue(ConfirmationMessage);
             }
             if (Optional.IsDefined(Directionality))
             {
-                writer.WritePropertyName("directionality");
+                writer.WritePropertyName("directionality"u8);
                 writer.WriteStringValue(Directionality.Value.ToString());
             }
             if (Optional.IsCollectionDefined(UseCases))
             {
-                writer.WritePropertyName("useCases");
+                writer.WritePropertyName("useCases"u8);
                 writer.WriteStartArray();
                 foreach (var item in UseCases)
                 {
@@ -76,6 +76,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static MessageDetails DeserializeMessageDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MessageProtocol>> supportedProtocols = default;
             Optional<MessageRecurrence> recurrence = default;
             Optional<string> helpMessage = default;
@@ -87,11 +91,10 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<IList<UseCase>> useCases = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportedProtocols"))
+                if (property.NameEquals("supportedProtocols"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MessageProtocol> array = new List<MessageProtocol>();
@@ -102,56 +105,53 @@ namespace Azure.Communication.ShortCodes.Models
                     supportedProtocols = array;
                     continue;
                 }
-                if (property.NameEquals("recurrence"))
+                if (property.NameEquals("recurrence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recurrence = new MessageRecurrence(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("helpMessage"))
+                if (property.NameEquals("helpMessage"u8))
                 {
                     helpMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("optOutMessage"))
+                if (property.NameEquals("optOutMessage"u8))
                 {
                     optOutMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("optInMessage"))
+                if (property.NameEquals("optInMessage"u8))
                 {
                     optInMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("optInReply"))
+                if (property.NameEquals("optInReply"u8))
                 {
                     optInReply = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confirmationMessage"))
+                if (property.NameEquals("confirmationMessage"u8))
                 {
                     confirmationMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("directionality"))
+                if (property.NameEquals("directionality"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     directionality = new MessageDirectionality(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("useCases"))
+                if (property.NameEquals("useCases"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UseCase> array = new List<UseCase>();

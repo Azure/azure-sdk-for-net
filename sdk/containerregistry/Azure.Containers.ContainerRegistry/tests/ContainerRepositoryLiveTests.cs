@@ -109,6 +109,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 // Act
                 await repository.DeleteAsync();
+                await Delay(5000);
+
+                await Delay(5000);
 
                 // Assert
                 Assert.ThrowsAsync<RequestFailedException>(async () => { await repository.GetPropertiesAsync(); });

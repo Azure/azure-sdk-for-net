@@ -32,7 +32,7 @@ extends:
   parameters:
     SDKType: client
     ServiceDirectory: servicebus
-    BuildSnippets: true
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.ServiceBus

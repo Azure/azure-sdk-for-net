@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Allow))
             {
-                writer.WritePropertyName("allow");
+                writer.WritePropertyName("allow"u8);
                 writer.WriteBooleanValue(Allow.Value);
             }
             if (Optional.IsDefined(Optimize))
             {
-                writer.WritePropertyName("optimize");
+                writer.WritePropertyName("optimize"u8);
                 writer.WriteBooleanValue(Optimize.Value);
             }
             if (Optional.IsDefined(Default))
             {
-                writer.WritePropertyName("default");
+                writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(Default.Value);
             }
             writer.WriteEndObject();
@@ -35,36 +35,37 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BreakOutCategoryPolicies DeserializeBreakOutCategoryPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> allow = default;
             Optional<bool> optimize = default;
             Optional<bool> @default = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allow"))
+                if (property.NameEquals("allow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allow = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("optimize"))
+                if (property.NameEquals("optimize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     optimize = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("default"))
+                if (property.NameEquals("default"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @default = property.Value.GetBoolean();

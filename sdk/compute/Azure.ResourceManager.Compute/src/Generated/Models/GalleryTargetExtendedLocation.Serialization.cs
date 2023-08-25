@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
+                writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
             if (Optional.IsDefined(ExtendedLocationReplicaCount))
             {
-                writer.WritePropertyName("extendedLocationReplicaCount");
+                writer.WritePropertyName("extendedLocationReplicaCount"u8);
                 writer.WriteNumberValue(ExtendedLocationReplicaCount.Value);
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(GalleryStorageAccountType))
             {
-                writer.WritePropertyName("storageAccountType");
-                writer.WriteStringValue(StorageAccountType.Value.ToString());
+                writer.WritePropertyName("storageAccountType"u8);
+                writer.WriteStringValue(GalleryStorageAccountType.Value.ToString());
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
             writer.WriteEndObject();
@@ -45,53 +45,53 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryTargetExtendedLocation DeserializeGalleryTargetExtendedLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<GalleryExtendedLocation> extendedLocation = default;
             Optional<int> extendedLocationReplicaCount = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
+            Optional<EdgeZoneStorageAccountType> storageAccountType = default;
             Optional<EncryptionImages> encryption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocation = GalleryExtendedLocation.DeserializeGalleryExtendedLocation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("extendedLocationReplicaCount"))
+                if (property.NameEquals("extendedLocationReplicaCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocationReplicaCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new ImageStorageAccountType(property.Value.GetString());
+                    storageAccountType = new EdgeZoneStorageAccountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("encryption"))
+                if (property.NameEquals("encryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);

@@ -18,24 +18,24 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerAddress))
             {
-                writer.WritePropertyName("serverAddress");
+                writer.WritePropertyName("serverAddress"u8);
                 writer.WriteStringValue(ServerAddress);
             }
             if (Optional.IsDefined(LeaseTime))
             {
-                writer.WritePropertyName("leaseTime");
+                writer.WritePropertyName("leaseTime"u8);
                 writer.WriteNumberValue(LeaseTime.Value);
             }
-            writer.WritePropertyName("dhcpType");
+            writer.WritePropertyName("dhcpType"u8);
             writer.WriteStringValue(DhcpType.ToString());
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Revision))
             {
-                writer.WritePropertyName("revision");
+                writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
             }
             writer.WriteEndObject();
@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static WorkloadNetworkDhcpServer DeserializeWorkloadNetworkDhcpServer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serverAddress = default;
             Optional<long> leaseTime = default;
             DhcpTypeEnum dhcpType = default;
@@ -52,36 +56,34 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serverAddress"))
+                if (property.NameEquals("serverAddress"u8))
                 {
                     serverAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("leaseTime"))
+                if (property.NameEquals("leaseTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     leaseTime = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("dhcpType"))
+                if (property.NameEquals("dhcpType"u8))
                 {
                     dhcpType = new DhcpTypeEnum(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("segments"))
+                if (property.NameEquals("segments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -92,21 +94,19 @@ namespace Azure.ResourceManager.Avs.Models
                     segments = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new WorkloadNetworkDhcpProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("revision"))
+                if (property.NameEquals("revision"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     revision = property.Value.GetInt64();

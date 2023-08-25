@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static CheckOciDriverTaskOutput DeserializeCheckOciDriverTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OracleOciDriverInfo> installedDriver = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("installedDriver"))
+                if (property.NameEquals("installedDriver"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     installedDriver = OracleOciDriverInfo.DeserializeOracleOciDriverInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReportableException> array = new List<ReportableException>();

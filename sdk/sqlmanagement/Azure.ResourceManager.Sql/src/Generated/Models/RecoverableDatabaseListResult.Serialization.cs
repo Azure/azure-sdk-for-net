@@ -16,11 +16,20 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static RecoverableDatabaseListResult DeserializeRecoverableDatabaseListResult(JsonElement element)
         {
-            IReadOnlyList<RecoverableDatabaseData> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<RecoverableDatabaseData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<RecoverableDatabaseData> array = new List<RecoverableDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -29,8 +38,13 @@ namespace Azure.ResourceManager.Sql.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new RecoverableDatabaseListResult(value);
+            return new RecoverableDatabaseListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -81,7 +81,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// resultType string).</param>
         /// <param name="credential">The credential reference containing
         /// authentication information.</param>
-        public AzureBlobStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), AzureKeyVaultSecretReference accountKey = default(AzureKeyVaultSecretReference), object sasUri = default(object), AzureKeyVaultSecretReference sasToken = default(AzureKeyVaultSecretReference), string serviceEndpoint = default(string), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), string accountKind = default(string), string encryptedCredential = default(string), CredentialReference credential = default(CredentialReference))
+        /// <param name="authenticationType">The type used for authentication.
+        /// Type: string. Possible values include: 'Anonymous', 'AccountKey',
+        /// 'SasUri', 'ServicePrincipal', 'Msi'</param>
+        /// <param name="containerUri">Container uri of the Azure Blob Storage
+        /// resource only support for anonymous access. Type: string (or
+        /// Expression with resultType string).</param>
+        public AzureBlobStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), AzureKeyVaultSecretReference accountKey = default(AzureKeyVaultSecretReference), object sasUri = default(object), AzureKeyVaultSecretReference sasToken = default(AzureKeyVaultSecretReference), string serviceEndpoint = default(string), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), string accountKind = default(string), string encryptedCredential = default(string), CredentialReference credential = default(CredentialReference), string authenticationType = default(string), object containerUri = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
@@ -96,6 +102,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             AccountKind = accountKind;
             EncryptedCredential = encryptedCredential;
             Credential = credential;
+            AuthenticationType = authenticationType;
+            ContainerUri = containerUri;
             CustomInit();
         }
 
@@ -198,6 +206,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.credential")]
         public CredentialReference Credential { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type used for authentication. Type: string.
+        /// Possible values include: 'Anonymous', 'AccountKey', 'SasUri',
+        /// 'ServicePrincipal', 'Msi'
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.authenticationType")]
+        public string AuthenticationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets container uri of the Azure Blob Storage resource only
+        /// support for anonymous access. Type: string (or Expression with
+        /// resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.containerUri")]
+        public object ContainerUri { get; set; }
 
         /// <summary>
         /// Validate the object.

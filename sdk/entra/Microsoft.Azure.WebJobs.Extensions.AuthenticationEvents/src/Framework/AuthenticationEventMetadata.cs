@@ -47,14 +47,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         {
             AuthenticationEventRequestBase eventRequest = (AuthenticationEventRequestBase)Activator.CreateInstance(RequestType, new object[] { request });
             PropertyInfo responseInfo = eventRequest.GetType().GetProperty("Response");
-            PropertyInfo dataInfo = eventRequest.GetType().GetProperty("Payload");
+            PropertyInfo dataInfo = eventRequest.GetType().GetProperty("Data");
 
             AuthenticationEventResponse eventResponse = AuthenticationEventResponse.CreateInstance(
                 responseInfo.PropertyType,
                 // ResponseSchema ?? string.Empty,
                 ResponseTemplate ?? string.Empty);
-
-            responseInfo.SetValue(eventRequest, eventResponse);
 
             if (args != null && args.Length != 0)
             {
@@ -75,6 +73,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             {
                 Helpers.ValidateGraph(eventRequest);
             }
+
+            responseInfo.SetValue(eventRequest, eventResponse);
 
             return eventRequest;
         }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationCertificate data model.
+    /// Definition of the certificate.
+    /// </summary>
     public partial class AutomationCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationCertificateData. </summary>
@@ -24,15 +27,15 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="thumbprint"> Gets the thumbprint of the certificate. </param>
+        /// <param name="thumbprintString"> Gets the thumbprint of the certificate. </param>
         /// <param name="expireOn"> Gets the expiry time of the certificate. </param>
         /// <param name="isExportable"> Gets the is exportable flag of the certificate. </param>
         /// <param name="createdOn"> Gets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        internal AutomationCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData thumbprint, DateTimeOffset? expireOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
+        internal AutomationCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintString, DateTimeOffset? expireOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
         {
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
             ExpireOn = expireOn;
             IsExportable = isExportable;
             CreatedOn = createdOn;
@@ -40,37 +43,8 @@ namespace Azure.ResourceManager.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// Gets the thumbprint of the certificate.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Thumbprint { get; }
+        /// <summary> Gets the thumbprint of the certificate. </summary>
+        public string ThumbprintString { get; }
         /// <summary> Gets the expiry time of the certificate. </summary>
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Gets the is exportable flag of the certificate. </summary>

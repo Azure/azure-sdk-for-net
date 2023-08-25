@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,99 +15,116 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmNicDetails DeserializeInMageRcmNicDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nicId = default;
             Optional<string> isPrimaryNic = default;
             Optional<string> isSelectedForFailover = default;
-            Optional<string> sourceIPAddress = default;
-            Optional<EthernetAddressType> sourceIPAddressType = default;
-            Optional<string> sourceNetworkId = default;
+            Optional<IPAddress> sourceIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> sourceIPAddressType = default;
+            Optional<ResourceIdentifier> sourceNetworkId = default;
             Optional<string> sourceSubnetName = default;
-            Optional<string> targetIPAddress = default;
-            Optional<EthernetAddressType> targetIPAddressType = default;
+            Optional<IPAddress> targetIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> targetIPAddressType = default;
             Optional<string> targetSubnetName = default;
             Optional<string> testSubnetName = default;
-            Optional<string> testIPAddress = default;
-            Optional<EthernetAddressType> testIPAddressType = default;
+            Optional<IPAddress> testIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nicId"))
+                if (property.NameEquals("nicId"u8))
                 {
                     nicId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPrimaryNic"))
+                if (property.NameEquals("isPrimaryNic"u8))
                 {
                     isPrimaryNic = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isSelectedForFailover"))
+                if (property.NameEquals("isSelectedForFailover"u8))
                 {
                     isSelectedForFailover = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceIPAddress"))
-                {
-                    sourceIPAddress = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sourceIPAddressType"))
+                if (property.NameEquals("sourceIPAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceIPAddressType = new EthernetAddressType(property.Value.GetString());
+                    sourceIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceNetworkId"))
+                if (property.NameEquals("sourceIPAddressType"u8))
                 {
-                    sourceNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceSubnetName"))
+                if (property.NameEquals("sourceNetworkId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sourceSubnetName"u8))
                 {
                     sourceSubnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetIPAddress"))
-                {
-                    targetIPAddress = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetIPAddressType"))
+                if (property.NameEquals("targetIPAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    targetIPAddressType = new EthernetAddressType(property.Value.GetString());
+                    targetIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetSubnetName"))
+                if (property.NameEquals("targetIPAddressType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetSubnetName"u8))
                 {
                     targetSubnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testSubnetName"))
+                if (property.NameEquals("testSubnetName"u8))
                 {
                     testSubnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testIPAddress"))
-                {
-                    testIPAddress = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("testIPAddressType"))
+                if (property.NameEquals("testIPAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    testIPAddressType = new EthernetAddressType(property.Value.GetString());
+                    testIPAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("testIPAddressType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
             }

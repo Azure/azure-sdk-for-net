@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeInstanceContainer DeserializeMachineLearningComputeInstanceContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<MachineLearningComputeInstanceAutosave> autosave = default;
             Optional<string> gpu = default;
@@ -24,57 +28,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IReadOnlyList<BinaryData>> services = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autosave"))
+                if (property.NameEquals("autosave"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autosave = new MachineLearningComputeInstanceAutosave(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("gpu"))
+                if (property.NameEquals("gpu"u8))
                 {
                     gpu = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("network"))
+                if (property.NameEquals("network"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     network = new MachineLearningNetwork(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("environment"))
+                if (property.NameEquals("environment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     environment = MachineLearningComputeInstanceEnvironmentInfo.DeserializeMachineLearningComputeInstanceEnvironmentInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("services"))
+                if (property.NameEquals("services"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     services = array;
                     continue;

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         public static FacetSortOrder ToFacetSortOrder(this string value)
         {
-            if (string.Equals(value, "asc", StringComparison.InvariantCultureIgnoreCase)) return FacetSortOrder.Asc;
-            if (string.Equals(value, "desc", StringComparison.InvariantCultureIgnoreCase)) return FacetSortOrder.Desc;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "asc")) return FacetSortOrder.Asc;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "desc")) return FacetSortOrder.Desc;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FacetSortOrder value.");
         }
     }

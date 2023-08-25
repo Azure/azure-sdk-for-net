@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Three lettered code specifying the currency of the VM price. Example: USD
-    /// Serialized Name: BillingCurrency
-    /// </summary>
+    /// <summary> Three lettered code specifying the currency of the VM price. Example: USD. </summary>
     public readonly partial struct MachineLearningBillingCurrency : IEquatable<MachineLearningBillingCurrency>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string UsdValue = "USD";
 
-        /// <summary>
-        /// USD
-        /// Serialized Name: BillingCurrency.USD
-        /// </summary>
+        /// <summary> USD. </summary>
         public static MachineLearningBillingCurrency Usd { get; } = new MachineLearningBillingCurrency(UsdValue);
         /// <summary> Determines if two <see cref="MachineLearningBillingCurrency"/> values are the same. </summary>
         public static bool operator ==(MachineLearningBillingCurrency left, MachineLearningBillingCurrency right) => left.Equals(right);

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapsePrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the SynapsePrivateLinkResource data model.
+    /// A private link resource
+    /// </summary>
     public partial class SynapsePrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapsePrivateLinkResourceData. </summary>

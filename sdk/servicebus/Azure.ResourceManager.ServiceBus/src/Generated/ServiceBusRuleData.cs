@@ -11,7 +11,10 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing the ServiceBusRule data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceBusRule data model.
+    /// Description of Rule Resource.
+    /// </summary>
     public partial class ServiceBusRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusRuleData. </summary>

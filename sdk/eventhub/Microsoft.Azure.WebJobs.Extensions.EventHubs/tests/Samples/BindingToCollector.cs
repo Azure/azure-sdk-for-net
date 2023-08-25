@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
+using Microsoft.Azure.WebJobs.EventHubs;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests.Samples
 {
@@ -15,9 +16,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests.Samples
             [TimerTrigger("0 */5 * * * *")] TimerInfo myTimer,
             [EventHub("<event_hub_name>", Connection = "<connection_name>")] IAsyncCollector<EventData> collector)
         {
-            // IAsyncCollector allows sending multiple events in a single function invocation
-            await collector.AddAsync(new EventData(new BinaryData($"Event 1 added at: {DateTime.Now}")));
-            await collector.AddAsync(new EventData(new BinaryData($"Event 2 added at: {DateTime.Now}")));
+            // When no partition key is used, partitions will be assigned per-batch via round-robin.
+            await collector.AddAsync(new EventData($"Event 1 added at: {DateTime.Now}"));
+            await collector.AddAsync(new EventData($"Event 2 added at: {DateTime.Now}"));
+
+            // Using a partition key will help group events together; events with the same key
+            // will always be assigned to the same partition.
+            await collector.AddAsync(new EventData($"Event 3 added at: {DateTime.Now}"), "sample-key");
+            await collector.AddAsync(new EventData($"Event 4 added at: {DateTime.Now}"), "sample-key");
         }
         #endregion
     }

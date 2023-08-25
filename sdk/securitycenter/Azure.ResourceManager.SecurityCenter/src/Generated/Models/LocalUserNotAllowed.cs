@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Login by a local user that isn&apos;t allowed. Allow list consists of login names to allow. </summary>
+    /// <summary> Login by a local user that isn't allowed. Allow list consists of login names to allow. </summary>
     public partial class LocalUserNotAllowed : AllowlistCustomAlertRule
     {
         /// <summary> Initializes a new instance of LocalUserNotAllowed. </summary>

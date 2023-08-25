@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Cname))
             {
-                writer.WritePropertyName("cname");
+                writer.WritePropertyName("cname"u8);
                 writer.WriteStringValue(Cname);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsCnameRecordInfo DeserializeDnsCnameRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cname = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cname"))
+                if (property.NameEquals("cname"u8))
                 {
                     cname = property.Value.GetString();
                     continue;

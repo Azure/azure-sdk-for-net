@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
             else
             {
-                _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(DeleteSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
+                _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(DeleteSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
             }
         }
 
@@ -107,11 +107,7 @@ namespace Azure.Security.KeyVault.Secrets
                     return OperationState.Pending(response);
 
                 default:
-                    RequestFailedException ex = async
-                        ? await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                        : _pipeline.Diagnostics.CreateRequestFailedException(response);
-
-                    return OperationState.Failure(response, ex);
+                    return OperationState.Failure(response, new RequestFailedException(response));
             }
         }
     }

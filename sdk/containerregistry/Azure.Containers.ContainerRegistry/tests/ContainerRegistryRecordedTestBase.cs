@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
@@ -34,21 +33,22 @@ namespace Azure.Containers.ContainerRegistry.Tests
             return anonymousAccess ? CreateAnonymousClient() : CreateAuthenticatedClient();
         }
 
-        public ContainerRegistryBlobClient CreateBlobClient(string repository)
+        public ContainerRegistryContentClient CreateBlobClient(string repository, int? chunkSize = default)
         {
             string endpoint = TestEnvironment.Endpoint;
             Uri authorityHost = GetAuthorityHost(endpoint);
             ContainerRegistryAudience audience = GetAudience(authorityHost);
 
-            return InstrumentClient(new ContainerRegistryBlobClient(
+            ContainerRegistryClientOptions options = InstrumentClientOptions(new ContainerRegistryClientOptions()
+            {
+                Audience = audience
+            });
+
+            return InstrumentClient(new ContainerRegistryContentClient(
                     new Uri(endpoint),
-                    TestEnvironment.Credential,
                     repository,
-                    InstrumentClientOptions(new ContainerRegistryClientOptions()
-                    {
-                        Audience = audience
-                    })
-                ));
+                    TestEnvironment.Credential,
+                    options));
         }
 
         public async Task CreateRepositoryAsync(string repository)
@@ -56,15 +56,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await CreateImageAsync(repository, null);
         }
 
-        public async Task CreateImageAsync(string repository, string tag)
+        public async Task<string> CreateImageAsync(string repository, string tag)
         {
-            await CreateImageAsync(new Uri(TestEnvironment.Endpoint), repository, tag);
+            return await CreateImageAsync(new Uri(TestEnvironment.Endpoint), repository, tag);
         }
 
-        public async Task CreateImageAsync(Uri endpoint, string repository, string tag)
+        public async Task<string> CreateImageAsync(Uri endpoint, string repository, string tag)
         {
             var client = GetUploadClient(endpoint, repository);
-            await client.UploadTestImageAsync(tag);
+            return await client.UploadTestImageAsync(tag);
         }
 
         public async Task AddTagAsync(Uri endpoint, string repository, string reference, string tag)
@@ -99,11 +99,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             if (endpoint.Contains(".azurecr.us"))
             {
                 return AzureAuthorityHosts.AzureGovernment;
-            }
-
-            if (endpoint.Contains(".azurecr.de"))
-            {
-                return AzureAuthorityHosts.AzureGermany;
             }
 
             throw new NotSupportedException($"Cloud for endpoint {endpoint} is not supported.");
@@ -176,14 +171,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
         }
 
-        private ContainerRegistryBlobClient GetUploadClient(Uri endpoint, string repository)
+        private ContainerRegistryContentClient GetUploadClient(Uri endpoint, string repository)
         {
             Uri authorityHost = GetAuthorityHost(endpoint.ToString());
 
             // We won't record the set-up calls, so don't instrument this client.
-            return new ContainerRegistryBlobClient(endpoint,
-                TestEnvironment.Credential,
+            return new ContainerRegistryContentClient(endpoint,
                 repository,
+                TestEnvironment.Credential,
                 new ContainerRegistryClientOptions()
                 {
                     Audience = GetAudience(authorityHost)
@@ -205,11 +200,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
                 return ContainerRegistryAudience.AzureResourceManagerGovernment;
-            }
-
-            if (authorityHost == AzureAuthorityHosts.AzureGermany)
-            {
-                return ContainerRegistryAudience.AzureResourceManagerGermany;
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");

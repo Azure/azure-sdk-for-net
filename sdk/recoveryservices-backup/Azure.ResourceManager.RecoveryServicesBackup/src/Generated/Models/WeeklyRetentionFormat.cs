@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WeeklyRetentionFormat. </summary>
         public WeeklyRetentionFormat()
         {
-            DaysOfTheWeek = new ChangeTrackingList<DayOfWeek>();
-            WeeksOfTheMonth = new ChangeTrackingList<WeekOfMonth>();
+            DaysOfTheWeek = new ChangeTrackingList<BackupDayOfWeek>();
+            WeeksOfTheMonth = new ChangeTrackingList<BackupWeekOfMonth>();
         }
 
         /// <summary> Initializes a new instance of WeeklyRetentionFormat. </summary>
         /// <param name="daysOfTheWeek"> List of days of the week. </param>
         /// <param name="weeksOfTheMonth"> List of weeks of month. </param>
-        internal WeeklyRetentionFormat(IList<DayOfWeek> daysOfTheWeek, IList<WeekOfMonth> weeksOfTheMonth)
+        internal WeeklyRetentionFormat(IList<BackupDayOfWeek> daysOfTheWeek, IList<BackupWeekOfMonth> weeksOfTheMonth)
         {
             DaysOfTheWeek = daysOfTheWeek;
             WeeksOfTheMonth = weeksOfTheMonth;
         }
 
         /// <summary> List of days of the week. </summary>
-        public IList<DayOfWeek> DaysOfTheWeek { get; }
+        public IList<BackupDayOfWeek> DaysOfTheWeek { get; }
         /// <summary> List of weeks of month. </summary>
-        public IList<WeekOfMonth> WeeksOfTheMonth { get; }
+        public IList<BackupWeekOfMonth> WeeksOfTheMonth { get; }
     }
 }

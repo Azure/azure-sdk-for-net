@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal KqlScriptRenameOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "KqlScriptRenameOperation");
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "KqlScriptRenameOperation");
         }
 
         /// <inheritdoc />

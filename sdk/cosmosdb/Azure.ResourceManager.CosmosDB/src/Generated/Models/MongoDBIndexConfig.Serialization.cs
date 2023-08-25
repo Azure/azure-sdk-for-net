@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpireAfterSeconds))
             {
-                writer.WritePropertyName("expireAfterSeconds");
+                writer.WritePropertyName("expireAfterSeconds"u8);
                 writer.WriteNumberValue(ExpireAfterSeconds.Value);
             }
             if (Optional.IsDefined(IsUnique))
             {
-                writer.WritePropertyName("unique");
+                writer.WritePropertyName("unique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBIndexConfig DeserializeMongoDBIndexConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> expireAfterSeconds = default;
             Optional<bool> unique = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expireAfterSeconds"))
+                if (property.NameEquals("expireAfterSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expireAfterSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unique"))
+                if (property.NameEquals("unique"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unique = property.Value.GetBoolean();

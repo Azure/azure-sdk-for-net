@@ -7,31 +7,19 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningEndpointKeyRegenerateContent.
-    /// Serialized Name: RegenerateEndpointKeysRequest
-    /// </summary>
+    /// <summary> The MachineLearningEndpointKeyRegenerateContent. </summary>
     public partial class MachineLearningEndpointKeyRegenerateContent
     {
         /// <summary> Initializes a new instance of MachineLearningEndpointKeyRegenerateContent. </summary>
-        /// <param name="keyType">
-        /// [Required] Specification for which type of key to generate. Primary or Secondary.
-        /// Serialized Name: RegenerateEndpointKeysRequest.keyType
-        /// </param>
+        /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
         public MachineLearningEndpointKeyRegenerateContent(MachineLearningKeyType keyType)
         {
             KeyType = keyType;
         }
 
-        /// <summary>
-        /// [Required] Specification for which type of key to generate. Primary or Secondary.
-        /// Serialized Name: RegenerateEndpointKeysRequest.keyType
-        /// </summary>
+        /// <summary> [Required] Specification for which type of key to generate. Primary or Secondary. </summary>
         public MachineLearningKeyType KeyType { get; }
-        /// <summary>
-        /// The value the key is set to.
-        /// Serialized Name: RegenerateEndpointKeysRequest.keyValue
-        /// </summary>
+        /// <summary> The value the key is set to. </summary>
         public string KeyValue { get; set; }
     }
 }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static SelfHostedIntegrationRuntimeStatus DeserializeSelfHostedIntegrationRuntimeStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = default;
             Optional<string> dataFactoryName = default;
             Optional<IntegrationRuntimeState> state = default;
@@ -28,8 +32,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<TimeSpan> updateDelayOffset = default;
             Optional<TimeSpan> localTimeZoneOffset = default;
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<IReadOnlyList<Uri>> serviceUrls = default;
-            Optional<IntegrationRuntimeAutoUpdate> autoUpdate = default;
+            Optional<IReadOnlyList<string>> serviceUrls = default;
+            Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
             Optional<string> versionStatus = default;
             Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
             Optional<string> pushedVersion = default;
@@ -39,27 +43,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new IntegrationRuntimeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataFactoryName"))
+                if (property.NameEquals("dataFactoryName"u8))
                 {
                     dataFactoryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new IntegrationRuntimeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,46 +71,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("createTime"))
+                        if (property0.NameEquals("createTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("taskQueueId"))
+                        if (property0.NameEquals("taskQueueId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             taskQueueId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("internalChannelEncryption"))
+                        if (property0.NameEquals("internalChannelEncryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             internalChannelEncryption = new IntegrationRuntimeInternalChannelEncryptionMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodes"))
+                        if (property0.NameEquals("nodes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SelfHostedIntegrationRuntimeNode> array = new List<SelfHostedIntegrationRuntimeNode>();
@@ -118,41 +117,37 @@ namespace Azure.ResourceManager.DataFactory.Models
                             nodes = array;
                             continue;
                         }
-                        if (property0.NameEquals("scheduledUpdateDate"))
+                        if (property0.NameEquals("scheduledUpdateDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scheduledUpdateDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("updateDelayOffset"))
+                        if (property0.NameEquals("updateDelayOffset"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updateDelayOffset = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("localTimeZoneOffset"))
+                        if (property0.NameEquals("localTimeZoneOffset"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             localTimeZoneOffset = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("capabilities"))
+                        if (property0.NameEquals("capabilities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -163,41 +158,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                             capabilities = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("serviceUrls"))
+                        if (property0.NameEquals("serviceUrls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Uri> array = new List<Uri>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                array.Add(item.GetString());
                             }
                             serviceUrls = array;
                             continue;
                         }
-                        if (property0.NameEquals("autoUpdate"))
+                        if (property0.NameEquals("autoUpdate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoUpdate = new IntegrationRuntimeAutoUpdate(property0.Value.GetString());
+                            autoUpdate = new IntegrationRuntimeAutoUpdateState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("versionStatus"))
+                        if (property0.NameEquals("versionStatus"u8))
                         {
                             versionStatus = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("links"))
+                        if (property0.NameEquals("links"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<LinkedIntegrationRuntime> array = new List<LinkedIntegrationRuntime>();
@@ -208,21 +200,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                             links = array;
                             continue;
                         }
-                        if (property0.NameEquals("pushedVersion"))
+                        if (property0.NameEquals("pushedVersion"u8))
                         {
                             pushedVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("latestVersion"))
+                        if (property0.NameEquals("latestVersion"u8))
                         {
                             latestVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("autoUpdateETA"))
+                        if (property0.NameEquals("autoUpdateETA"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoUpdateEta = property0.Value.GetDateTimeOffset("O");

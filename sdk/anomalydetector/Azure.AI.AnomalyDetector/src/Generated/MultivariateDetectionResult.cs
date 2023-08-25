@@ -12,17 +12,16 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Detection results for the given resultId. </summary>
+    /// <summary> Detection results for the resultId value. </summary>
     public partial class MultivariateDetectionResult
     {
         /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
-        /// <param name="resultId"></param>
-        /// <param name="summary"></param>
-        /// <param name="results"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resultId"/>, <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
-        internal MultivariateDetectionResult(string resultId, MultivariateBatchDetectionResultSummary summary, IEnumerable<AnomalyState> results)
+        /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
+        /// <param name="summary"> Multivariate anomaly detection status. </param>
+        /// <param name="results"> Detection result for each time stamp. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
+        internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IEnumerable<AnomalyState> results)
         {
-            Argument.AssertNotNull(resultId, nameof(resultId));
             Argument.AssertNotNull(summary, nameof(summary));
             Argument.AssertNotNull(results, nameof(results));
 
@@ -32,21 +31,21 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
-        /// <param name="resultId"></param>
-        /// <param name="summary"></param>
-        /// <param name="results"></param>
-        internal MultivariateDetectionResult(string resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
+        /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
+        /// <param name="summary"> Multivariate anomaly detection status. </param>
+        /// <param name="results"> Detection result for each time stamp. </param>
+        internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
         {
             ResultId = resultId;
             Summary = summary;
-            Results = results.ToList();
+            Results = results;
         }
 
-        /// <summary> Gets the result id. </summary>
-        public string ResultId { get; }
-        /// <summary> Gets the summary. </summary>
+        /// <summary> Result identifier that's used to fetch the results of an inference call. </summary>
+        public Guid ResultId { get; }
+        /// <summary> Multivariate anomaly detection status. </summary>
         public MultivariateBatchDetectionResultSummary Summary { get; }
-        /// <summary> Gets the results. </summary>
+        /// <summary> Detection result for each time stamp. </summary>
         public IReadOnlyList<AnomalyState> Results { get; }
     }
 }

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsCluster data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubsCluster data model.
+    /// Single Event Hubs Cluster resource in List or Get operations.
+    /// </summary>
     public partial class EventHubsClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EventHubsClusterData. </summary>

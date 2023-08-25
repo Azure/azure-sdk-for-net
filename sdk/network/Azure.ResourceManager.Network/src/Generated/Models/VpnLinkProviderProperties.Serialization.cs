@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkProviderName))
             {
-                writer.WritePropertyName("linkProviderName");
+                writer.WritePropertyName("linkProviderName"u8);
                 writer.WriteStringValue(LinkProviderName);
             }
             if (Optional.IsDefined(LinkSpeedInMbps))
             {
-                writer.WritePropertyName("linkSpeedInMbps");
+                writer.WritePropertyName("linkSpeedInMbps"u8);
                 writer.WriteNumberValue(LinkSpeedInMbps.Value);
             }
             writer.WriteEndObject();
@@ -30,20 +30,23 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnLinkProviderProperties DeserializeVpnLinkProviderProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> linkProviderName = default;
             Optional<int> linkSpeedInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkProviderName"))
+                if (property.NameEquals("linkProviderName"u8))
                 {
                     linkProviderName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkSpeedInMbps"))
+                if (property.NameEquals("linkSpeedInMbps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkSpeedInMbps = property.Value.GetInt32();

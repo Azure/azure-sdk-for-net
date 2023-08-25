@@ -7,6 +7,8 @@ Project("{033000A1-3A25-487B-B72A-402785A74714}") = "Azure.ResourceManager.BotSe
 EndProject
 Project("{033000A1-3A25-487B-B72A-402785A74714}") = "Azure.ResourceManager.BotService.Tests", "tests\Azure.ResourceManager.BotService.Tests.csproj", "{F3F8C7F9-6A80-4F28-8D8B-481C110C0684}"
 EndProject
+Project("{033000A1-3A25-487B-B72A-402785A74714}") = "Azure.ResourceManager.BotService.Samples", "samples\Azure.ResourceManager.BotService.Samples.csproj", "{7179BA90-02B0-44F6-A088-0C81D76DC54F}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

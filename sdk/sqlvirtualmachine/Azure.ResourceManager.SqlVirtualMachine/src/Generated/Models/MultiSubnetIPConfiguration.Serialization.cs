@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("privateIpAddress");
+            writer.WritePropertyName("privateIpAddress"u8);
             writer.WriteObjectValue(PrivateIPAddress);
-            writer.WritePropertyName("sqlVirtualMachineInstance");
+            writer.WritePropertyName("sqlVirtualMachineInstance"u8);
             writer.WriteStringValue(SqlVmInstance);
             writer.WriteEndObject();
         }
 
         internal static MultiSubnetIPConfiguration DeserializeMultiSubnetIPConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AvailabilityGroupListenerPrivateIPAddress privateIPAddress = default;
             string sqlVmInstance = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sqlVirtualMachineInstance"))
+                if (property.NameEquals("sqlVirtualMachineInstance"u8))
                 {
                     sqlVmInstance = property.Value.GetString();
                     continue;

@@ -16,14 +16,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ReplicationProtectedItemProperties DeserializeReplicationProtectedItemProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> protectedItemType = default;
-            Optional<string> protectableItemId = default;
+            Optional<ResourceIdentifier> protectableItemId = default;
             Optional<string> recoveryServicesProviderId = default;
             Optional<string> primaryFabricFriendlyName = default;
             Optional<string> primaryFabricProvider = default;
             Optional<string> recoveryFabricFriendlyName = default;
-            Optional<string> recoveryFabricId = default;
+            Optional<ResourceIdentifier> recoveryFabricId = default;
             Optional<string> primaryProtectionContainerFriendlyName = default;
             Optional<string> recoveryProtectionContainerFriendlyName = default;
             Optional<string> protectionState = default;
@@ -36,108 +40,115 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<string>> allowedOperations = default;
             Optional<string> replicationHealth = default;
             Optional<string> failoverHealth = default;
-            Optional<IReadOnlyList<HealthError>> healthErrors = default;
-            Optional<string> policyId = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Optional<ResourceIdentifier> policyId = default;
             Optional<string> policyFriendlyName = default;
             Optional<DateTimeOffset> lastSuccessfulFailoverTime = default;
             Optional<DateTimeOffset> lastSuccessfulTestFailoverTime = default;
             Optional<CurrentScenarioDetails> currentScenario = default;
-            Optional<string> failoverRecoveryPointId = default;
+            Optional<ResourceIdentifier> failoverRecoveryPointId = default;
             Optional<ReplicationProviderSpecificSettings> providerSpecificDetails = default;
-            Optional<string> recoveryContainerId = default;
-            Optional<string> eventCorrelationId = default;
+            Optional<ResourceIdentifier> recoveryContainerId = default;
+            Optional<Guid> eventCorrelationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemType"))
+                if (property.NameEquals("protectedItemType"u8))
                 {
                     protectedItemType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectableItemId"))
+                if (property.NameEquals("protectableItemId"u8))
                 {
-                    protectableItemId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectableItemId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryServicesProviderId"))
+                if (property.NameEquals("recoveryServicesProviderId"u8))
                 {
                     recoveryServicesProviderId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryFabricFriendlyName"))
+                if (property.NameEquals("primaryFabricFriendlyName"u8))
                 {
                     primaryFabricFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryFabricProvider"))
+                if (property.NameEquals("primaryFabricProvider"u8))
                 {
                     primaryFabricProvider = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricFriendlyName"))
+                if (property.NameEquals("recoveryFabricFriendlyName"u8))
                 {
                     recoveryFabricFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricId"))
+                if (property.NameEquals("recoveryFabricId"u8))
                 {
-                    recoveryFabricId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryFabricId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryProtectionContainerFriendlyName"))
+                if (property.NameEquals("primaryProtectionContainerFriendlyName"u8))
                 {
                     primaryProtectionContainerFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryProtectionContainerFriendlyName"))
+                if (property.NameEquals("recoveryProtectionContainerFriendlyName"u8))
                 {
                     recoveryProtectionContainerFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionState"))
+                if (property.NameEquals("protectionState"u8))
                 {
                     protectionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionStateDescription"))
+                if (property.NameEquals("protectionStateDescription"u8))
                 {
                     protectionStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activeLocation"))
+                if (property.NameEquals("activeLocation"u8))
                 {
                     activeLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testFailoverState"))
+                if (property.NameEquals("testFailoverState"u8))
                 {
                     testFailoverState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testFailoverStateDescription"))
+                if (property.NameEquals("testFailoverStateDescription"u8))
                 {
                     testFailoverStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("switchProviderState"))
+                if (property.NameEquals("switchProviderState"u8))
                 {
                     switchProviderState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("switchProviderStateDescription"))
+                if (property.NameEquals("switchProviderStateDescription"u8))
                 {
                     switchProviderStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowedOperations"))
+                if (property.NameEquals("allowedOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -148,98 +159,109 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     allowedOperations = array;
                     continue;
                 }
-                if (property.NameEquals("replicationHealth"))
+                if (property.NameEquals("replicationHealth"u8))
                 {
                     replicationHealth = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("failoverHealth"))
+                if (property.NameEquals("failoverHealth"u8))
                 {
                     failoverHealth = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthErrors"))
+                if (property.NameEquals("healthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("policyId"))
+                if (property.NameEquals("policyId"u8))
                 {
-                    policyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyFriendlyName"))
+                if (property.NameEquals("policyFriendlyName"u8))
                 {
                     policyFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastSuccessfulFailoverTime"))
+                if (property.NameEquals("lastSuccessfulFailoverTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSuccessfulFailoverTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastSuccessfulTestFailoverTime"))
+                if (property.NameEquals("lastSuccessfulTestFailoverTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSuccessfulTestFailoverTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("currentScenario"))
+                if (property.NameEquals("currentScenario"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("failoverRecoveryPointId"))
-                {
-                    failoverRecoveryPointId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("providerSpecificDetails"))
+                if (property.NameEquals("failoverRecoveryPointId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    failoverRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("providerSpecificDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     providerSpecificDetails = ReplicationProviderSpecificSettings.DeserializeReplicationProviderSpecificSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recoveryContainerId"))
+                if (property.NameEquals("recoveryContainerId"u8))
                 {
-                    recoveryContainerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryContainerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("eventCorrelationId"))
+                if (property.NameEquals("eventCorrelationId"u8))
                 {
-                    eventCorrelationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eventCorrelationId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new ReplicationProtectedItemProperties(friendlyName.Value, protectedItemType.Value, protectableItemId.Value, recoveryServicesProviderId.Value, primaryFabricFriendlyName.Value, primaryFabricProvider.Value, recoveryFabricFriendlyName.Value, recoveryFabricId.Value, primaryProtectionContainerFriendlyName.Value, recoveryProtectionContainerFriendlyName.Value, protectionState.Value, protectionStateDescription.Value, activeLocation.Value, testFailoverState.Value, testFailoverStateDescription.Value, switchProviderState.Value, switchProviderStateDescription.Value, Optional.ToList(allowedOperations), replicationHealth.Value, failoverHealth.Value, Optional.ToList(healthErrors), policyId.Value, policyFriendlyName.Value, Optional.ToNullable(lastSuccessfulFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentScenario.Value, failoverRecoveryPointId.Value, providerSpecificDetails.Value, recoveryContainerId.Value, eventCorrelationId.Value);
+            return new ReplicationProtectedItemProperties(friendlyName.Value, protectedItemType.Value, protectableItemId.Value, recoveryServicesProviderId.Value, primaryFabricFriendlyName.Value, primaryFabricProvider.Value, recoveryFabricFriendlyName.Value, recoveryFabricId.Value, primaryProtectionContainerFriendlyName.Value, recoveryProtectionContainerFriendlyName.Value, protectionState.Value, protectionStateDescription.Value, activeLocation.Value, testFailoverState.Value, testFailoverStateDescription.Value, switchProviderState.Value, switchProviderStateDescription.Value, Optional.ToList(allowedOperations), replicationHealth.Value, failoverHealth.Value, Optional.ToList(healthErrors), policyId.Value, policyFriendlyName.Value, Optional.ToNullable(lastSuccessfulFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentScenario.Value, failoverRecoveryPointId.Value, providerSpecificDetails.Value, recoveryContainerId.Value, Optional.ToNullable(eventCorrelationId));
         }
     }
 }

@@ -14,7 +14,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsSavedSearch data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsSavedSearch data model.
+    /// Value object for saved search results.
+    /// </summary>
     public partial class OperationalInsightsSavedSearchData : ResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsSavedSearchData. </summary>
@@ -39,12 +42,12 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the saved search. To override an existing saved search, use &quot;*&quot; or specify the current Etag. </param>
+        /// <param name="etag"> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </param>
         /// <param name="category"> The category of the saved search. This helps the user to find a saved search faster. </param>
         /// <param name="displayName"> Saved search display name. </param>
         /// <param name="query"> The query expression for the saved search. </param>
         /// <param name="functionAlias"> The function alias if query serves as a function. </param>
-        /// <param name="functionParameters"> The optional function parameters if query serves as a function. Value should be in the following format: &apos;param-name1:type1 = default_value1, param-name2:type2 = default_value2&apos;. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </param>
+        /// <param name="functionParameters"> The optional function parameters if query serves as a function. Value should be in the following format: 'param-name1:type1 = default_value1, param-name2:type2 = default_value2'. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </param>
         /// <param name="version"> The version number of the query language. The current version is 2 and is the default. </param>
         /// <param name="tags"> The tags attached to the saved search. </param>
         internal OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, string displayName, string query, string functionAlias, string functionParameters, long? version, IList<OperationalInsightsTag> tags) : base(id, name, resourceType, systemData)
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Tags = tags;
         }
 
-        /// <summary> The ETag of the saved search. To override an existing saved search, use &quot;*&quot; or specify the current Etag. </summary>
+        /// <summary> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </summary>
         public ETag? ETag { get; set; }
         /// <summary> The category of the saved search. This helps the user to find a saved search faster. </summary>
         public string Category { get; set; }
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public string Query { get; set; }
         /// <summary> The function alias if query serves as a function. </summary>
         public string FunctionAlias { get; set; }
-        /// <summary> The optional function parameters if query serves as a function. Value should be in the following format: &apos;param-name1:type1 = default_value1, param-name2:type2 = default_value2&apos;. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </summary>
+        /// <summary> The optional function parameters if query serves as a function. Value should be in the following format: 'param-name1:type1 = default_value1, param-name2:type2 = default_value2'. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </summary>
         public string FunctionParameters { get; set; }
         /// <summary> The version number of the query language. The current version is 2 and is the default. </summary>
         public long? Version { get; set; }

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudEndpointLastChangeEnumerationStatus DeserializeCloudEndpointLastChangeEnumerationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startedTimestamp = default;
             Optional<DateTimeOffset> completedTimestamp = default;
             Optional<long> namespaceFilesCount = default;
@@ -23,61 +27,55 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<DateTimeOffset> nextRunTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startedTimestamp"))
+                if (property.NameEquals("startedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("completedTimestamp"))
+                if (property.NameEquals("completedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     completedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("namespaceFilesCount"))
+                if (property.NameEquals("namespaceFilesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     namespaceFilesCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("namespaceDirectoriesCount"))
+                if (property.NameEquals("namespaceDirectoriesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     namespaceDirectoriesCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("namespaceSizeBytes"))
+                if (property.NameEquals("namespaceSizeBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     namespaceSizeBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("nextRunTimestamp"))
+                if (property.NameEquals("nextRunTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nextRunTimestamp = property.Value.GetDateTimeOffset("O");

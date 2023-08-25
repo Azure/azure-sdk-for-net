@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HealthBot.Models
 
         public static HealthBotSkuName ToHealthBotSkuName(this string value)
         {
-            if (string.Equals(value, "F0", StringComparison.InvariantCultureIgnoreCase)) return HealthBotSkuName.F0;
-            if (string.Equals(value, "S1", StringComparison.InvariantCultureIgnoreCase)) return HealthBotSkuName.S1;
-            if (string.Equals(value, "C0", StringComparison.InvariantCultureIgnoreCase)) return HealthBotSkuName.C0;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "F0")) return HealthBotSkuName.F0;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "S1")) return HealthBotSkuName.S1;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "C0")) return HealthBotSkuName.C0;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthBotSkuName value.");
         }
     }

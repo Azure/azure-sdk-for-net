@@ -17,12 +17,12 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             if (Optional.IsDefined(Channel))
             {
-                writer.WritePropertyName("channel");
+                writer.WritePropertyName("channel"u8);
                 writer.WriteNumberValue(Channel.Value);
             }
             if (Optional.IsDefined(Participant))
             {
-                writer.WritePropertyName("participant");
+                writer.WritePropertyName("participant"u8);
                 writer.WriteObjectValue(Participant);
             }
             writer.WriteEndObject();

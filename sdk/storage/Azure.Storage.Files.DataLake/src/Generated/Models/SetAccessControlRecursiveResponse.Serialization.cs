@@ -15,47 +15,47 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal static SetAccessControlRecursiveResponse DeserializeSetAccessControlRecursiveResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> directoriesSuccessful = default;
             Optional<int> filesSuccessful = default;
             Optional<int> failureCount = default;
             Optional<IReadOnlyList<AclFailedEntry>> failedEntries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("directoriesSuccessful"))
+                if (property.NameEquals("directoriesSuccessful"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     directoriesSuccessful = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("filesSuccessful"))
+                if (property.NameEquals("filesSuccessful"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filesSuccessful = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failureCount"))
+                if (property.NameEquals("failureCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failureCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedEntries"))
+                if (property.NameEquals("failedEntries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AclFailedEntry> array = new List<AclFailedEntry>();

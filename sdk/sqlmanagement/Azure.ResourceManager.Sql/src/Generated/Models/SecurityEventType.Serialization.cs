@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static SecurityEventType ToSecurityEventType(this string value)
         {
-            if (string.Equals(value, "Undefined", StringComparison.InvariantCultureIgnoreCase)) return SecurityEventType.Undefined;
-            if (string.Equals(value, "SqlInjectionVulnerability", StringComparison.InvariantCultureIgnoreCase)) return SecurityEventType.SqlInjectionVulnerability;
-            if (string.Equals(value, "SqlInjectionExploit", StringComparison.InvariantCultureIgnoreCase)) return SecurityEventType.SqlInjectionExploit;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Undefined")) return SecurityEventType.Undefined;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SqlInjectionVulnerability")) return SecurityEventType.SqlInjectionVulnerability;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SqlInjectionExploit")) return SecurityEventType.SqlInjectionExploit;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityEventType value.");
         }
     }

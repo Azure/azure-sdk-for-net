@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         public static SmartGroupModificationEvent ToSmartGroupModificationEvent(this string value)
         {
-            if (string.Equals(value, "SmartGroupCreated", StringComparison.InvariantCultureIgnoreCase)) return SmartGroupModificationEvent.SmartGroupCreated;
-            if (string.Equals(value, "StateChange", StringComparison.InvariantCultureIgnoreCase)) return SmartGroupModificationEvent.StateChange;
-            if (string.Equals(value, "AlertAdded", StringComparison.InvariantCultureIgnoreCase)) return SmartGroupModificationEvent.AlertAdded;
-            if (string.Equals(value, "AlertRemoved", StringComparison.InvariantCultureIgnoreCase)) return SmartGroupModificationEvent.AlertRemoved;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SmartGroupCreated")) return SmartGroupModificationEvent.SmartGroupCreated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StateChange")) return SmartGroupModificationEvent.StateChange;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlertAdded")) return SmartGroupModificationEvent.AlertAdded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlertRemoved")) return SmartGroupModificationEvent.AlertRemoved;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SmartGroupModificationEvent value.");
         }
     }

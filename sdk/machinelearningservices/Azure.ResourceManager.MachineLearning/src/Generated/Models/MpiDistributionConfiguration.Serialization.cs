@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ProcessCountPerInstance != null)
                 {
-                    writer.WritePropertyName("processCountPerInstance");
+                    writer.WritePropertyName("processCountPerInstance"u8);
                     writer.WriteNumberValue(ProcessCountPerInstance.Value);
                 }
                 else
@@ -27,18 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("processCountPerInstance");
                 }
             }
-            writer.WritePropertyName("distributionType");
+            writer.WritePropertyName("distributionType"u8);
             writer.WriteStringValue(DistributionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MpiDistributionConfiguration DeserializeMpiDistributionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> processCountPerInstance = default;
             DistributionType distributionType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("processCountPerInstance"))
+                if (property.NameEquals("processCountPerInstance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     processCountPerInstance = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("distributionType"))
+                if (property.NameEquals("distributionType"u8))
                 {
                     distributionType = new DistributionType(property.Value.GetString());
                     continue;

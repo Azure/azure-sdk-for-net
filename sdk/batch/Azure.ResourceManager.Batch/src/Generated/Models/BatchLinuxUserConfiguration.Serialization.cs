@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Uid))
             {
-                writer.WritePropertyName("uid");
+                writer.WritePropertyName("uid"u8);
                 writer.WriteNumberValue(Uid.Value);
             }
             if (Optional.IsDefined(Gid))
             {
-                writer.WritePropertyName("gid");
+                writer.WritePropertyName("gid"u8);
                 writer.WriteNumberValue(Gid.Value);
             }
             if (Optional.IsDefined(SshPrivateKey))
             {
-                writer.WritePropertyName("sshPrivateKey");
+                writer.WritePropertyName("sshPrivateKey"u8);
                 writer.WriteStringValue(SshPrivateKey);
             }
             writer.WriteEndObject();
@@ -35,32 +35,34 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchLinuxUserConfiguration DeserializeBatchLinuxUserConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> uid = default;
             Optional<int> gid = default;
             Optional<string> sshPrivateKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uid"))
+                if (property.NameEquals("uid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uid = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("gid"))
+                if (property.NameEquals("gid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gid = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sshPrivateKey"))
+                if (property.NameEquals("sshPrivateKey"u8))
                 {
                     sshPrivateKey = property.Value.GetString();
                     continue;

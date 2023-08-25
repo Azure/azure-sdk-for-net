@@ -15,14 +15,17 @@ namespace Azure.Security.Attestation
     {
         internal static JsonWebKeySet DeserializeJsonWebKeySet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<JsonWebKey>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keys"))
+                if (property.NameEquals("keys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<JsonWebKey> array = new List<JsonWebKey>();

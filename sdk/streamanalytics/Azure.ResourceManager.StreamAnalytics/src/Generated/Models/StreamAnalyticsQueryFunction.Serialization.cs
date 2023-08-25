@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(QueryFunctionType);
-            writer.WritePropertyName("bindingType");
+            writer.WritePropertyName("bindingType"u8);
             writer.WriteStringValue(BindingType);
-            writer.WritePropertyName("inputs");
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("output");
+            writer.WritePropertyName("output"u8);
             writer.WriteObjectValue(Output);
             writer.WriteEndObject();
         }

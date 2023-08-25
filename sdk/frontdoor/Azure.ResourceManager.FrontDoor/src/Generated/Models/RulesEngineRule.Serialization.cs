@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("priority");
+            writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            writer.WritePropertyName("action");
+            writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action);
             if (Optional.IsCollectionDefined(MatchConditions))
             {
                 if (MatchConditions != null)
                 {
-                    writer.WritePropertyName("matchConditions");
+                    writer.WritePropertyName("matchConditions"u8);
                     writer.WriteStartArray();
                     foreach (var item in MatchConditions)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 if (MatchProcessingBehavior != null)
                 {
-                    writer.WritePropertyName("matchProcessingBehavior");
+                    writer.WritePropertyName("matchProcessingBehavior"u8);
                     writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
                 }
                 else
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RulesEngineRule DeserializeRulesEngineRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             int priority = default;
             RulesEngineAction action = default;
@@ -63,22 +67,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<MatchProcessingBehavior?> matchProcessingBehavior = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = RulesEngineAction.DeserializeRulesEngineAction(property.Value);
                     continue;
                 }
-                if (property.NameEquals("matchConditions"))
+                if (property.NameEquals("matchConditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     matchConditions = array;
                     continue;
                 }
-                if (property.NameEquals("matchProcessingBehavior"))
+                if (property.NameEquals("matchProcessingBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

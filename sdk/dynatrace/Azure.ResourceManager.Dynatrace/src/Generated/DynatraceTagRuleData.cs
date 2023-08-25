@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    /// <summary> A class representing the DynatraceTagRule data model. </summary>
+    /// <summary>
+    /// A class representing the DynatraceTagRule data model.
+    /// Tag rules for a monitor resource
+    /// </summary>
     public partial class DynatraceTagRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of DynatraceTagRuleData. </summary>

@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchResizeOperationStatus DeserializeBatchResizeOperationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> targetDedicatedNodes = default;
             Optional<int> targetLowPriorityNodes = default;
             Optional<TimeSpan> resizeTimeout = default;
@@ -25,61 +29,55 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<IReadOnlyList<ResponseError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetDedicatedNodes"))
+                if (property.NameEquals("targetDedicatedNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetDedicatedNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targetLowPriorityNodes"))
+                if (property.NameEquals("targetLowPriorityNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetLowPriorityNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resizeTimeout"))
+                if (property.NameEquals("resizeTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resizeTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("nodeDeallocationOption"))
+                if (property.NameEquals("nodeDeallocationOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeDeallocationOption = property.Value.GetString().ToBatchNodeDeallocationOption();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResponseError> array = new List<ResponseError>();

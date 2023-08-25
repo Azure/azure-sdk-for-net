@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static NetworkConnectionListResult DeserializeNetworkConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkConnectionData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<DevCenterNetworkConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkConnectionData> array = new List<NetworkConnectionData>();
+                    List<DevCenterNetworkConnectionData> array = new List<DevCenterNetworkConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConnectionData.DeserializeNetworkConnectionData(item));
+                        array.Add(DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -16,20 +16,23 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapsePrivateLinkHubListResult DeserializeSynapsePrivateLinkHubListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<SynapsePrivateLinkHubData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SynapsePrivateLinkHubData> array = new List<SynapsePrivateLinkHubData>();

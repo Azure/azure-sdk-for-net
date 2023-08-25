@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("criterionType");
+            writer.WritePropertyName("criterionType"u8);
             writer.WriteStringValue(CriterionType.ToString());
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("metricName");
+            writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
             if (Optional.IsDefined(MetricNamespace))
             {
-                writer.WritePropertyName("metricNamespace");
+                writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
-            writer.WritePropertyName("timeAggregation");
+            writer.WritePropertyName("timeAggregation"u8);
             writer.WriteStringValue(TimeAggregation.ToString());
             if (Optional.IsCollectionDefined(Dimensions))
             {
-                writer.WritePropertyName("dimensions");
+                writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(SkipMetricValidation))
             {
-                writer.WritePropertyName("skipMetricValidation");
+                writer.WritePropertyName("skipMetricValidation"u8);
                 writer.WriteBooleanValue(SkipMetricValidation.Value);
             }
             foreach (var item in AdditionalProperties)
@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MultiMetricCriteria DeserializeMultiMetricCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("criterionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

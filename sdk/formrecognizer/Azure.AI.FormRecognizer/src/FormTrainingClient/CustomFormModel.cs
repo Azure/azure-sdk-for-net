@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// An optional, user-defined name to associate with your model.
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         public string ModelName { get; }
 
@@ -77,7 +77,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Properties of a model, such as whether the model is a composed model or not.
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         [CodeGenMember("Attributes")]
         public CustomFormModelProperties Properties { get; }

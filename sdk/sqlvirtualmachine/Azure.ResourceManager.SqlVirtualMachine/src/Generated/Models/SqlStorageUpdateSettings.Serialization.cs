@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskCount))
             {
-                writer.WritePropertyName("diskCount");
+                writer.WritePropertyName("diskCount"u8);
                 writer.WriteNumberValue(DiskCount.Value);
             }
             if (Optional.IsDefined(StartingDeviceId))
             {
-                writer.WritePropertyName("startingDeviceId");
+                writer.WritePropertyName("startingDeviceId"u8);
                 writer.WriteNumberValue(StartingDeviceId.Value);
             }
             if (Optional.IsDefined(DiskConfigurationType))
             {
-                writer.WritePropertyName("diskConfigurationType");
+                writer.WritePropertyName("diskConfigurationType"u8);
                 writer.WriteStringValue(DiskConfigurationType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -35,36 +35,37 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlStorageUpdateSettings DeserializeSqlStorageUpdateSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> diskCount = default;
             Optional<int> startingDeviceId = default;
             Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskCount"))
+                if (property.NameEquals("diskCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startingDeviceId"))
+                if (property.NameEquals("startingDeviceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startingDeviceId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskConfigurationType"))
+                if (property.NameEquals("diskConfigurationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskConfigurationType = new SqlVmDiskConfigurationType(property.Value.GetString());

@@ -28,6 +28,32 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
+        public async Task CreateWithConnectionString()
+        {
+            #region Snippet:EventHubs_ReadMe_Create_ConnectionString
+
+#if SNIPPET
+            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fakeHub";
+#endif
+
+            // It is recommended that you cache the Event Hubs clients for the lifetime of your
+            // application, closing or disposing when application ends.  This example disposes
+            // after the immediate scope for simplicity.
+
+            await using var producer = new EventHubProducerClient(connectionString, eventHubName);
+
+            #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
         public async Task Inspect()
         {
             await using var scope = await EventHubScope.CreateAsync(1);
@@ -41,6 +67,10 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
+
+            // It is recommended that you cache the Event Hubs clients for the lifetime of your
+            // application, closing or disposing when application ends.  This example disposes
+            // after the immediate scope for simplicity.
 
             await using (var producer = new EventHubProducerClient(connectionString, eventHubName))
             {
@@ -69,11 +99,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = scope.EventHubName;
 #endif
 
+            // It is recommended that you cache the Event Hubs clients for the lifetime of your
+            // application, closing or disposing when application ends.  This example disposes
+            // after the immediate scope for simplicity.
+
             await using (var producer = new EventHubProducerClient(connectionString, eventHubName))
             {
                 using EventDataBatch eventBatch = await producer.CreateBatchAsync();
-                eventBatch.TryAdd(new EventData(new BinaryData("First")));
-                eventBatch.TryAdd(new EventData(new BinaryData("Second")));
+
+                if ((!eventBatch.TryAdd(new EventData("First"))) ||
+                    (!eventBatch.TryAdd(new EventData("Second"))))
+                {
+                   throw new ApplicationException("Not all events could be added to the batch!");
+                }
 
                 await producer.SendAsync(eventBatch);
             }
@@ -103,6 +141,10 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 #endif
 
                 string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+
+                // It is recommended that you cache the Event Hubs clients for the lifetime of your
+                // application, closing or disposing when application ends.  This example disposes
+                // after the immediate scope for simplicity.
 
                 await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName))
                 {
@@ -148,6 +190,10 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 #endif
 
                 string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+
+                // It is recommended that you cache the Event Hubs clients for the lifetime of your
+                // application, closing or disposing when application ends.  This example disposes
+                // after the immediate scope for simplicity.
 
                 await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName))
                 {
@@ -195,11 +241,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var credential = EventHubsTestEnvironment.Instance.Credential;
 #endif
 
+            // It is recommended that you cache the Event Hubs clients for the lifetime of your
+            // application, closing or disposing when application ends.  This example disposes
+            // after the immediate scope for simplicity.
+
             await using (var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential))
             {
                 using EventDataBatch eventBatch = await producer.CreateBatchAsync();
-                eventBatch.TryAdd(new EventData(new BinaryData("First")));
-                eventBatch.TryAdd(new EventData(new BinaryData("Second")));
+
+                if ((!eventBatch.TryAdd(new EventData("First"))) ||
+                    (!eventBatch.TryAdd(new EventData("Second"))))
+                {
+                   throw new ApplicationException("Not all events could be added to the batch!");
+                }
 
                 await producer.SendAsync(eventBatch);
             }

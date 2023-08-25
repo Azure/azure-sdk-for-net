@@ -15,20 +15,23 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static UploadOciDriverTaskOutput DeserializeUploadOciDriverTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> driverPackageName = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("driverPackageName"))
+                if (property.NameEquals("driverPackageName"u8))
                 {
                     driverPackageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReportableException> array = new List<ReportableException>();

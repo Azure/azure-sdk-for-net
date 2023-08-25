@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BindDistinguishedName))
             {
-                writer.WritePropertyName("bindDn");
+                writer.WritePropertyName("bindDn"u8);
                 writer.WriteStringValue(BindDistinguishedName);
             }
             if (Optional.IsDefined(BindPassword))
             {
-                writer.WritePropertyName("bindPassword");
+                writer.WritePropertyName("bindPassword"u8);
                 writer.WriteStringValue(BindPassword);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheUsernameDownloadCredential DeserializeStorageCacheUsernameDownloadCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> bindDn = default;
             Optional<string> bindPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bindDn"))
+                if (property.NameEquals("bindDn"u8))
                 {
                     bindDn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bindPassword"))
+                if (property.NameEquals("bindPassword"u8))
                 {
                     bindPassword = property.Value.GetString();
                     continue;

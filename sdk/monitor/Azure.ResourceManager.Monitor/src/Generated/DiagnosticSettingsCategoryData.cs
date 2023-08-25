@@ -12,7 +12,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the DiagnosticSettingsCategory data model. </summary>
+    /// <summary>
+    /// A class representing the DiagnosticSettingsCategory data model.
+    /// The diagnostic settings category resource.
+    /// </summary>
     public partial class DiagnosticSettingsCategoryData : ResourceData
     {
         /// <summary> Initializes a new instance of DiagnosticSettingsCategoryData. </summary>

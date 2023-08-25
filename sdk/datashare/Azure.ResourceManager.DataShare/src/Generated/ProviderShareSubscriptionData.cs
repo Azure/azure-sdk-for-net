@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    /// <summary> A class representing the ProviderShareSubscription data model. </summary>
+    /// <summary>
+    /// A class representing the ProviderShareSubscription data model.
+    /// A provider side share subscription data transfer object.
+    /// </summary>
     public partial class ProviderShareSubscriptionData : ResourceData
     {
         /// <summary> Initializes a new instance of ProviderShareSubscriptionData. </summary>

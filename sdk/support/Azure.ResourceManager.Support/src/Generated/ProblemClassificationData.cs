@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    /// <summary> A class representing the ProblemClassification data model. </summary>
+    /// <summary>
+    /// A class representing the ProblemClassification data model.
+    /// ProblemClassification resource object.
+    /// </summary>
     public partial class ProblemClassificationData : ResourceData
     {
         /// <summary> Initializes a new instance of ProblemClassificationData. </summary>

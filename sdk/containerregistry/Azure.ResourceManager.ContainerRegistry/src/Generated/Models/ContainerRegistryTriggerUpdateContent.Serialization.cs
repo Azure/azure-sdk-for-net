@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TimerTriggers))
             {
-                writer.WritePropertyName("timerTriggers");
+                writer.WritePropertyName("timerTriggers"u8);
                 writer.WriteStartArray();
                 foreach (var item in TimerTriggers)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsCollectionDefined(SourceTriggers))
             {
-                writer.WritePropertyName("sourceTriggers");
+                writer.WritePropertyName("sourceTriggers"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceTriggers)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(BaseImageTrigger))
             {
-                writer.WritePropertyName("baseImageTrigger");
+                writer.WritePropertyName("baseImageTrigger"u8);
                 writer.WriteObjectValue(BaseImageTrigger);
             }
             writer.WriteEndObject();

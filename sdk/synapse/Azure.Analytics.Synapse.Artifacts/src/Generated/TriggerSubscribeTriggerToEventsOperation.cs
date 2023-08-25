@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal TriggerSubscribeTriggerToEventsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation<TriggerSubscriptionOperationStatus> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal<TriggerSubscriptionOperationStatus>(clientDiagnostics, nextLinkOperation, response, "TriggerSubscribeTriggerToEventsOperation");
+            _operation = new OperationInternal<TriggerSubscriptionOperationStatus>(nextLinkOperation, clientDiagnostics, response, "TriggerSubscribeTriggerToEventsOperation");
         }
 
         /// <inheritdoc />

@@ -14,42 +14,8 @@ extendedZipContent:
   target: /nuget.config
 
 # Shared
-- path: /sdk/core/Azure.Core/src/Shared/AppContextSwitchHelper.cs
-  target: /Shared/Core/AppContextSwitchHelper.cs
-- path: /sdk/core/Azure.Core/src/Shared/Argument.cs
-  target: /Shared/Core/Argument.cs
-- path: /sdk/core/Azure.Core/src/Shared/AsyncLockWithValue.cs
-  target: /Shared/Core/AsyncLockWithValue.cs
 - path: /sdk/core/Azure.Core/src/Shared/AuthorizationChallengeParser.cs
   target: /Shared/Core/AuthorizationChallengeParser.cs
-- path: /sdk/core/Azure.Core/src/Shared/ClientDiagnostics.cs
-  target: /Shared/Core/ClientDiagnostics.cs
-- path: /sdk/core/Azure.Core/src/Shared/ConstantDelayStrategy.cs
-  target: /Shared/Core/ConstantDelayStrategy.cs
-- path: /sdk/core/Azure.Core/src/Shared/ContentTypeUtilities.cs
-  target: /Shared/Core/ContentTypeUtilities.cs
-- path: /sdk/core/Azure.Core/src/Shared/DelayStrategy.cs
-  target: /Shared/Core/DelayStrategy.cs
-- path: /sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs
-  target: /Shared/Core/DiagnosticScope.cs
-- path: /sdk/core/Azure.Core/src/Shared/DiagnosticScopeFactory.cs
-  target: /Shared/Core/DiagnosticScopeFactory.cs
-- path: /sdk/core/Azure.Core/src/Shared/HttpMessageSanitizer.cs
-  target: /Shared/Core/HttpMessageSanitizer.cs
-- path: /sdk/core/Azure.Core/src/Shared/OperationInternal.cs
-  target: /Shared/Core/OperationInternal.cs
-- path: /sdk/core/Azure.Core/src/Shared/OperationInternalBase.cs
-  target: /Shared/Core/OperationInternalBase.cs
-- path: /sdk/core/Azure.Core/src/Shared/OperationInternalOfT.cs
-  target: /Shared/Core/OperationInternalOfT.cs
-- path: /sdk/core/Azure.Core/src/Shared/OperationPoller.cs
-  target: /Shared/Core/OperationPoller.cs
-- path: /sdk/core/Azure.Core/src/Shared/RetryAfterDelayStrategy.cs
-  target: /Shared/Core/RetryAfterDelayStrategy.cs
-- path: /sdk/core/Azure.Core/src/Shared/TaskExtensions.cs
-  target: /Shared/Core/TaskExtensions.cs
-- path: /sdk/core/Azure.Core/src/Shared/VoidValue.cs
-  target: /Shared/Core/VoidValue.cs
 - path: /sdk/keyvault/Azure.Security.KeyVault.Shared/src/ChallengeBasedAuthenticationPolicy.cs
   target: /Shared/KeyVault/ChallengeBasedAuthenticationPolicy.cs
 ---
@@ -119,10 +85,11 @@ dotnet build /t:CopySource /p:Destination=<ProjectDirectory>
 
 The sample project file and _Program.cs_ are not copied automatically. Only the source necessary to build the REST client is copied. You are welcome to copy and modify the rest of the sample source as needed.
 
-You also need to add a reference to Azure.Core in your project. In your project directory where you just copied source run:
+You also need to add references to Azure.Core and Microsoft.Azure.AutoRest.CSharp in your project. In your project directory where you just copied source run:
 
 ```dotnetcli
 dotnet add package Azure.Core
+dotnet add package Microsoft.Azure.AutoRest.CSharp --prerelease
 ```
 
 ## Using the sample

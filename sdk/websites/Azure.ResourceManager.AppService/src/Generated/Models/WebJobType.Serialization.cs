@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static WebJobType ToWebJobType(this string value)
         {
-            if (string.Equals(value, "Continuous", StringComparison.InvariantCultureIgnoreCase)) return WebJobType.Continuous;
-            if (string.Equals(value, "Triggered", StringComparison.InvariantCultureIgnoreCase)) return WebJobType.Triggered;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Continuous")) return WebJobType.Continuous;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Triggered")) return WebJobType.Triggered;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebJobType value.");
         }
     }

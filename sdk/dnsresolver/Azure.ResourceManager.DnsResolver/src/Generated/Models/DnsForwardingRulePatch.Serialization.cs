@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TargetDnsServers))
             {
-                writer.WritePropertyName("targetDnsServers");
+                writer.WritePropertyName("targetDnsServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetDnsServers)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
             if (Optional.IsDefined(DnsForwardingRuleState))
             {
-                writer.WritePropertyName("forwardingRuleState");
+                writer.WritePropertyName("forwardingRuleState"u8);
                 writer.WriteStringValue(DnsForwardingRuleState.Value.ToString());
             }
             writer.WriteEndObject();

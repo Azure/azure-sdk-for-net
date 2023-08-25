@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FactName))
             {
-                writer.WritePropertyName("factName");
+                writer.WritePropertyName("factName"u8);
                 writer.WriteStringValue(FactName);
             }
             if (Optional.IsDefined(FactData))
             {
-                writer.WritePropertyName("factData");
+                writer.WritePropertyName("factData"u8);
                 writer.WriteStringValue(FactData);
             }
             if (Optional.IsDefined(ValueOffset))
             {
-                writer.WritePropertyName("valueOffset");
+                writer.WritePropertyName("valueOffset"u8);
                 writer.WriteStringValue(ValueOffset);
             }
             if (Optional.IsDefined(UserObjectId))
             {
-                writer.WritePropertyName("userObjectId");
+                writer.WritePropertyName("userObjectId"u8);
                 writer.WriteStringValue(UserObjectId);
             }
             writer.WriteEndObject();

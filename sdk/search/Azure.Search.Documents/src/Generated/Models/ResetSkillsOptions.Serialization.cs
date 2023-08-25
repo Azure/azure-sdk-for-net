@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SkillNames))
             {
-                writer.WritePropertyName("skillNames");
+                writer.WritePropertyName("skillNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in SkillNames)
                 {

@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyLength");
+            writer.WritePropertyName("keyLength"u8);
             writer.WriteNumberValue(KeyLength);
             writer.WriteEndObject();
         }
 
         internal static ConnectionResetSharedKey DeserializeConnectionResetSharedKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int keyLength = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyLength"))
+                if (property.NameEquals("keyLength"u8))
                 {
                     keyLength = property.Value.GetInt32();
                     continue;

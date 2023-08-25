@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataShare
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("invitationId");
+            writer.WritePropertyName("invitationId"u8);
             writer.WriteStringValue(InvitationId);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DataShare
 
         internal static DataShareConsumerInvitationData DeserializeDataShareConsumerInvitationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -49,32 +53,31 @@ namespace Azure.ResourceManager.DataShare
             Optional<string> userName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,107 +86,101 @@ namespace Azure.ResourceManager.DataShare
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("dataSetCount"))
+                        if (property0.NameEquals("dataSetCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataSetCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("expirationDate"))
+                        if (property0.NameEquals("expirationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("invitationId"))
+                        if (property0.NameEquals("invitationId"u8))
                         {
                             invitationId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("invitationStatus"))
+                        if (property0.NameEquals("invitationStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             invitationStatus = new DataShareInvitationStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("location"))
+                        if (property0.NameEquals("location"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             location = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("providerEmail"))
+                        if (property0.NameEquals("providerEmail"u8))
                         {
                             providerEmail = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("providerName"))
+                        if (property0.NameEquals("providerName"u8))
                         {
                             providerName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("providerTenantName"))
+                        if (property0.NameEquals("providerTenantName"u8))
                         {
                             providerTenantName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("respondedAt"))
+                        if (property0.NameEquals("respondedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             respondedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("sentAt"))
+                        if (property0.NameEquals("sentAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sentAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("shareName"))
+                        if (property0.NameEquals("shareName"u8))
                         {
                             shareName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("termsOfUse"))
+                        if (property0.NameEquals("termsOfUse"u8))
                         {
                             termsOfUse = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("userEmail"))
+                        if (property0.NameEquals("userEmail"u8))
                         {
                             userEmail = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("userName"))
+                        if (property0.NameEquals("userName"u8))
                         {
                             userName = property0.Value.GetString();
                             continue;

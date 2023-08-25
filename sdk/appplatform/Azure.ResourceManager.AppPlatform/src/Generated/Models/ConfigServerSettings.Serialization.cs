@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GitProperty))
             {
-                writer.WritePropertyName("gitProperty");
+                writer.WritePropertyName("gitProperty"u8);
                 writer.WriteObjectValue(GitProperty);
             }
             writer.WriteEndObject();
@@ -25,14 +25,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ConfigServerSettings DeserializeConfigServerSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformConfigServerGitProperty> gitProperty = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("gitProperty"))
+                if (property.NameEquals("gitProperty"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gitProperty = AppPlatformConfigServerGitProperty.DeserializeAppPlatformConfigServerGitProperty(property.Value);

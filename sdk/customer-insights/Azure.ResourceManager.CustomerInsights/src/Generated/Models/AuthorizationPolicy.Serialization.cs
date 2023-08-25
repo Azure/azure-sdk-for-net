@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static AuthorizationPolicy DeserializeAuthorizationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> policyName = default;
             IReadOnlyList<PermissionType> permissions = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("permissions"))
+                if (property.NameEquals("permissions"u8))
                 {
                     List<PermissionType> array = new List<PermissionType>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -36,12 +40,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     permissions = array;
                     continue;
                 }
-                if (property.NameEquals("primaryKey"))
+                if (property.NameEquals("primaryKey"u8))
                 {
                     primaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"))
+                if (property.NameEquals("secondaryKey"u8))
                 {
                     secondaryKey = property.Value.GetString();
                     continue;

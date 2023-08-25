@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisForceRebootResult DeserializeRedisForceRebootResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetSlot");
+            writer.WritePropertyName("targetSlot"u8);
             writer.WriteStringValue(TargetSlot);
-            writer.WritePropertyName("preserveVnet");
+            writer.WritePropertyName("preserveVnet"u8);
             writer.WriteBooleanValue(PreserveVnet);
             writer.WriteEndObject();
         }

@@ -14,12 +14,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeInstanceCreatedBy DeserializeMachineLearningComputeInstanceCreatedBy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userName = default;
             Optional<string> userOrgId = default;
             Optional<string> userId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,12 +33,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userOrgId"))
+                if (property.NameEquals("userOrgId"u8))
                 {
                     userOrgId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userId"))
+                if (property.NameEquals("userId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static LocationExpanded DeserializeLocationExpanded(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> subscriptionId = default;
             Optional<string> name = default;
@@ -21,55 +26,68 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> displayName = default;
             Optional<string> regionalDisplayName = default;
             Optional<LocationMetadata> metadata = default;
+            Optional<IReadOnlyList<AvailabilityZoneMappings>> availabilityZoneMappings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToLocationType();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("regionalDisplayName"))
+                if (property.NameEquals("regionalDisplayName"u8))
                 {
                     regionalDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = LocationMetadata.DeserializeLocationMetadata(property.Value);
                     continue;
                 }
+                if (property.NameEquals("availabilityZoneMappings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AvailabilityZoneMappings> array = new List<AvailabilityZoneMappings>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.AvailabilityZoneMappings.DeserializeAvailabilityZoneMappings(item));
+                    }
+                    availabilityZoneMappings = array;
+                    continue;
+                }
             }
-            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, Optional.ToNullable(type), displayName.Value, regionalDisplayName.Value, metadata.Value);
+            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, Optional.ToNullable(type), displayName.Value, regionalDisplayName.Value, metadata.Value, Optional.ToList(availabilityZoneMappings));
         }
     }
 }

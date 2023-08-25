@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(InstanceIds))
             {
-                writer.WritePropertyName("instanceIds");
+                writer.WritePropertyName("instanceIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in InstanceIds)
                 {

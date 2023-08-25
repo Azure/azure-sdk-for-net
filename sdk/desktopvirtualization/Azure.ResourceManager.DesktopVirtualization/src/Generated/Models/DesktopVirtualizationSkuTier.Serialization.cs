@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         public static DesktopVirtualizationSkuTier ToDesktopVirtualizationSkuTier(this string value)
         {
-            if (string.Equals(value, "Free", StringComparison.InvariantCultureIgnoreCase)) return DesktopVirtualizationSkuTier.Free;
-            if (string.Equals(value, "Basic", StringComparison.InvariantCultureIgnoreCase)) return DesktopVirtualizationSkuTier.Basic;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return DesktopVirtualizationSkuTier.Standard;
-            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return DesktopVirtualizationSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return DesktopVirtualizationSkuTier.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return DesktopVirtualizationSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return DesktopVirtualizationSkuTier.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return DesktopVirtualizationSkuTier.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DesktopVirtualizationSkuTier value.");
         }
     }

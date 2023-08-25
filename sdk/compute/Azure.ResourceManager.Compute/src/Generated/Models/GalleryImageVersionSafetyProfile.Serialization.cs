@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
             {
-                writer.WritePropertyName("allowDeletionOfReplicatedLocations");
+                writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);
             }
             writer.WriteEndObject();
@@ -26,26 +26,28 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImageVersionSafetyProfile DeserializeGalleryImageVersionSafetyProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> reportedForPolicyViolation = default;
             Optional<IReadOnlyList<GalleryImageVersionPolicyViolation>> policyViolations = default;
             Optional<bool> allowDeletionOfReplicatedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("reportedForPolicyViolation"))
+                if (property.NameEquals("reportedForPolicyViolation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reportedForPolicyViolation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("policyViolations"))
+                if (property.NameEquals("policyViolations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GalleryImageVersionPolicyViolation> array = new List<GalleryImageVersionPolicyViolation>();
@@ -56,11 +58,10 @@ namespace Azure.ResourceManager.Compute.Models
                     policyViolations = array;
                     continue;
                 }
-                if (property.NameEquals("allowDeletionOfReplicatedLocations"))
+                if (property.NameEquals("allowDeletionOfReplicatedLocations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowDeletionOfReplicatedLocations = property.Value.GetBoolean();

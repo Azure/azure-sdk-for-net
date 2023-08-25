@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Environment type is either user created or curated by Azure ML service
-    /// Serialized Name: EnvironmentType
-    /// </summary>
+    /// <summary> Environment type is either user created or curated by Azure ML service. </summary>
     public readonly partial struct MachineLearningEnvironmentType : IEquatable<MachineLearningEnvironmentType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string CuratedValue = "Curated";
         private const string UserCreatedValue = "UserCreated";
 
-        /// <summary>
-        /// Curated
-        /// Serialized Name: EnvironmentType.Curated
-        /// </summary>
+        /// <summary> Curated. </summary>
         public static MachineLearningEnvironmentType Curated { get; } = new MachineLearningEnvironmentType(CuratedValue);
-        /// <summary>
-        /// UserCreated
-        /// Serialized Name: EnvironmentType.UserCreated
-        /// </summary>
+        /// <summary> UserCreated. </summary>
         public static MachineLearningEnvironmentType UserCreated { get; } = new MachineLearningEnvironmentType(UserCreatedValue);
         /// <summary> Determines if two <see cref="MachineLearningEnvironmentType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningEnvironmentType left, MachineLearningEnvironmentType right) => left.Equals(right);

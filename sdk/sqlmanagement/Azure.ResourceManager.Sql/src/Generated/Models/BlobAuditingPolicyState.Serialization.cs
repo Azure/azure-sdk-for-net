@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static BlobAuditingPolicyState ToBlobAuditingPolicyState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return BlobAuditingPolicyState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return BlobAuditingPolicyState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return BlobAuditingPolicyState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return BlobAuditingPolicyState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobAuditingPolicyState value.");
         }
     }

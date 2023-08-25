@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDelegatedSubnetUsage. </summary>
-        /// <param name="subnetName"> name of the subnet. </param>
-        /// <param name="usage"> Number of used delegated subnets. </param>
+        /// <param name="subnetName"> Name of the delegated subnet for which IP addresses are in use. </param>
+        /// <param name="usage"> Number of IP addresses used by the delegated subnet. </param>
         internal PostgreSqlFlexibleServerDelegatedSubnetUsage(string subnetName, long? usage)
         {
             SubnetName = subnetName;
             Usage = usage;
         }
 
-        /// <summary> name of the subnet. </summary>
+        /// <summary> Name of the delegated subnet for which IP addresses are in use. </summary>
         public string SubnetName { get; }
-        /// <summary> Number of used delegated subnets. </summary>
+        /// <summary> Number of IP addresses used by the delegated subnet. </summary>
         public long? Usage { get; }
     }
 }

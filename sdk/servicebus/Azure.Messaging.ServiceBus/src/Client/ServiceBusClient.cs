@@ -72,7 +72,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
             Logger.ClientCloseStart(typeof(ServiceBusClient), Identifier);
@@ -92,15 +91,6 @@ namespace Azure.Messaging.ServiceBus
                 Logger.ClientCloseComplete(typeof(ServiceBusClient), Identifier);
             }
         }
-
-        /// <summary>
-        /// Gets the metrics associated with this <see cref="ServiceBusClient"/> instance. The metrics returned represent a snapshot and will not be updated.
-        /// To get updated metrics, this method should be called again.
-        /// In order to use this property, <see cref="ServiceBusClientOptions.EnableTransportMetrics"/> must be set to <value>true</value>.
-        /// </summary>
-        internal virtual ServiceBusTransportMetrics GetTransportMetrics()
-            => Connection.InnerClient.TransportMetrics?.Clone() ??
-               throw new InvalidOperationException("Transport metrics are not enabled. To enable transport metrics, set the EnableTransportMetrics property on the ServiceBusClientOptions.");
 
         /// <summary>
         /// The connection that is used for the client.

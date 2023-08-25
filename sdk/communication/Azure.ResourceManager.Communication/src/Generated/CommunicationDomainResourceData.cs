@@ -12,14 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary> A class representing the CommunicationDomainResource data model. </summary>
+    /// <summary>
+    /// A class representing the CommunicationDomainResource data model.
+    /// A class representing a Domains resource.
+    /// </summary>
     public partial class CommunicationDomainResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
         /// <param name="location"> The location. </param>
         public CommunicationDomainResourceData(AzureLocation location) : base(location)
         {
-            ValidSenderUsernames = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
@@ -36,9 +38,8 @@ namespace Azure.ResourceManager.Communication
         /// <param name="domainManagement"> Describes how a Domains resource is being managed. </param>
         /// <param name="verificationStates"> List of VerificationStatusRecord. </param>
         /// <param name="verificationRecords"> List of DnsRecord. </param>
-        /// <param name="validSenderUsernames"> Collection of valid sender usernames. This is a key-value pair where key=username and value=display name. </param>
         /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
-        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, DomainPropertiesVerificationStates verificationStates, DomainPropertiesVerificationRecords verificationRecords, IDictionary<string, string> validSenderUsernames, UserEngagementTracking? userEngagementTracking) : base(id, name, resourceType, systemData, tags, location)
+        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, DomainPropertiesVerificationStates verificationStates, DomainPropertiesVerificationRecords verificationRecords, UserEngagementTracking? userEngagementTracking) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             DataLocation = dataLocation;
@@ -47,7 +48,6 @@ namespace Azure.ResourceManager.Communication
             DomainManagement = domainManagement;
             VerificationStates = verificationStates;
             VerificationRecords = verificationRecords;
-            ValidSenderUsernames = validSenderUsernames;
             UserEngagementTracking = userEngagementTracking;
         }
 
@@ -65,8 +65,6 @@ namespace Azure.ResourceManager.Communication
         public DomainPropertiesVerificationStates VerificationStates { get; }
         /// <summary> List of DnsRecord. </summary>
         public DomainPropertiesVerificationRecords VerificationRecords { get; }
-        /// <summary> Collection of valid sender usernames. This is a key-value pair where key=username and value=display name. </summary>
-        public IDictionary<string, string> ValidSenderUsernames { get; }
         /// <summary> Describes whether user engagement tracking is enabled or disabled. </summary>
         public UserEngagementTracking? UserEngagementTracking { get; set; }
     }

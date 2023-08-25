@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public bool CanRemote { get; }
 
-        protected JsonWebKey KeyMaterial { get; set; }
+        internal protected JsonWebKey KeyMaterial { get; set; }
 
         protected bool MustRemote => CanRemote && !KeyMaterial.HasPrivateKey;
 

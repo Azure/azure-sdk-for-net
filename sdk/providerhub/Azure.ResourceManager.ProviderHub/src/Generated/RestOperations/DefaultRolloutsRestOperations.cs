@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-09-01-preview";
+            _apiVersion = apiVersion ?? "2020-11-20";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DefaultRolloutArrayResponseWithContinuation>> ListByProviderRegistrationAsync(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
+        public async Task<Response<DefaultRolloutListResult>> ListByProviderRegistrationAsync(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -303,9 +303,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        DefaultRolloutArrayResponseWithContinuation value = default;
+                        DefaultRolloutListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DefaultRolloutArrayResponseWithContinuation.DeserializeDefaultRolloutArrayResponseWithContinuation(document.RootElement);
+                        value = DefaultRolloutListResult.DeserializeDefaultRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DefaultRolloutArrayResponseWithContinuation> ListByProviderRegistration(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
+        public Response<DefaultRolloutListResult> ListByProviderRegistration(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -330,9 +330,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        DefaultRolloutArrayResponseWithContinuation value = default;
+                        DefaultRolloutListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DefaultRolloutArrayResponseWithContinuation.DeserializeDefaultRolloutArrayResponseWithContinuation(document.RootElement);
+                        value = DefaultRolloutListResult.DeserializeDefaultRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DefaultRolloutArrayResponseWithContinuation>> ListByProviderRegistrationNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
+        public async Task<Response<DefaultRolloutListResult>> ListByProviderRegistrationNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -442,9 +442,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        DefaultRolloutArrayResponseWithContinuation value = default;
+                        DefaultRolloutListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DefaultRolloutArrayResponseWithContinuation.DeserializeDefaultRolloutArrayResponseWithContinuation(document.RootElement);
+                        value = DefaultRolloutListResult.DeserializeDefaultRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DefaultRolloutArrayResponseWithContinuation> ListByProviderRegistrationNextPage(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
+        public Response<DefaultRolloutListResult> ListByProviderRegistrationNextPage(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -471,9 +471,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        DefaultRolloutArrayResponseWithContinuation value = default;
+                        DefaultRolloutListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DefaultRolloutArrayResponseWithContinuation.DeserializeDefaultRolloutArrayResponseWithContinuation(document.RootElement);
+                        value = DefaultRolloutListResult.DeserializeDefaultRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

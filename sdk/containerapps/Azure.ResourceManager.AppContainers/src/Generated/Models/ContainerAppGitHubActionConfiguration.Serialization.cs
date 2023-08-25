@@ -17,42 +17,47 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RegistryInfo))
             {
-                writer.WritePropertyName("registryInfo");
+                writer.WritePropertyName("registryInfo"u8);
                 writer.WriteObjectValue(RegistryInfo);
             }
             if (Optional.IsDefined(AzureCredentials))
             {
-                writer.WritePropertyName("azureCredentials");
+                writer.WritePropertyName("azureCredentials"u8);
                 writer.WriteObjectValue(AzureCredentials);
             }
             if (Optional.IsDefined(ContextPath))
             {
-                writer.WritePropertyName("contextPath");
+                writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
+            }
+            if (Optional.IsDefined(GitHubPersonalAccessToken))
+            {
+                writer.WritePropertyName("githubPersonalAccessToken"u8);
+                writer.WriteStringValue(GitHubPersonalAccessToken);
             }
             if (Optional.IsDefined(Image))
             {
-                writer.WritePropertyName("image");
+                writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
             if (Optional.IsDefined(PublishType))
             {
-                writer.WritePropertyName("publishType");
+                writer.WritePropertyName("publishType"u8);
                 writer.WriteStringValue(PublishType);
             }
             if (Optional.IsDefined(OS))
             {
-                writer.WritePropertyName("os");
+                writer.WritePropertyName("os"u8);
                 writer.WriteStringValue(OS);
             }
             if (Optional.IsDefined(RuntimeStack))
             {
-                writer.WritePropertyName("runtimeStack");
+                writer.WritePropertyName("runtimeStack"u8);
                 writer.WriteStringValue(RuntimeStack);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
-                writer.WritePropertyName("runtimeVersion");
+                writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
             writer.WriteEndObject();
@@ -60,9 +65,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppGitHubActionConfiguration DeserializeContainerAppGitHubActionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppRegistryInfo> registryInfo = default;
             Optional<ContainerAppCredentials> azureCredentials = default;
             Optional<string> contextPath = default;
+            Optional<string> gitHubPersonalAccessToken = default;
             Optional<string> image = default;
             Optional<string> publishType = default;
             Optional<string> os = default;
@@ -70,58 +80,61 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> runtimeVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registryInfo"))
+                if (property.NameEquals("registryInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureCredentials"))
+                if (property.NameEquals("azureCredentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("contextPath"))
+                if (property.NameEquals("contextPath"u8))
                 {
                     contextPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("image"))
+                if (property.NameEquals("githubPersonalAccessToken"u8))
+                {
+                    gitHubPersonalAccessToken = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("image"u8))
                 {
                     image = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publishType"))
+                if (property.NameEquals("publishType"u8))
                 {
                     publishType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("os"))
+                if (property.NameEquals("os"u8))
                 {
                     os = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runtimeStack"))
+                if (property.NameEquals("runtimeStack"u8))
                 {
                     runtimeStack = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runtimeVersion"))
+                if (property.NameEquals("runtimeVersion"u8))
                 {
                     runtimeVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerAppGitHubActionConfiguration(registryInfo.Value, azureCredentials.Value, contextPath.Value, image.Value, publishType.Value, os.Value, runtimeStack.Value, runtimeVersion.Value);
+            return new ContainerAppGitHubActionConfiguration(registryInfo.Value, azureCredentials.Value, contextPath.Value, gitHubPersonalAccessToken.Value, image.Value, publishType.Value, os.Value, runtimeStack.Value, runtimeVersion.Value);
         }
     }
 }

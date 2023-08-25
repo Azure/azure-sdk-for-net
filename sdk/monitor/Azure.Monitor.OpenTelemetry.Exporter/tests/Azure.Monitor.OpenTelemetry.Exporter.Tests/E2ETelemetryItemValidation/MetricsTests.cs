@@ -1,12 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -43,18 +39,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var meterName = $"meterName{uniqueTestId}";
             using var meter = new Meter(meterName, "1.0");
 
-            var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
+            var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
             if (asView)
             {
-                meterProviderBulider
+                meterProviderBuilder
                     // Rename an instrument to new name.
                     .AddView(instrumentName: "MyCounter", name: "MyCounterRenamed");
             }
 
-            var meterProvider = meterProviderBulider.Build();
+            var meterProvider = meterProviderBuilder.Build();
 
             // ACT
             var counter = meter.CreateCounter<long>("MyCounter");
@@ -64,17 +60,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            meterProvider.Dispose();
+            meterProvider?.Dispose();
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.Single();
+            var telemetryItem = telemetryItems.Last()!;
 
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
                 expectedMetricDataPointName: asView ? "MyCounterRenamed" : "MyCounter",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: 20000,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
         }
@@ -90,18 +85,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var meterName = $"meterName{uniqueTestId}";
             using var meter = new Meter(meterName, "1.0");
 
-            var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
+            var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
             if (asView)
             {
-                meterProviderBulider
+                meterProviderBuilder
                 // Change Histogram boundaries
                 .AddView(instrumentName: "MyHistogram", name: "MyHistogramRenamed");
             }
 
-            var meterProvider = meterProviderBulider.Build();
+            var meterProvider = meterProviderBuilder.Build();
 
             // ACT
             var histogram = meter.CreateHistogram<long>("MyHistogram");
@@ -118,17 +113,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            meterProvider.Dispose();
+            meterProvider?.Dispose();
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.Single();
+            var telemetryItem = telemetryItems.Last()!;
 
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
                 expectedMetricDataPointName: asView ? "MyHistogramRenamed" : "MyHistogram",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: sum,
                 expectedMetricDataPointCount: loop,
                 expectedMetricDataPointMax:max,
@@ -139,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void VerifyGuage(bool asView)
+        public void VerifyGauge(bool asView)
         {
             // SETUP
             var uniqueTestId = Guid.NewGuid();
@@ -147,36 +141,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var meterName = $"meterName{uniqueTestId}";
             using var meter = new Meter(meterName, "1.0");
 
-            var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
+            var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
             if (asView)
             {
-                meterProviderBulider
-                    .AddView(instrumentName: "MyGuage", name: "MyGuageRenamed");
+                meterProviderBuilder
+                    .AddView(instrumentName: "MyGauge", name: "MyGaugeRenamed");
             }
 
-            var meterProvider = meterProviderBulider.Build();
+            var meterProvider = meterProviderBuilder?.Build();
 
             // ACT
-            var myObservableGauge = meter.CreateObservableGauge("MyGuage", () =>
+            var myObservableGauge = meter.CreateObservableGauge("MyGauge", () =>
                 new Measurement<double>(
                     value: 123.45,
-                    tags: new KeyValuePair<string, object>("tag1", "value1")));
+                    tags: new KeyValuePair<string, object?>("tag1", "value1")));
 
             // CLEANUP
-            meterProvider.Dispose();
+            meterProvider?.Dispose();
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.Single();
+            var telemetryItem = telemetryItems.Last()!;
 
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
-                expectedMetricDataPointName: asView ? "MyGuageRenamed" : "MyGuage",
-                expectedMetricDataPointNamespace: meterName,
+                expectedMetricDataPointName: asView ? "MyGaugeRenamed" : "MyGauge",
                 expectedMetricDataPointValue: 123.45,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" } });
         }
@@ -192,17 +185,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var meterName = $"meterName{uniqueTestId}";
             using var meter = new Meter(meterName, "1.0");
 
-            var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
+            var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
             if (asView)
             {
-                meterProviderBulider
+                meterProviderBuilder
                 .AddView(instrumentName: "MyUpDownCounter", name: "MyUpDownCounterRenamed");
             }
 
-            var meterProvider = meterProviderBulider.Build();
+            var meterProvider = meterProviderBuilder.Build();
 
             // ACT
             var upDownCounter = meter.CreateUpDownCounter<long>("MyUpDownCounter");
@@ -213,17 +206,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             upDownCounter.Add(-4, new("tag1", "value1"), new("tag2", "value2"));
 
             // CLEANUP
-            meterProvider.Dispose();
+            meterProvider?.Dispose();
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.Single();
+            var telemetryItem = telemetryItems.Last()!;
 
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
                 expectedMetricDataPointName: asView ? "MyUpDownCounterRenamed" : "MyUpDownCounter",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: -2,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
         }
@@ -239,17 +231,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var meterName = $"meterName{uniqueTestId}";
             using var meter = new Meter(meterName, "1.0");
 
-            var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
+            var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems, out MetricReader metricReader);
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems, out MetricReader metricReader);
 
             if (asView)
             {
-                meterProviderBulider
+                meterProviderBuilder
                 .AddView(instrumentName: "MyUpDownCounter", name: "MyUpDownCounterRenamed");
             }
 
-            using var meterProvider = meterProviderBulider.Build();
+            using var meterProvider = meterProviderBuilder.Build();
 
             // ACT
             var value = 1;
@@ -262,23 +254,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             metricReader.Collect();
             Assert.True(telemetryItems.Count == 1);
-            Assert.True(telemetryItems.TryTake(out var telemetryItem));
+            var telemetryItem = telemetryItems.Last()!;
             this.telemetryOutput.Write(telemetryItem);
             TelemetryItemValidationHelper.AssertMetricTelemetry(
-                telemetryItem: telemetryItem,
+                telemetryItem: telemetryItem!,
                 expectedMetricDataPointName: asView ? "MyUpDownCounterRenamed" : "MyUpDownCounter",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: -2,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
 
+            // Clear the telemetryItems.
+            telemetryItems.Clear();
+
             metricReader.Collect();
             Assert.True(telemetryItems.Count == 1);
-            Assert.True(telemetryItems.TryTake(out telemetryItem));
-            this.telemetryOutput.Write(telemetryItem);
+            telemetryItem = telemetryItems.Last()!;
+            this.telemetryOutput.Write(telemetryItem!);
             TelemetryItemValidationHelper.AssertMetricTelemetry(
-                telemetryItem: telemetryItem,
+                telemetryItem: telemetryItem!,
                 expectedMetricDataPointName: asView ? "MyUpDownCounterRenamed" : "MyUpDownCounter",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: 4,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
         }

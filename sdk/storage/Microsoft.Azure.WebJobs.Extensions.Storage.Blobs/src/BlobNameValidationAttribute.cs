@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
     /// <summary>
     /// DataAnnotation attribute to validate a Blob Path against Azure Storage rules.
     /// A BlobPath could be:
-    /// <list>
+    /// <list type="bullet">
     /// <item>A Container / Blob Name</item>
     /// <item>An absolute URI specifying a Blob</item>
     /// <item>Just a Container Name</item>

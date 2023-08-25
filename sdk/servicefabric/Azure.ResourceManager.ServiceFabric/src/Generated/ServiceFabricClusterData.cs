@@ -14,7 +14,11 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    /// <summary> A class representing the ServiceFabricCluster data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceFabricCluster data model.
+    /// The cluster resource
+    ///
+    /// </summary>
     public partial class ServiceFabricClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricClusterData. </summary>
@@ -44,23 +48,23 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="certificateCommonNames"> Describes a list of server certificates referenced by common name that are used to secure the cluster. </param>
         /// <param name="clientCertificateCommonNames"> The list of client certificates referenced by common name that are allowed to manage the cluster. </param>
         /// <param name="clientCertificateThumbprints"> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to &apos;Manual&apos;. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
         /// <param name="clusterEndpoint"> The Azure Resource Provider endpoint. A system service in the cluster connects to this  endpoint. </param>
         /// <param name="clusterId"> A service generated unique identifier for the cluster resource. </param>
         /// <param name="clusterState">
         /// The current state of the cluster.
-        /// 
+        ///
         ///   - WaitingForNodes - Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it.
         ///   - Deploying - Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up.
         ///   - BaselineUpgrade - Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time.
         ///   - UpdatingUserConfiguration - Indicates that the cluster is being upgraded with the user provided configuration.
         ///   - UpdatingUserCertificate - Indicates that the cluster is being upgraded with the user provided certificate.
-        ///   - UpdatingInfrastructure - Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the **upgradeMode** is set to &apos;Automatic&apos;.
+        ///   - UpdatingInfrastructure - Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the **upgradeMode** is set to 'Automatic'.
         ///   - EnforcingClusterVersion - Indicates that cluster is on a different version than expected and the cluster is being upgraded to the expected version.
         ///   - UpgradeServiceUnreachable - Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider.
         ///   - AutoScale - Indicates that the ReliabilityLevel of the cluster is being adjusted.
         ///   - Ready - Indicates that the cluster is in a stable state.
-        /// 
+        ///
         /// </param>
         /// <param name="diagnosticsStorageAccountConfig"> The storage account information for storing Service Fabric diagnostic logs. </param>
         /// <param name="isEventStoreServiceEnabled"> Indicates if the event store service is enabled. </param>
@@ -70,13 +74,13 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="provisioningState"> The provisioning state of the cluster resource. </param>
         /// <param name="reliabilityLevel">
         /// The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        /// 
+        ///
         ///   - None - Run the System services with a target replica set count of 1. This should only be used for test clusters.
         ///   - Bronze - Run the System services with a target replica set count of 3. This should only be used for test clusters.
         ///   - Silver - Run the System services with a target replica set count of 5.
         ///   - Gold - Run the System services with a target replica set count of 7.
         ///   - Platinum - Run the System services with a target replica set count of 9.
-        /// 
+        ///
         /// </param>
         /// <param name="reverseProxyCertificate"> The server certificate used by reverse proxy. </param>
         /// <param name="reverseProxyCertificateCommonNames"> Describes a list of server certificates referenced by common name that are used to secure the cluster. </param>
@@ -84,10 +88,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="upgradeMode"> The upgrade mode of the cluster when new Service Fabric runtime version is available. </param>
         /// <param name="applicationTypeVersionsCleanupPolicy"> The policy used to clean up unused versions. </param>
         /// <param name="vmImage"> The VM image VMSS has been configured with. Generic names such as Windows or Linux can be used. </param>
-        /// <param name="serviceFabricZonalUpgradeMode"> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can&apos;t be modified if a node type with multiple Availability Zones is already present in the cluster. </param>
+        /// <param name="serviceFabricZonalUpgradeMode"> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can't be modified if a node type with multiple Availability Zones is already present in the cluster. </param>
         /// <param name="vmssZonalUpgradeMode"> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </param>
         /// <param name="isInfrastructureServiceManagerEnabled"> Indicates if infrastructure service manager is enabled. </param>
-        /// <param name="upgradeWave"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **upgradeMode** is set to &apos;Automatic&apos;. </param>
+        /// <param name="upgradeWave"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **upgradeMode** is set to 'Automatic'. </param>
         /// <param name="upgradePauseStartOn"> Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
         /// <param name="upgradePauseEndOn"> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
         /// <param name="isWaveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public IList<ClusterClientCertificateCommonName> ClientCertificateCommonNames { get; }
         /// <summary> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. </summary>
         public IList<ClusterClientCertificateThumbprint> ClientCertificateThumbprints { get; }
-        /// <summary> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to &apos;Manual&apos;. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
+        /// <summary> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
         public string ClusterCodeVersion { get; set; }
         /// <summary> The Azure Resource Provider endpoint. A system service in the cluster connects to this  endpoint. </summary>
         public Uri ClusterEndpoint { get; }
@@ -152,18 +156,18 @@ namespace Azure.ResourceManager.ServiceFabric
         public Guid? ClusterId { get; }
         /// <summary>
         /// The current state of the cluster.
-        /// 
+        ///
         ///   - WaitingForNodes - Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it.
         ///   - Deploying - Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up.
         ///   - BaselineUpgrade - Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time.
         ///   - UpdatingUserConfiguration - Indicates that the cluster is being upgraded with the user provided configuration.
         ///   - UpdatingUserCertificate - Indicates that the cluster is being upgraded with the user provided certificate.
-        ///   - UpdatingInfrastructure - Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the **upgradeMode** is set to &apos;Automatic&apos;.
+        ///   - UpdatingInfrastructure - Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the **upgradeMode** is set to 'Automatic'.
         ///   - EnforcingClusterVersion - Indicates that cluster is on a different version than expected and the cluster is being upgraded to the expected version.
         ///   - UpgradeServiceUnreachable - Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider.
         ///   - AutoScale - Indicates that the ReliabilityLevel of the cluster is being adjusted.
         ///   - Ready - Indicates that the cluster is in a stable state.
-        /// 
+        ///
         /// </summary>
         public ServiceFabricClusterState? ClusterState { get; }
         /// <summary> The storage account information for storing Service Fabric diagnostic logs. </summary>
@@ -180,13 +184,13 @@ namespace Azure.ResourceManager.ServiceFabric
         public ServiceFabricProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        /// 
+        ///
         ///   - None - Run the System services with a target replica set count of 1. This should only be used for test clusters.
         ///   - Bronze - Run the System services with a target replica set count of 3. This should only be used for test clusters.
         ///   - Silver - Run the System services with a target replica set count of 5.
         ///   - Gold - Run the System services with a target replica set count of 7.
         ///   - Platinum - Run the System services with a target replica set count of 9.
-        /// 
+        ///
         /// </summary>
         public ClusterReliabilityLevel? ReliabilityLevel { get; set; }
         /// <summary> The server certificate used by reverse proxy. </summary>
@@ -211,13 +215,13 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary> The VM image VMSS has been configured with. Generic names such as Windows or Linux can be used. </summary>
         public string VmImage { get; set; }
-        /// <summary> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can&apos;t be modified if a node type with multiple Availability Zones is already present in the cluster. </summary>
+        /// <summary> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can't be modified if a node type with multiple Availability Zones is already present in the cluster. </summary>
         public SfZonalUpgradeMode? ServiceFabricZonalUpgradeMode { get; set; }
         /// <summary> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </summary>
         public VmssZonalUpgradeMode? VmssZonalUpgradeMode { get; set; }
         /// <summary> Indicates if infrastructure service manager is enabled. </summary>
         public bool? IsInfrastructureServiceManagerEnabled { get; set; }
-        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **upgradeMode** is set to &apos;Automatic&apos;. </summary>
+        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **upgradeMode** is set to 'Automatic'. </summary>
         public ClusterUpgradeCadence? UpgradeWave { get; set; }
         /// <summary> Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </summary>
         public DateTimeOffset? UpgradePauseStartOn { get; set; }

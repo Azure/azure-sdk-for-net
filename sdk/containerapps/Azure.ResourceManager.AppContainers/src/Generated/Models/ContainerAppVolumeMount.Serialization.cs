@@ -17,35 +17,50 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VolumeName))
             {
-                writer.WritePropertyName("volumeName");
+                writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
             if (Optional.IsDefined(MountPath))
             {
-                writer.WritePropertyName("mountPath");
+                writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
+            }
+            if (Optional.IsDefined(SubPath))
+            {
+                writer.WritePropertyName("subPath"u8);
+                writer.WriteStringValue(SubPath);
             }
             writer.WriteEndObject();
         }
 
         internal static ContainerAppVolumeMount DeserializeContainerAppVolumeMount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> volumeName = default;
             Optional<string> mountPath = default;
+            Optional<string> subPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("volumeName"))
+                if (property.NameEquals("volumeName"u8))
                 {
                     volumeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountPath"))
+                if (property.NameEquals("mountPath"u8))
                 {
                     mountPath = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("subPath"u8))
+                {
+                    subPath = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContainerAppVolumeMount(volumeName.Value, mountPath.Value);
+            return new ContainerAppVolumeMount(volumeName.Value, mountPath.Value, subPath.Value);
         }
     }
 }

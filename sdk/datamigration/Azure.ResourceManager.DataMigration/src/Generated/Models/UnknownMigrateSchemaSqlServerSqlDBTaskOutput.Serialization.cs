@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static UnknownMigrateSchemaSqlServerSqlDBTaskOutput DeserializeUnknownMigrateSchemaSqlServerSqlDBTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             string resultType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

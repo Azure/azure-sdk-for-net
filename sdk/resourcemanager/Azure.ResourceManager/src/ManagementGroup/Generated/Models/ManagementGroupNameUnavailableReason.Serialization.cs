@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         public static ManagementGroupNameUnavailableReason ToManagementGroupNameUnavailableReason(this string value)
         {
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return ManagementGroupNameUnavailableReason.Invalid;
-            if (string.Equals(value, "AlreadyExists", StringComparison.InvariantCultureIgnoreCase)) return ManagementGroupNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return ManagementGroupNameUnavailableReason.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return ManagementGroupNameUnavailableReason.AlreadyExists;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagementGroupNameUnavailableReason value.");
         }
     }

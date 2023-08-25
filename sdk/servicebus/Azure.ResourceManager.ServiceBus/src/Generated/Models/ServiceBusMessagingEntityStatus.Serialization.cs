@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         public static ServiceBusMessagingEntityStatus ToServiceBusMessagingEntityStatus(this string value)
         {
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusMessagingEntityStatus.Unknown;
-            if (string.Equals(value, "Active", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusMessagingEntityStatus.Active;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusMessagingEntityStatus.Disabled;
-            if (string.Equals(value, "Restoring", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusMessagingEntityStatus.Restoring;
-            if (string.Equals(value, "SendDisabled", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusMessagingEntityStatus.SendDisabled;
-            if (string.Equals(value, "ReceiveDisabled", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusMessagingEntityStatus.ReceiveDisabled;
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusMessagingEntityStatus.Creating;
-            if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusMessagingEntityStatus.Deleting;
-            if (string.Equals(value, "Renaming", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusMessagingEntityStatus.Renaming;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return ServiceBusMessagingEntityStatus.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Active")) return ServiceBusMessagingEntityStatus.Active;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return ServiceBusMessagingEntityStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Restoring")) return ServiceBusMessagingEntityStatus.Restoring;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SendDisabled")) return ServiceBusMessagingEntityStatus.SendDisabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReceiveDisabled")) return ServiceBusMessagingEntityStatus.ReceiveDisabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return ServiceBusMessagingEntityStatus.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return ServiceBusMessagingEntityStatus.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Renaming")) return ServiceBusMessagingEntityStatus.Renaming;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusMessagingEntityStatus value.");
         }
     }

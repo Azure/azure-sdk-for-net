@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.StorageSync
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LastStepName))
             {
-                writer.WritePropertyName("lastStepName");
+                writer.WritePropertyName("lastStepName"u8);
                 writer.WriteStringValue(LastStepName);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Operation))
             {
-                writer.WritePropertyName("operation");
+                writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation.Value.ToString());
             }
             if (Optional.IsDefined(Steps))
             {
-                writer.WritePropertyName("steps");
+                writer.WritePropertyName("steps"u8);
                 writer.WriteStringValue(Steps);
             }
             if (Optional.IsDefined(LastOperationId))
             {
-                writer.WritePropertyName("lastOperationId");
+                writer.WritePropertyName("lastOperationId"u8);
                 writer.WriteStringValue(LastOperationId.Value);
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.StorageSync
 
         internal static StorageSyncWorkflowData DeserializeStorageSyncWorkflowData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -65,32 +69,31 @@ namespace Azure.ResourceManager.StorageSync
             Optional<DateTimeOffset> lastStatusTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,66 +102,61 @@ namespace Azure.ResourceManager.StorageSync
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("lastStepName"))
+                        if (property0.NameEquals("lastStepName"u8))
                         {
                             lastStepName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new StorageSyncWorkflowStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("operation"))
+                        if (property0.NameEquals("operation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             operation = new StorageSyncOperationDirection(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("steps"))
+                        if (property0.NameEquals("steps"u8))
                         {
                             steps = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastOperationId"))
+                        if (property0.NameEquals("lastOperationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastOperationId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("commandName"))
+                        if (property0.NameEquals("commandName"u8))
                         {
                             commandName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdTimestamp"))
+                        if (property0.NameEquals("createdTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastStatusTimestamp"))
+                        if (property0.NameEquals("lastStatusTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastStatusTimestamp = property0.Value.GetDateTimeOffset("O");

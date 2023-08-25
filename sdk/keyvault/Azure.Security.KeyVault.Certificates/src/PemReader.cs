@@ -29,6 +29,7 @@ namespace Azure.Core
 
             if (s_ecCopyWithPrivateKeyMethod is null)
             {
+                // CopyWithPrivateKey was added in .NET Framework 4.7.2. We must otherwise throw without it.
                 s_ecCopyWithPrivateKeyMethod = typeof(ECDsaCertificateExtensions).GetMethod("CopyWithPrivateKey", BindingFlags.Static | BindingFlags.Public, null, new[] { typeof(X509Certificate2), typeof(ECDsa) }, null)
                     ?? throw new PlatformNotSupportedException("The current platform does not support reading an ECDsa private key from a PEM file");
             }

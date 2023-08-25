@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the OSOptionProfile data model. </summary>
+    /// <summary>
+    /// A class representing the OSOptionProfile data model.
+    /// The OS option profile.
+    /// </summary>
     public partial class OSOptionProfileData : ResourceData
     {
         /// <summary> Initializes a new instance of OSOptionProfileData. </summary>

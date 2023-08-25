@@ -19,12 +19,12 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             if (Optional.IsDefined(ModelState))
             {
-                writer.WritePropertyName("modelState");
+                writer.WritePropertyName("modelState"u8);
                 writer.WriteObjectValue(ModelState);
             }
             if (Optional.IsCollectionDefined(VariableStates))
             {
-                writer.WritePropertyName("variableStates");
+                writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();
                 foreach (var item in VariableStates)
                 {
@@ -37,25 +37,27 @@ namespace Azure.AI.AnomalyDetector
 
         internal static DiagnosticsInfo DeserializeDiagnosticsInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ModelState> modelState = default;
             Optional<IList<VariableState>> variableStates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelState"))
+                if (property.NameEquals("modelState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modelState = ModelState.DeserializeModelState(property.Value);
                     continue;
                 }
-                if (property.NameEquals("variableStates"))
+                if (property.NameEquals("variableStates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VariableState> array = new List<VariableState>();
@@ -67,7 +69,7 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new DiagnosticsInfo(modelState, Optional.ToList(variableStates));
+            return new DiagnosticsInfo(modelState.Value, Optional.ToList(variableStates));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -21,42 +21,43 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsClusterAssociatedWorkspace DeserializeOperationalInsightsClusterAssociatedWorkspace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> workspaceId = default;
             Optional<string> workspaceName = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<DateTimeOffset> associateDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspaceId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("workspaceName"))
+                if (property.NameEquals("workspaceName"u8))
                 {
                     workspaceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("associateDate"))
+                if (property.NameEquals("associateDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     associateDate = property.Value.GetDateTimeOffset("R");

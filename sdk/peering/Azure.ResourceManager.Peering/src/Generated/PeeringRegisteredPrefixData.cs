@@ -11,7 +11,10 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary> A class representing the PeeringRegisteredPrefix data model. </summary>
+    /// <summary>
+    /// A class representing the PeeringRegisteredPrefix data model.
+    /// The customer's prefix that is registered by the peering service provider.
+    /// </summary>
     public partial class PeeringRegisteredPrefixData : ResourceData
     {
         /// <summary> Initializes a new instance of PeeringRegisteredPrefixData. </summary>
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="prefix"> The customer&apos;s prefix from which traffic originates. </param>
+        /// <param name="prefix"> The customer's prefix from which traffic originates. </param>
         /// <param name="prefixValidationState"> The prefix validation state. </param>
         /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
         /// <param name="errorMessage"> The error message associated with the validation state, if any. </param>
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.Peering
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The customer&apos;s prefix from which traffic originates. </summary>
+        /// <summary> The customer's prefix from which traffic originates. </summary>
         public string Prefix { get; set; }
         /// <summary> The prefix validation state. </summary>
         public PeeringPrefixValidationState? PrefixValidationState { get; }

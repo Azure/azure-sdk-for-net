@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ApiVersions))
             {
-                writer.WritePropertyName("apiVersions");
+                writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
                 foreach (var item in ApiVersions)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(SwaggerSpecFolderUri))
             {
-                writer.WritePropertyName("swaggerSpecFolderUri");
+                writer.WritePropertyName("swaggerSpecFolderUri"u8);
                 writer.WriteStringValue(SwaggerSpecFolderUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -37,15 +37,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SwaggerSpecification DeserializeSwaggerSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> apiVersions = default;
             Optional<Uri> swaggerSpecFolderUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("apiVersions"))
+                if (property.NameEquals("apiVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -56,11 +59,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     apiVersions = array;
                     continue;
                 }
-                if (property.NameEquals("swaggerSpecFolderUri"))
+                if (property.NameEquals("swaggerSpecFolderUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        swaggerSpecFolderUri = null;
                         continue;
                     }
                     swaggerSpecFolderUri = new Uri(property.Value.GetString());

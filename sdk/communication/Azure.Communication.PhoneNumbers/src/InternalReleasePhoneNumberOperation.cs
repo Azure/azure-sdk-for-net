@@ -12,7 +12,7 @@ namespace Azure.Communication.PhoneNumbers
         internal InternalReleasePhoneNumberOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "ReleasePhoneNumberOperation");
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "ReleasePhoneNumberOperation");
 
             if (response.Headers.TryGetValue<string>("operation-id", out var id))
             {

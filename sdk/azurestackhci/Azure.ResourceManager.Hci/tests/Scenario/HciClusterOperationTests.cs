@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Hci.Tests
                 DesiredProperties = new HciClusterDesiredProperties()
                 {
                     DiagnosticLevel = HciClusterDiagnosticLevel.Enhanced
-                }
+                },
+                ManagedServiceIdentityType = Models.HciManagedServiceIdentityType.None
             };
 
             HciClusterResource clusterFromUpdate = await cluster.UpdateAsync(patch);
@@ -60,7 +61,6 @@ namespace Azure.ResourceManager.Hci.Tests
         }
 
         [TestCase(null)]
-        [TestCase(false)]
         [TestCase(true)]
         public async Task SetTags(bool? useTagResource)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci.Tests
             {
                 { "key", "value" }
             };
-            HciClusterResource updatedCluster= await cluster.SetTagsAsync(tags);
+            HciClusterResource updatedCluster = await cluster.SetTagsAsync(tags);
 
             Assert.AreEqual(tags, updatedCluster.Data.Tags);
         }

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Asn))
             {
-                writer.WritePropertyName("asn");
+                writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
             if (Optional.IsDefined(BgpPeeringAddress))
             {
-                writer.WritePropertyName("bgpPeeringAddress");
+                writer.WritePropertyName("bgpPeeringAddress"u8);
                 writer.WriteStringValue(BgpPeeringAddress);
             }
             writer.WriteEndObject();
@@ -30,21 +30,24 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnLinkBgpSettings DeserializeVpnLinkBgpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> asn = default;
             Optional<string> bgpPeeringAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("asn"))
+                if (property.NameEquals("asn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     asn = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("bgpPeeringAddress"))
+                if (property.NameEquals("bgpPeeringAddress"u8))
                 {
                     bgpPeeringAddress = property.Value.GetString();
                     continue;

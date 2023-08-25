@@ -16,41 +16,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("actionName");
+            writer.WritePropertyName("actionName"u8);
             writer.WriteStringValue(ActionName);
-            writer.WritePropertyName("failoverTypes");
+            writer.WritePropertyName("failoverTypes"u8);
             writer.WriteStartArray();
             foreach (var item in FailoverTypes)
             {
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("failoverDirections");
+            writer.WritePropertyName("failoverDirections"u8);
             writer.WriteStartArray();
             foreach (var item in FailoverDirections)
             {
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("customDetails");
+            writer.WritePropertyName("customDetails"u8);
             writer.WriteObjectValue(CustomDetails);
             writer.WriteEndObject();
         }
 
         internal static RecoveryPlanAction DeserializeRecoveryPlanAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string actionName = default;
             IList<ReplicationProtectedItemOperation> failoverTypes = default;
             IList<PossibleOperationsDirection> failoverDirections = default;
             RecoveryPlanActionDetails customDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionName"))
+                if (property.NameEquals("actionName"u8))
                 {
                     actionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("failoverTypes"))
+                if (property.NameEquals("failoverTypes"u8))
                 {
                     List<ReplicationProtectedItemOperation> array = new List<ReplicationProtectedItemOperation>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     failoverTypes = array;
                     continue;
                 }
-                if (property.NameEquals("failoverDirections"))
+                if (property.NameEquals("failoverDirections"u8))
                 {
                     List<PossibleOperationsDirection> array = new List<PossibleOperationsDirection>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     failoverDirections = array;
                     continue;
                 }
-                if (property.NameEquals("customDetails"))
+                if (property.NameEquals("customDetails"u8))
                 {
                     customDetails = RecoveryPlanActionDetails.DeserializeRecoveryPlanActionDetails(property.Value);
                     continue;

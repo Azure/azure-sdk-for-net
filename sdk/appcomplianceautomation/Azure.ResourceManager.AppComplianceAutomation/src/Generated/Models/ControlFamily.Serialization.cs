@@ -15,42 +15,43 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static ControlFamily DeserializeControlFamily(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> familyName = default;
             Optional<ControlFamilyType> familyType = default;
             Optional<ControlFamilyStatus> familyStatus = default;
             Optional<IReadOnlyList<Control>> controls = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("familyName"))
+                if (property.NameEquals("familyName"u8))
                 {
                     familyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("familyType"))
+                if (property.NameEquals("familyType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     familyType = new ControlFamilyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("familyStatus"))
+                if (property.NameEquals("familyStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     familyStatus = new ControlFamilyStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("controls"))
+                if (property.NameEquals("controls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Control> array = new List<Control>();

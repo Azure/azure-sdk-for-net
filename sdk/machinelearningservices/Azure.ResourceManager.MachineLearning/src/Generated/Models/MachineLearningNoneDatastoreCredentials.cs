@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Empty/none datastore credentials.
-    /// Serialized Name: NoneDatastoreCredentials
-    /// </summary>
+    /// <summary> Empty/none datastore credentials. </summary>
     public partial class MachineLearningNoneDatastoreCredentials : MachineLearningDatastoreCredentials
     {
         /// <summary> Initializes a new instance of MachineLearningNoneDatastoreCredentials. </summary>
@@ -20,10 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningNoneDatastoreCredentials. </summary>
-        /// <param name="credentialsType">
-        /// [Required] Credential type used to authentication with storage.
-        /// Serialized Name: DatastoreCredentials.credentialsType
-        /// </param>
+        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         internal MachineLearningNoneDatastoreCredentials(CredentialsType credentialsType) : base(credentialsType)
         {
             CredentialsType = credentialsType;

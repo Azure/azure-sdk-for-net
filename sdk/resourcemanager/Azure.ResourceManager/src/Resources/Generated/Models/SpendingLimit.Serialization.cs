@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static SpendingLimit ToSpendingLimit(this string value)
         {
-            if (string.Equals(value, "On", StringComparison.InvariantCultureIgnoreCase)) return SpendingLimit.On;
-            if (string.Equals(value, "Off", StringComparison.InvariantCultureIgnoreCase)) return SpendingLimit.Off;
-            if (string.Equals(value, "CurrentPeriodOff", StringComparison.InvariantCultureIgnoreCase)) return SpendingLimit.CurrentPeriodOff;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "On")) return SpendingLimit.On;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Off")) return SpendingLimit.Off;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CurrentPeriodOff")) return SpendingLimit.CurrentPeriodOff;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SpendingLimit value.");
         }
     }

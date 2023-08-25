@@ -1,0 +1,26 @@
+Service: monitor-ingestion
+
+Project: sdk/monitor/Azure.Monitor.Ingestion/perf/Azure.Monitor.Ingestion.Perf.csproj
+
+PackageVersions:
+- Azure.Monitor.Ingestion: 1.0.0-beta.4
+- Azure.Monitor.Ingestion: source
+
+Tests:
+- Test: upload
+  Class: SingleUpload
+  Arguments: &parallels
+  - --parallel 1
+  - --parallel 2
+  - --parallel 4
+  - --parallel 8
+  - --parallel 16
+  - --parallel 32
+  - --parallel 64
+  - --parallel 128
+  - --parallel 256
+  - --parallel 512
+
+- Test: upload-batch
+  Class: BatchUpload
+  Arguments: *parallels

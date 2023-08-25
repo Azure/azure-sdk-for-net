@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         protected ResourceIdentifier GetStorageAccountId() => _storageAccountIdentifier;
 
+        protected string MediaServiceAccountPrefix = "mediadotnetsdktests";
         private const string ResourceGroupNamePrefix = "MediaServiceRG";
         private const string StorageAccountNamePrefix = "azstorageformedia";
         private ResourceIdentifier _resourceGroupIdentifier;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the WebAppBackup data model. </summary>
+    /// <summary>
+    /// A class representing the WebAppBackup data model.
+    /// Backup description.
+    /// </summary>
     public partial class WebAppBackupData : ResourceData
     {
         /// <summary> Initializes a new instance of WebAppBackupData. </summary>

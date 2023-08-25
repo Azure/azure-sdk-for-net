@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the IotSecurityAggregatedAlert data model. </summary>
+    /// <summary>
+    /// A class representing the IotSecurityAggregatedAlert data model.
+    /// Security Solution Aggregated Alert information
+    /// </summary>
     public partial class IotSecurityAggregatedAlertData : ResourceData
     {
         /// <summary> Initializes a new instance of IotSecurityAggregatedAlertData. </summary>

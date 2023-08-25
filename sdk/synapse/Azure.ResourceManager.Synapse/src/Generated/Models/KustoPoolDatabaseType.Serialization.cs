@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static KustoPoolDatabaseType ToKustoPoolDatabaseType(this string value)
         {
-            if (string.Equals(value, "Microsoft.Synapse/workspaces/kustoPools/databases", StringComparison.InvariantCultureIgnoreCase)) return KustoPoolDatabaseType.MicrosoftSynapseWorkspacesKustoPoolsDatabases;
-            if (string.Equals(value, "Microsoft.Synapse/workspaces/kustoPools/attachedDatabaseConfigurations", StringComparison.InvariantCultureIgnoreCase)) return KustoPoolDatabaseType.MicrosoftSynapseWorkspacesKustoPoolsAttachedDatabaseConfigurations;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Synapse/workspaces/kustoPools/databases")) return KustoPoolDatabaseType.MicrosoftSynapseWorkspacesKustoPoolsDatabases;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Synapse/workspaces/kustoPools/attachedDatabaseConfigurations")) return KustoPoolDatabaseType.MicrosoftSynapseWorkspacesKustoPoolsAttachedDatabaseConfigurations;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KustoPoolDatabaseType value.");
         }
     }

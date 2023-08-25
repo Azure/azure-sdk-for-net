@@ -16,14 +16,17 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaAssetTrackListResult DeserializeMediaAssetTrackListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MediaAssetTrackData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaAssetTrackData> array = new List<MediaAssetTrackData>();

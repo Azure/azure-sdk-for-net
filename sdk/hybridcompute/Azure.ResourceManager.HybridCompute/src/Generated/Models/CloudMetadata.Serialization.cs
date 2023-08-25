@@ -20,10 +20,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static CloudMetadata DeserializeCloudMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provider = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provider"))
+                if (property.NameEquals("provider"u8))
                 {
                     provider = property.Value.GetString();
                     continue;

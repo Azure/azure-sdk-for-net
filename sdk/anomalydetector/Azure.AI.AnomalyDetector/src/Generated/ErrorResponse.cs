@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> ErrorResponse contains code and message that shows the error information. </summary>
+    /// <summary> Error information that the API returned. </summary>
     public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="code"></param>
-        /// <param name="message"></param>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Message that explains the error that the service reported. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         public ErrorResponse(string code, string message)
         {
@@ -26,9 +26,9 @@ namespace Azure.AI.AnomalyDetector
             Message = message;
         }
 
-        /// <summary> Gets or sets the code. </summary>
+        /// <summary> Error code. </summary>
         public string Code { get; set; }
-        /// <summary> Gets or sets the message. </summary>
+        /// <summary> Message that explains the error that the service reported. </summary>
         public string Message { get; set; }
     }
 }

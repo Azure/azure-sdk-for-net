@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,83 +15,94 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmFailbackSyncDetails DeserializeInMageRcmFailbackSyncDetails(JsonElement element)
         {
-            Optional<DiskReplicationProgressHealth> progressHealth = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<SiteRecoveryDiskReplicationProgressHealth> progressHealth = default;
             Optional<long> transferredBytes = default;
             Optional<long> last15MinutesTransferredBytes = default;
-            Optional<string> lastDataTransferTimeUtc = default;
+            Optional<DateTimeOffset> lastDataTransferTimeUtc = default;
             Optional<long> processedBytes = default;
-            Optional<string> startTime = default;
-            Optional<string> lastRefreshTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> lastRefreshTime = default;
             Optional<int> progressPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("progressHealth"))
+                if (property.NameEquals("progressHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    progressHealth = new DiskReplicationProgressHealth(property.Value.GetString());
+                    progressHealth = new SiteRecoveryDiskReplicationProgressHealth(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("transferredBytes"))
+                if (property.NameEquals("transferredBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferredBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("last15MinutesTransferredBytes"))
+                if (property.NameEquals("last15MinutesTransferredBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     last15MinutesTransferredBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastDataTransferTimeUtc"))
-                {
-                    lastDataTransferTimeUtc = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("processedBytes"))
+                if (property.NameEquals("lastDataTransferTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastDataTransferTimeUtc = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("processedBytes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     processedBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
-                {
-                    startTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastRefreshTime"))
-                {
-                    lastRefreshTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("progressPercentage"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("lastRefreshTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastRefreshTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("progressPercentage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     progressPercentage = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new InMageRcmFailbackSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), lastDataTransferTimeUtc.Value, Optional.ToNullable(processedBytes), startTime.Value, lastRefreshTime.Value, Optional.ToNullable(progressPercentage));
+            return new InMageRcmFailbackSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), Optional.ToNullable(lastDataTransferTimeUtc), Optional.ToNullable(processedBytes), Optional.ToNullable(startTime), Optional.ToNullable(lastRefreshTime), Optional.ToNullable(progressPercentage));
         }
     }
 }

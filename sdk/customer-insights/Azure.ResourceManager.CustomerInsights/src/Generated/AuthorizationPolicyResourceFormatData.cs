@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the AuthorizationPolicyResourceFormat data model. </summary>
+    /// <summary>
+    /// A class representing the AuthorizationPolicyResourceFormat data model.
+    /// The authorization policy resource format.
+    /// </summary>
     public partial class AuthorizationPolicyResourceFormatData : ResourceData
     {
         /// <summary> Initializes a new instance of AuthorizationPolicyResourceFormatData. </summary>

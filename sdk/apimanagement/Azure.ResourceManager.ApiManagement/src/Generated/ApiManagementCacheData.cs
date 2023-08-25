@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementCache data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementCache data model.
+    /// Cache details.
+    /// </summary>
     public partial class ApiManagementCacheData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementCacheData. </summary>
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Cache description. </param>
         /// <param name="connectionString"> Runtime connection string to cache. </param>
-        /// <param name="useFromLocation"> Location identifier to use cache from (should be either &apos;default&apos; or valid Azure region identifier). </param>
+        /// <param name="useFromLocation"> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </param>
         /// <param name="resourceUri"> Original uri of entity in external system cache points to. </param>
         internal ApiManagementCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string connectionString, string useFromLocation, Uri resourceUri) : base(id, name, resourceType, systemData)
         {
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement
         public string Description { get; set; }
         /// <summary> Runtime connection string to cache. </summary>
         public string ConnectionString { get; set; }
-        /// <summary> Location identifier to use cache from (should be either &apos;default&apos; or valid Azure region identifier). </summary>
+        /// <summary> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </summary>
         public string UseFromLocation { get; set; }
         /// <summary> Original uri of entity in external system cache points to. </summary>
         public Uri ResourceUri { get; set; }

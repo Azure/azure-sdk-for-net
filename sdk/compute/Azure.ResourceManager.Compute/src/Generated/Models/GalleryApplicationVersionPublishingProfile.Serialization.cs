@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
             if (Optional.IsDefined(ManageActions))
             {
-                writer.WritePropertyName("manageActions");
+                writer.WritePropertyName("manageActions"u8);
                 writer.WriteObjectValue(ManageActions);
             }
             if (Optional.IsDefined(Settings))
             {
-                writer.WritePropertyName("settings");
+                writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
             if (Optional.IsCollectionDefined(AdvancedSettings))
             {
-                writer.WritePropertyName("advancedSettings");
+                writer.WritePropertyName("advancedSettings"u8);
                 writer.WriteStartObject();
                 foreach (var item in AdvancedSettings)
                 {
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(EnableHealthCheck))
             {
-                writer.WritePropertyName("enableHealthCheck");
+                writer.WritePropertyName("enableHealthCheck"u8);
                 writer.WriteBooleanValue(EnableHealthCheck.Value);
             }
             if (Optional.IsCollectionDefined(CustomActions))
             {
-                writer.WritePropertyName("customActions");
+                writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsCollectionDefined(TargetRegions))
             {
-                writer.WritePropertyName("targetRegions");
+                writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetRegions)
                 {
@@ -67,32 +67,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ReplicaCount))
             {
-                writer.WritePropertyName("replicaCount");
+                writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
             if (Optional.IsDefined(IsExcludedFromLatest))
             {
-                writer.WritePropertyName("excludeFromLatest");
+                writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
             if (Optional.IsDefined(EndOfLifeOn))
             {
-                writer.WritePropertyName("endOfLifeDate");
+                writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             if (Optional.IsDefined(StorageAccountType))
             {
-                writer.WritePropertyName("storageAccountType");
+                writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
             if (Optional.IsDefined(ReplicationMode))
             {
-                writer.WritePropertyName("replicationMode");
+                writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(TargetExtendedLocations))
             {
-                writer.WritePropertyName("targetExtendedLocations");
+                writer.WritePropertyName("targetExtendedLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetExtendedLocations)
                 {
@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             UserArtifactSource source = default;
             Optional<UserArtifactManagement> manageActions = default;
             Optional<UserArtifactSettings> settings = default;
@@ -121,36 +125,33 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = UserArtifactSource.DeserializeUserArtifactSource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("manageActions"))
+                if (property.NameEquals("manageActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("settings"))
+                if (property.NameEquals("settings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("advancedSettings"))
+                if (property.NameEquals("advancedSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -161,21 +162,19 @@ namespace Azure.ResourceManager.Compute.Models
                     advancedSettings = dictionary;
                     continue;
                 }
-                if (property.NameEquals("enableHealthCheck"))
+                if (property.NameEquals("enableHealthCheck"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableHealthCheck = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("customActions"))
+                if (property.NameEquals("customActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
@@ -186,11 +185,10 @@ namespace Azure.ResourceManager.Compute.Models
                     customActions = array;
                     continue;
                 }
-                if (property.NameEquals("targetRegions"))
+                if (property.NameEquals("targetRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TargetRegion> array = new List<TargetRegion>();
@@ -201,71 +199,64 @@ namespace Azure.ResourceManager.Compute.Models
                     targetRegions = array;
                     continue;
                 }
-                if (property.NameEquals("replicaCount"))
+                if (property.NameEquals("replicaCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicaCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("excludeFromLatest"))
+                if (property.NameEquals("excludeFromLatest"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     excludeFromLatest = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("publishedDate"))
+                if (property.NameEquals("publishedDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publishedDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endOfLifeDate"))
+                if (property.NameEquals("endOfLifeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endOfLifeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccountType = new ImageStorageAccountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("replicationMode"))
+                if (property.NameEquals("replicationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicationMode = new GalleryReplicationMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetExtendedLocations"))
+                if (property.NameEquals("targetExtendedLocations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GalleryTargetExtendedLocation> array = new List<GalleryTargetExtendedLocation>();

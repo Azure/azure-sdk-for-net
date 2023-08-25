@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The list of schedules to be applied on the computes
-    /// Serialized Name: ComputeSchedules
-    /// </summary>
+    /// <summary> The list of schedules to be applied on the computes. </summary>
     internal partial class ComputeSchedules
     {
         /// <summary> Initializes a new instance of ComputeSchedules. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeSchedules. </summary>
-        /// <param name="computeStartStop">
-        /// The list of compute start stop schedules to be applied.
-        /// Serialized Name: ComputeSchedules.computeStartStop
-        /// </param>
+        /// <param name="computeStartStop"> The list of compute start stop schedules to be applied. </param>
         internal ComputeSchedules(IReadOnlyList<MachineLearningComputeStartStopSchedule> computeStartStop)
         {
             ComputeStartStop = computeStartStop;
         }
 
-        /// <summary>
-        /// The list of compute start stop schedules to be applied.
-        /// Serialized Name: ComputeSchedules.computeStartStop
-        /// </summary>
+        /// <summary> The list of compute start stop schedules to be applied. </summary>
         public IReadOnlyList<MachineLearningComputeStartStopSchedule> ComputeStartStop { get; }
     }
 }

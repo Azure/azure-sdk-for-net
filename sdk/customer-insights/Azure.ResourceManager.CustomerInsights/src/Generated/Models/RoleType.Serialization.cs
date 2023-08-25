@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static RoleType ToRoleType(this string value)
         {
-            if (string.Equals(value, "Admin", StringComparison.InvariantCultureIgnoreCase)) return RoleType.Admin;
-            if (string.Equals(value, "Reader", StringComparison.InvariantCultureIgnoreCase)) return RoleType.Reader;
-            if (string.Equals(value, "ManageAdmin", StringComparison.InvariantCultureIgnoreCase)) return RoleType.ManageAdmin;
-            if (string.Equals(value, "ManageReader", StringComparison.InvariantCultureIgnoreCase)) return RoleType.ManageReader;
-            if (string.Equals(value, "DataAdmin", StringComparison.InvariantCultureIgnoreCase)) return RoleType.DataAdmin;
-            if (string.Equals(value, "DataReader", StringComparison.InvariantCultureIgnoreCase)) return RoleType.DataReader;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Admin")) return RoleType.Admin;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Reader")) return RoleType.Reader;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManageAdmin")) return RoleType.ManageAdmin;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManageReader")) return RoleType.ManageReader;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataAdmin")) return RoleType.DataAdmin;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataReader")) return RoleType.DataReader;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RoleType value.");
         }
     }

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Monitor.Models
 
         public static MonitorEventLevel ToMonitorEventLevel(this string value)
         {
-            if (string.Equals(value, "Critical", StringComparison.InvariantCultureIgnoreCase)) return MonitorEventLevel.Critical;
-            if (string.Equals(value, "Error", StringComparison.InvariantCultureIgnoreCase)) return MonitorEventLevel.Error;
-            if (string.Equals(value, "Warning", StringComparison.InvariantCultureIgnoreCase)) return MonitorEventLevel.Warning;
-            if (string.Equals(value, "Informational", StringComparison.InvariantCultureIgnoreCase)) return MonitorEventLevel.Informational;
-            if (string.Equals(value, "Verbose", StringComparison.InvariantCultureIgnoreCase)) return MonitorEventLevel.Verbose;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical")) return MonitorEventLevel.Critical;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return MonitorEventLevel.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return MonitorEventLevel.Warning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Informational")) return MonitorEventLevel.Informational;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verbose")) return MonitorEventLevel.Verbose;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorEventLevel value.");
         }
     }

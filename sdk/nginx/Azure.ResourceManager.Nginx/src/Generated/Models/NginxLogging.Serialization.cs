@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccount))
             {
-                writer.WritePropertyName("storageAccount");
+                writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
             writer.WriteEndObject();
@@ -25,14 +25,17 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxLogging DeserializeNginxLogging(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NginxStorageAccount> storageAccount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccount"))
+                if (property.NameEquals("storageAccount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccount = NginxStorageAccount.DeserializeNginxStorageAccount(property.Value);

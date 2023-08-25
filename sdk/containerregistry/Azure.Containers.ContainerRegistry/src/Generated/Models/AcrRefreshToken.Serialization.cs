@@ -14,10 +14,14 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static AcrRefreshToken DeserializeAcrRefreshToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> refreshToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("refresh_token"))
+                if (property.NameEquals("refresh_token"u8))
                 {
                     refreshToken = property.Value.GetString();
                     continue;

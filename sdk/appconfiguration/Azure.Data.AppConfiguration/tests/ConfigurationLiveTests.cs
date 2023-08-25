@@ -26,6 +26,11 @@ namespace Azure.Data.AppConfiguration.Tests
             return prefix + Recording.GenerateId();
         }
 
+        private string GenerateSnapshotName(string prefix = "snapshot-")
+        {
+            return prefix + Recording.GenerateId();
+        }
+
         private ConfigurationClient GetClient()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ConnectionString))
@@ -1644,6 +1649,268 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting1));
             }
+        }
+
+        [RecordedTest]
+        public async Task CreateSnapshotUsingAutomaticPolling()
+        {
+            var service = GetClient();
+            var testSetting = CreateSetting();
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting);
+
+                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
+                ValidateCompletedOperation(operation);
+                var createdSnapshot = operation.Value;
+
+                var retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task CreateSnapshotUsingWaitForCompletion()
+        {
+            var service = GetClient();
+            var testSetting = CreateSetting();
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting);
+
+                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                ValidateCompletedOperation(operation);
+                var createdSnapshot = operation.Value;
+
+                var retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task CreateSnapshotUsingManualPolling()
+        {
+            var service = GetClient();
+            var testSetting = CreateSetting();
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting);
+
+                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                while (true)
+                {
+                    await operation.UpdateStatusAsync();
+                    if (operation.HasCompleted)
+                    {
+                        ValidateCompletedOperation(operation);
+                        break;
+                    }
+                    await Delay(125);
+                }
+                var createdSnapshot = operation.Value;
+
+                var retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task ArchiveSnapshotStatus()
+        {
+            var service = GetClient();
+            var testSetting = CreateSetting();
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting);
+
+                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
+                ValidateCompletedOperation(operation);
+                var createdSnapshot = operation.Value;
+
+                var retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+
+                ConfigurationSettingsSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
+                Assert.NotNull(archivedSnapshot);
+                Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task RecoverSnapshotStatus()
+        {
+            var service = GetClient();
+            var testSetting = CreateSetting();
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting);
+
+                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
+                ValidateCompletedOperation(operation);
+                var createdSnapshot = operation.Value;
+
+                var retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+
+                ConfigurationSettingsSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
+                Assert.NotNull(archivedSnapshot);
+                Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
+
+                ConfigurationSettingsSnapshot recoveredSnapshot = await service.RecoverSnapshotAsync(snapshotName);
+                Assert.NotNull(recoveredSnapshot);
+                Assert.AreEqual(SnapshotStatus.Ready, recoveredSnapshot.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetSnapshots()
+        {
+            var service = GetClient();
+            var firstSetting = new ConfigurationSetting("first_key", "first_value");
+            var secondSetting = new ConfigurationSetting("second_key", "second_value");
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(firstSetting);
+                await service.AddConfigurationSettingAsync(secondSetting);
+
+                var firstSnapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key) });
+                var firstSnapshotName = GenerateSnapshotName("first_snapshot");
+                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSettingsSnapshot(firstSnapshotFilter));
+                ValidateCompletedOperation(firstOperation);
+
+                var secondSnapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(secondSetting.Key) });
+                var secondSnapshotName = GenerateSnapshotName("second_snapshot");
+                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSettingsSnapshot(secondSnapshotFilter));
+                ValidateCompletedOperation(secondOperation);
+
+                var snapshots = service.GetSnapshotsAsync(cancellationToken: CancellationToken.None);
+                var resultsReturned = (await snapshots.ToEnumerableAsync()).Count;
+                Assert.GreaterOrEqual(resultsReturned, 2);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(firstSetting.Key, firstSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(secondSetting.Key, secondSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetConfigurationSettingsForSnapshot()
+        {
+            var service = GetClient();
+            var setting = new ConfigurationSetting("Test_Key", "Test_Value");
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(setting);
+
+                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSettingsSnapshot(snapshotFilter));
+                ValidateCompletedOperation(operation);
+
+                var settingsForSnapshot = service.GetConfigurationSettingsForSnapshotAsync(snapshotName);
+                var settingscount = (await settingsForSnapshot.ToEnumerableAsync()).Count;
+                Assert.GreaterOrEqual(settingscount, 1);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key));
+            }
+        }
+
+        [RecordedTest]
+        public async Task UnchangedSnapshotAfterSettingsUpdate()
+        {
+            var service = GetClient();
+            var setting = new ConfigurationSetting("Test_Key", "Test_Value");
+
+            try
+            {
+                ConfigurationSetting createdSetting = await service.AddConfigurationSettingAsync(setting);
+
+                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(createdSetting.Key) });
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSettingsSnapshot(snapshotFilter));
+                ValidateCompletedOperation(operation);
+
+                setting.Value = "Updated_Value";
+                await service.SetConfigurationSettingAsync(setting);
+
+                var settingsForSnapshot = service.GetConfigurationSettingsForSnapshotAsync(snapshotName);
+                var settings = await settingsForSnapshot.ToEnumerableAsync();
+                Assert.GreaterOrEqual(settings.Count, 1);
+
+                var settingForSnapshot = settings.FirstOrDefault();
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(createdSetting, settingForSnapshot));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key));
+            }
+        }
+
+        private void ValidateCreatedSnapshot(ConfigurationSettingsSnapshot createdSnapshot, ConfigurationSettingsSnapshot retrievedSnapshot, string expectedName)
+        {
+            Assert.NotNull(createdSnapshot);
+            Assert.AreEqual(expectedName, createdSnapshot.Name);
+
+            Assert.NotNull(retrievedSnapshot);
+            Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+        }
+
+        private static void ValidateCompletedOperation(CreateSnapshotOperation operation)
+        {
+            Assert.IsTrue(operation.HasValue);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.NotNull(operation.Id);
         }
 
         private static void AssertStatus200(Response response) => Assert.AreEqual(200, response.Status);

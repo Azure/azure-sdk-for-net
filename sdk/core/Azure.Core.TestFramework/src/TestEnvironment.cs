@@ -45,7 +45,6 @@ namespace Azure.Core.TestFramework
 
         private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = new();
         private static readonly object s_syncLock = new();
-        private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private Exception _bootstrappingException;
         private readonly Type _type;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -309,7 +308,7 @@ namespace Azure.Core.TestFramework
             string clientSecret = GetOptionalVariable("CLIENT_SECRET");
             string authorityHost = GetOptionalVariable("AZURE_AUTHORITY_HOST");
 
-            if (tenantId == null || clientId == null || clientSecret == null || authorityHost == null)
+            if (tenantId == null || clientId == null || clientSecret == null || authorityHost == null || ResourceManagerUrl == null)
             {
                 return;
             }
@@ -334,16 +333,17 @@ namespace Azure.Core.TestFramework
             // send the GET request
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            // resource group not found - nothing we can do here
-            if (response.Status == 404)
+            // resource group not valid - prompt to create new resources
+            if (response.Status is 403 or 404)
             {
+                BootStrapTestResources();
                 return;
             }
 
             // unexpected response => throw an exception
             if (response.Status != 200)
             {
-                throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                throw new RequestFailedException(response);
             }
 
             // parse the response
@@ -391,7 +391,7 @@ namespace Azure.Core.TestFramework
                     response = await pipeline.SendRequestAsync(request, CancellationToken.None);
                     if (response.Status != 200)
                     {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                        throw new RequestFailedException(response);
                     }
                 }
             }
@@ -564,6 +564,8 @@ namespace Azure.Core.TestFramework
             return testProject;
         }
 
+        public static bool IsWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
         /// <summary>
         /// Determines if the current environment is Azure DevOps.
         /// </summary>
@@ -648,13 +650,29 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        /// <summary>
+        /// Determines whether to enable proxy logging beyond errors.
+        /// </summary>
+        internal static bool EnableProxyLogging
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["EnableProxyLogging"] ??
+                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_PROXY_LOGGING");
+
+                bool.TryParse(switchString, out bool enableProxyLogging);
+
+                return enableProxyLogging;
+            }
+        }
+
         private void BootStrapTestResources()
         {
             lock (s_syncLock)
             {
                 try
                 {
-                    if (!s_isWindows ||
+                    if (!IsWindows ||
                         s_bootstrappingAttemptedTypes.Contains(_type) ||
                         Mode == RecordedTestMode.Playback ||
                         GlobalIsRunningInCI)

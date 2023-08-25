@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Text;
 
 namespace Azure.Core.Diagnostics
 {
@@ -43,10 +45,35 @@ namespace Azure.Core.Diagnostics
             WriteEvent(BackgroundRefreshFailedEvent, requestId, exception);
         }
 
+        [NonEvent]
+        public void Request(Request request, string? assemblyName, HttpMessageSanitizer sanitizer)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                Request(request.ClientRequestId, request.Method.ToString(), sanitizer.SanitizeUrl(request.Uri.ToString()), FormatHeaders(request.Headers, sanitizer), assemblyName);
+            }
+        }
+
         [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}client assembly: {4}")]
         public void Request(string requestId, string method, string uri, string headers, string? clientAssembly)
         {
             WriteEvent(RequestEvent, requestId, method, uri, headers, clientAssembly);
+        }
+
+        [NonEvent]
+        public void RequestContent(string requestId, byte[] content, Encoding? textEncoding)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                if (textEncoding is not null)
+                {
+                    RequestContentText(requestId, textEncoding.GetString(content));
+                }
+                else
+                {
+                    RequestContent(requestId, content);
+                }
+            }
         }
 
         [Event(RequestContentEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content: {1}")]
@@ -61,10 +88,35 @@ namespace Azure.Core.Diagnostics
             WriteEvent(RequestContentTextEvent, requestId, content);
         }
 
+        [NonEvent]
+        public void Response(Response response, HttpMessageSanitizer sanitizer, double elapsed)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                Response(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
+            }
+        }
+
         [Event(ResponseEvent, Level = EventLevel.Informational, Message = "Response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
         public void Response(string requestId, int status, string reasonPhrase, string headers, double seconds)
         {
             WriteEvent(ResponseEvent, requestId, status, reasonPhrase, headers, seconds);
+        }
+
+        [NonEvent]
+        public void ResponseContent(string requestId, byte[] content, Encoding? textEncoding)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                if (textEncoding is not null)
+                {
+                    ResponseContentText(requestId, textEncoding.GetString(content));
+                }
+                else
+                {
+                    ResponseContent(requestId, content);
+                }
+            }
         }
 
         [Event(ResponseContentEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content: {1}")]
@@ -73,16 +125,32 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ResponseContentEvent, requestId, content);
         }
 
-        [Event(ResponseContentBlockEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content block {1}: {2}")]
-        public void ResponseContentBlock(string requestId, int blockNumber, byte[] content)
-        {
-            WriteEvent(ResponseContentBlockEvent, requestId, blockNumber, content);
-        }
-
         [Event(ResponseContentTextEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content: {1}")]
         public void ResponseContentText(string requestId, string content)
         {
             WriteEvent(ResponseContentTextEvent, requestId, content);
+        }
+
+        [NonEvent]
+        public void ResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                if (textEncoding is not null)
+                {
+                    ResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+                }
+                else
+                {
+                    ResponseContentBlock(requestId, blockNumber, content);
+                }
+            }
+        }
+
+        [Event(ResponseContentBlockEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content block {1}: {2}")]
+        public void ResponseContentBlock(string requestId, int blockNumber, byte[] content)
+        {
+            WriteEvent(ResponseContentBlockEvent, requestId, blockNumber, content);
         }
 
         [Event(ResponseContentTextBlockEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content block {1}: {2}")]
@@ -91,10 +159,35 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ResponseContentTextBlockEvent, requestId, blockNumber, content);
         }
 
+        [NonEvent]
+        public void ErrorResponse(Response response, HttpMessageSanitizer sanitizer, double elapsed)
+        {
+            if (IsEnabled(EventLevel.Warning, EventKeywords.None))
+            {
+                ErrorResponse(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
+            }
+        }
+
         [Event(ErrorResponseEvent, Level = EventLevel.Warning, Message = "Error response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
         public void ErrorResponse(string requestId, int status, string reasonPhrase, string headers, double seconds)
         {
             WriteEvent(ErrorResponseEvent, requestId, status, reasonPhrase, headers, seconds);
+        }
+
+        [NonEvent]
+        public void ErrorResponseContent(string requestId, byte[] content, Encoding? textEncoding)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                if (textEncoding is not null)
+                {
+                    ErrorResponseContentText(requestId, textEncoding.GetString(content));
+                }
+                else
+                {
+                    ErrorResponseContent(requestId, content);
+                }
+            }
         }
 
         [Event(ErrorResponseContentEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content: {1}")]
@@ -103,16 +196,32 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ErrorResponseContentEvent, requestId, content);
         }
 
-        [Event(ErrorResponseContentBlockEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content block {1}: {2}")]
-        public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content)
-        {
-            WriteEvent(ErrorResponseContentBlockEvent, requestId, blockNumber, content);
-        }
-
         [Event(ErrorResponseContentTextEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content: {1}")]
         public void ErrorResponseContentText(string requestId, string content)
         {
             WriteEvent(ErrorResponseContentTextEvent, requestId, content);
+        }
+
+        [NonEvent]
+        public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                if (textEncoding is not null)
+                {
+                    ErrorResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+                }
+                else
+                {
+                    ErrorResponseContentBlock(requestId, blockNumber, content);
+                }
+            }
+        }
+
+        [Event(ErrorResponseContentBlockEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content block {1}: {2}")]
+        public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content)
+        {
+            WriteEvent(ErrorResponseContentBlockEvent, requestId, blockNumber, content);
         }
 
         [Event(ErrorResponseContentTextBlockEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content block {1}: {2}")]
@@ -139,6 +248,15 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ExceptionResponseEvent, requestId, exception);
         }
 
+        [NonEvent]
+        public void RequestRedirect(Request request, Uri redirectUri, Response response)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                RequestRedirect(request.ClientRequestId, request.Uri.ToString(), redirectUri.ToString(), response.Status);
+            }
+        }
+
         [Event(RequestRedirectEvent, Level = EventLevel.Verbose, Message = "Request [{0}] Redirecting from {1} to {2} in response to status code {3}")]
         public void RequestRedirect(string requestId, string from, string to, int status)
         {
@@ -157,10 +275,33 @@ namespace Azure.Core.Diagnostics
             WriteEvent(RequestRedirectCountExceededEvent, requestId, from, to);
         }
 
+        [NonEvent]
+        public void PipelineTransportOptionsNotApplied(Type optionsType)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                PipelineTransportOptionsNotApplied(optionsType.FullName ?? string.Empty);
+            }
+        }
+
         [Event(PipelineTransportOptionsNotAppliedEvent, Level = EventLevel.Informational, Message = "The client requires transport configuration but it was not applied because custom transport was provided. Type: {0}")]
         public void PipelineTransportOptionsNotApplied(string optionsType)
         {
             WriteEvent(PipelineTransportOptionsNotAppliedEvent, optionsType);
+        }
+
+        [NonEvent]
+        private static string FormatHeaders(IEnumerable<HttpHeader> headers, HttpMessageSanitizer sanitizer)
+        {
+            var stringBuilder = new StringBuilder();
+            foreach (HttpHeader header in headers)
+            {
+                stringBuilder.Append(header.Name);
+                stringBuilder.Append(':');
+                stringBuilder.Append(sanitizer.SanitizeHeader(header.Name, header.Value));
+                stringBuilder.Append(Environment.NewLine);
+            }
+            return stringBuilder.ToString();
         }
     }
 }

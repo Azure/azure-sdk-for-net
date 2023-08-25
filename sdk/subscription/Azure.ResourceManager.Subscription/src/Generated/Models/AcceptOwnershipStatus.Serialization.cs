@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static AcceptOwnershipStatus DeserializeAcceptOwnershipStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subscriptionId = default;
             Optional<AcceptOwnershipState> acceptOwnershipState = default;
             Optional<AcceptOwnershipProvisioningState> provisioningState = default;
@@ -25,56 +29,52 @@ namespace Azure.ResourceManager.Subscription.Models
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("acceptOwnershipState"))
+                if (property.NameEquals("acceptOwnershipState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     acceptOwnershipState = new AcceptOwnershipState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AcceptOwnershipProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("billingOwner"))
+                if (property.NameEquals("billingOwner"u8))
                 {
                     billingOwner = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionTenantId"))
+                if (property.NameEquals("subscriptionTenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subscriptionTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

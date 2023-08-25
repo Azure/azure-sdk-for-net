@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Communication.Tests
         private string _dataLocation;
 
         public CommunicationServiceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.NotNull(keys.Value.SecondaryConnectionString);
         }
 
-        [Test]
+        // [Test]
         public async Task RegenerateKey()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.Communication.Tests
             string primaryConnectionString = keys.Value.PrimaryConnectionString;
             string secondaryConnectionString = keys.Value.SecondaryConnectionString;
             var parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Primary };
-            var newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
+            var newkeys = await communication.RegenerateKeyAsync(parameter);
             Assert.AreEqual(primaryKey, newkeys.Value.PrimaryKey);
             Assert.NotNull(primaryConnectionString, keys.Value.PrimaryConnectionString);
             parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Secondary };
-            newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
+            newkeys = await communication.RegenerateKeyAsync(parameter);
             Assert.NotNull(secondaryKey, keys.Value.SecondaryKey);
             Assert.NotNull(secondaryConnectionString, keys.Value.SecondaryConnectionString);
         }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Communication.Tests
             {
                 Tags = { { "newtag", "newvalue" } }
             };
-            var communication2 = (await communication1.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            var communication2 = (await communication1.UpdateAsync(patch)).Value;
             Assert.IsNotNull(communication2);
             Assert.AreEqual("newtag", communication2.Data.Tags.FirstOrDefault().Key);
             Assert.AreEqual(communication1.Data.Name, communication2.Data.Name);

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformBuilder data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformBuilder data model.
+    /// KPack Builder resource
+    /// </summary>
     public partial class AppPlatformBuilderData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformBuilderData. </summary>

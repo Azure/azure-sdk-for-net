@@ -15,14 +15,17 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static AnswersResult DeserializeAnswersResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KnowledgeBaseAnswer>> answers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("answers"))
+                if (property.NameEquals("answers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KnowledgeBaseAnswer> array = new List<KnowledgeBaseAnswer>();

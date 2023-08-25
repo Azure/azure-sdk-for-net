@@ -18,46 +18,46 @@ namespace Azure.ResourceManager.MySql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AdvisorName))
             {
-                writer.WritePropertyName("advisorName");
+                writer.WritePropertyName("advisorName"u8);
                 writer.WriteStringValue(AdvisorName);
             }
             if (Optional.IsDefined(SessionId))
             {
-                writer.WritePropertyName("sessionId");
+                writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
             if (Optional.IsDefined(ActionId))
             {
-                writer.WritePropertyName("actionId");
+                writer.WritePropertyName("actionId"u8);
                 writer.WriteNumberValue(ActionId.Value);
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("createdTime");
+                writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expirationTime");
+                writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Reason))
             {
-                writer.WritePropertyName("reason");
+                writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
             if (Optional.IsDefined(RecommendationType))
             {
-                writer.WritePropertyName("recommendationType");
+                writer.WritePropertyName("recommendationType"u8);
                 writer.WriteStringValue(RecommendationType);
             }
             if (Optional.IsCollectionDefined(Details))
             {
-                writer.WritePropertyName("details");
+                writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
                 foreach (var item in Details)
                 {
@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.MySql
 
         internal static MySqlRecommendationActionData DeserializeMySqlRecommendationActionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -86,32 +90,31 @@ namespace Azure.ResourceManager.MySql
             Optional<IDictionary<string, string>> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,66 +123,61 @@ namespace Azure.ResourceManager.MySql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("advisorName"))
+                        if (property0.NameEquals("advisorName"u8))
                         {
                             advisorName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sessionId"))
+                        if (property0.NameEquals("sessionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sessionId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("actionId"))
+                        if (property0.NameEquals("actionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             actionId = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("createdTime"))
+                        if (property0.NameEquals("createdTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("expirationTime"))
+                        if (property0.NameEquals("expirationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("reason"))
+                        if (property0.NameEquals("reason"u8))
                         {
                             reason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("recommendationType"))
+                        if (property0.NameEquals("recommendationType"u8))
                         {
                             recommendationType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("details"))
+                        if (property0.NameEquals("details"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();

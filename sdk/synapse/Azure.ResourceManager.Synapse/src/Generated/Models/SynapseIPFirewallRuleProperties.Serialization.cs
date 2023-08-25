@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EndIPAddress))
             {
-                writer.WritePropertyName("endIpAddress");
+                writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress.ToString());
             }
             if (Optional.IsDefined(StartIPAddress))
             {
-                writer.WritePropertyName("startIpAddress");
+                writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress.ToString());
             }
             writer.WriteEndObject();

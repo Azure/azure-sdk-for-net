@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static SharingStatus DeserializeSharingStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SharingState> aggregatedState = default;
             Optional<IReadOnlyList<RegionalSharingStatus>> summary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aggregatedState"))
+                if (property.NameEquals("aggregatedState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aggregatedState = new SharingState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RegionalSharingStatus> array = new List<RegionalSharingStatus>();

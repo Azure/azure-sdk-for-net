@@ -15,29 +15,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BillingMeterCategory))
+            if (Optional.IsDefined(Category))
             {
-                writer.WritePropertyName("billingMeterCategory");
-                writer.WriteStringValue(BillingMeterCategory.Value.ToString());
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
             }
             if (Optional.IsDefined(Applicability))
             {
-                writer.WritePropertyName("applicability");
+                writer.WritePropertyName("applicability"u8);
                 writer.WriteStringValue(Applicability.Value.ToString());
             }
             if (Optional.IsDefined(Cores))
             {
-                writer.WritePropertyName("cores");
+                writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
             if (Optional.IsDefined(MemoryInGiB))
             {
-                writer.WritePropertyName("memoryGiB");
+                writer.WritePropertyName("memoryGiB"u8);
                 writer.WriteNumberValue(MemoryInGiB.Value);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
@@ -45,60 +45,56 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAvailableWorkloadProfileProperties DeserializeContainerAppAvailableWorkloadProfileProperties(JsonElement element)
         {
-            Optional<ContainerAppBillingMeterCategory> billingMeterCategory = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> category = default;
             Optional<ContainerAppAvailableWorkloadProfileApplicability> applicability = default;
             Optional<int> cores = default;
             Optional<int> memoryGiB = default;
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingMeterCategory"))
+                if (property.NameEquals("category"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    billingMeterCategory = new ContainerAppBillingMeterCategory(property.Value.GetString());
+                    category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicability"))
+                if (property.NameEquals("applicability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applicability = new ContainerAppAvailableWorkloadProfileApplicability(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cores"))
+                if (property.NameEquals("cores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cores = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("memoryGiB"))
+                if (property.NameEquals("memoryGiB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryGiB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerAppAvailableWorkloadProfileProperties(Optional.ToNullable(billingMeterCategory), Optional.ToNullable(applicability), Optional.ToNullable(cores), Optional.ToNullable(memoryGiB), displayName.Value);
+            return new ContainerAppAvailableWorkloadProfileProperties(category.Value, Optional.ToNullable(applicability), Optional.ToNullable(cores), Optional.ToNullable(memoryGiB), displayName.Value);
         }
     }
 }

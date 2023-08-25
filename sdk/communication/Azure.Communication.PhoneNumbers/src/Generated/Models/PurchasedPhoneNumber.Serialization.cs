@@ -15,6 +15,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PurchasedPhoneNumber DeserializePurchasedPhoneNumber(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string phoneNumber = default;
             string countryCode = default;
@@ -25,42 +29,42 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberCost cost = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneNumber"))
+                if (property.NameEquals("phoneNumber"u8))
                 {
                     phoneNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCode"))
+                if (property.NameEquals("countryCode"u8))
                 {
                     countryCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneNumberType"))
+                if (property.NameEquals("phoneNumberType"u8))
                 {
                     phoneNumberType = new PhoneNumberType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
                     continue;
                 }
-                if (property.NameEquals("assignmentType"))
+                if (property.NameEquals("assignmentType"u8))
                 {
                     assignmentType = new PhoneNumberAssignmentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("purchaseDate"))
+                if (property.NameEquals("purchaseDate"u8))
                 {
                     purchaseDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cost"))
+                if (property.NameEquals("cost"u8))
                 {
                     cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;

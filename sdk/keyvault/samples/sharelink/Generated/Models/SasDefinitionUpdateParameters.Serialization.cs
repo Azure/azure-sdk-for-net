@@ -17,27 +17,27 @@ namespace Azure.Security.KeyVault.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TemplateUri))
             {
-                writer.WritePropertyName("templateUri");
+                writer.WritePropertyName("templateUri"u8);
                 writer.WriteStringValue(TemplateUri);
             }
             if (Optional.IsDefined(SasType))
             {
-                writer.WritePropertyName("sasType");
+                writer.WritePropertyName("sasType"u8);
                 writer.WriteStringValue(SasType.Value.ToString());
             }
             if (Optional.IsDefined(ValidityPeriod))
             {
-                writer.WritePropertyName("validityPeriod");
+                writer.WritePropertyName("validityPeriod"u8);
                 writer.WriteStringValue(ValidityPeriod);
             }
             if (Optional.IsDefined(SasDefinitionAttributes))
             {
-                writer.WritePropertyName("attributes");
+                writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(SasDefinitionAttributes);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {

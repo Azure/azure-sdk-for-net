@@ -18,10 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
-        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of &apos;queue&apos; or &apos;subscriber&apos;. </param>
-        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type &apos;subscriber&apos;, then this value will be null. </param>
-        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type &apos;queue&apos;, then this value will be null. </param>
-        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic&apos;s subscription. If the entity type is of type &apos;queue&apos;, then this value will be null. </param>
+        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>
+        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type 'subscriber', then this value will be null. </param>
+        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
+        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
         internal ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(string namespaceName, string requestUri, string entityType, string queueName, string topicName, string subscriptionName)
         {
             NamespaceName = namespaceName;
@@ -36,13 +36,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string NamespaceName { get; }
         /// <summary> The endpoint of the Microsoft.ServiceBus resource. </summary>
         public string RequestUri { get; }
-        /// <summary> The entity type of the Microsoft.ServiceBus resource. Could be one of &apos;queue&apos; or &apos;subscriber&apos;. </summary>
+        /// <summary> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </summary>
         public string EntityType { get; }
-        /// <summary> The name of the Microsoft.ServiceBus queue. If the entity type is of type &apos;subscriber&apos;, then this value will be null. </summary>
+        /// <summary> The name of the Microsoft.ServiceBus queue. If the entity type is of type 'subscriber', then this value will be null. </summary>
         public string QueueName { get; }
-        /// <summary> The name of the Microsoft.ServiceBus topic. If the entity type is of type &apos;queue&apos;, then this value will be null. </summary>
+        /// <summary> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </summary>
         public string TopicName { get; }
-        /// <summary> The name of the Microsoft.ServiceBus topic&apos;s subscription. If the entity type is of type &apos;queue&apos;, then this value will be null. </summary>
+        /// <summary> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </summary>
         public string SubscriptionName { get; }
     }
 }

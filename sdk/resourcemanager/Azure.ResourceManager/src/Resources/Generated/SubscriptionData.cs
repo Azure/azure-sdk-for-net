@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the Subscription data model. </summary>
+    /// <summary>
+    /// A class representing the Subscription data model.
+    /// Subscription information.
+    /// </summary>
     public partial class SubscriptionData
     {
         /// <summary> Initializes a new instance of SubscriptionData. </summary>
@@ -23,13 +26,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of SubscriptionData. </summary>
-        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>
         /// <param name="tenantId"> The subscription tenant ID. </param>
         /// <param name="state"> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </param>
         /// <param name="subscriptionPolicies"> The subscription policies. </param>
-        /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, &apos;Legacy, RoleBased&apos;. </param>
+        /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'. </param>
         /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
         internal SubscriptionData(ResourceIdentifier id, string subscriptionId, string displayName, Guid? tenantId, SubscriptionState? state, SubscriptionPolicies subscriptionPolicies, string authorizationSource, IReadOnlyList<ManagedByTenant> managedByTenants, IReadOnlyDictionary<string, string> tags)
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.Resources
         public SubscriptionState? State { get; }
         /// <summary> The subscription policies. </summary>
         public SubscriptionPolicies SubscriptionPolicies { get; }
-        /// <summary> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, &apos;Legacy, RoleBased&apos;. </summary>
+        /// <summary> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'. </summary>
         public string AuthorizationSource { get; }
         /// <summary> An array containing the tenants managing the subscription. </summary>
         public IReadOnlyList<ManagedByTenant> ManagedByTenants { get; }

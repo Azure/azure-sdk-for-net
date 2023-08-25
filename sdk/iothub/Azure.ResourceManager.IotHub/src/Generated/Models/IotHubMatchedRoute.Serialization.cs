@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubMatchedRoute DeserializeIotHubMatchedRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RoutingRuleProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = RoutingRuleProperties.DeserializeRoutingRuleProperties(property.Value);

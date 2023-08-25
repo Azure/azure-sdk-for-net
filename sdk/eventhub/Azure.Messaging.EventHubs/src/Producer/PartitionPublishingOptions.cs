@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <remarks>
         ///   The owner level is only recognized and relevant when certain features of the producer are enabled.  For example, it is used by
-        ///   idempotent publishing.
+        ///   idempotent publishing.  The default owner level is <c>null</c>.
         /// </remarks>
         ///
         /// <exception cref="EventHubsException">
@@ -75,6 +75,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         ///     <para>The sequence number will be in the range of <c>0</c> - <see cref="int.MaxValue"/> (inclusive) and will increase as events are published.
         ///     When more than <see cref="int.MaxValue" /> events have been published, the sequence number will roll over to <c>0</c>.</para>
+        ///
+        ///     <para>The default sequence number is <c>null</c>.</para>
         /// </value>
         ///
         /// <remarks>

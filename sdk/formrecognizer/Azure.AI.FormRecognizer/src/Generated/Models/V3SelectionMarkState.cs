@@ -25,9 +25,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private const string SelectedValue = "selected";
         private const string UnselectedValue = "unselected";
 
-        /// <summary> selected. </summary>
+        /// <summary> The selection mark is selected, often indicated by a check ✓ or cross X inside the selection mark. </summary>
         public static V3SelectionMarkState Selected { get; } = new V3SelectionMarkState(SelectedValue);
-        /// <summary> unselected. </summary>
+        /// <summary> The selection mark is not selected. </summary>
         public static V3SelectionMarkState Unselected { get; } = new V3SelectionMarkState(UnselectedValue);
         /// <summary> Determines if two <see cref="V3SelectionMarkState"/> values are the same. </summary>
         public static bool operator ==(V3SelectionMarkState left, V3SelectionMarkState right) => left.Equals(right);

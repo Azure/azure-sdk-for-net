@@ -45,7 +45,7 @@ namespace Azure.Storage.Tests
         public async Task ReadStream(int dataSize, int bufferPartitionSize)
         {
             PredictableStream originalStream = new PredictableStream();
-            PooledMemoryStream arrayPoolStream = await PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, 0, _pool, bufferPartitionSize, true, default);
+            PooledMemoryStream arrayPoolStream = await PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, _pool, bufferPartitionSize, true, default);
             originalStream.Position = 0;
 
             byte[] originalStreamData = new byte[dataSize];
@@ -63,7 +63,7 @@ namespace Azure.Storage.Tests
             const long dataSize = (long)int.MaxValue + Constants.MB;
             const int bufferPartitionSize = 512 * Constants.MB;
             PredictableStream originalStream = new PredictableStream();
-            PooledMemoryStream arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, 0, _pool, bufferPartitionSize, false, default).EnsureCompleted();
+            PooledMemoryStream arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, _pool, bufferPartitionSize, false, default).EnsureCompleted();
             originalStream.Position = 0;
 
             // assert it holds the correct amount of data. other tests assert data validity and it's so expensive to do that here.
@@ -90,7 +90,7 @@ namespace Azure.Storage.Tests
             // Arrange
             byte[] originalData = GetRandomBuffer(dataSize);
             byte[] readData = new byte[dataSize];
-            PooledMemoryStream pooledMemoryStream = new PooledMemoryStream(ArrayPool<byte>.Shared, 0, bufferPartitionSize);
+            PooledMemoryStream pooledMemoryStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferPartitionSize);
 
             // Act
             await pooledMemoryStream.WriteAsync(originalData, 0, dataSize);

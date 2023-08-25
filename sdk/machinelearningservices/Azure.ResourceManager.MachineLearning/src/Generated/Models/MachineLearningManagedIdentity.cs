@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Managed identity configuration.
-    /// Serialized Name: ManagedIdentity
-    /// </summary>
+    /// <summary> Managed identity configuration. </summary>
     public partial class MachineLearningManagedIdentity : MachineLearningIdentityConfiguration
     {
         /// <summary> Initializes a new instance of MachineLearningManagedIdentity. </summary>
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningManagedIdentity. </summary>
-        /// <param name="identityType">
-        /// [Required] Specifies the type of identity framework.
-        /// Serialized Name: IdentityConfiguration.identityType
-        /// </param>
-        /// <param name="clientId">
-        /// Specifies a user-assigned identity by client ID. For system-assigned, do not set this field.
-        /// Serialized Name: ManagedIdentity.clientId
-        /// </param>
-        /// <param name="objectId">
-        /// Specifies a user-assigned identity by object ID. For system-assigned, do not set this field.
-        /// Serialized Name: ManagedIdentity.objectId
-        /// </param>
-        /// <param name="resourceId">
-        /// Specifies a user-assigned identity by ARM resource ID. For system-assigned, do not set this field.
-        /// Serialized Name: ManagedIdentity.resourceId
-        /// </param>
+        /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
+        /// <param name="clientId"> Specifies a user-assigned identity by client ID. For system-assigned, do not set this field. </param>
+        /// <param name="objectId"> Specifies a user-assigned identity by object ID. For system-assigned, do not set this field. </param>
+        /// <param name="resourceId"> Specifies a user-assigned identity by ARM resource ID. For system-assigned, do not set this field. </param>
         internal MachineLearningManagedIdentity(IdentityConfigurationType identityType, Guid? clientId, Guid? objectId, ResourceIdentifier resourceId) : base(identityType)
         {
             ClientId = clientId;
@@ -47,20 +32,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IdentityType = identityType;
         }
 
-        /// <summary>
-        /// Specifies a user-assigned identity by client ID. For system-assigned, do not set this field.
-        /// Serialized Name: ManagedIdentity.clientId
-        /// </summary>
+        /// <summary> Specifies a user-assigned identity by client ID. For system-assigned, do not set this field. </summary>
         public Guid? ClientId { get; set; }
-        /// <summary>
-        /// Specifies a user-assigned identity by object ID. For system-assigned, do not set this field.
-        /// Serialized Name: ManagedIdentity.objectId
-        /// </summary>
+        /// <summary> Specifies a user-assigned identity by object ID. For system-assigned, do not set this field. </summary>
         public Guid? ObjectId { get; set; }
-        /// <summary>
-        /// Specifies a user-assigned identity by ARM resource ID. For system-assigned, do not set this field.
-        /// Serialized Name: ManagedIdentity.resourceId
-        /// </summary>
+        /// <summary> Specifies a user-assigned identity by ARM resource ID. For system-assigned, do not set this field. </summary>
         public ResourceIdentifier ResourceId { get; set; }
     }
 }

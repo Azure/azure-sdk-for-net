@@ -12,7 +12,10 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> A class representing the WebPubSubHub data model. </summary>
+    /// <summary>
+    /// A class representing the WebPubSubHub data model.
+    /// A hub setting
+    /// </summary>
     public partial class WebPubSubHubData : ResourceData
     {
         /// <summary> Initializes a new instance of WebPubSubHubData. </summary>

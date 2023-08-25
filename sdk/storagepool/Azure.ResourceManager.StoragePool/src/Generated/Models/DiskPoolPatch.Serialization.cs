@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedBy))
             {
-                writer.WritePropertyName("managedBy");
+                writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
             if (Optional.IsCollectionDefined(ManagedByExtended))
             {
-                writer.WritePropertyName("managedByExtended");
+                writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagedByExtended)
                 {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Disks))
             {
-                writer.WritePropertyName("disks");
+                writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiTagDescription data model. </summary>
+    /// <summary>
+    /// A class representing the ApiTagDescription data model.
+    /// Contract details.
+    /// </summary>
     public partial class ApiTagDescriptionData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiTagDescriptionData. </summary>

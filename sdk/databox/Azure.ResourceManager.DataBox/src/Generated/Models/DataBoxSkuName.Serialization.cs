@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataBoxSkuName ToDataBoxSkuName(this string value)
         {
-            if (string.Equals(value, "DataBox", StringComparison.InvariantCultureIgnoreCase)) return DataBoxSkuName.DataBox;
-            if (string.Equals(value, "DataBoxDisk", StringComparison.InvariantCultureIgnoreCase)) return DataBoxSkuName.DataBoxDisk;
-            if (string.Equals(value, "DataBoxHeavy", StringComparison.InvariantCultureIgnoreCase)) return DataBoxSkuName.DataBoxHeavy;
-            if (string.Equals(value, "DataBoxCustomerDisk", StringComparison.InvariantCultureIgnoreCase)) return DataBoxSkuName.DataBoxCustomerDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBox")) return DataBoxSkuName.DataBox;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxDisk")) return DataBoxSkuName.DataBoxDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxHeavy")) return DataBoxSkuName.DataBoxHeavy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxCustomerDisk")) return DataBoxSkuName.DataBoxCustomerDisk;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxSkuName value.");
         }
     }

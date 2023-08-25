@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static BlobContainerImmutabilityPolicy DeserializeBlobContainerImmutabilityPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IReadOnlyList<UpdateHistoryEntry>> updateHistory = default;
             Optional<int> immutabilityPeriodSinceCreationInDays = default;
@@ -24,21 +28,19 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<bool> allowProtectedAppendWritesAll = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("updateHistory"))
+                if (property.NameEquals("updateHistory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UpdateHistoryEntry> array = new List<UpdateHistoryEntry>();
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
                     updateHistory = array;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,41 +60,37 @@ namespace Azure.ResourceManager.Storage.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("immutabilityPeriodSinceCreationInDays"))
+                        if (property0.NameEquals("immutabilityPeriodSinceCreationInDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             immutabilityPeriodSinceCreationInDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new ImmutabilityPolicyState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("allowProtectedAppendWrites"))
+                        if (property0.NameEquals("allowProtectedAppendWrites"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowProtectedAppendWrites = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allowProtectedAppendWritesAll"))
+                        if (property0.NameEquals("allowProtectedAppendWritesAll"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowProtectedAppendWritesAll = property0.Value.GetBoolean();

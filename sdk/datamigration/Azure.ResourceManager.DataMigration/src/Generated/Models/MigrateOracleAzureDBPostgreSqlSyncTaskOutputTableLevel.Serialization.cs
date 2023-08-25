@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tableName = default;
             Optional<string> databaseName = default;
             Optional<long> cdcInsertCounter = default;
@@ -32,132 +36,121 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"))
+                if (property.NameEquals("tableName"u8))
                 {
                     tableName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cdcInsertCounter"))
+                if (property.NameEquals("cdcInsertCounter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cdcInsertCounter = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cdcUpdateCounter"))
+                if (property.NameEquals("cdcUpdateCounter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cdcUpdateCounter = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cdcDeleteCounter"))
+                if (property.NameEquals("cdcDeleteCounter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cdcDeleteCounter = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("fullLoadEstFinishTime"))
+                if (property.NameEquals("fullLoadEstFinishTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fullLoadEstFinishTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("fullLoadStartedOn"))
+                if (property.NameEquals("fullLoadStartedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fullLoadStartedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("fullLoadEndedOn"))
+                if (property.NameEquals("fullLoadEndedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fullLoadEndedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("fullLoadTotalRows"))
+                if (property.NameEquals("fullLoadTotalRows"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fullLoadTotalRows = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new SyncTableMigrationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("totalChangesApplied"))
+                if (property.NameEquals("totalChangesApplied"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalChangesApplied = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("dataErrorsCounter"))
+                if (property.NameEquals("dataErrorsCounter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataErrorsCounter = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastModifiedTime"))
+                if (property.NameEquals("lastModifiedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

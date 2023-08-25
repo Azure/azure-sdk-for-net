@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.BotService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-15-preview";
+            _apiVersion = apiVersion ?? "2022-09-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, QnAMakerEndpointKeysRequestBody qnAMakerEndpointKeysRequestBody)
+        internal HttpMessage CreateGetRequest(string subscriptionId, GetBotServiceQnAMakerEndpointKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,33 +51,33 @@ namespace Azure.ResourceManager.BotService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(qnAMakerEndpointKeysRequestBody);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Lists the QnA Maker endpoint keys. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="qnAMakerEndpointKeysRequestBody"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="qnAMakerEndpointKeysRequestBody"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QnAMakerEndpointKeysResponse>> GetAsync(string subscriptionId, QnAMakerEndpointKeysRequestBody qnAMakerEndpointKeysRequestBody, CancellationToken cancellationToken = default)
+        public async Task<Response<GetBotServiceQnAMakerEndpointKeyResult>> GetAsync(string subscriptionId, GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(qnAMakerEndpointKeysRequestBody, nameof(qnAMakerEndpointKeysRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetRequest(subscriptionId, qnAMakerEndpointKeysRequestBody);
+            using var message = CreateGetRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        QnAMakerEndpointKeysResponse value = default;
+                        GetBotServiceQnAMakerEndpointKeyResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QnAMakerEndpointKeysResponse.DeserializeQnAMakerEndpointKeysResponse(document.RootElement);
+                        value = GetBotServiceQnAMakerEndpointKeyResult.DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -87,24 +87,24 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary> Lists the QnA Maker endpoint keys. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="qnAMakerEndpointKeysRequestBody"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="qnAMakerEndpointKeysRequestBody"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QnAMakerEndpointKeysResponse> Get(string subscriptionId, QnAMakerEndpointKeysRequestBody qnAMakerEndpointKeysRequestBody, CancellationToken cancellationToken = default)
+        public Response<GetBotServiceQnAMakerEndpointKeyResult> Get(string subscriptionId, GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(qnAMakerEndpointKeysRequestBody, nameof(qnAMakerEndpointKeysRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetRequest(subscriptionId, qnAMakerEndpointKeysRequestBody);
+            using var message = CreateGetRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        QnAMakerEndpointKeysResponse value = default;
+                        GetBotServiceQnAMakerEndpointKeyResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QnAMakerEndpointKeysResponse.DeserializeQnAMakerEndpointKeysResponse(document.RootElement);
+                        value = GetBotServiceQnAMakerEndpointKeyResult.DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the Gallery data model. </summary>
+    /// <summary>
+    /// A class representing the Gallery data model.
+    /// Specifies information about the Shared Image Gallery that you want to create or update.
+    /// </summary>
     public partial class GalleryData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GalleryData. </summary>

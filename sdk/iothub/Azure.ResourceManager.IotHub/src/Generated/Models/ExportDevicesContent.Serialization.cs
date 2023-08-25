@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.IotHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("exportBlobContainerUri");
+            writer.WritePropertyName("exportBlobContainerUri"u8);
             writer.WriteStringValue(ExportBlobContainerUri.AbsoluteUri);
-            writer.WritePropertyName("excludeKeys");
+            writer.WritePropertyName("excludeKeys"u8);
             writer.WriteBooleanValue(ExcludeKeys);
             if (Optional.IsDefined(ExportBlobName))
             {
-                writer.WritePropertyName("exportBlobName");
+                writer.WritePropertyName("exportBlobName"u8);
                 writer.WriteStringValue(ExportBlobName);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
-                writer.WritePropertyName("authenticationType");
+                writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             if (Optional.IsDefined(IncludeConfigurations))
             {
-                writer.WritePropertyName("includeConfigurations");
+                writer.WritePropertyName("includeConfigurations"u8);
                 writer.WriteBooleanValue(IncludeConfigurations.Value);
             }
             if (Optional.IsDefined(ConfigurationsBlobName))
             {
-                writer.WritePropertyName("configurationsBlobName");
+                writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);
             }
             writer.WriteEndObject();

@@ -15,25 +15,27 @@ namespace Azure.Communication.CallingServer
     {
         internal static AcsCallParticipantInternal DeserializeAcsCallParticipantInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CommunicationIdentifierModel> identifier = default;
             Optional<bool> isMuted = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identifier"))
+                if (property.NameEquals("identifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isMuted"))
+                if (property.NameEquals("isMuted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isMuted = property.Value.GetBoolean();

@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string aadAuthority = default;
-            string aadTenantId = default;
+            Guid aadTenantId = default;
             string servicePrincipalClientId = default;
             string servicePrincipalObjectId = default;
             string azureManagementEndpointAudience = default;
-            Optional<string> serviceResourceId = default;
+            Optional<ResourceIdentifier> serviceResourceId = default;
             Optional<string> aadAudience = default;
             string authType = default;
             Optional<byte[]> certificate = default;
@@ -28,106 +32,110 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<string> issuer = default;
             Optional<long> resourceId = default;
             Optional<string> subject = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<DateTimeOffset> validFrom = default;
             Optional<DateTimeOffset> validTo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aadAuthority"))
+                if (property.NameEquals("aadAuthority"u8))
                 {
                     aadAuthority = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadTenantId"))
+                if (property.NameEquals("aadTenantId"u8))
                 {
-                    aadTenantId = property.Value.GetString();
+                    aadTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalClientId"))
+                if (property.NameEquals("servicePrincipalClientId"u8))
                 {
                     servicePrincipalClientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalObjectId"))
+                if (property.NameEquals("servicePrincipalObjectId"u8))
                 {
                     servicePrincipalObjectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureManagementEndpointAudience"))
+                if (property.NameEquals("azureManagementEndpointAudience"u8))
                 {
                     azureManagementEndpointAudience = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceResourceId"))
+                if (property.NameEquals("serviceResourceId"u8))
                 {
-                    serviceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("aadAudience"))
+                if (property.NameEquals("aadAudience"u8))
                 {
                     aadAudience = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authType"))
+                if (property.NameEquals("authType"u8))
                 {
                     authType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificate"))
+                if (property.NameEquals("certificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certificate = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issuer"))
+                if (property.NameEquals("issuer"u8))
                 {
                     issuer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("subject"))
+                if (property.NameEquals("subject"u8))
                 {
                     subject = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
-                {
-                    thumbprint = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("validFrom"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("validFrom"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     validFrom = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("validTo"))
+                if (property.NameEquals("validTo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validTo = property.Value.GetDateTimeOffset("O");

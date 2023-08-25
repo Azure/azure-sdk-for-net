@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupRetentionDays))
             {
-                writer.WritePropertyName("backupRetentionDays");
+                writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
             }
             if (Optional.IsDefined(GeoRedundantBackup))
             {
-                writer.WritePropertyName("geoRedundantBackup");
+                writer.WritePropertyName("geoRedundantBackup"u8);
                 writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
             }
             writer.WriteEndObject();
@@ -31,36 +31,37 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerBackupProperties DeserializePostgreSqlFlexibleServerBackupProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> backupRetentionDays = default;
             Optional<PostgreSqlFlexibleServerGeoRedundantBackupEnum> geoRedundantBackup = default;
             Optional<DateTimeOffset> earliestRestoreDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupRetentionDays"))
+                if (property.NameEquals("backupRetentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupRetentionDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("geoRedundantBackup"))
+                if (property.NameEquals("geoRedundantBackup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     geoRedundantBackup = new PostgreSqlFlexibleServerGeoRedundantBackupEnum(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("earliestRestoreDate"))
+                if (property.NameEquals("earliestRestoreDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     earliestRestoreDate = property.Value.GetDateTimeOffset("O");

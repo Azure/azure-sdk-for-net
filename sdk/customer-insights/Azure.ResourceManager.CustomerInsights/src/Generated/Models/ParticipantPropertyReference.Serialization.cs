@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourcePropertyName");
+            writer.WritePropertyName("sourcePropertyName"u8);
             writer.WriteStringValue(SourcePropertyName);
-            writer.WritePropertyName("targetPropertyName");
+            writer.WritePropertyName("targetPropertyName"u8);
             writer.WriteStringValue(TargetPropertyName);
             writer.WriteEndObject();
         }
 
         internal static ParticipantPropertyReference DeserializeParticipantPropertyReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sourcePropertyName = default;
             string targetPropertyName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourcePropertyName"))
+                if (property.NameEquals("sourcePropertyName"u8))
                 {
                     sourcePropertyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetPropertyName"))
+                if (property.NameEquals("targetPropertyName"u8))
                 {
                     targetPropertyName = property.Value.GetString();
                     continue;

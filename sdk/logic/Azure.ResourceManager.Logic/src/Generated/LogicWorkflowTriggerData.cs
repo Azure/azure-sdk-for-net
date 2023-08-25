@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> A class representing the LogicWorkflowTrigger data model. </summary>
+    /// <summary>
+    /// A class representing the LogicWorkflowTrigger data model.
+    /// The workflow trigger.
+    /// </summary>
     public partial class LogicWorkflowTriggerData : ResourceData
     {
         /// <summary> Initializes a new instance of LogicWorkflowTriggerData. </summary>

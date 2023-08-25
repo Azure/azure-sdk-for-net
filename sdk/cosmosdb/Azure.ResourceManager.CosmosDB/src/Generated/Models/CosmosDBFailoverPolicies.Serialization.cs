@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("failoverPolicies");
+            writer.WritePropertyName("failoverPolicies"u8);
             writer.WriteStartArray();
             foreach (var item in FailoverPolicies)
             {

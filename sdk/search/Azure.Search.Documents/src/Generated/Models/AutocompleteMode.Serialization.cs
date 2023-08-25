@@ -21,9 +21,9 @@ namespace Azure.Search.Documents.Models
 
         public static AutocompleteMode ToAutocompleteMode(this string value)
         {
-            if (string.Equals(value, "oneTerm", StringComparison.InvariantCultureIgnoreCase)) return AutocompleteMode.OneTerm;
-            if (string.Equals(value, "twoTerms", StringComparison.InvariantCultureIgnoreCase)) return AutocompleteMode.TwoTerms;
-            if (string.Equals(value, "oneTermWithContext", StringComparison.InvariantCultureIgnoreCase)) return AutocompleteMode.OneTermWithContext;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "oneTerm")) return AutocompleteMode.OneTerm;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "twoTerms")) return AutocompleteMode.TwoTerms;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "oneTermWithContext")) return AutocompleteMode.OneTermWithContext;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutocompleteMode value.");
         }
     }

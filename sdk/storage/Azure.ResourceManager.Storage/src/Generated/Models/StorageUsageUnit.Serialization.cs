@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StorageUsageUnit ToStorageUsageUnit(this string value)
         {
-            if (string.Equals(value, "Count", StringComparison.InvariantCultureIgnoreCase)) return StorageUsageUnit.Count;
-            if (string.Equals(value, "Bytes", StringComparison.InvariantCultureIgnoreCase)) return StorageUsageUnit.Bytes;
-            if (string.Equals(value, "Seconds", StringComparison.InvariantCultureIgnoreCase)) return StorageUsageUnit.Seconds;
-            if (string.Equals(value, "Percent", StringComparison.InvariantCultureIgnoreCase)) return StorageUsageUnit.Percent;
-            if (string.Equals(value, "CountsPerSecond", StringComparison.InvariantCultureIgnoreCase)) return StorageUsageUnit.CountsPerSecond;
-            if (string.Equals(value, "BytesPerSecond", StringComparison.InvariantCultureIgnoreCase)) return StorageUsageUnit.BytesPerSecond;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count")) return StorageUsageUnit.Count;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Bytes")) return StorageUsageUnit.Bytes;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Seconds")) return StorageUsageUnit.Seconds;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Percent")) return StorageUsageUnit.Percent;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CountsPerSecond")) return StorageUsageUnit.CountsPerSecond;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BytesPerSecond")) return StorageUsageUnit.BytesPerSecond;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageUsageUnit value.");
         }
     }

@@ -15,6 +15,10 @@ namespace Azure.Maps.Rendering
     {
         internal static MapTileSet DeserializeMapTileSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tilejson = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -32,51 +36,50 @@ namespace Azure.Maps.Rendering
             Optional<IReadOnlyList<float>> center = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tilejson"))
+                if (property.NameEquals("tilejson"u8))
                 {
                     tilejson = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attribution"))
+                if (property.NameEquals("attribution"u8))
                 {
                     attribution = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("template"))
+                if (property.NameEquals("template"u8))
                 {
                     template = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("legend"))
+                if (property.NameEquals("legend"u8))
                 {
                     legend = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scheme"))
+                if (property.NameEquals("scheme"u8))
                 {
                     scheme = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tiles"))
+                if (property.NameEquals("tiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -87,11 +90,10 @@ namespace Azure.Maps.Rendering
                     tiles = array;
                     continue;
                 }
-                if (property.NameEquals("grids"))
+                if (property.NameEquals("grids"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -102,11 +104,10 @@ namespace Azure.Maps.Rendering
                     grids = array;
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -117,31 +118,28 @@ namespace Azure.Maps.Rendering
                     data = array;
                     continue;
                 }
-                if (property.NameEquals("minzoom"))
+                if (property.NameEquals("minzoom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minzoom = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxzoom"))
+                if (property.NameEquals("maxzoom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxzoom = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bounds"))
+                if (property.NameEquals("bounds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<float> array = new List<float>();
@@ -152,11 +150,10 @@ namespace Azure.Maps.Rendering
                     bounds = array;
                     continue;
                 }
-                if (property.NameEquals("center"))
+                if (property.NameEquals("center"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<float> array = new List<float>();

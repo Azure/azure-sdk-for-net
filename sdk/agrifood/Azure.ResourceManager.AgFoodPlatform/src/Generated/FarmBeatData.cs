@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
-    /// <summary> A class representing the FarmBeat data model. </summary>
+    /// <summary>
+    /// A class representing the FarmBeat data model.
+    /// FarmBeats ARM Resource.
+    /// </summary>
     public partial class FarmBeatData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of FarmBeatData. </summary>

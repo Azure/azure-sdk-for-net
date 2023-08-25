@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyUri))
             {
-                writer.WritePropertyName("keyUri");
+                writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -26,31 +26,33 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static EncryptionScopeKeyVaultProperties DeserializeEncryptionScopeKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> keyUri = default;
             Optional<string> currentVersionedKeyIdentifier = default;
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyUri"))
+                if (property.NameEquals("keyUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyUri = null;
                         continue;
                     }
                     keyUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("currentVersionedKeyIdentifier"))
+                if (property.NameEquals("currentVersionedKeyIdentifier"u8))
                 {
                     currentVersionedKeyIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastKeyRotationTimestamp"))
+                if (property.NameEquals("lastKeyRotationTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastKeyRotationTimestamp = property.Value.GetDateTimeOffset("O");

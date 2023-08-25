@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("error");
+                writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
             if (Optional.IsDefined(ConfigServer))
             {
-                writer.WritePropertyName("configServer");
+                writer.WritePropertyName("configServer"u8);
                 writer.WriteObjectValue(ConfigServer);
             }
             writer.WriteEndObject();
@@ -30,36 +30,37 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformConfigServerProperties DeserializeAppPlatformConfigServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformConfigServerState> provisioningState = default;
             Optional<AppPlatformErrorInfo> error = default;
             Optional<ConfigServerSettings> configServer = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformConfigServerState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("configServer"))
+                if (property.NameEquals("configServer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configServer = ConfigServerSettings.DeserializeConfigServerSettings(property.Value);

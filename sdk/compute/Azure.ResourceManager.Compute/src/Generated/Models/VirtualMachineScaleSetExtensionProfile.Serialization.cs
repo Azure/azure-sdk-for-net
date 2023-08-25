@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Extensions))
             {
-                writer.WritePropertyName("extensions");
+                writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ExtensionsTimeBudget))
             {
-                writer.WritePropertyName("extensionsTimeBudget");
+                writer.WritePropertyName("extensionsTimeBudget"u8);
                 writer.WriteStringValue(ExtensionsTimeBudget);
             }
             writer.WriteEndObject();
@@ -37,15 +37,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetExtensionProfile DeserializeVirtualMachineScaleSetExtensionProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualMachineScaleSetExtensionData>> extensions = default;
             Optional<string> extensionsTimeBudget = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extensions"))
+                if (property.NameEquals("extensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineScaleSetExtensionData> array = new List<VirtualMachineScaleSetExtensionData>();
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
                     extensions = array;
                     continue;
                 }
-                if (property.NameEquals("extensionsTimeBudget"))
+                if (property.NameEquals("extensionsTimeBudget"u8))
                 {
                     extensionsTimeBudget = property.Value.GetString();
                     continue;

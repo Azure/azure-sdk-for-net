@@ -521,7 +521,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
         #region private helpers
 
-        private RouterClient CreateMockRouterClient(int responseCode, string? responseContent = null)
+        private JobRouterClient CreateMockRouterClient(int responseCode, string? responseContent = null)
         {
             var connectionString = "endpoint=https://dummyresource.communication.azure.net/;accesskey=Kg==";
             var mockResponse = new MockResponse(responseCode);
@@ -530,15 +530,15 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 mockResponse.SetContent(responseContent);
             }
 
-            var routerClientOptions = new RouterClientOptions()
+            var routerClientOptions = new JobRouterClientOptions()
             {
                 Transport = new MockTransport(mockResponse)
             };
 
-            return new RouterClient(connectionString, routerClientOptions);
+            return new JobRouterClient(connectionString, routerClientOptions);
         }
 
-        private RouterAdministrationClient CreateMockRouterAdministrationClient(int responseCode, string? responseContent = null)
+        private JobRouterAdministrationClient CreateMockRouterAdministrationClient(int responseCode, string? responseContent = null)
         {
             var connectionString = "endpoint=https://dummyresource.communication.azure.net/;accesskey=Kg==";
             var mockResponse = new MockResponse(responseCode);
@@ -547,12 +547,12 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 mockResponse.SetContent(responseContent);
             }
 
-            var routerClientOptions = new RouterClientOptions()
+            var routerClientOptions = new JobRouterClientOptions()
             {
                 Transport = new MockTransport(mockResponse)
             };
 
-            return new RouterAdministrationClient(connectionString, routerClientOptions);
+            return new JobRouterAdministrationClient(connectionString, routerClientOptions);
         }
 
         #endregion private helpers

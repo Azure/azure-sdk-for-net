@@ -266,6 +266,7 @@ rename-mapping:
   HostnameConfiguration.keyVaultId: keyVaultSecretUri
   ParameterContract.required: IsRequired
   SchemaType: ApiSchemaType
+  ApiRevisionContract.privateUrl: privateUrlString
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'

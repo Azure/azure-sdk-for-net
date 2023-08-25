@@ -7,6 +7,8 @@ Project("{F6672391-5856-4802-8735-03F714F354B6}") = "Azure.ResourceManager.Confl
 EndProject
 Project("{F6672391-5856-4802-8735-03F714F354B6}") = "Azure.ResourceManager.Confluent.Tests", "tests\Azure.ResourceManager.Confluent.Tests.csproj", "{8835039D-1A98-4F8E-82E8-2E84B60140BE}"
 EndProject
+Project("{F6672391-5856-4802-8735-03F714F354B6}") = "Azure.ResourceManager.Confluent.Samples", "samples\Azure.ResourceManager.Confluent.Samples.csproj", "{13544639-8C92-441F-9C13-10807F59F409}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

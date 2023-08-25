@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBAccountReadOnlyKeyList DeserializeCosmosDBAccountReadOnlyKeyList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryReadonlyMasterKey = default;
             Optional<string> secondaryReadonlyMasterKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryReadonlyMasterKey"))
+                if (property.NameEquals("primaryReadonlyMasterKey"u8))
                 {
                     primaryReadonlyMasterKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryReadonlyMasterKey"))
+                if (property.NameEquals("secondaryReadonlyMasterKey"u8))
                 {
                     secondaryReadonlyMasterKey = property.Value.GetString();
                     continue;

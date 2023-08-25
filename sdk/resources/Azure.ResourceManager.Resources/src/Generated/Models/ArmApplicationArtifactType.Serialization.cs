@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static ArmApplicationArtifactType ToArmApplicationArtifactType(this string value)
         {
-            if (string.Equals(value, "NotSpecified", StringComparison.InvariantCultureIgnoreCase)) return ArmApplicationArtifactType.NotSpecified;
-            if (string.Equals(value, "Template", StringComparison.InvariantCultureIgnoreCase)) return ArmApplicationArtifactType.Template;
-            if (string.Equals(value, "Custom", StringComparison.InvariantCultureIgnoreCase)) return ArmApplicationArtifactType.Custom;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return ArmApplicationArtifactType.NotSpecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Template")) return ArmApplicationArtifactType.Template;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom")) return ArmApplicationArtifactType.Custom;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArmApplicationArtifactType value.");
         }
     }

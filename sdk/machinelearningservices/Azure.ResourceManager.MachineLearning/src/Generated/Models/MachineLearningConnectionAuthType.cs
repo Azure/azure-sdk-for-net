@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Authentication type of the connection target
-    /// Serialized Name: ConnectionAuthType
-    /// </summary>
+    /// <summary> Authentication type of the connection target. </summary>
     internal readonly partial struct MachineLearningConnectionAuthType : IEquatable<MachineLearningConnectionAuthType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string NoneValue = "None";
         private const string SasValue = "SAS";
 
-        /// <summary>
-        /// PAT
-        /// Serialized Name: ConnectionAuthType.PAT
-        /// </summary>
+        /// <summary> PAT. </summary>
         public static MachineLearningConnectionAuthType Pat { get; } = new MachineLearningConnectionAuthType(PatValue);
-        /// <summary>
-        /// ManagedIdentity
-        /// Serialized Name: ConnectionAuthType.ManagedIdentity
-        /// </summary>
+        /// <summary> ManagedIdentity. </summary>
         public static MachineLearningConnectionAuthType ManagedIdentity { get; } = new MachineLearningConnectionAuthType(ManagedIdentityValue);
-        /// <summary>
-        /// UsernamePassword
-        /// Serialized Name: ConnectionAuthType.UsernamePassword
-        /// </summary>
+        /// <summary> UsernamePassword. </summary>
         public static MachineLearningConnectionAuthType UsernamePassword { get; } = new MachineLearningConnectionAuthType(UsernamePasswordValue);
-        /// <summary>
-        /// None
-        /// Serialized Name: ConnectionAuthType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static MachineLearningConnectionAuthType None { get; } = new MachineLearningConnectionAuthType(NoneValue);
-        /// <summary>
-        /// SAS
-        /// Serialized Name: ConnectionAuthType.SAS
-        /// </summary>
+        /// <summary> SAS. </summary>
         public static MachineLearningConnectionAuthType Sas { get; } = new MachineLearningConnectionAuthType(SasValue);
         /// <summary> Determines if two <see cref="MachineLearningConnectionAuthType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningConnectionAuthType left, MachineLearningConnectionAuthType right) => left.Equals(right);

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("scope");
+                writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToSerialString());
             }
             if (Optional.IsDefined(ElevationLevel))
             {
-                writer.WritePropertyName("elevationLevel");
+                writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAutoUserSpecification DeserializeBatchAutoUserSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchAutoUserScope> scope = default;
             Optional<BatchUserAccountElevationLevel> elevationLevel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scope = property.Value.GetString().ToBatchAutoUserScope();
                     continue;
                 }
-                if (property.NameEquals("elevationLevel"))
+                if (property.NameEquals("elevationLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     elevationLevel = property.Value.GetString().ToBatchUserAccountElevationLevel();

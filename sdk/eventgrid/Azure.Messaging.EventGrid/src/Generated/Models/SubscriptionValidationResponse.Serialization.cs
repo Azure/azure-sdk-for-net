@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidationResponse))
             {
-                writer.WritePropertyName("validationResponse");
+                writer.WritePropertyName("validationResponse"u8);
                 writer.WriteStringValue(ValidationResponse);
             }
             writer.WriteEndObject();
@@ -28,10 +28,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         internal static SubscriptionValidationResponse DeserializeSubscriptionValidationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> validationResponse = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationResponse"))
+                if (property.NameEquals("validationResponse"u8))
                 {
                     validationResponse = property.Value.GetString();
                     continue;

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Confluent
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Confluent
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("offerDetail");
+            writer.WritePropertyName("offerDetail"u8);
             writer.WriteObjectValue(OfferDetail);
-            writer.WritePropertyName("userDetail");
+            writer.WritePropertyName("userDetail"u8);
             writer.WriteObjectValue(UserDetail);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Confluent
 
         internal static ConfluentOrganizationData DeserializeConfluentOrganizationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -58,11 +62,10 @@ namespace Azure.ResourceManager.Confluent
             ConfluentUserDetail userDetail = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -73,37 +76,36 @@ namespace Azure.ResourceManager.Confluent
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,52 +114,48 @@ namespace Azure.ResourceManager.Confluent
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("createdTime"))
+                        if (property0.NameEquals("createdTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ConfluentProvisionState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("organizationId"))
+                        if (property0.NameEquals("organizationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             organizationId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("ssoUrl"))
+                        if (property0.NameEquals("ssoUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                ssoUrl = null;
                                 continue;
                             }
                             ssoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("offerDetail"))
+                        if (property0.NameEquals("offerDetail"u8))
                         {
                             offerDetail = ConfluentOfferDetail.DeserializeConfluentOfferDetail(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("userDetail"))
+                        if (property0.NameEquals("userDetail"u8))
                         {
                             userDetail = ConfluentUserDetail.DeserializeConfluentUserDetail(property0.Value);
                             continue;

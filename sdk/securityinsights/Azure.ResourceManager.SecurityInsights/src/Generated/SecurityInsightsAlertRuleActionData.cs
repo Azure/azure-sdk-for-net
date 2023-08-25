@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the SecurityInsightsAlertRuleAction data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityInsightsAlertRuleAction data model.
+    /// Action for alert rule.
+    /// </summary>
     public partial class SecurityInsightsAlertRuleActionData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityInsightsAlertRuleActionData. </summary>
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the action. </param>
         /// <param name="logicAppResourceId"> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </param>
-        /// <param name="workflowId"> The name of the logic app&apos;s workflow. </param>
+        /// <param name="workflowId"> The name of the logic app's workflow. </param>
         internal SecurityInsightsAlertRuleActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier logicAppResourceId, string workflowId) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public ETag? ETag { get; set; }
         /// <summary> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </summary>
         public ResourceIdentifier LogicAppResourceId { get; set; }
-        /// <summary> The name of the logic app&apos;s workflow. </summary>
+        /// <summary> The name of the logic app's workflow. </summary>
         public string WorkflowId { get; set; }
     }
 }

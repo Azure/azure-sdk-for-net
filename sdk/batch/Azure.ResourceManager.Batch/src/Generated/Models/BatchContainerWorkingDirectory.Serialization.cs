@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchContainerWorkingDirectory ToBatchContainerWorkingDirectory(this string value)
         {
-            if (string.Equals(value, "TaskWorkingDirectory", StringComparison.InvariantCultureIgnoreCase)) return BatchContainerWorkingDirectory.TaskWorkingDirectory;
-            if (string.Equals(value, "ContainerImageDefault", StringComparison.InvariantCultureIgnoreCase)) return BatchContainerWorkingDirectory.ContainerImageDefault;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TaskWorkingDirectory")) return BatchContainerWorkingDirectory.TaskWorkingDirectory;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ContainerImageDefault")) return BatchContainerWorkingDirectory.ContainerImageDefault;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchContainerWorkingDirectory value.");
         }
     }

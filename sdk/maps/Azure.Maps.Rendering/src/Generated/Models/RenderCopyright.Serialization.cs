@@ -15,21 +15,24 @@ namespace Azure.Maps.Rendering
     {
         internal static RenderCopyright DeserializeRenderCopyright(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> formatVersion = default;
             Optional<IReadOnlyList<string>> generalCopyrights = default;
             Optional<IReadOnlyList<RegionalCopyright>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("formatVersion"))
+                if (property.NameEquals("formatVersion"u8))
                 {
                     formatVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("generalCopyrights"))
+                if (property.NameEquals("generalCopyrights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -40,11 +43,10 @@ namespace Azure.Maps.Rendering
                     generalCopyrights = array;
                     continue;
                 }
-                if (property.NameEquals("regions"))
+                if (property.NameEquals("regions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RegionalCopyright> array = new List<RegionalCopyright>();

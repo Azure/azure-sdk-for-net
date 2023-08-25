@@ -21,6 +21,9 @@
   <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Messaging.*\**\*.csproj" />
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.ServiceBus\**\*.csproj" />
+    <ProjectReference Update="$(MSBuildThisFileDirectory)Azure.Messaging.*\tests\*.csproj">
+      <TestInParallel>false</TestInParallel>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">

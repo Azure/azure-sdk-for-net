@@ -18,51 +18,69 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Script))
             {
-                writer.WritePropertyName("script");
+                writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
             if (Optional.IsDefined(ScriptUri))
             {
-                writer.WritePropertyName("scriptUri");
+                writer.WritePropertyName("scriptUri"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
             if (Optional.IsDefined(CommandId))
             {
-                writer.WritePropertyName("commandId");
+                writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
+            }
+            if (Optional.IsDefined(ScriptUriManagedIdentity))
+            {
+                writer.WritePropertyName("scriptUriManagedIdentity"u8);
+                writer.WriteObjectValue(ScriptUriManagedIdentity);
             }
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineRunCommandScriptSource DeserializeVirtualMachineRunCommandScriptSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> script = default;
             Optional<Uri> scriptUri = default;
             Optional<string> commandId = default;
+            Optional<RunCommandManagedIdentity> scriptUriManagedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("script"))
+                if (property.NameEquals("script"u8))
                 {
                     script = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scriptUri"))
+                if (property.NameEquals("scriptUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        scriptUri = null;
                         continue;
                     }
                     scriptUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commandId"))
+                if (property.NameEquals("commandId"u8))
                 {
                     commandId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("scriptUriManagedIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scriptUriManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property.Value);
+                    continue;
+                }
             }
-            return new VirtualMachineRunCommandScriptSource(script.Value, scriptUri.Value, commandId.Value);
+            return new VirtualMachineRunCommandScriptSource(script.Value, scriptUri.Value, commandId.Value, scriptUriManagedIdentity.Value);
         }
     }
 }

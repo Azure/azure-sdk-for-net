@@ -16,31 +16,40 @@ namespace Azure.ResourceManager.Orbital.Models
     {
         internal static OrbitalContactAntennaConfiguration DeserializeOrbitalContactAntennaConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> destinationIP = default;
             Optional<IReadOnlyList<IPAddress>> sourceIPs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("destinationIp"))
+                if (property.NameEquals("destinationIp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationIP = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceIps"))
+                if (property.NameEquals("sourceIps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.Parse(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     sourceIPs = array;
                     continue;

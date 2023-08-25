@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
             if (Optional.IsDefined(TargetPlatform))
             {
-                writer.WritePropertyName("targetPlatform");
+                writer.WritePropertyName("targetPlatform"u8);
                 writer.WriteStringValue(TargetPlatform.Value.ToString());
             }
             if (Optional.IsDefined(CheckPermissionsGroup))
             {
-                writer.WritePropertyName("checkPermissionsGroup");
+                writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsOfflineMigration))
             {
-                writer.WritePropertyName("isOfflineMigration");
+                writer.WritePropertyName("isOfflineMigration"u8);
                 writer.WriteBooleanValue(IsOfflineMigration.Value);
             }
             writer.WriteEndObject();
@@ -37,42 +37,43 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceMySqlTaskInput DeserializeConnectToSourceMySqlTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MySqlConnectionInfo sourceConnectionInfo = default;
             Optional<MySqlTargetPlatformType> targetPlatform = default;
             Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;
             Optional<bool> isOfflineMigration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetPlatform"))
+                if (property.NameEquals("targetPlatform"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetPlatform = new MySqlTargetPlatformType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("checkPermissionsGroup"))
+                if (property.NameEquals("checkPermissionsGroup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     checkPermissionsGroup = property.Value.GetString().ToServerLevelPermissionsGroup();
                     continue;
                 }
-                if (property.NameEquals("isOfflineMigration"))
+                if (property.NameEquals("isOfflineMigration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isOfflineMigration = property.Value.GetBoolean();

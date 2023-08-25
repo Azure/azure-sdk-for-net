@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DiskLunList))
             {
-                writer.WritePropertyName("diskLunList");
+                writer.WritePropertyName("diskLunList"u8);
                 writer.WriteStartArray();
                 foreach (var item in DiskLunList)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(IsInclusionList))
             {
-                writer.WritePropertyName("isInclusionList");
+                writer.WritePropertyName("isInclusionList"u8);
                 writer.WriteBooleanValue(IsInclusionList.Value);
             }
             writer.WriteEndObject();
@@ -36,15 +36,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DiskExclusionProperties DeserializeDiskExclusionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> diskLunList = default;
             Optional<bool> isInclusionList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskLunList"))
+                if (property.NameEquals("diskLunList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -55,11 +58,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     diskLunList = array;
                     continue;
                 }
-                if (property.NameEquals("isInclusionList"))
+                if (property.NameEquals("isInclusionList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isInclusionList = property.Value.GetBoolean();

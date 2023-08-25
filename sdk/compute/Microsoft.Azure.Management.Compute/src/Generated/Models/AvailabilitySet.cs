@@ -24,12 +24,11 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// availability. For more information about availability sets, see
     /// [Availability sets
     /// overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview).
-    /// &lt;br&gt;&lt;br&gt; For more information on Azure planned maintenance,
-    /// see [Maintenance and updates for Virtual Machines in
-    /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates)
-    /// &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to availability
-    /// set at creation time. An existing VM cannot be added to an availability
-    /// set.
+    /// For more information on Azure planned maintenance, see [Maintenance and
+    /// updates for Virtual Machines in
+    /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates).
+    /// Currently, a VM can only be added to an availability set at creation
+    /// time. An existing VM cannot be added to an availability set.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AvailabilitySet : Resource
@@ -57,8 +56,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// machines in the availability set.</param>
         /// <param name="proximityPlacementGroup">Specifies information about
         /// the proximity placement group that the availability set should be
-        /// assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2018-04-01.</param>
+        /// assigned to. Minimum api-version: 2018-04-01.</param>
         /// <param name="statuses">The resource status information.</param>
         /// <param name="sku">Sku of the availability set, only name is
         /// required to be set. See AvailabilitySetSkuTypes for possible set of
@@ -103,9 +101,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies information about the proximity placement
-        /// group that the availability set should be assigned to.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2018-04-01.
+        /// group that the availability set should be assigned to. Minimum
+        /// api-version: 2018-04-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
         public SubResource ProximityPlacementGroup { get; set; }

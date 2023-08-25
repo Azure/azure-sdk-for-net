@@ -7,6 +7,8 @@ Project("{92EA219F-BEBA-4AC2-ABEB-1B22CA6700FF}") = "Azure.ResourceManager.Kuber
 EndProject
 Project("{92EA219F-BEBA-4AC2-ABEB-1B22CA6700FF}") = "Azure.ResourceManager.Kubernetes.Tests", "tests\Azure.ResourceManager.Kubernetes.Tests.csproj", "{5FB5C28D-45A0-4BEE-9CB5-C93BB1C1BC50}"
 EndProject
+Project("{92EA219F-BEBA-4AC2-ABEB-1B22CA6700FF}") = "Azure.ResourceManager.Kubernetes.Samples", "samples\Azure.ResourceManager.Kubernetes.Samples.csproj", "{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccount))
             {
-                writer.WritePropertyName("storageAccount");
+                writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
             if (Optional.IsDefined(Container))
             {
-                writer.WritePropertyName("container");
+                writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(RefreshConfiguration))
             {
-                writer.WritePropertyName("refreshConfiguration");
+                writer.WritePropertyName("refreshConfiguration"u8);
                 writer.WriteObjectValue(RefreshConfiguration);
             }
             writer.WriteEndObject();
@@ -40,37 +40,39 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobExternal DeserializeStreamingJobExternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamAnalyticsStorageAccount> storageAccount = default;
             Optional<string> container = default;
             Optional<string> path = default;
             Optional<StreamingJobRefreshConfiguration> refreshConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccount"))
+                if (property.NameEquals("storageAccount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccount = StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(property.Value);
                     continue;
                 }
-                if (property.NameEquals("container"))
+                if (property.NameEquals("container"u8))
                 {
                     container = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("refreshConfiguration"))
+                if (property.NameEquals("refreshConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     refreshConfiguration = StreamingJobRefreshConfiguration.DeserializeStreamingJobRefreshConfiguration(property.Value);

@@ -49,10 +49,10 @@ param(
   [Parameter(Mandatory = $true)]
   [string]$DocRepoLocation,
 
-  [Parameter(Mandatory = $true)]
+  [Parameter(Mandatory = $false)]
   [string]$Language,
 
-  [Parameter(Mandatory = $true)]
+  [Parameter(Mandatory = $false)]
   [string]$RepoId,
 
   [Parameter(Mandatory = $false)]
@@ -192,8 +192,20 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
   }
   $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
   $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
+  if (Test-Path "$packageInfoLocation/$packageMetadataName") {
+    Write-Host "The docs metadata json $packageMetadataName exists, updating..."
+    $docsMetadata = Get-Content "$packageInfoLocation/$packageMetadataName" -Raw | ConvertFrom-Json
+    foreach ($property in $docsMetadata.PSObject.Properties) {
+      if ($packageInfo.PSObject.Properties.Name -notcontains $property.Name) {
+        $packageInfo | Add-Member -MemberType $property.MemberType -Name $property.Name -Value $property.Value -Force
+      }
+    }
+  }
+  else {
+    Write-Host "The docs metadata json $packageMetadataName does not exist, creating a new one to docs repo..."
+    New-Item -ItemType Directory -Path $packageInfoLocation -Force
+  }
   $packageInfoJson = ConvertTo-Json $packageInfo
-  New-Item -ItemType Directory -Path $packageInfoLocation -Force
   Set-Content `
     -Path $packageInfoLocation/$packageMetadataName `
     -Value $packageInfoJson
@@ -218,17 +230,40 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
   Set-Content -Path $readmeLocation -Value $outputReadmeContent
 }
 
-# For daily update and release, validate DocsMS publishing using the language-specific validation function
-if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
-  Write-Host "Validating the packages..."
-
-  $packageInfos = @($PackageInfoJsonLocations | ForEach-Object { GetPackageInfoJson $_ })
-
-  &$ValidateDocsMsPackagesFn -PackageInfos $packageInfos -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId -DocRepoLocation $DocRepoLocation
-}
-
+$allSucceeded = $true
 foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
+
+  if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
+    Write-Host "Validating the packages..."
+
+    $packageInfo =  GetPackageInfoJson $packageInfoLocation
+    # This calls a function named "Validate-${Language}-DocMsPackages" 
+    # declared in common.ps1, implemented in Language-Settings.ps1
+    $isValid = &$ValidateDocsMsPackagesFn `
+      -PackageInfos $packageInfo `
+      -PackageSourceOverride $PackageSourceOverride `
+      -DocValidationImageId $DocValidationImageId `
+      -DocRepoLocation $DocRepoLocation
+
+    if (!$isValid) {
+      Write-Host "Package validation failed for package: $packageInfoLocation"
+      $allSucceeded = $false
+
+      # Skip the later call to UpdateDocsMsMetadataForPackage because this 
+      # package has not passed validation
+      continue
+    }
+  }
+
   Write-Host "Updating metadata for package: $packageInfoLocation"
   # Convert package metadata json file to metadata json property.
   UpdateDocsMsMetadataForPackage $packageInfoLocation
+}
+
+# Set a variable which will be used by the pipeline later to fail the build if
+# any packages failed validation
+if ($allSucceeded) {
+  Write-Host "##vso[task.setvariable variable=DocsMsPackagesAllValid;]$true"
+} else { 
+  Write-Host "##vso[task.setvariable variable=DocsMsPackagesAllValid;]$false"
 }

@@ -18,11 +18,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("gitHubClientId");
+            writer.WritePropertyName("gitHubClientId"u8);
             writer.WriteStringValue(GitHubClientId);
-            writer.WritePropertyName("gitHubAccessCode");
+            writer.WritePropertyName("gitHubAccessCode"u8);
             writer.WriteStringValue(GitHubAccessCode);
-            writer.WritePropertyName("gitHubAccessTokenBaseUrl");
+            writer.WritePropertyName("gitHubAccessTokenBaseUrl"u8);
             writer.WriteStringValue(GitHubAccessTokenBaseUrl);
             writer.WriteEndObject();
         }

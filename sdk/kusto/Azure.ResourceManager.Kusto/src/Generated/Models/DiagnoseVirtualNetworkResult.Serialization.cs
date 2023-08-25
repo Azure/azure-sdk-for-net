@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static DiagnoseVirtualNetworkResult DeserializeDiagnoseVirtualNetworkResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> findings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("findings"))
+                if (property.NameEquals("findings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

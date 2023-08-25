@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppRevision data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppRevision data model.
+    /// Container App Revision.
+    /// </summary>
     public partial class ContainerAppRevisionData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppRevisionData. </summary>
@@ -42,7 +45,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
         /// <param name="healthState"> Current health State of the revision. </param>
         /// <param name="provisioningState"> Current provisioning State of the revision. </param>
-        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastActiveOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, ContainerAppRevisionHealthState? healthState, ContainerAppRevisionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="runningState"> Current running state of the revision. </param>
+        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastActiveOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, ContainerAppRevisionHealthState? healthState, ContainerAppRevisionProvisioningState? provisioningState, RevisionRunningState? runningState) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             LastActiveOn = lastActiveOn;
@@ -54,6 +58,7 @@ namespace Azure.ResourceManager.AppContainers
             ProvisioningError = provisioningError;
             HealthState = healthState;
             ProvisioningState = provisioningState;
+            RunningState = runningState;
         }
 
         /// <summary>
@@ -83,5 +88,7 @@ namespace Azure.ResourceManager.AppContainers
         public ContainerAppRevisionHealthState? HealthState { get; }
         /// <summary> Current provisioning State of the revision. </summary>
         public ContainerAppRevisionProvisioningState? ProvisioningState { get; }
+        /// <summary> Current running state of the revision. </summary>
+        public RevisionRunningState? RunningState { get; }
     }
 }

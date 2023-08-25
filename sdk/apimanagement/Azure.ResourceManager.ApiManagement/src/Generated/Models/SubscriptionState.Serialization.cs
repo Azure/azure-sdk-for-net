@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static SubscriptionState ToSubscriptionState(this string value)
         {
-            if (string.Equals(value, "suspended", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.Suspended;
-            if (string.Equals(value, "active", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.Active;
-            if (string.Equals(value, "expired", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.Expired;
-            if (string.Equals(value, "submitted", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.Submitted;
-            if (string.Equals(value, "rejected", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.Rejected;
-            if (string.Equals(value, "cancelled", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "suspended")) return SubscriptionState.Suspended;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "active")) return SubscriptionState.Active;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "expired")) return SubscriptionState.Expired;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "submitted")) return SubscriptionState.Submitted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rejected")) return SubscriptionState.Rejected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled")) return SubscriptionState.Cancelled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SubscriptionState value.");
         }
     }

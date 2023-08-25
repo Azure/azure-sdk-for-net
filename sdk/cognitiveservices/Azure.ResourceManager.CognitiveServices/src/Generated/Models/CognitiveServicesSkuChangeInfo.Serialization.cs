@@ -15,36 +15,37 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesSkuChangeInfo DeserializeCognitiveServicesSkuChangeInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> countOfDowngrades = default;
             Optional<float> countOfUpgradesAfterDowngrades = default;
             Optional<DateTimeOffset> lastChangeDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("countOfDowngrades"))
+                if (property.NameEquals("countOfDowngrades"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     countOfDowngrades = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("countOfUpgradesAfterDowngrades"))
+                if (property.NameEquals("countOfUpgradesAfterDowngrades"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     countOfUpgradesAfterDowngrades = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("lastChangeDate"))
+                if (property.NameEquals("lastChangeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastChangeDate = property.Value.GetDateTimeOffset("O");

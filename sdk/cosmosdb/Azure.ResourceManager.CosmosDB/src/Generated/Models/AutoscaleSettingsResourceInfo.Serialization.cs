@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("maxThroughput");
+            writer.WritePropertyName("maxThroughput"u8);
             writer.WriteNumberValue(MaxThroughput);
             if (Optional.IsDefined(AutoUpgradePolicy))
             {
-                writer.WritePropertyName("autoUpgradePolicy");
+                writer.WritePropertyName("autoUpgradePolicy"u8);
                 writer.WriteObjectValue(AutoUpgradePolicy);
             }
             writer.WriteEndObject();
@@ -27,31 +27,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static AutoscaleSettingsResourceInfo DeserializeAutoscaleSettingsResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int maxThroughput = default;
             Optional<AutoUpgradePolicyResourceInfo> autoUpgradePolicy = default;
             Optional<int> targetMaxThroughput = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxThroughput"))
+                if (property.NameEquals("maxThroughput"u8))
                 {
                     maxThroughput = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("autoUpgradePolicy"))
+                if (property.NameEquals("autoUpgradePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoUpgradePolicy = AutoUpgradePolicyResourceInfo.DeserializeAutoUpgradePolicyResourceInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetMaxThroughput"))
+                if (property.NameEquals("targetMaxThroughput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetMaxThroughput = property.Value.GetInt32();

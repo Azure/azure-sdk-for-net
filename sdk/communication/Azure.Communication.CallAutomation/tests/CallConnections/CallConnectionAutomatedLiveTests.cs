@@ -27,65 +27,70 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
              * 5. Check the call if the call is terminated.
             */
 
-            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
             string? callConnectionId = null;
 
             try
             {
-                // create caller and receiver
-                var user = await CreateIdentityUserAsync().ConfigureAwait(false);
-                var target = await CreateIdentityUserAsync().ConfigureAwait(false);
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
 
-                // setup service bus
-                var uniqueId = await ServiceBusWithNewCall(user, target);
+                    // create call and assert response
+                    var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                    CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
+                    callConnectionId = response.CallConnectionProperties.CallConnectionId;
+                    Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
-                // create call and assert response
-                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-                createCallOptions.RepeatabilityHeaders = null;
-                CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
-                callConnectionId = response.CallConnectionProperties.CallConnectionId;
-                Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+                    // wait for incomingcall context
+                    string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(incomingCallContext);
 
-                // wait for incomingcall context
-                string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(incomingCallContext);
+                    // answer the call
+                    var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+                    AnswerCallResult answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
 
-                // answer the call
-                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
-                answerCallOptions.RepeatabilityHeaders = null;
-                AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
+                    // wait for callConnected
+                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(connectedEvent);
+                    Assert.IsTrue(connectedEvent is CallConnected);
+                    Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
 
-                // wait for callConnected
-                var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(connectedEvent);
-                Assert.IsTrue(connectedEvent is CallConnected);
-                Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
+                    // wait for participants updated
+                    var participantsUpdatedEvent1 = await WaitForEvent<ParticipantsUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(participantsUpdatedEvent1);
+                    Assert.AreEqual(2, ((ParticipantsUpdated)participantsUpdatedEvent1!).Participants.Count);
 
-                // wait for participants updated
-                var participantsUpdatedEvent1 = await WaitForEvent<ParticipantsUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(participantsUpdatedEvent1);
-                Assert.AreEqual(2, ((ParticipantsUpdated)participantsUpdatedEvent1!).Participants.Count);
+                    // test get properties
+                    Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
 
-                // test get properties
-                Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+                    // try RemoveParticipants
+                    string operationContext1 = "MyTestOperationcontext";
+                    var removeParticipantsOptions = new RemoveParticipantOptions(target)
+                    {
+                        OperationContext = operationContext1,
+                    };
+                    Response<RemoveParticipantResult> removePartResponse = await response.CallConnection.RemoveParticipantAsync(removeParticipantsOptions);
+                    Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
+                    Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
 
-                // try RemoveParticipants
-                string operationContext1 = "MyTestOperationcontext";
-                var removeParticipantsOptions = new RemoveParticipantsOptions(new CommunicationIdentifier[] { target }) {
-                    OperationContext = operationContext1,
-                };
-                removeParticipantsOptions.RepeatabilityHeaders = null;
-                Response<RemoveParticipantsResult> removePartResponse = await response.CallConnection.RemoveParticipantsAsync(removeParticipantsOptions);
-                Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
-                Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
-
-                // call should be disconnected after removing participant
-                var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(disconnectedEvent);
-                Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
-                callConnectionId = null;
+                    // call should be disconnected after removing participant
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+                    callConnectionId = null;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
             catch (Exception ex)
             {

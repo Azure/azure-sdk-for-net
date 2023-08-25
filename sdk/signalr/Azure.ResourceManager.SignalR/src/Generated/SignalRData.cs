@@ -12,7 +12,10 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    /// <summary> A class representing the SignalR data model. </summary>
+    /// <summary>
+    /// A class representing the SignalR data model.
+    /// A class represent a resource.
+    /// </summary>
     public partial class SignalRData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SignalRData. </summary>
@@ -46,11 +49,11 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="features">
         /// List of the featureFlags.
-        /// 
+        ///
         /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
-        /// And the response will only include featureFlags that are explicitly set. 
+        /// And the response will only include featureFlags that are explicitly set.
         /// When a featureFlag is not explicitly set, its globally default value will be used
-        /// But keep in mind, the default value doesn&apos;t mean &quot;false&quot;. It varies in terms of different FeatureFlags.
+        /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </param>
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="resourceLogConfiguration"> Resource log configuration of a Microsoft.SignalRService resource. </param>
@@ -58,19 +61,19 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="upstream"> The settings for the Upstream when the service is in server-less mode. </param>
         /// <param name="networkACLs"> Network ACLs for the resource. </param>
         /// <param name="publicNetworkAccess">
-        /// Enable or disable public network access. Default to &quot;Enabled&quot;.
-        /// When it&apos;s Enabled, network ACLs still apply.
-        /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </param>
         /// <param name="disableLocalAuth">
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won&apos;t work.
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </param>
         /// <param name="disableAadAuth">
         /// DisableLocalAuth
         /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won&apos;t work.
+        /// When set as true, connection with AuthType=aad won't work.
         /// </param>
         internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, SignalRTlsSettings tls, string hostNamePrefix, IList<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRResourceLogCategoryListResult resourceLogConfiguration, SignalRCorsSettings cors, ServerlessUpstreamSettings upstream, SignalRNetworkAcls networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -138,11 +141,11 @@ namespace Azure.ResourceManager.SignalR
         public string HostNamePrefix { get; }
         /// <summary>
         /// List of the featureFlags.
-        /// 
+        ///
         /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
-        /// And the response will only include featureFlags that are explicitly set. 
+        /// And the response will only include featureFlags that are explicitly set.
         /// When a featureFlag is not explicitly set, its globally default value will be used
-        /// But keep in mind, the default value doesn&apos;t mean &quot;false&quot;. It varies in terms of different FeatureFlags.
+        /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </summary>
         public IList<SignalRFeature> Features { get; }
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
@@ -162,7 +165,7 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
         internal SignalRCorsSettings Cors { get; set; }
-        /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use &quot;*&quot; to allow all. If omitted, allow all by default. </summary>
+        /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </summary>
         public IList<string> CorsAllowedOrigins
         {
             get
@@ -189,21 +192,21 @@ namespace Azure.ResourceManager.SignalR
         /// <summary> Network ACLs for the resource. </summary>
         public SignalRNetworkAcls NetworkACLs { get; set; }
         /// <summary>
-        /// Enable or disable public network access. Default to &quot;Enabled&quot;.
-        /// When it&apos;s Enabled, network ACLs still apply.
-        /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </summary>
         public string PublicNetworkAccess { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won&apos;t work.
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won&apos;t work.
+        /// When set as true, connection with AuthType=aad won't work.
         /// </summary>
         public bool? DisableAadAuth { get; set; }
     }

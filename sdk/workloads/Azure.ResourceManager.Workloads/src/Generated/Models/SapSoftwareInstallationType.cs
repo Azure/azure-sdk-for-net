@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Workloads.Models
 
         private const string ServiceInitiatedValue = "ServiceInitiated";
         private const string SapInstallWithoutOSConfigValue = "SAPInstallWithoutOSConfig";
+        private const string ExternalValue = "External";
 
         /// <summary> ServiceInitiated. </summary>
         public static SapSoftwareInstallationType ServiceInitiated { get; } = new SapSoftwareInstallationType(ServiceInitiatedValue);
         /// <summary> SAPInstallWithoutOSConfig. </summary>
         public static SapSoftwareInstallationType SapInstallWithoutOSConfig { get; } = new SapSoftwareInstallationType(SapInstallWithoutOSConfigValue);
+        /// <summary> External. </summary>
+        public static SapSoftwareInstallationType External { get; } = new SapSoftwareInstallationType(ExternalValue);
         /// <summary> Determines if two <see cref="SapSoftwareInstallationType"/> values are the same. </summary>
         public static bool operator ==(SapSoftwareInstallationType left, SapSoftwareInstallationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapSoftwareInstallationType"/> values are not the same. </summary>

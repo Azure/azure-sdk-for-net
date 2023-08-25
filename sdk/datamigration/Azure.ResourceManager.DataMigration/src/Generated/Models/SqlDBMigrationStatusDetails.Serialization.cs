@@ -15,21 +15,24 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SqlDBMigrationStatusDetails DeserializeSqlDBMigrationStatusDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> migrationState = default;
             Optional<IReadOnlyList<string>> sqlDataCopyErrors = default;
             Optional<IReadOnlyList<CopyProgressDetails>> listOfCopyProgressDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationState"))
+                if (property.NameEquals("migrationState"u8))
                 {
                     migrationState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sqlDataCopyErrors"))
+                if (property.NameEquals("sqlDataCopyErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -40,11 +43,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sqlDataCopyErrors = array;
                     continue;
                 }
-                if (property.NameEquals("listOfCopyProgressDetails"))
+                if (property.NameEquals("listOfCopyProgressDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CopyProgressDetails> array = new List<CopyProgressDetails>();

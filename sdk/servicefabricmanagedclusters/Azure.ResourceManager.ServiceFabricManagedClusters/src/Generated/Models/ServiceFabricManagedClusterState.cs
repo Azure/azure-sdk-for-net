@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// The current state of the cluster.
-    /// 
+    ///
     /// </summary>
     public readonly partial struct ServiceFabricManagedClusterState : IEquatable<ServiceFabricManagedClusterState>
     {

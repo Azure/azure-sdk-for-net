@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SnapshotsToKeep))
             {
-                writer.WritePropertyName("snapshotsToKeep");
+                writer.WritePropertyName("snapshotsToKeep"u8);
                 writer.WriteNumberValue(SnapshotsToKeep.Value);
             }
             if (Optional.IsDefined(Day))
             {
-                writer.WritePropertyName("day");
+                writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day);
             }
             if (Optional.IsDefined(Hour))
             {
-                writer.WritePropertyName("hour");
+                writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
             if (Optional.IsDefined(Minute))
             {
-                writer.WritePropertyName("minute");
+                writer.WritePropertyName("minute"u8);
                 writer.WriteNumberValue(Minute.Value);
             }
             if (Optional.IsDefined(UsedBytes))
             {
-                writer.WritePropertyName("usedBytes");
+                writer.WritePropertyName("usedBytes"u8);
                 writer.WriteNumberValue(UsedBytes.Value);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static SnapshotPolicyWeeklySchedule DeserializeSnapshotPolicyWeeklySchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> snapshotsToKeep = default;
             Optional<string> day = default;
             Optional<int> hour = default;
@@ -52,46 +56,42 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<long> usedBytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("snapshotsToKeep"))
+                if (property.NameEquals("snapshotsToKeep"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     snapshotsToKeep = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("day"))
+                if (property.NameEquals("day"u8))
                 {
                     day = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hour"))
+                if (property.NameEquals("hour"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hour = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minute"))
+                if (property.NameEquals("minute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minute = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("usedBytes"))
+                if (property.NameEquals("usedBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usedBytes = property.Value.GetInt64();

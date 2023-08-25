@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.Marketplace.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OfferId))
             {
-                writer.WritePropertyName("offerId");
+                writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag");
+                writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(PlansContext))
             {
-                writer.WritePropertyName("plansContext");
+                writer.WritePropertyName("plansContext"u8);
                 writer.WriteStartArray();
                 foreach (var item in PlansContext)
                 {

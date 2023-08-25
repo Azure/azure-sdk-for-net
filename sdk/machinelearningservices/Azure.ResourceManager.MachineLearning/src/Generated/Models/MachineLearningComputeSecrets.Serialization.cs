@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeSecrets DeserializeMachineLearningComputeSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("computeType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

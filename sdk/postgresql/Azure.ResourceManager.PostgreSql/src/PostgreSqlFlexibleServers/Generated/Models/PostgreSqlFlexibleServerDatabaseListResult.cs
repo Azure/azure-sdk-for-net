@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDatabaseListResult. </summary>
         /// <param name="value"> The list of databases housed in a server. </param>
         /// <param name="nextLink"> The link used to get the next page of databases. </param>
-        internal PostgreSqlFlexibleServerDatabaseListResult(IReadOnlyList<PostgreSqlFlexibleServerDatabaseData> value, string nextLink)
+        internal PostgreSqlFlexibleServerDatabaseListResult(IReadOnlyList<PostgreSqlFlexibleServerDatabaseData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -32,6 +33,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> The list of databases housed in a server. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerDatabaseData> Value { get; }
         /// <summary> The link used to get the next page of databases. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

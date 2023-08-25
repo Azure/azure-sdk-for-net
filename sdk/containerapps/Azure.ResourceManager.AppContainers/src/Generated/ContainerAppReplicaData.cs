@@ -13,13 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppReplica data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppReplica data model.
+    /// Container App Revision Replica.
+    /// </summary>
     public partial class ContainerAppReplicaData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
         public ContainerAppReplicaData()
         {
             Containers = new ChangeTrackingList<ContainerAppReplicaContainer>();
+            InitContainers = new ChangeTrackingList<ContainerAppReplicaContainer>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
@@ -28,16 +32,28 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="createdOn"> Timestamp describing when the pod was created by controller. </param>
+        /// <param name="runningState"> Current running state of the replica. </param>
+        /// <param name="runningStateDetails"> The details of replica current running state. </param>
         /// <param name="containers"> The containers collection under a replica. </param>
-        internal ContainerAppReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, IList<ContainerAppReplicaContainer> containers) : base(id, name, resourceType, systemData)
+        /// <param name="initContainers"> The init containers collection under a replica. </param>
+        internal ContainerAppReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, ContainerAppReplicaRunningState? runningState, string runningStateDetails, IList<ContainerAppReplicaContainer> containers, IList<ContainerAppReplicaContainer> initContainers) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
+            RunningState = runningState;
+            RunningStateDetails = runningStateDetails;
             Containers = containers;
+            InitContainers = initContainers;
         }
 
         /// <summary> Timestamp describing when the pod was created by controller. </summary>
         public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Current running state of the replica. </summary>
+        public ContainerAppReplicaRunningState? RunningState { get; }
+        /// <summary> The details of replica current running state. </summary>
+        public string RunningStateDetails { get; }
         /// <summary> The containers collection under a replica. </summary>
         public IList<ContainerAppReplicaContainer> Containers { get; }
+        /// <summary> The init containers collection under a replica. </summary>
+        public IList<ContainerAppReplicaContainer> InitContainers { get; }
     }
 }

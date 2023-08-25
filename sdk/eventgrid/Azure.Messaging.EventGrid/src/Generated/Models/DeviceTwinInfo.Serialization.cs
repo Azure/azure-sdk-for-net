@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceTwinInfo DeserializeDeviceTwinInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> authenticationType = default;
             Optional<float> cloudToDeviceMessageCount = default;
             Optional<string> connectionState = default;
@@ -27,76 +31,72 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DeviceTwinInfoX509Thumbprint> x509Thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cloudToDeviceMessageCount"))
+                if (property.NameEquals("cloudToDeviceMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cloudToDeviceMessageCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("connectionState"))
+                if (property.NameEquals("connectionState"u8))
                 {
                     connectionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastActivityTime"))
+                if (property.NameEquals("lastActivityTime"u8))
                 {
                     lastActivityTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = DeviceTwinInfoProperties.DeserializeDeviceTwinInfoProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusUpdateTime"))
+                if (property.NameEquals("statusUpdateTime"u8))
                 {
                     statusUpdateTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     version = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("x509Thumbprint"))
+                if (property.NameEquals("x509Thumbprint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     x509Thumbprint = DeviceTwinInfoX509Thumbprint.DeserializeDeviceTwinInfoX509Thumbprint(property.Value);

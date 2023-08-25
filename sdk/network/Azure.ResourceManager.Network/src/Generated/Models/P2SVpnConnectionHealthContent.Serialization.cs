@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VpnUserNamesFilter))
             {
-                writer.WritePropertyName("vpnUserNamesFilter");
+                writer.WritePropertyName("vpnUserNamesFilter"u8);
                 writer.WriteStartArray();
                 foreach (var item in VpnUserNamesFilter)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(OutputBlobSasUri))
             {
-                writer.WritePropertyName("outputBlobSasUrl");
+                writer.WritePropertyName("outputBlobSasUrl"u8);
                 writer.WriteStringValue(OutputBlobSasUri.AbsoluteUri);
             }
             writer.WriteEndObject();

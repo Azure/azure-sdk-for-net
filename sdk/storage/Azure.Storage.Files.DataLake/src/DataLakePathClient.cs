@@ -220,7 +220,13 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, DataLakeClientOptions options)
-            : this(pathUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
+            : this(
+                  pathUri,
+                  (HttpPipelinePolicy)null,
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -320,7 +326,13 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakePathClient(Uri pathUri, StorageSharedKeyCredential credential)
-            : this(pathUri, credential.AsPolicy(), null, credential)
+            : this(
+                  pathUri,
+                  credential.AsPolicy(),
+                  options: null,
+                  storageSharedKeyCredential: credential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -342,7 +354,13 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
-            : this(pathUri, credential.AsPolicy(), options, credential)
+            : this(
+                  pathUri,
+                  credential.AsPolicy(),
+                  options,
+                  storageSharedKeyCredential: credential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -389,7 +407,13 @@ namespace Azure.Storage.Files.DataLake
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public DataLakePathClient(Uri pathUri, AzureSasCredential credential, DataLakeClientOptions options)
-            : this(pathUri, credential.AsPolicy<DataLakeUriBuilder>(pathUri), options, credential)
+            : this(
+                  pathUri,
+                  credential.AsPolicy<DataLakeUriBuilder>(pathUri),
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: credential,
+                  tokenCredential: null)
         {
         }
 
@@ -429,7 +453,13 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(pathUri, credential.AsPolicy(options), options, storageSharedKeyCredential: null)
+            : this(
+                  pathUri,
+                  credential.AsPolicy(options),
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }
@@ -521,11 +551,19 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
         internal DataLakePathClient(
             Uri pathUri,
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential)
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(pathUri, nameof(pathUri));
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
@@ -537,61 +575,8 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options,
-                customerProvidedKey: options.CustomerProvidedKey);
-
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
-
-            uriBuilder.DirectoryOrFilePath = null;
-
-            _fileSystemClient = new DataLakeFileSystemClient(
-                uriBuilder.ToDfsUri(),
-                _clientConfiguration);
-
-            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
-            _pathRestClient = dfsPathRestClient;
-            _blobPathRestClient = blobPathRestClient;
-
-            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="pathUri">
-        /// A <see cref="Uri"/> referencing the path that includes the
-        /// name of the account, the name of the file system, and the path to
-        /// the resource.
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <param name="sasCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        internal DataLakePathClient(
-            Uri pathUri,
-            HttpPipelinePolicy authentication,
-            DataLakeClientOptions options,
-            AzureSasCredential sasCredential)
-        {
-            Argument.AssertNotNull(pathUri, nameof(pathUri));
-            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
-            options ??= new DataLakeClientOptions();
-            _uri = pathUri;
-            _blobUri = uriBuilder.ToBlobUri();
-            _dfsUri = uriBuilder.ToDfsUri();
-
-            _clientConfiguration = new DataLakeClientConfiguration(
-                pipeline: options.Build(authentication),
                 sasCredential: sasCredential,
+                tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
@@ -827,6 +812,7 @@ namespace Azure.Storage.Files.DataLake
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
+                encryptionContext: options?.EncryptionContext,
                 conditions: options?.Conditions,
                 async: false,
                 cancellationToken)
@@ -876,6 +862,7 @@ namespace Azure.Storage.Files.DataLake
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
+                encryptionContext: options?.EncryptionContext,
                 conditions: options?.Conditions,
                 async: true,
                 cancellationToken)
@@ -956,6 +943,7 @@ namespace Azure.Storage.Files.DataLake
                 leaseDuration: null,
                 timeToExpire: null,
                 expiresOn: null,
+                encryptionContext: null,
                 conditions: conditions,
                 async: false,
                 cancellationToken)
@@ -1036,6 +1024,7 @@ namespace Azure.Storage.Files.DataLake
                 leaseDuration: null,
                 timeToExpire: null,
                 expiresOn: null,
+                encryptionContext: null,
                 conditions: conditions,
                 async: true,
                 cancellationToken)
@@ -1043,7 +1032,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, DataLakeRequestConditions, bool, CancellationToken)"/>
+        /// The <see cref="CreateInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, DataLakeRequestConditions, bool, CancellationToken)"/>
         /// operation creates a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1100,6 +1089,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the creation of this file or directory..
         /// </param>
+        /// <param name="encryptionContext">
+        /// Encryption context.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1128,6 +1120,7 @@ namespace Azure.Storage.Files.DataLake
             TimeSpan? leaseDuration,
             TimeSpan? timeToExpire,
             DateTimeOffset? expiresOn,
+            string encryptionContext,
             DataLakeRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1227,6 +1220,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseDuration: serviceLeaseDuration,
                             expiryOptions: pathExpiryOptions,
                             expiresOn: expiresOnString,
+                            encryptionContext: encryptionContext,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1257,6 +1251,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseDuration: serviceLeaseDuration,
                             expiryOptions: pathExpiryOptions,
                             expiresOn: expiresOnString,
+                            encryptionContext: encryptionContext,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1321,6 +1316,7 @@ namespace Azure.Storage.Files.DataLake
                     leaseDuration: options?.LeaseDuration,
                     timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                     expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
+                    encryptionContext: options?.EncryptionContext,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -1366,6 +1362,7 @@ namespace Azure.Storage.Files.DataLake
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
+                encryptionContext: options?.EncryptionContext,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -1436,6 +1433,7 @@ namespace Azure.Storage.Files.DataLake
                     leaseDuration: null,
                     timeToExpire: null,
                     expiresOn: null,
+                    encryptionContext: null,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -1506,12 +1504,13 @@ namespace Azure.Storage.Files.DataLake
                 leaseDuration: null,
                 timeToExpire: null,
                 expiresOn: null,
+                encryptionContext: null,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, bool, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, bool, CancellationToken)"/>
         /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1564,6 +1563,9 @@ namespace Azure.Storage.Files.DataLake
         /// the file will be deleted.  If null, the existing
         /// ExpiresOn time on the file will be removed, if it exists.
         /// </param>
+        /// <param name="encryptionContext">
+        /// Encryption context.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1592,6 +1594,7 @@ namespace Azure.Storage.Files.DataLake
             TimeSpan? leaseDuration,
             TimeSpan? timeToExpire,
             DateTimeOffset? expiresOn,
+            string encryptionContext,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1612,6 +1615,7 @@ namespace Azure.Storage.Files.DataLake
                     leaseDuration: leaseDuration,
                     timeToExpire: timeToExpire,
                     expiresOn: expiresOn,
+                    encryptionContext: encryptionContext,
                     conditions: conditions,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -1856,31 +1860,48 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PathDeleteHeaders> response;
+                    ResponseWithHeaders<PathDeleteHeaders> response = null;
 
-                    if (async)
+                    // Pagination only applies to service version 2023-08-03 and later, when using OAuth.
+                    bool? paginated = null;
+                    if (_clientConfiguration.ClientOptions.Version >= DataLakeClientOptions.ServiceVersion.V2023_08_03
+                        && recursive.GetValueOrDefault()
+                        && _clientConfiguration.TokenCredential != null)
                     {
-                        response = await PathRestClient.DeleteAsync(
-                            recursive: recursive,
-                            leaseId: conditions?.LeaseId,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        paginated = true;
                     }
-                    else
+
+                    do
                     {
-                        response = PathRestClient.Delete(
-                            recursive: recursive,
-                            leaseId: conditions?.LeaseId,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            cancellationToken: cancellationToken);
+                        if (async)
+                        {
+                            response = await PathRestClient.DeleteAsync(
+                                recursive: recursive,
+                                continuation: response?.Headers?.Continuation,
+                                leaseId: conditions?.LeaseId,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                paginated: paginated,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = PathRestClient.Delete(
+                                recursive: recursive,
+                                continuation: response?.Headers?.Continuation,
+                                leaseId: conditions?.LeaseId,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                paginated: paginated,
+                                cancellationToken: cancellationToken);
+                        }
                     }
+                    while (!string.IsNullOrEmpty(response?.Headers?.Continuation));
 
                     return response.GetRawResponse();
                 }
@@ -2087,12 +2108,12 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             return RenameInternal(
-                destinationFileSystem,
-                destinationPath,
-                sourceConditions,
-                destinationConditions,
+                destinationPath: destinationPath,
+                destinationFileSystem: destinationFileSystem,
+                sourceConditions: sourceConditions,
+                destinationConditions: destinationConditions,
                 async: false,
-                cancellationToken)
+                cancellationToken: cancellationToken)
                 .EnsureCompleted();
         }
 
@@ -2136,12 +2157,12 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             return await RenameInternal(
-                destinationFileSystem,
-                destinationPath,
-                sourceConditions,
-                destinationConditions,
+                destinationPath: destinationPath,
+                destinationFileSystem: destinationFileSystem,
+                sourceConditions: sourceConditions,
+                destinationConditions: destinationConditions,
                 async: true,
-                cancellationToken)
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -3173,7 +3194,7 @@ namespace Azure.Storage.Files.DataLake
                             }
                             batchesCount++;
                         } while (!string.IsNullOrEmpty(continuationToken)
-                            && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
+                            && (options == null || !options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
 
                         return Response.FromValue(
                             new AccessControlChangeResult()
@@ -3467,7 +3488,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToPathProperties(),
+                    response.ToPathProperties(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3523,7 +3544,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToPathProperties(),
+                    response.ToPathProperties(),
                     response.GetRawResponse());
             }
             catch (Exception ex)

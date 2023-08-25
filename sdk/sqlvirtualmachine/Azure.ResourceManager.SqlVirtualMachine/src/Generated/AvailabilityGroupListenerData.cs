@@ -12,7 +12,10 @@ using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    /// <summary> A class representing the AvailabilityGroupListener data model. </summary>
+    /// <summary>
+    /// A class representing the AvailabilityGroupListener data model.
+    /// A SQL Server availability group listener.
+    /// </summary>
     public partial class AvailabilityGroupListenerData : ResourceData
     {
         /// <summary> Initializes a new instance of AvailabilityGroupListenerData. </summary>

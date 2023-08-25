@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
     {
         internal static ManagedServicesRegistrationAssignmentRegistrationProperties DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<IReadOnlyList<ManagedServicesAuthorization>> authorizations = default;
             Optional<IReadOnlyList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
@@ -27,16 +31,15 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<string> managedByTenantName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authorizations"))
+                if (property.NameEquals("authorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServicesAuthorization> array = new List<ManagedServicesAuthorization>();
@@ -47,11 +50,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     authorizations = array;
                     continue;
                 }
-                if (property.NameEquals("eligibleAuthorizations"))
+                if (property.NameEquals("eligibleAuthorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServicesEligibleAuthorization> array = new List<ManagedServicesEligibleAuthorization>();
@@ -62,47 +64,44 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     eligibleAuthorizations = array;
                     continue;
                 }
-                if (property.NameEquals("registrationDefinitionName"))
+                if (property.NameEquals("registrationDefinitionName"u8))
                 {
                     registrationDefinitionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ManagedServicesProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("manageeTenantId"))
+                if (property.NameEquals("manageeTenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     manageeTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("manageeTenantName"))
+                if (property.NameEquals("manageeTenantName"u8))
                 {
                     manageeTenantName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedByTenantId"))
+                if (property.NameEquals("managedByTenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managedByTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("managedByTenantName"))
+                if (property.NameEquals("managedByTenantName"u8))
                 {
                     managedByTenantName = property.Value.GetString();
                     continue;

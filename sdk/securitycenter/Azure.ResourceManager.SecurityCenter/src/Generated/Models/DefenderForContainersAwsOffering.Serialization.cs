@@ -17,61 +17,65 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KubernetesService))
             {
-                writer.WritePropertyName("kubernetesService");
+                writer.WritePropertyName("kubernetesService"u8);
                 writer.WriteObjectValue(KubernetesService);
             }
             if (Optional.IsDefined(KubernetesScubaReader))
             {
-                writer.WritePropertyName("kubernetesScubaReader");
+                writer.WritePropertyName("kubernetesScubaReader"u8);
                 writer.WriteObjectValue(KubernetesScubaReader);
             }
             if (Optional.IsDefined(CloudWatchToKinesis))
             {
-                writer.WritePropertyName("cloudWatchToKinesis");
+                writer.WritePropertyName("cloudWatchToKinesis"u8);
                 writer.WriteObjectValue(CloudWatchToKinesis);
             }
             if (Optional.IsDefined(KinesisToS3))
             {
-                writer.WritePropertyName("kinesisToS3");
+                writer.WritePropertyName("kinesisToS3"u8);
                 writer.WriteObjectValue(KinesisToS3);
             }
             if (Optional.IsDefined(ContainerVulnerabilityAssessment))
             {
-                writer.WritePropertyName("containerVulnerabilityAssessment");
+                writer.WritePropertyName("containerVulnerabilityAssessment"u8);
                 writer.WriteObjectValue(ContainerVulnerabilityAssessment);
             }
             if (Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
             {
-                writer.WritePropertyName("containerVulnerabilityAssessmentTask");
+                writer.WritePropertyName("containerVulnerabilityAssessmentTask"u8);
                 writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask);
             }
             if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
             {
-                writer.WritePropertyName("enableContainerVulnerabilityAssessment");
+                writer.WritePropertyName("enableContainerVulnerabilityAssessment"u8);
                 writer.WriteBooleanValue(IsContainerVulnerabilityAssessmentEnabled.Value);
             }
             if (Optional.IsDefined(IsAutoProvisioningEnabled))
             {
-                writer.WritePropertyName("autoProvisioning");
+                writer.WritePropertyName("autoProvisioning"u8);
                 writer.WriteBooleanValue(IsAutoProvisioningEnabled.Value);
             }
             if (Optional.IsDefined(KubeAuditRetentionTime))
             {
-                writer.WritePropertyName("kubeAuditRetentionTime");
+                writer.WritePropertyName("kubeAuditRetentionTime"u8);
                 writer.WriteNumberValue(KubeAuditRetentionTime.Value);
             }
             if (Optional.IsDefined(ScubaExternalId))
             {
-                writer.WritePropertyName("scubaExternalId");
+                writer.WritePropertyName("scubaExternalId"u8);
                 writer.WriteStringValue(ScubaExternalId);
             }
-            writer.WritePropertyName("offeringType");
+            writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DefenderForContainersAwsOffering DeserializeDefenderForContainersAwsOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DefenderForContainersAwsOfferingKubernetesService> kubernetesService = default;
             Optional<DefenderForContainersAwsOfferingKubernetesScubaReader> kubernetesScubaReader = default;
             Optional<DefenderForContainersAwsOfferingCloudWatchToKinesis> cloudWatchToKinesis = default;
@@ -86,107 +90,98 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kubernetesService"))
+                if (property.NameEquals("kubernetesService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kubernetesService = DefenderForContainersAwsOfferingKubernetesService.DeserializeDefenderForContainersAwsOfferingKubernetesService(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kubernetesScubaReader"))
+                if (property.NameEquals("kubernetesScubaReader"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kubernetesScubaReader = DefenderForContainersAwsOfferingKubernetesScubaReader.DeserializeDefenderForContainersAwsOfferingKubernetesScubaReader(property.Value);
                     continue;
                 }
-                if (property.NameEquals("cloudWatchToKinesis"))
+                if (property.NameEquals("cloudWatchToKinesis"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cloudWatchToKinesis = DefenderForContainersAwsOfferingCloudWatchToKinesis.DeserializeDefenderForContainersAwsOfferingCloudWatchToKinesis(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kinesisToS3"))
+                if (property.NameEquals("kinesisToS3"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kinesisToS3 = DefenderForContainersAwsOfferingKinesisToS3.DeserializeDefenderForContainersAwsOfferingKinesisToS3(property.Value);
                     continue;
                 }
-                if (property.NameEquals("containerVulnerabilityAssessment"))
+                if (property.NameEquals("containerVulnerabilityAssessment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     containerVulnerabilityAssessment = DefenderForContainersAwsOfferingContainerVulnerabilityAssessment.DeserializeDefenderForContainersAwsOfferingContainerVulnerabilityAssessment(property.Value);
                     continue;
                 }
-                if (property.NameEquals("containerVulnerabilityAssessmentTask"))
+                if (property.NameEquals("containerVulnerabilityAssessmentTask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     containerVulnerabilityAssessmentTask = DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask.DeserializeDefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(property.Value);
                     continue;
                 }
-                if (property.NameEquals("enableContainerVulnerabilityAssessment"))
+                if (property.NameEquals("enableContainerVulnerabilityAssessment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableContainerVulnerabilityAssessment = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("autoProvisioning"))
+                if (property.NameEquals("autoProvisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoProvisioning = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kubeAuditRetentionTime"))
+                if (property.NameEquals("kubeAuditRetentionTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kubeAuditRetentionTime = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("scubaExternalId"))
+                if (property.NameEquals("scubaExternalId"u8))
                 {
                     scubaExternalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offeringType"))
+                if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

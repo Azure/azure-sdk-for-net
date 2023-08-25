@@ -1,3 +1,9 @@
+parameters:
+- name: Location
+  displayName: Location
+  type: string
+  default: eastus
+
 trigger: none
 
 extends:
@@ -8,7 +14,7 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'canadacentral'
+        Location: '${{ parameters.Location }}'
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'centraluseuap'

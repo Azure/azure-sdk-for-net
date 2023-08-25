@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter
     /// A Class representing a ProjectDevBoxDefinition along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProjectDevBoxDefinitionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetProjectDevBoxDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetProjectDevBoxDefinition method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource" /> using the GetProjectDevBoxDefinition method.
     /// </summary>
     public partial class ProjectDevBoxDefinitionResource : ArmResource
     {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Gets a Dev Box definition configured for a project
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}
-        /// Operation Id: DevBoxDefinitions_GetByProject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DevBoxDefinitions_GetByProject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ProjectDevBoxDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Gets a Dev Box definition configured for a project
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}
-        /// Operation Id: DevBoxDefinitions_GetByProject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DevBoxDefinitions_GetByProject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ProjectDevBoxDefinitionResource> Get(CancellationToken cancellationToken = default)

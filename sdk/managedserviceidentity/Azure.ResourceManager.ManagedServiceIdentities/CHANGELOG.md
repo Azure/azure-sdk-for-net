@@ -1,6 +1,34 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.1 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.0 (2023-02-20)
+
+### Features Added
+- Upgrade to API version 2023-01-31.
+- Create/Update/Delete federated identity credentials.
+- `ListAssociatedResources` method available in `1.1.0-beta.1` version is not added to this stable version.
+
+## 1.1.0-beta.2 (2022-10-19)
 
 ### Features Added
 

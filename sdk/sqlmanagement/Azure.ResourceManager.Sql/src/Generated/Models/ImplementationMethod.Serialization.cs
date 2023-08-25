@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static ImplementationMethod ToImplementationMethod(this string value)
         {
-            if (string.Equals(value, "TSql", StringComparison.InvariantCultureIgnoreCase)) return ImplementationMethod.TSql;
-            if (string.Equals(value, "AzurePowerShell", StringComparison.InvariantCultureIgnoreCase)) return ImplementationMethod.AzurePowerShell;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TSql")) return ImplementationMethod.TSql;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzurePowerShell")) return ImplementationMethod.AzurePowerShell;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImplementationMethod value.");
         }
     }

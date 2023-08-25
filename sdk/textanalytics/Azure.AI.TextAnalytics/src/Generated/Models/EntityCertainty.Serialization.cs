@@ -23,11 +23,11 @@ namespace Azure.AI.TextAnalytics
 
         public static EntityCertainty ToEntityCertainty(this string value)
         {
-            if (string.Equals(value, "positive", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.Positive;
-            if (string.Equals(value, "positivePossible", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.PositivePossible;
-            if (string.Equals(value, "neutralPossible", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.NeutralPossible;
-            if (string.Equals(value, "negativePossible", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.NegativePossible;
-            if (string.Equals(value, "negative", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.Negative;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positive")) return EntityCertainty.Positive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positivePossible")) return EntityCertainty.PositivePossible;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "neutralPossible")) return EntityCertainty.NeutralPossible;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negativePossible")) return EntityCertainty.NegativePossible;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negative")) return EntityCertainty.Negative;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityCertainty value.");
         }
     }

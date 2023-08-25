@@ -12,7 +12,10 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    /// <summary> A class representing the StreamingJobTransformation data model. </summary>
+    /// <summary>
+    /// A class representing the StreamingJobTransformation data model.
+    /// A transformation object, containing all information associated with the named transformation. All transformations are contained under a streaming job.
+    /// </summary>
     public partial class StreamingJobTransformationData : StreamAnalyticsSubResource
     {
         /// <summary> Initializes a new instance of StreamingJobTransformationData. </summary>

@@ -6,12 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The response of change point detection. </summary>
+    /// <summary> Response of change point detection. </summary>
     public partial class UnivariateChangePointDetectionResult
     {
         /// <summary> Initializes a new instance of UnivariateChangePointDetectionResult. </summary>
@@ -22,21 +21,35 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of UnivariateChangePointDetectionResult. </summary>
-        /// <param name="period"></param>
-        /// <param name="isChangePoint"></param>
-        /// <param name="confidenceScores"></param>
+        /// <param name="period">
+        /// Frequency extracted from the series. Zero means no recurrent pattern has been
+        /// found.
+        /// </param>
+        /// <param name="isChangePoint">
+        /// Change point properties for each input point. True means
+        /// an anomaly (either negative or positive) has been detected. The index of the
+        /// array is consistent with the input series.
+        /// </param>
+        /// <param name="confidenceScores"> Change point confidence of each point. </param>
         internal UnivariateChangePointDetectionResult(int? period, IReadOnlyList<bool> isChangePoint, IReadOnlyList<float> confidenceScores)
         {
             Period = period;
-            IsChangePoint = isChangePoint.ToList();
-            ConfidenceScores = confidenceScores.ToList();
+            IsChangePoint = isChangePoint;
+            ConfidenceScores = confidenceScores;
         }
 
-        /// <summary> Gets the period. </summary>
+        /// <summary>
+        /// Frequency extracted from the series. Zero means no recurrent pattern has been
+        /// found.
+        /// </summary>
         public int? Period { get; }
-        /// <summary> Gets the is change point. </summary>
+        /// <summary>
+        /// Change point properties for each input point. True means
+        /// an anomaly (either negative or positive) has been detected. The index of the
+        /// array is consistent with the input series.
+        /// </summary>
         public IReadOnlyList<bool> IsChangePoint { get; }
-        /// <summary> Gets the confidence scores. </summary>
+        /// <summary> Change point confidence of each point. </summary>
         public IReadOnlyList<float> ConfidenceScores { get; }
     }
 }

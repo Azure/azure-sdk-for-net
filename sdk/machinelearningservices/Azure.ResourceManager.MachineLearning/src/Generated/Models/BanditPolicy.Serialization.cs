@@ -17,31 +17,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SlackAmount))
             {
-                writer.WritePropertyName("slackAmount");
+                writer.WritePropertyName("slackAmount"u8);
                 writer.WriteNumberValue(SlackAmount.Value);
             }
             if (Optional.IsDefined(SlackFactor))
             {
-                writer.WritePropertyName("slackFactor");
+                writer.WritePropertyName("slackFactor"u8);
                 writer.WriteNumberValue(SlackFactor.Value);
             }
             if (Optional.IsDefined(DelayEvaluation))
             {
-                writer.WritePropertyName("delayEvaluation");
+                writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
             if (Optional.IsDefined(EvaluationInterval))
             {
-                writer.WritePropertyName("evaluationInterval");
+                writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
             }
-            writer.WritePropertyName("policyType");
+            writer.WritePropertyName("policyType"u8);
             writer.WriteStringValue(PolicyType.ToString());
             writer.WriteEndObject();
         }
 
         internal static BanditPolicy DeserializeBanditPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> slackAmount = default;
             Optional<float> slackFactor = default;
             Optional<int> delayEvaluation = default;
@@ -49,47 +53,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EarlyTerminationPolicyType policyType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("slackAmount"))
+                if (property.NameEquals("slackAmount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     slackAmount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("slackFactor"))
+                if (property.NameEquals("slackFactor"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     slackFactor = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("delayEvaluation"))
+                if (property.NameEquals("delayEvaluation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delayEvaluation = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("evaluationInterval"))
+                if (property.NameEquals("evaluationInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     evaluationInterval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("policyType"))
+                if (property.NameEquals("policyType"u8))
                 {
                     policyType = new EarlyTerminationPolicyType(property.Value.GetString());
                     continue;

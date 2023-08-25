@@ -14,7 +14,10 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the BlobContainer data model. </summary>
+    /// <summary>
+    /// A class representing the BlobContainer data model.
+    /// Properties of the blob container, including Id, resource name, resource type, Etag.
+    /// </summary>
     public partial class BlobContainerData : ResourceData
     {
         /// <summary> Initializes a new instance of BlobContainerData. </summary>

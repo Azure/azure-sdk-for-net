@@ -12,7 +12,10 @@ using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary> A class representing the RelayAuthorizationRule data model. </summary>
+    /// <summary>
+    /// A class representing the RelayAuthorizationRule data model.
+    /// Single item in a List or Get AuthorizationRule operation
+    /// </summary>
     public partial class RelayAuthorizationRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of RelayAuthorizationRuleData. </summary>

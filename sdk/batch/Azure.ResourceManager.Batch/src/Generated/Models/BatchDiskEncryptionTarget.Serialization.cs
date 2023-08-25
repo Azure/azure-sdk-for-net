@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchDiskEncryptionTarget ToBatchDiskEncryptionTarget(this string value)
         {
-            if (string.Equals(value, "OsDisk", StringComparison.InvariantCultureIgnoreCase)) return BatchDiskEncryptionTarget.OSDisk;
-            if (string.Equals(value, "TemporaryDisk", StringComparison.InvariantCultureIgnoreCase)) return BatchDiskEncryptionTarget.TemporaryDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OsDisk")) return BatchDiskEncryptionTarget.OSDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TemporaryDisk")) return BatchDiskEncryptionTarget.TemporaryDisk;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchDiskEncryptionTarget value.");
         }
     }

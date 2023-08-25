@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? DiskSizeGB { get; set; }
         /// <summary> The Source User Image VirtualHardDisk. This VirtualHardDisk will be copied before using it to attach to the Virtual Machine. If SourceImage is provided, the destination VirtualHardDisk should not exist. </summary>
         internal VirtualHardDisk Image { get; set; }
-        /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
+        /// <summary> Specifies the virtual hard disk's uri. </summary>
         public Uri ImageUri
         {
             get => Image is null ? default : Image.Uri;

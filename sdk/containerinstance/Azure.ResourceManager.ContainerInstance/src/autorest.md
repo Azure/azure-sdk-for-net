@@ -6,7 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: ContainerInstance
 namespace: Azure.ResourceManager.ContainerInstance
-require: https://github.com/Azure/azure-rest-api-specs/blob/4716fb039c67e1bee1d5448af9ce57e4942832fe/specification/containerinstance/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7990bc19fe4941681605891960006538d3528f78/specification/containerinstance/resource-manager/readme.md
+tag: package-2023-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -98,4 +99,7 @@ rename-mapping:
   GpuSku: ContainerGpuSku
   LogAnalytics: ContainerGroupLogAnalytics
   LogAnalyticsLogType: ContainerGroupLogAnalyticsLogType
+  SecurityContextDefinition: ContainerSecurityContextDefinition
+  SecurityContextCapabilitiesDefinition: ContainerSecurityContextCapabilitiesDefinition
+  SecurityContextDefinition.privileged: IsPrivileged
 ```

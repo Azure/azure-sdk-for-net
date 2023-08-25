@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PreferredDataCenterRegion))
             {
-                writer.WritePropertyName("preferredDataCenterRegion");
+                writer.WritePropertyName("preferredDataCenterRegion"u8);
                 writer.WriteStartArray();
                 foreach (var item in PreferredDataCenterRegion)
                 {
@@ -28,17 +28,22 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsDefined(TransportPreferences))
             {
-                writer.WritePropertyName("transportPreferences");
+                writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
+            }
+            if (Optional.IsDefined(ReverseTransportPreferences))
+            {
+                writer.WritePropertyName("reverseTransportPreferences"u8);
+                writer.WriteObjectValue(ReverseTransportPreferences);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
-                writer.WritePropertyName("encryptionPreferences");
+                writer.WritePropertyName("encryptionPreferences"u8);
                 writer.WriteObjectValue(EncryptionPreferences);
             }
             if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
             {
-                writer.WritePropertyName("storageAccountAccessTierPreferences");
+                writer.WritePropertyName("storageAccountAccessTierPreferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccountAccessTierPreferences)
                 {
@@ -51,17 +56,21 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxOrderPreferences DeserializeDataBoxOrderPreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> preferredDataCenterRegion = default;
             Optional<TransportPreferences> transportPreferences = default;
+            Optional<TransportPreferences> reverseTransportPreferences = default;
             Optional<DataBoxEncryptionPreferences> encryptionPreferences = default;
             Optional<IList<string>> storageAccountAccessTierPreferences = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preferredDataCenterRegion"))
+                if (property.NameEquals("preferredDataCenterRegion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -72,31 +81,37 @@ namespace Azure.ResourceManager.DataBox.Models
                     preferredDataCenterRegion = array;
                     continue;
                 }
-                if (property.NameEquals("transportPreferences"))
+                if (property.NameEquals("transportPreferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value);
                     continue;
                 }
-                if (property.NameEquals("encryptionPreferences"))
+                if (property.NameEquals("reverseTransportPreferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    reverseTransportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("encryptionPreferences"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     encryptionPreferences = DataBoxEncryptionPreferences.DeserializeDataBoxEncryptionPreferences(property.Value);
                     continue;
                 }
-                if (property.NameEquals("storageAccountAccessTierPreferences"))
+                if (property.NameEquals("storageAccountAccessTierPreferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -108,7 +123,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxOrderPreferences(Optional.ToList(preferredDataCenterRegion), transportPreferences.Value, encryptionPreferences.Value, Optional.ToList(storageAccountAccessTierPreferences));
+            return new DataBoxOrderPreferences(Optional.ToList(preferredDataCenterRegion), transportPreferences.Value, reverseTransportPreferences.Value, encryptionPreferences.Value, Optional.ToList(storageAccountAccessTierPreferences));
         }
     }
 }

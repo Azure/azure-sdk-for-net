@@ -14,7 +14,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the SecurityInsightsBookmark data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityInsightsBookmark data model.
+    /// Represents a bookmark in Azure Security Insights.
+    /// </summary>
     public partial class SecurityInsightsBookmarkData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityInsightsBookmarkData. </summary>

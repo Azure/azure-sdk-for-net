@@ -47,7 +47,7 @@ Let's list the certificates which exist in the vault along with their thumbprint
 ```C# Snippet:CertificatesSample2ListCertificates
 foreach (CertificateProperties cert in client.GetPropertiesOfCertificates())
 {
-    Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {BitConverter.ToString(cert.X509Thumbprint)}");
+    Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {cert.X509ThumbprintString}");
 }
 ```
 

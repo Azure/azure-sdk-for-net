@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of ServiceProviderResponseList. </summary>
         internal ServiceProviderResponseList()
         {
-            Value = new ChangeTrackingList<ServiceProvider>();
+            Value = new ChangeTrackingList<BotServiceProvider>();
         }
 
         /// <summary> Initializes a new instance of ServiceProviderResponseList. </summary>
         /// <param name="nextLink"> The link used to get the next page of bot service providers. </param>
         /// <param name="value"> Gets the list of bot service providers and their properties. </param>
-        internal ServiceProviderResponseList(string nextLink, IReadOnlyList<ServiceProvider> value)
+        internal ServiceProviderResponseList(string nextLink, IReadOnlyList<BotServiceProvider> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> The link used to get the next page of bot service providers. </summary>
         public string NextLink { get; }
         /// <summary> Gets the list of bot service providers and their properties. </summary>
-        public IReadOnlyList<ServiceProvider> Value { get; }
+        public IReadOnlyList<BotServiceProvider> Value { get; }
     }
 }

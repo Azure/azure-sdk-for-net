@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StorageAccountHttpProtocol ToStorageAccountHttpProtocol(this string value)
         {
-            if (string.Equals(value, "https,http", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountHttpProtocol.HttpsHttp;
-            if (string.Equals(value, "https", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountHttpProtocol.Https;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "https,http")) return StorageAccountHttpProtocol.HttpsHttp;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "https")) return StorageAccountHttpProtocol.Https;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountHttpProtocol value.");
         }
     }

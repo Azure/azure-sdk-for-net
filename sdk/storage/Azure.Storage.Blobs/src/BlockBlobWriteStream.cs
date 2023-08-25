@@ -47,7 +47,10 @@ namespace Azure.Storage.Blobs
             _tags = tags;
         }
 
-        protected override async Task AppendInternal(bool async, CancellationToken cancellationToken)
+        protected override async Task AppendInternal(
+            UploadTransferValidationOptions validationOptions,
+            bool async,
+            CancellationToken cancellationToken)
         {
             if (_buffer.Length > 0)
             {
@@ -68,7 +71,7 @@ namespace Azure.Storage.Blobs
                 await _blockBlobClient.StageBlockInternal(
                     base64BlockId: blockId,
                     content: _buffer,
-                    _validationOptions,
+                    validationOptions,
                     conditions: conditions,
                     progressHandler: _progressHandler,
                     async: async,
@@ -76,14 +79,13 @@ namespace Azure.Storage.Blobs
                     .ConfigureAwait(false);
 
                 _blockIds.Add(blockId);
-                _buffer.Clear();
             }
         }
 
-        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
+        protected override async Task CommitInternal(
+            bool async,
+            CancellationToken cancellationToken)
         {
-            await AppendInternal(async, cancellationToken).ConfigureAwait(false);
-
             Response<BlobContentInfo> response = await _blockBlobClient.CommitBlockListInternal(
                 base64BlockIds: _blockIds,
                 blobHttpHeaders: _blobHttpHeaders,

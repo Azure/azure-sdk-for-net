@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseGeoBackupPolicyState ToSynapseGeoBackupPolicyState(this string value)
         {
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseGeoBackupPolicyState.Disabled;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseGeoBackupPolicyState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SynapseGeoBackupPolicyState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SynapseGeoBackupPolicyState.Enabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseGeoBackupPolicyState value.");
         }
     }

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing the VCenter data model. </summary>
+    /// <summary>
+    /// A class representing the VCenter data model.
+    /// Defines the vCenter.
+    /// </summary>
     public partial class VCenterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VCenterData. </summary>

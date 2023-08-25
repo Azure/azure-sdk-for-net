@@ -14,28 +14,32 @@ namespace Azure.Data.Tables.Models
     {
         internal static TableItem DeserializeTableItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tableName = default;
             Optional<string> odataType = default;
             Optional<string> odataId = default;
             Optional<string> odataEditLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("TableName"))
+                if (property.NameEquals("TableName"u8))
                 {
                     tableName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("odata.id"))
+                if (property.NameEquals("odata.id"u8))
                 {
                     odataId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("odata.editLink"))
+                if (property.NameEquals("odata.editLink"u8))
                 {
                     odataEditLink = property.Value.GetString();
                     continue;

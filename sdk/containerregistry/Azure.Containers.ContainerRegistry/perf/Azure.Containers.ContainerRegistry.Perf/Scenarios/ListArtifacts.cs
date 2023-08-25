@@ -27,24 +27,21 @@ namespace Azure.Containers.ContainerRegistry.Perf
             // Global setup code that runs once at the beginning of test execution.
             await base.GlobalSetupAsync();
 
-            string repository = $"library/node";
-            string tag = "test-perf";
-
-            await ImportImageAsync(PerfTestEnvironment.Instance.Registry, repository, tag);
+            await ImportImageAsync(PerfTestEnvironment.Instance.Registry, RepositoryName, TagName);
         }
 
         public override async Task SetupAsync()
         {
             await base.SetupAsync();
 
-            _repository = _client.GetRepository($"library/node");
+            _repository = _client.GetRepository(RepositoryName);
         }
 
         public override void Run(CancellationToken cancellationToken)
         {
             foreach (var manifest in _repository.GetAllManifestProperties())
             {
-                 _client.GetArtifact($"library/node", manifest.Digest);
+                 _client.GetArtifact(RepositoryName, manifest.Digest);
             }
         }
 
@@ -52,7 +49,7 @@ namespace Azure.Containers.ContainerRegistry.Perf
         {
             await foreach (var manifest in _repository.GetAllManifestPropertiesAsync())
             {
-                _client.GetArtifact($"library/node", manifest.Digest);
+                _client.GetArtifact(RepositoryName, manifest.Digest);
             }
         }
     }

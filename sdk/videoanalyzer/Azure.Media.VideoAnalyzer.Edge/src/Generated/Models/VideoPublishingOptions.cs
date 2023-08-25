@@ -16,13 +16,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of VideoPublishingOptions. </summary>
-        /// <param name="enableVideoPreviewImage"> When set to &apos;true&apos; the video will publish preview images. Default is &apos;false&apos;. </param>
+        /// <param name="enableVideoPreviewImage"> When set to 'true' the video will publish preview images. Default is 'false'. </param>
         internal VideoPublishingOptions(string enableVideoPreviewImage)
         {
             EnableVideoPreviewImage = enableVideoPreviewImage;
         }
 
-        /// <summary> When set to &apos;true&apos; the video will publish preview images. Default is &apos;false&apos;. </summary>
+        /// <summary> When set to 'true' the video will publish preview images. Default is 'false'. </summary>
         public string EnableVideoPreviewImage { get; set; }
     }
 }

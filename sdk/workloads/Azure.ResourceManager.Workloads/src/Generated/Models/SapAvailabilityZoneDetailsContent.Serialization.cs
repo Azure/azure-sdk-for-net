@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("appLocation");
+            writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
-            writer.WritePropertyName("sapProduct");
+            writer.WritePropertyName("sapProduct"u8);
             writer.WriteStringValue(SapProduct.ToString());
-            writer.WritePropertyName("databaseType");
+            writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
             writer.WriteEndObject();
         }

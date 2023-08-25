@@ -16,32 +16,34 @@ namespace Azure.Maps.Search.Models
     {
         internal static ReverseSearchAddressItem DeserializeReverseSearchAddressItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MapsAddress> address = default;
             Optional<string> position = default;
             Optional<IReadOnlyList<RoadKind>> roadUse = default;
             Optional<MapsSearchMatchType> matchType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     address = MapsAddress.DeserializeMapsAddress(property.Value);
                     continue;
                 }
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     position = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roadUse"))
+                if (property.NameEquals("roadUse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoadKind> array = new List<RoadKind>();
@@ -52,11 +54,10 @@ namespace Azure.Maps.Search.Models
                     roadUse = array;
                     continue;
                 }
-                if (property.NameEquals("matchType"))
+                if (property.NameEquals("matchType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     matchType = new MapsSearchMatchType(property.Value.GetString());

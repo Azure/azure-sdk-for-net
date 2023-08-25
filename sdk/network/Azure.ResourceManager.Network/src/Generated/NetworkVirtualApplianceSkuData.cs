@@ -12,7 +12,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NetworkVirtualApplianceSku data model. </summary>
+    /// <summary>
+    /// A class representing the NetworkVirtualApplianceSku data model.
+    /// Definition of the NetworkVirtualApplianceSkus resource.
+    /// </summary>
     public partial class NetworkVirtualApplianceSkuData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>

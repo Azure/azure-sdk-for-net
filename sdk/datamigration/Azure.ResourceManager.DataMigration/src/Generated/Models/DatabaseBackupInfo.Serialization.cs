@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static DatabaseBackupInfo DeserializeDatabaseBackupInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databaseName = default;
             Optional<BackupType> backupType = default;
             Optional<IReadOnlyList<string>> backupFiles = default;
@@ -26,26 +30,24 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<DateTimeOffset> backupFinishDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupType"))
+                if (property.NameEquals("backupType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupType = new BackupType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backupFiles"))
+                if (property.NameEquals("backupFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -56,51 +58,46 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupFiles = array;
                     continue;
                 }
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     position = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isDamaged"))
+                if (property.NameEquals("isDamaged"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDamaged = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isCompressed"))
+                if (property.NameEquals("isCompressed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isCompressed = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("familyCount"))
+                if (property.NameEquals("familyCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     familyCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backupFinishDate"))
+                if (property.NameEquals("backupFinishDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupFinishDate = property.Value.GetDateTimeOffset("O");

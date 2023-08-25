@@ -15,33 +15,37 @@ namespace Azure.ResourceManager.Kusto.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("subnetId");
+            writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            writer.WritePropertyName("enginePublicIpId");
+            writer.WritePropertyName("enginePublicIpId"u8);
             writer.WriteStringValue(EnginePublicIPId);
-            writer.WritePropertyName("dataManagementPublicIpId");
+            writer.WritePropertyName("dataManagementPublicIpId"u8);
             writer.WriteStringValue(DataManagementPublicIPId);
             writer.WriteEndObject();
         }
 
         internal static KustoClusterVirtualNetworkConfiguration DeserializeKustoClusterVirtualNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string subnetId = default;
             string enginePublicIPId = default;
             string dataManagementPublicIPId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     subnetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enginePublicIpId"))
+                if (property.NameEquals("enginePublicIpId"u8))
                 {
                     enginePublicIPId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataManagementPublicIpId"))
+                if (property.NameEquals("dataManagementPublicIpId"u8))
                 {
                     dataManagementPublicIPId = property.Value.GetString();
                     continue;

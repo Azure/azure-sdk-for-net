@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsClusterProperties DeserializeStreamAnalyticsClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> createdDate = default;
             Optional<Guid> clusterId = default;
             Optional<StreamAnalyticsClusterProvisioningState> provisioningState = default;
@@ -28,51 +32,46 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<int> capacityAssigned = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createdDate"))
+                if (property.NameEquals("createdDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("clusterId"))
+                if (property.NameEquals("clusterId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new StreamAnalyticsClusterProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capacityAllocated"))
+                if (property.NameEquals("capacityAllocated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacityAllocated = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("capacityAssigned"))
+                if (property.NameEquals("capacityAssigned"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacityAssigned = property.Value.GetInt32();

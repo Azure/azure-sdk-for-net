@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static ComputeStatusLevelType ToComputeStatusLevelType(this string value)
         {
-            if (string.Equals(value, "Info", StringComparison.InvariantCultureIgnoreCase)) return ComputeStatusLevelType.Info;
-            if (string.Equals(value, "Warning", StringComparison.InvariantCultureIgnoreCase)) return ComputeStatusLevelType.Warning;
-            if (string.Equals(value, "Error", StringComparison.InvariantCultureIgnoreCase)) return ComputeStatusLevelType.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Info")) return ComputeStatusLevelType.Info;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return ComputeStatusLevelType.Warning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return ComputeStatusLevelType.Error;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeStatusLevelType value.");
         }
     }

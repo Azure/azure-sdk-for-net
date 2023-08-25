@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="providerAuthorizations"></param>
         /// <param name="providerAuthentication"></param>
         /// <param name="thirdPartyProviderAuthorization"></param>
-        internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ProviderHubMetadataProviderAuthentication providerAuthentication, ProviderHubMetadataThirdPartyProviderAuthorization thirdPartyProviderAuthorization)
+        internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ResourceProviderAuthentication providerAuthentication, ThirdPartyProviderAuthorization thirdPartyProviderAuthorization)
         {
             ProviderAuthorizations = providerAuthorizations;
             ProviderAuthentication = providerAuthentication;
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets the provider authorizations. </summary>
         public IList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
         /// <summary> Gets or sets the provider authentication. </summary>
-        internal ProviderHubMetadataProviderAuthentication ProviderAuthentication { get; set; }
+        internal ResourceProviderAuthentication ProviderAuthentication { get; set; }
         /// <summary> Gets or sets the provider authentication allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication is null ? default : ProviderAuthentication.AllowedAudiences;
-            set => ProviderAuthentication = new ProviderHubMetadataProviderAuthentication(value);
+            set => ProviderAuthentication = new ResourceProviderAuthentication(value);
         }
 
         /// <summary> Gets or sets the third party provider authorization. </summary>
-        public ProviderHubMetadataThirdPartyProviderAuthorization ThirdPartyProviderAuthorization { get; set; }
+        public ThirdPartyProviderAuthorization ThirdPartyProviderAuthorization { get; set; }
     }
 }

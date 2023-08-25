@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EventTypeInfo))
             {
-                writer.WritePropertyName("eventTypeInfo");
+                writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);
             }
             writer.WriteEndObject();

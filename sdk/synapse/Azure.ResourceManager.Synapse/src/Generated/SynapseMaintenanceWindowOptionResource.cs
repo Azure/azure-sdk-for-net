@@ -87,9 +87,17 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get list of SQL pool&apos;s available maintenance windows.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/maintenanceWindowOptions/current
-        /// Operation Id: SqlPoolMaintenanceWindowOptions_Get
+        /// Get list of SQL pool's available maintenance windows.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/maintenanceWindowOptions/current</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolMaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -115,9 +123,17 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get list of SQL pool&apos;s available maintenance windows.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/maintenanceWindowOptions/current
-        /// Operation Id: SqlPoolMaintenanceWindowOptions_Get
+        /// Get list of SQL pool's available maintenance windows.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/maintenanceWindowOptions/current</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolMaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static ScriptParameter DeserializeScriptParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScriptParameterType> type = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -21,41 +25,38 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<ParameterOptionalityStatus> optional = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ScriptParameterType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("visibility"))
+                if (property.NameEquals("visibility"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     visibility = new ParameterVisibilityStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("optional"))
+                if (property.NameEquals("optional"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     optional = new ParameterOptionalityStatus(property.Value.GetString());

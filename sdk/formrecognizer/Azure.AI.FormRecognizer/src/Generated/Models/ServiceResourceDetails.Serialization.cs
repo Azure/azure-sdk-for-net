@@ -14,16 +14,30 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static ServiceResourceDetails DeserializeServiceResourceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CustomDocumentModelsDetails customDocumentModels = default;
+            Optional<ResourceQuotaDetails> customNeuralDocumentModelBuilds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customDocumentModels"))
+                if (property.NameEquals("customDocumentModels"u8))
                 {
                     customDocumentModels = CustomDocumentModelsDetails.DeserializeCustomDocumentModelsDetails(property.Value);
                     continue;
                 }
+                if (property.NameEquals("customNeuralDocumentModelBuilds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customNeuralDocumentModelBuilds = ResourceQuotaDetails.DeserializeResourceQuotaDetails(property.Value);
+                    continue;
+                }
             }
-            return new ServiceResourceDetails(customDocumentModels);
+            return new ServiceResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds.Value);
         }
     }
 }

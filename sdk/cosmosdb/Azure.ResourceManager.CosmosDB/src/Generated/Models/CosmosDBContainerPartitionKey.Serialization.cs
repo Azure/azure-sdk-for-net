@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Paths))
             {
-                writer.WritePropertyName("paths");
+                writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
                 foreach (var item in Paths)
                 {
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
             writer.WriteEndObject();
@@ -41,17 +41,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBContainerPartitionKey DeserializeCosmosDBContainerPartitionKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> paths = default;
             Optional<CosmosDBPartitionKind> kind = default;
             Optional<int> version = default;
             Optional<bool> systemKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("paths"))
+                if (property.NameEquals("paths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -62,31 +65,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     paths = array;
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new CosmosDBPartitionKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     version = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("systemKey"))
+                if (property.NameEquals("systemKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemKey = property.Value.GetBoolean();

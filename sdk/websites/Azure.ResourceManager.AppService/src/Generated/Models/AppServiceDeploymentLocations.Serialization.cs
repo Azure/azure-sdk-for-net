@@ -15,16 +15,19 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceDeploymentLocations DeserializeAppServiceDeploymentLocations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AppServiceGeoRegion>> locations = default;
             Optional<IReadOnlyList<AppServiceEnvironmentProperties>> hostingEnvironments = default;
             Optional<IReadOnlyList<HostingEnvironmentDeploymentInfo>> hostingEnvironmentDeploymentInfos = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppServiceGeoRegion> array = new List<AppServiceGeoRegion>();
@@ -35,11 +38,10 @@ namespace Azure.ResourceManager.AppService.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("hostingEnvironments"))
+                if (property.NameEquals("hostingEnvironments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppServiceEnvironmentProperties> array = new List<AppServiceEnvironmentProperties>();
@@ -50,11 +52,10 @@ namespace Azure.ResourceManager.AppService.Models
                     hostingEnvironments = array;
                     continue;
                 }
-                if (property.NameEquals("hostingEnvironmentDeploymentInfos"))
+                if (property.NameEquals("hostingEnvironmentDeploymentInfos"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HostingEnvironmentDeploymentInfo> array = new List<HostingEnvironmentDeploymentInfo>();

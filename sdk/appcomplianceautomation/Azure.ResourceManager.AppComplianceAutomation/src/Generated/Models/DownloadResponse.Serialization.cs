@@ -15,17 +15,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static DownloadResponse DeserializeDownloadResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ResourceItem>> resourceList = default;
             Optional<IReadOnlyList<ComplianceReportItem>> complianceReport = default;
             Optional<DownloadResponseCompliancePdfReport> compliancePdfReport = default;
             Optional<DownloadResponseComplianceDetailedPdfReport> complianceDetailedPdfReport = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceList"))
+                if (property.NameEquals("resourceList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceItem> array = new List<ResourceItem>();
@@ -36,11 +39,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     resourceList = array;
                     continue;
                 }
-                if (property.NameEquals("complianceReport"))
+                if (property.NameEquals("complianceReport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ComplianceReportItem> array = new List<ComplianceReportItem>();
@@ -51,21 +53,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     complianceReport = array;
                     continue;
                 }
-                if (property.NameEquals("compliancePdfReport"))
+                if (property.NameEquals("compliancePdfReport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compliancePdfReport = DownloadResponseCompliancePdfReport.DeserializeDownloadResponseCompliancePdfReport(property.Value);
                     continue;
                 }
-                if (property.NameEquals("complianceDetailedPdfReport"))
+                if (property.NameEquals("complianceDetailedPdfReport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complianceDetailedPdfReport = DownloadResponseComplianceDetailedPdfReport.DeserializeDownloadResponseComplianceDetailedPdfReport(property.Value);

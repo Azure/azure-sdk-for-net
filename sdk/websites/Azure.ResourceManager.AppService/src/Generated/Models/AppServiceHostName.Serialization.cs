@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceHostName DeserializeAppServiceHostName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> siteNames = default;
             Optional<string> azureResourceName = default;
@@ -23,16 +27,15 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AppServiceHostNameType> hostNameType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("siteNames"))
+                if (property.NameEquals("siteNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -43,36 +46,33 @@ namespace Azure.ResourceManager.AppService.Models
                     siteNames = array;
                     continue;
                 }
-                if (property.NameEquals("azureResourceName"))
+                if (property.NameEquals("azureResourceName"u8))
                 {
                     azureResourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureResourceType"))
+                if (property.NameEquals("azureResourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureResourceType = property.Value.GetString().ToAppServiceResourceType();
                     continue;
                 }
-                if (property.NameEquals("customHostNameDnsRecordType"))
+                if (property.NameEquals("customHostNameDnsRecordType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customHostNameDnsRecordType = property.Value.GetString().ToCustomHostNameDnsRecordType();
                     continue;
                 }
-                if (property.NameEquals("hostNameType"))
+                if (property.NameEquals("hostNameType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostNameType = property.Value.GetString().ToAppServiceHostNameType();

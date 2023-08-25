@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static NotificationContext DeserializeNotificationContext(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> notificationSource = default;
             Optional<string> contextType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("notificationSource"))
+                if (property.NameEquals("notificationSource"u8))
                 {
                     notificationSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contextType"))
+                if (property.NameEquals("contextType"u8))
                 {
                     contextType = property.Value.GetString();
                     continue;

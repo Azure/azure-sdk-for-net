@@ -1,10 +1,62 @@
 # Release History
 
+## 1.3.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0-beta.2 (2023-07-31)
+
+### Features Added
+
+- Supported Sql Elastic Pool creation and update with `PreferredEnclaveType`.
+
+## 1.3.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Added support for `ManagedInstanceServerConfigurationOption`, `ManagedInstanceStartStopSchedule` and `ManagedLedgerDigestUpload` resources.
+- Added `filter` and `expand` parameters to `Get` and `Exists` methods of `RestorableDroppedDatabaseCollection` and `SqlDatabaseCollection`.
+- Added `filter` and `expand` parameters to `Get` methods of `RestorableDroppedDatabaseResource` and `SqlDatabaseResource`.
+- Added `RevalidateDatabaseEncryptionProtector` and `RevertDatabaseEncryptionProtector` methods to `SqlDatabaseResource`.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+- Upgraded API version of Instance Failover Groups to `2022-05-01-preview`.
+- Upgraded API version of Transparent Data Encryptions to `2022-08-01-preview`.
+- Upgraded API version of Servers to `2022-08-01-preview`.
+- Upgraded API version of Managed Instances to `2022-08-01-preview`.
+- Upgraded API version of Restorable Dropped Databases to `2022-08-01-preview`.
+- Upgraded API version of Managed Database Restore Details to `2022-05-01-preview`.
+- Upgraded API version of Managed Databases to `2022-05-01-preview`.
+- Upgraded API version of Databases to `2022-08-01-preview`.
+
 ## 1.2.0 (2023-01-16)
 
 ### Features Added
 
-- Constructor of `SqlDatabaseData` now accepts an extra parameter `PreferredEnclaveType`.
+- Supported Sql Database creation and update with `PreferredEnclaveType`.
+- Added methods `StartMove`, `CancelMove` and `CompleteMove` in ManagedDatabaseResource.
+- Added method `GetSynapseLinkWorkspaces` in SqlDatabaseResource.
+- Added new resources for Database SqlVulnerability Assessment related APIs.
+- Added new resources for Server SqlVulnerability Assessment related APIs.
+
+### Other Changes
+
+- Upgraded API version of Sql Database to 2022-05-01-preview.
+- Upgraded API version of Virtual Cluster to 2022-05-01-preview.
+- Upgraded API version of Managed Instance Dtc to 2022-05-01-preview
+- Upgraded API version of Managed Database to 2022-02-01-preview.
+- Upgraded API version of Managed Database Restore Detail to 2022-02-01-preview.
+- Upgraded API version of Sql Server DevOps Auditing Setting to 2022-02-01-preview.
 
 ## 1.1.0 (2022-11-11)
 

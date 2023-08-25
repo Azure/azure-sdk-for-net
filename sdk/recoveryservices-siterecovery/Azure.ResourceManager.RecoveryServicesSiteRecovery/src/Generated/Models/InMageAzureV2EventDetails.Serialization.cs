@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageAzureV2EventDetails DeserializeInMageAzureV2EventDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventType = default;
             Optional<string> category = default;
             Optional<string> component = default;
@@ -24,42 +28,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventType"))
+                if (property.NameEquals("eventType"u8))
                 {
                     eventType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("component"))
+                if (property.NameEquals("component"u8))
                 {
                     component = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correctiveAction"))
+                if (property.NameEquals("correctiveAction"u8))
                 {
                     correctiveAction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     details = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     summary = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("siteName"))
+                if (property.NameEquals("siteName"u8))
                 {
                     siteName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

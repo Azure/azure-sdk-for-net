@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = TestEnvironment.Location;
+            AzureLocation location = AzureLocation.WestUS;
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create a local network gateway with BGP
@@ -1420,11 +1420,11 @@ namespace Azure.ResourceManager.Network.Tests
                 getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration.VpnClientRootCertificates[0].Name.Equals(clientRootCertName), "Vpn client Root certificate upload was Failed!");
 
             // 5.Generate P2S Vpnclient package
-            VpnClientParameters vpnClientParameters = new VpnClientParameters()
+            VpnClientContent content = new VpnClientContent()
             {
                 ProcessorArchitecture = ProcessorArchitecture.Amd64
             };
-            var packageUrlOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.GeneratevpnclientpackageAsync(WaitUntil.Completed, vpnClientParameters);
+            var packageUrlOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.GenerateVpnClientPackageAsync(WaitUntil.Completed, content);
             await packageUrlOperation.WaitForCompletionAsync();
             //Assert.NotNull(packageUrl);
             //Assert.NotEmpty(packageUrl);
@@ -1840,7 +1840,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
             // 5.Generate P2S Vpnclient package
-            VpnClientParameters vpnClientParameters = new VpnClientParameters()
+            VpnClientContent content = new VpnClientContent()
             {
                 RadiusServerAuthCertificate = samplePublicCertData,
                 AuthenticationMethod = NetworkAuthenticationMethod.Eaptls

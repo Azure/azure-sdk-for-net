@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionInfo");
+            writer.WritePropertyName("connectionInfo"u8);
             writer.WriteObjectValue(ConnectionInfo);
-            writer.WritePropertyName("backupFileShare");
+            writer.WritePropertyName("backupFileShare"u8);
             writer.WriteObjectValue(BackupFileShare);
-            writer.WritePropertyName("selectedCertificates");
+            writer.WritePropertyName("selectedCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedCertificates)
             {
@@ -32,22 +32,26 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetTdeCertificatesSqlTaskInput DeserializeGetTdeCertificatesSqlTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlConnectionInfo connectionInfo = default;
             FileShare backupFileShare = default;
             IList<SelectedCertificateInput> selectedCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionInfo"))
+                if (property.NameEquals("connectionInfo"u8))
                 {
                     connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("backupFileShare"))
+                if (property.NameEquals("backupFileShare"u8))
                 {
                     backupFileShare = FileShare.DeserializeFileShare(property.Value);
                     continue;
                 }
-                if (property.NameEquals("selectedCertificates"))
+                if (property.NameEquals("selectedCertificates"u8))
                 {
                     List<SelectedCertificateInput> array = new List<SelectedCertificateInput>();
                     foreach (var item in property.Value.EnumerateArray())

@@ -15,20 +15,23 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrationReportResult DeserializeMigrationReportResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<Uri> reportUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reportUrl"))
+                if (property.NameEquals("reportUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        reportUrl = null;
                         continue;
                     }
                     reportUrl = new Uri(property.Value.GetString());

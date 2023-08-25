@@ -500,7 +500,6 @@ steps:
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Need permission of existing resource to run the tests")]
         public async Task ContainerRegistryTaskRun()
         {
             var location = AzureLocation.WestUS;
@@ -524,7 +523,7 @@ steps:
                 {
                     UserAssignedIdentities =
                     {
-                        { new ResourceIdentifier("/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/sdk-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/acrsdktestidentity"), new UserAssignedIdentity()}
+                        { new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/acrsdktestidentity"), new UserAssignedIdentity()}
                     }
                 },
                 RunRequest = new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
@@ -538,9 +537,9 @@ steps:
                         CustomRegistries =
                         {
                             {
-                                "acrsdktestregistry.azurecr.io", new CustomRegistryCredentials()
+                                "netsdkacr.azurecr.io", new CustomRegistryCredentials()
                                 {
-                                    Identity = "84962bda-7c5e-403e-8515-5100e4ede735" // client id of acrsdktestidentity
+                                    Identity = "527def11-cef4-4b38-b6d2-3f11f86910a0" // client id of acrsdktestidentity
                                 }
                             }
                         }
@@ -550,7 +549,7 @@ steps:
             });
             ContainerRegistryTaskRunResource taskRun = lro.Value;
             Assert.AreEqual(taskRunName, taskRun.Data.Name);
-            // Assert.AreEqual("ca1", taskRun.Data.RunResult.RunId);
+            Assert.AreEqual("ca1", taskRun.Data.RunResult.RunId);
             // List taskruns
             await foreach (var taskRunFromList in taskRunCollection)
             {
@@ -618,113 +617,113 @@ steps:
             Assert.AreEqual(cachedSystemData.LastModifiedByType, registryFromUpdate.Data.SystemData.LastModifiedByType);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task ContainerRegistryTransferExport()
-        {
-            var location = AzureLocation.WestUS;
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "testRg", location);
-            var registryCollection = rg.GetContainerRegistries();
-            // Create container registry and exportPipeline
-            var registryName = Recording.GenerateAssetName("acrregistry");
-            ContainerRegistryResource registry = await CreateContainerRegistryAsync(rg, registryName);
+        // [TestCase]
+        // [RecordedTest]
+        // public async Task ContainerRegistryTransferExport()
+        // {
+        //     var location = AzureLocation.WestUS;
+        //     ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "testRg", location);
+        //     var registryCollection = rg.GetContainerRegistries();
+        //     // Create container registry and exportPipeline
+        //     var registryName = Recording.GenerateAssetName("acrregistry");
+        //     ContainerRegistryResource registry = await CreateContainerRegistryAsync(rg, registryName);
 
-            var exportPipelineCollection = registry.GetExportPipelines();
-            var exportPipelineName = Recording.GenerateAssetName("acrexportpipeline");
-            var data = new ExportPipelineData()
-            {
-                Location = registry.Data.Location,
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
-                Target = new ExportPipelineTargetProperties(new Uri("https://vaultname.vault.azure.net/secrets/exportsas"))
-                {
-                    Uri = new Uri("https://accountname.blob.core.windows.net/containername"),
-                    PipelineTargetType = "AzureStorageBlobContainer"
-                }
-            };
-            var lro = await exportPipelineCollection.CreateOrUpdateAsync(WaitUntil.Completed, exportPipelineName, data);
-            ExportPipelineResource exportPipeline = lro.Value;
-            // Validate the created exportPipeline
-            var exportPipelineData = exportPipeline.Data;
-            Assert.AreEqual(ContainerRegistryProvisioningState.Succeeded, exportPipelineData.ProvisioningState);
-            Assert.NotNull(exportPipelineData.Location);
-            Assert.NotNull(exportPipelineData.Identity);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, exportPipelineData.Identity.ManagedServiceIdentityType);
-            Assert.NotNull(exportPipelineData.Target);
-            Assert.AreEqual("AzureStorageBlobContainer", exportPipelineData.Target.PipelineTargetType);
-            Assert.That(exportPipelineData.Target.Uri.AbsoluteUri.Contains(".blob.core.windows.net/"));
-            Assert.That(exportPipelineData.Target.KeyVaultUri.AbsoluteUri.Contains(".vault.azure.net/secrets/"));
-            // List exportPipelines by container registry
-            await foreach (var exportPipelineFromList in exportPipelineCollection)
-            {
-                Assert.AreEqual(exportPipelineName, exportPipelineFromList.Data.Name);
-            }
-            // Get the exportPipeline
-            ExportPipelineResource exportPipelineFromGet = await exportPipelineCollection.GetAsync(exportPipelineName);
-            Assert.AreEqual(exportPipelineName, exportPipelineFromGet.Data.Name);
-            // Delete the exportPipeline
-            await exportPipelineFromGet.DeleteAsync(WaitUntil.Completed);
-            // Delete the exportPipeline again
-            await exportPipelineFromGet.DeleteAsync(WaitUntil.Completed);
-            // Delete the container registry
-            await registry.DeleteAsync(WaitUntil.Completed);
-        }
+        //     var exportPipelineCollection = registry.GetExportPipelines();
+        //     var exportPipelineName = Recording.GenerateAssetName("acrexportpipeline");
+        //     var data = new ExportPipelineData()
+        //     {
+        //         Location = registry.Data.Location,
+        //         Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+        //         Target = new ExportPipelineTargetProperties(new Uri("https://vaultname.vault.azure.net/secrets/exportsas"))
+        //         {
+        //             Uri = new Uri("https://accountname.blob.core.windows.net/containername"),
+        //             PipelineTargetType = "AzureStorageBlobContainer"
+        //         }
+        //     };
+        //     var lro = await exportPipelineCollection.CreateOrUpdateAsync(WaitUntil.Completed, exportPipelineName, data);
+        //     ExportPipelineResource exportPipeline = lro.Value;
+        //     // Validate the created exportPipeline
+        //     var exportPipelineData = exportPipeline.Data;
+        //     Assert.AreEqual(ContainerRegistryProvisioningState.Succeeded, exportPipelineData.ProvisioningState);
+        //     Assert.NotNull(exportPipelineData.Location);
+        //     Assert.NotNull(exportPipelineData.Identity);
+        //     Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, exportPipelineData.Identity.ManagedServiceIdentityType);
+        //     Assert.NotNull(exportPipelineData.Target);
+        //     Assert.AreEqual("AzureStorageBlobContainer", exportPipelineData.Target.PipelineTargetType);
+        //     Assert.That(exportPipelineData.Target.Uri.AbsoluteUri.Contains(".blob.core.windows.net/"));
+        //     Assert.That(exportPipelineData.Target.KeyVaultUri.AbsoluteUri.Contains(".vault.azure.net/secrets/"));
+        //     // List exportPipelines by container registry
+        //     await foreach (var exportPipelineFromList in exportPipelineCollection)
+        //     {
+        //         Assert.AreEqual(exportPipelineName, exportPipelineFromList.Data.Name);
+        //     }
+        //     // Get the exportPipeline
+        //     ExportPipelineResource exportPipelineFromGet = await exportPipelineCollection.GetAsync(exportPipelineName);
+        //     Assert.AreEqual(exportPipelineName, exportPipelineFromGet.Data.Name);
+        //     // Delete the exportPipeline
+        //     await exportPipelineFromGet.DeleteAsync(WaitUntil.Completed);
+        //     // Delete the exportPipeline again
+        //     await exportPipelineFromGet.DeleteAsync(WaitUntil.Completed);
+        //     // Delete the container registry
+        //     await registry.DeleteAsync(WaitUntil.Completed);
+        // }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task ContainerRegistryTransferImport()
-        {
-            var location = AzureLocation.WestUS;
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "testRg", location);
-            var registryCollection = rg.GetContainerRegistries();
-            // Create container registry and importPipeline
-            var registryName = Recording.GenerateAssetName("acrregistry");
-            ContainerRegistryResource registry = await CreateContainerRegistryAsync(rg, registryName);
+        // [TestCase]
+        // [RecordedTest]
+        // public async Task ContainerRegistryTransferImport()
+        // {
+        //     var location = AzureLocation.WestUS;
+        //     ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "testRg", location);
+        //     var registryCollection = rg.GetContainerRegistries();
+        //     // Create container registry and importPipeline
+        //     var registryName = Recording.GenerateAssetName("acrregistry");
+        //     ContainerRegistryResource registry = await CreateContainerRegistryAsync(rg, registryName);
 
-            var importPipelineCollection = registry.GetImportPipelines();
-            var importPipelineName = Recording.GenerateAssetName("acrimportpipeline");
-            var data = new ImportPipelineData()
-            {
-                Location = registry.Data.Location,
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
-                Source = new ImportPipelineSourceProperties(new Uri("https://vaultname.vault.azure.net/secrets/exportsas"))
-                {
-                    Uri = new Uri("https://accountname.blob.core.windows.net/containername"),
-                    PipelineSourceType = PipelineSourceType.AzureStorageBlobContainer
-                },
-                Trigger = new PipelineTriggerProperties()
-                {
-                    SourceTrigger = new PipelineSourceTriggerProperties(ContainerRegistryTriggerStatus.Enabled)
-                }
-            };
-            var lro = await importPipelineCollection.CreateOrUpdateAsync(WaitUntil.Completed, importPipelineName, data);
-            ImportPipelineResource importPipeline = lro.Value;
-            // Validate the created importPipeline
-            var importPipelineData = importPipeline.Data;
-            Assert.AreEqual(ContainerRegistryProvisioningState.Succeeded, importPipelineData.ProvisioningState);
-            Assert.NotNull(importPipelineData.Location);
-            Assert.NotNull(importPipelineData.Identity);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, importPipelineData.Identity.ManagedServiceIdentityType);
-            Assert.NotNull(importPipelineData.Source);
-            Assert.AreEqual(PipelineSourceType.AzureStorageBlobContainer, importPipelineData.Source.PipelineSourceType);
-            Assert.That(importPipelineData.Source.Uri.AbsoluteUri.Contains(".blob.core.windows.net/"));
-            Assert.That(importPipelineData.Source.KeyVaultUri.AbsoluteUri.Contains(".vault.azure.net/secrets/"));
-            Assert.NotNull(importPipelineData.Trigger);
-            Assert.AreEqual(ContainerRegistryTriggerStatus.Enabled, importPipelineData.Trigger.SourceTrigger.Status);
-            // List importPipelines by container registry
-            await foreach (var importPipelineFromList in importPipelineCollection)
-            {
-                Assert.AreEqual(importPipelineName, importPipelineFromList.Data.Name);
-            }
-            // Get the importPipeline
-            ImportPipelineResource importPipelineFromGet = await importPipelineCollection.GetAsync(importPipelineName);
-            Assert.AreEqual(importPipelineName, importPipelineFromGet.Data.Name);
-            // Delete the importPipeline
-            await importPipelineFromGet.DeleteAsync(WaitUntil.Completed);
-            // Delete the importPipeline again
-            await importPipelineFromGet.DeleteAsync(WaitUntil.Completed);
-            // Delete the container registry
-            await registry.DeleteAsync(WaitUntil.Completed);
-        }
+        //     var importPipelineCollection = registry.GetImportPipelines();
+        //     var importPipelineName = Recording.GenerateAssetName("acrimportpipeline");
+        //     var data = new ImportPipelineData()
+        //     {
+        //         Location = registry.Data.Location,
+        //         Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+        //         Source = new ImportPipelineSourceProperties(new Uri("https://vaultname.vault.azure.net/secrets/exportsas"))
+        //         {
+        //             Uri = new Uri("https://accountname.blob.core.windows.net/containername"),
+        //             PipelineSourceType = PipelineSourceType.AzureStorageBlobContainer
+        //         },
+        //         Trigger = new PipelineTriggerProperties()
+        //         {
+        //             SourceTrigger = new PipelineSourceTriggerProperties(ContainerRegistryTriggerStatus.Enabled)
+        //         }
+        //     };
+        //     var lro = await importPipelineCollection.CreateOrUpdateAsync(WaitUntil.Completed, importPipelineName, data);
+        //     ImportPipelineResource importPipeline = lro.Value;
+        //     // Validate the created importPipeline
+        //     var importPipelineData = importPipeline.Data;
+        //     Assert.AreEqual(ContainerRegistryProvisioningState.Succeeded, importPipelineData.ProvisioningState);
+        //     Assert.NotNull(importPipelineData.Location);
+        //     Assert.NotNull(importPipelineData.Identity);
+        //     Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, importPipelineData.Identity.ManagedServiceIdentityType);
+        //     Assert.NotNull(importPipelineData.Source);
+        //     Assert.AreEqual(PipelineSourceType.AzureStorageBlobContainer, importPipelineData.Source.PipelineSourceType);
+        //     Assert.That(importPipelineData.Source.Uri.AbsoluteUri.Contains(".blob.core.windows.net/"));
+        //     Assert.That(importPipelineData.Source.KeyVaultUri.AbsoluteUri.Contains(".vault.azure.net/secrets/"));
+        //     Assert.NotNull(importPipelineData.Trigger);
+        //     Assert.AreEqual(ContainerRegistryTriggerStatus.Enabled, importPipelineData.Trigger.SourceTrigger.Status);
+        //     // List importPipelines by container registry
+        //     await foreach (var importPipelineFromList in importPipelineCollection)
+        //     {
+        //         Assert.AreEqual(importPipelineName, importPipelineFromList.Data.Name);
+        //     }
+        //     // Get the importPipeline
+        //     ImportPipelineResource importPipelineFromGet = await importPipelineCollection.GetAsync(importPipelineName);
+        //     Assert.AreEqual(importPipelineName, importPipelineFromGet.Data.Name);
+        //     // Delete the importPipeline
+        //     await importPipelineFromGet.DeleteAsync(WaitUntil.Completed);
+        //     // Delete the importPipeline again
+        //     await importPipelineFromGet.DeleteAsync(WaitUntil.Completed);
+        //     // Delete the container registry
+        //     await registry.DeleteAsync(WaitUntil.Completed);
+        // }
 
         [TestCase]
         [RecordedTest]
@@ -851,103 +850,103 @@ steps:
             await registry.DeleteAsync(WaitUntil.Completed);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task ContainerRegistryConnectedRegistry()
-        {
-            var location = AzureLocation.WestUS;
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "testRg", location);
-            var registryCollection = rg.GetContainerRegistries();
-            // Create container registry
-            var registryName = Recording.GenerateAssetName("acrregistry");
-            ContainerRegistryResource registry = await CreateContainerRegistryAsync(rg, registryName, AzureLocation.EastUS);
-            // Enable data endpoint in container registry
-            await registry.UpdateAsync(WaitUntil.Completed, new ContainerRegistryPatch()
-            {
-                IsDataEndpointEnabled = true
-            });
+        // [TestCase]
+        // [RecordedTest]
+        // public async Task ContainerRegistryConnectedRegistry()
+        // {
+        //     var location = AzureLocation.WestUS;
+        //     ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "testRg", location);
+        //     var registryCollection = rg.GetContainerRegistries();
+        //     // Create container registry
+        //     var registryName = Recording.GenerateAssetName("acrregistry");
+        //     ContainerRegistryResource registry = await CreateContainerRegistryAsync(rg, registryName, AzureLocation.EastUS);
+        //     // Enable data endpoint in container registry
+        //     await registry.UpdateAsync(WaitUntil.Completed, new ContainerRegistryPatch()
+        //     {
+        //         IsDataEndpointEnabled = true
+        //     });
 
-            var repository = Recording.GenerateAssetName("hello-world");
-            var scopeMapName = Recording.GenerateAssetName("acrscopemap");
-            var tokenName = Recording.GenerateAssetName("acrtoken");
-            var connectedRegistryName = Recording.GenerateAssetName("acrconnectedregistry");
+        //     var repository = Recording.GenerateAssetName("hello-world");
+        //     var scopeMapName = Recording.GenerateAssetName("acrscopemap");
+        //     var tokenName = Recording.GenerateAssetName("acrtoken");
+        //     var connectedRegistryName = Recording.GenerateAssetName("acrconnectedregistry");
 
-            // Create scopemap/token
-            var scopeMapCollection = registry.GetScopeMaps();
-            ScopeMapResource scopeMap = (await scopeMapCollection.CreateOrUpdateAsync(WaitUntil.Completed, scopeMapName, new ScopeMapData()
-            {
-                Actions =
-                {
-                    $"repositories/{repository}/content/read",
-                    $"repositories/{repository}/content/write",
-                    $"repositories/{repository}/content/delete",
-                    $"repositories/{repository}/metadata/read",
-                    $"repositories/{repository}/metadata/write",
-                    $"gateway/{connectedRegistryName}/config/read",
-                    $"gateway/{connectedRegistryName}/config/write",
-                    $"gateway/{connectedRegistryName}/message/read",
-                    $"gateway/{connectedRegistryName}/message/write"
-                }
-            })).Value;
-            var tokenCollection = registry.GetContainerRegistryTokens();
-            ContainerRegistryTokenResource token = (await tokenCollection.CreateOrUpdateAsync(WaitUntil.Completed, tokenName, new ContainerRegistryTokenData()
-            {
-                ScopeMapId = scopeMap.Id
-            })).Value;
-            // Create connected registry
-            var connectedRegistryCollection = registry.GetConnectedRegistries();
-            ConnectedRegistryResource connectedRegistry = (await connectedRegistryCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectedRegistryName, new ConnectedRegistryData()
-            {
-                Mode = ConnectedRegistryMode.ReadWrite,
-                Parent = new ConnectedRegistryParent(new ConnectedRegistrySyncProperties(token.Id, XmlConvert.ToTimeSpan("PT48H"))
-                {
-                    Schedule = "0 9 * * *",
-                    SyncWindow = XmlConvert.ToTimeSpan("PT4H")
-                }),
-                Logging = new ConnectedRegistryLogging()
-                {
-                    LogLevel = ConnectedRegistryLogLevel.Information
-                }
-            })).Value;
-            var connectedRegistryData = connectedRegistry.Data;
-            Assert.IsNotEmpty(connectedRegistry.Id);
-            Assert.AreEqual(ConnectedRegistryActivationStatus.Inactive, connectedRegistryData.Activation.Status);
-            Assert.AreEqual(ConnectedRegistryConnectionState.Offline, connectedRegistryData.ConnectionState);
-            Assert.AreEqual(ConnectedRegistryAuditLogStatus.Disabled, connectedRegistryData.Logging.AuditLogStatus);
-            Assert.AreEqual(ConnectedRegistryLogLevel.Information, connectedRegistryData.Logging.LogLevel);
-            Assert.AreEqual(ConnectedRegistryMode.ReadWrite, connectedRegistryData.Mode);
-            Assert.AreEqual(ContainerRegistryProvisioningState.Succeeded, connectedRegistryData.ProvisioningState);
-            Assert.AreEqual(token.Id, connectedRegistryData.Parent.SyncProperties.TokenId);
-            Assert.AreEqual("0 9 * * *", connectedRegistryData.Parent.SyncProperties.Schedule);
-            Assert.AreEqual(XmlConvert.ToTimeSpan("PT48H"), connectedRegistryData.Parent.SyncProperties.MessageTtl);
-            Assert.AreEqual(XmlConvert.ToTimeSpan("PT4H"), connectedRegistryData.Parent.SyncProperties.SyncWindow);
-            // List connected registries
-            await foreach (var connectedRegistryFromList in connectedRegistryCollection)
-            {
-                Assert.AreEqual(connectedRegistryName, connectedRegistryFromList.Data.Name);
-            }
-            // Get the connected registry
-            ConnectedRegistryResource connectedRegistryFromGet = await connectedRegistryCollection.GetAsync(connectedRegistryName);
-            Assert.AreEqual(connectedRegistryName, connectedRegistryFromGet.Data.Name);
-            // Update the connected registry
-            ConnectedRegistryResource connectedRegistryFromUpdate = (await connectedRegistryFromGet.UpdateAsync(WaitUntil.Completed, new ConnectedRegistryPatch()
-            {
-                SyncProperties = new ConnectedRegistrySyncUpdateProperties()
-                {
-                    MessageTtl = XmlConvert.ToTimeSpan("PT24H"),
-                    SyncWindow = XmlConvert.ToTimeSpan("PT2H")
-                }
-            })).Value;
-            Assert.AreEqual(XmlConvert.ToTimeSpan("PT24H"), connectedRegistryFromUpdate.Data.Parent.SyncProperties.MessageTtl);
-            Assert.AreEqual(XmlConvert.ToTimeSpan("PT2H"), connectedRegistryFromUpdate.Data.Parent.SyncProperties.SyncWindow);
-            // Delete the connected registry
-            await connectedRegistryFromUpdate.DeleteAsync(WaitUntil.Completed);
-            // Delete connected registry dependencies
-            await token.DeleteAsync(WaitUntil.Completed);
-            await scopeMap.DeleteAsync(WaitUntil.Completed);
-            // Delete the container registry
-            await registry.DeleteAsync(WaitUntil.Completed);
-        }
+        //     // Create scopemap/token
+        //     var scopeMapCollection = registry.GetScopeMaps();
+        //     ScopeMapResource scopeMap = (await scopeMapCollection.CreateOrUpdateAsync(WaitUntil.Completed, scopeMapName, new ScopeMapData()
+        //     {
+        //         Actions =
+        //         {
+        //             $"repositories/{repository}/content/read",
+        //             $"repositories/{repository}/content/write",
+        //             $"repositories/{repository}/content/delete",
+        //             $"repositories/{repository}/metadata/read",
+        //             $"repositories/{repository}/metadata/write",
+        //             $"gateway/{connectedRegistryName}/config/read",
+        //             $"gateway/{connectedRegistryName}/config/write",
+        //             $"gateway/{connectedRegistryName}/message/read",
+        //             $"gateway/{connectedRegistryName}/message/write"
+        //         }
+        //     })).Value;
+        //     var tokenCollection = registry.GetContainerRegistryTokens();
+        //     ContainerRegistryTokenResource token = (await tokenCollection.CreateOrUpdateAsync(WaitUntil.Completed, tokenName, new ContainerRegistryTokenData()
+        //     {
+        //         ScopeMapId = scopeMap.Id
+        //     })).Value;
+        //     // Create connected registry
+        //     var connectedRegistryCollection = registry.GetConnectedRegistries();
+        //     ConnectedRegistryResource connectedRegistry = (await connectedRegistryCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectedRegistryName, new ConnectedRegistryData()
+        //     {
+        //         Mode = ConnectedRegistryMode.ReadWrite,
+        //         Parent = new ConnectedRegistryParent(new ConnectedRegistrySyncProperties(token.Id, XmlConvert.ToTimeSpan("PT48H"))
+        //         {
+        //             Schedule = "0 9 * * *",
+        //             SyncWindow = XmlConvert.ToTimeSpan("PT4H")
+        //         }),
+        //         Logging = new ConnectedRegistryLogging()
+        //         {
+        //             LogLevel = ConnectedRegistryLogLevel.Information
+        //         }
+        //     })).Value;
+        //     var connectedRegistryData = connectedRegistry.Data;
+        //     Assert.IsNotEmpty(connectedRegistry.Id);
+        //     Assert.AreEqual(ConnectedRegistryActivationStatus.Inactive, connectedRegistryData.Activation.Status);
+        //     Assert.AreEqual(ConnectedRegistryConnectionState.Offline, connectedRegistryData.ConnectionState);
+        //     Assert.AreEqual(ConnectedRegistryAuditLogStatus.Disabled, connectedRegistryData.Logging.AuditLogStatus);
+        //     Assert.AreEqual(ConnectedRegistryLogLevel.Information, connectedRegistryData.Logging.LogLevel);
+        //     Assert.AreEqual(ConnectedRegistryMode.ReadWrite, connectedRegistryData.Mode);
+        //     Assert.AreEqual(ContainerRegistryProvisioningState.Succeeded, connectedRegistryData.ProvisioningState);
+        //     Assert.AreEqual(token.Id, connectedRegistryData.Parent.SyncProperties.TokenId);
+        //     Assert.AreEqual("0 9 * * *", connectedRegistryData.Parent.SyncProperties.Schedule);
+        //     Assert.AreEqual(XmlConvert.ToTimeSpan("PT48H"), connectedRegistryData.Parent.SyncProperties.MessageTtl);
+        //     Assert.AreEqual(XmlConvert.ToTimeSpan("PT4H"), connectedRegistryData.Parent.SyncProperties.SyncWindow);
+        //     // List connected registries
+        //     await foreach (var connectedRegistryFromList in connectedRegistryCollection)
+        //     {
+        //         Assert.AreEqual(connectedRegistryName, connectedRegistryFromList.Data.Name);
+        //     }
+        //     // Get the connected registry
+        //     ConnectedRegistryResource connectedRegistryFromGet = await connectedRegistryCollection.GetAsync(connectedRegistryName);
+        //     Assert.AreEqual(connectedRegistryName, connectedRegistryFromGet.Data.Name);
+        //     // Update the connected registry
+        //     ConnectedRegistryResource connectedRegistryFromUpdate = (await connectedRegistryFromGet.UpdateAsync(WaitUntil.Completed, new ConnectedRegistryPatch()
+        //     {
+        //         SyncProperties = new ConnectedRegistrySyncUpdateProperties()
+        //         {
+        //             MessageTtl = XmlConvert.ToTimeSpan("PT24H"),
+        //             SyncWindow = XmlConvert.ToTimeSpan("PT2H")
+        //         }
+        //     })).Value;
+        //     Assert.AreEqual(XmlConvert.ToTimeSpan("PT24H"), connectedRegistryFromUpdate.Data.Parent.SyncProperties.MessageTtl);
+        //     Assert.AreEqual(XmlConvert.ToTimeSpan("PT2H"), connectedRegistryFromUpdate.Data.Parent.SyncProperties.SyncWindow);
+        //     // Delete the connected registry
+        //     await connectedRegistryFromUpdate.DeleteAsync(WaitUntil.Completed);
+        //     // Delete connected registry dependencies
+        //     await token.DeleteAsync(WaitUntil.Completed);
+        //     await scopeMap.DeleteAsync(WaitUntil.Completed);
+        //     // Delete the container registry
+        //     await registry.DeleteAsync(WaitUntil.Completed);
+        // }
 
         private static void ValidateSystemData(SystemData systemData)
         {

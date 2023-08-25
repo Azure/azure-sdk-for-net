@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         /// <summary> Initializes a new instance of AsymmetricEncryptedSecret. </summary>
         /// <param name="value"> The value of the secret. </param>
-        /// <param name="encryptionAlgorithm"> The algorithm used to encrypt &quot;Value&quot;. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to encrypt "Value". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AsymmetricEncryptedSecret(string value, DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm)
         {
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of AsymmetricEncryptedSecret. </summary>
         /// <param name="value"> The value of the secret. </param>
-        /// <param name="encryptionCertThumbprint"> Thumbprint certificate used to encrypt \&quot;Value\&quot;. If the value is unencrypted, it will be null. </param>
-        /// <param name="encryptionAlgorithm"> The algorithm used to encrypt &quot;Value&quot;. </param>
+        /// <param name="encryptionCertThumbprint"> Thumbprint certificate used to encrypt \"Value\". If the value is unencrypted, it will be null. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to encrypt "Value". </param>
         internal AsymmetricEncryptedSecret(string value, string encryptionCertThumbprint, DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm)
         {
             Value = value;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> The value of the secret. </summary>
         public string Value { get; set; }
-        /// <summary> Thumbprint certificate used to encrypt \&quot;Value\&quot;. If the value is unencrypted, it will be null. </summary>
+        /// <summary> Thumbprint certificate used to encrypt \"Value\". If the value is unencrypted, it will be null. </summary>
         public string EncryptionCertThumbprint { get; set; }
-        /// <summary> The algorithm used to encrypt &quot;Value&quot;. </summary>
+        /// <summary> The algorithm used to encrypt "Value". </summary>
         public DataBoxEdgeEncryptionAlgorithm EncryptionAlgorithm { get; set; }
     }
 }

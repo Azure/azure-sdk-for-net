@@ -7,6 +7,8 @@ Project("{7F3298C3-9256-4A81-8A2B-2860671A032F}") = "Azure.ResourceManager.Strea
 EndProject
 Project("{7F3298C3-9256-4A81-8A2B-2860671A032F}") = "Azure.ResourceManager.StreamAnalytics.Tests", "tests\Azure.ResourceManager.StreamAnalytics.Tests.csproj", "{8E286132-7EFB-4156-AE14-7B9D0EBF6771}"
 EndProject
+Project("{7F3298C3-9256-4A81-8A2B-2860671A032F}") = "Azure.ResourceManager.StreamAnalytics.Samples", "samples\Azure.ResourceManager.StreamAnalytics.Samples.csproj", "{fd169eed-c903-4b16-8fcc-939ebb684dd2}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

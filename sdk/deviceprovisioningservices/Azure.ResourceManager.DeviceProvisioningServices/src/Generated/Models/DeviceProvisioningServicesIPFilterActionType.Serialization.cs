@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         public static DeviceProvisioningServicesIPFilterActionType ToDeviceProvisioningServicesIPFilterActionType(this string value)
         {
-            if (string.Equals(value, "Accept", StringComparison.InvariantCultureIgnoreCase)) return DeviceProvisioningServicesIPFilterActionType.Accept;
-            if (string.Equals(value, "Reject", StringComparison.InvariantCultureIgnoreCase)) return DeviceProvisioningServicesIPFilterActionType.Reject;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accept")) return DeviceProvisioningServicesIPFilterActionType.Accept;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Reject")) return DeviceProvisioningServicesIPFilterActionType.Reject;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeviceProvisioningServicesIPFilterActionType value.");
         }
     }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static TransferConfigurationType ToTransferConfigurationType(this string value)
         {
-            if (string.Equals(value, "TransferAll", StringComparison.InvariantCultureIgnoreCase)) return TransferConfigurationType.TransferAll;
-            if (string.Equals(value, "TransferUsingFilter", StringComparison.InvariantCultureIgnoreCase)) return TransferConfigurationType.TransferUsingFilter;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TransferAll")) return TransferConfigurationType.TransferAll;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TransferUsingFilter")) return TransferConfigurationType.TransferUsingFilter;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TransferConfigurationType value.");
         }
     }

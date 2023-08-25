@@ -13,7 +13,10 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the ObjectReplicationPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the ObjectReplicationPolicy data model.
+    /// The replication policy between two storage accounts. Multiple rules can be defined in one policy.
+    /// </summary>
     public partial class ObjectReplicationPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ObjectReplicationPolicyData. </summary>

@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
-        /// Operation Id: ConsumerInvitations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataShareConsumerInvitationResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
-        /// Operation Id: ConsumerInvitations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataShareConsumerInvitationResource> Get(CancellationToken cancellationToken = default)

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsDefined(StandbyAvailabilityZone))
             {
-                writer.WritePropertyName("standbyAvailabilityZone");
+                writer.WritePropertyName("standbyAvailabilityZone"u8);
                 writer.WriteStringValue(StandbyAvailabilityZone);
             }
             writer.WriteEndObject();
@@ -30,32 +30,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerHighAvailability DeserializePostgreSqlFlexibleServerHighAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PostgreSqlFlexibleServerHighAvailabilityMode> mode = default;
             Optional<PostgreSqlFlexibleServerHAState> state = default;
             Optional<string> standbyAvailabilityZone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new PostgreSqlFlexibleServerHighAvailabilityMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new PostgreSqlFlexibleServerHAState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("standbyAvailabilityZone"))
+                if (property.NameEquals("standbyAvailabilityZone"u8))
                 {
                     standbyAvailabilityZone = property.Value.GetString();
                     continue;

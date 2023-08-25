@@ -16,18 +16,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceUsage. </summary>
+        /// <param name="id"> Id of the usage result. </param>
         /// <param name="unit"> Unit of the usage result. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name object of the resource. </param>
-        internal ContainerInstanceUsage(string unit, int? currentValue, int? limit, ContainerInstanceUsageName name)
+        internal ContainerInstanceUsage(string id, string unit, int? currentValue, int? limit, ContainerInstanceUsageName name)
         {
+            Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
         }
 
+        /// <summary> Id of the usage result. </summary>
+        public string Id { get; }
         /// <summary> Unit of the usage result. </summary>
         public string Unit { get; }
         /// <summary> The current usage of the resource. </summary>

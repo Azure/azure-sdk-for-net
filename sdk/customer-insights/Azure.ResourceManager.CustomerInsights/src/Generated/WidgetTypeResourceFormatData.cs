@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the WidgetTypeResourceFormat data model. </summary>
+    /// <summary>
+    /// A class representing the WidgetTypeResourceFormat data model.
+    /// The WidgetTypeResourceFormat
+    /// </summary>
     public partial class WidgetTypeResourceFormatData : ResourceData
     {
         /// <summary> Initializes a new instance of WidgetTypeResourceFormatData. </summary>

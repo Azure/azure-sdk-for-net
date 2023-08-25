@@ -576,7 +576,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         // We'll re-process this response as a batch result
 
-                        throw ClientDiagnostics.CreateRequestFailedException(responses[0]);
+                        throw new RequestFailedException(responses[0]);
                     }
                     else
                     {
@@ -600,7 +600,7 @@ namespace Azure.Storage.Blobs.Specialized
                         value is DelayedResponse response)
                     {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                        await response.SetLiveResponse(responses[i], throwOnAnyFailure).ConfigureAwait(false);
+                        response.SetLiveResponse(responses[i], throwOnAnyFailure);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     }
                 }

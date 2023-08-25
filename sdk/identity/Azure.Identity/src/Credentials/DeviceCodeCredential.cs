@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Microsoft.Identity.Client;
 using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -18,13 +18,16 @@ namespace Azure.Identity
     public class DeviceCodeCredential : TokenCredential
     {
         private readonly string _tenantId;
-        private readonly string[] _additionallyAllowedTenantIds;
+        internal readonly string[] AdditionallyAllowedTenantIds;
         internal MsalPublicClient Client { get; set; }
         internal string ClientId { get; }
         internal bool DisableAutomaticAuthentication { get; }
         internal AuthenticationRecord Record { get; private set; }
+        private bool _isCaeEnabledRequestCached = false;
+        private bool _isCaeDisabledRequestCached = false;
         internal Func<DeviceCodeInfo, CancellationToken, Task> DeviceCodeCallback { get; }
         internal CredentialPipeline Pipeline { get; }
+        internal string DefaultScope { get; }
 
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to initiate the device code authentication.";
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
@@ -66,8 +69,8 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId,  TokenCredentialOptions options = default)
-            : this(deviceCodeCallback, Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull:true), clientId, options, null)
+        public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, TokenCredentialOptions options = default)
+            : this(deviceCodeCallback, Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull: true), clientId, options, null)
         {
         }
 
@@ -80,20 +83,20 @@ namespace Azure.Identity
         {
             Argument.AssertNotNull(clientId, nameof(clientId));
             Argument.AssertNotNull(deviceCodeCallback, nameof(deviceCodeCallback));
-
             _tenantId = tenantId;
             ClientId = clientId;
             DeviceCodeCallback = deviceCodeCallback;
             DisableAutomaticAuthentication = (options as DeviceCodeCredentialOptions)?.DisableAutomaticAuthentication ?? false;
             Record = (options as DeviceCodeCredentialOptions)?.AuthenticationRecord;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+            DefaultScope = AzureAuthorityHosts.GetDefaultScope(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault());
             Client = client ?? new MsalPublicClient(
                 Pipeline,
                 tenantId,
                 ClientId,
-                AzureAuthorityHosts.GetDeviceCodeRedirectUri(Pipeline.AuthorityHost).AbsoluteUri,
+                AzureAuthorityHosts.GetDeviceCodeRedirectUri(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault()).AbsoluteUri,
                 options);
-            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -103,10 +106,13 @@ namespace Azure.Identity
         /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
         public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
-            // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = AzureAuthorityHosts.GetDefaultScope(Pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            // throw if no default scope exists
+            if (DefaultScope == null)
+            {
+                throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            }
 
-            return Authenticate(new TokenRequestContext(new string[] { defaultScope }), cancellationToken);
+            return Authenticate(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken);
         }
 
         /// <summary>
@@ -116,10 +122,13 @@ namespace Azure.Identity
         /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution of credentials using the same persisted token cache.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
-            // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = AzureAuthorityHosts.GetDefaultScope(Pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            // throw if no default scope exists
+            if (DefaultScope == null)
+            {
+                throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            }
 
-            return await AuthenticateAsync(new TokenRequestContext(new string[] { defaultScope }), cancellationToken).ConfigureAwait(false);
+            return await AuthenticateAsync(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -203,14 +212,20 @@ namespace Azure.Identity
             {
                 Exception inner = null;
 
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
+                var isCachePopulated = Record switch
+                {
+                    not null when requestContext.IsCaeEnabled && _isCaeEnabledRequestCached => true,
+                    not null when !requestContext.IsCaeEnabled && _isCaeDisabledRequestCached => true,
+                    _ => false
+                };
 
-                if (Record != null)
+                if (isCachePopulated)
                 {
                     try
                     {
                         AuthenticationResult result = await Client
-                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
+                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                             .ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -236,10 +251,18 @@ namespace Azure.Identity
         private async Task<AccessToken> GetTokenViaDeviceCodeAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
         {
             AuthenticationResult result = await Client
-                .AcquireTokenWithDeviceCodeAsync(context.Scopes, context.Claims, code => DeviceCodeCallbackImpl(code, cancellationToken), async, cancellationToken)
+                .AcquireTokenWithDeviceCodeAsync(context.Scopes, context.Claims, code => DeviceCodeCallbackImpl(code, cancellationToken), context.IsCaeEnabled, async, cancellationToken)
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
+            if (context.IsCaeEnabled)
+            {
+                _isCaeEnabledRequestCached = true;
+            }
+            else
+            {
+                _isCaeDisabledRequestCached = true;
+            }
 
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }

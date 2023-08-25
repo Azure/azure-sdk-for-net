@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("goal");
+            writer.WritePropertyName("goal"u8);
             writer.WriteStringValue(Goal.ToString());
-            writer.WritePropertyName("primaryMetric");
+            writer.WritePropertyName("primaryMetric"u8);
             writer.WriteStringValue(PrimaryMetric);
             writer.WriteEndObject();
         }
 
         internal static MachineLearningObjective DeserializeMachineLearningObjective(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningGoal goal = default;
             string primaryMetric = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("goal"))
+                if (property.NameEquals("goal"u8))
                 {
                     goal = new MachineLearningGoal(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryMetric"))
+                if (property.NameEquals("primaryMetric"u8))
                 {
                     primaryMetric = property.Value.GetString();
                     continue;

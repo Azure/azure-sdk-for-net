@@ -24,7 +24,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             var client = CreateClient();
             client.SetRoutesAsync(new List<SipTrunkRoute>()).Wait();
             client.SetTrunksAsync(TestData!.TrunkList).Wait();
-            client.SetRoutesAsync(new List<SipTrunkRoute> { TestData!.RuleNavigateToTrunk1 }).Wait();
+            client.SetRoutesAsync(new List<SipTrunkRoute> { TestData!.RuleWithoutTrunks }).Wait();
 
             return client;
         }
@@ -71,13 +71,14 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         [Test]
         public async Task GetSipRoutesForResource()
         {
-            var client = InitializeTest();
+            var client = CreateClient();
+            await client.SetRoutesAsync(new List<SipTrunkRoute> { TestData!.RuleWithoutTrunks }).ConfigureAwait(false);
             var response = await client.GetRoutesAsync().ConfigureAwait(false);
             var routes = response.Value;
 
             Assert.IsNotNull(routes);
             Assert.AreEqual(1, routes.Count());
-            Assert.IsTrue(RouteAreEqual(TestData!.RuleNavigateToTrunk1, routes[0]));
+            Assert.IsTrue(RouteAreEqual(TestData!.RuleWithoutTrunks, routes[0]));
         }
 
         [Test]
@@ -132,15 +133,16 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         [Test]
         public async Task ReplaceSipRoutesForResource()
         {
-            var client = InitializeTest();
+            var client = CreateClient();
 
-            await client.SetRoutesAsync(new List<SipTrunkRoute> { TestData!.RuleNavigateToAllTrunks }).ConfigureAwait(false);
+            await client.SetRoutesAsync(new List<SipTrunkRoute> { TestData!.RuleWithoutTrunks }).ConfigureAwait(false);
+            await client.SetRoutesAsync(new List<SipTrunkRoute> { TestData!.RuleWithoutTrunks2 }).ConfigureAwait(false);
             var response = await client.GetRoutesAsync().ConfigureAwait(false);
 
             var newRoutes = response.Value;
             Assert.IsNotNull(newRoutes);
             Assert.AreEqual(1, newRoutes.Count);
-            Assert.IsTrue(RouteAreEqual(TestData!.RuleNavigateToAllTrunks, newRoutes[0]));
+            Assert.IsTrue(RouteAreEqual(TestData!.RuleWithoutTrunks2, newRoutes[0]));
         }
 
         [Test]

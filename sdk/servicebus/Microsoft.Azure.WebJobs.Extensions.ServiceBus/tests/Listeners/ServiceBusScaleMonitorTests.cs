@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -24,6 +27,8 @@ using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 {
     [NonParallelizable]
+    [TestFixture(ServiceBusEntityType.Queue)]
+    [TestFixture(ServiceBusEntityType.Topic)]
     public class ServiceBusScaleMonitorTests
     {
         private ServiceBusListener _listener;
@@ -37,11 +42,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private TestLoggerProvider _loggerProvider;
         private LoggerFactory _loggerFactory;
         private string _functionId = "test-functionid";
-        private string _entityPath = "test-entity-path";
+        private string _queue = "test-queue";
+        private string _topic = "test-topic";
+        private string _subscription = "test-subscription";
+        private string _entityPath;
         private string _testConnection = "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
         private string _connection = "connection";
         private ServiceBusClient _client;
         private Mock<ServiceBusAdministrationClient> _mockAdminClient;
+        private readonly ServiceBusEntityType _entityType;
+        private readonly string _entityTypeName;
+
+        public ServiceBusScaleMonitorTests(ServiceBusEntityType entityType)
+        {
+            _entityType = entityType;
+            _entityTypeName = entityType == ServiceBusEntityType.Queue ? "queue" : "topic";
+            _entityPath = _entityType == ServiceBusEntityType.Queue ? _queue : EntityNameFormatter.FormatSubscriptionPath(_topic, _subscription);
+        }
 
         [SetUp]
         public void Setup()
@@ -79,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
                 .Returns(_mockMessageReceiver.Object);
 
-            _mockClientFactory.Setup(p => p.CreateAdministrationClient(_testConnection))
+            _mockClientFactory.Setup(p => p.CreateAdministrationClient(_connection))
                 .Returns(_mockAdminClient.Object);
 
             _loggerFactory = new LoggerFactory();
@@ -92,7 +109,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             _listener = new ServiceBusListener(
                 _functionId,
-                ServiceBusEntityType.Queue,
+                _entityType,
                 _entityPath,
                 false,
                 _serviceBusOptions.AutoCompleteMessages,
@@ -103,7 +120,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                concurrencyManager);
+                concurrencyManager,
+                default);
 
             _scaleMonitor = (ServiceBusScaleMonitor)_listener.GetMonitor();
         }
@@ -112,46 +130,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         public void ScaleMonitorDescriptor_ReturnsExpectedValue()
         {
             Assert.AreEqual($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(), _scaleMonitor.Descriptor.Id);
-        }
-
-        [Test]
-        public void GetMetrics_ReturnsExpectedResult()
-        {
-            var utcNow = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(10));
-
-            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: utcNow);
-
-            // Test base case
-            var metrics = ServiceBusScaleMonitor.CreateTriggerMetrics(null, 0, 0, 0, false);
-
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-
-            // Test messages on main queue
-            metrics = ServiceBusScaleMonitor.CreateTriggerMetrics(message, 10, 0, 0, false);
-
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(10, metrics.MessageCount);
-            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(10)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-
-            // Test listening on dead letter queue
-            metrics = ServiceBusScaleMonitor.CreateTriggerMetrics(message, 10, 100, 0, true);
-
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(100, metrics.MessageCount);
-            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(10)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-
-            // Test partitions
-            metrics = ServiceBusScaleMonitor.CreateTriggerMetrics(null, 0, 0, 16, false);
-
-            Assert.AreEqual(16, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
         }
 
         [Test]
@@ -369,6 +347,112 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
+        public async Task GetMetrics_CalculatesMetrics_UsingRuntimeInformation()
+        {
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)));
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(message);
+
+            if (_entityType == ServiceBusEntityType.Queue)
+            {
+                _mockAdminClient.Setup(x => x.GetQueueRuntimePropertiesAsync(_entityPath, It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(ServiceBusModelFactory.QueueRuntimeProperties(_entityPath, activeMessageCount: 10, deadLetterMessageCount: 5), new MockResponse(200)))
+                    .Verifiable();
+                _mockAdminClient.Setup(x => x.GetQueueAsync(_entityPath, It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(
+                        ServiceBusModelFactory.QueueProperties(
+                            _entityPath,
+                            maxDeliveryCount: 10,
+                            lockDuration: TimeSpan.FromSeconds(30),
+                            autoDeleteOnIdle: TimeSpan.FromMinutes(5),
+                            duplicateDetectionHistoryTimeWindow: TimeSpan.FromSeconds(20),
+                            defaultMessageTimeToLive: TimeSpan.FromSeconds(30),
+                            userMetadata: "data"),
+                        new MockResponse(200)))
+                    .Verifiable();
+            }
+            else
+            {
+                _mockAdminClient.Setup(x => x.GetSubscriptionRuntimePropertiesAsync(_topic, _subscription, It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(ServiceBusModelFactory.SubscriptionRuntimeProperties(_topic, _subscription, activeMessageCount: 10, deadLetterMessageCount: 5), new MockResponse(200)))
+                    .Verifiable();
+                _mockAdminClient.Setup(x => x.GetTopicAsync(_topic, It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(
+                        ServiceBusModelFactory.TopicProperties(
+                            _topic,
+                            defaultMessageTimeToLive: TimeSpan.FromMinutes(5),
+                            autoDeleteOnIdle: TimeSpan.FromMinutes(5),
+                            duplicateDetectionHistoryTimeWindow: TimeSpan.FromMinutes(5)),
+                        new MockResponse(200)))
+                    .Verifiable();
+            }
+            ServiceBusListener listener = CreateListener();
+
+            var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
+
+            _mockAdminClient.VerifyAll();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
+            Assert.AreEqual(10, metrics.MessageCount);
+            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
+        public async Task GetMetrics_CalculatesMetrics_UsingRuntimeInformation_UsingDLQ()
+        {
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)));
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(message);
+
+            if (_entityType == ServiceBusEntityType.Queue)
+            {
+                _mockAdminClient.Setup(x => x.GetQueueRuntimePropertiesAsync(_entityPath, It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(ServiceBusModelFactory.QueueRuntimeProperties(_entityPath, activeMessageCount: 10, deadLetterMessageCount: 5), new MockResponse(200)))
+                    .Verifiable();
+                _mockAdminClient.Setup(x => x.GetQueueAsync(_entityPath, It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(
+                        ServiceBusModelFactory.QueueProperties(
+                            _entityPath,
+                            maxDeliveryCount: 10,
+                            lockDuration: TimeSpan.FromSeconds(30),
+                            autoDeleteOnIdle: TimeSpan.FromMinutes(5),
+                            duplicateDetectionHistoryTimeWindow: TimeSpan.FromSeconds(20),
+                            defaultMessageTimeToLive: TimeSpan.FromSeconds(30),
+                            userMetadata: "data"), new MockResponse(200)))
+                    .Verifiable();
+            }
+            else
+            {
+                _mockAdminClient.Setup(x => x.GetSubscriptionRuntimePropertiesAsync(_topic, _subscription, It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(ServiceBusModelFactory.SubscriptionRuntimeProperties(_topic, _subscription, activeMessageCount: 10, deadLetterMessageCount: 5), new MockResponse(200)))
+                    .Verifiable();
+                _mockAdminClient.Setup(x => x.GetTopicAsync(_topic, It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(
+                        ServiceBusModelFactory.TopicProperties(
+                            _topic,
+                            defaultMessageTimeToLive: TimeSpan.FromMinutes(5),
+                            autoDeleteOnIdle: TimeSpan.FromMinutes(5),
+                            duplicateDetectionHistoryTimeWindow: TimeSpan.FromMinutes(5)),
+                        new MockResponse(200)))
+                    .Verifiable();
+            }
+
+            ServiceBusListener listener = CreateListener(useDeadletterQueue: true);
+
+            var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
+
+            _mockAdminClient.VerifyAll();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
+            Assert.AreEqual(5, metrics.MessageCount);
+            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
         public async Task GetMetrics_HandlesExceptions()
         {
             // MessagingEntityNotFoundException
@@ -386,7 +470,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"ServiceBus queue '{_entityPath}' was not found.", warning.FormattedMessage);
+            Assert.AreEqual($"ServiceBus {_entityTypeName} '{_entityPath}' was not found.", warning.FormattedMessage);
             _loggerProvider.ClearAllLogMessages();
 
             // UnauthorizedAccessException
@@ -403,7 +487,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"Connection string does not have Manage claim for queue '{_entityPath}'. Failed to get queue description to derive queue length metrics. " +
+            Assert.AreEqual($"Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
                         $"Falling back to using first message enqueued time.",
                         warning.FormattedMessage);
             _loggerProvider.ClearAllLogMessages();
@@ -422,19 +506,31 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"Error querying for Service Bus queue scale status: Uh oh", warning.FormattedMessage);
+            Assert.AreEqual($"Error querying for Service Bus {_entityTypeName} scale status: Uh oh", warning.FormattedMessage);
         }
 
-        private ServiceBusListener CreateListener()
+        private ServiceBusListener CreateListener(bool useDeadletterQueue = false)
         {
             var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
             var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
             var concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, mockConcurrencyThrottleManager.Object);
+            string entityPath = _entityPath;
+
+            if (useDeadletterQueue)
+            {
+                entityPath = EntityNameFormatter.FormatDeadLetterPath(entityPath);
+                _mockProvider
+                    .Setup(p => p.CreateMessageProcessor(_client, entityPath, It.IsAny<ServiceBusProcessorOptions>()))
+                    .Returns(_mockMessageProcessor.Object);
+                _mockProvider
+                    .Setup(p => p.CreateBatchMessageReceiver(_client, entityPath, It.IsAny<ServiceBusReceiverOptions>()))
+                    .Returns(_mockMessageReceiver.Object);
+            }
 
             return new ServiceBusListener(
                 _functionId,
-                ServiceBusEntityType.Queue,
-                _entityPath,
+                _entityType,
+                entityPath,
                 false,
                 _serviceBusOptions.AutoCompleteMessages,
                 _mockExecutor.Object,
@@ -444,7 +540,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                concurrencyManager);
+                concurrencyManager,
+                default);
         }
 
         [Test]

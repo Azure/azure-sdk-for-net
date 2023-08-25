@@ -7,6 +7,8 @@ Project("{1DB1F126-4B38-423F-8672-39A3C84617E4}") = "Azure.ResourceManager.Workl
 EndProject
 Project("{1DB1F126-4B38-423F-8672-39A3C84617E4}") = "Azure.ResourceManager.WorkloadMonitor.Tests", "tests\Azure.ResourceManager.WorkloadMonitor.Tests.csproj", "{61FF433D-794B-4BCA-8E81-7EC33D30482C}"
 EndProject
+Project("{1DB1F126-4B38-423F-8672-39A3C84617E4}") = "Azure.ResourceManager.WorkloadMonitor.Samples", "samples\Azure.ResourceManager.WorkloadMonitor.Samples.csproj", "{6B9A1013-2369-4B91-B4DB-9C562D31F85A}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get a workload classifier of Sql pool&apos;s workload group. </summary>
+        /// <summary> Get a workload classifier of Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get a workload classifier of Sql pool&apos;s workload group. </summary>
+        /// <summary> Get a workload classifier of Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Create Or Update workload classifier for a Sql pool&apos;s workload group. </summary>
+        /// <summary> Create Or Update workload classifier for a Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Create Or Update workload classifier for a Sql pool&apos;s workload group. </summary>
+        /// <summary> Create Or Update workload classifier for a Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Remove workload classifier of a Sql pool&apos;s workload group. </summary>
+        /// <summary> Remove workload classifier of a Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Remove workload classifier of a Sql pool&apos;s workload group. </summary>
+        /// <summary> Remove workload classifier of a Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get list of  Sql pool&apos;s workload classifier for workload groups. </summary>
+        /// <summary> Get list of  Sql pool's workload classifier for workload groups. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get list of  Sql pool&apos;s workload classifier for workload groups. </summary>
+        /// <summary> Get list of  Sql pool's workload classifier for workload groups. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get list of  Sql pool&apos;s workload classifier for workload groups. </summary>
+        /// <summary> Get list of  Sql pool's workload classifier for workload groups. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get list of  Sql pool&apos;s workload classifier for workload groups. </summary>
+        /// <summary> Get list of  Sql pool's workload classifier for workload groups. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
-                writer.WritePropertyName("allowedAudiences");
+                writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedAudiences)
                 {
@@ -31,14 +31,17 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AllowedAudiencesValidation DeserializeAllowedAudiencesValidation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> allowedAudiences = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedAudiences"))
+                if (property.NameEquals("allowedAudiences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

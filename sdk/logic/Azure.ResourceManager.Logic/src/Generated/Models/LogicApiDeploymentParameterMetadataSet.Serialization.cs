@@ -14,25 +14,27 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiDeploymentParameterMetadataSet DeserializeLogicApiDeploymentParameterMetadataSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicApiDeploymentParameterMetadata> packageContentLink = default;
             Optional<LogicApiDeploymentParameterMetadata> redisCacheConnectionString = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("packageContentLink"))
+                if (property.NameEquals("packageContentLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     packageContentLink = LogicApiDeploymentParameterMetadata.DeserializeLogicApiDeploymentParameterMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("redisCacheConnectionString"))
+                if (property.NameEquals("redisCacheConnectionString"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     redisCacheConnectionString = LogicApiDeploymentParameterMetadata.DeserializeLogicApiDeploymentParameterMetadata(property.Value);

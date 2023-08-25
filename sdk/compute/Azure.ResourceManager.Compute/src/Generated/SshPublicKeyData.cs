@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the SshPublicKey data model. </summary>
+    /// <summary>
+    /// A class representing the SshPublicKey data model.
+    /// Specifies information about the SSH public key.
+    /// </summary>
     public partial class SshPublicKeyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SshPublicKeyData. </summary>

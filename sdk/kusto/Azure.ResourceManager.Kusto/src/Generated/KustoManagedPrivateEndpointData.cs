@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> A class representing the KustoManagedPrivateEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the KustoManagedPrivateEndpoint data model.
+    /// Class representing a managed private endpoint.
+    /// </summary>
     public partial class KustoManagedPrivateEndpointData : ResourceData
     {
         /// <summary> Initializes a new instance of KustoManagedPrivateEndpointData. </summary>

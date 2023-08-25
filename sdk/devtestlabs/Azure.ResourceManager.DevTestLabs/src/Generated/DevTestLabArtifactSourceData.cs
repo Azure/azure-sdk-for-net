@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabArtifactSource data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabArtifactSource data model.
+    /// Properties of an artifact source.
+    /// </summary>
     public partial class DevTestLabArtifactSourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabArtifactSourceData. </summary>
@@ -29,15 +32,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="displayName"> The artifact source&apos;s display name. </param>
-        /// <param name="uri"> The artifact source&apos;s URI. </param>
-        /// <param name="sourceType"> The artifact source&apos;s type. </param>
+        /// <param name="displayName"> The artifact source's display name. </param>
+        /// <param name="uri"> The artifact source's URI. </param>
+        /// <param name="sourceType"> The artifact source's type. </param>
         /// <param name="folderPath"> The folder containing artifacts. </param>
         /// <param name="armTemplateFolderPath"> The folder containing Azure Resource Manager templates. </param>
-        /// <param name="branchRef"> The artifact source&apos;s branch reference. </param>
+        /// <param name="branchRef"> The artifact source's branch reference. </param>
         /// <param name="securityToken"> The security token to authenticate to the artifact source. </param>
         /// <param name="status"> Indicates if the artifact source is enabled (values: Enabled, Disabled). </param>
-        /// <param name="createdOn"> The artifact source&apos;s creation date. </param>
+        /// <param name="createdOn"> The artifact source's creation date. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, Uri uri, DevTestLabSourceControlType? sourceType, string folderPath, string armTemplateFolderPath, string branchRef, string securityToken, DevTestLabEnableStatus? status, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
@@ -55,23 +58,23 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary> The artifact source&apos;s display name. </summary>
+        /// <summary> The artifact source's display name. </summary>
         public string DisplayName { get; set; }
-        /// <summary> The artifact source&apos;s URI. </summary>
+        /// <summary> The artifact source's URI. </summary>
         public Uri Uri { get; set; }
-        /// <summary> The artifact source&apos;s type. </summary>
+        /// <summary> The artifact source's type. </summary>
         public DevTestLabSourceControlType? SourceType { get; set; }
         /// <summary> The folder containing artifacts. </summary>
         public string FolderPath { get; set; }
         /// <summary> The folder containing Azure Resource Manager templates. </summary>
         public string ArmTemplateFolderPath { get; set; }
-        /// <summary> The artifact source&apos;s branch reference. </summary>
+        /// <summary> The artifact source's branch reference. </summary>
         public string BranchRef { get; set; }
         /// <summary> The security token to authenticate to the artifact source. </summary>
         public string SecurityToken { get; set; }
         /// <summary> Indicates if the artifact source is enabled (values: Enabled, Disabled). </summary>
         public DevTestLabEnableStatus? Status { get; set; }
-        /// <summary> The artifact source&apos;s creation date. </summary>
+        /// <summary> The artifact source's creation date. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }

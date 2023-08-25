@@ -23,18 +23,24 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         private const string AssignedValue = "Assigned";
-        private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
+        private const string SucceededValue = "Succeeded";
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Assigned. </summary>
         public static ManagedClusterPodIdentityProvisioningState Assigned { get; } = new ManagedClusterPodIdentityProvisioningState(AssignedValue);
-        /// <summary> Updating. </summary>
-        public static ManagedClusterPodIdentityProvisioningState Updating { get; } = new ManagedClusterPodIdentityProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static ManagedClusterPodIdentityProvisioningState Canceled { get; } = new ManagedClusterPodIdentityProvisioningState(CanceledValue);
         /// <summary> Deleting. </summary>
         public static ManagedClusterPodIdentityProvisioningState Deleting { get; } = new ManagedClusterPodIdentityProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static ManagedClusterPodIdentityProvisioningState Failed { get; } = new ManagedClusterPodIdentityProvisioningState(FailedValue);
+        /// <summary> Succeeded. </summary>
+        public static ManagedClusterPodIdentityProvisioningState Succeeded { get; } = new ManagedClusterPodIdentityProvisioningState(SucceededValue);
+        /// <summary> Updating. </summary>
+        public static ManagedClusterPodIdentityProvisioningState Updating { get; } = new ManagedClusterPodIdentityProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="ManagedClusterPodIdentityProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterPodIdentityProvisioningState left, ManagedClusterPodIdentityProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterPodIdentityProvisioningState"/> values are not the same. </summary>

@@ -21,27 +21,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteObjectValue(Timeout);
             }
             if (Optional.IsDefined(Retry))
             {
-                writer.WritePropertyName("retry");
+                writer.WritePropertyName("retry"u8);
                 writer.WriteObjectValue(Retry);
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {
-                writer.WritePropertyName("retryIntervalInSeconds");
+                writer.WritePropertyName("retryIntervalInSeconds"u8);
                 writer.WriteNumberValue(RetryIntervalInSeconds.Value);
             }
             if (Optional.IsDefined(SecureInput))
             {
-                writer.WritePropertyName("secureInput");
+                writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(SecureInput.Value);
             }
             if (Optional.IsDefined(SecureOutput))
             {
-                writer.WritePropertyName("secureOutput");
+                writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(SecureOutput.Value);
             }
             foreach (var item in AdditionalProperties)
@@ -54,6 +54,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ActivityPolicy DeserializeActivityPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> timeout = default;
             Optional<object> retry = default;
             Optional<int> retryIntervalInSeconds = default;
@@ -63,51 +67,46 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("retry"))
+                if (property.NameEquals("retry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retry = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("retryIntervalInSeconds"))
+                if (property.NameEquals("retryIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retryIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("secureInput"))
+                if (property.NameEquals("secureInput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secureInput = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("secureOutput"))
+                if (property.NameEquals("secureOutput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secureOutput = property.Value.GetBoolean();

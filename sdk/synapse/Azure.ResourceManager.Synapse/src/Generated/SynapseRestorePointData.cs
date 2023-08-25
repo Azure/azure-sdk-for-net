@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseRestorePoint data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseRestorePoint data model.
+    /// Database restore points.
+    /// </summary>
     public partial class SynapseRestorePointData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseRestorePointData. </summary>

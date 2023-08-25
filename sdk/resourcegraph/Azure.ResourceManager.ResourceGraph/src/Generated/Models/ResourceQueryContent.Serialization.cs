@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Subscriptions))
             {
-                writer.WritePropertyName("subscriptions");
+                writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subscriptions)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
             if (Optional.IsCollectionDefined(ManagementGroups))
             {
-                writer.WritePropertyName("managementGroups");
+                writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagementGroups)
                 {
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("query");
+            writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
             if (Optional.IsDefined(Options))
             {
-                writer.WritePropertyName("options");
+                writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
             }
             if (Optional.IsCollectionDefined(Facets))
             {
-                writer.WritePropertyName("facets");
+                writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {

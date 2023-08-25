@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -75,12 +72,21 @@ namespace Azure.Analytics.Purview.Scanning
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get a filter. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a filter
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetFilterAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetFilterAsync(RequestContext context = null)
+        public virtual async Task<Response> GetFilterAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
@@ -96,12 +102,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Get a filter. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a filter
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetFilter(RequestContext)']/*" />
-        public virtual Response GetFilter(RequestContext context = null)
+        public virtual Response GetFilter(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
@@ -117,11 +132,20 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Creates or updates a filter. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates or updates a filter
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CreateOrUpdateFilterAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateFilterAsync(RequestContent content, RequestContext context = null)
         {
@@ -139,11 +163,20 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Creates or updates a filter. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates or updates a filter
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CreateOrUpdateFilter(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateFilter(RequestContent content, RequestContext context = null)
         {
@@ -161,12 +194,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Creates an instance of a scan. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates an instance of a scan
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
         {
@@ -186,12 +228,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Creates an instance of a scan. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates an instance of a scan
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CreateOrUpdate(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {
@@ -211,12 +262,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Gets a scan information. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets a scan information
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetPropertiesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
+        public virtual async Task<Response> GetPropertiesAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
@@ -232,12 +292,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Gets a scan information. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets a scan information
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetProperties(RequestContext)']/*" />
-        public virtual Response GetProperties(RequestContext context = null)
+        public virtual Response GetProperties(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
@@ -253,12 +322,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Deletes the scan associated with the data source. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes the scan associated with the data source
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='DeleteAsync(RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
@@ -274,12 +352,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Deletes the scan associated with the data source. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes the scan associated with the data source
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='Delete(RequestContext)']/*" />
-        public virtual Response Delete(RequestContext context = null)
+        public virtual Response Delete(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
@@ -295,16 +382,25 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Runs the scan. </summary>
+        /// <summary>
+        /// [Protocol Method] Runs the scan
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
+        /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: "Full" | "Incremental". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='RunScanAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='RunScanAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> RunScanAsync(string runId, string scanLevel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -322,16 +418,25 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Runs the scan. </summary>
+        /// <summary>
+        /// [Protocol Method] Runs the scan
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
+        /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: "Full" | "Incremental". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='RunScan(String,String,RequestContext)']/*" />
-        public virtual Response RunScan(string runId, string scanLevel = null, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='RunScan(string,string,RequestContext)']/*" />
+        public virtual Response RunScan(string runId, string scanLevel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -349,15 +454,24 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Cancels a scan. </summary>
+        /// <summary>
+        /// [Protocol Method] Cancels a scan
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CancelScanAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> CancelScanAsync(string runId, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CancelScanAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> CancelScanAsync(string runId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -375,15 +489,24 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Cancels a scan. </summary>
+        /// <summary>
+        /// [Protocol Method] Cancels a scan
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CancelScan(String,RequestContext)']/*" />
-        public virtual Response CancelScan(string runId, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CancelScan(string,RequestContext)']/*" />
+        public virtual Response CancelScan(string runId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -401,12 +524,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Gets trigger information. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets trigger information
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetTriggerAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetTriggerAsync(RequestContext context = null)
+        public virtual async Task<Response> GetTriggerAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
@@ -422,12 +554,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Gets trigger information. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets trigger information
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetTrigger(RequestContext)']/*" />
-        public virtual Response GetTrigger(RequestContext context = null)
+        public virtual Response GetTrigger(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
@@ -443,12 +584,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Creates an instance of a trigger. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates an instance of a trigger
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CreateOrUpdateTriggerAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateTriggerAsync(RequestContent content, RequestContext context = null)
         {
@@ -468,12 +618,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Creates an instance of a trigger. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates an instance of a trigger
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CreateOrUpdateTrigger(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateTrigger(RequestContent content, RequestContext context = null)
         {
@@ -493,12 +652,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Deletes the trigger associated with the scan. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes the trigger associated with the scan
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='DeleteTriggerAsync(RequestContext)']/*" />
-        public virtual async Task<Response> DeleteTriggerAsync(RequestContext context = null)
+        public virtual async Task<Response> DeleteTriggerAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
@@ -514,12 +682,21 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Deletes the trigger associated with the scan. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes the trigger associated with the scan
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='DeleteTrigger(RequestContext)']/*" />
-        public virtual Response DeleteTrigger(RequestContext context = null)
+        public virtual Response DeleteTrigger(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
@@ -535,58 +712,46 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Lists the scan history of a scan. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the scan history of a scan
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetRunsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestContext context)
         {
-            return GetRunsImplementationAsync("PurviewScanClient.GetRuns", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
         }
 
-        private AsyncPageable<BinaryData> GetRunsImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetRunsRequest(context)
-                        : CreateGetRunsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Lists the scan history of a scan. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the scan history of a scan
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetRuns(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetRuns(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetRuns(RequestContext context)
         {
-            return GetRunsImplementation("PurviewScanClient.GetRuns", context);
-        }
-
-        private Pageable<BinaryData> GetRunsImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetRunsRequest(context)
-                        : CreateGetRunsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetFilterRequest(RequestContext context)

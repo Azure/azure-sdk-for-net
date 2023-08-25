@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tunnel = default;
             Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
             Optional<long> ingressBytesTransferred = default;
@@ -21,42 +25,39 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> lastConnectionEstablishedUtcTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tunnel"))
+                if (property.NameEquals("tunnel"u8))
                 {
                     tunnel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionStatus"))
+                if (property.NameEquals("connectionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectionStatus = new VirtualNetworkGatewayConnectionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ingressBytesTransferred"))
+                if (property.NameEquals("ingressBytesTransferred"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("egressBytesTransferred"))
+                if (property.NameEquals("egressBytesTransferred"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     egressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastConnectionEstablishedUtcTime"))
+                if (property.NameEquals("lastConnectionEstablishedUtcTime"u8))
                 {
                     lastConnectionEstablishedUtcTime = property.Value.GetString();
                     continue;

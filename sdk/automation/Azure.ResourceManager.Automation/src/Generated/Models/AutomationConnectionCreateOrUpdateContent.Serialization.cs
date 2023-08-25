@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.Automation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("connectionType");
+            writer.WritePropertyName("connectionType"u8);
             writer.WriteObjectValue(ConnectionType);
             if (Optional.IsCollectionDefined(FieldDefinitionValues))
             {
-                writer.WritePropertyName("fieldDefinitionValues");
+                writer.WritePropertyName("fieldDefinitionValues"u8);
                 writer.WriteStartObject();
                 foreach (var item in FieldDefinitionValues)
                 {

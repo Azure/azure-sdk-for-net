@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 
         public static ChangeCategory ToChangeCategory(this string value)
         {
-            if (string.Equals(value, "User", StringComparison.InvariantCultureIgnoreCase)) return ChangeCategory.User;
-            if (string.Equals(value, "System", StringComparison.InvariantCultureIgnoreCase)) return ChangeCategory.System;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "User")) return ChangeCategory.User;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "System")) return ChangeCategory.System;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ChangeCategory value.");
         }
     }

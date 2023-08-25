@@ -16,14 +16,14 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("skills");
+            writer.WritePropertyName("skills"u8);
             writer.WriteStartArray();
             foreach (var item in Skills)
             {
@@ -32,24 +32,24 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(CognitiveServicesAccount))
             {
-                writer.WritePropertyName("cognitiveServices");
+                writer.WritePropertyName("cognitiveServices"u8);
                 writer.WriteObjectValue(CognitiveServicesAccount);
             }
             if (Optional.IsDefined(KnowledgeStore))
             {
-                writer.WritePropertyName("knowledgeStore");
+                writer.WritePropertyName("knowledgeStore"u8);
                 writer.WriteObjectValue(KnowledgeStore);
             }
             if (Optional.IsDefined(_etag))
             {
-                writer.WritePropertyName("@odata.etag");
+                writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
             if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
-                    writer.WritePropertyName("encryptionKey");
+                    writer.WritePropertyName("encryptionKey"u8);
                     writer.WriteObjectValue(EncryptionKey);
                 }
                 else
@@ -62,6 +62,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchIndexerSkillset DeserializeSearchIndexerSkillset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             IList<SearchIndexerSkill> skills = default;
@@ -71,17 +75,17 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skills"))
+                if (property.NameEquals("skills"u8))
                 {
                     List<SearchIndexerSkill> array = new List<SearchIndexerSkill>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -91,32 +95,30 @@ namespace Azure.Search.Documents.Indexes.Models
                     skills = array;
                     continue;
                 }
-                if (property.NameEquals("cognitiveServices"))
+                if (property.NameEquals("cognitiveServices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cognitiveServices = CognitiveServicesAccount.DeserializeCognitiveServicesAccount(property.Value);
                     continue;
                 }
-                if (property.NameEquals("knowledgeStore"))
+                if (property.NameEquals("knowledgeStore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     knowledgeStore = KnowledgeStore.DeserializeKnowledgeStore(property.Value);
                     continue;
                 }
-                if (property.NameEquals("@odata.etag"))
+                if (property.NameEquals("@odata.etag"u8))
                 {
                     odataEtag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionKey"))
+                if (property.NameEquals("encryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

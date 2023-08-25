@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static TopologySingleResource DeserializeTopologySingleResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> severity = default;
             Optional<bool> recommendationsExist = default;
@@ -25,61 +29,56 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<IReadOnlyList<TopologySingleResourceChild>> children = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     severity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendationsExist"))
+                if (property.NameEquals("recommendationsExist"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recommendationsExist = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("networkZones"))
+                if (property.NameEquals("networkZones"u8))
                 {
                     networkZones = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topologyScore"))
+                if (property.NameEquals("topologyScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     topologyScore = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("parents"))
+                if (property.NameEquals("parents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TopologySingleResourceParent> array = new List<TopologySingleResourceParent>();
@@ -90,11 +89,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     parents = array;
                     continue;
                 }
-                if (property.NameEquals("children"))
+                if (property.NameEquals("children"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TopologySingleResourceChild> array = new List<TopologySingleResourceChild>();

@@ -20,8 +20,8 @@ namespace Azure.AI.TextAnalytics.Models
 
         public static WarningCodeValue ToWarningCodeValue(this string value)
         {
-            if (string.Equals(value, "LongWordsInDocument", StringComparison.InvariantCultureIgnoreCase)) return WarningCodeValue.LongWordsInDocument;
-            if (string.Equals(value, "DocumentTruncated", StringComparison.InvariantCultureIgnoreCase)) return WarningCodeValue.DocumentTruncated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LongWordsInDocument")) return WarningCodeValue.LongWordsInDocument;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DocumentTruncated")) return WarningCodeValue.DocumentTruncated;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WarningCodeValue value.");
         }
     }

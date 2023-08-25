@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("validationCategory");
+            writer.WritePropertyName("validationCategory"u8);
             writer.WriteStringValue(ValidationCategory.ToString());
-            writer.WritePropertyName("individualRequestDetails");
+            writer.WritePropertyName("individualRequestDetails"u8);
             writer.WriteStartArray();
             foreach (var item in IndividualRequestDetails)
             {

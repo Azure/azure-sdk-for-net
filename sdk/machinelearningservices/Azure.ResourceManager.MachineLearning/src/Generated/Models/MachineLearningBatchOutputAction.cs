@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum to determine how batch inferencing will handle output
-    /// Serialized Name: BatchOutputAction
-    /// </summary>
+    /// <summary> Enum to determine how batch inferencing will handle output. </summary>
     public readonly partial struct MachineLearningBatchOutputAction : IEquatable<MachineLearningBatchOutputAction>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string SummaryOnlyValue = "SummaryOnly";
         private const string AppendRowValue = "AppendRow";
 
-        /// <summary>
-        /// SummaryOnly
-        /// Serialized Name: BatchOutputAction.SummaryOnly
-        /// </summary>
+        /// <summary> SummaryOnly. </summary>
         public static MachineLearningBatchOutputAction SummaryOnly { get; } = new MachineLearningBatchOutputAction(SummaryOnlyValue);
-        /// <summary>
-        /// AppendRow
-        /// Serialized Name: BatchOutputAction.AppendRow
-        /// </summary>
+        /// <summary> AppendRow. </summary>
         public static MachineLearningBatchOutputAction AppendRow { get; } = new MachineLearningBatchOutputAction(AppendRowValue);
         /// <summary> Determines if two <see cref="MachineLearningBatchOutputAction"/> values are the same. </summary>
         public static bool operator ==(MachineLearningBatchOutputAction left, MachineLearningBatchOutputAction right) => left.Equals(right);

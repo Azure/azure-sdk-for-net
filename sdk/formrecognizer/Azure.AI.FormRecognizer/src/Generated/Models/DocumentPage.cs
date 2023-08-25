@@ -28,6 +28,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Words = new ChangeTrackingList<DocumentWord>();
             SelectionMarks = new ChangeTrackingList<DocumentSelectionMark>();
             Lines = new ChangeTrackingList<DocumentLine>();
+            Barcodes = new ChangeTrackingList<DocumentBarcode>();
+            Formulas = new ChangeTrackingList<DocumentFormula>();
         }
 
         /// <summary> 1-based page number in the input document. </summary>
@@ -46,5 +48,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public IReadOnlyList<DocumentSelectionMark> SelectionMarks { get; }
         /// <summary> Extracted lines from the page, potentially containing both textual and visual elements. </summary>
         public IReadOnlyList<DocumentLine> Lines { get; }
+        /// <summary> Extracted barcodes from the page. </summary>
+        public IReadOnlyList<DocumentBarcode> Barcodes { get; }
+        /// <summary> Extracted formulas from the page. </summary>
+        public IReadOnlyList<DocumentFormula> Formulas { get; }
     }
 }

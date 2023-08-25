@@ -15,26 +15,28 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static StoragePoolSkuLocationInfo DeserializeStoragePoolSkuLocationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<StoragePoolSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -45,11 +47,10 @@ namespace Azure.ResourceManager.StoragePool.Models
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("zoneDetails"))
+                if (property.NameEquals("zoneDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StoragePoolSkuZoneDetails> array = new List<StoragePoolSkuZoneDetails>();

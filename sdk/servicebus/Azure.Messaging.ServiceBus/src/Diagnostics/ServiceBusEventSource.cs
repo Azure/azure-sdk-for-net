@@ -195,6 +195,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorStoppingCancellationWarningEvent = 113;
 
         internal const int RunOperationExceptionVerboseEvent = 114;
+        internal const int ReceiveMessageCanceledEvent = 115;
 
         #endregion
         // add new event numbers here incrementing from previous
@@ -294,6 +295,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ReceiveMessageExceptionEvent, clientId, exception);
+            }
+        }
+
+        [Event(ReceiveMessageCanceledEvent, Level = EventLevel.Verbose, Message = "A receive operation was cancelled. (Identifier '{0}'). Error Message: '{1}'")]
+        public void ReceiveMessageCanceled(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiveMessageCanceledEvent, identifier, exception);
             }
         }
 

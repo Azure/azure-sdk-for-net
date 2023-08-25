@@ -15,18 +15,18 @@ namespace Azure.AI.Translation.Document
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("glossaryUrl");
+            writer.WritePropertyName("glossaryUrl"u8);
             writer.WriteStringValue(GlossaryUri.AbsoluteUri);
-            writer.WritePropertyName("format");
+            writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
             if (Optional.IsDefined(FormatVersion))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(FormatVersion);
             }
             if (Optional.IsDefined(StorageSource))
             {
-                writer.WritePropertyName("storageSource");
+                writer.WritePropertyName("storageSource"u8);
                 writer.WriteStringValue(StorageSource);
             }
             writer.WriteEndObject();

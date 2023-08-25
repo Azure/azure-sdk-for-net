@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.AnomalyDetector
 {
-    public enum ModelStatus
+    public readonly partial struct ModelStatus : IEquatable<ModelStatus>
     {
-        /// <summary> CREATED. </summary>
-        Created,
-        /// <summary> RUNNING. </summary>
-        Running,
-        /// <summary> READY. </summary>
-        Ready,
-        /// <summary> FAILED. </summary>
-        Failed
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ModelStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ModelStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string CreatedValue = "CREATED";
+        private const string RunningValue = "RUNNING";
+        private const string ReadyValue = "READY";
+        private const string FailedValue = "FAILED";
+
+        /// <summary> The model has been created. Training has been scheduled but not yet started. </summary>
+        public static ModelStatus Created { get; } = new ModelStatus(CreatedValue);
+        /// <summary> The model is being trained. </summary>
+        public static ModelStatus Running { get; } = new ModelStatus(RunningValue);
+        /// <summary> The model has been trained and is ready to be used for anomaly detection. </summary>
+        public static ModelStatus Ready { get; } = new ModelStatus(ReadyValue);
+        /// <summary> The model training failed. </summary>
+        public static ModelStatus Failed { get; } = new ModelStatus(FailedValue);
+        /// <summary> Determines if two <see cref="ModelStatus"/> values are the same. </summary>
+        public static bool operator ==(ModelStatus left, ModelStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ModelStatus"/> values are not the same. </summary>
+        public static bool operator !=(ModelStatus left, ModelStatus right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ModelStatus"/>. </summary>
+        public static implicit operator ModelStatus(string value) => new ModelStatus(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ModelStatus other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ModelStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

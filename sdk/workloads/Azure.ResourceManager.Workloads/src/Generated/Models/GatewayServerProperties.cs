@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of GatewayServerProperties. </summary>
-        /// <param name="port"> The gateway Port. </param>
-        /// <param name="health"> Defines the SAP Instance health. </param>
+        /// <param name="port"> Gateway Port. </param>
+        /// <param name="health"> Defines the health of SAP Instances. </param>
         internal GatewayServerProperties(long? port, SapHealthState? health)
         {
             Port = port;
             Health = health;
         }
 
-        /// <summary> The gateway Port. </summary>
+        /// <summary> Gateway Port. </summary>
         public long? Port { get; }
-        /// <summary> Defines the SAP Instance health. </summary>
+        /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
     }
 }

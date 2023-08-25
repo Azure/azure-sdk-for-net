@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the DataBoxEdgeUser data model. </summary>
+    /// <summary>
+    /// A class representing the DataBoxEdgeUser data model.
+    /// Represents a user who has access to one or more shares on the Data Box Edge/Gateway device.
+    /// </summary>
     public partial class DataBoxEdgeUserData : ResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeUserData. </summary>

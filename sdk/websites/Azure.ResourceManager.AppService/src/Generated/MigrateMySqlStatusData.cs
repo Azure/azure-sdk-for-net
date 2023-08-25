@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the MigrateMySqlStatus data model. </summary>
+    /// <summary>
+    /// A class representing the MigrateMySqlStatus data model.
+    /// MySQL migration status.
+    /// </summary>
     public partial class MigrateMySqlStatusData : ResourceData
     {
         /// <summary> Initializes a new instance of MigrateMySqlStatusData. </summary>

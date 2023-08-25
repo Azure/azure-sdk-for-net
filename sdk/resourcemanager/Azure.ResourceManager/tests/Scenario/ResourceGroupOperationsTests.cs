@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    [ClientTestFixture(true, "2021-04-01", "2019-10-01")]
+    [ClientTestFixture(true, "2022-09-01", "2019-10-01")]
     public class ResourceGroupOperationsTests : ResourceManagerTestBase
     {
         public ResourceGroupOperationsTests(bool isAsync, string apiVersion)

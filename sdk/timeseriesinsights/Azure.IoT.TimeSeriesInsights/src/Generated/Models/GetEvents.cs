@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         /// <summary> The range of time on which the query is executed. Cannot be null. </summary>
         public DateTimeRange SearchSpan { get; }
-        /// <summary> Optional top-level filter for the query which will be applied to all the variables in the query. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;.  Can be null. </summary>
+        /// <summary> Optional top-level filter for the query which will be applied to all the variables in the query. Example: "$event.Status.String='Good'".  Can be null. </summary>
         public TimeSeriesExpression Filter { get; set; }
         /// <summary> Projected properties is an array of properties which you want to project. These properties must appear in the events; otherwise, they are not returned. </summary>
         public IList<TimeSeriesInsightsEventProperty> ProjectedProperties { get; }

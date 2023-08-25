@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string CreateValue = "Create";
         private const string ReplaceValue = "Replace";
         private const string DeleteValue = "Delete";
+        private const string RecreateValue = "Recreate";
         private const string SystemOperationValue = "SystemOperation";
 
         /// <summary> Create. </summary>
@@ -33,6 +34,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBOperationType Replace { get; } = new CosmosDBOperationType(ReplaceValue);
         /// <summary> Delete. </summary>
         public static CosmosDBOperationType Delete { get; } = new CosmosDBOperationType(DeleteValue);
+        /// <summary> Recreate. </summary>
+        public static CosmosDBOperationType Recreate { get; } = new CosmosDBOperationType(RecreateValue);
         /// <summary> SystemOperation. </summary>
         public static CosmosDBOperationType SystemOperation { get; } = new CosmosDBOperationType(SystemOperationValue);
         /// <summary> Determines if two <see cref="CosmosDBOperationType"/> values are the same. </summary>

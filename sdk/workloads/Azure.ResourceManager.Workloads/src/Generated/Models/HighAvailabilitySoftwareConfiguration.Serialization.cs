@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("fencingClientId");
+            writer.WritePropertyName("fencingClientId"u8);
             writer.WriteStringValue(FencingClientId);
-            writer.WritePropertyName("fencingClientPassword");
+            writer.WritePropertyName("fencingClientPassword"u8);
             writer.WriteStringValue(FencingClientPassword);
             writer.WriteEndObject();
         }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VMwareV2FabricSpecificDetails. </summary>
         internal VMwareV2FabricSpecificDetails()
         {
-            ProcessServers = new ChangeTrackingList<ProcessServerDetails>();
+            ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServerDetails>();
             InstanceType = "VMwareV2";
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="serviceResourceId"> The service resource Id. </param>
         /// <param name="serviceContainerId"> The service container Id. </param>
         /// <param name="processServers"> The list of process servers. </param>
-        internal VMwareV2FabricSpecificDetails(string instanceType, string vmwareSiteId, string physicalSiteId, string migrationSolutionId, string serviceEndpoint, string serviceResourceId, string serviceContainerId, IReadOnlyList<ProcessServerDetails> processServers) : base(instanceType)
+        internal VMwareV2FabricSpecificDetails(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, ResourceIdentifier migrationSolutionId, string serviceEndpoint, ResourceIdentifier serviceResourceId, string serviceContainerId, IReadOnlyList<SiteRecoveryProcessServerDetails> processServers) : base(instanceType)
         {
             VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;
@@ -42,18 +42,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The ARM Id of the VMware site. </summary>
-        public string VMwareSiteId { get; }
+        public ResourceIdentifier VMwareSiteId { get; }
         /// <summary> The ARM Id of the physical site. </summary>
-        public string PhysicalSiteId { get; }
+        public ResourceIdentifier PhysicalSiteId { get; }
         /// <summary> The Migration solution ARM Id. </summary>
-        public string MigrationSolutionId { get; }
+        public ResourceIdentifier MigrationSolutionId { get; }
         /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
         /// <summary> The service resource Id. </summary>
-        public string ServiceResourceId { get; }
+        public ResourceIdentifier ServiceResourceId { get; }
         /// <summary> The service container Id. </summary>
         public string ServiceContainerId { get; }
         /// <summary> The list of process servers. </summary>
-        public IReadOnlyList<ProcessServerDetails> ProcessServers { get; }
+        public IReadOnlyList<SiteRecoveryProcessServerDetails> ProcessServers { get; }
     }
 }

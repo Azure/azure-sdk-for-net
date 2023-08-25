@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         public static CognitiveServicesSkuRestrictionsType ToCognitiveServicesSkuRestrictionsType(this string value)
         {
-            if (string.Equals(value, "Location", StringComparison.InvariantCultureIgnoreCase)) return CognitiveServicesSkuRestrictionsType.Location;
-            if (string.Equals(value, "Zone", StringComparison.InvariantCultureIgnoreCase)) return CognitiveServicesSkuRestrictionsType.Zone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Location")) return CognitiveServicesSkuRestrictionsType.Location;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zone")) return CognitiveServicesSkuRestrictionsType.Zone;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CognitiveServicesSkuRestrictionsType value.");
         }
     }

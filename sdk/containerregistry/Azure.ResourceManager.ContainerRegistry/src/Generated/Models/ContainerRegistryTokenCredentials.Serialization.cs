@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Certificates))
             {
-                writer.WritePropertyName("certificates");
+                writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsCollectionDefined(Passwords))
             {
-                writer.WritePropertyName("passwords");
+                writer.WritePropertyName("passwords"u8);
                 writer.WriteStartArray();
                 foreach (var item in Passwords)
                 {
@@ -41,15 +41,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTokenCredentials DeserializeContainerRegistryTokenCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ContainerRegistryTokenCertificate>> certificates = default;
             Optional<IList<ContainerRegistryTokenPassword>> passwords = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificates"))
+                if (property.NameEquals("certificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerRegistryTokenCertificate> array = new List<ContainerRegistryTokenCertificate>();
@@ -60,11 +63,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     certificates = array;
                     continue;
                 }
-                if (property.NameEquals("passwords"))
+                if (property.NameEquals("passwords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerRegistryTokenPassword> array = new List<ContainerRegistryTokenPassword>();

@@ -14,10 +14,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceTwinMetadata DeserializeDeviceTwinMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> lastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdated"))
+                if (property.NameEquals("lastUpdated"u8))
                 {
                     lastUpdated = property.Value.GetString();
                     continue;

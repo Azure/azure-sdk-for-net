@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static FrequencyType ToFrequencyType(this string value)
         {
-            if (string.Equals(value, "Minute", StringComparison.InvariantCultureIgnoreCase)) return FrequencyType.Minute;
-            if (string.Equals(value, "Hour", StringComparison.InvariantCultureIgnoreCase)) return FrequencyType.Hour;
-            if (string.Equals(value, "Day", StringComparison.InvariantCultureIgnoreCase)) return FrequencyType.Day;
-            if (string.Equals(value, "Week", StringComparison.InvariantCultureIgnoreCase)) return FrequencyType.Week;
-            if (string.Equals(value, "Month", StringComparison.InvariantCultureIgnoreCase)) return FrequencyType.Month;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Minute")) return FrequencyType.Minute;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hour")) return FrequencyType.Hour;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Day")) return FrequencyType.Day;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Week")) return FrequencyType.Week;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Month")) return FrequencyType.Month;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrequencyType value.");
         }
     }

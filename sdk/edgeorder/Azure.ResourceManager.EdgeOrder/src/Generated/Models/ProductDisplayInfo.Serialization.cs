@@ -20,16 +20,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ProductDisplayInfo DeserializeProductDisplayInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> productFamilyDisplayName = default;
             Optional<string> configurationDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("productFamilyDisplayName"))
+                if (property.NameEquals("productFamilyDisplayName"u8))
                 {
                     productFamilyDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configurationDisplayName"))
+                if (property.NameEquals("configurationDisplayName"u8))
                 {
                     configurationDisplayName = property.Value.GetString();
                     continue;

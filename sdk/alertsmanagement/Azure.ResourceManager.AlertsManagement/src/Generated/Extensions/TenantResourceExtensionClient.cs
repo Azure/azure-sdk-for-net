@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// List alerts meta data information based on value of identifier parameter.
-        /// Request Path: /providers/Microsoft.AlertsManagement/alertsMetaData
-        /// Operation Id: Alerts_MetaData
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AlertsManagement/alertsMetaData</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_MetaData</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -68,8 +76,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// List alerts meta data information based on value of identifier parameter.
-        /// Request Path: /providers/Microsoft.AlertsManagement/alertsMetaData
-        /// Operation Id: Alerts_MetaData
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AlertsManagement/alertsMetaData</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_MetaData</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

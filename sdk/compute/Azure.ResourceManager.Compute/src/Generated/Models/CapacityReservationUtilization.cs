@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of CapacityReservationUtilization. </summary>
-        /// <param name="currentCapacity"> The value provides the current capacity of the VM size which was reserved successfully and for which the customer is getting billed.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-08-01. </param>
+        /// <param name="currentCapacity"> The value provides the current capacity of the VM size which was reserved successfully and for which the customer is getting billed. Minimum api-version: 2022-08-01. </param>
         /// <param name="virtualMachinesAllocated"> A list of all virtual machines resource ids allocated against the capacity reservation. </param>
         internal CapacityReservationUtilization(int? currentCapacity, IReadOnlyList<SubResource> virtualMachinesAllocated)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachinesAllocated = virtualMachinesAllocated;
         }
 
-        /// <summary> The value provides the current capacity of the VM size which was reserved successfully and for which the customer is getting billed.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-08-01. </summary>
+        /// <summary> The value provides the current capacity of the VM size which was reserved successfully and for which the customer is getting billed. Minimum api-version: 2022-08-01. </summary>
         public int? CurrentCapacity { get; }
         /// <summary> A list of all virtual machines resource ids allocated against the capacity reservation. </summary>
         public IReadOnlyList<SubResource> VirtualMachinesAllocated { get; }

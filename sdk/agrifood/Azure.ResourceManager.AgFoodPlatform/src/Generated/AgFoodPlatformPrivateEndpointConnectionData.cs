@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
-    /// <summary> A class representing the AgFoodPlatformPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the AgFoodPlatformPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class AgFoodPlatformPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionData. </summary>

@@ -15,14 +15,17 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteReport DeserializeRouteReport(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EffectiveSetting>> effectiveSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("effectiveSettings"))
+                if (property.NameEquals("effectiveSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EffectiveSetting> array = new List<EffectiveSetting>();

@@ -12,7 +12,10 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    /// <summary> A class representing the PostgreSqlServerAdministrator data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlServerAdministrator data model.
+    /// Represents a and external administrator to be created.
+    /// </summary>
     public partial class PostgreSqlServerAdministratorData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlServerAdministratorData. </summary>

@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static SharedGalleryImageVersionStorageProfile DeserializeSharedGalleryImageVersionStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SharedGalleryOSDiskImage> osDiskImage = default;
             Optional<IReadOnlyList<SharedGalleryDataDiskImage>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osDiskImage"))
+                if (property.NameEquals("osDiskImage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osDiskImage = SharedGalleryOSDiskImage.DeserializeSharedGalleryOSDiskImage(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDiskImages"))
+                if (property.NameEquals("dataDiskImages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SharedGalleryDataDiskImage> array = new List<SharedGalleryDataDiskImage>();

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageAzureV2ProtectedDiskDetails DeserializeInMageAzureV2ProtectedDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskId = default;
             Optional<string> diskName = default;
             Optional<string> protectionStage = default;
@@ -40,191 +44,176 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> secondsToTakeSwitchProvider = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"))
+                if (property.NameEquals("diskId"u8))
                 {
                     diskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskName"))
+                if (property.NameEquals("diskName"u8))
                 {
                     diskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionStage"))
+                if (property.NameEquals("protectionStage"u8))
                 {
                     protectionStage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthErrorCode"))
+                if (property.NameEquals("healthErrorCode"u8))
                 {
                     healthErrorCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rpoInSeconds"))
+                if (property.NameEquals("rpoInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rpoInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncRequired"))
+                if (property.NameEquals("resyncRequired"u8))
                 {
                     resyncRequired = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resyncProgressPercentage"))
+                if (property.NameEquals("resyncProgressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resyncDurationInSeconds"))
+                if (property.NameEquals("resyncDurationInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncDurationInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskCapacityInBytes"))
+                if (property.NameEquals("diskCapacityInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskCapacityInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("fileSystemCapacityInBytes"))
+                if (property.NameEquals("fileSystemCapacityInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileSystemCapacityInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("sourceDataInMegaBytes"))
+                if (property.NameEquals("sourceDataInMegaBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceDataInMegaBytes = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("psDataInMegaBytes"))
+                if (property.NameEquals("psDataInMegaBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     psDataInMegaBytes = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("targetDataInMegaBytes"))
+                if (property.NameEquals("targetDataInMegaBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetDataInMegaBytes = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("diskResized"))
+                if (property.NameEquals("diskResized"u8))
                 {
                     diskResized = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastRpoCalculatedTime"))
+                if (property.NameEquals("lastRpoCalculatedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastRpoCalculatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resyncProcessedBytes"))
+                if (property.NameEquals("resyncProcessedBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncProcessedBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncTotalTransferredBytes"))
+                if (property.NameEquals("resyncTotalTransferredBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncTotalTransferredBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncLast15MinutesTransferredBytes"))
+                if (property.NameEquals("resyncLast15MinutesTransferredBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncLast15MinutesTransferredBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncLastDataTransferTimeUTC"))
+                if (property.NameEquals("resyncLastDataTransferTimeUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncLastDataTransferTimeUTC = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resyncStartTime"))
+                if (property.NameEquals("resyncStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("progressHealth"))
+                if (property.NameEquals("progressHealth"u8))
                 {
                     progressHealth = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progressStatus"))
+                if (property.NameEquals("progressStatus"u8))
                 {
                     progressStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondsToTakeSwitchProvider"))
+                if (property.NameEquals("secondsToTakeSwitchProvider"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secondsToTakeSwitchProvider = property.Value.GetInt64();

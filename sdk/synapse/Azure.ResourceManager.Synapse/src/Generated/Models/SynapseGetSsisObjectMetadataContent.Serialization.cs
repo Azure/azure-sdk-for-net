@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MetadataPath))
             {
-                writer.WritePropertyName("metadataPath");
+                writer.WritePropertyName("metadataPath"u8);
                 writer.WriteStringValue(MetadataPath);
             }
             writer.WriteEndObject();

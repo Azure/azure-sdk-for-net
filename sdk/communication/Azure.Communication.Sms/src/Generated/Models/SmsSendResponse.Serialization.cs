@@ -16,10 +16,14 @@ namespace Azure.Communication.Sms.Models
     {
         internal static SmsSendResponse DeserializeSmsSendResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SmsSendResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SmsSendResult> array = new List<SmsSendResult>();
                     foreach (var item in property.Value.EnumerateArray())

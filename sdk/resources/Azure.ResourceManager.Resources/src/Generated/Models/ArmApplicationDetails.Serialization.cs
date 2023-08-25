@@ -15,31 +15,33 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmApplicationDetails DeserializeArmApplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> oid = default;
             Optional<string> puid = default;
             Optional<Guid> applicationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("oid"))
+                if (property.NameEquals("oid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     oid = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("puid"))
+                if (property.NameEquals("puid"u8))
                 {
                     puid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationId"))
+                if (property.NameEquals("applicationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applicationId = property.Value.GetGuid();

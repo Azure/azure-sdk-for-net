@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(IsDurable))
             {
-                writer.WritePropertyName("isDurable");
+                writer.WritePropertyName("isDurable"u8);
                 writer.WriteBooleanValue(IsDurable.Value);
             }
             if (Optional.IsDefined(IsShared))
             {
-                writer.WritePropertyName("isShared");
+                writer.WritePropertyName("isShared"u8);
                 writer.WriteBooleanValue(IsShared.Value);
             }
             writer.WriteEndObject();
@@ -35,31 +35,33 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusClientAffineProperties DeserializeServiceBusClientAffineProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<bool> isDurable = default;
             Optional<bool> isShared = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDurable"))
+                if (property.NameEquals("isDurable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDurable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isShared"))
+                if (property.NameEquals("isShared"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isShared = property.Value.GetBoolean();

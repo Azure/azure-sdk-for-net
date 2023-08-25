@@ -25,13 +25,13 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
 
         public static State ToState(this string value)
         {
-            if (string.Equals(value, "notStarted", StringComparison.InvariantCultureIgnoreCase)) return State.NotStarted;
-            if (string.Equals(value, "running", StringComparison.InvariantCultureIgnoreCase)) return State.Running;
-            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return State.Succeeded;
-            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return State.Failed;
-            if (string.Equals(value, "rejected", StringComparison.InvariantCultureIgnoreCase)) return State.Rejected;
-            if (string.Equals(value, "cancelled", StringComparison.InvariantCultureIgnoreCase)) return State.Cancelled;
-            if (string.Equals(value, "cancelling", StringComparison.InvariantCultureIgnoreCase)) return State.Cancelling;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "notStarted")) return State.NotStarted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return State.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded")) return State.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return State.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rejected")) return State.Rejected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled")) return State.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelling")) return State.Cancelling;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown State value.");
         }
     }

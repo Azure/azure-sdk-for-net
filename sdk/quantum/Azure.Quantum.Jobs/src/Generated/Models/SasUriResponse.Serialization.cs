@@ -14,10 +14,14 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static SasUriResponse DeserializeSasUriResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sasUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasUri"))
+                if (property.NameEquals("sasUri"u8))
                 {
                     sasUri = property.Value.GetString();
                     continue;

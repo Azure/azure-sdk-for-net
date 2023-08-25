@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
-                writer.WritePropertyName("ipConfigurations");
+                writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (EnableAcceleratedNetworking != null)
                 {
-                    writer.WritePropertyName("enableAcceleratedNetworking");
+                    writer.WritePropertyName("enableAcceleratedNetworking"u8);
                     writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
                 }
                 else
@@ -49,15 +49,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("enableAcceleratedNetworking");
                 }
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
+            writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
             writer.WriteEndObject();
         }
 
         internal static NetworkInterfaceResourceSettings DeserializeNetworkInterfaceResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<NicIPConfigurationResourceSettings>> ipConfigurations = default;
             Optional<bool?> enableAcceleratedNetworking = default;
@@ -65,11 +69,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -80,11 +83,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("ipConfigurations"))
+                if (property.NameEquals("ipConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NicIPConfigurationResourceSettings> array = new List<NicIPConfigurationResourceSettings>();
@@ -95,7 +97,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     ipConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("enableAcceleratedNetworking"))
+                if (property.NameEquals("enableAcceleratedNetworking"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,12 +107,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     enableAcceleratedNetworking = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;

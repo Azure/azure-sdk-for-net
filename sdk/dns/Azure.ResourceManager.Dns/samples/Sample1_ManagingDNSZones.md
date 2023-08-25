@@ -65,7 +65,7 @@ ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().Get
 // Now we get the DnsZone collection from the resource group
 DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
 // With ListAsync(), we can get a list of the DnsZones
-AsyncPageable<DnsZoneResource>  response = dnsZoneCollection.GetAllAsync();
+AsyncPageable<DnsZoneResource> response = dnsZoneCollection.GetAllAsync();
 await foreach (DnsZoneResource dnsZone in response)
 {
     Console.WriteLine(dnsZone.Data.Name);
@@ -83,6 +83,6 @@ ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().Get
 // Now we get the DnsZone collection from the resource group
 DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
 string dnsZoneName = "sample.com";
-DnsZoneResource dnsZone =await dnsZoneCollection.GetAsync(dnsZoneName);
+DnsZoneResource dnsZone = await dnsZoneCollection.GetAsync(dnsZoneName);
 await dnsZone.DeleteAsync(WaitUntil.Completed);
 ```

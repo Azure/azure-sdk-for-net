@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Avs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterSize))
             {
-                writer.WritePropertyName("clusterSize");
+                writer.WritePropertyName("clusterSize"u8);
                 writer.WriteNumberValue(ClusterSize.Value);
             }
             if (Optional.IsCollectionDefined(Hosts))
             {
-                writer.WritePropertyName("hosts");
+                writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
                 foreach (var item in Hosts)
                 {

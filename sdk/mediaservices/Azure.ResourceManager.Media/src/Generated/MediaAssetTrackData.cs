@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaAssetTrack data model. </summary>
+    /// <summary>
+    /// A class representing the MediaAssetTrack data model.
+    /// An Asset Track resource.
+    /// </summary>
     public partial class MediaAssetTrackData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaAssetTrackData. </summary>

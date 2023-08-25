@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static CompletionOperationType ToCompletionOperationType(this string value)
         {
-            if (string.Equals(value, "DoNothing", StringComparison.InvariantCultureIgnoreCase)) return CompletionOperationType.DoNothing;
-            if (string.Equals(value, "DeleteFile", StringComparison.InvariantCultureIgnoreCase)) return CompletionOperationType.DeleteFile;
-            if (string.Equals(value, "MoveFile", StringComparison.InvariantCultureIgnoreCase)) return CompletionOperationType.MoveFile;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DoNothing")) return CompletionOperationType.DoNothing;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeleteFile")) return CompletionOperationType.DeleteFile;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MoveFile")) return CompletionOperationType.MoveFile;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CompletionOperationType value.");
         }
     }

@@ -16,6 +16,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberSearchResult DeserializePhoneNumberSearchResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string searchId = default;
             IReadOnlyList<string> phoneNumbers = default;
             PhoneNumberType phoneNumberType = default;
@@ -23,14 +27,16 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberCapabilities capabilities = default;
             PhoneNumberCost cost = default;
             DateTimeOffset searchExpiresBy = default;
+            Optional<int> errorCode = default;
+            Optional<PhoneNumberSearchResultError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("searchId"))
+                if (property.NameEquals("searchId"u8))
                 {
                     searchId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneNumbers"))
+                if (property.NameEquals("phoneNumbers"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -40,33 +46,51 @@ namespace Azure.Communication.PhoneNumbers
                     phoneNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("phoneNumberType"))
+                if (property.NameEquals("phoneNumberType"u8))
                 {
                     phoneNumberType = new PhoneNumberType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("assignmentType"))
+                if (property.NameEquals("assignmentType"u8))
                 {
                     assignmentType = new PhoneNumberAssignmentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
                     continue;
                 }
-                if (property.NameEquals("cost"))
+                if (property.NameEquals("cost"u8))
                 {
                     cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;
                 }
-                if (property.NameEquals("searchExpiresBy"))
+                if (property.NameEquals("searchExpiresBy"u8))
                 {
                     searchExpiresBy = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("errorCode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    errorCode = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = new PhoneNumberSearchResultError(property.Value.GetString());
+                    continue;
+                }
             }
-            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresBy);
+            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresBy, Optional.ToNullable(errorCode), Optional.ToNullable(error));
         }
     }
 }

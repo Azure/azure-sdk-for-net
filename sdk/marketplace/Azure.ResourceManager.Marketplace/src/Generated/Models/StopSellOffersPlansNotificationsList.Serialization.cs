@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static StopSellOffersPlansNotificationsList DeserializeStopSellOffersPlansNotificationsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StopSellOffersPlansNotificationsResult>> stopSellNotifications = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stopSellNotifications"))
+                if (property.NameEquals("stopSellNotifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StopSellOffersPlansNotificationsResult> array = new List<StopSellOffersPlansNotificationsResult>();

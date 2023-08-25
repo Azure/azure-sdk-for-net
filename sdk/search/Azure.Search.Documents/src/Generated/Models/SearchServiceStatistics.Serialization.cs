@@ -14,16 +14,20 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceStatistics DeserializeSearchServiceStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SearchServiceCounters counters = default;
             SearchServiceLimits limits = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("counters"))
+                if (property.NameEquals("counters"u8))
                 {
                     counters = SearchServiceCounters.DeserializeSearchServiceCounters(property.Value);
                     continue;
                 }
-                if (property.NameEquals("limits"))
+                if (property.NameEquals("limits"u8))
                 {
                     limits = SearchServiceLimits.DeserializeSearchServiceLimits(property.Value);
                     continue;

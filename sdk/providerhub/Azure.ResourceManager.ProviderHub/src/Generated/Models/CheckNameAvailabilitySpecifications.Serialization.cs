@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableDefaultValidation))
+            if (Optional.IsDefined(IsDefaultValidationEnabled))
             {
-                writer.WritePropertyName("enableDefaultValidation");
-                writer.WriteBooleanValue(EnableDefaultValidation.Value);
+                writer.WritePropertyName("enableDefaultValidation"u8);
+                writer.WriteBooleanValue(IsDefaultValidationEnabled.Value);
             }
             if (Optional.IsCollectionDefined(ResourceTypesWithCustomValidation))
             {
-                writer.WritePropertyName("resourceTypesWithCustomValidation");
+                writer.WritePropertyName("resourceTypesWithCustomValidation"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypesWithCustomValidation)
                 {
@@ -36,25 +36,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CheckNameAvailabilitySpecifications DeserializeCheckNameAvailabilitySpecifications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableDefaultValidation = default;
             Optional<IList<string>> resourceTypesWithCustomValidation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableDefaultValidation"))
+                if (property.NameEquals("enableDefaultValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableDefaultValidation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resourceTypesWithCustomValidation"))
+                if (property.NameEquals("resourceTypesWithCustomValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

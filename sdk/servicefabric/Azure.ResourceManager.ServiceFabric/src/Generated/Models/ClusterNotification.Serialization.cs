@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("notificationCategory");
+            writer.WritePropertyName("notificationCategory"u8);
             writer.WriteStringValue(NotificationCategory.ToString());
-            writer.WritePropertyName("notificationLevel");
+            writer.WritePropertyName("notificationLevel"u8);
             writer.WriteStringValue(NotificationLevel.ToString());
-            writer.WritePropertyName("notificationTargets");
+            writer.WritePropertyName("notificationTargets"u8);
             writer.WriteStartArray();
             foreach (var item in NotificationTargets)
             {
@@ -34,28 +34,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterNotification DeserializeClusterNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isEnabled = default;
             ClusterNotificationCategory notificationCategory = default;
             ClusterNotificationLevel notificationLevel = default;
             IList<ClusterNotificationTarget> notificationTargets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("notificationCategory"))
+                if (property.NameEquals("notificationCategory"u8))
                 {
                     notificationCategory = new ClusterNotificationCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("notificationLevel"))
+                if (property.NameEquals("notificationLevel"u8))
                 {
                     notificationLevel = new ClusterNotificationLevel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("notificationTargets"))
+                if (property.NameEquals("notificationTargets"u8))
                 {
                     List<ClusterNotificationTarget> array = new List<ClusterNotificationTarget>();
                     foreach (var item in property.Value.EnumerateArray())

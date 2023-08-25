@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static AddressValidationStatus ToAddressValidationStatus(this string value)
         {
-            if (string.Equals(value, "Valid", StringComparison.InvariantCultureIgnoreCase)) return AddressValidationStatus.Valid;
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return AddressValidationStatus.Invalid;
-            if (string.Equals(value, "Ambiguous", StringComparison.InvariantCultureIgnoreCase)) return AddressValidationStatus.Ambiguous;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid")) return AddressValidationStatus.Valid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return AddressValidationStatus.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ambiguous")) return AddressValidationStatus.Ambiguous;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AddressValidationStatus value.");
         }
     }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppVolumeQuotaRule data model. </summary>
+    /// <summary>
+    /// A class representing the NetAppVolumeQuotaRule data model.
+    /// Quota Rule of a Volume
+    /// </summary>
     public partial class NetAppVolumeQuotaRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NetAppVolumeQuotaRuleData. </summary>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="provisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
         /// <param name="quotaSizeInKiBs"> Size of quota. </param>
         /// <param name="quotaType"> Type of quota. </param>
-        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name=&apos;user-name&apos; get sid&gt;. </param>
+        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         internal NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.NetApp
         public long? QuotaSizeInKiBs { get; set; }
         /// <summary> Type of quota. </summary>
         public NetAppVolumeQuotaType? QuotaType { get; set; }
-        /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name=&apos;user-name&apos; get sid&gt;. </summary>
+        /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
         public string QuotaTarget { get; set; }
     }
 }

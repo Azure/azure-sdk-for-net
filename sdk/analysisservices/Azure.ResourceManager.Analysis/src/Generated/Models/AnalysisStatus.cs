@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Analysis.Models
 
         /// <summary> 0. </summary>
         public static AnalysisStatus Zero { get; } = new AnalysisStatus(ZeroValue);
+
+        internal int ToSerialInt32() => _value;
+
         /// <summary> Determines if two <see cref="AnalysisStatus"/> values are the same. </summary>
         public static bool operator ==(AnalysisStatus left, AnalysisStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalysisStatus"/> values are not the same. </summary>

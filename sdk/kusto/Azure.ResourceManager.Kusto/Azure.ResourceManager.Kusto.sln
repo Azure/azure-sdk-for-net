@@ -7,6 +7,8 @@ Project("{B0E4C45D-26BD-4AA6-8EAD-049628768752}") = "Azure.ResourceManager.Kusto
 EndProject
 Project("{B0E4C45D-26BD-4AA6-8EAD-049628768752}") = "Azure.ResourceManager.Kusto.Tests", "tests\Azure.ResourceManager.Kusto.Tests.csproj", "{B74A7ED3-325A-49C1-8878-439AA6CE0A98}"
 EndProject
+Project("{B0E4C45D-26BD-4AA6-8EAD-049628768752}") = "Azure.ResourceManager.Kusto.Samples", "samples\Azure.ResourceManager.Kusto.Samples.csproj", "{450DC451-3EA0-4E51-B438-60AA05ECC630}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

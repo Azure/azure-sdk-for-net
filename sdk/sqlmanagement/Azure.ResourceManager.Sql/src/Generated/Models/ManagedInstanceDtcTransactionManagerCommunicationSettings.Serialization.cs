@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowInboundEnabled))
             {
-                writer.WritePropertyName("allowInboundEnabled");
+                writer.WritePropertyName("allowInboundEnabled"u8);
                 writer.WriteBooleanValue(AllowInboundEnabled.Value);
             }
             if (Optional.IsDefined(AllowOutboundEnabled))
             {
-                writer.WritePropertyName("allowOutboundEnabled");
+                writer.WritePropertyName("allowOutboundEnabled"u8);
                 writer.WriteBooleanValue(AllowOutboundEnabled.Value);
             }
             if (Optional.IsDefined(Authentication))
             {
-                writer.WritePropertyName("authentication");
+                writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication);
             }
             writer.WriteEndObject();
@@ -35,32 +35,34 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstanceDtcTransactionManagerCommunicationSettings DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> allowInboundEnabled = default;
             Optional<bool> allowOutboundEnabled = default;
             Optional<string> authentication = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowInboundEnabled"))
+                if (property.NameEquals("allowInboundEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowInboundEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allowOutboundEnabled"))
+                if (property.NameEquals("allowOutboundEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowOutboundEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("authentication"))
+                if (property.NameEquals("authentication"u8))
                 {
                     authentication = property.Value.GetString();
                     continue;

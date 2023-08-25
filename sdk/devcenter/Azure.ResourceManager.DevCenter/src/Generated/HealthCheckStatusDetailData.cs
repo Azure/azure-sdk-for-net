@@ -13,13 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the HealthCheckStatusDetail data model. </summary>
+    /// <summary>
+    /// A class representing the HealthCheckStatusDetail data model.
+    /// Health Check details.
+    /// </summary>
     public partial class HealthCheckStatusDetailData : ResourceData
     {
         /// <summary> Initializes a new instance of HealthCheckStatusDetailData. </summary>
         public HealthCheckStatusDetailData()
         {
-            HealthChecks = new ChangeTrackingList<HealthCheck>();
+            HealthChecks = new ChangeTrackingList<DevCenterHealthCheck>();
         }
 
         /// <summary> Initializes a new instance of HealthCheckStatusDetailData. </summary>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="startOn"> Start time of last execution of the health checks. </param>
         /// <param name="endOn"> End time of last execution of the health checks. </param>
         /// <param name="healthChecks"> Details for each health check item. </param>
-        internal HealthCheckStatusDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<HealthCheck> healthChecks) : base(id, name, resourceType, systemData)
+        internal HealthCheckStatusDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<DevCenterHealthCheck> healthChecks) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -42,6 +45,6 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> End time of last execution of the health checks. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> Details for each health check item. </summary>
-        public IReadOnlyList<HealthCheck> HealthChecks { get; }
+        public IReadOnlyList<DevCenterHealthCheck> HealthChecks { get; }
     }
 }

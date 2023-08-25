@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterBootstrapAccountPassword))
             {
-                writer.WritePropertyName("clusterBootstrapAccountPassword");
+                writer.WritePropertyName("clusterBootstrapAccountPassword"u8);
                 writer.WriteStringValue(ClusterBootstrapAccountPassword);
             }
             if (Optional.IsDefined(ClusterOperatorAccountPassword))
             {
-                writer.WritePropertyName("clusterOperatorAccountPassword");
+                writer.WritePropertyName("clusterOperatorAccountPassword"u8);
                 writer.WriteStringValue(ClusterOperatorAccountPassword);
             }
             if (Optional.IsDefined(SqlServiceAccountPassword))
             {
-                writer.WritePropertyName("sqlServiceAccountPassword");
+                writer.WritePropertyName("sqlServiceAccountPassword"u8);
                 writer.WriteStringValue(SqlServiceAccountPassword);
             }
             writer.WriteEndObject();
@@ -35,22 +35,26 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static WindowsServerFailoverClusterDomainCredentials DeserializeWindowsServerFailoverClusterDomainCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clusterBootstrapAccountPassword = default;
             Optional<string> clusterOperatorAccountPassword = default;
             Optional<string> sqlServiceAccountPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterBootstrapAccountPassword"))
+                if (property.NameEquals("clusterBootstrapAccountPassword"u8))
                 {
                     clusterBootstrapAccountPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterOperatorAccountPassword"))
+                if (property.NameEquals("clusterOperatorAccountPassword"u8))
                 {
                     clusterOperatorAccountPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sqlServiceAccountPassword"))
+                if (property.NameEquals("sqlServiceAccountPassword"u8))
                 {
                     sqlServiceAccountPassword = property.Value.GetString();
                     continue;

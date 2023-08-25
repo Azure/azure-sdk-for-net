@@ -7,6 +7,8 @@ Project("{63D9E588-43E6-4E38-BA35-977A697F5486}") = "Azure.ResourceManager.Orbit
 EndProject
 Project("{63D9E588-43E6-4E38-BA35-977A697F5486}") = "Azure.ResourceManager.Orbital.Tests", "tests\Azure.ResourceManager.Orbital.Tests.csproj", "{61CDECA4-8737-47F0-AD51-1E44C5B3D2DA}"
 EndProject
+Project("{63D9E588-43E6-4E38-BA35-977A697F5486}") = "Azure.ResourceManager.Orbital.Samples", "samples\Azure.ResourceManager.Orbital.Samples.csproj", "{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

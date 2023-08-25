@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.PostgreSql
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,73 +40,73 @@ namespace Azure.ResourceManager.PostgreSql
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorLogin))
             {
-                writer.WritePropertyName("administratorLogin");
+                writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
             if (Optional.IsDefined(SslEnforcement))
             {
-                writer.WritePropertyName("sslEnforcement");
+                writer.WritePropertyName("sslEnforcement"u8);
                 writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
             }
             if (Optional.IsDefined(MinimalTlsVersion))
             {
-                writer.WritePropertyName("minimalTlsVersion");
+                writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
             if (Optional.IsDefined(InfrastructureEncryption))
             {
-                writer.WritePropertyName("infrastructureEncryption");
+                writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
             }
             if (Optional.IsDefined(UserVisibleState))
             {
-                writer.WritePropertyName("userVisibleState");
+                writer.WritePropertyName("userVisibleState"u8);
                 writer.WriteStringValue(UserVisibleState.Value.ToString());
             }
             if (Optional.IsDefined(FullyQualifiedDomainName))
             {
-                writer.WritePropertyName("fullyQualifiedDomainName");
+                writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
             if (Optional.IsDefined(EarliestRestoreOn))
             {
-                writer.WritePropertyName("earliestRestoreDate");
+                writer.WritePropertyName("earliestRestoreDate"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
             }
             if (Optional.IsDefined(StorageProfile))
             {
-                writer.WritePropertyName("storageProfile");
+                writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
             if (Optional.IsDefined(ReplicationRole))
             {
-                writer.WritePropertyName("replicationRole");
+                writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole);
             }
             if (Optional.IsDefined(MasterServerId))
             {
-                writer.WritePropertyName("masterServerId");
+                writer.WritePropertyName("masterServerId"u8);
                 writer.WriteStringValue(MasterServerId);
             }
             if (Optional.IsDefined(ReplicaCapacity))
             {
-                writer.WritePropertyName("replicaCapacity");
+                writer.WritePropertyName("replicaCapacity"u8);
                 writer.WriteNumberValue(ReplicaCapacity.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();

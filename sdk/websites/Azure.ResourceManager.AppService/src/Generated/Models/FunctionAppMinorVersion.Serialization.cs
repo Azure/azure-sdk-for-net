@@ -14,26 +14,29 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static FunctionAppMinorVersion DeserializeFunctionAppMinorVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayText = default;
             Optional<string> value = default;
             Optional<FunctionAppRuntimes> stackSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayText"))
+                if (property.NameEquals("displayText"u8))
                 {
                     displayText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stackSettings"))
+                if (property.NameEquals("stackSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stackSettings = FunctionAppRuntimes.DeserializeFunctionAppRuntimes(property.Value);

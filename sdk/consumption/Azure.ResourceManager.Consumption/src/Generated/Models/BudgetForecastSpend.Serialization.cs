@@ -14,21 +14,24 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static BudgetForecastSpend DeserializeBudgetForecastSpend(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<decimal> amount = default;
             Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("amount"))
+                if (property.NameEquals("amount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     amount = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;

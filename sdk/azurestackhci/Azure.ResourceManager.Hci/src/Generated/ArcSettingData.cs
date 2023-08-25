@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing the ArcSetting data model. </summary>
+    /// <summary>
+    /// A class representing the ArcSetting data model.
+    /// ArcSetting details.
+    /// </summary>
     public partial class ArcSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of ArcSettingData. </summary>

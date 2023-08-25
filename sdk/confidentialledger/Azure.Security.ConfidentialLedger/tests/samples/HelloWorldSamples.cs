@@ -89,22 +89,13 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #endregion
 
             #region Snippet:NoCollectionId
-
-#if SNIPPET
-            Response postResponse = ledgerClient.PostLedgerEntry(
-#else
             postOperation = ledgerClient.PostLedgerEntry(
-#endif
-            waitUntil: WaitUntil.Completed,
+                waitUntil: WaitUntil.Completed,
                 RequestContent.Create(
                     new { contents = "Hello world!" }));
 
             string content = postOperation.GetRawResponse().Content.ToString();
-#if SNIPPET
-            string transactionId = postOperation.Id;
-#else
             transactionId = postOperation.Id;
-#endif
             string collectionId = "subledger:0";
 
             // Try fetching the ledger entry until it is "loaded".
@@ -156,11 +147,8 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 waitUntil: WaitUntil.Completed,
                 RequestContent.Create(new { contents = "Hello world collection 1" }),
                 "my collection");
-#if SNIPPET
-            string transactionId = firstPostOperation.Id;
-#else
+
             transactionId = firstPostOperation.Id;
-#endif
 
             // Wait for the entry to be committed
             status = "Pending";

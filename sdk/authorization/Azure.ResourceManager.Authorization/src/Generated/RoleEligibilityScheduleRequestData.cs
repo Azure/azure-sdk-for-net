@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> A class representing the RoleEligibilityScheduleRequest data model. </summary>
+    /// <summary>
+    /// A class representing the RoleEligibilityScheduleRequest data model.
+    /// Role Eligibility schedule request
+    /// </summary>
     public partial class RoleEligibilityScheduleRequestData : ResourceData
     {
         /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestData. </summary>
@@ -36,8 +39,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="targetRoleEligibilityScheduleInstanceId"> The role eligibility schedule instance id being updated. </param>
         /// <param name="justification"> Justification for the role eligibility. </param>
         /// <param name="ticketInfo"> Ticket Info of the role eligibility. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role eligibility schedule request was created. </param>
         /// <param name="requestorId"> Id of the user who created this request. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
@@ -91,9 +94,9 @@ namespace Azure.ResourceManager.Authorization
         public string Justification { get; set; }
         /// <summary> Ticket Info of the role eligibility. </summary>
         public RoleEligibilityScheduleRequestPropertiesTicketInfo TicketInfo { get; set; }
-        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
+        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
         public string Condition { get; set; }
-        /// <summary> Version of the condition. Currently accepted value is &apos;2.0&apos;. </summary>
+        /// <summary> Version of the condition. Currently accepted value is '2.0'. </summary>
         public string ConditionVersion { get; set; }
         /// <summary> DateTime when role eligibility schedule request was created. </summary>
         public DateTimeOffset? CreatedOn { get; }

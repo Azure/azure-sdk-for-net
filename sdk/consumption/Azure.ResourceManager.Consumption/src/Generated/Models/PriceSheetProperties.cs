@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of PriceSheetProperties. </summary>
         /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
         /// <param name="meterId"> The meter id (GUID). </param>
-        /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it&apos;s specified in $expand. </param>
+        /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>
         /// <param name="unitOfMeasure"> Unit of measure. </param>
         /// <param name="includedQuantity"> Included quality for an offer. </param>
         /// <param name="partNumber"> Part Number. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public ResourceIdentifier BillingPeriodId { get; }
         /// <summary> The meter id (GUID). </summary>
         public Guid? MeterId { get; }
-        /// <summary> The details about the meter. By default this is not populated, unless it&apos;s specified in $expand. </summary>
+        /// <summary> The details about the meter. By default this is not populated, unless it's specified in $expand. </summary>
         public ConsumptionMeterDetails MeterDetails { get; }
         /// <summary> Unit of measure. </summary>
         public string UnitOfMeasure { get; }

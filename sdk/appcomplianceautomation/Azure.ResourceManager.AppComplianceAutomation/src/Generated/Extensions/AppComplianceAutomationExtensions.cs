@@ -18,55 +18,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppComplianceAutomation. </summary>
     public static partial class AppComplianceAutomationExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of ReportResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ReportResources and their operations over a ReportResource. </returns>
-        public static ReportResourceCollection GetReportResources(this TenantResource tenantResource)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(tenantResource).GetReportResources();
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Get the AppComplianceAutomation report and its properties.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}
-        /// Operation Id: Report_Get
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ReportResource>> GetReportResourceAsync(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetReportResources().GetAsync(reportName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the AppComplianceAutomation report and its properties.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}
-        /// Operation Id: Report_Get
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ReportResource> GetReportResource(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetReportResources().Get(reportName, cancellationToken);
-        }
-
         #region ReportResource
         /// <summary>
         /// Gets an object representing a <see cref="ReportResource" /> along with the instance operations that can be performed on it but with no data.
@@ -104,5 +70,61 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of ReportResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ReportResources and their operations over a ReportResource. </returns>
+        public static ReportResourceCollection GetReportResources(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetReportResources();
+        }
+
+        /// <summary>
+        /// Get the AppComplianceAutomation report and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Report_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ReportResource>> GetReportResourceAsync(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetReportResources().GetAsync(reportName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the AppComplianceAutomation report and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Report_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ReportResource> GetReportResource(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetReportResources().Get(reportName, cancellationToken);
+        }
     }
 }

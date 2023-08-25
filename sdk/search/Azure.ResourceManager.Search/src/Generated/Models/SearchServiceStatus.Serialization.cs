@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SearchServiceStatus ToSearchServiceStatus(this string value)
         {
-            if (string.Equals(value, "running", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceStatus.Running;
-            if (string.Equals(value, "provisioning", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceStatus.Provisioning;
-            if (string.Equals(value, "deleting", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceStatus.Deleting;
-            if (string.Equals(value, "degraded", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceStatus.Degraded;
-            if (string.Equals(value, "disabled", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceStatus.Disabled;
-            if (string.Equals(value, "error", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceStatus.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return SearchServiceStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "provisioning")) return SearchServiceStatus.Provisioning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleting")) return SearchServiceStatus.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "degraded")) return SearchServiceStatus.Degraded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "disabled")) return SearchServiceStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "error")) return SearchServiceStatus.Error;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceStatus value.");
         }
     }

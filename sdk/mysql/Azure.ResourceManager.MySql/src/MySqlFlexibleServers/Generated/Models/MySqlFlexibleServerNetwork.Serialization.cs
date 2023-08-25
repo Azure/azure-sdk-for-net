@@ -15,14 +15,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(DelegatedSubnetResourceId))
             {
-                writer.WritePropertyName("delegatedSubnetResourceId");
+                writer.WritePropertyName("delegatedSubnetResourceId"u8);
                 writer.WriteStringValue(DelegatedSubnetResourceId);
             }
             if (Optional.IsDefined(PrivateDnsZoneResourceId))
             {
-                writer.WritePropertyName("privateDnsZoneResourceId");
+                writer.WritePropertyName("privateDnsZoneResourceId"u8);
                 writer.WriteStringValue(PrivateDnsZoneResourceId);
             }
             writer.WriteEndObject();
@@ -30,36 +35,37 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerNetwork DeserializeMySqlFlexibleServerNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MySqlFlexibleServerEnableStatusEnum> publicNetworkAccess = default;
             Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
             Optional<ResourceIdentifier> privateDnsZoneResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicNetworkAccess = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("delegatedSubnetResourceId"))
+                if (property.NameEquals("delegatedSubnetResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delegatedSubnetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateDnsZoneResourceId"))
+                if (property.NameEquals("privateDnsZoneResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateDnsZoneResourceId = new ResourceIdentifier(property.Value.GetString());

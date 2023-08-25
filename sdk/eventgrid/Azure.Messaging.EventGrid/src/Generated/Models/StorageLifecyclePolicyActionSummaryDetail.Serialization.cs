@@ -14,32 +14,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static StorageLifecyclePolicyActionSummaryDetail DeserializeStorageLifecyclePolicyActionSummaryDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> totalObjectsCount = default;
             Optional<long> successCount = default;
             Optional<string> errorList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalObjectsCount"))
+                if (property.NameEquals("totalObjectsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalObjectsCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("successCount"))
+                if (property.NameEquals("successCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     successCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("errorList"))
+                if (property.NameEquals("errorList"u8))
                 {
                     errorList = property.Value.GetString();
                     continue;

@@ -15,7 +15,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class representing the DnsForwardingRule data model. </summary>
+    /// <summary>
+    /// A class representing the DnsForwardingRule data model.
+    /// Describes a forwarding rule within a DNS forwarding ruleset.
+    /// </summary>
     public partial class DnsForwardingRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of DnsForwardingRuleData. </summary>

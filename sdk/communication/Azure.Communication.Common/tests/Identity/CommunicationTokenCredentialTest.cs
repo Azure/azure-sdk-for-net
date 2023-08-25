@@ -61,6 +61,20 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
+        public async Task CommunicationTokenCredential_CreateNotRefreshableWithoutInitialToken()
+        {
+            using var tokenCredential = new CommunicationTokenCredential(
+                new CommunicationTokenRefreshOptions(
+                    refreshProactively: false,
+                    tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
+                {
+                    AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
+                });
+            var accessToken = await tokenCredential.GetTokenAsync();
+            Assert.AreEqual(SampleToken, accessToken.Token);
+        }
+
+        [Test]
         public async Task CommunicationTokenCredential_CreateRefreshableWithInitialToken()
         {
             var initialToken = ExpiredToken;

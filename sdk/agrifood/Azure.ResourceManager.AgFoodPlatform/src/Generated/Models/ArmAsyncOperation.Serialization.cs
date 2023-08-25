@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     {
         internal static ArmAsyncOperation DeserializeArmAsyncOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

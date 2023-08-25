@@ -16,14 +16,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerCommunicationLinkListResult DeserializeServerCommunicationLinkListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SqlServerCommunicationLinkData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SqlServerCommunicationLinkData> array = new List<SqlServerCommunicationLinkData>();

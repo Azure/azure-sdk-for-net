@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         public static PostgreSqlServerSecurityAlertPolicyState ToPostgreSqlServerSecurityAlertPolicyState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return PostgreSqlServerSecurityAlertPolicyState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return PostgreSqlServerSecurityAlertPolicyState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return PostgreSqlServerSecurityAlertPolicyState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return PostgreSqlServerSecurityAlertPolicyState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PostgreSqlServerSecurityAlertPolicyState value.");
         }
     }

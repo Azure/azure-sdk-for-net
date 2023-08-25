@@ -19,34 +19,34 @@ namespace Azure.ResourceManager.FrontDoor
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HostName))
             {
-                writer.WritePropertyName("hostName");
+                writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
             if (Optional.IsDefined(SessionAffinityEnabledState))
             {
-                writer.WritePropertyName("sessionAffinityEnabledState");
+                writer.WritePropertyName("sessionAffinityEnabledState"u8);
                 writer.WriteStringValue(SessionAffinityEnabledState.Value.ToString());
             }
             if (Optional.IsDefined(SessionAffinityTtlInSeconds))
             {
-                writer.WritePropertyName("sessionAffinityTtlSeconds");
+                writer.WritePropertyName("sessionAffinityTtlSeconds"u8);
                 writer.WriteNumberValue(SessionAffinityTtlInSeconds.Value);
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
-                writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
             writer.WriteEndObject();
@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.FrontDoor
 
         internal static FrontendEndpointData DeserializeFrontendEndpointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -68,32 +72,30 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<CustomHttpsConfiguration> customHttpsConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,52 +104,48 @@ namespace Azure.ResourceManager.FrontDoor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("hostName"))
+                        if (property0.NameEquals("hostName"u8))
                         {
                             hostName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sessionAffinityEnabledState"))
+                        if (property0.NameEquals("sessionAffinityEnabledState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sessionAffinityEnabledState = new SessionAffinityEnabledState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sessionAffinityTtlSeconds"))
+                        if (property0.NameEquals("sessionAffinityTtlSeconds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sessionAffinityTtlSeconds = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("webApplicationFirewallPolicyLink"))
+                        if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("resourceState"))
+                        if (property0.NameEquals("resourceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceState = new FrontDoorResourceState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("customHttpsProvisioningState"))
+                        if (property0.NameEquals("customHttpsProvisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -157,7 +155,7 @@ namespace Azure.ResourceManager.FrontDoor
                             customHttpsProvisioningState = new FrontendEndpointCustomHttpsProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("customHttpsProvisioningSubstate"))
+                        if (property0.NameEquals("customHttpsProvisioningSubstate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,7 +165,7 @@ namespace Azure.ResourceManager.FrontDoor
                             customHttpsProvisioningSubstate = new FrontendEndpointCustomHttpsProvisioningSubstate(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("customHttpsConfiguration"))
+                        if (property0.NameEquals("customHttpsConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

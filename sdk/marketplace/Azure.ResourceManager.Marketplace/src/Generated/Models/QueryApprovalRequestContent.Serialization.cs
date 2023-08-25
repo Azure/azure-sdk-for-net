@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Marketplace.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PublisherId))
             {
-                writer.WritePropertyName("publisherId");
+                writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
             if (Optional.IsCollectionDefined(PlanIds))
             {
-                writer.WritePropertyName("planIds");
+                writer.WritePropertyName("planIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in PlanIds)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             writer.WriteEndObject();

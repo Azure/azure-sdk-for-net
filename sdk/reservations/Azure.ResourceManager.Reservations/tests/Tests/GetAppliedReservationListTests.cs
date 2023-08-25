@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value.ReservationOrderIds);
             Assert.IsNotNull(response.Value.ReservationOrderIds.Value);
-            Assert.AreEqual(314, response.Value.ReservationOrderIds.Value.Count);
+            Assert.AreEqual(127, response.Value.ReservationOrderIds.Value.Count);
         }
     }
 }

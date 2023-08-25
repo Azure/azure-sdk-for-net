@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="xml"> The xml representation format for a property. </param>
         /// <param name="externalDocs"> The external documentation. </param>
         /// <param name="example"> The example value. </param>
-        /// <param name="isNotificationUrlExtension"> Indicates the notification url extension. If this is set, the property&apos;s value should be a callback url for a webhook. </param>
+        /// <param name="isNotificationUrlExtension"> Indicates the notification url extension. If this is set, the property's value should be a callback url for a webhook. </param>
         /// <param name="dynamicSchemaOld"> The dynamic schema configuration. </param>
         /// <param name="dynamicSchemaNew"> The dynamic schema configuration. </param>
         /// <param name="dynamicListNew"> The dynamic list. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// </para>
         /// </summary>
         public BinaryData Example { get; set; }
-        /// <summary> Indicates the notification url extension. If this is set, the property&apos;s value should be a callback url for a webhook. </summary>
+        /// <summary> Indicates the notification url extension. If this is set, the property's value should be a callback url for a webhook. </summary>
         public bool? IsNotificationUrlExtension { get; set; }
         /// <summary> The dynamic schema configuration. </summary>
         public SwaggerCustomDynamicSchema DynamicSchemaOld { get; set; }

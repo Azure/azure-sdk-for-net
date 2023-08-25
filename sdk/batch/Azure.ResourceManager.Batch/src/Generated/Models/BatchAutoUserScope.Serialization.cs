@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchAutoUserScope ToBatchAutoUserScope(this string value)
         {
-            if (string.Equals(value, "Task", StringComparison.InvariantCultureIgnoreCase)) return BatchAutoUserScope.Task;
-            if (string.Equals(value, "Pool", StringComparison.InvariantCultureIgnoreCase)) return BatchAutoUserScope.Pool;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Task")) return BatchAutoUserScope.Task;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pool")) return BatchAutoUserScope.Pool;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAutoUserScope value.");
         }
     }

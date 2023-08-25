@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static EdgeProfile DeserializeEdgeProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeProfileSubscription> subscription = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscription"))
+                if (property.NameEquals("subscription"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subscription = EdgeProfileSubscription.DeserializeEdgeProfileSubscription(property.Value);

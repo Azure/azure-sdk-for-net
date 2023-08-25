@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.IotCentral.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplyToDevices))
             {
-                writer.WritePropertyName("applyToDevices");
+                writer.WritePropertyName("applyToDevices"u8);
                 writer.WriteBooleanValue(ApplyToDevices.Value);
             }
             if (Optional.IsDefined(ApplyToIotCentral))
             {
-                writer.WritePropertyName("applyToIoTCentral");
+                writer.WritePropertyName("applyToIoTCentral"u8);
                 writer.WriteBooleanValue(ApplyToIotCentral.Value);
             }
             if (Optional.IsDefined(DefaultAction))
             {
-                writer.WritePropertyName("defaultAction");
+                writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
             if (Optional.IsCollectionDefined(IPRules))
             {
-                writer.WritePropertyName("ipRules");
+                writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
@@ -46,47 +46,47 @@ namespace Azure.ResourceManager.IotCentral.Models
 
         internal static IotCentralNetworkRuleSets DeserializeIotCentralNetworkRuleSets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> applyToDevices = default;
             Optional<bool> applyToIoTCentral = default;
             Optional<IotCentralNetworkAction> defaultAction = default;
             Optional<IList<IotCentralNetworkRuleSetIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("applyToDevices"))
+                if (property.NameEquals("applyToDevices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applyToDevices = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("applyToIoTCentral"))
+                if (property.NameEquals("applyToIoTCentral"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applyToIoTCentral = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("defaultAction"))
+                if (property.NameEquals("defaultAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultAction = new IotCentralNetworkAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipRules"))
+                if (property.NameEquals("ipRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IotCentralNetworkRuleSetIPRule> array = new List<IotCentralNetworkRuleSetIPRule>();

@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static DetectorIssueType ToDetectorIssueType(this string value)
         {
-            if (string.Equals(value, "ServiceIncident", StringComparison.InvariantCultureIgnoreCase)) return DetectorIssueType.ServiceIncident;
-            if (string.Equals(value, "AppDeployment", StringComparison.InvariantCultureIgnoreCase)) return DetectorIssueType.AppDeployment;
-            if (string.Equals(value, "AppCrash", StringComparison.InvariantCultureIgnoreCase)) return DetectorIssueType.AppCrash;
-            if (string.Equals(value, "RuntimeIssueDetected", StringComparison.InvariantCultureIgnoreCase)) return DetectorIssueType.RuntimeIssueDetected;
-            if (string.Equals(value, "AseDeployment", StringComparison.InvariantCultureIgnoreCase)) return DetectorIssueType.AseDeployment;
-            if (string.Equals(value, "UserIssue", StringComparison.InvariantCultureIgnoreCase)) return DetectorIssueType.UserIssue;
-            if (string.Equals(value, "PlatformIssue", StringComparison.InvariantCultureIgnoreCase)) return DetectorIssueType.PlatformIssue;
-            if (string.Equals(value, "Other", StringComparison.InvariantCultureIgnoreCase)) return DetectorIssueType.Other;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceIncident")) return DetectorIssueType.ServiceIncident;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppDeployment")) return DetectorIssueType.AppDeployment;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppCrash")) return DetectorIssueType.AppCrash;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RuntimeIssueDetected")) return DetectorIssueType.RuntimeIssueDetected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AseDeployment")) return DetectorIssueType.AseDeployment;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserIssue")) return DetectorIssueType.UserIssue;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PlatformIssue")) return DetectorIssueType.PlatformIssue;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Other")) return DetectorIssueType.Other;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorIssueType value.");
         }
     }

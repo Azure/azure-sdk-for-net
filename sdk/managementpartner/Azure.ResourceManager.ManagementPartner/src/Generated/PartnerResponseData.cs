@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementPartner
 {
-    /// <summary> A class representing the PartnerResponse data model. </summary>
+    /// <summary>
+    /// A class representing the PartnerResponse data model.
+    /// this is the management partner operations response
+    /// </summary>
     public partial class PartnerResponseData : ResourceData
     {
         /// <summary> Initializes a new instance of PartnerResponseData. </summary>

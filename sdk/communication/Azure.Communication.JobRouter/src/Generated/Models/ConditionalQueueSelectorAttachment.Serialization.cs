@@ -16,49 +16,53 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("condition");
+            writer.WritePropertyName("condition"u8);
             writer.WriteObjectValue(Condition);
-            writer.WritePropertyName("labelSelectors");
+            writer.WritePropertyName("queueSelectors"u8);
             writer.WriteStartArray();
-            foreach (var item in LabelSelectors)
+            foreach (var item in QueueSelectors)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 
         internal static ConditionalQueueSelectorAttachment DeserializeConditionalQueueSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RouterRule condition = default;
-            IList<QueueSelector> labelSelectors = default;
+            IList<RouterQueueSelector> queueSelectors = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("condition"))
+                if (property.NameEquals("condition"u8))
                 {
                     condition = RouterRule.DeserializeRouterRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("labelSelectors"))
+                if (property.NameEquals("queueSelectors"u8))
                 {
-                    List<QueueSelector> array = new List<QueueSelector>();
+                    List<RouterQueueSelector> array = new List<RouterQueueSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueueSelector.DeserializeQueueSelector(item));
+                        array.Add(RouterQueueSelector.DeserializeRouterQueueSelector(item));
                     }
-                    labelSelectors = array;
+                    queueSelectors = array;
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
             }
-            return new ConditionalQueueSelectorAttachment(kind, condition, labelSelectors);
+            return new ConditionalQueueSelectorAttachment(kind, condition, queueSelectors);
         }
     }
 }

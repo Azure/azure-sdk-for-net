@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the MSDeployStatus data model. </summary>
+    /// <summary>
+    /// A class representing the MSDeployStatus data model.
+    /// MSDeploy ARM response
+    /// </summary>
     public partial class MSDeployStatusData : ResourceData
     {
         /// <summary> Initializes a new instance of MSDeployStatusData. </summary>

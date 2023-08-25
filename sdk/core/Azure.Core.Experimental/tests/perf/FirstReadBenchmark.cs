@@ -3,10 +3,9 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core.Dynamic;
 using BenchmarkDotNet.Attributes;
 
-namespace Azure.Data.AppConfiguration.Performance
+namespace Azure.Core.Experimental.Perf.Benchmarks
 {
     [MemoryDiagnoser]
     public class FirstReadBenchmark
@@ -23,7 +22,7 @@ namespace Azure.Data.AppConfiguration.Performance
         [Benchmark]
         public int ReadJsonData()
         {
-            return (int)_binaryData.ToDynamic()["a"]["b"];
+            return (int)_binaryData.ToDynamicFromJson()["a"]["b"];
         }
     }
 }

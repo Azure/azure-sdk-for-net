@@ -8,8 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentField")]
-    [CodeGenSuppress(nameof(DocumentField), typeof(DocumentFieldType), typeof(string), typeof(DateTimeOffset?), typeof(TimeSpan?), typeof(string), typeof(double?), typeof(long?), typeof(V3SelectionMarkState?), typeof(DocumentSignatureType?), typeof(string), typeof(IReadOnlyList<DocumentField>), typeof(IReadOnlyDictionary<string, DocumentField>), typeof(CurrencyValue?), typeof(AddressValue), typeof(string), typeof(IReadOnlyList<BoundingRegion>), typeof(IReadOnlyList<DocumentSpan>), typeof(float?))]
+    [CodeGenSuppress(nameof(DocumentField), typeof(DocumentFieldType), typeof(string), typeof(DateTimeOffset?), typeof(TimeSpan?), typeof(string), typeof(double?), typeof(long?), typeof(V3SelectionMarkState?), typeof(DocumentSignatureType?), typeof(string), typeof(IReadOnlyList<DocumentField>), typeof(IReadOnlyDictionary<string, DocumentField>), typeof(CurrencyValue?), typeof(AddressValue), typeof(bool?), typeof(string), typeof(IReadOnlyList<BoundingRegion>), typeof(IReadOnlyList<DocumentSpan>), typeof(float?))]
     [CodeGenSuppress("ValueString")]
     [CodeGenSuppress("ValueDate")]
     [CodeGenSuppress("ValueTime")]
@@ -22,6 +21,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     [CodeGenSuppress("ValueObject")]
     [CodeGenSuppress("ValueCurrency")]
     [CodeGenSuppress("ValueAddress")]
+    [CodeGenSuppress("ValueBoolean")]
     public partial class DocumentField
     {
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -49,14 +49,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="valueObject"> Dictionary of named field values. </param>
         /// <param name="valueCurrency"> Currency value. </param>
         /// <param name="valueAddress"> Address value. </param>
+        /// <param name="valueBoolean"> Boolean value. </param>
         /// <param name="content"> Field content. </param>
         /// <param name="boundingRegions"> Bounding regions covering the field. </param>
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
-        internal DocumentField(DocumentFieldType expectedFieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, V3SelectionMarkState? valueSelectionMarkPrivate, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue? valueCurrency, AddressValue valueAddress, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
+        internal DocumentField(DocumentFieldType expectedFieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, V3SelectionMarkState? valueSelectionMarkPrivate, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue? valueCurrency, AddressValue valueAddress, bool? valueBoolean, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
         {
             ExpectedFieldType = expectedFieldType;
-            Value = new DocumentFieldValue(expectedFieldType, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMarkPrivate, valueSignature, valueCountryRegion, valueArray, valueObject, valueCurrency, valueAddress);
+            Value = new DocumentFieldValue(expectedFieldType, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMarkPrivate, valueSignature, valueCountryRegion, valueArray, valueObject, valueCurrency, valueAddress, valueBoolean);
             Content = content;
             BoundingRegions = boundingRegions;
             Spans = spans;

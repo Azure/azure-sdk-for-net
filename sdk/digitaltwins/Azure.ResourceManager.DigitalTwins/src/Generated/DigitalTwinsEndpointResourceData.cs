@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
-    /// <summary> A class representing the DigitalTwinsEndpointResource data model. </summary>
+    /// <summary>
+    /// A class representing the DigitalTwinsEndpointResource data model.
+    /// DigitalTwinsInstance endpoint resource.
+    /// </summary>
     public partial class DigitalTwinsEndpointResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceData. </summary>

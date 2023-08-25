@@ -54,6 +54,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(uri, serviceClient.Uri);
+            Assert.IsNotNull(serviceClient.ClientConfiguration.SharedKeyCredential);
         }
 
         [RecordedTest]
@@ -69,6 +70,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(uri, serviceClient.Uri);
+            Assert.IsNotNull(serviceClient.ClientConfiguration.TokenCredential);
         }
 
         [RecordedTest]
@@ -83,6 +85,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             try
             {
                 await fileSystem.CreateAsync();
+                Assert.IsNotNull(fileSystem.ClientConfiguration.SharedKeyCredential);
             }
 
             // Cleanup
@@ -154,6 +157,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(fileSystems);
+            Assert.IsNotNull(sasClient.ClientConfiguration.SasCredential);
         }
 
         [RecordedTest]

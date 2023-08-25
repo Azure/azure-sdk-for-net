@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -61,8 +60,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a Target Type resources for given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}
-        /// Operation Id: TargetTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,8 +97,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a Target Type resources for given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}
-        /// Operation Id: TargetTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,94 +134,62 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a list of Target Type resources for given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes
-        /// Operation Id: TargetTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TargetTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TargetTypeResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TargetTypeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _targetTypeClientDiagnostics.CreateScope("TargetTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _targetTypeRestClient.ListAsync(Id.SubscriptionId, _locationName, continuationToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TargetTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TargetTypeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _targetTypeClientDiagnostics.CreateScope("TargetTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _targetTypeRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, _locationName, continuationToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TargetTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _targetTypeRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _locationName, continuationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetTypeResource(Client, TargetTypeData.DeserializeTargetTypeData(e)), _targetTypeClientDiagnostics, Pipeline, "TargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get a list of Target Type resources for given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes
-        /// Operation Id: TargetTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TargetTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TargetTypeResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            Page<TargetTypeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _targetTypeClientDiagnostics.CreateScope("TargetTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _targetTypeRestClient.List(Id.SubscriptionId, _locationName, continuationToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TargetTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TargetTypeResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _targetTypeClientDiagnostics.CreateScope("TargetTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _targetTypeRestClient.ListNextPage(nextLink, Id.SubscriptionId, _locationName, continuationToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TargetTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _targetTypeRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _locationName, continuationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetTypeResource(Client, TargetTypeData.DeserializeTargetTypeData(e)), _targetTypeClientDiagnostics, Pipeline, "TargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}
-        /// Operation Id: TargetTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -232,8 +215,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}
-        /// Operation Id: TargetTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

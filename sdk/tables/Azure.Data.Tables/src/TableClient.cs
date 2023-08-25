@@ -236,7 +236,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
-            Uri = new Uri(_endpoint, Name);
+            Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
-            Uri = new Uri(_endpoint, Name);
+            Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
 
         internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
@@ -339,7 +339,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
-            Uri = new Uri(_endpoint, Name);
+            Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
 
         internal TableClient(
@@ -366,7 +366,7 @@ namespace Azure.Data.Tables
             _batchOperations = new TableRestClient(diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             _version = version;
             Name = table;
-            Uri = new Uri(_endpoint, Name);
+            Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
             _accountName = accountName;
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
@@ -478,7 +478,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409.</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
         public virtual Response<TableItem> CreateIfNotExists(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateIfNotExists)}");
@@ -517,7 +517,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409.</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
         public virtual async Task<Response<TableItem>> CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateIfNotExists)}");
@@ -1043,7 +1043,7 @@ namespace Azure.Data.Tables
         /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>e => e.PartitionKey == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
-        /// The maximum number of entities that will be returned per page.
+        /// The maximum number of entities that will be returned per page. If unspecified, the default value is 1000 for storage accounts and is not limited for Cosmos DB table API.
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
@@ -1081,7 +1081,7 @@ namespace Azure.Data.Tables
         /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>e => e.PartitionKey == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
-        /// The maximum number of entities that will be returned per page.
+        /// The maximum number of entities that will be returned per page. If unspecified, the default value is 1000 for storage accounts and is not limited for Cosmos DB table API.
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
@@ -1119,7 +1119,7 @@ namespace Azure.Data.Tables
         /// For example, the following filter would filter entities with a PartitionKey of 'foo': <c>"PartitionKey eq 'foo'"</c>.
         /// </param>
         /// <param name="maxPerPage">
-        /// The maximum number of entities that will be returned per page.
+        /// The maximum number of entities that will be returned per page. If unspecified, the default value is 1000 for storage accounts and is not limited for Cosmos DB table API.
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
@@ -1200,7 +1200,7 @@ namespace Azure.Data.Tables
         /// For example, the following filter would filter entities with a PartitionKey of 'foo': <c>"PartitionKey eq 'foo'"</c>.
         /// </param>
         /// <param name="maxPerPage">
-        /// The maximum number of entities that will be returned per page.
+        /// The maximum number of entities that will be returned per page. If unspecified, the default value is 1000 for storage accounts and is not limited for Cosmos DB table API.
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
@@ -1355,7 +1355,7 @@ namespace Azure.Data.Tables
                 return message.Response.Status switch
                 {
                     404 or 204 => message.Response,
-                    _ => throw _diagnostics.CreateRequestFailedException(message.Response),
+                    _ => throw new RequestFailedException(message.Response),
                 };
             }
             catch (Exception ex)

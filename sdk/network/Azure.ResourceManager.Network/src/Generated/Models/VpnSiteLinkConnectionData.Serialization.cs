@@ -21,59 +21,69 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(VpnSiteLink))
             {
-                writer.WritePropertyName("vpnSiteLink");
+                writer.WritePropertyName("vpnSiteLink"u8);
                 JsonSerializer.Serialize(writer, VpnSiteLink);
             }
             if (Optional.IsDefined(RoutingWeight))
             {
-                writer.WritePropertyName("routingWeight");
+                writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
             if (Optional.IsDefined(VpnLinkConnectionMode))
             {
-                writer.WritePropertyName("vpnLinkConnectionMode");
+                writer.WritePropertyName("vpnLinkConnectionMode"u8);
                 writer.WriteStringValue(VpnLinkConnectionMode.Value.ToString());
             }
             if (Optional.IsDefined(VpnConnectionProtocolType))
             {
-                writer.WritePropertyName("vpnConnectionProtocolType");
+                writer.WritePropertyName("vpnConnectionProtocolType"u8);
                 writer.WriteStringValue(VpnConnectionProtocolType.Value.ToString());
             }
             if (Optional.IsDefined(ConnectionBandwidth))
             {
-                writer.WritePropertyName("connectionBandwidth");
+                writer.WritePropertyName("connectionBandwidth"u8);
                 writer.WriteNumberValue(ConnectionBandwidth.Value);
             }
             if (Optional.IsDefined(SharedKey))
             {
-                writer.WritePropertyName("sharedKey");
+                writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
             if (Optional.IsDefined(EnableBgp))
             {
-                writer.WritePropertyName("enableBgp");
+                writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
+            }
+            if (Optional.IsCollectionDefined(VpnGatewayCustomBgpAddresses))
+            {
+                writer.WritePropertyName("vpnGatewayCustomBgpAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in VpnGatewayCustomBgpAddresses)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
             {
-                writer.WritePropertyName("usePolicyBasedTrafficSelectors");
+                writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
             if (Optional.IsCollectionDefined(IPsecPolicies))
             {
-                writer.WritePropertyName("ipsecPolicies");
+                writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPsecPolicies)
                 {
@@ -83,17 +93,17 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(EnableRateLimiting))
             {
-                writer.WritePropertyName("enableRateLimiting");
+                writer.WritePropertyName("enableRateLimiting"u8);
                 writer.WriteBooleanValue(EnableRateLimiting.Value);
             }
             if (Optional.IsDefined(UseLocalAzureIPAddress))
             {
-                writer.WritePropertyName("useLocalAzureIpAddress");
+                writer.WritePropertyName("useLocalAzureIpAddress"u8);
                 writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
             if (Optional.IsCollectionDefined(IngressNatRules))
             {
-                writer.WritePropertyName("ingressNatRules");
+                writer.WritePropertyName("ingressNatRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IngressNatRules)
                 {
@@ -103,7 +113,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(EgressNatRules))
             {
-                writer.WritePropertyName("egressNatRules");
+                writer.WritePropertyName("egressNatRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in EgressNatRules)
                 {
@@ -117,6 +127,10 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnSiteLinkConnectionData DeserializeVpnSiteLinkConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -131,6 +145,7 @@ namespace Azure.ResourceManager.Network
             Optional<int> connectionBandwidth = default;
             Optional<string> sharedKey = default;
             Optional<bool> enableBgp = default;
+            Optional<IList<GatewayCustomBgpIPAddressIPConfiguration>> vpnGatewayCustomBgpAddresses = default;
             Optional<bool> usePolicyBasedTrafficSelectors = default;
             Optional<IList<IPsecPolicy>> ipsecPolicies = default;
             Optional<bool> enableRateLimiting = default;
@@ -140,42 +155,39 @@ namespace Azure.ResourceManager.Network
             Optional<IList<WritableSubResource>> egressNatRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,116 +196,119 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("vpnSiteLink"))
+                        if (property0.NameEquals("vpnSiteLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vpnSiteLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("routingWeight"))
+                        if (property0.NameEquals("routingWeight"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             routingWeight = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("vpnLinkConnectionMode"))
+                        if (property0.NameEquals("vpnLinkConnectionMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vpnLinkConnectionMode = new VpnLinkConnectionMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("connectionStatus"))
+                        if (property0.NameEquals("connectionStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectionStatus = new VpnConnectionStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("vpnConnectionProtocolType"))
+                        if (property0.NameEquals("vpnConnectionProtocolType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vpnConnectionProtocolType = new VirtualNetworkGatewayConnectionProtocol(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("ingressBytesTransferred"))
+                        if (property0.NameEquals("ingressBytesTransferred"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ingressBytesTransferred = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("egressBytesTransferred"))
+                        if (property0.NameEquals("egressBytesTransferred"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             egressBytesTransferred = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("connectionBandwidth"))
+                        if (property0.NameEquals("connectionBandwidth"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectionBandwidth = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("sharedKey"))
+                        if (property0.NameEquals("sharedKey"u8))
                         {
                             sharedKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enableBgp"))
+                        if (property0.NameEquals("enableBgp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableBgp = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("usePolicyBasedTrafficSelectors"))
+                        if (property0.NameEquals("vpnGatewayCustomBgpAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<GatewayCustomBgpIPAddressIPConfiguration> array = new List<GatewayCustomBgpIPAddressIPConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item));
+                            }
+                            vpnGatewayCustomBgpAddresses = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("usePolicyBasedTrafficSelectors"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             usePolicyBasedTrafficSelectors = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("ipsecPolicies"))
+                        if (property0.NameEquals("ipsecPolicies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IPsecPolicy> array = new List<IPsecPolicy>();
@@ -304,41 +319,37 @@ namespace Azure.ResourceManager.Network
                             ipsecPolicies = array;
                             continue;
                         }
-                        if (property0.NameEquals("enableRateLimiting"))
+                        if (property0.NameEquals("enableRateLimiting"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableRateLimiting = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("useLocalAzureIpAddress"))
+                        if (property0.NameEquals("useLocalAzureIpAddress"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             useLocalAzureIPAddress = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("ingressNatRules"))
+                        if (property0.NameEquals("ingressNatRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -349,11 +360,10 @@ namespace Azure.ResourceManager.Network
                             ingressNatRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("egressNatRules"))
+                        if (property0.NameEquals("egressNatRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -368,7 +378,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
+            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToList(vpnGatewayCustomBgpAddresses), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
         }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum to describe the frequency of a recurrence schedule
-    /// Serialized Name: RecurrenceFrequency
-    /// </summary>
+    /// <summary> Enum to describe the frequency of a recurrence schedule. </summary>
     public readonly partial struct MachineLearningRecurrenceFrequency : IEquatable<MachineLearningRecurrenceFrequency>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string WeekValue = "Week";
         private const string MonthValue = "Month";
 
-        /// <summary>
-        /// Minute frequency
-        /// Serialized Name: RecurrenceFrequency.Minute
-        /// </summary>
+        /// <summary> Minute frequency. </summary>
         public static MachineLearningRecurrenceFrequency Minute { get; } = new MachineLearningRecurrenceFrequency(MinuteValue);
-        /// <summary>
-        /// Hour frequency
-        /// Serialized Name: RecurrenceFrequency.Hour
-        /// </summary>
+        /// <summary> Hour frequency. </summary>
         public static MachineLearningRecurrenceFrequency Hour { get; } = new MachineLearningRecurrenceFrequency(HourValue);
-        /// <summary>
-        /// Day frequency
-        /// Serialized Name: RecurrenceFrequency.Day
-        /// </summary>
+        /// <summary> Day frequency. </summary>
         public static MachineLearningRecurrenceFrequency Day { get; } = new MachineLearningRecurrenceFrequency(DayValue);
-        /// <summary>
-        /// Week frequency
-        /// Serialized Name: RecurrenceFrequency.Week
-        /// </summary>
+        /// <summary> Week frequency. </summary>
         public static MachineLearningRecurrenceFrequency Week { get; } = new MachineLearningRecurrenceFrequency(WeekValue);
-        /// <summary>
-        /// Month frequency
-        /// Serialized Name: RecurrenceFrequency.Month
-        /// </summary>
+        /// <summary> Month frequency. </summary>
         public static MachineLearningRecurrenceFrequency Month { get; } = new MachineLearningRecurrenceFrequency(MonthValue);
         /// <summary> Determines if two <see cref="MachineLearningRecurrenceFrequency"/> values are the same. </summary>
         public static bool operator ==(MachineLearningRecurrenceFrequency left, MachineLearningRecurrenceFrequency right) => left.Equals(right);

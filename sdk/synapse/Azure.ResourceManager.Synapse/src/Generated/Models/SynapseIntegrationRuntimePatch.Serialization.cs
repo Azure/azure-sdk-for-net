@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoUpdate))
             {
-                writer.WritePropertyName("autoUpdate");
+                writer.WritePropertyName("autoUpdate"u8);
                 writer.WriteStringValue(AutoUpdate.Value.ToString());
             }
             if (Optional.IsDefined(UpdateDelayOffset))
             {
-                writer.WritePropertyName("updateDelayOffset");
+                writer.WritePropertyName("updateDelayOffset"u8);
                 writer.WriteStringValue(UpdateDelayOffset);
             }
             writer.WriteEndObject();

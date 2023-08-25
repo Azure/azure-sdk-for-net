@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The desired maximum forecast horizon in units of time-series frequency.
-    /// Serialized Name: ForecastHorizon
     /// Please note <see cref="ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutoForecastHorizon"/> and <see cref="CustomForecastHorizon"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ForecastHorizon. </summary>
-        /// <param name="mode">
-        /// [Required] Set forecast horizon value selection mode.
-        /// Serialized Name: ForecastHorizon.mode
-        /// </param>
+        /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
         internal ForecastHorizon(ForecastHorizonMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary>
-        /// [Required] Set forecast horizon value selection mode.
-        /// Serialized Name: ForecastHorizon.mode
-        /// </summary>
+        /// <summary> [Required] Set forecast horizon value selection mode. </summary>
         internal ForecastHorizonMode Mode { get; set; }
     }
 }

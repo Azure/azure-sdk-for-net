@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementPortalDelegationSetting data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementPortalDelegationSetting data model.
+    /// Delegation settings for a developer portal.
+    /// </summary>
     public partial class ApiManagementPortalDelegationSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementPortalDelegationSettingData. </summary>

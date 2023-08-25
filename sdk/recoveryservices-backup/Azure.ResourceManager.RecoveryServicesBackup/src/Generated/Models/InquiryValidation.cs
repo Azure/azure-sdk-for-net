@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="status"> Status for the Inquiry Validation. </param>
         /// <param name="errorDetail"> Error Detail in case the status is non-success. </param>
         /// <param name="additionalDetail"> Error Additional Detail in case the status is non-success. </param>
-        internal InquiryValidation(string status, ErrorDetail errorDetail, string additionalDetail)
+        internal InquiryValidation(string status, BackupErrorDetail errorDetail, string additionalDetail)
         {
             Status = status;
             ErrorDetail = errorDetail;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Status for the Inquiry Validation. </summary>
         public string Status { get; set; }
         /// <summary> Error Detail in case the status is non-success. </summary>
-        public ErrorDetail ErrorDetail { get; set; }
+        public BackupErrorDetail ErrorDetail { get; set; }
         /// <summary> Error Additional Detail in case the status is non-success. </summary>
         public string AdditionalDetail { get; }
     }

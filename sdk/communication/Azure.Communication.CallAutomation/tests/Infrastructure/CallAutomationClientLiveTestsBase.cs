@@ -17,6 +17,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("X-FORWARDED-HOST");
+            SanitizedHeaders.Add("Repeatability-Request-ID");
+            SanitizedHeaders.Add("Repeatability-First-Sent");
             JsonPathSanitizers.Add("$..id");
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");

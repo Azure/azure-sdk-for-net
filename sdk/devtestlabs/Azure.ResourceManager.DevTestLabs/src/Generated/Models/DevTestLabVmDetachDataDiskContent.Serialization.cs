@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExistingLabDiskId))
             {
-                writer.WritePropertyName("existingLabDiskId");
+                writer.WritePropertyName("existingLabDiskId"u8);
                 writer.WriteStringValue(ExistingLabDiskId);
             }
             writer.WriteEndObject();

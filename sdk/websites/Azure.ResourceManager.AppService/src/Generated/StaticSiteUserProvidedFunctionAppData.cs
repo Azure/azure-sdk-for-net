@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the StaticSiteUserProvidedFunctionApp data model. </summary>
+    /// <summary>
+    /// A class representing the StaticSiteUserProvidedFunctionApp data model.
+    /// Static Site User Provided Function App ARM resource.
+    /// </summary>
     public partial class StaticSiteUserProvidedFunctionAppData : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionAppData. </summary>

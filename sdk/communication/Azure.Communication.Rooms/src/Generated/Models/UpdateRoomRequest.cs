@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
@@ -17,16 +15,11 @@ namespace Azure.Communication.Rooms
         /// <summary> Initializes a new instance of UpdateRoomRequest. </summary>
         public UpdateRoomRequest()
         {
-            Participants = new ChangeTrackingList<RoomParticipantInternal>();
         }
 
         /// <summary> (Optional) The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ValidFrom { get; set; }
         /// <summary> (Optional) The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ValidUntil { get; set; }
-        /// <summary> The Policy based on which Participants can join a room. </summary>
-        public RoomJoinPolicy? RoomJoinPolicy { get; set; }
-        /// <summary> Collection of room participants. </summary>
-        public IList<RoomParticipantInternal> Participants { get; }
     }
 }

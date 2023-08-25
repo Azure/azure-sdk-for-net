@@ -31,13 +31,6 @@ namespace Azure.ResourceManager.Workloads
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of PhpWorkloadResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PhpWorkloadResources and their operations over a PhpWorkloadResource. </returns>
-        public virtual PhpWorkloadResourceCollection GetPhpWorkloadResources()
-        {
-            return GetCachedClient(Client => new PhpWorkloadResourceCollection(Client, Id));
-        }
-
         /// <summary> Gets a collection of SapVirtualInstanceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
         public virtual SapVirtualInstanceCollection GetSapVirtualInstances()

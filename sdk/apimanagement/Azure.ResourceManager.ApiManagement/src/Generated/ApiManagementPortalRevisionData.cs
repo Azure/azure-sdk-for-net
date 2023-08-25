@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementPortalRevision data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementPortalRevision data model.
+    /// Portal Revision's contract details.
+    /// </summary>
     public partial class ApiManagementPortalRevisionData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementPortalRevisionData. </summary>
@@ -27,9 +30,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Portal revision description. </param>
         /// <param name="statusDetails"> Portal revision publishing status details. </param>
-        /// <param name="status"> Status of the portal&apos;s revision. </param>
-        /// <param name="isCurrent"> Indicates if the portal&apos;s revision is public. </param>
-        /// <param name="createdOn"> Portal&apos;s revision creation date and time. </param>
+        /// <param name="status"> Status of the portal's revision. </param>
+        /// <param name="isCurrent"> Indicates if the portal's revision is public. </param>
+        /// <param name="createdOn"> Portal's revision creation date and time. </param>
         /// <param name="updatedOn"> Last updated date and time. </param>
         internal ApiManagementPortalRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string statusDetails, PortalRevisionStatus? status, bool? isCurrent, DateTimeOffset? createdOn, DateTimeOffset? updatedOn) : base(id, name, resourceType, systemData)
         {
@@ -45,11 +48,11 @@ namespace Azure.ResourceManager.ApiManagement
         public string Description { get; set; }
         /// <summary> Portal revision publishing status details. </summary>
         public string StatusDetails { get; }
-        /// <summary> Status of the portal&apos;s revision. </summary>
+        /// <summary> Status of the portal's revision. </summary>
         public PortalRevisionStatus? Status { get; }
-        /// <summary> Indicates if the portal&apos;s revision is public. </summary>
+        /// <summary> Indicates if the portal's revision is public. </summary>
         public bool? IsCurrent { get; set; }
-        /// <summary> Portal&apos;s revision creation date and time. </summary>
+        /// <summary> Portal's revision creation date and time. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last updated date and time. </summary>
         public DateTimeOffset? UpdatedOn { get; }

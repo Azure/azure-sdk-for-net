@@ -37,10 +37,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='instanceId'>
         /// The instance ID of the virtual machine.
         /// </param>
-        /// <param name='tempDisk'>
-        /// Specifies whether to reimage temp disk. Default value: false. Note:
-        /// This temp disk reimage parameter is only supported for VM/VMSS with
-        /// Ephemeral OS disk.
+        /// <param name='vmScaleSetVMReimageInput'>
+        /// Parameters for the Reimaging Virtual machine in ScaleSet.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,7 +52,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, bool? tempDisk = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = default(VirtualMachineScaleSetVMReimageParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Allows you to re-image all the disks ( including data disks ) in
         /// the a VM scale set instance. This operation is only supported for
@@ -390,9 +388,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='sasUriExpirationTimeInMinutes'>
         /// Expiration duration in minutes for the SAS URIs with a value
-        /// between 1 to 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not
-        /// specified, SAS URIs will be generated with a default expiration
-        /// duration of 120 minutes.
+        /// between 1 to 1440 minutes. **Note:** If not specified, SAS URIs
+        /// will be generated with a default expiration duration of 120
+        /// minutes.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -505,10 +503,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='instanceId'>
         /// The instance ID of the virtual machine.
         /// </param>
-        /// <param name='tempDisk'>
-        /// Specifies whether to reimage temp disk. Default value: false. Note:
-        /// This temp disk reimage parameter is only supported for VM/VMSS with
-        /// Ephemeral OS disk.
+        /// <param name='vmScaleSetVMReimageInput'>
+        /// Parameters for the Reimaging Virtual machine in ScaleSet.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -522,7 +518,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, bool? tempDisk = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = default(VirtualMachineScaleSetVMReimageParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Allows you to re-image all the disks ( including data disks ) in
         /// the a VM scale set instance. This operation is only supported for

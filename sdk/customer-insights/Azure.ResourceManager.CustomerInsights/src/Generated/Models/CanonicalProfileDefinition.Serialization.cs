@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static CanonicalProfileDefinition DeserializeCanonicalProfileDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> canonicalProfileId = default;
             Optional<IReadOnlyList<CanonicalProfileDefinitionPropertiesItem>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("canonicalProfileId"))
+                if (property.NameEquals("canonicalProfileId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     canonicalProfileId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CanonicalProfileDefinitionPropertiesItem> array = new List<CanonicalProfileDefinitionPropertiesItem>();

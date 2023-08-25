@@ -14,7 +14,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     /// <typeparam name="TData">The EventData model related to the request.</typeparam>
     /// <seealso cref="AuthenticationEventResponse" />
     /// <seealso cref="AuthenticationEventData" />
-    public abstract class AuthenticationEventRequest<TResponse, TData> : AuthenticationEventRequestBase where TResponse : AuthenticationEventResponse where TData : AuthenticationEventData
+    public abstract class AuthenticationEventRequest<TResponse, TData> : AuthenticationEventRequestBase
+        where TResponse : AuthenticationEventResponse , new()
+        where TData : AuthenticationEventData
     {
         /// <summary>Initializes a new instance of the <see cref="AuthenticationEventRequest{T, K}" /> class.</summary>
         /// <param name="request">The request.</param>
@@ -23,15 +25,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <value>The response.</value>
         ///
         [JsonPropertyName("response")]
-        [Required]
         public TResponse Response { get; set; }
 
         /// <summary>Gets or sets the related EventData model.</summary>
         /// <value>The Json payload.</value>
         ///
-        [JsonPropertyName("payload")]
+        [JsonPropertyName("data")]
         [Required]
-        public TData Payload { get; set; }
+        public TData Data { get; set; }
 
         /// <summary>Validates the response and creates the IActionResult with the json payload based on the status of the request.</summary>
         /// <returns>IActionResult based on the EventStatus (UnauthorizedResult, BadRequestObjectResult or JsonResult).</returns>
@@ -43,8 +44,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 {
                     Response.MarkAsFailed(new Exception(String.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage), true);
                 }
-
-                if (RequestStatus == RequestStatusType.TokenInvalid)
+                else if (RequestStatus == RequestStatusType.ValidationError)
+                {
+                    Response.MarkAsFailed(new Exception(String.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage), false);
+                }
+                else if (RequestStatus == RequestStatusType.TokenInvalid)
                 {
                     Response.MarkAsUnauthorized();
                 }
@@ -59,6 +63,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         internal override Task<AuthenticationEventResponse> Failed(Exception exception, bool internalError)
         {
+            if (Response == null)
+            {
+                Response = new TResponse();
+            }
+
             Response.MarkAsFailed(exception, internalError);
             return Task.FromResult<AuthenticationEventResponse>((TResponse)Response);
         }

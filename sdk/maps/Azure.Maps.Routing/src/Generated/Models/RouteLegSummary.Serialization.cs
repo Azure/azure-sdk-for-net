@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteLegSummary DeserializeRouteLegSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> lengthInMeters = default;
             Optional<int> travelTimeInSeconds = default;
             Optional<int> trafficDelayInSeconds = default;
@@ -27,101 +31,91 @@ namespace Azure.Maps.Routing.Models
             Optional<double> batteryConsumptionInkWh = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lengthInMeters"))
+                if (property.NameEquals("lengthInMeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lengthInMeters = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("travelTimeInSeconds"))
+                if (property.NameEquals("travelTimeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     travelTimeInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("trafficDelayInSeconds"))
+                if (property.NameEquals("trafficDelayInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trafficDelayInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("departureTime"))
+                if (property.NameEquals("departureTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     departureTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("arrivalTime"))
+                if (property.NameEquals("arrivalTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     arrivalTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("noTrafficTravelTimeInSeconds"))
+                if (property.NameEquals("noTrafficTravelTimeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     noTrafficTravelTimeInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("historicTrafficTravelTimeInSeconds"))
+                if (property.NameEquals("historicTrafficTravelTimeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     historicTrafficTravelTimeInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("liveTrafficIncidentsTravelTimeInSeconds"))
+                if (property.NameEquals("liveTrafficIncidentsTravelTimeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     liveTrafficIncidentsTravelTimeInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fuelConsumptionInLiters"))
+                if (property.NameEquals("fuelConsumptionInLiters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fuelConsumptionInLiters = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("batteryConsumptionInkWh"))
+                if (property.NameEquals("batteryConsumptionInkWh"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     batteryConsumptionInkWh = property.Value.GetDouble();

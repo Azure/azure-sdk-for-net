@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of ServiceBusSku. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The billing tier of this particular SKU. </param>
-        /// <param name="capacity"> The specified messaging units for the tier. For Premium tier, capacity are 1,2 and 4. </param>
+        /// <param name="capacity"> Messaging units for your service bus premium namespace. Valid capacities are {1, 2, 4, 8, 16} multiples of your properties.premiumMessagingPartitions setting. For example, If properties.premiumMessagingPartitions is 1 then possible capacity values are 1, 2, 4, 8, and 16. If properties.premiumMessagingPartitions is 4 then possible capacity values are 4, 8, 16, 32 and 64. </param>
         internal ServiceBusSku(ServiceBusSkuName name, ServiceBusSkuTier? tier, int? capacity)
         {
             Name = name;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public ServiceBusSkuName Name { get; set; }
         /// <summary> The billing tier of this particular SKU. </summary>
         public ServiceBusSkuTier? Tier { get; set; }
-        /// <summary> The specified messaging units for the tier. For Premium tier, capacity are 1,2 and 4. </summary>
+        /// <summary> Messaging units for your service bus premium namespace. Valid capacities are {1, 2, 4, 8, 16} multiples of your properties.premiumMessagingPartitions setting. For example, If properties.premiumMessagingPartitions is 1 then possible capacity values are 1, 2, 4, 8, and 16. If properties.premiumMessagingPartitions is 4 then possible capacity values are 4, 8, 16, 32 and 64. </summary>
         public int? Capacity { get; set; }
     }
 }

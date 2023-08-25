@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Storage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PermissionScopes))
             {
-                writer.WritePropertyName("permissionScopes");
+                writer.WritePropertyName("permissionScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in PermissionScopes)
                 {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Storage
             }
             if (Optional.IsDefined(HomeDirectory))
             {
-                writer.WritePropertyName("homeDirectory");
+                writer.WritePropertyName("homeDirectory"u8);
                 writer.WriteStringValue(HomeDirectory);
             }
             if (Optional.IsCollectionDefined(SshAuthorizedKeys))
             {
-                writer.WritePropertyName("sshAuthorizedKeys");
+                writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in SshAuthorizedKeys)
                 {
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.Storage
             }
             if (Optional.IsDefined(HasSharedKey))
             {
-                writer.WritePropertyName("hasSharedKey");
+                writer.WritePropertyName("hasSharedKey"u8);
                 writer.WriteBooleanValue(HasSharedKey.Value);
             }
             if (Optional.IsDefined(HasSshKey))
             {
-                writer.WritePropertyName("hasSshKey");
+                writer.WritePropertyName("hasSshKey"u8);
                 writer.WriteBooleanValue(HasSshKey.Value);
             }
             if (Optional.IsDefined(HasSshPassword))
             {
-                writer.WritePropertyName("hasSshPassword");
+                writer.WritePropertyName("hasSshPassword"u8);
                 writer.WriteBooleanValue(HasSshPassword.Value);
             }
             writer.WriteEndObject();
@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Storage
 
         internal static StorageAccountLocalUserData DeserializeStorageAccountLocalUserData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,32 +83,31 @@ namespace Azure.ResourceManager.Storage
             Optional<bool> hasSshPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,11 +116,10 @@ namespace Azure.ResourceManager.Storage
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("permissionScopes"))
+                        if (property0.NameEquals("permissionScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StoragePermissionScope> array = new List<StoragePermissionScope>();
@@ -128,16 +130,15 @@ namespace Azure.ResourceManager.Storage
                             permissionScopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("homeDirectory"))
+                        if (property0.NameEquals("homeDirectory"u8))
                         {
                             homeDirectory = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sshAuthorizedKeys"))
+                        if (property0.NameEquals("sshAuthorizedKeys"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StorageSshPublicKey> array = new List<StorageSshPublicKey>();
@@ -148,36 +149,33 @@ namespace Azure.ResourceManager.Storage
                             sshAuthorizedKeys = array;
                             continue;
                         }
-                        if (property0.NameEquals("sid"))
+                        if (property0.NameEquals("sid"u8))
                         {
                             sid = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hasSharedKey"))
+                        if (property0.NameEquals("hasSharedKey"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hasSharedKey = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("hasSshKey"))
+                        if (property0.NameEquals("hasSshKey"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hasSshKey = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("hasSshPassword"))
+                        if (property0.NameEquals("hasSshPassword"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hasSshPassword = property0.Value.GetBoolean();

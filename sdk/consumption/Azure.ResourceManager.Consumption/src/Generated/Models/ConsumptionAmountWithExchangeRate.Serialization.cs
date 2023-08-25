@@ -14,42 +14,43 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionAmountWithExchangeRate DeserializeConsumptionAmountWithExchangeRate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<decimal> exchangeRate = default;
             Optional<int> exchangeRateMonth = default;
             Optional<string> currency = default;
             Optional<decimal> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exchangeRate"))
+                if (property.NameEquals("exchangeRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     exchangeRate = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("exchangeRateMonth"))
+                if (property.NameEquals("exchangeRateMonth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     exchangeRateMonth = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("currency"))
+                if (property.NameEquals("currency"u8))
                 {
                     currency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetDecimal();

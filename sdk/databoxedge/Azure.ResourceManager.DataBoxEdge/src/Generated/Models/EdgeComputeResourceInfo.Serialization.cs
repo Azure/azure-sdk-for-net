@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("processorCount");
+            writer.WritePropertyName("processorCount"u8);
             writer.WriteNumberValue(ProcessorCount);
-            writer.WritePropertyName("memoryInGB");
+            writer.WritePropertyName("memoryInGB"u8);
             writer.WriteNumberValue(MemoryInGB);
             writer.WriteEndObject();
         }
 
         internal static EdgeComputeResourceInfo DeserializeEdgeComputeResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int processorCount = default;
             long memoryInGB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("processorCount"))
+                if (property.NameEquals("processorCount"u8))
                 {
                     processorCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("memoryInGB"))
+                if (property.NameEquals("memoryInGB"u8))
                 {
                     memoryInGB = property.Value.GetInt64();
                     continue;

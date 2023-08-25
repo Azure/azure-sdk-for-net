@@ -63,7 +63,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary> Bounding box of the table. </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         public FieldBoundingBox BoundingBox { get; }
 

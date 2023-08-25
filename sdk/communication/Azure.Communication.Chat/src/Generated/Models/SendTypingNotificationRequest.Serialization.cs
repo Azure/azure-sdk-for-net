@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             if (Optional.IsDefined(SenderDisplayName))
             {
-                writer.WritePropertyName("senderDisplayName");
+                writer.WritePropertyName("senderDisplayName"u8);
                 writer.WriteStringValue(SenderDisplayName);
             }
             writer.WriteEndObject();

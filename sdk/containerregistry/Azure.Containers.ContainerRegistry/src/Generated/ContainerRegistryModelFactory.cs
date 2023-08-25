@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class ContainerRegistryModelFactory
     {
         /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>

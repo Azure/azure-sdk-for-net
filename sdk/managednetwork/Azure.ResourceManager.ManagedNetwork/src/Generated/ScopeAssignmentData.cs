@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    /// <summary> A class representing the ScopeAssignment data model. </summary>
+    /// <summary>
+    /// A class representing the ScopeAssignment data model.
+    /// The Managed Network resource
+    /// </summary>
     public partial class ScopeAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of ScopeAssignmentData. </summary>

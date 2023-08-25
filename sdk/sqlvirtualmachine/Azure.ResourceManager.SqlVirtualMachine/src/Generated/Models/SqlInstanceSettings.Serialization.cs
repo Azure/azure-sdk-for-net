@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Collation))
             {
-                writer.WritePropertyName("collation");
+                writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
             if (Optional.IsDefined(MaxDop))
             {
-                writer.WritePropertyName("maxDop");
+                writer.WritePropertyName("maxDop"u8);
                 writer.WriteNumberValue(MaxDop.Value);
             }
             if (Optional.IsDefined(IsOptimizeForAdHocWorkloadsEnabled))
             {
-                writer.WritePropertyName("isOptimizeForAdHocWorkloadsEnabled");
+                writer.WritePropertyName("isOptimizeForAdHocWorkloadsEnabled"u8);
                 writer.WriteBooleanValue(IsOptimizeForAdHocWorkloadsEnabled.Value);
             }
             if (Optional.IsDefined(MinServerMemoryInMB))
             {
-                writer.WritePropertyName("minServerMemoryMB");
+                writer.WritePropertyName("minServerMemoryMB"u8);
                 writer.WriteNumberValue(MinServerMemoryInMB.Value);
             }
             if (Optional.IsDefined(MaxServerMemoryInMB))
             {
-                writer.WritePropertyName("maxServerMemoryMB");
+                writer.WritePropertyName("maxServerMemoryMB"u8);
                 writer.WriteNumberValue(MaxServerMemoryInMB.Value);
             }
             if (Optional.IsDefined(IsLpimEnabled))
             {
-                writer.WritePropertyName("isLpimEnabled");
+                writer.WritePropertyName("isLpimEnabled"u8);
                 writer.WriteBooleanValue(IsLpimEnabled.Value);
             }
             if (Optional.IsDefined(IsIfiEnabled))
             {
-                writer.WritePropertyName("isIfiEnabled");
+                writer.WritePropertyName("isIfiEnabled"u8);
                 writer.WriteBooleanValue(IsIfiEnabled.Value);
             }
             writer.WriteEndObject();
@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlInstanceSettings DeserializeSqlInstanceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> collation = default;
             Optional<int> maxDop = default;
             Optional<bool> isOptimizeForAdHocWorkloadsEnabled = default;
@@ -64,66 +68,60 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<bool> isIfiEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("collation"))
+                if (property.NameEquals("collation"u8))
                 {
                     collation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxDop"))
+                if (property.NameEquals("maxDop"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDop = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isOptimizeForAdHocWorkloadsEnabled"))
+                if (property.NameEquals("isOptimizeForAdHocWorkloadsEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isOptimizeForAdHocWorkloadsEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("minServerMemoryMB"))
+                if (property.NameEquals("minServerMemoryMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minServerMemoryMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxServerMemoryMB"))
+                if (property.NameEquals("maxServerMemoryMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxServerMemoryMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isLpimEnabled"))
+                if (property.NameEquals("isLpimEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isLpimEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isIfiEnabled"))
+                if (property.NameEquals("isIfiEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isIfiEnabled = property.Value.GetBoolean();

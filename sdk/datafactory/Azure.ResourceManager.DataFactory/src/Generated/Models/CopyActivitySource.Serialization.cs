@@ -15,43 +15,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(SourceRetryCount))
             {
-                writer.WritePropertyName("sourceRetryCount");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("sourceRetryCount"u8);
+                JsonSerializer.Serialize(writer, SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
-                writer.WritePropertyName("sourceRetryWait");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryWait);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("sourceRetryWait"u8);
+                JsonSerializer.Serialize(writer, SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("maxConcurrentConnections"u8);
+                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
-                writer.WritePropertyName("disableMetricsCollection");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("disableMetricsCollection"u8);
+                JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -67,6 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CopyActivitySource DeserializeCopyActivitySource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -86,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "AzureSqlSource": return AzureSqlSource.DeserializeAzureSqlSource(element);
                     case "AzureTableSource": return AzureTableSource.DeserializeAzureTableSource(element);
                     case "BinarySource": return BinarySource.DeserializeBinarySource(element);
-                    case "BlobSource": return AzureBlobSource.DeserializeAzureBlobSource(element);
+                    case "BlobSource": return DataFactoryBlobSource.DeserializeDataFactoryBlobSource(element);
                     case "CassandraSource": return CassandraSource.DeserializeCassandraSource(element);
                     case "CommonDataServiceForAppsSource": return CommonDataServiceForAppsSource.DeserializeCommonDataServiceForAppsSource(element);
                     case "ConcurSource": return ConcurSource.DeserializeConcurSource(element);
@@ -109,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "HBaseSource": return HBaseSource.DeserializeHBaseSource(element);
                     case "HdfsSource": return HdfsSource.DeserializeHdfsSource(element);
                     case "HiveSource": return HiveSource.DeserializeHiveSource(element);
-                    case "HttpSource": return HttpFileSource.DeserializeHttpFileSource(element);
+                    case "HttpSource": return DataFactoryHttpFileSource.DeserializeDataFactoryHttpFileSource(element);
                     case "HubspotSource": return HubspotSource.DeserializeHubspotSource(element);
                     case "ImpalaSource": return ImpalaSource.DeserializeImpalaSource(element);
                     case "InformixSource": return InformixSource.DeserializeInformixSource(element);
@@ -142,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SalesforceMarketingCloudSource": return SalesforceMarketingCloudSource.DeserializeSalesforceMarketingCloudSource(element);
                     case "SalesforceServiceCloudSource": return SalesforceServiceCloudSource.DeserializeSalesforceServiceCloudSource(element);
                     case "SalesforceSource": return SalesforceSource.DeserializeSalesforceSource(element);
-                    case "SapBwSource": return SapBwSource.DeserializeSapBwSource(element);
+                    case "SapBwSource": return SapBWSource.DeserializeSapBWSource(element);
                     case "SapCloudForCustomerSource": return SapCloudForCustomerSource.DeserializeSapCloudForCustomerSource(element);
                     case "SapEccSource": return SapEccSource.DeserializeSapEccSource(element);
                     case "SapHanaSource": return SapHanaSource.DeserializeSapHanaSource(element);

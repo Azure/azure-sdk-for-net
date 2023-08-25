@@ -15,15 +15,18 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static AvsSubscriptionQuotaAvailabilityResult DeserializeAvsSubscriptionQuotaAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, int>> hostsRemaining = default;
             Optional<AvsSubscriptionQuotaEnabled> quotaEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostsRemaining"))
+                if (property.NameEquals("hostsRemaining"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, int> dictionary = new Dictionary<string, int>();
@@ -34,11 +37,10 @@ namespace Azure.ResourceManager.Avs.Models
                     hostsRemaining = dictionary;
                     continue;
                 }
-                if (property.NameEquals("quotaEnabled"))
+                if (property.NameEquals("quotaEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quotaEnabled = new AvsSubscriptionQuotaEnabled(property.Value.GetString());

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Description { get; set; }
         /// <summary> Runtime connection string to cache. </summary>
         public string ConnectionString { get; set; }
-        /// <summary> Location identifier to use cache from (should be either &apos;default&apos; or valid Azure region identifier). </summary>
+        /// <summary> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </summary>
         public string UseFromLocation { get; set; }
         /// <summary> Original uri of entity in external system cache points to. </summary>
         public Uri ResourceUri { get; set; }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary> A class representing the MySqlFlexibleServerBackup data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlFlexibleServerBackup data model.
+    /// Server backup properties
+    /// </summary>
     public partial class MySqlFlexibleServerBackupData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlFlexibleServerBackupData. </summary>

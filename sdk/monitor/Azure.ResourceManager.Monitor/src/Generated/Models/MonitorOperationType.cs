@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> the operation associated with the notification and its value must be &quot;scale&quot;. </summary>
+    /// <summary> the operation associated with the notification and its value must be "scale". </summary>
     public readonly partial struct MonitorOperationType : IEquatable<MonitorOperationType>
     {
         private readonly string _value;

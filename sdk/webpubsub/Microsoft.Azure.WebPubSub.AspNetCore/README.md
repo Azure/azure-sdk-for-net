@@ -23,7 +23,7 @@ This library can be used to do the following actions. Details about the terms us
 Install the client library from [NuGet][package_ref]
 
 ```PowerShell
-dotnet add package Microsoft.Azure.WebPubSub.AspNetCore --prerelease
+dotnet add package Microsoft.Azure.WebPubSub.AspNetCore
 ```
 
 ### Prerequisites

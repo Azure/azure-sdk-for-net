@@ -15,96 +15,96 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(AuthenticationSettings))
             {
-                writer.WritePropertyName("authenticationSettings");
+                writer.WritePropertyName("authenticationSettings"u8);
                 writer.WriteObjectValue(AuthenticationSettings);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
-                writer.WritePropertyName("subscriptionKeyParameterNames");
+                writer.WritePropertyName("subscriptionKeyParameterNames"u8);
                 writer.WriteObjectValue(SubscriptionKeyParameterNames);
             }
             if (Optional.IsDefined(ApiType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
             if (Optional.IsDefined(ApiRevision))
             {
-                writer.WritePropertyName("apiRevision");
+                writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
             if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("apiVersion");
+                writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
             if (Optional.IsDefined(IsCurrent))
             {
-                writer.WritePropertyName("isCurrent");
+                writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
             }
             if (Optional.IsDefined(ApiRevisionDescription))
             {
-                writer.WritePropertyName("apiRevisionDescription");
+                writer.WritePropertyName("apiRevisionDescription"u8);
                 writer.WriteStringValue(ApiRevisionDescription);
             }
             if (Optional.IsDefined(ApiVersionDescription))
             {
-                writer.WritePropertyName("apiVersionDescription");
+                writer.WritePropertyName("apiVersionDescription"u8);
                 writer.WriteStringValue(ApiVersionDescription);
             }
             if (Optional.IsDefined(ApiVersionSetId))
             {
-                writer.WritePropertyName("apiVersionSetId");
+                writer.WritePropertyName("apiVersionSetId"u8);
                 writer.WriteStringValue(ApiVersionSetId);
             }
             if (Optional.IsDefined(IsSubscriptionRequired))
             {
-                writer.WritePropertyName("subscriptionRequired");
+                writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
             if (Optional.IsDefined(TermsOfServiceUri))
             {
-                writer.WritePropertyName("termsOfServiceUrl");
+                writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Contact))
             {
-                writer.WritePropertyName("contact");
+                writer.WritePropertyName("contact"u8);
                 writer.WriteObjectValue(Contact);
             }
             if (Optional.IsDefined(License))
             {
-                writer.WritePropertyName("license");
+                writer.WritePropertyName("license"u8);
                 writer.WriteObjectValue(License);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(ServiceUri))
             {
-                writer.WritePropertyName("serviceUrl");
+                writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsCollectionDefined(Protocols))
             {
-                writer.WritePropertyName("protocols");
+                writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {

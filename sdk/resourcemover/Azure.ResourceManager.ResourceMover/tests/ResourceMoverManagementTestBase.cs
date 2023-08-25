@@ -21,11 +21,13 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         protected ResourceMoverManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         protected ResourceMoverManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         [SetUp]
@@ -71,9 +73,8 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             return lro.Value;
         }
 
-        protected async Task<MoverResource> CreateMoverResource(MoverResourceSetResource moverResourceSet, ResourceIdentifier vnetId, string moverResourceName)
+        protected async Task<MoverResource> CreateMoverResource(MoverResourceSetResource moverResourceSet, ResourceIdentifier vnetId, string moverResourceName, string targetVnetName)
         {
-            string targetVnetName = Recording.GenerateAssetName("targetVnet-");
             MoverResourceData input = new MoverResourceData
             {
                 Properties = new MoverResourceProperties(vnetId)

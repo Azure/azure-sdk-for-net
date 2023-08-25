@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DataExportDetails))
             {
-                writer.WritePropertyName("dataExportDetails");
+                writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsCollectionDefined(DataImportDetails))
             {
-                writer.WritePropertyName("dataImportDetails");
+                writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("deviceType");
+            writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
-            writer.WritePropertyName("transferType");
+            writer.WritePropertyName("transferType"u8);
             writer.WriteStringValue(TransferType.ToSerialString());
-            writer.WritePropertyName("validationType");
+            writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
             writer.WriteEndObject();
         }

@@ -17,79 +17,79 @@ namespace Azure.ResourceManager.Attestation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Alg))
             {
-                writer.WritePropertyName("alg");
+                writer.WritePropertyName("alg"u8);
                 writer.WriteStringValue(Alg);
             }
             if (Optional.IsDefined(Crv))
             {
-                writer.WritePropertyName("crv");
+                writer.WritePropertyName("crv"u8);
                 writer.WriteStringValue(Crv);
             }
             if (Optional.IsDefined(D))
             {
-                writer.WritePropertyName("d");
+                writer.WritePropertyName("d"u8);
                 writer.WriteStringValue(D);
             }
             if (Optional.IsDefined(Dp))
             {
-                writer.WritePropertyName("dp");
+                writer.WritePropertyName("dp"u8);
                 writer.WriteStringValue(Dp);
             }
             if (Optional.IsDefined(Dq))
             {
-                writer.WritePropertyName("dq");
+                writer.WritePropertyName("dq"u8);
                 writer.WriteStringValue(Dq);
             }
             if (Optional.IsDefined(E))
             {
-                writer.WritePropertyName("e");
+                writer.WritePropertyName("e"u8);
                 writer.WriteStringValue(E);
             }
             if (Optional.IsDefined(K))
             {
-                writer.WritePropertyName("k");
+                writer.WritePropertyName("k"u8);
                 writer.WriteStringValue(K);
             }
             if (Optional.IsDefined(Kid))
             {
-                writer.WritePropertyName("kid");
+                writer.WritePropertyName("kid"u8);
                 writer.WriteStringValue(Kid);
             }
-            writer.WritePropertyName("kty");
+            writer.WritePropertyName("kty"u8);
             writer.WriteStringValue(Kty);
             if (Optional.IsDefined(N))
             {
-                writer.WritePropertyName("n");
+                writer.WritePropertyName("n"u8);
                 writer.WriteStringValue(N);
             }
             if (Optional.IsDefined(P))
             {
-                writer.WritePropertyName("p");
+                writer.WritePropertyName("p"u8);
                 writer.WriteStringValue(P);
             }
             if (Optional.IsDefined(Q))
             {
-                writer.WritePropertyName("q");
+                writer.WritePropertyName("q"u8);
                 writer.WriteStringValue(Q);
             }
             if (Optional.IsDefined(Qi))
             {
-                writer.WritePropertyName("qi");
+                writer.WritePropertyName("qi"u8);
                 writer.WriteStringValue(Qi);
             }
             if (Optional.IsDefined(Use))
             {
-                writer.WritePropertyName("use");
+                writer.WritePropertyName("use"u8);
                 writer.WriteStringValue(Use);
             }
             if (Optional.IsDefined(X))
             {
-                writer.WritePropertyName("x");
+                writer.WritePropertyName("x"u8);
                 writer.WriteStringValue(X);
             }
             if (Optional.IsCollectionDefined(X5C))
             {
-                writer.WritePropertyName("x5c");
+                writer.WritePropertyName("x5c"u8);
                 writer.WriteStartArray();
                 foreach (var item in X5C)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Attestation.Models
             }
             if (Optional.IsDefined(Y))
             {
-                writer.WritePropertyName("y");
+                writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
             }
             writer.WriteEndObject();

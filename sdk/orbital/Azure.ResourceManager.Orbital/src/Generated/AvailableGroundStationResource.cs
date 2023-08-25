@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary>
         /// Gets the specified available ground station.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Orbital/availableGroundStations/{groundStationName}
-        /// Operation Id: AvailableGroundStations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Orbital/availableGroundStations/{groundStationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AvailableGroundStationResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary>
         /// Gets the specified available ground station.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Orbital/availableGroundStations/{groundStationName}
-        /// Operation Id: AvailableGroundStations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Orbital/availableGroundStations/{groundStationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AvailableGroundStationResource> Get(CancellationToken cancellationToken = default)

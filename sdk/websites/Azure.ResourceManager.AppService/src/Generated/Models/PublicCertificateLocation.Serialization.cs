@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static PublicCertificateLocation ToPublicCertificateLocation(this string value)
         {
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return PublicCertificateLocation.Unknown;
-            if (string.Equals(value, "CurrentUserMy", StringComparison.InvariantCultureIgnoreCase)) return PublicCertificateLocation.CurrentUserMy;
-            if (string.Equals(value, "LocalMachineMy", StringComparison.InvariantCultureIgnoreCase)) return PublicCertificateLocation.LocalMachineMy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return PublicCertificateLocation.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CurrentUserMy")) return PublicCertificateLocation.CurrentUserMy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalMachineMy")) return PublicCertificateLocation.LocalMachineMy;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicCertificateLocation value.");
         }
     }

@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogLogsAgent DeserializeDatadogLogsAgent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> transport = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("transport"))
+                if (property.NameEquals("transport"u8))
                 {
                     transport = property.Value.GetString();
                     continue;

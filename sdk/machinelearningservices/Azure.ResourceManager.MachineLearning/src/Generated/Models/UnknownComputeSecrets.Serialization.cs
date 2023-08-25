@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static UnknownComputeSecrets DeserializeUnknownComputeSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ComputeType computeType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(property.Value.GetString());
                     continue;

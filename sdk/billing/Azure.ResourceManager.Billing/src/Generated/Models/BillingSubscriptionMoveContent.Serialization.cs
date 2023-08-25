@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Billing.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DestinationEnrollmentAccountId))
             {
-                writer.WritePropertyName("destinationEnrollmentAccountId");
+                writer.WritePropertyName("destinationEnrollmentAccountId"u8);
                 writer.WriteStringValue(DestinationEnrollmentAccountId);
             }
             if (Optional.IsDefined(DestinationInvoiceSectionId))
             {
-                writer.WritePropertyName("destinationInvoiceSectionId");
+                writer.WritePropertyName("destinationInvoiceSectionId"u8);
                 writer.WriteStringValue(DestinationInvoiceSectionId);
             }
             writer.WriteEndObject();

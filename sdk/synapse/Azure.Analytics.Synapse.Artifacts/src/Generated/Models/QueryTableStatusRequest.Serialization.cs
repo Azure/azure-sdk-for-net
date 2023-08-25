@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxSegmentCount))
             {
-                writer.WritePropertyName("maxSegmentCount");
+                writer.WritePropertyName("maxSegmentCount"u8);
                 writer.WriteNumberValue(MaxSegmentCount.Value);
             }
             if (Optional.IsDefined(ContinuationToken))
             {
-                writer.WritePropertyName("continuationToken");
+                writer.WritePropertyName("continuationToken"u8);
                 writer.WriteObjectValue(ContinuationToken);
             }
             writer.WriteEndObject();

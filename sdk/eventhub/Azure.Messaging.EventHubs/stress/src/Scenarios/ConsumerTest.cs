@@ -14,19 +14,16 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   The test scenario responsible for running all of the roles needed for the Consumer test scenario.
 /// <summary/>
 ///
-public class ConsumerTest
+public class ConsumerTest : TestScenario
 {
-    /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
-    private readonly TestParameters _testParameters;
-
-    /// <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
-    private readonly string _jobIndex;
-
-    /// <summary> The <see cref="Metrics"/> instance used to send metrics to application insights.</summary>
-    private Metrics _metrics;
+    /// <summary> The name of this test.</summary>
+    public override string Name { get; } = "ConsumerTest";
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    private static Role[] _roles = {Role.PartitionPublisher, Role.Consumer};
+    public override Role[] Roles { get; } = {Role.PartitionPublisher, Role.Consumer};
+
+    /// <summary>The ids of all of the partitions.</summary>
+    private string[] _partitionIds;
 
     /// <summary>Holds the set of events that have been read by this instance. The key is the unique Id set by the producer.</summary>
     private ConcurrentDictionary<string, byte> _readEvents { get; } = new ConcurrentDictionary<string, byte>();
@@ -43,13 +40,8 @@ public class ConsumerTest
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
     public ConsumerTest(TestParameters testParameters,
-                        Metrics metrics,
-                        string jobIndex = default)
+                        Metrics metrics) : base(testParameters, metrics, $"net-consumer-{Guid.NewGuid().ToString()}")
     {
-        _testParameters = testParameters;
-        _jobIndex = jobIndex;
-        _metrics = metrics;
-        _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-consumer-{Guid.NewGuid().ToString()}";
     }
 
     /// <summary>
@@ -58,22 +50,23 @@ public class ConsumerTest
     ///
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task RunTestAsync(CancellationToken cancellationToken)
+    public async override Task RunTestAsync(CancellationToken cancellationToken)
     {
-        var runAllRoles = !int.TryParse(_jobIndex, out var roleIndex);
-        var testRunTasks = new List<Task>();
-        var partitionIds = await _testParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
+        _partitionIds = await TestScenarioParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
+        var partitionCount = _partitionIds.Length;
 
-        if (runAllRoles)
+        var testRunTasks = new List<Task>();
+
+        if (TestScenarioParameters.RunAllRoles)
         {
-            foreach (Role role in _roles)
+            foreach (Role role in Roles)
             {
-                testRunTasks.Add(RunRoleAsync(role, roleIndex, partitionIds, cancellationToken));
+                testRunTasks.Add(RunRoleAsync(role, cancellationToken));
             }
         }
         else
         {
-            testRunTasks.Add(RunRoleAsync(_roles[roleIndex], roleIndex, partitionIds, cancellationToken));
+            testRunTasks.Add(RunRoleAsync(Roles[TestScenarioParameters.JobIndex], cancellationToken));
         }
 
         await Task.WhenAll(testRunTasks).ConfigureAwait(false);
@@ -86,24 +79,22 @@ public class ConsumerTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    private Task RunRoleAsync(Role role,
-                              int roleIndex,
-                              string[] partitionIds,
+    internal override Task RunRoleAsync(Role role,
                               CancellationToken cancellationToken)
     {
         switch (role)
         {
             case Role.Consumer:
                 var consumerConfiguration = new ConsumerConfiguration();
-                var consumer = new Consumer(_testParameters, consumerConfiguration, _metrics, _readEvents, _lastReadPartitionSequence);
+                var consumer = new Consumer(TestScenarioParameters, consumerConfiguration, MetricsCollection, _readEvents, _lastReadPartitionSequence);
                 return Task.Run(() => consumer.RunAsync(cancellationToken));
 
             case Role.PartitionPublisher:
                 var partitionPublisherConfiguration = new PartitionPublisherConfiguration();
-                var partitionsCount = partitionIds.Length;
-                var partitions = EventTracking.GetAssignedPartitions(partitionsCount, roleIndex, partitionIds, _roles);
+                var partitionsCount = _partitionIds.Length;
+                var partitions = EventTracking.GetAssignedPartitions(partitionsCount, TestScenarioParameters.JobIndex, _partitionIds, Roles);
 
-                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testParameters, _metrics, partitions);
+                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, TestScenarioParameters, MetricsCollection, partitions);
                 return Task.Run(() => partitionPublisher.RunAsync(cancellationToken));
 
             default:

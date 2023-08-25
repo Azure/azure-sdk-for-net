@@ -1,4 +1,4 @@
-﻿ // Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -9,6 +9,7 @@ using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.AppConfiguration;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
@@ -28,12 +29,14 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             : base(isAsync)
         {
             IgnoreTestInLiveMode();
+            IgnoreNetworkDependencyVersions();
         }
 
         protected AppConfigurationClientBase(bool isAsync, RecordedTestMode mode)
             : base(isAsync, mode)
         {
             IgnoreTestInLiveMode();
+            IgnoreNetworkDependencyVersions();
         }
 
         protected void Initialize()
@@ -47,6 +50,15 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             TestValue = "test value";
             ResourceGroupPrefix = "Default-AppConfiguration-";
             ArmClient = GetArmClient();
+        }
+
+        protected async Task<ResourceIdentifier> GetSubnetID(ResourceGroupResource ResGroup, string VnetName, string SubnetName, VirtualNetworkData VnetData)
+        {
+            ResourceIdentifier subnetID;
+            var vnetResource = await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, VnetData);
+            var subnetCollection = vnetResource.Value.GetSubnets();
+            subnetID = vnetResource.Value.Data.Subnets[0].Id;
+            return subnetID;
         }
 
         private void IgnoreTestInLiveMode()

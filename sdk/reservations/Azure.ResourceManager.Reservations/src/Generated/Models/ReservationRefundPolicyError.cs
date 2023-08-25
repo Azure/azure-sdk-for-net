@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of ReservationRefundPolicyError. </summary>
-        /// <param name="code"></param>
+        /// <param name="code"> Error code describing the reason that service is not able to process the incoming request. </param>
         /// <param name="message"></param>
         internal ReservationRefundPolicyError(ReservationErrorResponseCode? code, string message)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Message = message;
         }
 
-        /// <summary> Gets the code. </summary>
+        /// <summary> Error code describing the reason that service is not able to process the incoming request. </summary>
         public ReservationErrorResponseCode? Code { get; }
         /// <summary> Gets the message. </summary>
         public string Message { get; }

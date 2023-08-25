@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaServicesAccountFilter data model. </summary>
+    /// <summary>
+    /// A class representing the MediaServicesAccountFilter data model.
+    /// An Account Filter.
+    /// </summary>
     public partial class MediaServicesAccountFilterData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaServicesAccountFilterData. </summary>

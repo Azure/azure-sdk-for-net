@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static RecommendedSensitivityLabelUpdateKind ToRecommendedSensitivityLabelUpdateKind(this string value)
         {
-            if (string.Equals(value, "enable", StringComparison.InvariantCultureIgnoreCase)) return RecommendedSensitivityLabelUpdateKind.Enable;
-            if (string.Equals(value, "disable", StringComparison.InvariantCultureIgnoreCase)) return RecommendedSensitivityLabelUpdateKind.Disable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "enable")) return RecommendedSensitivityLabelUpdateKind.Enable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "disable")) return RecommendedSensitivityLabelUpdateKind.Disable;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecommendedSensitivityLabelUpdateKind value.");
         }
     }

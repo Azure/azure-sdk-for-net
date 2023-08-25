@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the P2SVpnGateway data model. </summary>
+    /// <summary>
+    /// A class representing the P2SVpnGateway data model.
+    /// P2SVpnGateway Resource.
+    /// </summary>
     public partial class P2SVpnGatewayData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of P2SVpnGatewayData. </summary>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the P2S VPN gateway resource. </param>
         /// <param name="vpnGatewayScaleUnit"> The scale unit for this p2s vpn gateway. </param>
         /// <param name="vpnServerConfiguration"> The VpnServerConfiguration to which the p2sVpnGateway is attached to. </param>
-        /// <param name="vpnClientConnectionHealth"> All P2S VPN clients&apos; connection health status. </param>
+        /// <param name="vpnClientConnectionHealth"> All P2S VPN clients' connection health status. </param>
         /// <param name="customDnsServers"> List of all customer specified DNS servers IP addresses. </param>
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the P2SVpnGateway. </param>
         internal P2SVpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, WritableSubResource virtualHub, IList<P2SConnectionConfiguration> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, WritableSubResource vpnServerConfiguration, VpnClientConnectionHealth vpnClientConnectionHealth, IList<string> customDnsServers, bool? isRoutingPreferenceInternet) : base(id, name, resourceType, location, tags)
@@ -87,7 +90,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> All P2S VPN clients&apos; connection health status. </summary>
+        /// <summary> All P2S VPN clients' connection health status. </summary>
         public VpnClientConnectionHealth VpnClientConnectionHealth { get; }
         /// <summary> List of all customer specified DNS servers IP addresses. </summary>
         public IList<string> CustomDnsServers { get; }

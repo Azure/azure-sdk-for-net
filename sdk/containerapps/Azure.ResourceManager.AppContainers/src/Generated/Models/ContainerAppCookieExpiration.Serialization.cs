@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Convention))
             {
-                writer.WritePropertyName("convention");
+                writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
             if (Optional.IsDefined(TimeToExpiration))
             {
-                writer.WritePropertyName("timeToExpiration");
+                writer.WritePropertyName("timeToExpiration"u8);
                 writer.WriteStringValue(TimeToExpiration);
             }
             writer.WriteEndObject();
@@ -30,21 +30,24 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCookieExpiration DeserializeContainerAppCookieExpiration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppCookieExpirationConvention> convention = default;
             Optional<string> timeToExpiration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("convention"))
+                if (property.NameEquals("convention"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     convention = property.Value.GetString().ToContainerAppCookieExpirationConvention();
                     continue;
                 }
-                if (property.NameEquals("timeToExpiration"))
+                if (property.NameEquals("timeToExpiration"u8))
                 {
                     timeToExpiration = property.Value.GetString();
                     continue;

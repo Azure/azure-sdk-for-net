@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("accessKey");
+            writer.WritePropertyName("accessKey"u8);
             writer.WriteStringValue(AccessKey);
             if (Optional.IsDefined(Suffix))
             {
-                writer.WritePropertyName("suffix");
+                writer.WritePropertyName("suffix"u8);
                 writer.WriteStringValue(Suffix);
             }
             writer.WriteEndObject();

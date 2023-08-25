@@ -54,5 +54,14 @@ namespace Azure.Storage.Files.DataLake.Models
         /// conditions on the creation of this file or directory.
         /// </summary>
         public DataLakeRequestConditions Conditions { get; set; }
+
+        /// <summary>
+        /// Optional encryption context that can be set the file.
+        /// Encryption context is file metadata that is not encrypted when stored on the file.
+        /// The primary application of this field is to store non-encrypted data that can be used to derive the customer-provided key
+        /// for a file.
+        /// Not applicable for directories.
+        /// </summary>
+        public string EncryptionContext { get; set; }
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StorageAccountStatus ToStorageAccountStatus(this string value)
         {
-            if (string.Equals(value, "available", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountStatus.Available;
-            if (string.Equals(value, "unavailable", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountStatus.Unavailable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "available")) return StorageAccountStatus.Available;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unavailable")) return StorageAccountStatus.Unavailable;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountStatus value.");
         }
     }

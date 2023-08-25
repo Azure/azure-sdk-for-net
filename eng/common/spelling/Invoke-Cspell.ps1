@@ -25,7 +25,7 @@ created in the temp folder, package*.json files will be placed in that folder.
 .PARAMETER LeavePackageInstallCache
 If set the PackageInstallCache will not be deleted. Use if there are multiple
 calls to Invoke-Cspell.ps1 to prevent creating multiple working directories and
-redundant calls `npm install`.
+redundant calls `npm ci`.
 
 .PARAMETER Test
 Run test functions against the script logic
@@ -167,9 +167,7 @@ $originalLocation = Get-Location
 
 try {
   Set-Location $PackageInstallCache
-  npm install npx | Out-Null
-  npm install cspell | Out-Null
-  npm install | Out-Null
+  npm ci | Write-Host
 
   # Use the mutated configuration file when calling cspell
   $command = "npx cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --relative"

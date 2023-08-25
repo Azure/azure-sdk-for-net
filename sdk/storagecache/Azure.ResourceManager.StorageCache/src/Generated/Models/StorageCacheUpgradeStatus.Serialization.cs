@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheUpgradeStatus DeserializeStorageCacheUpgradeStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currentFirmwareVersion = default;
             Optional<StorageCacheFirmwareStatusType> firmwareUpdateStatus = default;
             Optional<DateTimeOffset> firmwareUpdateDeadline = default;
@@ -22,42 +26,39 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<string> pendingFirmwareVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currentFirmwareVersion"))
+                if (property.NameEquals("currentFirmwareVersion"u8))
                 {
                     currentFirmwareVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firmwareUpdateStatus"))
+                if (property.NameEquals("firmwareUpdateStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firmwareUpdateStatus = new StorageCacheFirmwareStatusType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("firmwareUpdateDeadline"))
+                if (property.NameEquals("firmwareUpdateDeadline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firmwareUpdateDeadline = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastFirmwareUpdate"))
+                if (property.NameEquals("lastFirmwareUpdate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastFirmwareUpdate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("pendingFirmwareVersion"))
+                if (property.NameEquals("pendingFirmwareVersion"u8))
                 {
                     pendingFirmwareVersion = property.Value.GetString();
                     continue;

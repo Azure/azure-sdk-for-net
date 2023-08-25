@@ -15,15 +15,19 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static PrivateLinkResourcesWrapper DeserializePrivateLinkResourcesWrapper(JsonElement element)
         {
-            IReadOnlyList<FactoryPrivateLinkResource> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<DataFactoryPrivateLinkResource> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<FactoryPrivateLinkResource> array = new List<FactoryPrivateLinkResource>();
+                    List<DataFactoryPrivateLinkResource> array = new List<DataFactoryPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FactoryPrivateLinkResource.DeserializeFactoryPrivateLinkResource(item));
+                        array.Add(DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource(item));
                     }
                     value = array;
                     continue;

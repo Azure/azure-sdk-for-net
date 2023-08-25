@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag");
+                writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionLotSummary DeserializeConsumptionLotSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -51,42 +55,40 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<ConsumptionReseller> reseller = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,116 +97,106 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("originalAmount"))
+                        if (property0.NameEquals("originalAmount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             originalAmount = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("closedBalance"))
+                        if (property0.NameEquals("closedBalance"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("source"))
+                        if (property0.NameEquals("source"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             source = new ConsumptionLotSource(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("startDate"))
+                        if (property0.NameEquals("startDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("expirationDate"))
+                        if (property0.NameEquals("expirationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("poNumber"))
+                        if (property0.NameEquals("poNumber"u8))
                         {
                             poNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("purchasedDate"))
+                        if (property0.NameEquals("purchasedDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purchasedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new ConsumptionLotStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("creditCurrency"))
+                        if (property0.NameEquals("creditCurrency"u8))
                         {
                             creditCurrency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingCurrency"))
+                        if (property0.NameEquals("billingCurrency"u8))
                         {
                             billingCurrency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("originalAmountInBillingCurrency"))
+                        if (property0.NameEquals("originalAmountInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             originalAmountInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("closedBalanceInBillingCurrency"))
+                        if (property0.NameEquals("closedBalanceInBillingCurrency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("reseller"))
+                        if (property0.NameEquals("reseller"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value);

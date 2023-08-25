@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static ShareCredentialDetails DeserializeShareCredentialDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> shareName = default;
             Optional<ShareDestinationFormatType> shareType = default;
             Optional<string> userName = default;
@@ -22,36 +26,34 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IReadOnlyList<DataBoxAccessProtocol>> supportedAccessProtocols = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shareName"))
+                if (property.NameEquals("shareName"u8))
                 {
                     shareName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shareType"))
+                if (property.NameEquals("shareType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shareType = property.Value.GetString().ToShareDestinationFormatType();
                     continue;
                 }
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedAccessProtocols"))
+                if (property.NameEquals("supportedAccessProtocols"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxAccessProtocol> array = new List<DataBoxAccessProtocol>();

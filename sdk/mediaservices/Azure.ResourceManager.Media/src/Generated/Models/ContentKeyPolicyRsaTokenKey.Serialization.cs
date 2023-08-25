@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Exponent != null)
             {
-                writer.WritePropertyName("exponent");
+                writer.WritePropertyName("exponent"u8);
                 writer.WriteBase64StringValue(Exponent, "D");
             }
             else
@@ -27,26 +27,30 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Modulus != null)
             {
-                writer.WritePropertyName("modulus");
+                writer.WritePropertyName("modulus"u8);
                 writer.WriteBase64StringValue(Modulus, "D");
             }
             else
             {
                 writer.WriteNull("modulus");
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
 
         internal static ContentKeyPolicyRsaTokenKey DeserializeContentKeyPolicyRsaTokenKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             byte[] exponent = default;
             byte[] modulus = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exponent"))
+                if (property.NameEquals("exponent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
                     exponent = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("modulus"))
+                if (property.NameEquals("modulus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
                     modulus = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

@@ -30,15 +30,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the WinRMListener class.
         /// </summary>
         /// <param name="protocol">Specifies the protocol of WinRM listener.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;**http**
-        /// &lt;br&gt;&lt;br&gt; **https**. Possible values include: 'Http',
-        /// 'Https'</param>
+        /// Possible values are: **http,** **https.**. Possible values include:
+        /// 'Http', 'Https'</param>
         /// <param name="certificateUrl">This is the URL of a certificate that
         /// has been uploaded to Key Vault as a secret. For adding a secret to
         /// the Key Vault, see [Add a key or secret to the key
         /// vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add).
-        /// In this case, your certificate needs to be It is the Base64
-        /// encoding of the following JSON Object which is encoded in UTF-8:
+        /// In this case, your certificate needs to be the Base64 encoding of
+        /// the following JSON Object which is encoded in UTF-8:
         /// &lt;br&gt;&lt;br&gt; {&lt;br&gt;
         /// "data":"&lt;Base64-encoded-certificate&gt;",&lt;br&gt;
         /// "dataType":"pfx",&lt;br&gt;
@@ -61,10 +60,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the protocol of WinRM listener.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;**http** &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-        /// **https**. Possible values include: 'Http', 'Https'
+        /// Gets or sets specifies the protocol of WinRM listener. Possible
+        /// values are: **http,** **https.**. Possible values include: 'Http',
+        /// 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "protocol")]
         public ProtocolTypes? Protocol { get; set; }
@@ -74,8 +72,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// uploaded to Key Vault as a secret. For adding a secret to the Key
         /// Vault, see [Add a key or secret to the key
         /// vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add).
-        /// In this case, your certificate needs to be It is the Base64
-        /// encoding of the following JSON Object which is encoded in UTF-8:
+        /// In this case, your certificate needs to be the Base64 encoding of
+        /// the following JSON Object which is encoded in UTF-8:
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; {&amp;lt;br&amp;gt;
         /// "data":"&amp;lt;Base64-encoded-certificate&amp;gt;",&amp;lt;br&amp;gt;
         /// "dataType":"pfx",&amp;lt;br&amp;gt;

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static SiteExtensionType ToSiteExtensionType(this string value)
         {
-            if (string.Equals(value, "Gallery", StringComparison.InvariantCultureIgnoreCase)) return SiteExtensionType.Gallery;
-            if (string.Equals(value, "WebRoot", StringComparison.InvariantCultureIgnoreCase)) return SiteExtensionType.WebRoot;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Gallery")) return SiteExtensionType.Gallery;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WebRoot")) return SiteExtensionType.WebRoot;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteExtensionType value.");
         }
     }

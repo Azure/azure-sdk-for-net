@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Elastic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(MonitoringStatus))
             {
-                writer.WritePropertyName("monitoringStatus");
+                writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
             if (Optional.IsDefined(ElasticProperties))
             {
-                writer.WritePropertyName("elasticProperties");
+                writer.WritePropertyName("elasticProperties"u8);
                 writer.WriteObjectValue(ElasticProperties);
             }
             if (Optional.IsDefined(UserInfo))
             {
-                writer.WritePropertyName("userInfo");
+                writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
             writer.WriteEndObject();
@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static MonitorProperties DeserializeMonitorProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<MonitoringStatus> monitoringStatus = default;
             Optional<ElasticProperties> elasticProperties = default;
@@ -48,61 +52,55 @@ namespace Azure.ResourceManager.Elastic.Models
             Optional<int> liftrResourcePreference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("monitoringStatus"))
+                if (property.NameEquals("monitoringStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monitoringStatus = new MonitoringStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("elasticProperties"))
+                if (property.NameEquals("elasticProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     elasticProperties = ElasticProperties.DeserializeElasticProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("userInfo"))
+                if (property.NameEquals("userInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userInfo = UserInfo.DeserializeUserInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("liftrResourceCategory"))
+                if (property.NameEquals("liftrResourceCategory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     liftrResourceCategory = new LiftrResourceCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("liftrResourcePreference"))
+                if (property.NameEquals("liftrResourcePreference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     liftrResourcePreference = property.Value.GetInt32();

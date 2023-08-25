@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </summary>
     public readonly partial struct MachineLearningProvisioningState : IEquatable<MachineLearningProvisioningState>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: ProvisioningState.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static MachineLearningProvisioningState Unknown { get; } = new MachineLearningProvisioningState(UnknownValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static MachineLearningProvisioningState Updating { get; } = new MachineLearningProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static MachineLearningProvisioningState Creating { get; } = new MachineLearningProvisioningState(CreatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static MachineLearningProvisioningState Deleting { get; } = new MachineLearningProvisioningState(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static MachineLearningProvisioningState Succeeded { get; } = new MachineLearningProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static MachineLearningProvisioningState Failed { get; } = new MachineLearningProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static MachineLearningProvisioningState Canceled { get; } = new MachineLearningProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="MachineLearningProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningProvisioningState left, MachineLearningProvisioningState right) => left.Equals(right);

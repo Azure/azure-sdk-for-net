@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the DscConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the DscConfiguration data model.
+    /// Definition of the configuration type.
+    /// </summary>
     public partial class DscConfigurationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DscConfigurationData. </summary>

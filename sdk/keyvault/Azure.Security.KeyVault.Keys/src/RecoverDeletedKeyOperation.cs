@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(RecoverDeletedKeyOperation), new[]
+            _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(RecoverDeletedKeyOperation), new[]
             {
                 new KeyValuePair<string, string>("secret", _value.Name), // Retained for backward compatibility.
                 new KeyValuePair<string, string>("key", _value.Name),
@@ -101,11 +101,7 @@ namespace Azure.Security.KeyVault.Keys
                     return OperationState.Pending(response);
 
                 default:
-                    RequestFailedException ex = async
-                        ? await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                        : _pipeline.Diagnostics.CreateRequestFailedException(response);
-
-                    return OperationState.Failure(response, ex);
+                    return OperationState.Failure(response, new RequestFailedException(response));
             }
         }
     }

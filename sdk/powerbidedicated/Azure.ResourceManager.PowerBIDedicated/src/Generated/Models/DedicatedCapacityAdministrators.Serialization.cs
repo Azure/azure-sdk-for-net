@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Members))
             {
-                writer.WritePropertyName("members");
+                writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();
                 foreach (var item in Members)
                 {
@@ -31,14 +31,17 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         internal static DedicatedCapacityAdministrators DeserializeDedicatedCapacityAdministrators(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> members = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("members"))
+                if (property.NameEquals("members"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

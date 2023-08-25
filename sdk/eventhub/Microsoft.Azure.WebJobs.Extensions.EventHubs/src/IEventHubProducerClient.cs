@@ -3,6 +3,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -10,6 +11,7 @@ namespace Microsoft.Azure.WebJobs
     internal interface IEventHubProducerClient
     {
         public Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken);
+        public Task<IEventDataBatch> CreateBatchAsync(CreateBatchOptions options, CancellationToken cancellationToken);
         public Task SendAsync(IEventDataBatch batch, CancellationToken cancellationToken);
     }
 }

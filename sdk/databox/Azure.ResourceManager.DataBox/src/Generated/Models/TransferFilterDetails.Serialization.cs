@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataAccountType");
+            writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
             if (Optional.IsDefined(BlobFilterDetails))
             {
-                writer.WritePropertyName("blobFilterDetails");
+                writer.WritePropertyName("blobFilterDetails"u8);
                 writer.WriteObjectValue(BlobFilterDetails);
             }
             if (Optional.IsDefined(AzureFileFilterDetails))
             {
-                writer.WritePropertyName("azureFileFilterDetails");
+                writer.WritePropertyName("azureFileFilterDetails"u8);
                 writer.WriteObjectValue(AzureFileFilterDetails);
             }
             if (Optional.IsCollectionDefined(FilterFileDetails))
             {
-                writer.WritePropertyName("filterFileDetails");
+                writer.WritePropertyName("filterFileDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilterFileDetails)
                 {
@@ -43,42 +43,43 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferFilterDetails DeserializeTransferFilterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataAccountType dataAccountType = default;
             Optional<BlobFilterDetails> blobFilterDetails = default;
             Optional<AzureFileFilterDetails> azureFileFilterDetails = default;
             Optional<IList<FilterFileDetails>> filterFileDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataAccountType"))
+                if (property.NameEquals("dataAccountType"u8))
                 {
                     dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
-                if (property.NameEquals("blobFilterDetails"))
+                if (property.NameEquals("blobFilterDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blobFilterDetails = BlobFilterDetails.DeserializeBlobFilterDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureFileFilterDetails"))
+                if (property.NameEquals("azureFileFilterDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureFileFilterDetails = AzureFileFilterDetails.DeserializeAzureFileFilterDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("filterFileDetails"))
+                if (property.NameEquals("filterFileDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FilterFileDetails> array = new List<FilterFileDetails>();

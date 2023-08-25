@@ -45,18 +45,26 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Check whether a bot name is available.
-        /// Request Path: /providers/Microsoft.BotService/checkNameAvailability
-        /// Operation Id: Bots_GetCheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BotService/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_GetCheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="checkNameAvailabilityRequestBody"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponseBody>> GetCheckNameAvailabilityBotAsync(CheckNameAvailabilityRequestBody checkNameAvailabilityRequestBody, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotServiceNameAvailabilityResult>> CheckBotServiceNameAvailabilityAsync(BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = BotClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetCheckNameAvailabilityBot");
+            using var scope = BotClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckBotServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = await BotRestClient.GetCheckNameAvailabilityAsync(checkNameAvailabilityRequestBody, cancellationToken).ConfigureAwait(false);
+                var response = await BotRestClient.GetCheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -68,18 +76,26 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Check whether a bot name is available.
-        /// Request Path: /providers/Microsoft.BotService/checkNameAvailability
-        /// Operation Id: Bots_GetCheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BotService/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_GetCheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="checkNameAvailabilityRequestBody"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponseBody> GetCheckNameAvailabilityBot(CheckNameAvailabilityRequestBody checkNameAvailabilityRequestBody, CancellationToken cancellationToken = default)
+        public virtual Response<BotServiceNameAvailabilityResult> CheckBotServiceNameAvailability(BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = BotClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetCheckNameAvailabilityBot");
+            using var scope = BotClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckBotServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = BotRestClient.GetCheckNameAvailability(checkNameAvailabilityRequestBody, cancellationToken);
+                var response = BotRestClient.GetCheckNameAvailability(content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Initializes a new instance of NfsAccessRule. </summary>
         /// <param name="scope"> Scope for this rule. The scope and filter determine which clients match the rule. </param>
-        /// <param name="filter"> Filter applied to the scope for this rule. The filter&apos;s format depends on its scope. &apos;default&apos; scope matches all clients and has no filter value. &apos;network&apos; scope takes a filter in CIDR format (for example, 10.99.1.0/24). &apos;host&apos; takes an IP address or fully qualified domain name as filter. If a client does not match any filter rule and there is no default rule, access is denied. </param>
+        /// <param name="filter"> Filter applied to the scope for this rule. The filter's format depends on its scope. 'default' scope matches all clients and has no filter value. 'network' scope takes a filter in CIDR format (for example, 10.99.1.0/24). 'host' takes an IP address or fully qualified domain name as filter. If a client does not match any filter rule and there is no default rule, access is denied. </param>
         /// <param name="access"> Access allowed by this rule. </param>
         /// <param name="allowSuid"> Allow SUID semantics. </param>
-        /// <param name="allowSubmountAccess"> For the default policy, allow access to subdirectories under the root export. If this is set to no, clients can only mount the path &apos;/&apos;. If set to yes, clients can mount a deeper path, like &apos;/a/b&apos;. </param>
+        /// <param name="allowSubmountAccess"> For the default policy, allow access to subdirectories under the root export. If this is set to no, clients can only mount the path '/'. If set to yes, clients can mount a deeper path, like '/a/b'. </param>
         /// <param name="enableRootSquash"> Map root accesses to anonymousUID and anonymousGID. </param>
         /// <param name="anonymousUID"> UID value that replaces 0 when rootSquash is true. 65534 will be used if not provided. </param>
         /// <param name="anonymousGID"> GID value that replaces 0 when rootSquash is true. This will use the value of anonymousUID if not provided. </param>
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Scope for this rule. The scope and filter determine which clients match the rule. </summary>
         public NfsAccessRuleScope Scope { get; set; }
-        /// <summary> Filter applied to the scope for this rule. The filter&apos;s format depends on its scope. &apos;default&apos; scope matches all clients and has no filter value. &apos;network&apos; scope takes a filter in CIDR format (for example, 10.99.1.0/24). &apos;host&apos; takes an IP address or fully qualified domain name as filter. If a client does not match any filter rule and there is no default rule, access is denied. </summary>
+        /// <summary> Filter applied to the scope for this rule. The filter's format depends on its scope. 'default' scope matches all clients and has no filter value. 'network' scope takes a filter in CIDR format (for example, 10.99.1.0/24). 'host' takes an IP address or fully qualified domain name as filter. If a client does not match any filter rule and there is no default rule, access is denied. </summary>
         public string Filter { get; set; }
         /// <summary> Access allowed by this rule. </summary>
         public NfsAccessRuleAccess Access { get; set; }
         /// <summary> Allow SUID semantics. </summary>
         public bool? AllowSuid { get; set; }
-        /// <summary> For the default policy, allow access to subdirectories under the root export. If this is set to no, clients can only mount the path &apos;/&apos;. If set to yes, clients can mount a deeper path, like &apos;/a/b&apos;. </summary>
+        /// <summary> For the default policy, allow access to subdirectories under the root export. If this is set to no, clients can only mount the path '/'. If set to yes, clients can mount a deeper path, like '/a/b'. </summary>
         public bool? AllowSubmountAccess { get; set; }
         /// <summary> Map root accesses to anonymousUID and anonymousGID. </summary>
         public bool? EnableRootSquash { get; set; }

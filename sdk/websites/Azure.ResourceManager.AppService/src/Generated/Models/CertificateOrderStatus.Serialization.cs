@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static CertificateOrderStatus ToCertificateOrderStatus(this string value)
         {
-            if (string.Equals(value, "Pendingissuance", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderStatus.Pendingissuance;
-            if (string.Equals(value, "Issued", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderStatus.Issued;
-            if (string.Equals(value, "Revoked", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderStatus.Revoked;
-            if (string.Equals(value, "Canceled", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderStatus.Canceled;
-            if (string.Equals(value, "Denied", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderStatus.Denied;
-            if (string.Equals(value, "Pendingrevocation", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderStatus.Pendingrevocation;
-            if (string.Equals(value, "PendingRekey", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderStatus.PendingRekey;
-            if (string.Equals(value, "Unused", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderStatus.Unused;
-            if (string.Equals(value, "Expired", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderStatus.Expired;
-            if (string.Equals(value, "NotSubmitted", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderStatus.NotSubmitted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pendingissuance")) return CertificateOrderStatus.Pendingissuance;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Issued")) return CertificateOrderStatus.Issued;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Revoked")) return CertificateOrderStatus.Revoked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return CertificateOrderStatus.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Denied")) return CertificateOrderStatus.Denied;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pendingrevocation")) return CertificateOrderStatus.Pendingrevocation;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PendingRekey")) return CertificateOrderStatus.PendingRekey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unused")) return CertificateOrderStatus.Unused;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Expired")) return CertificateOrderStatus.Expired;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSubmitted")) return CertificateOrderStatus.NotSubmitted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CertificateOrderStatus value.");
         }
     }

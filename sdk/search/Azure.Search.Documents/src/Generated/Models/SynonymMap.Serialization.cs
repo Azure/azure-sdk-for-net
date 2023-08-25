@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("format");
+            writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
-            writer.WritePropertyName("synonyms");
+            writer.WritePropertyName("synonyms"u8);
             writer.WriteStringValue(Synonyms);
             if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
-                    writer.WritePropertyName("encryptionKey");
+                    writer.WritePropertyName("encryptionKey"u8);
                     writer.WriteObjectValue(EncryptionKey);
                 }
                 else
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(_etag))
             {
-                writer.WritePropertyName("@odata.etag");
+                writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
             writer.WriteEndObject();
@@ -43,6 +43,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SynonymMap DeserializeSynonymMap(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string format = default;
             string synonyms = default;
@@ -50,22 +54,22 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("format"))
+                if (property.NameEquals("format"u8))
                 {
                     format = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("synonyms"))
+                if (property.NameEquals("synonyms"u8))
                 {
                     synonyms = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionKey"))
+                if (property.NameEquals("encryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("@odata.etag"))
+                if (property.NameEquals("@odata.etag"u8))
                 {
                     odataEtag = property.Value.GetString();
                     continue;

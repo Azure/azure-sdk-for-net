@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SecurityEventSqlInjectionAdditionalProperties DeserializeSecurityEventSqlInjectionAdditionalProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> threatId = default;
             Optional<string> statement = default;
             Optional<int> statementHighlightOffset = default;
@@ -23,57 +27,53 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("threatId"))
+                if (property.NameEquals("threatId"u8))
                 {
                     threatId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statement"))
+                if (property.NameEquals("statement"u8))
                 {
                     statement = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statementHighlightOffset"))
+                if (property.NameEquals("statementHighlightOffset"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statementHighlightOffset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("statementHighlightLength"))
+                if (property.NameEquals("statementHighlightLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statementHighlightLength = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("errorSeverity"))
+                if (property.NameEquals("errorSeverity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorSeverity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;

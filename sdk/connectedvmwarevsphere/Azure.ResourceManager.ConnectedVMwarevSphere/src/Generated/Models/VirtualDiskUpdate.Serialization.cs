@@ -17,42 +17,42 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
-                writer.WritePropertyName("diskSizeGB");
+                writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
             if (Optional.IsDefined(DeviceKey))
             {
-                writer.WritePropertyName("deviceKey");
+                writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
             if (Optional.IsDefined(DiskMode))
             {
-                writer.WritePropertyName("diskMode");
+                writer.WritePropertyName("diskMode"u8);
                 writer.WriteStringValue(DiskMode.Value.ToString());
             }
             if (Optional.IsDefined(ControllerKey))
             {
-                writer.WritePropertyName("controllerKey");
+                writer.WritePropertyName("controllerKey"u8);
                 writer.WriteNumberValue(ControllerKey.Value);
             }
             if (Optional.IsDefined(UnitNumber))
             {
-                writer.WritePropertyName("unitNumber");
+                writer.WritePropertyName("unitNumber"u8);
                 writer.WriteNumberValue(UnitNumber.Value);
             }
             if (Optional.IsDefined(DeviceName))
             {
-                writer.WritePropertyName("deviceName");
+                writer.WritePropertyName("deviceName"u8);
                 writer.WriteStringValue(DeviceName);
             }
             if (Optional.IsDefined(DiskType))
             {
-                writer.WritePropertyName("diskType");
+                writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
             writer.WriteEndObject();

@@ -6,6 +6,7 @@ using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using System;
 using System.Buffers;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 if (result == null)
                 {
-                    throw new ArgumentNullException(AuthenticationEventResource.Ex_Invalid_Return);
+                    throw new ResponseValidationException(AuthenticationEventResource.Ex_Invalid_Return);
                 }
 
                 if (result is AuthenticationEventResponse action)

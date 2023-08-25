@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Subscription.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BlockSubscriptionsLeavingTenant))
             {
-                writer.WritePropertyName("blockSubscriptionsLeavingTenant");
+                writer.WritePropertyName("blockSubscriptionsLeavingTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsLeavingTenant.Value);
             }
             if (Optional.IsDefined(BlockSubscriptionsIntoTenant))
             {
-                writer.WritePropertyName("blockSubscriptionsIntoTenant");
+                writer.WritePropertyName("blockSubscriptionsIntoTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsIntoTenant.Value);
             }
             if (Optional.IsCollectionDefined(ExemptedPrincipals))
             {
-                writer.WritePropertyName("exemptedPrincipals");
+                writer.WritePropertyName("exemptedPrincipals"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExemptedPrincipals)
                 {

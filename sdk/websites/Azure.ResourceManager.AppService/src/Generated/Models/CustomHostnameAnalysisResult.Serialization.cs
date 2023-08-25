@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CNameRecords))
             {
-                writer.WritePropertyName("cNameRecords");
+                writer.WritePropertyName("cNameRecords"u8);
                 writer.WriteStartArray();
                 foreach (var item in CNameRecords)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(TxtRecords))
             {
-                writer.WritePropertyName("txtRecords");
+                writer.WritePropertyName("txtRecords"u8);
                 writer.WriteStartArray();
                 foreach (var item in TxtRecords)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(ARecords))
             {
-                writer.WritePropertyName("aRecords");
+                writer.WritePropertyName("aRecords"u8);
                 writer.WriteStartArray();
                 foreach (var item in ARecords)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(AlternateCNameRecords))
             {
-                writer.WritePropertyName("alternateCNameRecords");
+                writer.WritePropertyName("alternateCNameRecords"u8);
                 writer.WriteStartArray();
                 foreach (var item in AlternateCNameRecords)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(AlternateTxtRecords))
             {
-                writer.WritePropertyName("alternateTxtRecords");
+                writer.WritePropertyName("alternateTxtRecords"u8);
                 writer.WriteStartArray();
                 foreach (var item in AlternateTxtRecords)
                 {
@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static CustomHostnameAnalysisResult DeserializeCustomHostnameAnalysisResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -99,37 +103,36 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<string>> alternateTxtRecords = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,66 +141,60 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("isHostnameAlreadyVerified"))
+                        if (property0.NameEquals("isHostnameAlreadyVerified"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isHostnameAlreadyVerified = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("customDomainVerificationTest"))
+                        if (property0.NameEquals("customDomainVerificationTest"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             customDomainVerificationTest = property0.Value.GetString().ToDnsVerificationTestResult();
                             continue;
                         }
-                        if (property0.NameEquals("customDomainVerificationFailureInfo"))
+                        if (property0.NameEquals("customDomainVerificationFailureInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             customDomainVerificationFailureInfo = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("hasConflictOnScaleUnit"))
+                        if (property0.NameEquals("hasConflictOnScaleUnit"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hasConflictOnScaleUnit = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("hasConflictAcrossSubscription"))
+                        if (property0.NameEquals("hasConflictAcrossSubscription"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hasConflictAcrossSubscription = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("conflictingAppResourceId"))
+                        if (property0.NameEquals("conflictingAppResourceId"u8))
                         {
                             conflictingAppResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("cNameRecords"))
+                        if (property0.NameEquals("cNameRecords"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -208,11 +205,10 @@ namespace Azure.ResourceManager.AppService.Models
                             cNameRecords = array;
                             continue;
                         }
-                        if (property0.NameEquals("txtRecords"))
+                        if (property0.NameEquals("txtRecords"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -223,11 +219,10 @@ namespace Azure.ResourceManager.AppService.Models
                             txtRecords = array;
                             continue;
                         }
-                        if (property0.NameEquals("aRecords"))
+                        if (property0.NameEquals("aRecords"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -238,11 +233,10 @@ namespace Azure.ResourceManager.AppService.Models
                             aRecords = array;
                             continue;
                         }
-                        if (property0.NameEquals("alternateCNameRecords"))
+                        if (property0.NameEquals("alternateCNameRecords"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -253,11 +247,10 @@ namespace Azure.ResourceManager.AppService.Models
                             alternateCNameRecords = array;
                             continue;
                         }
-                        if (property0.NameEquals("alternateTxtRecords"))
+                        if (property0.NameEquals("alternateTxtRecords"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();

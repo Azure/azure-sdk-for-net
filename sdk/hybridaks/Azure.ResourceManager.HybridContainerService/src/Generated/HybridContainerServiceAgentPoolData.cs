@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    /// <summary> A class representing the HybridContainerServiceAgentPool data model. </summary>
+    /// <summary>
+    /// A class representing the HybridContainerServiceAgentPool data model.
+    /// The agentPool resource definition
+    /// </summary>
     public partial class HybridContainerServiceAgentPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HybridContainerServiceAgentPoolData. </summary>
@@ -37,10 +40,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
         /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
         /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
-        /// <param name="mode"> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: &apos;System&apos;, &apos;LB&apos;, &apos;User&apos;. Default is &apos;User&apos;. </param>
+        /// <param name="mode"> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: 'System', 'LB', 'User'. Default is 'User'. </param>
         /// <param name="nodeLabels"> NodeLabels - Agent pool node labels to be persisted across all nodes in agent pool. </param>
         /// <param name="nodeTaints"> NodeTaints - Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
-        /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: &apos;Linux&apos;, &apos;Windows&apos;. </param>
+        /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: 'Linux', 'Windows'. </param>
         /// <param name="nodeImageVersion"> The version of node image. </param>
         /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
         /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>
@@ -77,13 +80,13 @@ namespace Azure.ResourceManager.HybridContainerService
         public int? MaxPods { get; set; }
         /// <summary> The minimum number of nodes for auto-scaling. </summary>
         public int? MinCount { get; set; }
-        /// <summary> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: &apos;System&apos;, &apos;LB&apos;, &apos;User&apos;. Default is &apos;User&apos;. </summary>
+        /// <summary> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: 'System', 'LB', 'User'. Default is 'User'. </summary>
         public Mode? Mode { get; set; }
         /// <summary> NodeLabels - Agent pool node labels to be persisted across all nodes in agent pool. </summary>
         public IDictionary<string, string> NodeLabels { get; }
         /// <summary> NodeTaints - Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </summary>
         public IList<string> NodeTaints { get; }
-        /// <summary> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: &apos;Linux&apos;, &apos;Windows&apos;. </summary>
+        /// <summary> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: 'Linux', 'Windows'. </summary>
         public OSType? OSType { get; set; }
         /// <summary> The version of node image. </summary>
         public string NodeImageVersion { get; set; }

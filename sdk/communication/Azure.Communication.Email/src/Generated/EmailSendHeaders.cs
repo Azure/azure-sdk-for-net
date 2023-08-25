@@ -17,11 +17,9 @@ namespace Azure.Communication.Email
         {
             _response = response;
         }
-        /// <summary> Status of a repeatable request. </summary>
-        public string RepeatabilityResult => _response.Headers.TryGetValue("Repeatability-Result", out string value) ? value : null;
-        /// <summary> Location url of where to poll the status of this message from. </summary>
+        /// <summary> Location url of where to poll the status of this operation from. </summary>
         public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
-        /// <summary> Amount of time client should wait before retrying the request, specified in seconds. </summary>
-        public int? RetryAfter => _response.Headers.TryGetValue("Retry-After", out int? value) ? value : null;
+        /// <summary> This header will only be present when the operation status is a non-terminal status. It indicates the minimum amount of time in seconds to wait before polling for operation status again. </summary>
+        public int? RetryAfter => _response.Headers.TryGetValue("retry-after", out int? value) ? value : null;
     }
 }

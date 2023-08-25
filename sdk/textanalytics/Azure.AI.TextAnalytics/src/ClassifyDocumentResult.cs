@@ -7,8 +7,7 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A representation of the result of performing dynamic classification or custom text classification on a given
-    /// document.
+    /// A representation of the result of performing custom text classification on a given document.
     /// </summary>
     public class ClassifyDocumentResult : TextAnalyticsResult
     {
@@ -21,12 +20,10 @@ namespace Azure.AI.TextAnalytics
             string id,
             TextDocumentStatistics statistics,
             ClassificationCategoryCollection classifications,
-            DetectedLanguage? detectedLanguage,
             IReadOnlyCollection<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _classifications = classifications;
-            DetectedLanguage = detectedLanguage;
             Warnings = warnings;
         }
 
@@ -34,12 +31,6 @@ namespace Azure.AI.TextAnalytics
         /// Initializes a <see cref="ClassifyDocumentResult"/> with an error.
         /// </summary>
         internal ClassifyDocumentResult(string id, TextAnalyticsError error) : base(id, error) { }
-
-        /// <summary>
-        /// The language of the input document as detected by the service when requested to perform automatic language
-        /// detection, which is possible by specifying "auto" as the language of the input document.
-        /// </summary>
-        public DetectedLanguage? DetectedLanguage { get; }
 
         /// <summary>
         /// The warnings that resulted from processing the document.

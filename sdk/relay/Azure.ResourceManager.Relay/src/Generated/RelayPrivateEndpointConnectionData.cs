@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary> A class representing the RelayPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the RelayPrivateEndpointConnection data model.
+    /// Properties of the PrivateEndpointConnection.
+    /// </summary>
     public partial class RelayPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of RelayPrivateEndpointConnectionData. </summary>

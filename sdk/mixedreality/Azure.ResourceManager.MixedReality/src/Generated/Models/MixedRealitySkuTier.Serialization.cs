@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.MixedReality.Models
 
         public static MixedRealitySkuTier ToMixedRealitySkuTier(this string value)
         {
-            if (string.Equals(value, "Free", StringComparison.InvariantCultureIgnoreCase)) return MixedRealitySkuTier.Free;
-            if (string.Equals(value, "Basic", StringComparison.InvariantCultureIgnoreCase)) return MixedRealitySkuTier.Basic;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return MixedRealitySkuTier.Standard;
-            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return MixedRealitySkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return MixedRealitySkuTier.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return MixedRealitySkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return MixedRealitySkuTier.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return MixedRealitySkuTier.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MixedRealitySkuTier value.");
         }
     }

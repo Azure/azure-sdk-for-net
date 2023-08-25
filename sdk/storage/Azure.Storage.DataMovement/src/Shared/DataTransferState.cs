@@ -2,73 +2,49 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.DataMovement.Models;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Defines the state of the transfer
     /// </summary>
-    internal class DataTransferState : IAsyncDisposable
+    internal class DataTransferState
     {
-        // To detect redundant calls
-        private bool _disposedValue;
-
+        private readonly object _statusLock = new object();
         private string _id;
-        private StorageTransferStatus _status;
-        private long _currentTransferredBytes;
-        private SemaphoreSlim _statusSemaphore;
+        private DataTransferStatus _status;
 
-        public StorageTransferStatus Status => _status;
+        public TaskCompletionSource<DataTransferStatus> CompletionSource;
 
-        /// <summary>
-        /// constructor
-        /// </summary>
-        public DataTransferState()
-        {
-            _disposedValue = false;
-            _statusSemaphore = new SemaphoreSlim(1, 1);
-            _id = Guid.NewGuid().ToString();
-            _status = StorageTransferStatus.Queued;
-            _currentTransferredBytes = 0;
-        }
+        public CancellationTokenSource CancellationTokenSource { get; internal set; }
 
-        /// <summary>
-        /// constructor for mocking
-        /// </summary>
-        public DataTransferState(StorageTransferStatus status)
-        {
-            _id = Guid.NewGuid().ToString();
-            _status = status;
-            _currentTransferredBytes = 0;
-        }
+        public DataTransferStatus Status => _status;
 
         /// <summary>
         /// Constructor to resume current jobs
         /// </summary>
-        public DataTransferState(string id, long bytesTransferred)
+        /// <param name="id">The transfer ID of the transfer object.</param>
+        /// <param name="status">The Transfer Status of the Transfer. See <see cref="DataTransferStatus"/>.</param>
+        public DataTransferState(
+            string id = default,
+            DataTransferStatus status = DataTransferStatus.Queued)
         {
-            _id = id;
-            _status = StorageTransferStatus.Queued;
-            _currentTransferredBytes = bytesTransferred;
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (!_disposedValue)
+            _id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
+            _status = status;
+            CompletionSource = new TaskCompletionSource<DataTransferStatus>(
+                _status,
+                TaskCreationOptions.RunContinuationsAsynchronously);
+            if (DataTransferStatus.Completed == status ||
+                        DataTransferStatus.CompletedWithSkippedTransfers == status ||
+                        DataTransferStatus.CompletedWithFailedTransfers == status)
             {
-                _disposedValue = true;
-                if (_statusSemaphore.CurrentCount == 0)
-                {
-                    await _statusSemaphore.WaitAsync().ConfigureAwait(false);
-                    _statusSemaphore.Release();
-                }
-                _statusSemaphore.Dispose();
+                CompletionSource.TrySetResult(status);
             }
+            CancellationTokenSource = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -85,16 +61,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public bool HasCompleted
         {
-            get { return _status >= StorageTransferStatus.Completed; }
-            internal set { }
-        }
-
-        /// <summary>
-        /// Defines how many bytes are transferred to far
-        /// </summary>
-        public long TransferredBytes
-        {
-            get { return _currentTransferredBytes; }
+            get {
+                return (DataTransferStatus.Completed == _status ||
+                        DataTransferStatus.CompletedWithSkippedTransfers == _status ||
+                        DataTransferStatus.CompletedWithFailedTransfers == _status);
+            }
             internal set { }
         }
 
@@ -108,37 +79,72 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Sets the completion status
+        /// Gets the status of the transfer
         /// </summary>
-        /// <param name="status"></param>
-        public async Task SetTransferStatus(StorageTransferStatus status)
+        /// <returns></returns>
+        public DataTransferStatus GetTransferStatus()
         {
-            if (!_disposedValue)
+            lock (_statusLock)
             {
-                await _statusSemaphore.WaitAsync().ConfigureAwait(false);
-                if (_status != status)
-                {
-                    _status = status;
-                }
-                _statusSemaphore.Release();
+                return _status;
             }
         }
 
         /// <summary>
-        /// Incrementes the amount of bytes to the current value
+        /// Sets the completion status
         /// </summary>
-        public void ResetTransferredBytes()
+        /// <param name="status"></param>
+        /// <returns>Returns whether or not the status has been changed/set</returns>
+        public bool TrySetTransferStatus(DataTransferStatus status)
         {
-            Volatile.Write(ref _currentTransferredBytes, 0);
+            lock (_statusLock)
+            {
+                if (_status != status)
+                {
+                    _status = status;
+                    if (DataTransferStatus.Paused == status ||
+                        DataTransferStatus.Completed == status ||
+                        DataTransferStatus.CompletedWithSkippedTransfers == status ||
+                        DataTransferStatus.CompletedWithFailedTransfers == status)
+                    {
+                        // If the _completionSource has been cancelled or the exception
+                        // has been set, we don't need to check if TrySetResult returns false
+                        // because it's acceptable to cancel or have an error occur before then.
+                        CompletionSource.TrySetResult(status);
+                    }
+                    return true;
+                }
+                return false;
+            }
         }
 
-        /// <summary>
-        /// Incrementes the amount of bytes to the current value
-        /// </summary>
-        /// <param name="transferredBytes"></param>
-        public void UpdateTransferBytes(long transferredBytes)
+        internal bool CanPause()
+            => _status == DataTransferStatus.InProgress;
+
+        public async Task PauseIfRunningAsync(CancellationToken cancellationToken)
         {
-            Interlocked.Add(ref _currentTransferredBytes, transferredBytes);
+            if (!CanPause())
+            {
+                return;
+            }
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            // Call the inner cancellation token to stop the transfer job
+            TrySetTransferStatus(DataTransferStatus.PauseInProgress);
+            if (TriggerCancellation())
+            {
+                // Wait until full pause has completed.
+                await CompletionSource.Task.AwaitWithCancellation(cancellationToken);
+            }
+        }
+
+        internal bool TriggerCancellation()
+        {
+            if (!CancellationTokenSource.IsCancellationRequested)
+            {
+                CancellationTokenSource.Cancel();
+                return true;
+            }
+            return false;
         }
     }
 }

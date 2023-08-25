@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("defaultConsistencyLevel");
+            writer.WritePropertyName("defaultConsistencyLevel"u8);
             writer.WriteStringValue(DefaultConsistencyLevel.ToSerialString());
             if (Optional.IsDefined(MaxStalenessPrefix))
             {
-                writer.WritePropertyName("maxStalenessPrefix");
+                writer.WritePropertyName("maxStalenessPrefix"u8);
                 writer.WriteNumberValue(MaxStalenessPrefix.Value);
             }
             if (Optional.IsDefined(MaxIntervalInSeconds))
             {
-                writer.WritePropertyName("maxIntervalInSeconds");
+                writer.WritePropertyName("maxIntervalInSeconds"u8);
                 writer.WriteNumberValue(MaxIntervalInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -32,31 +32,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ConsistencyPolicy DeserializeConsistencyPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DefaultConsistencyLevel defaultConsistencyLevel = default;
             Optional<long> maxStalenessPrefix = default;
             Optional<int> maxIntervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultConsistencyLevel"))
+                if (property.NameEquals("defaultConsistencyLevel"u8))
                 {
                     defaultConsistencyLevel = property.Value.GetString().ToDefaultConsistencyLevel();
                     continue;
                 }
-                if (property.NameEquals("maxStalenessPrefix"))
+                if (property.NameEquals("maxStalenessPrefix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxStalenessPrefix = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxIntervalInSeconds"))
+                if (property.NameEquals("maxIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxIntervalInSeconds = property.Value.GetInt32();

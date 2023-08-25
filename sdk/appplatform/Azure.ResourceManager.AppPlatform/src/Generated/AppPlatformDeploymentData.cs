@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformDeployment data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformDeployment data model.
+    /// Deployment resource payload
+    /// </summary>
     public partial class AppPlatformDeploymentData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformDeploymentData. </summary>

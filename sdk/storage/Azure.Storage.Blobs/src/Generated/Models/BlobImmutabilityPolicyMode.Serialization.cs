@@ -21,9 +21,9 @@ namespace Azure.Storage.Blobs.Models
 
         public static BlobImmutabilityPolicyMode ToBlobImmutabilityPolicyMode(this string value)
         {
-            if (string.Equals(value, "Mutable", StringComparison.InvariantCultureIgnoreCase)) return BlobImmutabilityPolicyMode.Mutable;
-            if (string.Equals(value, "Unlocked", StringComparison.InvariantCultureIgnoreCase)) return BlobImmutabilityPolicyMode.Unlocked;
-            if (string.Equals(value, "Locked", StringComparison.InvariantCultureIgnoreCase)) return BlobImmutabilityPolicyMode.Locked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Mutable")) return BlobImmutabilityPolicyMode.Mutable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unlocked")) return BlobImmutabilityPolicyMode.Unlocked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Locked")) return BlobImmutabilityPolicyMode.Locked;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobImmutabilityPolicyMode value.");
         }
     }

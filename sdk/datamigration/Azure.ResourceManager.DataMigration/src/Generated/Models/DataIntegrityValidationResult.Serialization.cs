@@ -15,15 +15,18 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static DataIntegrityValidationResult DeserializeDataIntegrityValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, string>> failedObjects = default;
             Optional<ValidationError> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("failedObjects"))
+                if (property.NameEquals("failedObjects"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -34,11 +37,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     failedObjects = dictionary;
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validationErrors = ValidationError.DeserializeValidationError(property.Value);

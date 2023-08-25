@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static MaintenanceOperationResultCodeType ToMaintenanceOperationResultCodeType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return MaintenanceOperationResultCodeType.None;
-            if (string.Equals(value, "RetryLater", StringComparison.InvariantCultureIgnoreCase)) return MaintenanceOperationResultCodeType.RetryLater;
-            if (string.Equals(value, "MaintenanceAborted", StringComparison.InvariantCultureIgnoreCase)) return MaintenanceOperationResultCodeType.MaintenanceAborted;
-            if (string.Equals(value, "MaintenanceCompleted", StringComparison.InvariantCultureIgnoreCase)) return MaintenanceOperationResultCodeType.MaintenanceCompleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return MaintenanceOperationResultCodeType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RetryLater")) return MaintenanceOperationResultCodeType.RetryLater;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MaintenanceAborted")) return MaintenanceOperationResultCodeType.MaintenanceAborted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MaintenanceCompleted")) return MaintenanceOperationResultCodeType.MaintenanceCompleted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MaintenanceOperationResultCodeType value.");
         }
     }

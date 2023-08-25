@@ -16,9 +16,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraClusterDataCenterNodeItem DeserializeCassandraClusterDataCenterNodeItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> address = default;
             Optional<CassandraNodeState> state = default;
             Optional<string> status = default;
+            Optional<string> cassandraProcessStatus = default;
             Optional<string> load = default;
             Optional<IReadOnlyList<string>> tokens = default;
             Optional<int> size = default;
@@ -34,36 +39,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<double> cpuUsage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new CassandraNodeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("load"))
+                if (property.NameEquals("cassandraProcessStatus"u8))
+                {
+                    cassandraProcessStatus = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("load"u8))
                 {
                     load = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tokens"))
+                if (property.NameEquals("tokens"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -74,108 +82,99 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     tokens = array;
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     size = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("hostID"))
+                if (property.NameEquals("hostID"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("rack"))
+                if (property.NameEquals("rack"u8))
                 {
                     rack = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     timestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskUsedKB"))
+                if (property.NameEquals("diskUsedKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskUsedKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskFreeKB"))
+                if (property.NameEquals("diskFreeKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskFreeKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryUsedKB"))
+                if (property.NameEquals("memoryUsedKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryUsedKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryBuffersAndCachedKB"))
+                if (property.NameEquals("memoryBuffersAndCachedKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryBuffersAndCachedKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryFreeKB"))
+                if (property.NameEquals("memoryFreeKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryFreeKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryTotalKB"))
+                if (property.NameEquals("memoryTotalKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryTotalKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cpuUsage"))
+                if (property.NameEquals("cpuUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cpuUsage = property.Value.GetDouble();
                     continue;
                 }
             }
-            return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, load.Value, Optional.ToList(tokens), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage));
+            return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, cassandraProcessStatus.Value, load.Value, Optional.ToList(tokens), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Initializes a new instance of StorageCacheNetworkSettings. </summary>
         /// <param name="mtu"> The IPv4 maximum transmission unit configured for the subnet. </param>
-        /// <param name="utilityAddresses"> Array of additional IP addresses used by this Cache. </param>
+        /// <param name="utilityAddresses"> Array of additional IP addresses used by this cache. </param>
         /// <param name="dnsServers"> DNS servers for the cache to use.  It will be set from the network configuration if no value is provided. </param>
         /// <param name="dnsSearchDomain"> DNS search domain. </param>
         /// <param name="ntpServer"> NTP server IP Address or FQDN for the cache to use. The default is time.windows.com. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> The IPv4 maximum transmission unit configured for the subnet. </summary>
         public int? Mtu { get; set; }
-        /// <summary> Array of additional IP addresses used by this Cache. </summary>
+        /// <summary> Array of additional IP addresses used by this cache. </summary>
         public IReadOnlyList<IPAddress> UtilityAddresses { get; }
         /// <summary> DNS servers for the cache to use.  It will be set from the network configuration if no value is provided. </summary>
         public IList<IPAddress> DnsServers { get; }

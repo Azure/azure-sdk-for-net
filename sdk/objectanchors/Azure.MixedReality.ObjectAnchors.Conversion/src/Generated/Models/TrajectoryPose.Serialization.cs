@@ -16,9 +16,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("rotation");
+            writer.WritePropertyName("rotation"u8);
             writer.WriteObjectValue(RotationWrapper);
-            writer.WritePropertyName("translation");
+            writer.WritePropertyName("translation"u8);
             writer.WriteObjectValue(TranslationWrapper);
             writer.WriteEndObject();
         }
@@ -29,12 +29,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Vector3 translation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rotation"))
+                if (property.NameEquals("rotation"u8))
                 {
                     rotation = Quaternion.DeserializeQuaternion(property.Value);
                     continue;
                 }
-                if (property.NameEquals("translation"))
+                if (property.NameEquals("translation"u8))
                 {
                     translation = Vector3.DeserializeVector3(property.Value);
                     continue;

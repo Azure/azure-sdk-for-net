@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static UpdateDownloadProgress DeserializeUpdateDownloadProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeDownloadPhase> downloadPhase = default;
             Optional<int> percentComplete = default;
             Optional<double> totalBytesToDownload = default;
@@ -22,61 +26,55 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<int> numberOfUpdatesDownloaded = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("downloadPhase"))
+                if (property.NameEquals("downloadPhase"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     downloadPhase = new DataBoxEdgeDownloadPhase(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("percentComplete"))
+                if (property.NameEquals("percentComplete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     percentComplete = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalBytesToDownload"))
+                if (property.NameEquals("totalBytesToDownload"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalBytesToDownload = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("totalBytesDownloaded"))
+                if (property.NameEquals("totalBytesDownloaded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalBytesDownloaded = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("numberOfUpdatesToDownload"))
+                if (property.NameEquals("numberOfUpdatesToDownload"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberOfUpdatesToDownload = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("numberOfUpdatesDownloaded"))
+                if (property.NameEquals("numberOfUpdatesDownloaded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberOfUpdatesDownloaded = property.Value.GetInt32();

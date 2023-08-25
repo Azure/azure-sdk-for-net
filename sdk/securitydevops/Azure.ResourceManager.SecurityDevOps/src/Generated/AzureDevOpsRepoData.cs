@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityDevOps.Models;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
-    /// <summary> A class representing the AzureDevOpsRepo data model. </summary>
+    /// <summary>
+    /// A class representing the AzureDevOpsRepo data model.
+    /// Azure DevOps Repo Proxy Resource.
+    /// </summary>
     public partial class AzureDevOpsRepoData : ResourceData
     {
         /// <summary> Initializes a new instance of AzureDevOpsRepoData. </summary>

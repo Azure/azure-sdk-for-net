@@ -5,15 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentWord")]
     public partial class DocumentWord
     {
         /// <summary>
-        /// Initializes a new instance of DocumentWord. Use for the <see cref="DocumentAnalysisModelFactory"/>.
+        /// Initializes a new instance of DocumentWord. Used for the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
         internal DocumentWord(string content, IReadOnlyList<PointF> boundingPolygon, DocumentSpan span, float confidence)
         {
@@ -37,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             get => throw new InvalidOperationException();
             set
             {
-                BoundingPolygon = ClientCommon.CovertToListOfPointF(value);
+                BoundingPolygon = ClientCommon.ConvertToListOfPointF(value);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Maps.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyType");
+            writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
             writer.WriteEndObject();
         }

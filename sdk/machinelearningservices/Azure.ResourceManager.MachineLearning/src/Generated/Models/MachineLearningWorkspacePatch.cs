@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The parameters for updating a machine learning workspace.
-    /// Serialized Name: WorkspaceUpdateParameters
-    /// </summary>
+    /// <summary> The parameters for updating a machine learning workspace. </summary>
     public partial class MachineLearningWorkspacePatch
     {
         /// <summary> Initializes a new instance of MachineLearningWorkspacePatch. </summary>
@@ -23,45 +20,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// The resource tags for the machine learning workspace.
-        /// Serialized Name: WorkspaceUpdateParameters.tags
-        /// </summary>
+        /// <summary> The resource tags for the machine learning workspace. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// The sku of the workspace.
-        /// Serialized Name: WorkspaceUpdateParameters.sku
-        /// </summary>
+        /// <summary> The sku of the workspace. </summary>
         public MachineLearningSku Sku { get; set; }
-        /// <summary>
-        /// The identity of the resource.
-        /// Serialized Name: WorkspaceUpdateParameters.identity
-        /// </summary>
+        /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// The description of this workspace.
-        /// Serialized Name: WorkspaceUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> The description of this workspace. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The friendly name for this workspace.
-        /// Serialized Name: WorkspaceUpdateParameters.properties.friendlyName
-        /// </summary>
+        /// <summary> The friendly name for this workspace. </summary>
         public string FriendlyName { get; set; }
-        /// <summary>
-        /// The compute name for image build
-        /// Serialized Name: WorkspaceUpdateParameters.properties.imageBuildCompute
-        /// </summary>
+        /// <summary> The compute name for image build. </summary>
         public string ImageBuildCompute { get; set; }
-        /// <summary>
-        /// The service managed resource settings.
-        /// Serialized Name: WorkspaceUpdateParameters.properties.serviceManagedResourcesSettings
-        /// </summary>
+        /// <summary> The service managed resource settings. </summary>
         internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
-        /// <summary>
-        /// The throughput of the collections in cosmosdb database
-        /// Serialized Name: CosmosDbSettings.collectionsThroughput
-        /// </summary>
+        /// <summary> The throughput of the collections in cosmosdb database. </summary>
         public int? CosmosDbCollectionsThroughput
         {
             get => ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
@@ -73,25 +46,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary>
-        /// The user assigned identity resource id that represents the workspace identity.
-        /// Serialized Name: WorkspaceUpdateParameters.properties.primaryUserAssignedIdentity
-        /// </summary>
+        /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
         public string PrimaryUserAssignedIdentity { get; set; }
-        /// <summary>
-        /// Whether requests from Public Network are allowed.
-        /// Serialized Name: WorkspaceUpdateParameters.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Whether requests from Public Network are allowed. </summary>
         public MachineLearningPublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// ARM id of the application insights associated with this workspace.
-        /// Serialized Name: WorkspaceUpdateParameters.properties.applicationInsights
-        /// </summary>
+        /// <summary> ARM id of the application insights associated with this workspace. </summary>
         public string ApplicationInsights { get; set; }
-        /// <summary>
-        /// ARM id of the container registry associated with this workspace.
-        /// Serialized Name: WorkspaceUpdateParameters.properties.containerRegistry
-        /// </summary>
+        /// <summary> ARM id of the container registry associated with this workspace. </summary>
         public string ContainerRegistry { get; set; }
     }
 }

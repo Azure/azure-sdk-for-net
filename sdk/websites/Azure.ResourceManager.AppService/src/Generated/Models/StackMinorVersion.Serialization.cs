@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayVersion))
             {
-                writer.WritePropertyName("displayVersion");
+                writer.WritePropertyName("displayVersion"u8);
                 writer.WriteStringValue(DisplayVersion);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
-                writer.WritePropertyName("runtimeVersion");
+                writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
             if (Optional.IsDefined(IsDefault))
             {
-                writer.WritePropertyName("isDefault");
+                writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
             if (Optional.IsDefined(IsRemoteDebuggingEnabled))
             {
-                writer.WritePropertyName("isRemoteDebuggingEnabled");
+                writer.WritePropertyName("isRemoteDebuggingEnabled"u8);
                 writer.WriteBooleanValue(IsRemoteDebuggingEnabled.Value);
             }
             writer.WriteEndObject();
@@ -40,37 +40,39 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StackMinorVersion DeserializeStackMinorVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayVersion = default;
             Optional<string> runtimeVersion = default;
             Optional<bool> isDefault = default;
             Optional<bool> isRemoteDebuggingEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayVersion"))
+                if (property.NameEquals("displayVersion"u8))
                 {
                     displayVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runtimeVersion"))
+                if (property.NameEquals("runtimeVersion"u8))
                 {
                     runtimeVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDefault"))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isRemoteDebuggingEnabled"))
+                if (property.NameEquals("isRemoteDebuggingEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isRemoteDebuggingEnabled = property.Value.GetBoolean();

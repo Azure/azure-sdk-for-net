@@ -76,6 +76,11 @@ namespace Azure.Storage.Blobs.Specialized
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
+        /// True when batch is disposed, false otherwise
+        /// </summary>
+        private bool _disposed;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -211,7 +216,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new DelayedResponse(
                 message,
-                async response =>
+                response =>
                 {
                     switch (response.Status)
                     {
@@ -219,7 +224,7 @@ namespace Azure.Storage.Blobs.Specialized
                             BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(response);
                             return ResponseWithHeaders.FromValue(blobDeleteHeaders, response);
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                            throw new RequestFailedException(response);
                     }
                 });
         }
@@ -322,7 +327,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new DelayedResponse(
                 message,
-                async response =>
+                response =>
                 {
                     switch (response.Status)
                     {
@@ -331,7 +336,7 @@ namespace Azure.Storage.Blobs.Specialized
                             BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(response);
                             return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, response);
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                            throw new RequestFailedException(response);
                     }
                 });
         }
@@ -389,8 +394,13 @@ namespace Azure.Storage.Blobs.Specialized
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-            foreach (HttpMessage message in _messages) {
-                message.Dispose();
+            if (!_disposed)
+            {
+                _disposed = true;
+                foreach (HttpMessage message in _messages)
+                {
+                    message.Dispose();
+                }
             }
         }
         #endregion SetBlobAccessTier

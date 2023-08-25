@@ -7,7 +7,7 @@
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Interpretation of the anomalous timestamp. </summary>
+    /// <summary> Interpretation of the anomalous time stamp. </summary>
     public partial class AnomalyInterpretation
     {
         /// <summary> Initializes a new instance of AnomalyInterpretation. </summary>
@@ -16,9 +16,12 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of AnomalyInterpretation. </summary>
-        /// <param name="variable"></param>
-        /// <param name="contributionScore"></param>
-        /// <param name="correlationChanges"></param>
+        /// <param name="variable"> Variable. </param>
+        /// <param name="contributionScore">
+        /// This score shows the percentage that contributes to the anomalous time stamp. It's a
+        /// number between 0 and 1.
+        /// </param>
+        /// <param name="correlationChanges"> Correlation changes among the anomalous variables. </param>
         internal AnomalyInterpretation(string variable, float? contributionScore, CorrelationChanges correlationChanges)
         {
             Variable = variable;
@@ -26,11 +29,14 @@ namespace Azure.AI.AnomalyDetector
             CorrelationChanges = correlationChanges;
         }
 
-        /// <summary> Gets the variable. </summary>
+        /// <summary> Variable. </summary>
         public string Variable { get; }
-        /// <summary> Gets the contribution score. </summary>
+        /// <summary>
+        /// This score shows the percentage that contributes to the anomalous time stamp. It's a
+        /// number between 0 and 1.
+        /// </summary>
         public float? ContributionScore { get; }
-        /// <summary> Gets the correlation changes. </summary>
+        /// <summary> Correlation changes among the anomalous variables. </summary>
         public CorrelationChanges CorrelationChanges { get; }
     }
 }

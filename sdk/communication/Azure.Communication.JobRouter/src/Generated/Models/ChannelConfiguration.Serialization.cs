@@ -15,23 +15,42 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("capacityCostPerJob");
+            writer.WritePropertyName("capacityCostPerJob"u8);
             writer.WriteNumberValue(CapacityCostPerJob);
+            if (Optional.IsDefined(MaxNumberOfJobs))
+            {
+                writer.WritePropertyName("maxNumberOfJobs"u8);
+                writer.WriteNumberValue(MaxNumberOfJobs.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static ChannelConfiguration DeserializeChannelConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int capacityCostPerJob = default;
+            Optional<int> maxNumberOfJobs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capacityCostPerJob"))
+                if (property.NameEquals("capacityCostPerJob"u8))
                 {
                     capacityCostPerJob = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("maxNumberOfJobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxNumberOfJobs = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new ChannelConfiguration(capacityCostPerJob);
+            return new ChannelConfiguration(capacityCostPerJob, Optional.ToNullable(maxNumberOfJobs));
         }
     }
 }

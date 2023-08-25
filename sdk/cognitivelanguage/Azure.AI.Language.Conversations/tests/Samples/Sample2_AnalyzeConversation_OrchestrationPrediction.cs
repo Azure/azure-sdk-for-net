@@ -3,10 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Text.Json;
+using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
@@ -28,51 +28,50 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversationItem = new
+                    ConversationItem = new
                     {
-                        text = "How are you?",
-                        id = "1",
-                        participantId = "1",
+                        Text = "How are you?",
+                        Id = "1",
+                        ParticipantId = "1",
                     }
                 },
-                parameters = new
+                Parameters = new
                 {
-                    projectName,
-                    deploymentName,
+                    ProjectName = projectName,
+                    DeploymentName = deploymentName,
 
                     // Use Utf16CodeUnit for strings in .NET.
-                    stringIndexType = "Utf16CodeUnit",
+                    StringIndexType = "Utf16CodeUnit",
                 },
-                kind = "Conversation",
+                Kind = "Conversation",
             };
 
-            Response response = client.AnalyzeConversation(RequestContent.Create(data));
+            Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-            using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-            JsonElement conversationalTaskResult = result.RootElement;
-            JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
             #endregion
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
-            string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-            JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+            string respondingProjectName = orchestrationPrediction.TopIntent;
+            dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "QuestionAnswering")
+            if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
             {
                 Console.WriteLine($"Top intent: {respondingProjectName}");
 
-                JsonElement questionAnsweringResponse = targetIntentResult.GetProperty("result");
+                dynamic questionAnsweringResponse = targetIntentResult.Result;
                 Console.WriteLine($"Question Answering Response:");
-                foreach (JsonElement answer in questionAnsweringResponse.GetProperty("answers").EnumerateArray())
+                foreach (dynamic answer in questionAnsweringResponse.Answers)
                 {
-                    Console.WriteLine(answer.GetProperty("answer").GetString());
+                    Console.WriteLine(answer.Answer?.ToString());
                 }
             }
             #endregion
 
-            Assert.That(targetIntentResult.GetProperty("targetProjectKind").GetString(), Is.EqualTo("QuestionAnswering"));
+            Assert.That(targetIntentResult.TargetProjectKind?.ToString(), Is.EqualTo("QuestionAnswering"));
             Assert.That(respondingProjectName, Is.EqualTo("ChitChat-QnA"));
         }
 
@@ -83,79 +82,51 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversationItem = new
+                    ConversationItem = new
                     {
-                        text = "Send an email to Carol about tomorrow's demo",
-                        id = "1",
-                        participantId = "1",
+                        Text = "How are you?",
+                        Id = "1",
+                        ParticipantId = "1",
                     }
                 },
-                parameters = new
+                Parameters = new
                 {
-                    projectName = TestEnvironment.OrchestrationProjectName,
-                    deploymentName = TestEnvironment.OrchestrationDeploymentName,
+                    ProjectName = TestEnvironment.OrchestrationProjectName,
+                    DeploymentName = TestEnvironment.OrchestrationDeploymentName,
 
                     // Use Utf16CodeUnit for strings in .NET.
-                    stringIndexType = "Utf16CodeUnit",
+                    StringIndexType = "Utf16CodeUnit",
                 },
-                kind = "Conversation",
+                Kind = "Conversation",
             };
 
-            Response response = client.AnalyzeConversation(RequestContent.Create(data));
+            Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-            using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-            JsonElement conversationalTaskResult = result.RootElement;
-            JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
-            string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-            JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+            string respondingProjectName = orchestrationPrediction.TopIntent;
+            dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Conversation")
+            if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
             {
-                JsonElement conversationResult = targetIntentResult.GetProperty("result");
-                JsonElement conversationPrediction = conversationResult.GetProperty("prediction");
+                dynamic questionAnsweringResult = targetIntentResult.Result;
 
-                Console.WriteLine($"Top Intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
-                Console.WriteLine($"Intents:");
-                foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
+                Console.WriteLine($"Answers:");
+                foreach (dynamic answer in questionAnsweringResult.Answers)
                 {
-                    Console.WriteLine($"Intent Category: {intent.GetProperty("category").GetString()}");
-                    Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
+                    Console.WriteLine($"{answer.Answer}");
+                    Console.WriteLine($"Confidence: {answer.ConfidenceScore}");
                     Console.WriteLine();
-                }
-
-                Console.WriteLine($"Entities:");
-                foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
-                {
-                    Console.WriteLine($"Entity Text: {entity.GetProperty("text").GetString()}");
-                    Console.WriteLine($"Entity Category: {entity.GetProperty("category").GetString()}");
-                    Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
-                    Console.WriteLine($"Starting Position: {entity.GetProperty("offset").GetInt32()}");
-                    Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
-                    Console.WriteLine();
-
-                    if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
-                    {
-                        foreach (JsonElement resolution in resolutions.EnumerateArray())
-                        {
-                            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
-                            {
-                                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-                                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-                                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
-                                Console.WriteLine();
-                            }
-                        }
-                    }
                 }
             }
             #endregion
 
-            Assert.That(targetIntentResult.GetProperty("targetProjectKind").GetString(), Is.EqualTo("Conversation"));
-            Assert.That(orchestrationPrediction.GetProperty("topIntent").GetString(), Is.EqualTo("EmailIntent"));
+            Assert.That(targetIntentResult.TargetProjectKind?.ToString(), Is.EqualTo("QuestionAnswering"));
+            Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("ChitChat-QnA"));
         }
 
         [SyncOnly]
@@ -166,45 +137,44 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversationItem = new
+                    ConversationItem = new
                     {
-                        text = "Reserve a table for 2 at the Italian restaurant.",
-                        id = "1",
-                        participantId = "1",
+                        Text = "Reserve a table for 2 at the Italian restaurant.",
+                        Id = "1",
+                        ParticipantId = "1",
                     }
                 },
-                parameters = new
+                Parameters = new
                 {
-                    projectName = TestEnvironment.OrchestrationProjectName,
-                    deploymentName = TestEnvironment.OrchestrationDeploymentName,
+                    ProjectName = TestEnvironment.OrchestrationProjectName,
+                    DeploymentName = TestEnvironment.OrchestrationDeploymentName,
 
                     // Use Utf16CodeUnit for strings in .NET.
-                    stringIndexType = "Utf16CodeUnit",
+                    StringIndexType = "Utf16CodeUnit",
                 },
-                kind = "Conversation",
+                Kind = "Conversation",
             };
 
-            Response response = client.AnalyzeConversation(RequestContent.Create(data));
+            Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-            using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-            JsonElement conversationalTaskResult = result.RootElement;
-            JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionLuis
-            string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-            JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+            string respondingProjectName = orchestrationPrediction.TopIntent;
+            dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Luis")
+            if (targetIntentResult.TargetProjectKind == "Luis")
             {
-                JsonElement luisResponse = targetIntentResult.GetProperty("result");
-                Console.WriteLine($"LUIS Response: {luisResponse.GetRawText()}");
+                dynamic luisResponse = targetIntentResult.Result;
+                Console.WriteLine($"LUIS Response: {luisResponse}");
             }
             #endregion
 
-            Assert.That(targetIntentResult.GetProperty("targetProjectKind").GetString(), Is.EqualTo("Luis"));
-            Assert.That(orchestrationPrediction.GetProperty("topIntent").GetString(), Is.EqualTo("RestaurantIntent"));
+            Assert.That(targetIntentResult.TargetProjectKind?.ToString(), Is.EqualTo("Luis"));
+            Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("RestaurantIntent"));
         }
 
         [AsyncOnly]
@@ -218,50 +188,49 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversationItem = new
+                    ConversationItem = new
                     {
-                        text = "How are you?",
-                        id = "1",
-                        participantId = "1",
+                        Text = "How are you?",
+                        Id = "1",
+                        ParticipantId = "1",
                     }
                 },
-                parameters = new
+                Parameters = new
                 {
-                    projectName,
-                    deploymentName,
+                    ProjectName = projectName,
+                    DeploymentName = deploymentName,
 
                     // Use Utf16CodeUnit for strings in .NET.
-                    stringIndexType = "Utf16CodeUnit",
+                    StringIndexType = "Utf16CodeUnit",
                 },
-                kind = "Conversation",
+                Kind = "Conversation",
             };
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
-            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-            using JsonDocument result = await JsonDocument.ParseAsync(response.ContentStream);
-            JsonElement conversationalTaskResult = result.RootElement;
-            JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
             #endregion
 
-            string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-            JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+            string respondingProjectName = orchestrationPrediction.TopIntent;
+            dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "QuestionAnswering")
+            if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
             {
                 Console.WriteLine($"Top intent: {respondingProjectName}");
 
-                JsonElement questionAnsweringResponse = targetIntentResult.GetProperty("result");
+                dynamic questionAnsweringResponse = targetIntentResult.Result;
                 Console.WriteLine($"Question Answering Response:");
-                foreach (JsonElement answer in questionAnsweringResponse.GetProperty("answers").EnumerateArray())
+                foreach (dynamic answer in questionAnsweringResponse.Answers)
                 {
-                    Console.WriteLine(answer.GetProperty("answer").GetString());
+                    Console.WriteLine(answer.Answer?.ToString());
                 }
             }
 
-            Assert.That(targetIntentResult.GetProperty("targetProjectKind").GetString(), Is.EqualTo("QuestionAnswering"));
+            Assert.That(targetIntentResult.TargetProjectKind?.ToString(), Is.EqualTo("QuestionAnswering"));
             Assert.That(respondingProjectName, Is.EqualTo("ChitChat-QnA"));
         }
 
@@ -272,68 +241,67 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversationItem = new
+                    ConversationItem = new
                     {
-                        text = "Send an email to Carol about tomorrow's demo",
-                        id = "1",
-                        participantId = "1",
+                        Text = "Send an email to Carol about tomorrow's demo",
+                        Id = "1",
+                        ParticipantId = "1",
                     }
                 },
-                parameters = new
+                Parameters = new
                 {
-                    projectName = TestEnvironment.OrchestrationProjectName,
-                    deploymentName = TestEnvironment.OrchestrationDeploymentName,
+                    ProjectName = TestEnvironment.OrchestrationProjectName,
+                    DeploymentName = TestEnvironment.OrchestrationDeploymentName,
 
                     // Use Utf16CodeUnit for strings in .NET.
-                    stringIndexType = "Utf16CodeUnit",
+                    StringIndexType = "Utf16CodeUnit",
                 },
-                kind = "Conversation",
+                Kind = "Conversation",
             };
 
-            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-            using JsonDocument result = await JsonDocument.ParseAsync(response.ContentStream);
-            JsonElement conversationalTaskResult = result.RootElement;
-            JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
 
-            string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-            JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+            string respondingProjectName = orchestrationPrediction.TopIntent;
+            dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Conversation")
+            if (targetIntentResult.TargetProjectKind == "Conversation")
             {
-                JsonElement conversationResult = targetIntentResult.GetProperty("result");
-                JsonElement conversationPrediction = conversationResult.GetProperty("prediction");
+                dynamic conversationResult = targetIntentResult.Result;
+                dynamic conversationPrediction = conversationResult.Prediction;
 
-                Console.WriteLine($"Top Intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
+                Console.WriteLine($"Top Intent: {conversationPrediction.TopIntent}");
                 Console.WriteLine($"Intents:");
-                foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
+                foreach (dynamic intent in conversationPrediction.Intents)
                 {
-                    Console.WriteLine($"Intent Category: {intent.GetProperty("category").GetString()}");
-                    Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
+                    Console.WriteLine($"Intent Category: {intent.Category}");
+                    Console.WriteLine($"Confidence: {intent.ConfidenceScore}");
                     Console.WriteLine();
                 }
 
                 Console.WriteLine($"Entities:");
-                foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
+                foreach (dynamic entity in conversationPrediction.Entities)
                 {
-                    Console.WriteLine($"Entity Text: {entity.GetProperty("text").GetString()}");
-                    Console.WriteLine($"Entity Category: {entity.GetProperty("category").GetString()}");
-                    Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
-                    Console.WriteLine($"Starting Position: {entity.GetProperty("offset").GetInt32()}");
-                    Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
+                    Console.WriteLine($"Entity Text: {entity.Text}");
+                    Console.WriteLine($"Entity Category: {entity.Category}");
+                    Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
+                    Console.WriteLine($"Starting Position: {entity.Offset}");
+                    Console.WriteLine($"Length: {entity.Length}");
                     Console.WriteLine();
 
-                    if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
+                    if (entity.resolutions is not null)
                     {
-                        foreach (JsonElement resolution in resolutions.EnumerateArray())
+                        foreach (dynamic resolution in entity.Resolutions)
                         {
-                            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+                            if (resolution.ResolutionKind == "DateTimeResolution")
                             {
-                                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-                                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-                                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                                Console.WriteLine($"Datetime Sub Kind: {resolution.DateTimeSubKind}");
+                                Console.WriteLine($"Timex: {resolution.Timex}");
+                                Console.WriteLine($"Value: {resolution.Value}");
                                 Console.WriteLine();
                             }
                         }
@@ -341,8 +309,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
 
-            Assert.That(targetIntentResult.GetProperty("targetProjectKind").GetString(), Is.EqualTo("Conversation"));
-            Assert.That(orchestrationPrediction.GetProperty("topIntent").GetString(), Is.EqualTo("EmailIntent"));
+            Assert.That(targetIntentResult.TargetProjectKind?.ToString(), Is.EqualTo("Conversation"));
+            Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("EmailIntent"));
         }
 
         [AsyncOnly]
@@ -353,43 +321,42 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversationItem = new
+                    ConversationItem = new
                     {
-                        text = "Reserve a table for 2 at the Italian restaurant.",
-                        id = "1",
-                        participantId = "1",
+                        Text = "Reserve a table for 2 at the Italian restaurant.",
+                        Id = "1",
+                        ParticipantId = "1",
                     }
                 },
-                parameters = new
+                Parameters = new
                 {
-                    projectName = TestEnvironment.OrchestrationProjectName,
-                    deploymentName = TestEnvironment.OrchestrationDeploymentName,
+                    ProjectName = TestEnvironment.OrchestrationProjectName,
+                    DeploymentName = TestEnvironment.OrchestrationDeploymentName,
 
                     // Use Utf16CodeUnit for strings in .NET.
-                    stringIndexType = "Utf16CodeUnit",
+                    StringIndexType = "Utf16CodeUnit",
                 },
-                kind = "Conversation",
+                Kind = "Conversation",
             };
 
-            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-            using JsonDocument result = await JsonDocument.ParseAsync(response.ContentStream);
-            JsonElement conversationalTaskResult = result.RootElement;
-            JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
 
-            string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-            JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+            string respondingProjectName = orchestrationPrediction.TopIntent;
+            dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Luis")
+            if (targetIntentResult.TargetProjectKind == "Luis")
             {
-                JsonElement luisResponse = targetIntentResult.GetProperty("result");
-                Console.WriteLine($"LUIS Response: {luisResponse.GetRawText()}");
+                dynamic luisResponse = targetIntentResult.Result;
+                Console.WriteLine($"LUIS Response: {luisResponse}");
             }
 
-            Assert.That(targetIntentResult.GetProperty("targetProjectKind").GetString(), Is.EqualTo("Luis"));
-            Assert.That(orchestrationPrediction.GetProperty("topIntent").GetString(), Is.EqualTo("RestaurantIntent"));
+            Assert.That(targetIntentResult.TargetProjectKind?.ToString(), Is.EqualTo("Luis"));
+            Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("RestaurantIntent"));
         }
     }
 }

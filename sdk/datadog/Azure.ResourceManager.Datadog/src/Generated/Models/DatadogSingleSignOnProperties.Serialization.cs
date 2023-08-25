@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SingleSignOnState))
             {
-                writer.WritePropertyName("singleSignOnState");
+                writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
             if (Optional.IsDefined(EnterpriseAppId))
             {
-                writer.WritePropertyName("enterpriseAppId");
+                writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
             }
             writer.WriteEndObject();
@@ -31,42 +31,43 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogSingleSignOnProperties DeserializeDatadogSingleSignOnProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<SingleSignOnState> singleSignOnState = default;
             Optional<string> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("singleSignOnState"))
+                if (property.NameEquals("singleSignOnState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     singleSignOnState = new SingleSignOnState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enterpriseAppId"))
+                if (property.NameEquals("enterpriseAppId"u8))
                 {
                     enterpriseAppId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("singleSignOnUrl"))
+                if (property.NameEquals("singleSignOnUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        singleSignOnUrl = null;
                         continue;
                     }
                     singleSignOnUrl = new Uri(property.Value.GetString());

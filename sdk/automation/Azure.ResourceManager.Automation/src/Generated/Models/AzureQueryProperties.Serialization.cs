@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Scope))
             {
-                writer.WritePropertyName("scope");
+                writer.WritePropertyName("scope"u8);
                 writer.WriteStartArray();
                 foreach (var item in Scope)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsCollectionDefined(Locations))
             {
-                writer.WritePropertyName("locations");
+                writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(TagSettings))
             {
-                writer.WritePropertyName("tagSettings");
+                writer.WritePropertyName("tagSettings"u8);
                 writer.WriteObjectValue(TagSettings);
             }
             writer.WriteEndObject();
@@ -46,16 +46,19 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AzureQueryProperties DeserializeAzureQueryProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> scope = default;
             Optional<IList<AzureLocation>> locations = default;
             Optional<QueryTagSettingsProperties> tagSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -66,11 +69,10 @@ namespace Azure.ResourceManager.Automation.Models
                     scope = array;
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
@@ -81,11 +83,10 @@ namespace Azure.ResourceManager.Automation.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("tagSettings"))
+                if (property.NameEquals("tagSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value);

@@ -14,14 +14,17 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the MetricAlert data model. </summary>
+    /// <summary>
+    /// A class representing the MetricAlert data model.
+    /// The metric alert resource.
+    /// </summary>
     public partial class MetricAlertData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MetricAlertData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
         /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> the list of resource id&apos;s that this metric alert is scoped to. </param>
+        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
         /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
         /// <param name="criteria">
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
         /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> the list of resource id&apos;s that this metric alert is scoped to. </param>
+        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
         /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
         /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.Monitor
         public int Severity { get; set; }
         /// <summary> the flag that indicates whether the metric alert is enabled. </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> the list of resource id&apos;s that this metric alert is scoped to. </summary>
+        /// <summary> the list of resource id's that this metric alert is scoped to. </summary>
         public IList<string> Scopes { get; }
         /// <summary> how often the metric alert is evaluated represented in ISO 8601 duration format. </summary>
         public TimeSpan EvaluationFrequency { get; set; }

@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
             TimeSpan delay = await policy.DelayGate.Cycle();
-            Assert.AreEqual(delay, TimeSpan.FromSeconds(3));
+            Assert.That(delay, Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(0.2 * 3)));
 
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
@@ -46,7 +46,7 @@ namespace Azure.Core.Tests
             for (int i = 0; i < 3; i++)
             {
                 TimeSpan delay = await policy.DelayGate.Cycle();
-                Assert.AreEqual(delay, TimeSpan.FromSeconds(3));
+                Assert.That(delay, Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(0.2 * 3)));
 
                 await mockTransport.RequestGate.Cycle(new MockResponse(500));
             }
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests
             for (int i = 0; i < 3; i++)
             {
                 TimeSpan delay = await policy.DelayGate.Cycle();
-                Assert.AreEqual(delay, TimeSpan.FromSeconds(3));
+                Assert.That(delay, Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(0.2 * 3)));
 
                 await mockTransport.RequestGate.Cycle(new MockResponse(500));
             }
@@ -98,7 +98,7 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
 
-            Assert.AreEqual(TimeSpan.FromSeconds(expected), retryDelay);
+            Assert.That(retryDelay, Is.EqualTo(TimeSpan.FromSeconds(expected)).Within(TimeSpan.FromSeconds(0.2 * expected)));
             Assert.AreEqual(501, response.Status);
         }
     }

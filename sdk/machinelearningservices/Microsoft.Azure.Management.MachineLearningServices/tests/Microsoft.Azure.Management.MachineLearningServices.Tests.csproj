@@ -6,7 +6,6 @@
     <Description>MachineLearningServices.Tests Class Library</Description>
     <AssemblyName>MachineLearningServices.Tests</AssemblyName>
     <VersionPrefix>2020-09-01-preview</VersionPrefix>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

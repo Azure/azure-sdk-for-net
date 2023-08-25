@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerJobAgent data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerJobAgent data model.
+    /// An Azure SQL job agent.
+    /// </summary>
     public partial class SqlServerJobAgentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlServerJobAgentData. </summary>

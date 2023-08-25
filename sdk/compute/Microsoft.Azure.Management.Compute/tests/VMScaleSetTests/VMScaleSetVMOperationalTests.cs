@@ -87,6 +87,7 @@ namespace Compute.Tests
         {
             InitializeCommon(context);
             instanceId = "0";
+            const string expectedOSName = "Windows Server 2012 R2 Datacenter", expectedOSVersion = "Microsoft Windows NT 6.3.9600.0", expectedComputerName = "test000000", expectedHyperVGeneration = "V1";
 
             bool passed = false;
             try
@@ -109,7 +110,8 @@ namespace Compute.Tests
                 var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName,
                     vmScaleSet.Name, instanceId);
                 Assert.True(getInstanceViewResponse != null, "VMScaleSetVM not returned.");
-                ValidateVMScaleSetVMInstanceView(getInstanceViewResponse, hasManagedDisks);
+                ValidateVMScaleSetVMInstanceView(getInstanceViewResponse, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion, expectedHyperVGeneration);
+
 
                 var query = new Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineScaleSetVM>();
                 query.SetFilter(vm => vm.LatestModelApplied == true);
@@ -124,7 +126,7 @@ namespace Compute.Tests
                 Assert.True(listResponse.Count() == inputVMScaleSet.Sku.Capacity);
 
                 m_CrpClient.VirtualMachineScaleSetVMs.Start(rgName, vmScaleSet.Name, instanceId);
-                m_CrpClient.VirtualMachineScaleSetVMs.Reimage(rgName, vmScaleSet.Name, instanceId, tempDisk: null);
+                m_CrpClient.VirtualMachineScaleSetVMs.Reimage(rgName, vmScaleSet.Name, instanceId);
 
                 if (hasManagedDisks)
                 {

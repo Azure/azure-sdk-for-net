@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TotalUsage))
             {
-                writer.WritePropertyName("totalUsage");
+                writer.WritePropertyName("totalUsage"u8);
                 writer.WriteNumberValue(TotalUsage.Value);
             }
             if (Optional.IsCollectionDefined(PerCpuUsage))
             {
-                writer.WritePropertyName("perCpuUsage");
+                writer.WritePropertyName("perCpuUsage"u8);
                 writer.WriteStartArray();
                 foreach (var item in PerCpuUsage)
                 {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(KernelModeUsage))
             {
-                writer.WritePropertyName("kernelModeUsage");
+                writer.WritePropertyName("kernelModeUsage"u8);
                 writer.WriteNumberValue(KernelModeUsage.Value);
             }
             if (Optional.IsDefined(UserModeUsage))
             {
-                writer.WritePropertyName("userModeUsage");
+                writer.WritePropertyName("userModeUsage"u8);
                 writer.WriteNumberValue(UserModeUsage.Value);
             }
             writer.WriteEndObject();
@@ -46,27 +46,29 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerCpuUsage DeserializeContainerCpuUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> totalUsage = default;
             Optional<IList<long>> perCpuUsage = default;
             Optional<long> kernelModeUsage = default;
             Optional<long> userModeUsage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalUsage"))
+                if (property.NameEquals("totalUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalUsage = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("perCpuUsage"))
+                if (property.NameEquals("perCpuUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<long> array = new List<long>();
@@ -77,21 +79,19 @@ namespace Azure.ResourceManager.AppService.Models
                     perCpuUsage = array;
                     continue;
                 }
-                if (property.NameEquals("kernelModeUsage"))
+                if (property.NameEquals("kernelModeUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kernelModeUsage = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("userModeUsage"))
+                if (property.NameEquals("userModeUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userModeUsage = property.Value.GetInt64();

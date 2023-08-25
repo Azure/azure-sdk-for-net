@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <RootNamespace>AzureSamples.Security.KeyVault.Proxy</RootNamespace>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>11.0</LangVersion>
     <NoWarn>
       $(NoWarn);
       AZC0001

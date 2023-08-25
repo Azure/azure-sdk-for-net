@@ -23,7 +23,7 @@ namespace Azure.Identity
     /// </summary>
     public class VisualStudioCredential : TokenCredential
     {
-        private const string TokenProviderFilePath = @".IdentityService\AzureServiceAuth\tokenprovider.json";
+        private static readonly string TokenProviderFilePath = Path.Combine(".IdentityService", "AzureServiceAuth", "tokenprovider.json");
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
 
@@ -34,8 +34,9 @@ namespace Azure.Identity
         private readonly IProcessService _processService;
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
+        internal bool _isChainedCredential;
 
-        internal TimeSpan VisualStudioProcessTimeout { get; private set; }
+        internal TimeSpan ProcessTimeout { get; private set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -52,14 +53,15 @@ namespace Azure.Identity
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
-            _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logPII = options?.IsUnsafeSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             TenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
-            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
-            VisualStudioProcessTimeout = options?.VisualStudioProcessTimeout ?? TimeSpan.FromSeconds(30);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
+            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(30);
+            _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <inheritdoc />
@@ -104,18 +106,32 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
             }
         }
 
         private static string GetTokenProviderPath()
         {
+            string baseFolder;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath);
+                baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                if (string.IsNullOrEmpty(baseFolder))
+                {
+                    // There is a known issue that Environment.GetFolderPath does not work on Windows Nano: https://github.com/dotnet/runtime/issues/21430
+                    baseFolder = Environment.GetEnvironmentVariable("LOCALAPPDATA");
+                    if (string.IsNullOrEmpty(baseFolder))
+                    {
+                        throw new CredentialUnavailableException("Can't find the Local Application Data folder. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscredential/troubleshoot");
+                    }
+                }
+            }
+            else
+            {
+                baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             }
 
-            throw new CredentialUnavailableException($"Operating system {RuntimeInformation.OSDescription} isn't supported.");
+            return Path.Combine(baseFolder, TokenProviderFilePath);
         }
 
         private async Task<AccessToken> RunProcessesAsync(List<ProcessStartInfo> processStartInfos, bool async, CancellationToken cancellationToken)
@@ -126,7 +142,7 @@ namespace Azure.Identity
                 string output = string.Empty;
                 try
                 {
-                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), VisualStudioProcessTimeout, _logPII, cancellationToken);
+                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
                     output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();
@@ -138,7 +154,7 @@ namespace Azure.Identity
                 }
                 catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
-                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in {VisualStudioProcessTimeout.TotalSeconds} seconds."));
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in {ProcessTimeout.TotalSeconds} seconds."));
                 }
                 catch (JsonException exception)
                 {
@@ -146,7 +162,14 @@ namespace Azure.Identity
                 }
                 catch (Exception exception) when (!(exception is OperationCanceledException))
                 {
-                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed with unexpected error: {exception.Message}.", exception));
+                    if (_isChainedCredential)
+                    {
+                        exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed with unexpected error: {exception.Message}.", exception));
+                    }
+                    else
+                    {
+                        exceptions.Add(new AuthenticationFailedException($"Process \"{processStartInfo.FileName}\" has failed with unexpected error: {exception.Message}.", exception));
+                    }
                 }
             }
 
@@ -178,21 +201,21 @@ namespace Azure.Identity
                 }
 
                 arguments.Clear();
+                // Add the arguments set in the token provider file.
+                if (tokenProvider.Arguments?.Length > 0)
+                {
+                    foreach (var argument in tokenProvider.Arguments)
+                    {
+                        arguments.Append(argument).Append(' ');
+                    }
+                }
+
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);
-                }
-
-                // Add the arguments set in the token provider file.
-                if (tokenProvider.Arguments?.Length > 0)
-                {
-                    foreach (var argument in tokenProvider.Arguments)
-                    {
-                        arguments.Append(' ').Append(argument);
-                    }
                 }
 
                 var startInfo = new ProcessStartInfo

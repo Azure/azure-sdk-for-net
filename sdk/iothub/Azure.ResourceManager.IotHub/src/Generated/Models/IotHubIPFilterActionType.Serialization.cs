@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.IotHub.Models
 
         public static IotHubIPFilterActionType ToIotHubIPFilterActionType(this string value)
         {
-            if (string.Equals(value, "Accept", StringComparison.InvariantCultureIgnoreCase)) return IotHubIPFilterActionType.Accept;
-            if (string.Equals(value, "Reject", StringComparison.InvariantCultureIgnoreCase)) return IotHubIPFilterActionType.Reject;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accept")) return IotHubIPFilterActionType.Accept;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Reject")) return IotHubIPFilterActionType.Reject;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubIPFilterActionType value.");
         }
     }

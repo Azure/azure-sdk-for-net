@@ -13,7 +13,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>All check have passed except for the Token, which is invalid.</summary>
         TokenInvalid,
         /// <summary>Incoming request and token has passed all checks and is in a successful state.</summary>
-        Successful
+        Successful,
+        /// <summary>The incoming payload is invalid and failed validation checks</summary>
+        ValidationError
     }
     #endregion
 }

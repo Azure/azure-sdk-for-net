@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -46,92 +45,60 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Get all the DigitalTwinsInstances in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/digitalTwinsInstances
-        /// Operation Id: DigitalTwins_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/digitalTwinsInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwins_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DigitalTwinsDescriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = await DigitalTwinsDescriptionDigitalTwinsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DigitalTwinsDescriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = await DigitalTwinsDescriptionDigitalTwinsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all the DigitalTwinsInstances in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/digitalTwinsInstances
-        /// Operation Id: DigitalTwins_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/digitalTwinsInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwins_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptions(CancellationToken cancellationToken = default)
         {
-            Page<DigitalTwinsDescriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = DigitalTwinsDescriptionDigitalTwinsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DigitalTwinsDescriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = DigitalTwinsDescriptionDigitalTwinsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Check if a DigitalTwinsInstance name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/locations/{location}/checkNameAvailability
-        /// Operation Id: DigitalTwins_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwins_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="content"> Set the name parameter in the DigitalTwinsInstanceCheckName structure to the name of the DigitalTwinsInstance to check. </param>
@@ -154,8 +121,16 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Check if a DigitalTwinsInstance name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/locations/{location}/checkNameAvailability
-        /// Operation Id: DigitalTwins_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwins_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="content"> Set the name parameter in the DigitalTwinsInstanceCheckName structure to the name of the DigitalTwinsInstance to check. </param>

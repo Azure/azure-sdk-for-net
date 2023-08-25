@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-04-04";
+            _apiVersion = apiVersion ?? "2022-09-04";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

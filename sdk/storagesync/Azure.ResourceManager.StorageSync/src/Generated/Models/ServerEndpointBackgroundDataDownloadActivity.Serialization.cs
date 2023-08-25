@@ -15,47 +15,47 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointBackgroundDataDownloadActivity DeserializeServerEndpointBackgroundDataDownloadActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<DateTimeOffset> startedTimestamp = default;
             Optional<int> percentProgress = default;
             Optional<long> downloadedBytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startedTimestamp"))
+                if (property.NameEquals("startedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("percentProgress"))
+                if (property.NameEquals("percentProgress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     percentProgress = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("downloadedBytes"))
+                if (property.NameEquals("downloadedBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     downloadedBytes = property.Value.GetInt64();

@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityDevOps.Models;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
-    /// <summary> A class representing the GitHubRepo data model. </summary>
+    /// <summary>
+    /// A class representing the GitHubRepo data model.
+    /// GitHub repo Proxy Resource.
+    /// </summary>
     public partial class GitHubRepoData : ResourceData
     {
         /// <summary> Initializes a new instance of GitHubRepoData. </summary>
