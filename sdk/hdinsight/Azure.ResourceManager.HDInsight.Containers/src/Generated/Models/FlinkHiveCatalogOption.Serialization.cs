@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
-            writer.WriteStringValue(MetastoreDbConnectionPasswordSecret);
+            writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
             writer.WritePropertyName("metastoreDbConnectionURL"u8);
-            writer.WriteStringValue(MetastoreDbConnectionURL);
+            writer.WriteStringValue(MetastoreDBConnectionUriString);
             writer.WritePropertyName("metastoreDbConnectionUserName"u8);
-            writer.WriteStringValue(MetastoreDbConnectionUserName);
+            writer.WriteStringValue(MetastoreDBConnectionUserName);
             writer.WriteEndObject();
         }
 
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            string metastoreDbConnectionPasswordSecret = default;
-            string metastoreDbConnectionURL = default;
-            string metastoreDbConnectionUserName = default;
+            string metastoreDBConnectionPasswordSecret = default;
+            string metastoreDBConnectionURL = default;
+            string metastoreDBConnectionUserName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metastoreDbConnectionPasswordSecret"u8))
                 {
-                    metastoreDbConnectionPasswordSecret = property.Value.GetString();
+                    metastoreDBConnectionPasswordSecret = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("metastoreDbConnectionURL"u8))
                 {
-                    metastoreDbConnectionURL = property.Value.GetString();
+                    metastoreDBConnectionURL = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("metastoreDbConnectionUserName"u8))
                 {
-                    metastoreDbConnectionUserName = property.Value.GetString();
+                    metastoreDBConnectionUserName = property.Value.GetString();
                     continue;
                 }
             }
-            return new FlinkHiveCatalogOption(metastoreDbConnectionPasswordSecret, metastoreDbConnectionURL, metastoreDbConnectionUserName);
+            return new FlinkHiveCatalogOption(metastoreDBConnectionPasswordSecret, metastoreDBConnectionURL, metastoreDBConnectionUserName);
         }
     }
 }

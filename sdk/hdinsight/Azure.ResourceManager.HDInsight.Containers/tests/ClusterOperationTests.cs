@@ -11,7 +11,7 @@ using Azure.ResourceManager.HDInsight.Containers.Models;
 using Azure.ResourceManager.ManagedServiceIdentities;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.HDInsightOnAks.Tests
+namespace Azure.ResourceManager.HDInsight.Containers.Tests
 {
     [NonParallelizable]
     [RunFrequency(RunTestFrequency.Manually)]
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HDInsightOnAks.Tests
 
             clusterData.ComputeProfile = new ComputeProfile(new List<NodeProfile> { nodeProfile });
 
-            clusterData.ClusterProfile = new ClusterProfile(clusterVersion: availableClusterVersionResult.ClusterVersionValue, ossVersion:availableClusterVersionResult.OssVersion, identityProfile: identityProfile, authorizationProfile: authorizationProfile);
+            clusterData.ClusterProfile = new ClusterProfile(clusterVersion: availableClusterVersionResult.ClusterVersionValue, ossVersion: availableClusterVersionResult.OssVersion, identityProfile: identityProfile, authorizationProfile: authorizationProfile);
 
             // set trino profile
             clusterData.ClusterProfile.TrinoProfile = new TrinoProfile();

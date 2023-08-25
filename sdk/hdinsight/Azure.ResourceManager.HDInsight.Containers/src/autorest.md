@@ -25,7 +25,9 @@ rename-mapping:
   Cluster: HDInsightCluster
   ClusterPool: HDInsightClusterPool
   # TODO, remove these when service fix the Uri format before GA
+  FlinkHiveCatalogOption.metastoreDbConnectionURL: MetastoreDBConnectionUriString
   FlinkStorageProfile.storageUri: StorageUriString
+  HiveCatalogOption.metastoreDbConnectionURL: MetastoreDBConnectionUriString
   ScriptActionProfile.url: UriString
   SparkMetastoreSpec.thriftUrl: ThriftUriString
   SparkProfile.defaultStorageUrl: DefaultStorageUriString
@@ -59,6 +61,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Db: DB|db
 
 directive:
   - from: hdinsight.json

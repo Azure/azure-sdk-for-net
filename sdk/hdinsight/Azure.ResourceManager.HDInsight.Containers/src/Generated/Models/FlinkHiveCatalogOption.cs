@@ -14,26 +14,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class FlinkHiveCatalogOption
     {
         /// <summary> Initializes a new instance of FlinkHiveCatalogOption. </summary>
-        /// <param name="metastoreDbConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
-        /// <param name="metastoreDbConnectionURL"> Connection string for hive metastore database. </param>
-        /// <param name="metastoreDbConnectionUserName"> User name for database connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metastoreDbConnectionPasswordSecret"/>, <paramref name="metastoreDbConnectionURL"/> or <paramref name="metastoreDbConnectionUserName"/> is null. </exception>
-        public FlinkHiveCatalogOption(string metastoreDbConnectionPasswordSecret, string metastoreDbConnectionURL, string metastoreDbConnectionUserName)
+        /// <param name="metastoreDBConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
+        /// <param name="metastoreDBConnectionUriString"> Connection string for hive metastore database. </param>
+        /// <param name="metastoreDBConnectionUserName"> User name for database connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metastoreDBConnectionPasswordSecret"/>, <paramref name="metastoreDBConnectionUriString"/> or <paramref name="metastoreDBConnectionUserName"/> is null. </exception>
+        public FlinkHiveCatalogOption(string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName)
         {
-            Argument.AssertNotNull(metastoreDbConnectionPasswordSecret, nameof(metastoreDbConnectionPasswordSecret));
-            Argument.AssertNotNull(metastoreDbConnectionURL, nameof(metastoreDbConnectionURL));
-            Argument.AssertNotNull(metastoreDbConnectionUserName, nameof(metastoreDbConnectionUserName));
+            Argument.AssertNotNull(metastoreDBConnectionPasswordSecret, nameof(metastoreDBConnectionPasswordSecret));
+            Argument.AssertNotNull(metastoreDBConnectionUriString, nameof(metastoreDBConnectionUriString));
+            Argument.AssertNotNull(metastoreDBConnectionUserName, nameof(metastoreDBConnectionUserName));
 
-            MetastoreDbConnectionPasswordSecret = metastoreDbConnectionPasswordSecret;
-            MetastoreDbConnectionURL = metastoreDbConnectionURL;
-            MetastoreDbConnectionUserName = metastoreDbConnectionUserName;
+            MetastoreDBConnectionPasswordSecret = metastoreDBConnectionPasswordSecret;
+            MetastoreDBConnectionUriString = metastoreDBConnectionUriString;
+            MetastoreDBConnectionUserName = metastoreDBConnectionUserName;
         }
 
         /// <summary> Secret reference name from secretsProfile.secrets containing password for database connection. </summary>
-        public string MetastoreDbConnectionPasswordSecret { get; set; }
+        public string MetastoreDBConnectionPasswordSecret { get; set; }
         /// <summary> Connection string for hive metastore database. </summary>
-        public string MetastoreDbConnectionURL { get; set; }
+        public string MetastoreDBConnectionUriString { get; set; }
         /// <summary> User name for database connection. </summary>
-        public string MetastoreDbConnectionUserName { get; set; }
+        public string MetastoreDBConnectionUserName { get; set; }
     }
 }

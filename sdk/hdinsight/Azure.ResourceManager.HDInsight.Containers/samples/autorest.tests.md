@@ -2,7 +2,7 @@
 
 Run `dotnet build /t:GenerateTests` to generate code.
 
-# Azure.ResourceManager.HDInsightOnAks.Tests
+# Azure.ResourceManager.HDInsight.Containers.Samples
 
 > see https://aka.ms/autorest
 ``` yaml

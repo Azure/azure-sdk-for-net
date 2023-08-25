@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.HDInsightOnAks.Tests
+namespace Azure.ResourceManager.HDInsight.Containers.Tests
 {
     public class HDInsightContainersManagementTestEnvironment : TestEnvironment
     {

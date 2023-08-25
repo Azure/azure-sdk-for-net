@@ -15,34 +15,34 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     {
         /// <summary> Initializes a new instance of HiveCatalogOption. </summary>
         /// <param name="catalogName"> Name of trino catalog which should use specified hive metastore. </param>
-        /// <param name="metastoreDbConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
-        /// <param name="metastoreDbConnectionURL"> Connection string for hive metastore database. </param>
-        /// <param name="metastoreDbConnectionUserName"> User name for database connection. </param>
+        /// <param name="metastoreDBConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
+        /// <param name="metastoreDBConnectionUriString"> Connection string for hive metastore database. </param>
+        /// <param name="metastoreDBConnectionUserName"> User name for database connection. </param>
         /// <param name="metastoreWarehouseDir"> Metastore root directory URI, format: abfs[s]://&lt;container&gt;@&lt;account_name&gt;.dfs.core.windows.net/&lt;path&gt;. More details: https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction-abfs-uri. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/>, <paramref name="metastoreDbConnectionPasswordSecret"/>, <paramref name="metastoreDbConnectionURL"/>, <paramref name="metastoreDbConnectionUserName"/> or <paramref name="metastoreWarehouseDir"/> is null. </exception>
-        public HiveCatalogOption(string catalogName, string metastoreDbConnectionPasswordSecret, string metastoreDbConnectionURL, string metastoreDbConnectionUserName, string metastoreWarehouseDir)
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/>, <paramref name="metastoreDBConnectionPasswordSecret"/>, <paramref name="metastoreDBConnectionUriString"/>, <paramref name="metastoreDBConnectionUserName"/> or <paramref name="metastoreWarehouseDir"/> is null. </exception>
+        public HiveCatalogOption(string catalogName, string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName, string metastoreWarehouseDir)
         {
             Argument.AssertNotNull(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(metastoreDbConnectionPasswordSecret, nameof(metastoreDbConnectionPasswordSecret));
-            Argument.AssertNotNull(metastoreDbConnectionURL, nameof(metastoreDbConnectionURL));
-            Argument.AssertNotNull(metastoreDbConnectionUserName, nameof(metastoreDbConnectionUserName));
+            Argument.AssertNotNull(metastoreDBConnectionPasswordSecret, nameof(metastoreDBConnectionPasswordSecret));
+            Argument.AssertNotNull(metastoreDBConnectionUriString, nameof(metastoreDBConnectionUriString));
+            Argument.AssertNotNull(metastoreDBConnectionUserName, nameof(metastoreDBConnectionUserName));
             Argument.AssertNotNull(metastoreWarehouseDir, nameof(metastoreWarehouseDir));
 
             CatalogName = catalogName;
-            MetastoreDbConnectionPasswordSecret = metastoreDbConnectionPasswordSecret;
-            MetastoreDbConnectionURL = metastoreDbConnectionURL;
-            MetastoreDbConnectionUserName = metastoreDbConnectionUserName;
+            MetastoreDBConnectionPasswordSecret = metastoreDBConnectionPasswordSecret;
+            MetastoreDBConnectionUriString = metastoreDBConnectionUriString;
+            MetastoreDBConnectionUserName = metastoreDBConnectionUserName;
             MetastoreWarehouseDir = metastoreWarehouseDir;
         }
 
         /// <summary> Name of trino catalog which should use specified hive metastore. </summary>
         public string CatalogName { get; set; }
         /// <summary> Secret reference name from secretsProfile.secrets containing password for database connection. </summary>
-        public string MetastoreDbConnectionPasswordSecret { get; set; }
+        public string MetastoreDBConnectionPasswordSecret { get; set; }
         /// <summary> Connection string for hive metastore database. </summary>
-        public string MetastoreDbConnectionURL { get; set; }
+        public string MetastoreDBConnectionUriString { get; set; }
         /// <summary> User name for database connection. </summary>
-        public string MetastoreDbConnectionUserName { get; set; }
+        public string MetastoreDBConnectionUserName { get; set; }
         /// <summary> Metastore root directory URI, format: abfs[s]://&lt;container&gt;@&lt;account_name&gt;.dfs.core.windows.net/&lt;path&gt;. More details: https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction-abfs-uri. </summary>
         public string MetastoreWarehouseDir { get; set; }
     }

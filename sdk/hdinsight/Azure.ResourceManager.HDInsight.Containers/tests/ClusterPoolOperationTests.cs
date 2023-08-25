@@ -12,7 +12,7 @@ using Azure.ResourceManager.HDInsight.Containers.Models;
 using Castle.Core.Resource;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.HDInsightOnAks.Tests
+namespace Azure.ResourceManager.HDInsight.Containers.Tests
 {
     [NonParallelizable]
     [RunFrequency(RunTestFrequency.Manually)]

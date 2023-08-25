@@ -370,10 +370,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class FlinkHiveCatalogOption
     {
-        public FlinkHiveCatalogOption(string metastoreDbConnectionPasswordSecret, string metastoreDbConnectionURL, string metastoreDbConnectionUserName) { }
-        public string MetastoreDbConnectionPasswordSecret { get { throw null; } set { } }
-        public string MetastoreDbConnectionURL { get { throw null; } set { } }
-        public string MetastoreDbConnectionUserName { get { throw null; } set { } }
+        public FlinkHiveCatalogOption(string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName) { }
+        public string MetastoreDBConnectionPasswordSecret { get { throw null; } set { } }
+        public string MetastoreDBConnectionUriString { get { throw null; } set { } }
+        public string MetastoreDBConnectionUserName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FlinkJobAction : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.FlinkJobAction>
@@ -445,11 +445,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class HiveCatalogOption
     {
-        public HiveCatalogOption(string catalogName, string metastoreDbConnectionPasswordSecret, string metastoreDbConnectionURL, string metastoreDbConnectionUserName, string metastoreWarehouseDir) { }
+        public HiveCatalogOption(string catalogName, string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName, string metastoreWarehouseDir) { }
         public string CatalogName { get { throw null; } set { } }
-        public string MetastoreDbConnectionPasswordSecret { get { throw null; } set { } }
-        public string MetastoreDbConnectionURL { get { throw null; } set { } }
-        public string MetastoreDbConnectionUserName { get { throw null; } set { } }
+        public string MetastoreDBConnectionPasswordSecret { get { throw null; } set { } }
+        public string MetastoreDBConnectionUriString { get { throw null; } set { } }
+        public string MetastoreDBConnectionUserName { get { throw null; } set { } }
         public string MetastoreWarehouseDir { get { throw null; } set { } }
     }
     public partial class IdentityProfile
@@ -644,10 +644,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class SparkMetastoreSpec
     {
         public SparkMetastoreSpec(string dbServerHost, string dbName, string dbUserName, string dbPasswordSecretName, string keyVaultId) { }
-        public string DbName { get { throw null; } set { } }
-        public string DbPasswordSecretName { get { throw null; } set { } }
-        public string DbServerHost { get { throw null; } set { } }
-        public string DbUserName { get { throw null; } set { } }
+        public string DBName { get { throw null; } set { } }
+        public string DBPasswordSecretName { get { throw null; } set { } }
+        public string DBServerHost { get { throw null; } set { } }
+        public string DBUserName { get { throw null; } set { } }
         public string KeyVaultId { get { throw null; } set { } }
         public string ThriftUriString { get { throw null; } set { } }
     }

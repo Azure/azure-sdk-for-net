@@ -9,7 +9,7 @@ using Azure.ResourceManager.HDInsight.Containers;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
-namespace Azure.ResourceManager.HDInsightOnAks.Tests
+namespace Azure.ResourceManager.HDInsight.Containers.Tests
 {
     [ClientTestFixture]
     public abstract class HDInsightContainersOperationTestsBase : ManagementRecordedTestBase<HDInsightContainersManagementTestEnvironment>

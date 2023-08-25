@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("catalogName"u8);
             writer.WriteStringValue(CatalogName);
             writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
-            writer.WriteStringValue(MetastoreDbConnectionPasswordSecret);
+            writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
             writer.WritePropertyName("metastoreDbConnectionURL"u8);
-            writer.WriteStringValue(MetastoreDbConnectionURL);
+            writer.WriteStringValue(MetastoreDBConnectionUriString);
             writer.WritePropertyName("metastoreDbConnectionUserName"u8);
-            writer.WriteStringValue(MetastoreDbConnectionUserName);
+            writer.WriteStringValue(MetastoreDBConnectionUserName);
             writer.WritePropertyName("metastoreWarehouseDir"u8);
             writer.WriteStringValue(MetastoreWarehouseDir);
             writer.WriteEndObject();
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string catalogName = default;
-            string metastoreDbConnectionPasswordSecret = default;
-            string metastoreDbConnectionURL = default;
-            string metastoreDbConnectionUserName = default;
+            string metastoreDBConnectionPasswordSecret = default;
+            string metastoreDBConnectionURL = default;
+            string metastoreDBConnectionUserName = default;
             string metastoreWarehouseDir = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("metastoreDbConnectionPasswordSecret"u8))
                 {
-                    metastoreDbConnectionPasswordSecret = property.Value.GetString();
+                    metastoreDBConnectionPasswordSecret = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("metastoreDbConnectionURL"u8))
                 {
-                    metastoreDbConnectionURL = property.Value.GetString();
+                    metastoreDBConnectionURL = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("metastoreDbConnectionUserName"u8))
                 {
-                    metastoreDbConnectionUserName = property.Value.GetString();
+                    metastoreDBConnectionUserName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("metastoreWarehouseDir"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     continue;
                 }
             }
-            return new HiveCatalogOption(catalogName, metastoreDbConnectionPasswordSecret, metastoreDbConnectionURL, metastoreDbConnectionUserName, metastoreWarehouseDir);
+            return new HiveCatalogOption(catalogName, metastoreDBConnectionPasswordSecret, metastoreDBConnectionURL, metastoreDBConnectionUserName, metastoreWarehouseDir);
         }
     }
 }

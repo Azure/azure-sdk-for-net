@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dbServerHost"u8);
-            writer.WriteStringValue(DbServerHost);
+            writer.WriteStringValue(DBServerHost);
             writer.WritePropertyName("dbName"u8);
-            writer.WriteStringValue(DbName);
+            writer.WriteStringValue(DBName);
             writer.WritePropertyName("dbUserName"u8);
-            writer.WriteStringValue(DbUserName);
+            writer.WriteStringValue(DBUserName);
             writer.WritePropertyName("dbPasswordSecretName"u8);
-            writer.WriteStringValue(DbPasswordSecretName);
+            writer.WriteStringValue(DBPasswordSecretName);
             writer.WritePropertyName("keyVaultId"u8);
             writer.WriteStringValue(KeyVaultId);
             if (Optional.IsDefined(ThriftUriString))

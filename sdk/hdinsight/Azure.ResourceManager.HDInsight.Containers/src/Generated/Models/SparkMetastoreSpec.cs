@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Argument.AssertNotNull(dbPasswordSecretName, nameof(dbPasswordSecretName));
             Argument.AssertNotNull(keyVaultId, nameof(keyVaultId));
 
-            DbServerHost = dbServerHost;
-            DbName = dbName;
-            DbUserName = dbUserName;
-            DbPasswordSecretName = dbPasswordSecretName;
+            DBServerHost = dbServerHost;
+            DBName = dbName;
+            DBUserName = dbUserName;
+            DBPasswordSecretName = dbPasswordSecretName;
             KeyVaultId = keyVaultId;
         }
 
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="thriftUriString"> The thrift url. </param>
         internal SparkMetastoreSpec(string dbServerHost, string dbName, string dbUserName, string dbPasswordSecretName, string keyVaultId, string thriftUriString)
         {
-            DbServerHost = dbServerHost;
-            DbName = dbName;
-            DbUserName = dbUserName;
-            DbPasswordSecretName = dbPasswordSecretName;
+            DBServerHost = dbServerHost;
+            DBName = dbName;
+            DBUserName = dbUserName;
+            DBPasswordSecretName = dbPasswordSecretName;
             KeyVaultId = keyVaultId;
             ThriftUriString = thriftUriString;
         }
 
         /// <summary> The database server host. </summary>
-        public string DbServerHost { get; set; }
+        public string DBServerHost { get; set; }
         /// <summary> The database name. </summary>
-        public string DbName { get; set; }
+        public string DBName { get; set; }
         /// <summary> The database user name. </summary>
-        public string DbUserName { get; set; }
+        public string DBUserName { get; set; }
         /// <summary> The secret name which contains the database user password. </summary>
-        public string DbPasswordSecretName { get; set; }
+        public string DBPasswordSecretName { get; set; }
         /// <summary> The key vault resource id. </summary>
         public string KeyVaultId { get; set; }
         /// <summary> The thrift url. </summary>
