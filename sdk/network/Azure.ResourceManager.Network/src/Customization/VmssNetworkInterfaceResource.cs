@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a NetworkInterface along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VmssNetworkInterfaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVmssNetworkInterfaceResource method.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkInterfaceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetNetworkInterfaceResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkInterface method.
     /// </summary>
-    public partial class VmssNetworkInterfaceResource : ArmResource
+    public partial class NetworkInterfaceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="VmssNetworkInterfaceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NetworkInterfaceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkInterfaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}";
@@ -40,24 +40,24 @@ namespace Azure.ResourceManager.Network
         private readonly NetworkInterfaceLoadBalancersRestOperations _networkInterfaceLoadBalancersRestClient;
         private readonly NetworkInterfaceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="VmssNetworkInterfaceResource"/> class for mocking. </summary>
-        protected VmssNetworkInterfaceResource()
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceResource"/> class for mocking. </summary>
+        protected NetworkInterfaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VmssNetworkInterfaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "NetworkInterfaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VmssNetworkInterfaceResource(ArmClient client, NetworkInterfaceData data) : this(client, data.Id)
+        internal NetworkInterfaceResource(ArmClient client, NetworkInterfaceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VmssNetworkInterfaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VmssNetworkInterfaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkInterfaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkInterfaceApiVersion);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkInterfaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -214,16 +214,16 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VmssNetworkInterfaceResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterfaceResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.Get");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Get");
             scope.Start();
             try
             {
                 var response = await _networkInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VmssNetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,16 +247,16 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VmssNetworkInterfaceResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.Get");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Get");
             scope.Start();
             try
             {
                 var response = _networkInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VmssNetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.Delete");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Delete");
             scope.Start();
             try
             {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.Delete");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Delete");
             scope.Start();
             try
             {
@@ -349,16 +349,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkTagsObject"> Parameters supplied to update network interface tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
-        public virtual async Task<Response<VmssNetworkInterfaceResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterfaceResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.Update");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Update");
             scope.Start();
             try
             {
                 var response = await _networkInterfaceRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VmssNetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -383,16 +383,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkTagsObject"> Parameters supplied to update network interface tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
-        public virtual Response<VmssNetworkInterfaceResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.Update");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Update");
             scope.Start();
             try
             {
                 var response = _networkInterfaceRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken);
-                return Response.FromValue(new VmssNetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<EffectiveRouteListResult>> GetEffectiveRouteTableAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.GetEffectiveRouteTable");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.GetEffectiveRouteTable");
             scope.Start();
             try
             {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<EffectiveRouteListResult> GetEffectiveRouteTable(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.GetEffectiveRouteTable");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.GetEffectiveRouteTable");
             scope.Start();
             try
             {
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<EffectiveNetworkSecurityGroupListResult>> GetEffectiveNetworkSecurityGroupsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.GetEffectiveNetworkSecurityGroups");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.GetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<EffectiveNetworkSecurityGroupListResult> GetEffectiveNetworkSecurityGroups(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.GetEffectiveNetworkSecurityGroups");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.GetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceLoadBalancersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceLoadBalancersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "VmssNetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceLoadBalancersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceLoadBalancersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "VmssNetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -598,12 +598,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<VmssNetworkInterfaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterfaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.AddTag");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.AddTag");
             scope.Start();
             try
             {
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Network
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _networkInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new VmssNetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -652,12 +652,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<VmssNetworkInterfaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.AddTag");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.AddTag");
             scope.Start();
             try
             {
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Network
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _networkInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new VmssNetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -705,11 +705,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<VmssNetworkInterfaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterfaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.SetTags");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.SetTags");
             scope.Start();
             try
             {
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Network
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _networkInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new VmssNetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -754,11 +754,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<VmssNetworkInterfaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.SetTags");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.SetTags");
             scope.Start();
             try
             {
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Network
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _networkInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new VmssNetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -803,11 +803,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<VmssNetworkInterfaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterfaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.RemoveTag");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.Network
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _networkInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new VmssNetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -855,11 +855,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<VmssNetworkInterfaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("VmssNetworkInterfaceResource.RemoveTag");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.Network
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _networkInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new VmssNetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NetworkInterfaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {

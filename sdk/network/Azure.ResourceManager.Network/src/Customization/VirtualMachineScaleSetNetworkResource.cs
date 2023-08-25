@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesVirtualMachineScaleSetsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VmssNetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VmssNetworkInterfaceResource> GetNetworkInterfacesVirtualMachineScaleSetsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.CreateListNetworkInterfacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.CreateListNetworkInterfacesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetNetworkResource.GetNetworkInterfacesVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VmssNetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetNetworkResource.GetNetworkInterfacesVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkInterfaceResource> GetNetworkInterfacesVirtualMachineScaleSets(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VmssNetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VmssNetworkInterfaceResource> GetNetworkInterfacesVirtualMachineScaleSets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.CreateListNetworkInterfacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.CreateListNetworkInterfacesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetNetworkResource.GetNetworkInterfacesVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VmssNetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetNetworkResource.GetNetworkInterfacesVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

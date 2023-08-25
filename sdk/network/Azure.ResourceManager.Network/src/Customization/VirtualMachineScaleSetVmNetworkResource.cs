@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesVirtualMachineScaleSetVMsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VmssNetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VmssNetworkInterfaceResource> GetNetworkInterfacesVirtualMachineScaleSetVMsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineScaleSetVmsRestClient.CreateListNetworkInterfacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineScaleSetVmsRestClient.CreateListNetworkInterfacesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), VirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfacesVirtualMachineScaleSetVMs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VmssNetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), VirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfacesVirtualMachineScaleSetVMs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkInterfaceResource> GetNetworkInterfacesVirtualMachineScaleSetVMs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VmssNetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VmssNetworkInterfaceResource> GetNetworkInterfacesVirtualMachineScaleSetVMs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineScaleSetVmsRestClient.CreateListNetworkInterfacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineScaleSetVmsRestClient.CreateListNetworkInterfacesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), VirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfacesVirtualMachineScaleSetVMs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VmssNetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), VirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfacesVirtualMachineScaleSetVMs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,14 +190,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceVirtualMachineScaleSetAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VmssNetworkInterfaceResource>> GetNetworkInterfaceVirtualMachineScaleSetAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfaceVirtualMachineScaleSet");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetsRestClient.GetNetworkInterfaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VmssNetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkInterfaceResource> GetNetworkInterfaceVirtualMachineScaleSet(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<VmssNetworkInterfaceResource> GetNetworkInterfaceVirtualMachineScaleSet(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfaceVirtualMachineScaleSet");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetsRestClient.GetNetworkInterface(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand, cancellationToken);
-                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VmssNetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
