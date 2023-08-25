@@ -12,11 +12,12 @@ namespace Azure.Core.Serialization
 {
     internal partial class MergePatchDictionary<T> : IDictionary<string, T?>
     {
-        public static MergePatchDictionary<string> GetStringDictionary(Dictionary<string, string?>? d = default)
-            => new(e => e.GetString(), (w, s) => w.WriteStringValue(s), default, d);
+        public static MergePatchDictionary<string> GetStringDictionary()
+            => new(e => e.GetString(), (w, s) => w.WriteStringValue(s), default);
 
-        private readonly Dictionary<string, bool> _changed;
-        private readonly Dictionary<string, T?> _dictionary;
+        private readonly MergePatchChanges _changes;
+        private readonly Dictionary<string, int> _indexes;
+        private readonly T?[] _values;
 
         private readonly Func<JsonElement, T?> _deserializeItem;
         private readonly Action<Utf8JsonWriter, T?> _serializeItem;
@@ -28,11 +29,12 @@ namespace Azure.Core.Serialization
         public MergePatchDictionary(
             Func<JsonElement, T?> deserializeItem,
             Action<Utf8JsonWriter, T?> serializeItem,
-            Func<T?, bool>? hasChanges = default,
-            Dictionary<string, T?>? dictionary = default)
+            Func<T?, bool>? hasChanges = default)
         {
-            _changed = new Dictionary<string, bool>();
-            _dictionary = dictionary ?? new Dictionary<string, T?>();
+            // TODO: How to size it?
+            _changes = new(100);
+            _indexes = new Dictionary<string, int>();
+            _values = new T?[100];
 
             _deserializeItem = deserializeItem;
             _serializeItem = serializeItem;
@@ -50,12 +52,12 @@ namespace Azure.Core.Serialization
                 return false;
             }
 
-            foreach (KeyValuePair<string, bool> item in _changed)
+            foreach (KeyValuePair<string, int> item in _indexes)
             {
-                bool mightHaveChanged = item.Value;
+                bool mightHaveChanged = _changes.HasChanged(item.Value);
                 if (mightHaveChanged)
                 {
-                    T? value = _dictionary[item.Key];
+                    T? value = _values[item.Value];
                     if (_itemHasChanges != null && _itemHasChanges(value))
                     {
                         return true;
@@ -72,23 +74,29 @@ namespace Azure.Core.Serialization
             {
                 // If the value is read and a reference value, it might get changed
                 _checkChanges = _itemHasChanges != null;
-                _changed[key] = _itemHasChanges != null;
-                return _dictionary[key];
+                if (_itemHasChanges != null)
+                {
+                    _changes.SetChanged(_indexes[key]);
+                }
+                return _values[_indexes[key]];
             }
 
             set
             {
                 _hasChanges = true;
-                _changed[key] = true;
+
+                // TODO: check if it's new to reallocate if needed
+                _changes.SetChanged(_indexes[key]);
+
                 _dictionary[key] = value;
             }
         }
 
-        ICollection<string> IDictionary<string, T?>.Keys => _dictionary.Keys;
+        ICollection<string> IDictionary<string, T?>.Keys => _indexes.Keys;
 
         ICollection<T?> IDictionary<string, T?>.Values => _dictionary.Values;
 
-        int ICollection<KeyValuePair<string, T?>>.Count => _dictionary.Count;
+        int ICollection<KeyValuePair<string, T?>>.Count => _indexes.Count;
 
         bool ICollection<KeyValuePair<string, T?>>.IsReadOnly => false;
 
@@ -154,7 +162,7 @@ namespace Azure.Core.Serialization
 
         public bool TryGetValue(string key, out T? value)
         {
-            if (_dictionary.TryGetValue(key, out value))
+            if (_indexes.TryGetValue(key, out int index))
             {
                 _checkChanges = _itemHasChanges != null;
                 _changed[key] = _itemHasChanges != null;
