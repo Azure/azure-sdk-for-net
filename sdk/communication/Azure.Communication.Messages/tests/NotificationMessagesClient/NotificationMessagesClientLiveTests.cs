@@ -33,6 +33,20 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
+        public async Task SendMessageWithAzureKeyCredentialShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClientWithAzureKeyCredential();
+            var options = new SendMessageOptions(TestEnvironment.SenderChannelRegistrationId, new List<string> { TestEnvironment.RecipientIdentifier }, "LiveTest");
+
+            // Act
+            Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(options);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
         public async Task SendShippingConfirmationTemplateMessageShouldSucceed()
         {
             // Arrange

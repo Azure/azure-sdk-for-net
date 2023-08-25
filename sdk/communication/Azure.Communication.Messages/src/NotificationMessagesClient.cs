@@ -55,17 +55,6 @@ namespace Azure.Communication.Messages
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationMessagesClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="tokenCredential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
-        /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public NotificationMessagesClient(Uri endpoint, TokenCredential tokenCredential, CommunicationMessagesClientOptions options = default)
-            : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
-                options ?? new CommunicationMessagesClientOptions())
-        { }
-
         #endregion
 
         #region private constructors
