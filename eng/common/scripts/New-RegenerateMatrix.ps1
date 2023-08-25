@@ -38,7 +38,7 @@ function Split-Items([array]$Items) {
 # ensure the output directory exists
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 
-$pattern = '^.*?/(sdk/(.*?)/.*)'
+$pattern = "^$($RepoRoot.Path.Replace("\", "/"))/(sdk/(.*?)/.*)"
 Push-Location "$RepoRoot/sdk"
 [array]$packageFolders = Get-ChildItem -Directory -Recurse
 | ForEach-Object {
