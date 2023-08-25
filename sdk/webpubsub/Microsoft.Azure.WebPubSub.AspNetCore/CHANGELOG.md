@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.0 (2023-08-28)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix multi request origins validation.
 
 ## 1.1.0 (2023-07-12)
 
