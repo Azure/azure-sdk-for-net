@@ -6,7 +6,7 @@ All samples are using `client` created in [Create a `TextTranslationClient`][cre
 
 When the input language is known, you can provide those to the service call.
 
-```C#
+```C# Snippet:GetTextTranslationSentencesSourceAsync
 try
 {
     string sourceLanguage = "zh-Hans";
@@ -22,8 +22,6 @@ try
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
     Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
-
-
 }
 catch (RequestFailedException exception)
 {
@@ -36,7 +34,7 @@ catch (RequestFailedException exception)
 
 You can ommit source languge of the input text. In this case, API will try to auto-detect the language.
 
-```C#
+```C# Snippet:GetTextTranslationSentencesAutoAsync
 try
 {
     IEnumerable<string> inputTextElements = new[]
@@ -50,7 +48,6 @@ try
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
     Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
-
 }
 catch (RequestFailedException exception)
 {

@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppCertificateResource> GetAppCertificatesAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppCertificateResource> GetAppCertificates(string filter = null, CancellationToken cancellationToken = default)
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceRecommendation> GetRecommendationsAsync(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceRecommendation> GetRecommendations(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)

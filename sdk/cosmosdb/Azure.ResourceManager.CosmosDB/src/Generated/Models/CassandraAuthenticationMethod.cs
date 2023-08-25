@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Which authentication method Cassandra should use to authenticate clients. &apos;None&apos; turns off authentication, so should not be used except in emergencies. &apos;Cassandra&apos; is the default password based authentication. The default is &apos;Cassandra&apos;. &apos;Ldap&apos; is in preview. </summary>
+    /// <summary> Which authentication method Cassandra should use to authenticate clients. 'None' turns off authentication, so should not be used except in emergencies. 'Cassandra' is the default password based authentication. The default is 'Cassandra'. </summary>
     public readonly partial struct CassandraAuthenticationMethod : IEquatable<CassandraAuthenticationMethod>
     {
         private readonly string _value;

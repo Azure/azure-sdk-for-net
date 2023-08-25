@@ -142,6 +142,59 @@ namespace Azure.ResourceManager.Network
             return GetExpressRouteLinks().Get(linkName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ExpressRoutePortAuthorizationResources in the ExpressRoutePort. </summary>
+        /// <returns> An object representing collection of ExpressRoutePortAuthorizationResources and their operations over a ExpressRoutePortAuthorizationResource. </returns>
+        public virtual ExpressRoutePortAuthorizationCollection GetExpressRoutePortAuthorizations()
+        {
+            return GetCachedClient(Client => new ExpressRoutePortAuthorizationCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified authorization from the specified express route port.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePortAuthorizations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationName"> The name of the authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExpressRoutePortAuthorizationResource>> GetExpressRoutePortAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
+        {
+            return await GetExpressRoutePortAuthorizations().GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified authorization from the specified express route port.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePortAuthorizations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationName"> The name of the authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ExpressRoutePortAuthorizationResource> GetExpressRoutePortAuthorization(string authorizationName, CancellationToken cancellationToken = default)
+        {
+            return GetExpressRoutePortAuthorizations().Get(authorizationName, cancellationToken);
+        }
+
         /// <summary>
         /// Retrieves the requested ExpressRoutePort resource.
         /// <list type="bullet">

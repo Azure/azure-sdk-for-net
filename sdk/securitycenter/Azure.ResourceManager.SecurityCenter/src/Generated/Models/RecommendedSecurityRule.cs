@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of RecommendedSecurityRule. </summary>
         /// <param name="name"> The name of the rule. </param>
-        /// <param name="direction"> The rule&apos;s direction. </param>
-        /// <param name="destinationPort"> The rule&apos;s destination port. </param>
-        /// <param name="protocols"> The rule&apos;s transport protocols. </param>
-        /// <param name="ipAddresses"> The remote IP addresses that should be able to communicate with the Azure resource on the rule&apos;s destination port and protocol. </param>
+        /// <param name="direction"> The rule's direction. </param>
+        /// <param name="destinationPort"> The rule's destination port. </param>
+        /// <param name="protocols"> The rule's transport protocols. </param>
+        /// <param name="ipAddresses"> The remote IP addresses that should be able to communicate with the Azure resource on the rule's destination port and protocol. </param>
         internal RecommendedSecurityRule(string name, SecurityTrafficDirection? direction, int? destinationPort, IList<SecurityTransportProtocol> protocols, IList<string> ipAddresses)
         {
             Name = name;
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> The name of the rule. </summary>
         public string Name { get; set; }
-        /// <summary> The rule&apos;s direction. </summary>
+        /// <summary> The rule's direction. </summary>
         public SecurityTrafficDirection? Direction { get; set; }
-        /// <summary> The rule&apos;s destination port. </summary>
+        /// <summary> The rule's destination port. </summary>
         public int? DestinationPort { get; set; }
-        /// <summary> The rule&apos;s transport protocols. </summary>
+        /// <summary> The rule's transport protocols. </summary>
         public IList<SecurityTransportProtocol> Protocols { get; }
-        /// <summary> The remote IP addresses that should be able to communicate with the Azure resource on the rule&apos;s destination port and protocol. </summary>
+        /// <summary> The remote IP addresses that should be able to communicate with the Azure resource on the rule's destination port and protocol. </summary>
         public IList<string> IPAddresses { get; }
     }
 }

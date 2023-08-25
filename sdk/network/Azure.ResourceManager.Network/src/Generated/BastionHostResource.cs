@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates the specified Bastion Host.
+        /// Updates Tags for BastionHost resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -229,24 +230,24 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BastionHosts_CreateOrUpdate</description>
+        /// <description>BastionHosts_UpdateTags</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters supplied to the create or update Bastion Host operation. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update BastionHost tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual async Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostResource.Update");
             scope.Start();
             try
             {
-                var response = await _bastionHostRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<BastionHostResource>(new BastionHostOperationSource(Client), _bastionHostClientDiagnostics, Pipeline, _bastionHostRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _bastionHostRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<BastionHostResource>(new BastionHostOperationSource(Client), _bastionHostClientDiagnostics, Pipeline, _bastionHostRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates the specified Bastion Host.
+        /// Updates Tags for BastionHost resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -267,24 +268,24 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BastionHosts_CreateOrUpdate</description>
+        /// <description>BastionHosts_UpdateTags</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters supplied to the create or update Bastion Host operation. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update BastionHost tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostResource.Update");
             scope.Start();
             try
             {
-                var response = _bastionHostRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation<BastionHostResource>(new BastionHostOperationSource(Client), _bastionHostClientDiagnostics, Pipeline, _bastionHostRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _bastionHostRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken);
+                var operation = new NetworkArmOperation<BastionHostResource>(new BastionHostOperationSource(Client), _bastionHostClientDiagnostics, Pipeline, _bastionHostRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -333,8 +334,13 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var patch = new NetworkTagsObject();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -382,8 +388,13 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    var patch = new NetworkTagsObject();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -430,8 +441,9 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var patch = new NetworkTagsObject();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -478,8 +490,9 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    var patch = new NetworkTagsObject();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -525,8 +538,13 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var patch = new NetworkTagsObject();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -572,8 +590,13 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    var patch = new NetworkTagsObject();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

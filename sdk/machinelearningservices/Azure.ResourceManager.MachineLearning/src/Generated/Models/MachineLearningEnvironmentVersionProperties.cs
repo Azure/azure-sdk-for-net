@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="build"> Configuration settings for Docker build context. </param>
         /// <param name="condaFile">
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
-        /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
+        /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
         /// </param>
         /// <param name="environmentType">
         /// Environment type is either user managed or curated by the Azure ML service
-        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
+        /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments" /&gt;
         /// </param>
         /// <param name="image">
         /// Name of the image that will be used for the environment.
-        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
+        /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
         /// </param>
         /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
         /// <param name="osType"> The OS type of the environment. </param>
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningBuildContext Build { get; set; }
         /// <summary>
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
-        /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
+        /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
         /// </summary>
         public string CondaFile { get; set; }
         /// <summary>
         /// Environment type is either user managed or curated by the Azure ML service
-        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
+        /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments" /&gt;
         /// </summary>
         public MachineLearningEnvironmentType? EnvironmentType { get; }
         /// <summary>
         /// Name of the image that will be used for the environment.
-        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
+        /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
         /// </summary>
         public string Image { get; set; }
         /// <summary> Defines configuration specific to inference. </summary>

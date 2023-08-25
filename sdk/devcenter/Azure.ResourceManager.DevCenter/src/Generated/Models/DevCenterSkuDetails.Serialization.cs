@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<Capability>> capabilities = default;
+            Optional<IReadOnlyList<DevCenterCapability>> capabilities = default;
             string name = default;
             Optional<DevCenterSkuTier> tier = default;
             Optional<string> size = default;
@@ -59,7 +59,11 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -82,10 +86,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<Capability> array = new List<Capability>();
+                    List<DevCenterCapability> array = new List<DevCenterCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Capability.DeserializeCapability(item));
+                        array.Add(DevCenterCapability.DeserializeDevCenterCapability(item));
                     }
                     capabilities = array;
                     continue;
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new DevCenterSkuDetails(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), resourceType.Value, Optional.ToList(locations), Optional.ToList(capabilities));
+            return new DevCenterSkuDetails(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), Optional.ToNullable(resourceType), Optional.ToList(locations), Optional.ToList(capabilities));
         }
     }
 }

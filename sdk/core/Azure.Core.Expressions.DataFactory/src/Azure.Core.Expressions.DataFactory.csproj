@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>This is the implementation of the DataFactoryExpressions</Description>
     <AssemblyTitle>Microsoft Azure DataFactory Expressions</AssemblyTitle>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageTags>azure;datafactory</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -25,7 +25,13 @@
     <Compile Include="$(AutoRestSharedCodeDirectory)Utf8JsonWriterExtensions.cs" LinkBase="Shared\AutoRest" />
     <Compile Include="$(AutoRestSharedCodeDirectory)TypeFormatters.cs" LinkBase="Shared\AutoRest" />
     <Compile Include="$(AutoRestSharedCodeDirectory)JsonElementExtensions.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AutoRestSharedCodeDirectory)Optional.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AutoRestSharedCodeDirectory)ChangeTrackingDictionary.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AutoRestSharedCodeDirectory)ChangeTrackingList.cs" LinkBase="Shared\AutoRest" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)PropertyReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)InitializationConstructorAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>

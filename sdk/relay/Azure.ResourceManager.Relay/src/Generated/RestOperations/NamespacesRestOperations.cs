@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.Relay
             return message;
         }
 
-        /// <summary> Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
+        /// <summary> Creates or updates a namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.Relay
             }
         }
 
-        /// <summary> Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
+        /// <summary> Creates or updates a namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>

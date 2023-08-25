@@ -221,12 +221,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MsixPackageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MsixPackageResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MsixPackageResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixPackageMSIXPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixPackageMSIXPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MsixPackageResource(Client, MsixPackageData.DeserializeMsixPackageData(e)), _msixPackageMSIXPackagesClientDiagnostics, Pipeline, "MsixPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -243,12 +246,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MsixPackageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MsixPackageResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<MsixPackageResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixPackageMSIXPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixPackageMSIXPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MsixPackageResource(Client, MsixPackageData.DeserializeMsixPackageData(e)), _msixPackageMSIXPackagesClientDiagnostics, Pipeline, "MsixPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

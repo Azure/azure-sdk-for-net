@@ -57,8 +57,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Perform the text analysis operation.
-            AnalyzeHealthcareEntitiesOperation operation = client.StartAnalyzeHealthcareEntities(batchedDocuments, options);
-            operation.WaitForCompletion();
+            AnalyzeHealthcareEntitiesOperation operation = client.AnalyzeHealthcareEntities(WaitUntil.Completed, batchedDocuments, options);
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();

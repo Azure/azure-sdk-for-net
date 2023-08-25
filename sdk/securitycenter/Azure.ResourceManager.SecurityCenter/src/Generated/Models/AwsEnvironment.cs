@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AwsEnvironment. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="organizationalData">
-        /// The AWS account&apos;s organizational data
+        /// The AWS account's organizational data
         /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
         /// </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary>
-        /// The AWS account&apos;s organizational data
+        /// The AWS account's organizational data
         /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
         /// </summary>

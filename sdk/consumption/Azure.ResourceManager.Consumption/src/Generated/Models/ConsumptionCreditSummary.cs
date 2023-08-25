@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="pendingEligibleCharges"> Pending eligible charges. </param>
         /// <param name="creditCurrency"> The credit currency. </param>
         /// <param name="billingCurrency"> The billing currency. </param>
-        /// <param name="reseller"> Credit&apos;s reseller. </param>
+        /// <param name="reseller"> Credit's reseller. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         internal ConsumptionCreditSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CreditBalanceSummary balanceSummary, ConsumptionAmount pendingCreditAdjustments, ConsumptionAmount expiredCredit, ConsumptionAmount pendingEligibleCharges, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ETag? etag) : base(id, name, resourceType, systemData)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public string CreditCurrency { get; }
         /// <summary> The billing currency. </summary>
         public string BillingCurrency { get; }
-        /// <summary> Credit&apos;s reseller. </summary>
+        /// <summary> Credit's reseller. </summary>
         public ConsumptionReseller Reseller { get; }
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates a load balancer inbound nat rule.
+        /// Creates or updates a load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="data"> Parameters supplied to the create or update inbound nat rule operation. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
+        /// <param name="data"> Parameters supplied to the create or update inbound NAT rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="data"/> is null. </exception>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates a load balancer inbound nat rule.
+        /// Creates or updates a load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="data"> Parameters supplied to the create or update inbound nat rule operation. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
+        /// <param name="data"> Parameters supplied to the create or update inbound NAT rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="data"/> is null. </exception>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets the specified load balancer inbound nat rule.
+        /// Gets the specified load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets the specified load balancer inbound nat rule.
+        /// Gets the specified load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets all the inbound nat rules in a load balancer.
+        /// Gets all the inbound NAT rules in a load balancer.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets all the inbound nat rules in a load balancer.
+        /// Gets all the inbound NAT rules in a load balancer.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>

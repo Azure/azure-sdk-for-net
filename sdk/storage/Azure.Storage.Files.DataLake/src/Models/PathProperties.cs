@@ -192,6 +192,21 @@ namespace Azure.Storage.Files.DataLake.Models
         public string EncryptionContext { get; internal set; }
 
         /// <summary>
+        /// Owner.
+        /// </summary>
+        public string Owner { get; internal set; }
+
+        /// <summary>
+        /// Group.
+        /// </summary>
+        public string Group { get; internal set; }
+
+        /// <summary>
+        /// Permissions.
+        /// </summary>
+        public string Permissions { get; internal set; }
+
+        /// <summary>
         /// If this path represents a directory.
         /// </summary>
         public bool IsDirectory

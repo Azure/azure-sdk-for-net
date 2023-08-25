@@ -1,6 +1,17 @@
 # Release History
 
-## 5.2.0-beta.1 (Unreleased)
+## 5.2.0 (2023-08-23)
+
+### Bugs Fixed
+- Updating ParameterBindingData  "Connection" value to the full connection name instead of the connection section key
+
+### Features Added
+- Added support for `BlobsOptions.PoisonBlobThreshold`
+
+## 5.1.3 (2023-06-26)
+- Loosen parameter binding data parsing and validation to allow binding BlobContainerClient without blob name. (#37124)
+
+## 5.1.2 (2023-04-27)
 - Fixed bug where the blob container would scan from the beginning due not correctly updating the latest scan time. (#35145)
 
 ## 5.1.1 (2023-03-24)

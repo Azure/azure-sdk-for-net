@@ -12,7 +12,13 @@ namespace Azure.Identity.BrokeredAuthentication
     /// </summary>
     public class InteractiveBrowserCredentialBrokerOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
     {
-        private IntPtr _parentWindowHandle;
+        private readonly IntPtr _parentWindowHandle;
+
+        /// <summary>
+        /// Gets or sets whether Microsoft Account (MSA) passthough.
+        /// </summary>
+        /// <value></value>
+        public bool? IsMsaPassthroughEnabled { get; set; }
 
         /// <summary>
         /// Creates a new instance of <see cref="InteractiveBrowserCredentialBrokerOptions"/> to configure a <see cref="InteractiveBrowserCredential"/>.
@@ -27,7 +33,13 @@ namespace Azure.Identity.BrokeredAuthentication
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
-            builder.WithBrokerPreview().WithParentActivityOrWindow(() => _parentWindowHandle);
+            builder.WithParentActivityOrWindow(() => _parentWindowHandle);
+            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows);
+            if (IsMsaPassthroughEnabled.HasValue)
+            {
+                options.MsaPassthrough = IsMsaPassthroughEnabled.Value;
+            }
+            builder.WithBroker(options);
         }
     }
 }

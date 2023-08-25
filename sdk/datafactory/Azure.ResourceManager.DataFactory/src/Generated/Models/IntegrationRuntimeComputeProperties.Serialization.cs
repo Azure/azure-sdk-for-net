@@ -42,10 +42,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("dataFlowProperties"u8);
                 writer.WriteObjectValue(DataFlowProperties);
             }
-            if (Optional.IsDefined(VNetProperties))
+            if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
-                writer.WriteObjectValue(VNetProperties);
+                writer.WriteObjectValue(VnetProperties);
+            }
+            if (Optional.IsDefined(CopyComputeScaleProperties))
+            {
+                writer.WritePropertyName("copyComputeScaleProperties"u8);
+                writer.WriteObjectValue(CopyComputeScaleProperties);
+            }
+            if (Optional.IsDefined(PipelineExternalComputeScaleProperties))
+            {
+                writer.WritePropertyName("pipelineExternalComputeScaleProperties"u8);
+                writer.WriteObjectValue(PipelineExternalComputeScaleProperties);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -70,7 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<int> numberOfNodes = default;
             Optional<int> maxParallelExecutionsPerNode = default;
             Optional<IntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
-            Optional<IntegrationRuntimeVNetProperties> vNetProperties = default;
+            Optional<IntegrationRuntimeVnetProperties> vnetProperties = default;
+            Optional<CopyComputeScaleProperties> copyComputeScaleProperties = default;
+            Optional<PipelineExternalComputeScaleProperties> pipelineExternalComputeScaleProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,13 +134,31 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    vNetProperties = IntegrationRuntimeVNetProperties.DeserializeIntegrationRuntimeVNetProperties(property.Value);
+                    vnetProperties = IntegrationRuntimeVnetProperties.DeserializeIntegrationRuntimeVnetProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("copyComputeScaleProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    copyComputeScaleProperties = CopyComputeScaleProperties.DeserializeCopyComputeScaleProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("pipelineExternalComputeScaleProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pipelineExternalComputeScaleProperties = PipelineExternalComputeScaleProperties.DeserializePipelineExternalComputeScaleProperties(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeComputeProperties(Optional.ToNullable(location), nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
+            return new IntegrationRuntimeComputeProperties(Optional.ToNullable(location), nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vnetProperties.Value, copyComputeScaleProperties.Value, pipelineExternalComputeScaleProperties.Value, additionalProperties);
         }
     }
 }

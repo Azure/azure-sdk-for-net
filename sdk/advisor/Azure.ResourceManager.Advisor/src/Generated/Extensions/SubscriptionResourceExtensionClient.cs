@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigData>> CreateConfigurationAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigData> CreateConfiguration(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)

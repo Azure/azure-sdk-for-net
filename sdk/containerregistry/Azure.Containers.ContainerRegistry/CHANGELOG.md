@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.10 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2023-07-12)
+
+### Bugs Fixed
+
+- Fixed an issue where content client `DownloadBlobStreaming()` method would throw for blobs greater than 2GB in size.
+
+## 1.1.0 (2023-05-09)
+
+- General availability release of `ContainerRegistryContentClient`.
+
+### Breaking Changes
+
+- Added sanity check for manifest size at download time:  if the manifest is bigger than 4MB, `RequestFailedException` will be thrown.
 
 ## 1.1.0-beta.9 (2023-04-11)
 

@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: KubernetesConfiguration
 namespace: Azure.ResourceManager.KubernetesConfiguration
@@ -14,6 +13,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

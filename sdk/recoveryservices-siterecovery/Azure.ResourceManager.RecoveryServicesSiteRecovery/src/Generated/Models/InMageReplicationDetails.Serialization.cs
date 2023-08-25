@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> activeSiteType = default;
             Optional<int> sourceVmCpuCount = default;
             Optional<int> sourceVmRamSizeInMB = default;
-            Optional<OSDiskDetails> osDetails = default;
+            Optional<SiteRecoveryOSDiskDetails> osDetails = default;
             Optional<string> protectionStage = default;
             Optional<string> vmId = default;
             Optional<string> vmProtectionState = default;
@@ -35,9 +36,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<double> uncompressedDataRateInMB = default;
             Optional<long> rpoInSeconds = default;
             Optional<IReadOnlyList<InMageProtectedDiskDetails>> protectedDisks = default;
-            Optional<string> ipAddress = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> processServerId = default;
+            Optional<Guid> processServerId = default;
             Optional<string> masterTargetId = default;
             Optional<IReadOnlyDictionary<string, DateTimeOffset>> consistencyPoints = default;
             Optional<string> diskResized = default;
@@ -50,9 +51,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> infrastructureVmId = default;
             Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
             Optional<string> discoveryType = default;
-            Optional<string> azureStorageAccountId = default;
+            Optional<ResourceIdentifier> azureStorageAccountId = default;
             Optional<IReadOnlyList<string>> datastores = default;
-            Optional<IReadOnlyList<HealthError>> validationErrors = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
             Optional<DateTimeOffset> lastRpoCalculatedTime = default;
             Optional<DateTimeOffset> lastUpdateReceivedTime = default;
             Optional<string> replicaId = default;
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = OSDiskDetails.DeserializeOSDiskDetails(property.Value);
+                    osDetails = SiteRecoveryOSDiskDetails.DeserializeSiteRecoveryOSDiskDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectionStage"u8))
@@ -185,7 +186,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastHeartbeat"u8))
@@ -199,7 +204,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("processServerId"u8))
                 {
-                    processServerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    processServerId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("masterTargetId"u8))
@@ -286,7 +295,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("azureStorageAccountId"u8))
                 {
-                    azureStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("datastores"u8))
@@ -309,10 +322,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     validationErrors = array;
                     continue;
@@ -374,7 +387,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageReplicationDetails(instanceType, activeSiteType.Value, Optional.ToNullable(sourceVmCpuCount), Optional.ToNullable(sourceVmRamSizeInMB), osDetails.Value, protectionStage.Value, vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, resyncDetails.Value, Optional.ToNullable(retentionWindowStart), Optional.ToNullable(retentionWindowEnd), Optional.ToNullable(compressedDataRateInMB), Optional.ToNullable(uncompressedDataRateInMB), Optional.ToNullable(rpoInSeconds), Optional.ToList(protectedDisks), ipAddress.Value, Optional.ToNullable(lastHeartbeat), processServerId.Value, masterTargetId.Value, Optional.ToDictionary(consistencyPoints), diskResized.Value, rebootAfterUpdateStatus.Value, multiVmGroupId.Value, multiVmGroupName.Value, multiVmSyncStatus.Value, agentDetails.Value, vCenterInfrastructureId.Value, infrastructureVmId.Value, Optional.ToList(vmNics), discoveryType.Value, azureStorageAccountId.Value, Optional.ToList(datastores), Optional.ToList(validationErrors), Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(lastUpdateReceivedTime), replicaId.Value, osVersion.Value, Optional.ToNullable(isAdditionalStatsAvailable), Optional.ToNullable(totalDataTransferred), totalProgressHealth.Value);
+            return new InMageReplicationDetails(instanceType, activeSiteType.Value, Optional.ToNullable(sourceVmCpuCount), Optional.ToNullable(sourceVmRamSizeInMB), osDetails.Value, protectionStage.Value, vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, resyncDetails.Value, Optional.ToNullable(retentionWindowStart), Optional.ToNullable(retentionWindowEnd), Optional.ToNullable(compressedDataRateInMB), Optional.ToNullable(uncompressedDataRateInMB), Optional.ToNullable(rpoInSeconds), Optional.ToList(protectedDisks), ipAddress.Value, Optional.ToNullable(lastHeartbeat), Optional.ToNullable(processServerId), masterTargetId.Value, Optional.ToDictionary(consistencyPoints), diskResized.Value, rebootAfterUpdateStatus.Value, multiVmGroupId.Value, multiVmGroupName.Value, multiVmSyncStatus.Value, agentDetails.Value, vCenterInfrastructureId.Value, infrastructureVmId.Value, Optional.ToList(vmNics), discoveryType.Value, azureStorageAccountId.Value, Optional.ToList(datastores), Optional.ToList(validationErrors), Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(lastUpdateReceivedTime), replicaId.Value, osVersion.Value, Optional.ToNullable(isAdditionalStatsAvailable), Optional.ToNullable(totalDataTransferred), totalProgressHealth.Value);
         }
     }
 }

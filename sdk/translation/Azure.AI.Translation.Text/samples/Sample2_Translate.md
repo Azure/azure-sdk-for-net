@@ -6,7 +6,7 @@ All samples are using `client` created in [Create a `TextTranslationClient`][cre
 
 Translate text from known source language to target language.
 
-```C#
+```C# Snippet:GetTextTranslationBySourceAsync
 try
 {
     string from = "en";
@@ -34,7 +34,7 @@ You can ommit source languge of the input text. In this case, API will try to au
 > Note that you must provide the source language rather than autodetection when using the dynamic dictionary feature.
 > Note you can use `suggestedFrom` paramter that specifies a fallback language if the language of the input text can't be identified. Language autodetection is applied when the from parameter is omitted. If detection fails, the suggestedFrom language will be assumed.
 
-```C#
+```C# Snippet:GetTextTranslationAutoDetectAsync
 try
 {
     string targetLanguage = "cs";
@@ -58,7 +58,7 @@ catch (RequestFailedException exception)
 
 You can combine both Translation and Transliteration in one Translate call. Your source Text can be in non-standard Script of a language as well as you can ask for non-standard Script of a target language.
 
-```C#
+```C# Snippet:GetTranslationTextTransliteratedAsync
 try
 {
     string fromScript = "Latn";
@@ -77,7 +77,6 @@ try
     Console.WriteLine($"Source Text: {translation.SourceText.Text}");
     Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
     Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
-
 }
 catch (RequestFailedException exception)
 {
@@ -90,7 +89,7 @@ catch (RequestFailedException exception)
 
 You can translate multiple text elements. Each input element can be in different language (source language parameter needs to be omitted and language auto-detection is used). Refer to [Request limits for Translator](https://learn.microsoft.com/azure/cognitive-services/translator/request-limits) for current limits.
 
-```C#
+```C# Snippet:GetMultipleTextTranslationsAsync
 try
 {
     IEnumerable<string> targetLanguages = new[] { "cs" };
@@ -121,7 +120,7 @@ catch (RequestFailedException exception)
 
 You can provide multiple target languages which results in each input element being translated to all target languages.
 
-```C#
+```C# Snippet:GetTextTranslationMatrixAsync
 try
 {
     IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
@@ -151,7 +150,7 @@ catch (RequestFailedException exception)
 
 You can select whether the translated text is plain text or HTML text. Any HTML needs to be a well-formed, complete element. Possible values are: plain (default) or html.
 
-```C#
+```C# Snippet:GetTextTranslationFormatAsync
 try
 {
     IEnumerable<string> targetLanguages = new[] { "cs" };
@@ -178,7 +177,7 @@ catch (RequestFailedException exception)
 
 It's sometimes useful to exclude specific content from translation. You can use the attribute class=notranslate to specify content that should remain in its original language. In the following example, the content inside the first div element won't be translated, while the content in the second div element will be translated.
 
-```C#
+```C# Snippet:GetTextTranslationFilterAsync
 try
 {
     string from = "en";
@@ -208,7 +207,7 @@ If you already know the translation you want to apply to a word or a phrase, you
 
 > Note You must include the From parameter in your API translation request instead of using the autodetect feature.
 
-```C#
+```C# Snippet:GetTextTranslationMarkupAsync
 try
 {
     string from = "en";
@@ -216,7 +215,7 @@ try
     IEnumerable<string> inputTextElements = new[]
     {
         "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry."
-    };
+};
 
     Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, sourceLanguage: from).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
@@ -238,7 +237,7 @@ catch (RequestFailedException exception)
 
 If you want to avoid getting profanity in the translation, regardless of the presence of profanity in the source text, you can use the profanity filtering option. The option allows you to choose whether you want to see profanity deleted, whether you want to mark profanities with appropriate tags (giving you the option to add your own post-processing), or you want no action taken. The accepted values of `ProfanityAction` are `Deleted`, `Marked` and `NoAction` (default).
 
-```C#
+```C# Snippet:GetTextTranslationProfanityAsync
 try
 {
     ProfanityAction profanityAction = ProfanityAction.Marked;
@@ -268,7 +267,7 @@ catch (RequestFailedException exception)
 
 You can ask translation service to include alignment projection from source text to translated text.
 
-```C#
+```C# Snippet:GetTextTranslationAlignmentAsync
 try
 {
     bool includeAlignment = true;
@@ -286,7 +285,6 @@ try
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
     Console.WriteLine($"Alignments: {translation?.Translations?.FirstOrDefault()?.Alignment?.Proj}");
-
 }
 catch (RequestFailedException exception)
 {
@@ -299,7 +297,7 @@ catch (RequestFailedException exception)
 
 You can ask translator service to include sentence boundaries for the input text and the translated text.
 
-```C#
+```C# Snippet:GetTextTranslationSentencesAsync
 try
 {
     bool includeSentenceLength = true;
@@ -318,8 +316,6 @@ try
     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
     Console.WriteLine($"Source Sentece length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.SrcSentLen)}");
     Console.WriteLine($"Translated Sentece length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.TransSentLen)}");
-
-
 }
 catch (RequestFailedException exception)
 {
@@ -336,7 +332,7 @@ It is possible to set `allowFalback` paramter. It specifies that the service is 
 
 `allowFallback=false` specifies that the translation should only use systems trained for the category specified by the request. If a translation for language X to language Y requires chaining through a pivot language E, then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. If no system is found with the specific category, the request will return a 400 status code. `allowFallback=true` specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
 
-```C#
+```C# Snippet:GetTextTranslationFallbackAsync
 try
 {
     string category = "<<Category ID>>";

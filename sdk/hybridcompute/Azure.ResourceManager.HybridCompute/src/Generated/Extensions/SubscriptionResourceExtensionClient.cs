@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Returns a Azure Arc PrivateLinkScope&apos;s validation details.
+        /// Returns a Azure Arc PrivateLinkScope's validation details.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Returns a Azure Arc PrivateLinkScope&apos;s validation details.
+        /// Returns a Azure Arc PrivateLinkScope's validation details.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

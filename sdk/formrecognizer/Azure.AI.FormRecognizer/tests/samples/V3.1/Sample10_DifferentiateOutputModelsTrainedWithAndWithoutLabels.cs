@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.BlobContainerSasUrlV2;
+            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -82,7 +82,7 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.BlobContainerSasUrlV2;
+            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));

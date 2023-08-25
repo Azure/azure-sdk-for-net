@@ -17,20 +17,36 @@ namespace Azure.Storage.Shared
         protected long _bufferSize;
         protected readonly IProgress<long> _progressHandler;
         protected readonly PooledMemoryStream _buffer;
+        private ArrayPool<byte> _bufferPool;
         private readonly StorageChecksumAlgorithm _checksumAlgorithm;
-        private IHasher _bufferChecksum;
+        private bool UseMasterCrc => _checksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64;
+
+        /* Use StorageCrc64HashAlgorithm directly. Some checksum algorithms need a "finalization" step but
+         * crc does not. We don't want finalization semantics in the code because we need access to the
+         * cumulative crc as it's being calculated. This is because the caller can Flush() at any time, and
+         * historically implementing classes call commit APIs on this flush. We don't want to call a commit
+         * API if we haven't done some of our validation, but the caller isn't necessarily at the end of
+         * their write when they call flush. We therefore maintain a running calculation if crc validation
+         * is being used and only use a user-provided checksum (if any) on Close()/Dispose(). */
+        private StorageCrc64HashAlgorithm _masterCrcChecksummer;
+        private Memory<byte> _composedCrc = Memory<byte>.Empty;
+        private Memory<byte> _userProvidedChecksum = Memory<byte>.Empty;
+        private IHasher _bufferChecksumer;
+
         private bool _disposed;
-        private bool _shouldDisposeBuffer;
+        private readonly DisposableBucket _accumulatedDisposables = new DisposableBucket();
 
         protected StorageWriteStream(
             long position,
             long bufferSize,
             IProgress<long> progressHandler,
             UploadTransferValidationOptions transferValidation,
-            PooledMemoryStream buffer = null)
+            PooledMemoryStream buffer = null,
+            ArrayPool<byte> bufferPool = null)
         {
             _position = position;
             _bufferSize = bufferSize;
+            _bufferPool = bufferPool ?? ArrayPool<byte>.Shared;
 
             if (progressHandler != null)
             {
@@ -38,10 +54,30 @@ namespace Azure.Storage.Shared
             }
 
             _checksumAlgorithm = Argument.CheckNotNull(transferValidation, nameof(transferValidation)).ChecksumAlgorithm;
-            // write streams don't support pre-calculated hashes
             if (!transferValidation.PrecalculatedChecksum.IsEmpty)
             {
-                throw Errors.PrecalculatedHashNotSupportedOnSplit();
+                if (UseMasterCrc)
+                {
+                    _accumulatedDisposables.Add(_bufferPool.RentDisposable(
+                        transferValidation.PrecalculatedChecksum.Length,
+                        out var buf));
+                    buf.Clear();
+                    _userProvidedChecksum = new Memory<byte>(buf, 0, transferValidation.PrecalculatedChecksum.Length);
+                    transferValidation.PrecalculatedChecksum.CopyTo(_userProvidedChecksum);
+                }
+                else
+                {
+                    throw Errors.PrecalculatedHashNotSupportedOnSplit();
+                }
+            }
+            if (UseMasterCrc)
+            {
+                _masterCrcChecksummer = StorageCrc64HashAlgorithm.Create();
+                _accumulatedDisposables.Add(_bufferPool.RentDisposable(
+                       Constants.StorageCrc64SizeInBytes,
+                       out var buf));
+                buf.Clear();
+                _composedCrc = new Memory<byte>(buf, 0, Constants.StorageCrc64SizeInBytes);
             }
 
             if (buffer != null)
@@ -51,16 +87,15 @@ namespace Azure.Storage.Shared
                     throw Errors.CannotInitializeWriteStreamWithData();
                 }
                 _buffer = buffer;
-                _shouldDisposeBuffer = false;
             }
             else
             {
                 _buffer = new PooledMemoryStream(
-                    arrayPool: ArrayPool<byte>.Shared,
+                    arrayPool: _bufferPool,
                     maxArraySize: (int)Math.Min(Constants.MB, bufferSize));
-                _shouldDisposeBuffer = true;
+                _accumulatedDisposables.Add(_buffer);
             }
-            _bufferChecksum = ContentHasher.GetHasherFromAlgorithmId(_checksumAlgorithm);
+            _bufferChecksumer = ContentHasher.GetHasherFromAlgorithmId(_checksumAlgorithm);
         }
 
         public override bool CanRead => false;
@@ -107,7 +142,7 @@ namespace Azure.Storage.Shared
                 cancellationToken)
             .ConfigureAwait(false);
 
-        protected virtual async Task WriteInternal(
+        private async Task WriteInternal(
             byte[] buffer,
             int offset,
             int count,
@@ -136,11 +171,14 @@ namespace Azure.Storage.Shared
                 offset += remainingSpace;
 
                 // Upload bytes.
-                await AppendInternal(
-                    FinalizeAndReplaceBufferChecksum(),
-                    async,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                using (FinalizeAndReplaceBufferChecksum(out UploadTransferValidationOptions validationOptions))
+                {
+                    await AppendAndClearBufferInternal(
+                        validationOptions,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
 
                 // We need to loop, because remaining bytes might be greater than _buffer size.
                 while (remaining > 0)
@@ -158,32 +196,74 @@ namespace Azure.Storage.Shared
                     // Renaming bytes won't fit in buffer.
                     if (remaining > 0)
                     {
-                        await AppendInternal(
-                            FinalizeAndReplaceBufferChecksum(),
-                            async,
-                            cancellationToken)
-                            .ConfigureAwait(false);
+                        using (FinalizeAndReplaceBufferChecksum(out UploadTransferValidationOptions validationOptions))
+                        {
+                            await AppendAndClearBufferInternal(
+                                validationOptions,
+                                async,
+                                cancellationToken)
+                                .ConfigureAwait(false);
+                        }
                     }
                 }
             }
         }
 
-        protected abstract Task FlushInternal(
-            UploadTransferValidationOptions validationOptions,
-            bool async,
-            CancellationToken cancellationToken);
-
         public override void Flush()
             => FlushInternal(
-                FinalizeAndReplaceBufferChecksum(),
                 async: false,
                 cancellationToken: default).EnsureCompleted();
 
         public override async Task FlushAsync(CancellationToken cancellationToken)
             => await FlushInternal(
-                FinalizeAndReplaceBufferChecksum(),
                 async: true,
                 cancellationToken).ConfigureAwait(false);
+
+        private async Task FlushInternal(bool async, CancellationToken cancellationToken)
+        {
+            using (FinalizeAndReplaceBufferChecksum(out UploadTransferValidationOptions validationOptions))
+            {
+                await AppendAndClearBufferInternal(validationOptions, async, cancellationToken).ConfigureAwait(false);
+            }
+
+            if (UseMasterCrc)
+            {
+                using (_bufferPool.RentDisposable(_masterCrcChecksummer.HashLengthInBytes, out byte[] buf))
+                {
+                    buf.Clear();
+                    var currentAccumulated = new Memory<byte>(buf, 0, _masterCrcChecksummer.HashLengthInBytes);
+                    _masterCrcChecksummer.GetCurrentHash(currentAccumulated.Span);
+                    if (!currentAccumulated.Span.SequenceEqual(_composedCrc.Span))
+                    {
+                        throw Errors.ChecksumMismatch(currentAccumulated.Span, _composedCrc.Span);
+                    }
+                }
+            }
+
+            await CommitInternal(async, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected virtual Task CommitInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        private async Task AppendAndClearBufferInternal(
+            UploadTransferValidationOptions validationOptions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                await AppendInternal(validationOptions, async, cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                _buffer.Clear();
+            }
+        }
 
         protected abstract Task AppendInternal(
             UploadTransferValidationOptions validationOptions,
@@ -199,7 +279,8 @@ namespace Azure.Storage.Shared
             bool async,
             CancellationToken cancellationToken)
         {
-            _bufferChecksum?.AppendHash(new Span<byte>(buffer, offset, count));
+            _bufferChecksumer?.AppendHash(new Span<byte>(buffer, offset, count));
+            _masterCrcChecksummer?.Append(new Span<byte>(buffer, offset, count));
             if (async)
             {
                 await _buffer.WriteAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
@@ -249,15 +330,28 @@ namespace Azure.Storage.Shared
             if (disposing)
             {
                 Flush();
-                if (_shouldDisposeBuffer)
-                {
-                    _buffer.Dispose();
-                }
+                ValidateCallerCrcIfAny();
+                _accumulatedDisposables.Dispose();
             }
 
             _disposed = true;
 
             base.Dispose(disposing);
+        }
+
+        private void ValidateCallerCrcIfAny()
+        {
+            if (UseMasterCrc && !_userProvidedChecksum.IsEmpty)
+            {
+                using (_bufferPool.RentAsSpanDisposable(_masterCrcChecksummer.HashLengthInBytes, out Span<byte> currentAccumulated))
+                {
+                    _masterCrcChecksummer.GetCurrentHash(currentAccumulated);
+                    if (!currentAccumulated.SequenceEqual(_userProvidedChecksum.Span))
+                    {
+                        throw Errors.ChecksumMismatch(currentAccumulated, _userProvidedChecksum.Span);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -275,26 +369,45 @@ namespace Azure.Storage.Shared
         /// be made private.
         /// </para>
         /// </summary>
-        /// <returns></returns>
-        protected UploadTransferValidationOptions FinalizeAndReplaceBufferChecksum()
+        /// <returns>Disposable for the rented memory hosting the checksum.</returns>
+        protected IDisposable FinalizeAndReplaceBufferChecksum(out UploadTransferValidationOptions validationOptions)
         {
             if (_buffer.Length == 0)
             {
-                return new UploadTransferValidationOptions
+                validationOptions =  new UploadTransferValidationOptions
                 {
                     ChecksumAlgorithm = StorageChecksumAlgorithm.None
                 };
+                return null;
             }
 
-            var result = new UploadTransferValidationOptions
+            Memory<byte> checksum = Memory<byte>.Empty;
+            IDisposable disposableResult = null;
+            if (_bufferChecksumer != null)
+            {
+                disposableResult = _bufferPool.RentDisposable(_bufferChecksumer.HashSizeInBytes, out byte[] buf);
+                buf.Clear();
+                checksum = new Memory<byte>(buf, 0, _bufferChecksumer.HashSizeInBytes);
+                _bufferChecksumer.GetFinalHash(checksum.Span);
+
+                if (UseMasterCrc)
+                {
+                    StorageCrc64Composer.Compose(
+                        (_composedCrc.ToArray(), 0),
+                        (checksum.ToArray(), _buffer.Length))
+                        .CopyTo(_composedCrc);
+                }
+
+                _bufferChecksumer?.Dispose();
+                _bufferChecksumer = ContentHasher.GetHasherFromAlgorithmId(_checksumAlgorithm);
+            }
+
+            validationOptions = new UploadTransferValidationOptions
             {
                 ChecksumAlgorithm = _checksumAlgorithm,
-                PrecalculatedChecksum = _bufferChecksum?.GetFinalHash() ?? ReadOnlyMemory<byte>.Empty,
+                PrecalculatedChecksum = checksum,
             };
-            _bufferChecksum?.Dispose();
-            _bufferChecksum = ContentHasher.GetHasherFromAlgorithmId(_checksumAlgorithm);
-
-            return result;
+            return disposableResult;
         }
     }
 }

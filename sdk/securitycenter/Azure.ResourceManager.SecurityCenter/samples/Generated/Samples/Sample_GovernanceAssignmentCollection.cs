@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_GovernanceAssignmentCollection
     {
-        // List security governanceAssignments
+        // List governance assignments
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListSecurityGovernanceAssignments()
+        public async Task GetAll_ListGovernanceAssignments()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-01-01-preview/examples/GovernanceAssignments/ListGovernanceAssignments_example.json
             // this example is just showing the usage of "GovernanceAssignments_List" operation, for the dependent resources, they will have to be created separately.
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Get security governanceAssignment by specific governanceAssignmentKey
+        // Get governanceAssignment by specific governanceAssignmentKey
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetSecurityGovernanceAssignmentBySpecificGovernanceAssignmentKey()
+        public async Task Get_GetGovernanceAssignmentBySpecificGovernanceAssignmentKey()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-01-01-preview/examples/GovernanceAssignments/GetGovernanceAssignment_example.json
             // this example is just showing the usage of "GovernanceAssignments_Get" operation, for the dependent resources, they will have to be created separately.
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get security governanceAssignment by specific governanceAssignmentKey
+        // Get governanceAssignment by specific governanceAssignmentKey
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetSecurityGovernanceAssignmentBySpecificGovernanceAssignmentKey()
+        public async Task Exists_GetGovernanceAssignmentBySpecificGovernanceAssignmentKey()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-01-01-preview/examples/GovernanceAssignments/GetGovernanceAssignment_example.json
             // this example is just showing the usage of "GovernanceAssignments_Get" operation, for the dependent resources, they will have to be created separately.

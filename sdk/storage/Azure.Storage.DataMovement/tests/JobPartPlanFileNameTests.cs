@@ -5,14 +5,13 @@ using System;
 using NUnit.Framework;
 using Azure.Storage.Test;
 using System.IO;
-using Azure.Core.TestFramework;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     public class JobPartPlanFileNameTests
     {
-        private string schemaVersion = DataMovementConstants.PlanFile.SchemaVersion;
+        private string schemaVersion = DataMovementConstants.JobPartPlanFile.SchemaVersion;
 
         public JobPartPlanFileNameTests()
         {

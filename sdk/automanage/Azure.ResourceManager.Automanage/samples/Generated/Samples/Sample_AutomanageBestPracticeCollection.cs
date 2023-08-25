@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 {
     public partial class Sample_AutomanageBestPracticeCollection
     {
-        // Get an Automanage best practice 
+        // Get an Automanage best practice
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAnAutomanageBestPractice()
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Automanage best practice 
+        // Get an Automanage best practice
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAnAutomanageBestPractice()
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Automanage bestPractices 
+        // List Automanage bestPractices
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAutomanageBestPractices()

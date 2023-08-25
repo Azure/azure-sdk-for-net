@@ -75,78 +75,6 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        /// <summary> Gets an operation by its id. </summary>
-        /// <param name="operationId"> The id of the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PhoneNumberOperation>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetOperation");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetOperationAsync(operationId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets an operation by its id. </summary>
-        /// <param name="operationId"> The id of the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PhoneNumberOperation> GetOperation(string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetOperation");
-            scope.Start();
-            try
-            {
-                return RestClient.GetOperation(operationId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Cancels an operation by its id. </summary>
-        /// <param name="operationId"> The id of the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelOperationAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.CancelOperation");
-            scope.Start();
-            try
-            {
-                return await RestClient.CancelOperationAsync(operationId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Cancels an operation by its id. </summary>
-        /// <param name="operationId"> The id of the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelOperation(string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.CancelOperation");
-            scope.Start();
-            try
-            {
-                return RestClient.CancelOperation(operationId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets the details of the given purchased phone number. </summary>
         /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,7 +119,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
         /// <param name="locality"> The name of locality or town in which to search for the area code. This is required if the number type is Geographic. </param>
         /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. </param>
-        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual AsyncPageable<PhoneNumberAreaCode> ListAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
@@ -211,7 +139,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
         /// <param name="locality"> The name of locality or town in which to search for the area code. This is required if the number type is Geographic. </param>
         /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. </param>
-        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual Pageable<PhoneNumberAreaCode> ListAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
@@ -226,7 +154,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Gets the list of supported countries. </summary>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
-        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PhoneNumberCountry> ListAvailableCountriesAsync(int? skip = null, int? maxPageSize = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
@@ -238,7 +166,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Gets the list of supported countries. </summary>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
-        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PhoneNumberCountry> ListAvailableCountries(int? skip = null, int? maxPageSize = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
@@ -252,7 +180,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="administrativeDivision"> An optional parameter for the name of the state or province in which to search for the area code. </param>
-        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual AsyncPageable<PhoneNumberLocality> ListAvailableLocalitiesAsync(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
@@ -269,7 +197,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="administrativeDivision"> An optional parameter for the name of the state or province in which to search for the area code. </param>
-        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual Pageable<PhoneNumberLocality> ListAvailableLocalities(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
@@ -287,7 +215,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
         /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
-        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual AsyncPageable<PhoneNumberOffering> ListOfferingsAsync(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
@@ -305,7 +233,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
         /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
-        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual Pageable<PhoneNumberOffering> ListOfferings(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)

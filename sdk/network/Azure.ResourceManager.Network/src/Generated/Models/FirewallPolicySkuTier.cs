@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
+        private const string BasicValue = "Basic";
 
         /// <summary> Standard. </summary>
         public static FirewallPolicySkuTier Standard { get; } = new FirewallPolicySkuTier(StandardValue);
         /// <summary> Premium. </summary>
         public static FirewallPolicySkuTier Premium { get; } = new FirewallPolicySkuTier(PremiumValue);
+        /// <summary> Basic. </summary>
+        public static FirewallPolicySkuTier Basic { get; } = new FirewallPolicySkuTier(BasicValue);
         /// <summary> Determines if two <see cref="FirewallPolicySkuTier"/> values are the same. </summary>
         public static bool operator ==(FirewallPolicySkuTier left, FirewallPolicySkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallPolicySkuTier"/> values are not the same. </summary>

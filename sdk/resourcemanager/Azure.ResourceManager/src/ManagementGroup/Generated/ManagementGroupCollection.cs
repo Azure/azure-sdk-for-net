@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Create or update a management group.
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="content"> Management group creation parameters. </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Create or update a management group.
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="content"> Management group creation parameters. </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Get the details of the management group.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
         /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
-        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. '$filter=children.childType ne Subscription'). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Get the details of the management group.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
         /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
-        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. '$filter=children.childType ne Subscription'). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// List management groups for the authenticated user.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="skiptoken">
-        /// Page continuation token is only used if a previous operation returned a partial result. 
+        /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        /// 
+        ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// List management groups for the authenticated user.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -269,11 +269,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="skiptoken">
-        /// Page continuation token is only used if a previous operation returned a partial result. 
+        /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        /// 
+        ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -368,8 +368,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
         /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
-        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. '$filter=children.childType ne Subscription'). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -407,8 +407,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
         /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
-        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. '$filter=children.childType ne Subscription'). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>

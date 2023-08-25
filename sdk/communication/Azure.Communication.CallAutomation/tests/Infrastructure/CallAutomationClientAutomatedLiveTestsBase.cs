@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Azure.Communication.CallAutomation.Tests.EventCatcher;
 using Azure.Communication.Identity;
+using Azure.Communication.PhoneNumbers;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -32,7 +33,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private const string TestDispatcherRegEx = @"https://incomingcalldispatcher.azurewebsites.net";
         private const string TestDispatcherQNameRegEx = @"(?<=\?q=)(.*)";
 
-        private Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventData>> _eventstore;
+        private Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>> _eventstore;
         private ConcurrentDictionary<string, string> _incomingcontextstore;
         private RecordedEventListener _recordedEventListener;
         private HttpPipeline _pipeline;
@@ -48,6 +49,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..id");
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
+            JsonPathSanitizers.Add("$..botAppId");
+            JsonPathSanitizers.Add("$..ivrContext");
             BodyKeySanitizers.Add(new BodyKeySanitizer(@"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized") { JsonPath = "..callbackUri" });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx, "https://sanitized.skype.com"));
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.skype.com"));
@@ -57,7 +60,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         [SetUp]
         public void TestSetup()
         {
-            _eventstore = new Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventData>>();
+            _eventstore = new Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>>();
             _incomingcontextstore = new ConcurrentDictionary<string, string>();
             _recordedEventListener = new RecordedEventListener(Mode, GetSessionFilePath(), CreateServiceBusClient);
 
@@ -142,7 +145,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return null;
         }
 
-        protected async Task<CallAutomationEventData?> WaitForEvent<T>(string callConnectionId, TimeSpan timeOut)
+        protected async Task<CallAutomationEventBase?> WaitForEvent<T>(string callConnectionId, TimeSpan timeOut)
         {
             var timeOutTime = DateTime.Now.Add(timeOut);
             while (DateTime.Now < timeOutTime)
@@ -199,8 +202,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     {
                         using (Recording.DisableRecording())
                         {
-                            var hangUpOptions = new HangUpOptions(true);
-                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
                         }
                     }
                 }
@@ -216,7 +218,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// <returns>The instrumented <see cref="CallAutomationClientOptions" />.</returns>
         private CallAutomationClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs(CommunicationUserIdentifier? source = null)
         {
-            CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions(source: source);
+            CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions() { Source = source };
             callClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(callClientOptions);
         }
@@ -246,7 +248,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 else
                 {
                     // for call automation callback events
-                    CallAutomationEventData callBackEvent = CallAutomationEventParser.Parse(BinaryData.FromString(body));
+                    CallAutomationEventBase callBackEvent = CallAutomationEventParser.Parse(BinaryData.FromString(body));
 
                     if (_eventstore.TryGetValue(callBackEvent.CallConnectionId, out var mylist))
                     {
@@ -254,7 +256,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     }
                     else
                     {
-                        ConcurrentDictionary<Type, CallAutomationEventData> events = new ConcurrentDictionary<Type, CallAutomationEventData>();
+                        ConcurrentDictionary<Type, CallAutomationEventBase> events = new ConcurrentDictionary<Type, CallAutomationEventBase>();
                         events.TryAdd(callBackEvent.GetType(), callBackEvent);
                         _eventstore.Add(callBackEvent.CallConnectionId, events);
                     }
@@ -280,7 +282,17 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 case CommunicationUserIdentifier:
                     return RemoveAllNonChar(((CommunicationUserIdentifier)inputIdentifier).RawId);
                 case PhoneNumberIdentifier:
-                    return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId);
+                    if (Mode == RecordedTestMode.Playback)
+                    {
+                        return "Sanitized";
+                    }
+                    else
+                    {
+                        /* Change the plus + sign to it's unicode without the special characters i.e. u002B.
+                         * It's required because the dispacther app receives the incoming call context for pstn call
+                         * with the + as unicode in it and builds the topic id with it to send the event.*/
+                        return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId).Insert(1, "u002B");
+                    }
                 case MicrosoftTeamsUserIdentifier:
                     return RemoveAllNonChar(((MicrosoftTeamsUserIdentifier)inputIdentifier).RawId);
                 default:

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resources under the management group. </summary>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resources under the management group. </summary>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resources under the management group. </summary>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resources under the management group. </summary>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resources under the subscription. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resources under the subscription. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resources under the subscription. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resources under the subscription. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the resource group. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the resource group. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the resources under the resource group. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the resources under the resource group. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resource. </summary>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resource. </summary>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resource. </summary>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resource. </summary>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy set definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy set definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy set definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy set definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
@@ -1221,7 +1221,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
@@ -1318,7 +1318,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
@@ -1431,7 +1431,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy assignment. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy assignment. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -1528,7 +1528,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy assignment. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy assignment. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -1644,7 +1644,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -1675,7 +1675,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -1747,7 +1747,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -1778,7 +1778,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -1822,7 +1822,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupName"/> is null. </exception>
@@ -1851,7 +1851,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupName"/> is null. </exception>
@@ -1894,7 +1894,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -1923,7 +1923,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -1967,7 +1967,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -1998,7 +1998,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -2042,7 +2042,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
@@ -2070,7 +2070,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
@@ -2113,7 +2113,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
@@ -2144,7 +2144,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
@@ -2189,7 +2189,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
@@ -2220,7 +2220,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
@@ -2265,7 +2265,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -2296,7 +2296,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -2342,7 +2342,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
@@ -2375,7 +2375,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>

@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> PrivateEndpointConnection properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
-        /// <param name="ifMatch"> The state (ETag) version of the private endpoint connection to update. This value can be omitted or set to &quot;*&quot; to apply the operation unconditionally. </param>
+        /// <param name="ifMatch"> The state (ETag) version of the private endpoint connection to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BatchPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, BatchPrivateEndpointConnectionData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> PrivateEndpointConnection properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
-        /// <param name="ifMatch"> The state (ETag) version of the private endpoint connection to update. This value can be omitted or set to &quot;*&quot; to apply the operation unconditionally. </param>
+        /// <param name="ifMatch"> The state (ETag) version of the private endpoint connection to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BatchPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, BatchPrivateEndpointConnectionData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             Optional<bool> @public = default;
-            Optional<Uri> uri = default;
+            Optional<string> uri = default;
             Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
             Optional<AppPlatformAppProvisioningState> provisioningState = default;
             Optional<string> fqdn = default;
@@ -138,11 +138,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uri = new Uri(property.Value.GetString());
+                    uri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("addonConfigs"u8))

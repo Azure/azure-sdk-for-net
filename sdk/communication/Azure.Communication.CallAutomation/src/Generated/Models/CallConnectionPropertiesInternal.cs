@@ -28,12 +28,14 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="mediaSubscriptionId"> SubscriptionId for media streaming. </param>
         /// <param name="sourceCallerIdNumber">
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
         /// </param>
         /// <param name="sourceDisplayName"> Display name of the call if dialing out to a pstn number. </param>
         /// <param name="sourceIdentity"> Source identity. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel sourceIdentity)
+        /// <param name="correlationId"> The correlation ID. </param>
+        /// <param name="answeredByIdentifier"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel sourceIdentity, string correlationId, CommunicationUserIdentifierModel answeredByIdentifier)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -44,6 +46,8 @@ namespace Azure.Communication.CallAutomation
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
             SourceIdentity = sourceIdentity;
+            CorrelationId = correlationId;
+            AnsweredByIdentifier = answeredByIdentifier;
         }
 
         /// <summary> The call connection id. </summary>
@@ -59,7 +63,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> SubscriptionId for media streaming. </summary>
         public string MediaSubscriptionId { get; }
         /// <summary>
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
         /// </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; }
@@ -67,5 +71,9 @@ namespace Azure.Communication.CallAutomation
         public string SourceDisplayName { get; }
         /// <summary> Source identity. </summary>
         public CommunicationIdentifierModel SourceIdentity { get; }
+        /// <summary> The correlation ID. </summary>
+        public string CorrelationId { get; }
+        /// <summary> Identity of the answering entity. Only populated when identity is provided in the request. </summary>
+        public CommunicationUserIdentifierModel AnsweredByIdentifier { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of Category. </summary>
-        /// <param name="categoryName"> The name of the compliance category. e.g. &quot;Operational Security&quot;. </param>
+        /// <param name="categoryName"> The name of the compliance category. e.g. "Operational Security". </param>
         /// <param name="categoryType"> The category type. </param>
         /// <param name="categoryStatus"> Category status. </param>
         /// <param name="controlFamilies"> List of control families. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             ControlFamilies = controlFamilies;
         }
 
-        /// <summary> The name of the compliance category. e.g. &quot;Operational Security&quot;. </summary>
+        /// <summary> The name of the compliance category. e.g. "Operational Security". </summary>
         public string CategoryName { get; }
         /// <summary> The category type. </summary>
         public CategoryType? CategoryType { get; }

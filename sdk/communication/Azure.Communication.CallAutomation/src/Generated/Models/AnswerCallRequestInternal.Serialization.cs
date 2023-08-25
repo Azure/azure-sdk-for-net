@@ -19,6 +19,11 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);

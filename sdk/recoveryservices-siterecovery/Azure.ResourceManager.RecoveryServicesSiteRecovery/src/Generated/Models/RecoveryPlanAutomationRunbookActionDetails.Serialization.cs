@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> runbookId = default;
+            Optional<ResourceIdentifier> runbookId = default;
             Optional<string> timeout = default;
             RecoveryPlanActionLocation fabricLocation = default;
             string instanceType = default;
@@ -46,7 +46,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("runbookId"u8))
                 {
-                    runbookId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runbookId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("timeout"u8))

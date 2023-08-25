@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="name"> A name for the key describing its usage. </param>
         /// <param name="value"> The value of the key that is used for authentication purposes. </param>
         /// <param name="connectionString"> A connection string that can be used by supporting clients for authentication. </param>
-        /// <param name="lastModifiedOn"> The last time any of the key&apos;s properties were modified. </param>
+        /// <param name="lastModifiedOn"> The last time any of the key's properties were modified. </param>
         /// <param name="isReadOnly"> Whether this key can only be used for read operations. </param>
         internal AppConfigurationStoreApiKey(string id, string name, string value, string connectionString, DateTimeOffset? lastModifiedOn, bool? isReadOnly)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public string Value { get; }
         /// <summary> A connection string that can be used by supporting clients for authentication. </summary>
         public string ConnectionString { get; }
-        /// <summary> The last time any of the key&apos;s properties were modified. </summary>
+        /// <summary> The last time any of the key's properties were modified. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> Whether this key can only be used for read operations. </summary>
         public bool? IsReadOnly { get; }

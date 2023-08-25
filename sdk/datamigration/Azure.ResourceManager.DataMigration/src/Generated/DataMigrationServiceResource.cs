@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. The PATCH method updates an existing service. This method can change the kind, SKU, and network of the service, but if tasks are currently running (i.e. the service is busy), this will fail with 400 Bad Request (&quot;ServiceIsBusy&quot;).
+        /// The services resource is the top-level resource that represents the Database Migration Service. The PATCH method updates an existing service. This method can change the kind, SKU, and network of the service, but if tasks are currently running (i.e. the service is busy), this will fail with 400 Bad Request ("ServiceIsBusy").
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. The PATCH method updates an existing service. This method can change the kind, SKU, and network of the service, but if tasks are currently running (i.e. the service is busy), this will fail with 400 Bad Request (&quot;ServiceIsBusy&quot;).
+        /// The services resource is the top-level resource that represents the Database Migration Service. The PATCH method updates an existing service. This method can change the kind, SKU, and network of the service, but if tasks are currently running (i.e. the service is busy), this will fail with 400 Bad Request ("ServiceIsBusy").
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. This action stops the service and the service cannot be used for data migration. The service owner won&apos;t be billed when the service is stopped.
+        /// The services resource is the top-level resource that represents the Database Migration Service. This action stops the service and the service cannot be used for data migration. The service owner won't be billed when the service is stopped.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. This action stops the service and the service cannot be used for data migration. The service owner won&apos;t be billed when the service is stopped.
+        /// The services resource is the top-level resource that represents the Database Migration Service. This action stops the service and the service cannot be used for data migration. The service owner won't be billed when the service is stopped.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

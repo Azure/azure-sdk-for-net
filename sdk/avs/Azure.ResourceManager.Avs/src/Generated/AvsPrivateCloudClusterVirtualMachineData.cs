@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Display name of the VM. </param>
         /// <param name="moRefId"> Virtual machine managed object reference id. </param>
-        /// <param name="folderPath"> Path to virtual machine&apos;s folder starting from datacenter virtual machine folder. </param>
+        /// <param name="folderPath"> Path to virtual machine's folder starting from datacenter virtual machine folder. </param>
         /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
         internal AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement) : base(id, name, resourceType, systemData)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Avs
         public string DisplayName { get; }
         /// <summary> Virtual machine managed object reference id. </summary>
         public string MoRefId { get; }
-        /// <summary> Path to virtual machine&apos;s folder starting from datacenter virtual machine folder. </summary>
+        /// <summary> Path to virtual machine's folder starting from datacenter virtual machine folder. </summary>
         public string FolderPath { get; }
         /// <summary> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </summary>
         public VirtualMachineRestrictMovementState? RestrictMovement { get; }

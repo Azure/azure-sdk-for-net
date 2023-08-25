@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> Updates &apos;tags&apos; and &apos;enabled&apos; fields in an existing Alert rule. This method is used to update the Alert rule tags, and to enable or disable the Alert rule. To update other fields use CreateOrUpdate operation. </summary>
+        /// <summary> Updates 'tags' and 'enabled' fields in an existing Alert rule. This method is used to update the Alert rule tags, and to enable or disable the Alert rule. To update other fields use CreateOrUpdate operation. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Updates &apos;tags&apos; and &apos;enabled&apos; fields in an existing Alert rule. This method is used to update the Alert rule tags, and to enable or disable the Alert rule. To update other fields use CreateOrUpdate operation. </summary>
+        /// <summary> Updates 'tags' and 'enabled' fields in an existing Alert rule. This method is used to update the Alert rule tags, and to enable or disable the Alert rule. To update other fields use CreateOrUpdate operation. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>

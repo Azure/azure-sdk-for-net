@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -15,6 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of GranularCopyProgress. </summary>
         internal GranularCopyProgress()
         {
+            Actions = new ChangeTrackingList<CustomerResolutionCode>();
         }
 
         /// <summary> Initializes a new instance of GranularCopyProgress. </summary>
@@ -33,10 +36,12 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="directoriesErroredOut"> To indicate directories errored out in the job. </param>
         /// <param name="invalidDirectoriesProcessed"> To indicate directories renamed. </param>
         /// <param name="isEnumerationInProgress">
-        /// To indicate if enumeration of data is in progress. 
+        /// To indicate if enumeration of data is in progress.
         /// Until this is true, the TotalBytesToProcess may not be valid.
         /// </param>
-        internal GranularCopyProgress(string storageAccountName, DataBoxJobTransferType? transferType, DataAccountType? dataAccountType, ResourceIdentifier accountId, long? bytesProcessed, long? totalBytesToProcess, long? filesProcessed, long? totalFilesToProcess, long? invalidFilesProcessed, long? invalidFileBytesUploaded, long? renamedContainerCount, long? filesErroredOut, long? directoriesErroredOut, long? invalidDirectoriesProcessed, bool? isEnumerationInProgress)
+        /// <param name="error"> Error, if any, in the stage. </param>
+        /// <param name="actions"> Available actions on the job. </param>
+        internal GranularCopyProgress(string storageAccountName, DataBoxJobTransferType? transferType, DataAccountType? dataAccountType, ResourceIdentifier accountId, long? bytesProcessed, long? totalBytesToProcess, long? filesProcessed, long? totalFilesToProcess, long? invalidFilesProcessed, long? invalidFileBytesUploaded, long? renamedContainerCount, long? filesErroredOut, long? directoriesErroredOut, long? invalidDirectoriesProcessed, bool? isEnumerationInProgress, ResponseError error, IReadOnlyList<CustomerResolutionCode> actions)
         {
             StorageAccountName = storageAccountName;
             TransferType = transferType;
@@ -53,6 +58,8 @@ namespace Azure.ResourceManager.DataBox.Models
             DirectoriesErroredOut = directoriesErroredOut;
             InvalidDirectoriesProcessed = invalidDirectoriesProcessed;
             IsEnumerationInProgress = isEnumerationInProgress;
+            Error = error;
+            Actions = actions;
         }
 
         /// <summary> Name of the storage account. This will be empty for data account types other than storage account. </summary>
@@ -84,9 +91,13 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> To indicate directories renamed. </summary>
         public long? InvalidDirectoriesProcessed { get; }
         /// <summary>
-        /// To indicate if enumeration of data is in progress. 
+        /// To indicate if enumeration of data is in progress.
         /// Until this is true, the TotalBytesToProcess may not be valid.
         /// </summary>
         public bool? IsEnumerationInProgress { get; }
+        /// <summary> Error, if any, in the stage. </summary>
+        public ResponseError Error { get; }
+        /// <summary> Available actions on the job. </summary>
+        public IReadOnlyList<CustomerResolutionCode> Actions { get; }
     }
 }

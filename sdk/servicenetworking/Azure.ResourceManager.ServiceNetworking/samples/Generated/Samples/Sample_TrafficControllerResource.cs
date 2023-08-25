@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // for more information of creating TrafficControllerResource, please refer to the document of TrafficControllerResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string trafficControllerName = "TC1";
+            string trafficControllerName = "tc1";
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
@@ -100,17 +99,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // for more information of creating TrafficControllerResource, please refer to the document of TrafficControllerResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string trafficControllerName = "TC1";
+            string trafficControllerName = "tc1";
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
             // invoke the operation
             TrafficControllerPatch patch = new TrafficControllerPatch()
             {
-                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                    ["configurationEndpoints"] = new object[] { "abc.eastus.trafficcontroller.azure.net" }
-                }),
+                Tags =
+{
+["key1"] = "value1",
+},
             };
             TrafficControllerResource result = await trafficController.UpdateAsync(patch);
 
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // for more information of creating TrafficControllerResource, please refer to the document of TrafficControllerResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string trafficControllerName = "TC1";
+            string trafficControllerName = "tc1";
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 

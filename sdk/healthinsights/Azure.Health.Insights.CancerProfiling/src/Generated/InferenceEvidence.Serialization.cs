@@ -21,7 +21,7 @@ namespace Azure.Health.Insights.CancerProfiling
             }
             Optional<ClinicalNoteEvidence> patientDataEvidence = default;
             Optional<ClinicalCodedElement> patientInfoEvidence = default;
-            Optional<float?> importance = default;
+            Optional<float> importance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patientDataEvidence"u8))
@@ -46,14 +46,13 @@ namespace Azure.Health.Insights.CancerProfiling
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        importance = null;
                         continue;
                     }
                     importance = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new InferenceEvidence(patientDataEvidence, patientInfoEvidence, Optional.ToNullable(importance));
+            return new InferenceEvidence(patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by &apos;Severity&apos; returns the count of alerts for each severity).
+        /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by 'Severity' returns the count of alerts for each severity).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by &apos;Severity&apos; returns the count of alerts for each severity).
+        /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by 'Severity' returns the count of alerts for each severity).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

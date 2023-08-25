@@ -19,10 +19,9 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> Detection result for each time stamp. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resultId"/>, <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
-        internal MultivariateDetectionResult(string resultId, MultivariateBatchDetectionResultSummary summary, IEnumerable<AnomalyState> results)
+        /// <exception cref="ArgumentNullException"> <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
+        internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IEnumerable<AnomalyState> results)
         {
-            Argument.AssertNotNull(resultId, nameof(resultId));
             Argument.AssertNotNull(summary, nameof(summary));
             Argument.AssertNotNull(results, nameof(results));
 
@@ -35,7 +34,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> Detection result for each time stamp. </param>
-        internal MultivariateDetectionResult(string resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
+        internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
         {
             ResultId = resultId;
             Summary = summary;
@@ -43,7 +42,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Result identifier that's used to fetch the results of an inference call. </summary>
-        public string ResultId { get; }
+        public Guid ResultId { get; }
         /// <summary> Multivariate anomaly detection status. </summary>
         public MultivariateBatchDetectionResultSummary Summary { get; }
         /// <summary> Detection result for each time stamp. </summary>

@@ -21,12 +21,10 @@ namespace Azure.Communication.JobRouter.Models
         internal ClassificationPolicyItem(ClassificationPolicy classificationPolicy, string etag)
         {
             ClassificationPolicy = classificationPolicy;
-            Etag = etag;
+            _etag = etag;
         }
 
         /// <summary> A container for the rules that govern how jobs are classified. </summary>
         public ClassificationPolicy ClassificationPolicy { get; }
-        /// <summary> (Optional) The Concurrency Token. </summary>
-        public string Etag { get; }
     }
 }

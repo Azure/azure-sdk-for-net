@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="orderBy"> Please choose OrderBy value from [&apos;createdtime&apos;, &apos;modifiedtime&apos;]. </param>
+        /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
         /// <param name="top">
         /// Top count of results, top count cannot be greater than the page size.
         ///                               If topCount &gt; page size, results with be default page size count will be returned
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="orderBy"> Please choose OrderBy value from [&apos;createdtime&apos;, &apos;modifiedtime&apos;]. </param>
+        /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
         /// <param name="top">
         /// Top count of results, top count cannot be greater than the page size.
         ///                               If topCount &gt; page size, results with be default page size count will be returned

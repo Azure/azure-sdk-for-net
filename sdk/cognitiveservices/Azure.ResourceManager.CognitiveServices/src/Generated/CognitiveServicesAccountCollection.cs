@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It&apos;s also the resource type for billing.
+        /// Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It's also the resource type for billing.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It&apos;s also the resource type for billing.
+        /// Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It's also the resource type for billing.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

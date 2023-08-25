@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: IotHub
 namespace: Azure.ResourceManager.IotHub
@@ -15,6 +14,9 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+# mgmt-debug: 
+#   show-serialized-names: true
 
 override-operation-name:
   IotHubResource_CheckNameAvailability: CheckIotHubNameAvailability
@@ -56,6 +58,8 @@ rename-mapping:
   RoutingServiceBusTopicEndpointProperties.endpointUri: Endpoint
   RoutingStorageContainerProperties.endpointUri: Endpoint
   IotHubSkuDescription.resourceType: -|resource-type
+  CertificateProperties.thumbprint: ThumbprintString
+  CertificatePropertiesWithNonce.thumbprint: ThumbprintString
 
 prepend-rp-prefix:
   - AuthenticationType
@@ -101,7 +105,6 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'thumbprint': 'any'
   'certificate': 'any'
   'UserAssignedIdentity': 'arm-id'
 

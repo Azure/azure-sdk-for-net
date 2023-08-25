@@ -30,9 +30,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeFaasInstance = "faas.instance";
 
         public const string AttributeK8sCluster = "k8s.cluster.name";
+        public const string AttributeK8sCronJob = "k8s.cronjob.name";
+        public const string AttributeK8sDaemonSet = "k8s.daemonset.name";
+        public const string AttributeK8sDeployment = "k8s.deployment.name";
+        public const string AttributeK8sJob = "k8s.job.name";
         public const string AttributeK8sNamespace = "k8s.namespace.name";
         public const string AttributeK8sPod = "k8s.pod.name";
-        public const string AttributeK8sDeployment = "k8s.deployment.name";
+        public const string AttributeK8sReplicaSet = "k8s.replicaset.name";
+        public const string AttributeK8sStatefulSet = "k8s.statefulset.name";
 
         public const string AttributeHostHostname = "host.hostname";
         public const string AttributeHostId = "host.id";
@@ -81,7 +86,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeHttpHostName = "host.name";
         public const string AttributeHttpHostPort = "host.port";
         public const string AttributeHttpRoute = "http.route";
-        public const string AttributeHttpClientIP = "http.client_ip";
         public const string AttributeHttpUserAgent = "http.user_agent";
         public const string AttributeHttpRequestContentLength = "http.request_content_length";
         public const string AttributeHttpRequestContentLengthUncompressed = "http.request_content_length_uncompressed";
@@ -145,5 +149,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeExceptionType = "exception.type";
         public const string AttributeExceptionMessage = "exception.message";
         public const string AttributeExceptionStacktrace = "exception.stacktrace";
+
+        // Http v1.21.0 https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/http.md
+        public const string AttributeClientAddress = "client.address"; // replaces: "http.client_ip" (AttributeHttpClientIp)
+        public const string AttributeHttpRequestMethod = "http.request.method"; // replaces: "http.method" (AttributeHttpMethod)
+        public const string AttributeHttpResponseStatusCode = "http.response.status_code"; // replaces: "http.status_code" (AttributeHttpStatusCode)
+        public const string AttributeNetworkProtocolVersion = "network.protocol.version"; // replaces: "http.flavor" (AttributeHttpFlavor)
+        public const string AttributeServerAddress = "server.address"; // replaces: "net.host.name" (AttributeNetHostName)
+        public const string AttributeServerPort = "server.port"; // replaces: "net.host.port" (AttributeNetHostPort) and "net.peer.port" (AttributeNetPeerPort)
+        public const string AttributeUrlFull = "url.full"; // replaces: "http.url" (AttributeHttpUrl)
+        public const string AttributeUrlPath = "url.path"; // replaces: "http.target" (AttributeHttpTarget)
+        public const string AttributeUrlScheme = "url.scheme"; // replaces: "http.scheme" (AttributeHttpScheme)
+        public const string AttributeUrlQuery = "url.query";
+        public const string AttributeUserAgentOriginal = "user_agent.original"; // replaces: "http.user_agent" (AttributeHttpUserAgent)
+        public const string AttributeServerSocketAddress = "server.socket.address"; // replaces: "net.peer.ip" (AttributeNetPeerIp)
+
+        // Messaging v1.21.0 https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/messaging.md
+        public const string AttributeMessagingDestinationName = "messaging.destination.name";
+        public const string AttributeNetworkProtocolName = "network.protocol.name";
     }
 }

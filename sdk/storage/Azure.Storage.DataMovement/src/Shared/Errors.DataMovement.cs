@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using Azure.Storage.DataMovement;
-using static Azure.Storage.Constants.Sas;
 
 namespace Azure.Storage
 {
@@ -29,9 +26,8 @@ namespace Azure.Storage
         public static ArgumentException UnableToGetLength()
             => new ArgumentException("Unable to get the length of the source storage resource");
 
-        public static ArgumentException MismatchSchemaVersionHeader(string schemaVersion)
-            => throw new ArgumentException($"Mismatch Schema Version: Schema Version of the Job Plan file does not match the Schema Version supported by " +
-                    $"the SDK: {DataMovementConstants.PlanFile.SchemaVersion}. Please update to the Azure.Storage.DataMovement version which supports this Job Plan file Version Schema: {schemaVersion}.");
+        public static ArgumentException UnsupportedSchemaVersionHeader(string schemaVersion)
+            => new ArgumentException($"The checkpoint file schema version {schemaVersion} is not supported by this version of the SDK.");
 
         public static ArgumentException MismatchTransferId(string passedTransferId, string storedTransferId)
             => throw new ArgumentException($"Mismatch Transfer Id: Transfer ID stored in the Job Plan file does not match the Transfer ID " +
@@ -53,12 +49,6 @@ namespace Azure.Storage
         public static ArgumentException MissingTransferIdCheckpointer(string transferId)
             => throw new ArgumentException($"The transfer id, {transferId}, could not be found in the checkpointer.");
 
-        public static ArgumentException MismatchIdSingleContainer(string transferId)
-            => throw new ArgumentException($"Cannot Resume Error: Transfer Id, {transferId} is being attempted as a single transfer when it's a container transfer.");
-
-        public static ArgumentException MismatchIdContainer(string transferId)
-            => throw new ArgumentException($"Cannot Resume Error: Transfer Id, {transferId} is being attempted as a container transfer when it's a single transfer.");
-
         public static ArgumentException CollisionJobPart(string transferId, int jobPart)
             => throw new ArgumentException($"Job Part Collision Checkpointer: The job part {jobPart} for transfer id {transferId}, already exists in the checkpointer.");
 
@@ -75,7 +65,7 @@ namespace Azure.Storage
             => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
 
         public static ArgumentException InvalidSchemaVersionFileName(string schemaVersion)
-            => new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {schemaVersion} does not match the Schema Version supported by the package: {DataMovementConstants.PlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
+            => new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {schemaVersion} does not match the Schema Version supported by the package: {DataMovementConstants.JobPartPlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
 
         public static ArgumentException InvalidPlanFileElement(string elementName, int expectedSize, int actualSize)
             => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected size: {expectedSize}\n Actual Size: {actualSize}");
@@ -83,15 +73,53 @@ namespace Azure.Storage
         public static ArgumentException InvalidStringToDictionary(string elementName, string value)
             => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected format stored was invalid, \"{value}\"");
 
-        public static void ThrowIfElementIsNotPositive(string elementName, long actualValue)
-        {
-            if (actualValue <= 0)
-            {
-                throw new ArgumentException($"Invalid Job Part Plan File: Value of {elementName} was expected to be a non-zero positive value but instead was {actualValue}");
-            }
-        }
-
         public static IOException LocalFileAlreadyExists(string pathName)
             => new IOException($"File path `{pathName}` already exists. Cannot overwrite file.");
+
+        public static ArgumentException MismatchResumeTransferArguments(string elementName, string checkpointerValue, string passedValue)
+            => new ArgumentException($"Mismatch Value to Resume Job: The following parameter, {elementName}, does not match the stored value in the transfer checkpointer. Please ensure the value passed to resume the transfer matches the value used when the transfer was started.\n" +
+                $"Checkpointer Value: {checkpointerValue}\n" +
+                $"New Value: {passedValue}");
+
+        public static ArgumentException MismatchResumeCreateMode(bool checkpointerValue, StorageResourceCreationPreference passedValue)
+            => new ArgumentException($"Mismatch Value to Resume Job: The value to overwrite / create files when they exist does not match the stored value in the transfer checkpointer. Please ensure the value passed to resume the transfer matches the value in order to prevent overwriting or failing files.\n" +
+                $"Checkpointer Value to overwrite was set to {checkpointerValue.ToString()}.\n" +
+                $"The value passed in was {passedValue.ToString()}");
+
+        public static InvalidOperationException SingleDownloadLengthMismatch(long expectedLength, long actualLength)
+            => new InvalidOperationException($"Download length {actualLength} did not match expected length {expectedLength}.");
+
+        public static ArgumentException InvalidDownloadOffset(long offset, long length)
+            => new ArgumentException($"Cannot find offset returned by Successful Download Range in the expected Range.\n" +
+                $"Offset: \"{offset}\"\n" +
+                $"Length: \"{length}\"");
+
+        public static ArgumentException InvalidExpectedLength(long length)
+            => new ArgumentException($"Expected positive non-zero length, but was given: {length}");
+
+        public static InvalidOperationException FailedDownloadRange(long offset, long bytesTransferred, string transferId)
+            => new InvalidOperationException($"Unexpected error: Experienced failed download range argument. " +
+                    $"Range: {offset} - {bytesTransferred} with Transfer ID: {transferId}");
+
+        public static FileNotFoundException TempChunkFileNotFound(long offset, long length, string filePath)
+            => new FileNotFoundException($"Could not append chunk to destination file at Offset: " +
+                $"\"{offset}\" and Length: \"{length}\"," +
+                $"due to the chunk file missing: \"{filePath}\"");
+
+        public static InvalidOperationException MismatchLengthTransferred(long expectedLength, long actualLength)
+            => new InvalidOperationException($"Amount of bytes transferred exceeds expected length\n" +
+                $"Expected Bytes Transferred Length: {expectedLength}\n" +
+                $"Actual Bytes Transferred Length: {actualLength}.");
+
+        public static InvalidOperationException FailedChunkTransfer(long offset, long bytesTransferred)
+            => new InvalidOperationException($"Unexpected error: Experienced failed chunk transfer argument. " +
+                    $"Offset: \"{offset}\"\n" +
+                    $"Length: \"{bytesTransferred}\"");
+
+        public static InvalidOperationException InvalidTransferResourceTypes()
+            => new InvalidOperationException("Invalid source and destination resource types.");
+
+        public static ArgumentException ResourceUriInvalid(string parameterResource)
+            => new ArgumentException($"Could not perform operation because {parameterResource} was expected to be not a Local Storage Resource.");
     }
 }

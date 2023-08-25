@@ -25,7 +25,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2022-11-02";
+        public const string DefaultSasVersion = "2023-08-03";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -66,6 +66,7 @@ namespace Azure.Storage
         public const int DefaultDownloadCopyBufferSize = 16384;
 
         public const int StorageCrc64SizeInBytes = 8;
+        public const int MD5SizeInBytes = 16;
 
         /// <summary>
         /// Backwards compatible default value for trimming slashes on object name.
@@ -216,7 +217,8 @@ namespace Azure.Storage
 
             internal static class Append
             {
-                public const int MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
+                public const int Pre_2022_11_02_MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
+                public const int MaxAppendBlockBytes = 100 * Constants.MB; // 100MB
                 public const int MaxBlocks = 50000;
             }
 
@@ -383,6 +385,12 @@ namespace Azure.Storage
             public const string DirectoryResourceType = "directory";
 
             public const string EncryptionContextHeaderName = "x-ms-encryption-context";
+
+            public const string OwnerHeaderName = "x-ms-owner";
+
+            public const string GroupHeaderName = "x-ms-group";
+
+            public const string PermissionsHeaderName = "x-ms-permissions";
         }
 
         /// <summary>
@@ -645,6 +653,9 @@ namespace Azure.Storage
 
         internal static class ClientSideEncryption
         {
+            public const string HttpMessagePropertyKeyV1 = "Azure.Storage.StorageTelemetryPolicy.ClientSideEncryption.V1";
+            public const string HttpMessagePropertyKeyV2 = "Azure.Storage.StorageTelemetryPolicy.ClientSideEncryption.V2";
+
             public const string AgentMetadataKey = "EncryptionLibrary";
 
             public const string AesCbcPkcs5Padding = "AES/CBC/PKCS5Padding";
@@ -705,6 +716,12 @@ namespace Azure.Storage
         {
             internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
             internal const string QueryParameterKey = "timeout";
+        }
+
+        internal static class CopyHttpAuthorization
+        {
+            internal static readonly string[] Scopes = { "https://storage.azure.com/.default" };
+            internal const string BearerScheme = "Bearer";
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Creates or updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Creates or updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Creates or updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Creates or updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

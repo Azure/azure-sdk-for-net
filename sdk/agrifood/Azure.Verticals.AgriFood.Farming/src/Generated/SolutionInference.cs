@@ -49,15 +49,24 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Cancels a job for given solution id. </summary>
+        /// <summary>
+        /// [Protocol Method] Cancels a job for given solution id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="solutionId"> Id of solution for which job is to be cancelled. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CancelAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CancelAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CancelAsync(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -77,15 +86,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Cancels a job for given solution id. </summary>
+        /// <summary>
+        /// [Protocol Method] Cancels a job for given solution id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="solutionId"> Id of solution for which job is to be cancelled. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Cancel(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Cancel(string,RequestContent,RequestContext)']/*" />
         public virtual Response Cancel(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -105,15 +123,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Fetches details of triggered job for a solution. </summary>
+        /// <summary>
+        /// [Protocol Method] Fetches details of triggered job for a solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="solutionId"> Id of the solution. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='FetchAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='FetchAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> FetchAsync(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -133,15 +160,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Fetches details of triggered job for a solution. </summary>
+        /// <summary>
+        /// [Protocol Method] Fetches details of triggered job for a solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="solutionId"> Id of the solution. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Fetch(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Fetch(string,RequestContent,RequestContext)']/*" />
         public virtual Response Fetch(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -161,16 +197,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates a job trigger for a solution. </summary>
+        /// <summary>
+        /// [Protocol Method] Creates a job trigger for a solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="solutionId"> Id of the solution resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdateAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdateAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -190,16 +235,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates a job trigger for a solution. </summary>
+        /// <summary>
+        /// [Protocol Method] Creates a job trigger for a solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="solutionId"> Id of the solution resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdate(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdate(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrUpdate(WaitUntil waitUntil, string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));

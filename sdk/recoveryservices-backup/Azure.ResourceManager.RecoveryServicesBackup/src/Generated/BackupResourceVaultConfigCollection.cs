@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
-        /// Updates vault security config. 
+        /// Updates vault security config.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
-        /// Updates vault security config. 
+        /// Updates vault security config.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Creates or updates a Sql pool&apos;s transparent data encryption configuration.
+        /// Creates or updates a Sql pool's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Creates or updates a Sql pool&apos;s transparent data encryption configuration.
+        /// Creates or updates a Sql pool's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a SQL pool&apos;s transparent data encryption configuration.
+        /// Get a SQL pool's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a SQL pool&apos;s transparent data encryption configuration.
+        /// Get a SQL pool's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get list of SQL pool&apos;s transparent data encryption configurations.
+        /// Get list of SQL pool's transparent data encryption configurations.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get list of SQL pool&apos;s transparent data encryption configurations.
+        /// Get list of SQL pool's transparent data encryption configurations.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-15-preview";
+            _apiVersion = apiVersion ?? "2023-03-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        /// <summary> Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won&apos;t do anything on an already deallocated cluster. Use Start to restart the cluster. </summary>
+        /// <summary> Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won't do anything on an already deallocated cluster. Use Start to restart the cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won&apos;t do anything on an already deallocated cluster. Use Start to restart the cluster. </summary>
+        /// <summary> Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won't do anything on an already deallocated cluster. Use Start to restart the cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        /// <summary> Start the Managed Cassandra Cluster and Associated Data Centers. Start will start the host virtual machine of this cluster with reserved data disk. This won&apos;t do anything on an already running cluster. Use Deallocate to deallocate the cluster. </summary>
+        /// <summary> Start the Managed Cassandra Cluster and Associated Data Centers. Start will start the host virtual machine of this cluster with reserved data disk. This won't do anything on an already running cluster. Use Deallocate to deallocate the cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Start the Managed Cassandra Cluster and Associated Data Centers. Start will start the host virtual machine of this cluster with reserved data disk. This won&apos;t do anything on an already running cluster. Use Deallocate to deallocate the cluster. </summary>
+        /// <summary> Start the Managed Cassandra Cluster and Associated Data Centers. Start will start the host virtual machine of this cluster with reserved data disk. This won't do anything on an already running cluster. Use Deallocate to deallocate the cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>

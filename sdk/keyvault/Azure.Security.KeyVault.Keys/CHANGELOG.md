@@ -4,9 +4,13 @@
 
 ### Features Added
 
+- Added `CryptographyClient.CreateRSA` and `CreateRSAAsync` to create an `RSA` implementation backed by Key Vault or Managed HSM ([#3545](https://github.com/Azure/azure-sdk-for-net/issues/3545))
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- When a Key Vault is moved to another tenant, the client is reauthenticated.
 
 ### Other Changes
 

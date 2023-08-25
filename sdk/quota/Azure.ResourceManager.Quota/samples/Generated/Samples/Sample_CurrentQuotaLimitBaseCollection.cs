@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.Quota.Samples
             {
                 Properties = new QuotaProperties()
                 {
-                    Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Limit = new QuotaLimitObject(10),
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "MinPublicIpInterNetworkPrefixLength",
                     },
-                    ResourceType = "MinPublicIpInterNetworkPrefixLength",
+                    ResourceTypeName = "MinPublicIpInterNetworkPrefixLength",
                 },
             };
             ArmOperation<CurrentQuotaLimitBaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.Quota.Samples
             {
                 Properties = new QuotaProperties()
                 {
-                    Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Limit = new QuotaLimitObject(10),
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "StandardSkuPublicIpAddresses",
                     },
-                    ResourceType = "PublicIpAddresses",
+                    ResourceTypeName = "PublicIpAddresses",
                 },
             };
             ArmOperation<CurrentQuotaLimitBaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
@@ -255,8 +255,8 @@ namespace Azure.ResourceManager.Quota.Samples
             {
                 Properties = new QuotaProperties()
                 {
-                    Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Limit = new QuotaLimitObject(10),
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "standardFSv2Family",
                     },
@@ -299,12 +299,12 @@ namespace Azure.ResourceManager.Quota.Samples
             {
                 Properties = new QuotaProperties()
                 {
-                    Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Limit = new QuotaLimitObject(10),
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "TotalLowPriorityCores",
                     },
-                    ResourceType = "lowPriority",
+                    ResourceTypeName = "lowPriority",
                 },
             };
             ArmOperation<CurrentQuotaLimitBaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);

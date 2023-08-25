@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>

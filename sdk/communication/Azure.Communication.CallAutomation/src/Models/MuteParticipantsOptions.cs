@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -15,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public MuteParticipantsOptions(IEnumerable<CommunicationIdentifier> targetParticipants)
         {
-            TargetParticipants = targetParticipants;
+            TargetParticipants = targetParticipants.ToList<CommunicationIdentifier>();
         }
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace Azure.Communication.CallAutomation
         /// Only one participant is currently supported.
         /// Only ACS Users are currently supported.
         /// </summary>
-        public IEnumerable<CommunicationIdentifier> TargetParticipants { get; }
+        public IReadOnlyList<CommunicationIdentifier> TargetParticipants { get; }
 
         /// <summary>
         /// The operation context.

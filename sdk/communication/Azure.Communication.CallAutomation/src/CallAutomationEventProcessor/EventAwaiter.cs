@@ -14,14 +14,14 @@ namespace Azure.Communication.CallAutomation
         private const int DEFAULT_EVENT_EXPIRATION_SECONDS = 240;
         private readonly CancellationToken _cancellationToken;
 
-        private Func<CallAutomationEventData, bool> _predicate;
+        private Func<CallAutomationEventBase, bool> _predicate;
 
         private bool _disposed;
 
         internal TaskCompletionSource<EventProcessorArgs> taskSource { get; }
         internal Action<object, EventProcessorArgs> OnEventReceived => OnEventsReceived;
 
-        internal EventAwaiter(Func<CallAutomationEventData, bool> predicate, CancellationToken cancellationToken)
+        internal EventAwaiter(Func<CallAutomationEventBase, bool> predicate, CancellationToken cancellationToken)
         {
             // With constructor, define predicate that matches the condition given.
             _predicate = predicate;

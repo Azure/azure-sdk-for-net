@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
@@ -17,11 +16,8 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        internal AnomalyDetectionModel(string modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime)
+        internal AnomalyDetectionModel(Guid modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
-
             ModelId = modelId;
             CreatedTime = createdTime;
             LastUpdatedTime = lastUpdatedTime;
@@ -35,7 +31,7 @@ namespace Azure.AI.AnomalyDetector
         /// Training result of a model, including its status, errors, and diagnostics
         /// information.
         /// </param>
-        internal AnomalyDetectionModel(string modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelInfo modelInfo)
+        internal AnomalyDetectionModel(Guid modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelInfo modelInfo)
         {
             ModelId = modelId;
             CreatedTime = createdTime;
@@ -44,7 +40,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Model identifier. </summary>
-        public string ModelId { get; }
+        public Guid ModelId { get; }
         /// <summary> Date and time (UTC) when the model was created. </summary>
         public DateTimeOffset CreatedTime { get; }
         /// <summary> Date and time (UTC) when the model was last updated. </summary>

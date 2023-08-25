@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobsClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, _serviceVersion);
         }
 
-        public async Task<DisposingBlobContainer> GetTestContainerAsync(
+        public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
@@ -639,6 +639,10 @@ namespace Azure.Storage.DataMovement.Tests
                     }
                 }
             }
+            else
+            {
+                File.Create(localSourceFile).Close();
+            }
             return blobClient;
         }
 
@@ -692,6 +696,10 @@ namespace Azure.Storage.DataMovement.Tests
                     await blobClient.UploadPagesAsync(partStream, offset);
                     offset += blockSize;
                 }
+            }
+            else
+            {
+                File.Create(localSourceFile).Close();
             }
             return blobClient;
         }

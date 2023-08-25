@@ -78,6 +78,6 @@ namespace Azure.Identity
         }
 
         /// <inheritdoc/>
-        public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
+        public bool DisableInstanceDiscovery { get; set; }
     }
 }

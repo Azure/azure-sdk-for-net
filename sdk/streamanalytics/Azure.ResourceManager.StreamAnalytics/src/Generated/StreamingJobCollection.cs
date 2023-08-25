@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="jobName"> The name of the streaming job. </param>
         /// <param name="data"> The definition of the streaming job that will be used to create a new streaming job or replace the existing one. </param>
         /// <param name="ifMatch"> The ETag of the streaming job. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new streaming job to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new streaming job to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="jobName"> The name of the streaming job. </param>
         /// <param name="data"> The definition of the streaming job that will be used to create a new streaming job or replace the existing one. </param>
         /// <param name="ifMatch"> The ETag of the streaming job. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new streaming job to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new streaming job to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the streaming job. </param>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the streaming job. </param>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the streaming job. </param>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the streaming job. </param>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>

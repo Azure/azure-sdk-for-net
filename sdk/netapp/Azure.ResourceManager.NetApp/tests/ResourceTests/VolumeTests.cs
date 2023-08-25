@@ -16,6 +16,7 @@ using Azure.Core;
 using FluentAssertions;
 using Polly.Contrib.WaitAndRetry;
 using Polly;
+using System.Net;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
@@ -139,6 +140,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             var keyValue = new KeyValuePair<string, string>("Tag2", "value2");
             parameters.Tags.InitializeFrom(DefaultTags);
             parameters.Tags.Add(keyValue);
+            parameters.IsSnapshotDirectoryVisible = false;
             volumeResource1 = (await volumeResource1.UpdateAsync(WaitUntil.Completed, parameters)).Value;
             volumeResource1.Data.Tags.Should().Contain(keyValue);
 
@@ -147,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeResource3.Data.Tags.Should().Contain(keyValue);
             KeyValuePair<string, string> keyValuePair = new("key1", DefaultTags["key1"]);
             volumeResource3.Data.Tags.Should().Contain(keyValuePair);
-
+            Assert.IsFalse(volumeResource3.Data.IsSnapshotDirectoryVisible);
             //usageThreshold should not change
             Assert.AreEqual(volumeResource3.Data.UsageThreshold, volumeResource3.Data.UsageThreshold);
         }
@@ -565,10 +567,30 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Call break file locks
             NetAppVolumeBreakFileLocksContent parameters = new()
             {
-                ConfirmRunningDisruptiveOperation = true
+                ConfirmRunningDisruptiveOperation = true,
+                ClientIP = IPAddress.Parse("101.102.103.104")
             };
 
             await volumeResource1.BreakFileLocksAsync(WaitUntil.Completed, parameters);
+        }
+
+        [RecordedTest]
+        public async Task GetGetGroupIdListForLdapUserNonLDAPVolumeShouldReturnError()
+        {
+            //create volume
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            await CreateVirtualNetwork();
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
+            VerifyVolumeProperties(volumeResource1, true);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            //validate if created successfully
+            NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            VerifyVolumeProperties(volumeResource2, true);
+
+            //Call break file locks
+            GetGroupIdListForLdapUserContent parameters = new("fakeUser");
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource1.GetGetGroupIdListForLdapUserAsync(WaitUntil.Completed, parameters); });
+            Assert.AreEqual(400, exception.Status);
         }
 
         private async Task WaitForReplicationStatus(NetAppVolumeResource volumeResource, NetAppMirrorState mirrorState)

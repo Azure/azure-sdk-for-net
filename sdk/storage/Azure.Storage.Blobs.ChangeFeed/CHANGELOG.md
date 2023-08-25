@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.35 (Unreleased)
+## 12.0.0-preview.38 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-preview.37 (2023-08-08)
+- Added support for service version 2023-05-03 and 2023-08-03.
+
+## 12.0.0-preview.36 (2023-07-11)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.35 (2023-05-30)
+- Added support for service version 2023-01-03.
 
 ## 12.0.0-preview.34 (2023-04-11)
 - This release contains bug fixes to improve quality.

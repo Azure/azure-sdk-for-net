@@ -22,10 +22,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
 
             // Add delegate for call connected event
-            handler.AttachOngoingEventProcessor<CallConnectedEventData>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
+            handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallConnectedEventData(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             // Assert if the delegate was also called
             Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
@@ -40,13 +40,13 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
 
             // Add delegate for call connected event
-            handler.AttachOngoingEventProcessor<CallConnectedEventData>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
+            handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
 
             // Then remove
-            handler.DetachOngoingEventProcessor<CallConnectedEventData>(CallConnectionId);
+            handler.DetachOngoingEventProcessor<CallConnected>(CallConnectionId);
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallConnectedEventData(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             // Assert if the delegate didnt get called
             Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
@@ -61,12 +61,12 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
 
             // Add delegate for call connected event
-            handler.AttachOngoingEventProcessor<CallConnectedEventData>("UnMatchedID", passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
+            handler.AttachOngoingEventProcessor<CallConnected>("UnMatchedID", passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
 
             // Then replace with correct one
-            handler.AttachOngoingEventProcessor<CallConnectedEventData>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
+            handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
 
-            SendAndProcessEvent(handler, new CallConnectedEventData(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             // Assert if the delegate was also called
             Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
@@ -81,10 +81,11 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
 
             // Add delegate for call connected event
-            handler.AttachOngoingEventProcessor<CallConnectedEventData>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
+            handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
+            var internalEvent = new CallTransferAcceptedInternal(CallConnectionId, ServerCallId, CorelationId, null, null, null, null);
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallTransferAcceptedEventData(CallConnectionId, ServerCallId, CorelationId, null , null));
+            SendAndProcessEvent(handler, new CallTransferAccepted(internalEvent));
 
             // Assert if the delegate was never called
             Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
@@ -99,12 +100,12 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
 
             // Add delegate for call connected event
-            handler.AttachOngoingEventProcessor<CallConnectedEventData>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
+            handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallDisconnectedEventData(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallDisconnected(CallConnectionId, ServerCallId, CorelationId, null));
 
-            SendAndProcessEvent(handler, new CallConnectedEventData(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             // Assert if the delegate was never called
             Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);

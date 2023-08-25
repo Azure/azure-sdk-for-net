@@ -2,12 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Globalization;
 using System.Net;
 using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.EventHubs;
+using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -87,6 +88,26 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.AddSingleton<CheckpointClientProvider>();
             builder.Services.Configure<EventHubOptions>(configure);
             builder.Services.PostConfigure<EventHubOptions>(ConfigureOptions);
+
+            return builder;
+        }
+
+        public static IWebJobsBuilder AddEventHubsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
+        {
+            IServiceProvider serviceProvider = null;
+            Lazy<EventHubsScalerProvider> scalerProvider = new Lazy<EventHubsScalerProvider>(() => new EventHubsScalerProvider(serviceProvider, triggerMetadata));
+
+            builder.Services.AddSingleton<IScaleMonitorProvider>(resolvedServiceProvider =>
+            {
+                serviceProvider = serviceProvider ?? resolvedServiceProvider;
+                return scalerProvider.Value;
+            });
+
+            builder.Services.AddSingleton<ITargetScalerProvider>(resolvedServiceProvider =>
+            {
+                serviceProvider = serviceProvider ?? resolvedServiceProvider;
+                return scalerProvider.Value;
+            });
 
             return builder;
         }

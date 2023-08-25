@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class MonitorMetric
+    public partial class MonitorMetric
     {
         internal static MonitorMetric DeserializeMonitorMetric(JsonElement element)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> displayDescription = default;
             Optional<string> errorCode = default;
             Optional<string> errorMessage = default;
-            Unit unit = default;
+            MonitorMetricUnit unit = default;
             IReadOnlyList<MonitorTimeSeriesElement> timeseries = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("unit"u8))
                 {
-                    unit = property.Value.GetString().ToUnit();
+                    unit = new MonitorMetricUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("timeseries"u8))

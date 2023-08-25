@@ -13,6 +13,6 @@ namespace Azure.Identity
         /// By setting this to <c>true</c>, the validation of the authority is disabled.
         /// As a result, it is crucial to ensure that the configured authority host is valid and trustworthy."
         /// </summary>
-        bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
+        bool DisableInstanceDiscovery { get; set; }
     }
 }

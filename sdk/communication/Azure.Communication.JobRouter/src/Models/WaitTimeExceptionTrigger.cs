@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
     [CodeGenModel("WaitTimeExceptionTrigger")]
     [CodeGenSuppress("WaitTimeExceptionTrigger", typeof(double))]
-    public partial class WaitTimeExceptionTrigger : JobExceptionTrigger
+    public partial class WaitTimeExceptionTrigger : ExceptionTrigger
     {
         /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
         /// <param name="threshold"> Threshold for wait time for this trigger. </param>

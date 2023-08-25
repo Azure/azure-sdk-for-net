@@ -400,6 +400,21 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToMessageArray>();
         }
 
+        private static int MinBatchSize = 5;
+        private static int MaxBatchSize = 10;
+
+        [Test]
+        public async Task TestBatch_MinBatchSize()
+        {
+            await TestMultiple_MinBatch<TestBatchMinBatchSize>();
+        }
+
+        [Test]
+        public async Task TestBatch_MinBatchSize_WithPartialBatch()
+        {
+            await TestMultiple_MinBatch_PartialBatch<TestBatchMinBatchSize_PartialBatch>();
+        }
+
         [Test]
         public async Task TestBatch_JsonPoco()
         {
@@ -446,7 +461,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
          * Helper functions
          */
 
-        private IHost BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true, bool enableCrossEntityTransaction = false, int? maxMessages = default)
+        private IHost BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true, bool enableCrossEntityTransaction = false, int? maxMessages = default, int? minMessages = default, TimeSpan? maxWaitTime = default)
         {
             return BuildHost<T>(builder =>
                 builder.ConfigureWebJobs(b =>
@@ -460,6 +475,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         if (maxMessages != null)
                         {
                             sbOptions.MaxMessageBatchSize = maxMessages.Value;
+                        }
+                        if (minMessages != null)
+                        {
+                            sbOptions.MinMessageBatchSize = minMessages.Value;
+                        }
+                        if (maxWaitTime != null)
+                        {
+                            sbOptions.MaxBatchWaitTime = maxWaitTime.Value;
                         }
                     }))
                 .ConfigureServices(services =>
@@ -654,6 +677,50 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.IsTrue(scope.IsFailed);
         }
 
+        [Test]
+        public async Task TestSingle_Dispose()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId1");
+            var host = BuildHost<TestSingleDispose>();
+
+            bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+            Assert.True(result);
+            host.Dispose();
+        }
+
+        [Test]
+        public async Task TestSingle_StopWithoutDrain()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId1");
+            var host = BuildHost<TestSingleDispose>();
+
+            bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+            Assert.True(result);
+            await host.StopAsync();
+        }
+
+        [Test]
+        public async Task TestBatch_Dispose()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId1");
+            var host = BuildHost<TestBatchDispose>();
+
+            bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+            Assert.True(result);
+            host.Dispose();
+        }
+
+        [Test]
+        public async Task TestBatch_StopWithoutDrain()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId1");
+            var host = BuildHost<TestBatchDispose>();
+
+            bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+            Assert.True(result);
+            await host.StopAsync();
+        }
+
         private async Task TestMultiple<T>(bool isXml = false)
         {
             if (isXml)
@@ -671,6 +738,41 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        private async Task TestMultiple_MinBatch<T>(Action<IHostBuilder> configurationDelegate = default)
+        {
+            // pre-populate queue before starting listener to allow batch receive to get multiple messages
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test3', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test4', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test5', 'Value': 'Value'}", "sessionId");
+
+            var host = BuildSessionHost<T>(maxMessages: MaxBatchSize, minMessages: MinBatchSize, maxWaitTime: TimeSpan.FromSeconds(5));
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        private async Task TestMultiple_MinBatch_PartialBatch<T>(Action<IHostBuilder> configurationDelegate = default)
+        {
+            // pre-populate queue before starting listener to allow batch receive to get multiple messages
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test3', 'Value': 'Value'}", "sessionId");
+
+            var host = BuildSessionHost<T>(maxMessages: MaxBatchSize, minMessages: MinBatchSize, maxWaitTime: TimeSpan.FromSeconds(5));
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+
                 await host.StopAsync();
             }
         }
@@ -772,8 +874,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual(msg.PartitionKey, partitionKey);
                 Assert.AreEqual(msg.TransactionPartitionKey, transactionPartitionKey);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
-                Assert.True(cancellationToken.IsCancellationRequested);
+                Assert.False(cancellationToken.IsCancellationRequested);
                 try
                 {
                     await messageActions.CompleteMessageAsync(msg);
@@ -798,8 +899,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     $"DrainModeValidationFunctions.TopicWithSessions: message data {msg.Body} with session id {msg.SessionId}");
                 Assert.AreEqual(_drainModeSessionId, msg.SessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
-                Assert.True(cancellationToken.IsCancellationRequested);
+                Assert.False(cancellationToken.IsCancellationRequested);
                 try
                 {
                     await messageSession.CompleteMessageAsync(msg);
@@ -827,8 +927,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     $"DrainModeTestJobBatch.QueueWithSessionsBatch: received {array.Length} messages with session id {array[0].SessionId}");
                 Assert.AreEqual(_drainModeSessionId, array[0].SessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
-                Assert.True(cancellationToken.IsCancellationRequested);
+                Assert.False(cancellationToken.IsCancellationRequested);
                 for (int i = 0; i < array.Length; i++)
                 {
                     var message = array[i];
@@ -860,8 +959,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     $"DrainModeTestJobBatch.TopicWithSessionsBatch: received {array.Length} messages with session id {array[0].SessionId}");
                 Assert.AreEqual(_drainModeSessionId, array[0].SessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
-                Assert.True(cancellationToken.IsCancellationRequested);
+                Assert.False(cancellationToken.IsCancellationRequested);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
                     await messageSession.CompleteMessageAsync(msg);
@@ -923,6 +1021,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ServiceBusReceivedMessage[] array,
                 ServiceBusSessionMessageActions messageSession)
             {
+                string[] messages = array.Select(x => x.Body.ToString()).ToArray();
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+            }
+        }
+
+        public class TestBatchMinBatchSize_PartialBatch
+        {
+            public static void Run(
+               [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+               ServiceBusReceivedMessage[] array)
+            {
+                Assert.AreEqual(array.Length, 3);
+                string[] messages = array.Select(x => x.Body.ToString()).ToArray();
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+            }
+        }
+
+        public class TestBatchMinBatchSize
+        {
+            public static void Run(
+               [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+               ServiceBusReceivedMessage[] array)
+            {
+                Assert.AreEqual(array.Length, MinBatchSize);
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -1075,6 +1197,34 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
 
                 count++;
+            }
+        }
+
+        public class TestSingleDispose
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage message,
+                CancellationToken cancellationToken)
+            {
+                _waitHandle1.Set();
+                // wait a small amount of time for the host to call dispose
+                await Task.Delay(2000, CancellationToken.None);
+                Assert.IsTrue(cancellationToken.IsCancellationRequested);
+            }
+        }
+
+        public class TestBatchDispose
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage[] message,
+                CancellationToken cancellationToken)
+            {
+                _waitHandle1.Set();
+                // wait a small amount of time for the host to call dispose
+                await Task.Delay(2000, CancellationToken.None);
+                Assert.IsTrue(cancellationToken.IsCancellationRequested);
             }
         }
 

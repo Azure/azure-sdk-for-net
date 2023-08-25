@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The github scope connector&apos;s environment data. </summary>
+    /// <summary> The github scope connector's environment data. </summary>
     public partial class GithubScopeEnvironment : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of GithubScopeEnvironment. </summary>

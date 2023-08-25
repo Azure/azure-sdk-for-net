@@ -99,9 +99,9 @@
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
-  <!-- Add App.config to enable server GC in net461 perf and stress projects -->
-  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net461'">
-    <None Include="$(RepoRoot)/common/PerfStressShared/App.config" />
+  <!-- Add App.config to enable server GC in net462 perf and stress projects -->
+  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net462'">
+    <None Include="$(RepoRoot)/common/Perf/App.config" />
   </ItemGroup>
 
   <!-- Add StyleCop Analyzers -->
@@ -220,6 +220,11 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <!-- DataFactory Project Specific Overrides-->
+  <ItemGroup Condition="$(MSBuildProjectName) == 'Azure.ResourceManager.DataFactory'">
+    <PackageReference Include="Azure.Core.Expressions.DataFactory"/>
   </ItemGroup>
 
   <!-- Management Client TEST Project Specific Overrides -->

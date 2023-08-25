@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=description)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevTestLabPolicyResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=description)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevTestLabPolicyResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {

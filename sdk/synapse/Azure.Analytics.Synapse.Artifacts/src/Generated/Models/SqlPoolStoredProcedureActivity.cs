@@ -35,13 +35,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="sqlPool"> SQL pool stored procedure reference. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
-        /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </param>
-        internal SqlPoolStoredProcedureActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, SqlPoolReference sqlPool, object storedProcedureName, IDictionary<string, StoredProcedureParameter> storedProcedureParameters) : base(name, type, description, dependsOn, userProperties, additionalProperties)
+        /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". </param>
+        internal SqlPoolStoredProcedureActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, SqlPoolReference sqlPool, object storedProcedureName, IDictionary<string, StoredProcedureParameter> storedProcedureParameters) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             SqlPool = sqlPool;
             StoredProcedureName = storedProcedureName;
@@ -53,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SqlPoolReference SqlPool { get; set; }
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
         public object StoredProcedureName { get; set; }
-        /// <summary> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </summary>
+        /// <summary> Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". </summary>
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
     }
 }

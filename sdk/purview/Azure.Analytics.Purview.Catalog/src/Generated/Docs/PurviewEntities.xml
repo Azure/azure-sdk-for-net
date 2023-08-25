@@ -253,130 +253,6 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AtlasEntityWithExtInfo</c>:
-<code>{
-  entity: {
-    businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-    classifications: [
-      {
-        entityGuid: string, # Optional. The GUID of the entity.
-        entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        validityPeriods: [
-          {
-            endTime: string, # Optional. The end of the time boundary.
-            startTime: string, # Optional. The start of the time boundary.
-            timeZone: string, # Optional. The timezone of the time boundary.
-          }
-        ], # Optional. An array of time boundaries indicating validity periods.
-        source: string, # Optional. indicate the source who create the classification detail
-        sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-        attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-        typeName: string, # Optional. The name of the type.
-        lastModifiedTS: string, # Optional. ETag for concurrency control.
-      }
-    ], # Optional. An array of classifications.
-    createTime: number, # Optional. The created time of the record.
-    createdBy: string, # Optional. The user who created the record.
-    customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-    guid: string, # Optional. The GUID of the entity.
-    homeId: string, # Optional. The home ID of the entity.
-    isIncomplete: boolean, # Optional. Whether it is a shell entity
-    labels: [string], # Optional. labels
-    meanings: [
-      {
-        confidence: number, # Optional. The confidence of the term assignment.
-        createdBy: string, # Optional. The user who created the record.
-        description: string, # Optional. The description of the term assignment.
-        displayText: string, # Optional. The display text.
-        expression: string, # Optional. The expression of the term assignment.
-        relationGuid: string, # Optional. The GUID of the relationship.
-        source: string, # Optional. The source of the term.
-        status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-        steward: string, # Optional. The steward of the term.
-        termGuid: string, # Optional. The GUID of the term.
-      }
-    ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-    provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-    proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-    relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-    status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-    updateTime: number, # Optional. The update time of the record.
-    updatedBy: string, # Optional. The user who updated the record.
-    version: number, # Optional. The version of the entity.
-    source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-    contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-    typeName: string, # Optional. The name of the type.
-    lastModifiedTS: string, # Optional. ETag for concurrency control.
-  }, # Optional. An instance of an entity - like hive_table, hive_database.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdate(RequestContent,RequestContext)">
 <example>
@@ -630,132 +506,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AtlasEntityWithExtInfo</c>:
-<code>{
-  entity: {
-    businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-    classifications: [
-      {
-        entityGuid: string, # Optional. The GUID of the entity.
-        entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        validityPeriods: [
-          {
-            endTime: string, # Optional. The end of the time boundary.
-            startTime: string, # Optional. The start of the time boundary.
-            timeZone: string, # Optional. The timezone of the time boundary.
-          }
-        ], # Optional. An array of time boundaries indicating validity periods.
-        source: string, # Optional. indicate the source who create the classification detail
-        sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-        attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-        typeName: string, # Optional. The name of the type.
-        lastModifiedTS: string, # Optional. ETag for concurrency control.
-      }
-    ], # Optional. An array of classifications.
-    createTime: number, # Optional. The created time of the record.
-    createdBy: string, # Optional. The user who created the record.
-    customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-    guid: string, # Optional. The GUID of the entity.
-    homeId: string, # Optional. The home ID of the entity.
-    isIncomplete: boolean, # Optional. Whether it is a shell entity
-    labels: [string], # Optional. labels
-    meanings: [
-      {
-        confidence: number, # Optional. The confidence of the term assignment.
-        createdBy: string, # Optional. The user who created the record.
-        description: string, # Optional. The description of the term assignment.
-        displayText: string, # Optional. The display text.
-        expression: string, # Optional. The expression of the term assignment.
-        relationGuid: string, # Optional. The GUID of the relationship.
-        source: string, # Optional. The source of the term.
-        status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-        steward: string, # Optional. The steward of the term.
-        termGuid: string, # Optional. The GUID of the term.
-      }
-    ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-    provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-    proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-    relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-    status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-    updateTime: number, # Optional. The update time of the record.
-    updatedBy: string, # Optional. The user who updated the record.
-    version: number, # Optional. The version of the entity.
-    source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-    contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-    typeName: string, # Optional. The name of the type.
-    lastModifiedTS: string, # Optional. ETag for concurrency control.
-  }, # Optional. An instance of an entity - like hive_table, hive_database.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetByGuidsAsync(IEnumerable,Boolean,Boolean,IEnumerable,RequestContext)">
+    <member name="GetByGuidsAsync(IEnumerable{string},bool?,bool?,IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call GetByGuidsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -763,18 +515,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.GetByGuidsAsync(new String[]{"<guids>"});
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetByGuidsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-Response response = await client.GetByGuidsAsync(new String[]{"<guids>"}, true, true, new String[]{"<excludeRelationshipTypes>"});
+Response response = await client.GetByGuidsAsync(new String[]{"<guids>"}, true, true, new String[]{"<excludeRelationshipTypes>"}, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -865,78 +606,8 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").G
 Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasEntitiesWithExtInfo</c>:
-<code>{
-  entities: [
-    {
-      businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      createTime: number, # Optional. The created time of the record.
-      createdBy: string, # Optional. The user who created the record.
-      customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-      guid: string, # Optional. The GUID of the entity.
-      homeId: string, # Optional. The home ID of the entity.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-      provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-      proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-      relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      updateTime: number, # Optional. The update time of the record.
-      updatedBy: string, # Optional. The user who updated the record.
-      version: number, # Optional. The version of the entity.
-      source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-      contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entities.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetByGuids(IEnumerable,Boolean,Boolean,IEnumerable,RequestContext)">
+    <member name="GetByGuids(IEnumerable{string},bool?,bool?,IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call GetByGuids with required parameters and parse the result.
 <code><![CDATA[
@@ -944,18 +615,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.GetByGuids(new String[]{"<guids>"});
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetByGuids with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-Response response = client.GetByGuids(new String[]{"<guids>"}, true, true, new String[]{"<excludeRelationshipTypes>"});
+Response response = client.GetByGuids(new String[]{"<guids>"}, true, true, new String[]{"<excludeRelationshipTypes>"}, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -1046,76 +706,6 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").G
 Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasEntitiesWithExtInfo</c>:
-<code>{
-  entities: [
-    {
-      businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      createTime: number, # Optional. The created time of the record.
-      createdBy: string, # Optional. The user who created the record.
-      customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-      guid: string, # Optional. The GUID of the entity.
-      homeId: string, # Optional. The home ID of the entity.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-      provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-      proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-      relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      updateTime: number, # Optional. The update time of the record.
-      updatedBy: string, # Optional. The user who updated the record.
-      version: number, # Optional. The version of the entity.
-      source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-      contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entities.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateEntitiesAsync(RequestContent,RequestContext)">
 <example>
@@ -1371,132 +961,6 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AtlasEntitiesWithExtInfo</c>:
-<code>{
-  entities: [
-    {
-      businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      createTime: number, # Optional. The created time of the record.
-      createdBy: string, # Optional. The user who created the record.
-      customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-      guid: string, # Optional. The GUID of the entity.
-      homeId: string, # Optional. The home ID of the entity.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-      provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-      proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-      relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      updateTime: number, # Optional. The update time of the record.
-      updatedBy: string, # Optional. The user who updated the record.
-      version: number, # Optional. The version of the entity.
-      source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-      contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entities.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateEntities(RequestContent,RequestContext)">
 <example>
@@ -1752,134 +1216,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AtlasEntitiesWithExtInfo</c>:
-<code>{
-  entities: [
-    {
-      businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      createTime: number, # Optional. The created time of the record.
-      createdBy: string, # Optional. The user who created the record.
-      customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-      guid: string, # Optional. The GUID of the entity.
-      homeId: string, # Optional. The home ID of the entity.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-      provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-      proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-      relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      updateTime: number, # Optional. The update time of the record.
-      updatedBy: string, # Optional. The user who updated the record.
-      version: number, # Optional. The version of the entity.
-      source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-      contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entities.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteByGuidsAsync(IEnumerable,RequestContext)">
+    <member name="DeleteByGuidsAsync(IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call DeleteByGuidsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1887,7 +1225,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.DeleteByGuidsAsync(new String[]{"<guids>"});
+Response response = await client.DeleteByGuidsAsync(new String[]{"<guids>"}, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1955,68 +1293,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteByGuids(IEnumerable,RequestContext)">
+    <member name="DeleteByGuids(IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call DeleteByGuids with required parameters and parse the result.
 <code><![CDATA[
@@ -2024,7 +1302,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.DeleteByGuids(new String[]{"<guids>"});
+Response response = client.DeleteByGuids(new String[]{"<guids>"}, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -2092,66 +1370,6 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
     <member name="AddClassificationAsync(RequestContent,RequestContext)">
 <example>
@@ -2203,35 +1421,6 @@ Response response = await client.AddClassificationAsync(RequestContent.Create(da
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ClassificationAssociateRequest</c>:
-<code>{
-  classification: {
-    entityGuid: string, # Optional. The GUID of the entity.
-    entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-    removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-    validityPeriods: [
-      {
-        endTime: string, # Optional. The end of the time boundary.
-        startTime: string, # Optional. The start of the time boundary.
-        timeZone: string, # Optional. The timezone of the time boundary.
-      }
-    ], # Optional. An array of time boundaries indicating validity periods.
-    source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-    typeName: string, # Optional. The name of the type.
-    lastModifiedTS: string, # Optional. ETag for concurrency control.
-  }, # Optional. An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity.
-  entityGuids: [string], # Optional. The GUID of the entity.
-}
-</code>
-
-</remarks>
     </member>
     <member name="AddClassification(RequestContent,RequestContext)">
 <example>
@@ -2283,37 +1472,8 @@ Response response = client.AddClassification(RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ClassificationAssociateRequest</c>:
-<code>{
-  classification: {
-    entityGuid: string, # Optional. The GUID of the entity.
-    entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-    removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-    validityPeriods: [
-      {
-        endTime: string, # Optional. The end of the time boundary.
-        startTime: string, # Optional. The start of the time boundary.
-        timeZone: string, # Optional. The timezone of the time boundary.
-      }
-    ], # Optional. An array of time boundaries indicating validity periods.
-    source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-    typeName: string, # Optional. The name of the type.
-    lastModifiedTS: string, # Optional. ETag for concurrency control.
-  }, # Optional. An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity.
-  entityGuids: [string], # Optional. The GUID of the entity.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetByGuidAsync(String,Boolean,Boolean,RequestContext)">
+    <member name="GetByGuidAsync(string,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2321,18 +1481,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.GetByGuidAsync("<guid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetByGuidAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-Response response = await client.GetByGuidAsync("<guid>", true, true);
+Response response = await client.GetByGuidAsync("<guid>", true, true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -2423,76 +1572,8 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").G
 Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasEntityWithExtInfo</c>:
-<code>{
-  entity: {
-    businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-    classifications: [
-      {
-        entityGuid: string, # Optional. The GUID of the entity.
-        entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        validityPeriods: [
-          {
-            endTime: string, # Optional. The end of the time boundary.
-            startTime: string, # Optional. The start of the time boundary.
-            timeZone: string, # Optional. The timezone of the time boundary.
-          }
-        ], # Optional. An array of time boundaries indicating validity periods.
-        source: string, # Optional. indicate the source who create the classification detail
-        sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-        attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-        typeName: string, # Optional. The name of the type.
-        lastModifiedTS: string, # Optional. ETag for concurrency control.
-      }
-    ], # Optional. An array of classifications.
-    createTime: number, # Optional. The created time of the record.
-    createdBy: string, # Optional. The user who created the record.
-    customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-    guid: string, # Optional. The GUID of the entity.
-    homeId: string, # Optional. The home ID of the entity.
-    isIncomplete: boolean, # Optional. Whether it is a shell entity
-    labels: [string], # Optional. labels
-    meanings: [
-      {
-        confidence: number, # Optional. The confidence of the term assignment.
-        createdBy: string, # Optional. The user who created the record.
-        description: string, # Optional. The description of the term assignment.
-        displayText: string, # Optional. The display text.
-        expression: string, # Optional. The expression of the term assignment.
-        relationGuid: string, # Optional. The GUID of the relationship.
-        source: string, # Optional. The source of the term.
-        status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-        steward: string, # Optional. The steward of the term.
-        termGuid: string, # Optional. The GUID of the term.
-      }
-    ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-    provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-    proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-    relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-    status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-    updateTime: number, # Optional. The update time of the record.
-    updatedBy: string, # Optional. The user who updated the record.
-    version: number, # Optional. The version of the entity.
-    source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-    contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-    typeName: string, # Optional. The name of the type.
-    lastModifiedTS: string, # Optional. ETag for concurrency control.
-  }, # Optional. An instance of an entity - like hive_table, hive_database.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetByGuid(String,Boolean,Boolean,RequestContext)">
+    <member name="GetByGuid(string,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -2500,18 +1581,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.GetByGuid("<guid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetByGuid with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-Response response = client.GetByGuid("<guid>", true, true);
+Response response = client.GetByGuid("<guid>", true, true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -2602,76 +1672,8 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").G
 Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasEntityWithExtInfo</c>:
-<code>{
-  entity: {
-    businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-    classifications: [
-      {
-        entityGuid: string, # Optional. The GUID of the entity.
-        entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        validityPeriods: [
-          {
-            endTime: string, # Optional. The end of the time boundary.
-            startTime: string, # Optional. The start of the time boundary.
-            timeZone: string, # Optional. The timezone of the time boundary.
-          }
-        ], # Optional. An array of time boundaries indicating validity periods.
-        source: string, # Optional. indicate the source who create the classification detail
-        sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-        attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-        typeName: string, # Optional. The name of the type.
-        lastModifiedTS: string, # Optional. ETag for concurrency control.
-      }
-    ], # Optional. An array of classifications.
-    createTime: number, # Optional. The created time of the record.
-    createdBy: string, # Optional. The user who created the record.
-    customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-    guid: string, # Optional. The GUID of the entity.
-    homeId: string, # Optional. The home ID of the entity.
-    isIncomplete: boolean, # Optional. Whether it is a shell entity
-    labels: [string], # Optional. labels
-    meanings: [
-      {
-        confidence: number, # Optional. The confidence of the term assignment.
-        createdBy: string, # Optional. The user who created the record.
-        description: string, # Optional. The description of the term assignment.
-        displayText: string, # Optional. The display text.
-        expression: string, # Optional. The expression of the term assignment.
-        relationGuid: string, # Optional. The GUID of the relationship.
-        source: string, # Optional. The source of the term.
-        status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-        steward: string, # Optional. The steward of the term.
-        termGuid: string, # Optional. The GUID of the term.
-      }
-    ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-    provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-    proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-    relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-    status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-    updateTime: number, # Optional. The update time of the record.
-    updatedBy: string, # Optional. The user who updated the record.
-    version: number, # Optional. The version of the entity.
-    source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-    contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-    typeName: string, # Optional. The name of the type.
-    lastModifiedTS: string, # Optional. ETag for concurrency control.
-  }, # Optional. An instance of an entity - like hive_table, hive_database.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="PartialUpdateEntityAttributeByGuidAsync(String,String,RequestContent,RequestContext)">
+    <member name="PartialUpdateEntityAttributeByGuidAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateEntityAttributeByGuidAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2749,68 +1751,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="PartialUpdateEntityAttributeByGuid(String,String,RequestContent,RequestContext)">
+    <member name="PartialUpdateEntityAttributeByGuid(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateEntityAttributeByGuid with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2888,68 +1830,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteByGuidAsync(String,RequestContext)">
+    <member name="DeleteByGuidAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2957,7 +1839,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.DeleteByGuidAsync("<guid>");
+Response response = await client.DeleteByGuidAsync("<guid>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -3025,68 +1907,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteByGuid(String,RequestContext)">
+    <member name="DeleteByGuid(string,RequestContext)">
 <example>
 This sample shows how to call DeleteByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -3094,7 +1916,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.DeleteByGuid("<guid>");
+Response response = client.DeleteByGuid("<guid>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -3162,68 +1984,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetClassificationAsync(String,String,RequestContext)">
+    <member name="GetClassificationAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetClassificationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3231,7 +1993,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.GetClassificationAsync("<guid>", "<classificationName>");
+Response response = await client.GetClassificationAsync("<guid>", "<classificationName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entityGuid").ToString());
@@ -3247,34 +2009,8 @@ Console.WriteLine(result.GetProperty("typeName").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasClassification</c>:
-<code>{
-  entityGuid: string, # Optional. The GUID of the entity.
-  entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-  validityPeriods: [
-    {
-      endTime: string, # Optional. The end of the time boundary.
-      startTime: string, # Optional. The start of the time boundary.
-      timeZone: string, # Optional. The timezone of the time boundary.
-    }
-  ], # Optional. An array of time boundaries indicating validity periods.
-  source: string, # Optional. indicate the source who create the classification detail
-  sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetClassification(String,String,RequestContext)">
+    <member name="GetClassification(string,string,RequestContext)">
 <example>
 This sample shows how to call GetClassification with required parameters and parse the result.
 <code><![CDATA[
@@ -3282,7 +2018,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.GetClassification("<guid>", "<classificationName>");
+Response response = client.GetClassification("<guid>", "<classificationName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entityGuid").ToString());
@@ -3298,34 +2034,8 @@ Console.WriteLine(result.GetProperty("typeName").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasClassification</c>:
-<code>{
-  entityGuid: string, # Optional. The GUID of the entity.
-  entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-  validityPeriods: [
-    {
-      endTime: string, # Optional. The end of the time boundary.
-      startTime: string, # Optional. The start of the time boundary.
-      timeZone: string, # Optional. The timezone of the time boundary.
-    }
-  ], # Optional. An array of time boundaries indicating validity periods.
-  source: string, # Optional. indicate the source who create the classification detail
-  sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteClassificationAsync(String,String,RequestContext)">
+    <member name="DeleteClassificationAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteClassificationAsync with required parameters.
 <code><![CDATA[
@@ -3338,7 +2048,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteClassification(String,String,RequestContext)">
+    <member name="DeleteClassification(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteClassification with required parameters.
 <code><![CDATA[
@@ -3351,7 +2061,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetClassificationsAsync(String,RequestContext)">
+    <member name="GetClassificationsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetClassificationsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3359,7 +2069,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.GetClassificationsAsync("<guid>");
+Response response = await client.GetClassificationsAsync("<guid>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("list")[0].ToString());
@@ -3370,25 +2080,8 @@ Console.WriteLine(result.GetProperty("startIndex").ToString());
 Console.WriteLine(result.GetProperty("totalCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasClassifications</c>:
-<code>{
-  list: [any], # Optional. An array of objects.
-  pageSize: number, # Optional. The size of the page.
-  sortBy: string, # Optional. The sorted by field.
-  sortType: &quot;NONE&quot; | &quot;ASC&quot; | &quot;DESC&quot;, # Optional. to specify whether the result should be sorted? If yes, whether asc or desc.
-  startIndex: number, # Optional. The start index of the page.
-  totalCount: number, # Optional. The total count of items.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetClassifications(String,RequestContext)">
+    <member name="GetClassifications(string,RequestContext)">
 <example>
 This sample shows how to call GetClassifications with required parameters and parse the result.
 <code><![CDATA[
@@ -3396,7 +2089,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.GetClassifications("<guid>");
+Response response = client.GetClassifications("<guid>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("list")[0].ToString());
@@ -3407,25 +2100,8 @@ Console.WriteLine(result.GetProperty("startIndex").ToString());
 Console.WriteLine(result.GetProperty("totalCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasClassifications</c>:
-<code>{
-  list: [any], # Optional. An array of objects.
-  pageSize: number, # Optional. The size of the page.
-  sortBy: string, # Optional. The sorted by field.
-  sortType: &quot;NONE&quot; | &quot;ASC&quot; | &quot;DESC&quot;, # Optional. to specify whether the result should be sorted? If yes, whether asc or desc.
-  startIndex: number, # Optional. The start index of the page.
-  totalCount: number, # Optional. The total count of items.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="AddClassificationsAsync(String,RequestContent,RequestContext)">
+    <member name="AddClassificationsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddClassificationsAsync with required parameters and request content.
 <code><![CDATA[
@@ -3461,34 +2137,8 @@ Response response = await client.AddClassificationsAsync("<guid>", RequestConten
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasClassification</c>:
-<code>{
-  entityGuid: string, # Optional. The GUID of the entity.
-  entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-  validityPeriods: [
-    {
-      endTime: string, # Optional. The end of the time boundary.
-      startTime: string, # Optional. The start of the time boundary.
-      timeZone: string, # Optional. The timezone of the time boundary.
-    }
-  ], # Optional. An array of time boundaries indicating validity periods.
-  source: string, # Optional. indicate the source who create the classification detail
-  sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="AddClassifications(String,RequestContent,RequestContext)">
+    <member name="AddClassifications(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddClassifications with required parameters and request content.
 <code><![CDATA[
@@ -3524,34 +2174,8 @@ Response response = client.AddClassifications("<guid>", RequestContent.Create(da
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasClassification</c>:
-<code>{
-  entityGuid: string, # Optional. The GUID of the entity.
-  entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-  validityPeriods: [
-    {
-      endTime: string, # Optional. The end of the time boundary.
-      startTime: string, # Optional. The start of the time boundary.
-      timeZone: string, # Optional. The timezone of the time boundary.
-    }
-  ], # Optional. An array of time boundaries indicating validity periods.
-  source: string, # Optional. indicate the source who create the classification detail
-  sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="UpdateClassificationsAsync(String,RequestContent,RequestContext)">
+    <member name="UpdateClassificationsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateClassificationsAsync with required parameters and request content.
 <code><![CDATA[
@@ -3587,34 +2211,8 @@ Response response = await client.UpdateClassificationsAsync("<guid>", RequestCon
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasClassification</c>:
-<code>{
-  entityGuid: string, # Optional. The GUID of the entity.
-  entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-  validityPeriods: [
-    {
-      endTime: string, # Optional. The end of the time boundary.
-      startTime: string, # Optional. The start of the time boundary.
-      timeZone: string, # Optional. The timezone of the time boundary.
-    }
-  ], # Optional. An array of time boundaries indicating validity periods.
-  source: string, # Optional. indicate the source who create the classification detail
-  sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="UpdateClassifications(String,RequestContent,RequestContext)">
+    <member name="UpdateClassifications(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateClassifications with required parameters and request content.
 <code><![CDATA[
@@ -3650,34 +2248,8 @@ Response response = client.UpdateClassifications("<guid>", RequestContent.Create
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasClassification</c>:
-<code>{
-  entityGuid: string, # Optional. The GUID of the entity.
-  entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-  validityPeriods: [
-    {
-      endTime: string, # Optional. The end of the time boundary.
-      startTime: string, # Optional. The start of the time boundary.
-      timeZone: string, # Optional. The timezone of the time boundary.
-    }
-  ], # Optional. An array of time boundaries indicating validity periods.
-  source: string, # Optional. indicate the source who create the classification detail
-  sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetByUniqueAttributesAsync(String,Boolean,Boolean,String,RequestContext)">
+    <member name="GetByUniqueAttributesAsync(string,bool?,bool?,string,RequestContext)">
 <example>
 This sample shows how to call GetByUniqueAttributesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3685,18 +2257,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.GetByUniqueAttributesAsync("<typeName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetByUniqueAttributesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-Response response = await client.GetByUniqueAttributesAsync("<typeName>", true, true, "<attrQualifiedName>");
+Response response = await client.GetByUniqueAttributesAsync("<typeName>", true, true, "<attrQualifiedName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -3787,76 +2348,8 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").G
 Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasEntityWithExtInfo</c>:
-<code>{
-  entity: {
-    businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-    classifications: [
-      {
-        entityGuid: string, # Optional. The GUID of the entity.
-        entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        validityPeriods: [
-          {
-            endTime: string, # Optional. The end of the time boundary.
-            startTime: string, # Optional. The start of the time boundary.
-            timeZone: string, # Optional. The timezone of the time boundary.
-          }
-        ], # Optional. An array of time boundaries indicating validity periods.
-        source: string, # Optional. indicate the source who create the classification detail
-        sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-        attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-        typeName: string, # Optional. The name of the type.
-        lastModifiedTS: string, # Optional. ETag for concurrency control.
-      }
-    ], # Optional. An array of classifications.
-    createTime: number, # Optional. The created time of the record.
-    createdBy: string, # Optional. The user who created the record.
-    customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-    guid: string, # Optional. The GUID of the entity.
-    homeId: string, # Optional. The home ID of the entity.
-    isIncomplete: boolean, # Optional. Whether it is a shell entity
-    labels: [string], # Optional. labels
-    meanings: [
-      {
-        confidence: number, # Optional. The confidence of the term assignment.
-        createdBy: string, # Optional. The user who created the record.
-        description: string, # Optional. The description of the term assignment.
-        displayText: string, # Optional. The display text.
-        expression: string, # Optional. The expression of the term assignment.
-        relationGuid: string, # Optional. The GUID of the relationship.
-        source: string, # Optional. The source of the term.
-        status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-        steward: string, # Optional. The steward of the term.
-        termGuid: string, # Optional. The GUID of the term.
-      }
-    ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-    provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-    proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-    relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-    status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-    updateTime: number, # Optional. The update time of the record.
-    updatedBy: string, # Optional. The user who updated the record.
-    version: number, # Optional. The version of the entity.
-    source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-    contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-    typeName: string, # Optional. The name of the type.
-    lastModifiedTS: string, # Optional. ETag for concurrency control.
-  }, # Optional. An instance of an entity - like hive_table, hive_database.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetByUniqueAttributes(String,Boolean,Boolean,String,RequestContext)">
+    <member name="GetByUniqueAttributes(string,bool?,bool?,string,RequestContext)">
 <example>
 This sample shows how to call GetByUniqueAttributes with required parameters and parse the result.
 <code><![CDATA[
@@ -3864,18 +2357,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.GetByUniqueAttributes("<typeName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetByUniqueAttributes with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-Response response = client.GetByUniqueAttributes("<typeName>", true, true, "<attrQualifiedName>");
+Response response = client.GetByUniqueAttributes("<typeName>", true, true, "<attrQualifiedName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -3966,76 +2448,8 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").G
 Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasEntityWithExtInfo</c>:
-<code>{
-  entity: {
-    businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-    classifications: [
-      {
-        entityGuid: string, # Optional. The GUID of the entity.
-        entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        validityPeriods: [
-          {
-            endTime: string, # Optional. The end of the time boundary.
-            startTime: string, # Optional. The start of the time boundary.
-            timeZone: string, # Optional. The timezone of the time boundary.
-          }
-        ], # Optional. An array of time boundaries indicating validity periods.
-        source: string, # Optional. indicate the source who create the classification detail
-        sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-        attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-        typeName: string, # Optional. The name of the type.
-        lastModifiedTS: string, # Optional. ETag for concurrency control.
-      }
-    ], # Optional. An array of classifications.
-    createTime: number, # Optional. The created time of the record.
-    createdBy: string, # Optional. The user who created the record.
-    customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-    guid: string, # Optional. The GUID of the entity.
-    homeId: string, # Optional. The home ID of the entity.
-    isIncomplete: boolean, # Optional. Whether it is a shell entity
-    labels: [string], # Optional. labels
-    meanings: [
-      {
-        confidence: number, # Optional. The confidence of the term assignment.
-        createdBy: string, # Optional. The user who created the record.
-        description: string, # Optional. The description of the term assignment.
-        displayText: string, # Optional. The display text.
-        expression: string, # Optional. The expression of the term assignment.
-        relationGuid: string, # Optional. The GUID of the relationship.
-        source: string, # Optional. The source of the term.
-        status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-        steward: string, # Optional. The steward of the term.
-        termGuid: string, # Optional. The GUID of the term.
-      }
-    ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-    provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-    proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-    relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-    status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-    updateTime: number, # Optional. The update time of the record.
-    updatedBy: string, # Optional. The user who updated the record.
-    version: number, # Optional. The version of the entity.
-    source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-    contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-    typeName: string, # Optional. The name of the type.
-    lastModifiedTS: string, # Optional. ETag for concurrency control.
-  }, # Optional. An instance of an entity - like hive_table, hive_database.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="PartialUpdateEntityByUniqueAttributesAsync(String,RequestContent,String,RequestContext)">
+    <member name="PartialUpdateEntityByUniqueAttributesAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -4287,132 +2701,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AtlasEntityWithExtInfo</c>:
-<code>{
-  entity: {
-    businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-    classifications: [
-      {
-        entityGuid: string, # Optional. The GUID of the entity.
-        entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        validityPeriods: [
-          {
-            endTime: string, # Optional. The end of the time boundary.
-            startTime: string, # Optional. The start of the time boundary.
-            timeZone: string, # Optional. The timezone of the time boundary.
-          }
-        ], # Optional. An array of time boundaries indicating validity periods.
-        source: string, # Optional. indicate the source who create the classification detail
-        sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-        attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-        typeName: string, # Optional. The name of the type.
-        lastModifiedTS: string, # Optional. ETag for concurrency control.
-      }
-    ], # Optional. An array of classifications.
-    createTime: number, # Optional. The created time of the record.
-    createdBy: string, # Optional. The user who created the record.
-    customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-    guid: string, # Optional. The GUID of the entity.
-    homeId: string, # Optional. The home ID of the entity.
-    isIncomplete: boolean, # Optional. Whether it is a shell entity
-    labels: [string], # Optional. labels
-    meanings: [
-      {
-        confidence: number, # Optional. The confidence of the term assignment.
-        createdBy: string, # Optional. The user who created the record.
-        description: string, # Optional. The description of the term assignment.
-        displayText: string, # Optional. The display text.
-        expression: string, # Optional. The expression of the term assignment.
-        relationGuid: string, # Optional. The GUID of the relationship.
-        source: string, # Optional. The source of the term.
-        status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-        steward: string, # Optional. The steward of the term.
-        termGuid: string, # Optional. The GUID of the term.
-      }
-    ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-    provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-    proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-    relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-    status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-    updateTime: number, # Optional. The update time of the record.
-    updatedBy: string, # Optional. The user who updated the record.
-    version: number, # Optional. The version of the entity.
-    source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-    contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-    typeName: string, # Optional. The name of the type.
-    lastModifiedTS: string, # Optional. ETag for concurrency control.
-  }, # Optional. An instance of an entity - like hive_table, hive_database.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="PartialUpdateEntityByUniqueAttributes(String,RequestContent,String,RequestContext)">
+    <member name="PartialUpdateEntityByUniqueAttributes(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateEntityByUniqueAttributes with required parameters and parse the result.
 <code><![CDATA[
@@ -4664,132 +2954,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AtlasEntityWithExtInfo</c>:
-<code>{
-  entity: {
-    businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-    classifications: [
-      {
-        entityGuid: string, # Optional. The GUID of the entity.
-        entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        validityPeriods: [
-          {
-            endTime: string, # Optional. The end of the time boundary.
-            startTime: string, # Optional. The start of the time boundary.
-            timeZone: string, # Optional. The timezone of the time boundary.
-          }
-        ], # Optional. An array of time boundaries indicating validity periods.
-        source: string, # Optional. indicate the source who create the classification detail
-        sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-        attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-        typeName: string, # Optional. The name of the type.
-        lastModifiedTS: string, # Optional. ETag for concurrency control.
-      }
-    ], # Optional. An array of classifications.
-    createTime: number, # Optional. The created time of the record.
-    createdBy: string, # Optional. The user who created the record.
-    customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-    guid: string, # Optional. The GUID of the entity.
-    homeId: string, # Optional. The home ID of the entity.
-    isIncomplete: boolean, # Optional. Whether it is a shell entity
-    labels: [string], # Optional. labels
-    meanings: [
-      {
-        confidence: number, # Optional. The confidence of the term assignment.
-        createdBy: string, # Optional. The user who created the record.
-        description: string, # Optional. The description of the term assignment.
-        displayText: string, # Optional. The display text.
-        expression: string, # Optional. The expression of the term assignment.
-        relationGuid: string, # Optional. The GUID of the relationship.
-        source: string, # Optional. The source of the term.
-        status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-        steward: string, # Optional. The steward of the term.
-        termGuid: string, # Optional. The GUID of the term.
-      }
-    ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-    provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-    proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-    relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-    status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-    updateTime: number, # Optional. The update time of the record.
-    updatedBy: string, # Optional. The user who updated the record.
-    version: number, # Optional. The version of the entity.
-    source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-    contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-    typeName: string, # Optional. The name of the type.
-    lastModifiedTS: string, # Optional. ETag for concurrency control.
-  }, # Optional. An instance of an entity - like hive_table, hive_database.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteByUniqueAttributeAsync(String,String,RequestContext)">
+    <member name="DeleteByUniqueAttributeAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteByUniqueAttributeAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -4797,18 +2963,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.DeleteByUniqueAttributeAsync("<typeName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call DeleteByUniqueAttributeAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attrQualifiedName>");
+Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attrQualifiedName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -4876,68 +3031,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteByUniqueAttribute(String,String,RequestContext)">
+    <member name="DeleteByUniqueAttribute(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteByUniqueAttribute with required parameters and parse the result.
 <code><![CDATA[
@@ -4945,18 +3040,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.DeleteByUniqueAttribute("<typeName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call DeleteByUniqueAttribute with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-Response response = client.DeleteByUniqueAttribute("<typeName>", "<attrQualifiedName>");
+Response response = client.DeleteByUniqueAttribute("<typeName>", "<attrQualifiedName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -5024,68 +3108,8 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("t
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>EntityMutationResponse</c>:
-<code>{
-  guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
-  mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
-  partialUpdatedEntities: [
-    {
-      classificationNames: [string], # Optional. An array of classification names.
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      displayText: string, # Optional. The display text.
-      guid: string, # Optional. The GUID of the record.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meaningNames: [string], # Optional. An array of meanings.
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entity headers that partially updated.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteClassificationByUniqueAttributeAsync(String,String,String,RequestContext)">
+    <member name="DeleteClassificationByUniqueAttributeAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteClassificationByUniqueAttributeAsync with required parameters.
 <code><![CDATA[
@@ -5107,7 +3131,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteClassificationByUniqueAttribute(String,String,String,RequestContext)">
+    <member name="DeleteClassificationByUniqueAttribute(string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteClassificationByUniqueAttribute with required parameters.
 <code><![CDATA[
@@ -5129,7 +3153,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddClassificationsByUniqueAttributeAsync(String,RequestContent,String,RequestContext)">
+    <member name="AddClassificationsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call AddClassificationsByUniqueAttributeAsync with required parameters and request content.
 <code><![CDATA[
@@ -5178,34 +3202,8 @@ Response response = await client.AddClassificationsByUniqueAttributeAsync("<type
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasClassification</c>:
-<code>{
-  entityGuid: string, # Optional. The GUID of the entity.
-  entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-  validityPeriods: [
-    {
-      endTime: string, # Optional. The end of the time boundary.
-      startTime: string, # Optional. The start of the time boundary.
-      timeZone: string, # Optional. The timezone of the time boundary.
-    }
-  ], # Optional. An array of time boundaries indicating validity periods.
-  source: string, # Optional. indicate the source who create the classification detail
-  sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="AddClassificationsByUniqueAttribute(String,RequestContent,String,RequestContext)">
+    <member name="AddClassificationsByUniqueAttribute(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call AddClassificationsByUniqueAttribute with required parameters and request content.
 <code><![CDATA[
@@ -5254,34 +3252,8 @@ Response response = client.AddClassificationsByUniqueAttribute("<typeName>", Req
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasClassification</c>:
-<code>{
-  entityGuid: string, # Optional. The GUID of the entity.
-  entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-  validityPeriods: [
-    {
-      endTime: string, # Optional. The end of the time boundary.
-      startTime: string, # Optional. The start of the time boundary.
-      timeZone: string, # Optional. The timezone of the time boundary.
-    }
-  ], # Optional. An array of time boundaries indicating validity periods.
-  source: string, # Optional. indicate the source who create the classification detail
-  sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="UpdateClassificationsByUniqueAttributeAsync(String,RequestContent,String,RequestContext)">
+    <member name="UpdateClassificationsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call UpdateClassificationsByUniqueAttributeAsync with required parameters and request content.
 <code><![CDATA[
@@ -5330,34 +3302,8 @@ Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<t
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasClassification</c>:
-<code>{
-  entityGuid: string, # Optional. The GUID of the entity.
-  entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-  validityPeriods: [
-    {
-      endTime: string, # Optional. The end of the time boundary.
-      startTime: string, # Optional. The start of the time boundary.
-      timeZone: string, # Optional. The timezone of the time boundary.
-    }
-  ], # Optional. An array of time boundaries indicating validity periods.
-  source: string, # Optional. indicate the source who create the classification detail
-  sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="UpdateClassificationsByUniqueAttribute(String,RequestContent,String,RequestContext)">
+    <member name="UpdateClassificationsByUniqueAttribute(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call UpdateClassificationsByUniqueAttribute with required parameters and request content.
 <code><![CDATA[
@@ -5406,32 +3352,6 @@ Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", 
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasClassification</c>:
-<code>{
-  entityGuid: string, # Optional. The GUID of the entity.
-  entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-  validityPeriods: [
-    {
-      endTime: string, # Optional. The end of the time boundary.
-      startTime: string, # Optional. The start of the time boundary.
-      timeZone: string, # Optional. The timezone of the time boundary.
-    }
-  ], # Optional. An array of time boundaries indicating validity periods.
-  source: string, # Optional. indicate the source who create the classification detail
-  sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
     <member name="SetClassificationsAsync(RequestContent,RequestContext)">
 <example>
@@ -5522,18 +3442,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasEntityHeaders</c>:
-<code>{
-  guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The description of the guid header map,
-}
-</code>
-
-</remarks>
     </member>
     <member name="SetClassifications(RequestContent,RequestContext)">
 <example>
@@ -5624,20 +3532,8 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasEntityHeaders</c>:
-<code>{
-  guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The description of the guid header map,
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEntitiesByUniqueAttributesAsync(String,Boolean,Boolean,String,RequestContext)">
+    <member name="GetEntitiesByUniqueAttributesAsync(string,bool?,bool?,string,RequestContext)">
 <example>
 This sample shows how to call GetEntitiesByUniqueAttributesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -5645,18 +3541,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetEntitiesByUniqueAttributesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", true, true, "<attrNQualifiedName>");
+Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", true, true, "<attrNQualifiedName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -5747,78 +3632,8 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").G
 Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasEntitiesWithExtInfo</c>:
-<code>{
-  entities: [
-    {
-      businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      createTime: number, # Optional. The created time of the record.
-      createdBy: string, # Optional. The user who created the record.
-      customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-      guid: string, # Optional. The GUID of the entity.
-      homeId: string, # Optional. The home ID of the entity.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-      provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-      proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-      relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      updateTime: number, # Optional. The update time of the record.
-      updatedBy: string, # Optional. The user who updated the record.
-      version: number, # Optional. The version of the entity.
-      source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-      contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entities.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEntitiesByUniqueAttributes(String,Boolean,Boolean,String,RequestContext)">
+    <member name="GetEntitiesByUniqueAttributes(string,bool?,bool?,string,RequestContext)">
 <example>
 This sample shows how to call GetEntitiesByUniqueAttributes with required parameters and parse the result.
 <code><![CDATA[
@@ -5826,18 +3641,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.GetEntitiesByUniqueAttributes("<typeName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetEntitiesByUniqueAttributes with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-Response response = client.GetEntitiesByUniqueAttributes("<typeName>", true, true, "<attrNQualifiedName>");
+Response response = client.GetEntitiesByUniqueAttributes("<typeName>", true, true, "<attrNQualifiedName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -5928,78 +3732,8 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").G
 Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasEntitiesWithExtInfo</c>:
-<code>{
-  entities: [
-    {
-      businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
-      classifications: [
-        {
-          entityGuid: string, # Optional. The GUID of the entity.
-          entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-          removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-          validityPeriods: [
-            {
-              endTime: string, # Optional. The end of the time boundary.
-              startTime: string, # Optional. The start of the time boundary.
-              timeZone: string, # Optional. The timezone of the time boundary.
-            }
-          ], # Optional. An array of time boundaries indicating validity periods.
-          source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-          typeName: string, # Optional. The name of the type.
-          lastModifiedTS: string, # Optional. ETag for concurrency control.
-        }
-      ], # Optional. An array of classifications.
-      createTime: number, # Optional. The created time of the record.
-      createdBy: string, # Optional. The user who created the record.
-      customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
-      guid: string, # Optional. The GUID of the entity.
-      homeId: string, # Optional. The home ID of the entity.
-      isIncomplete: boolean, # Optional. Whether it is a shell entity
-      labels: [string], # Optional. labels
-      meanings: [
-        {
-          confidence: number, # Optional. The confidence of the term assignment.
-          createdBy: string, # Optional. The user who created the record.
-          description: string, # Optional. The description of the term assignment.
-          displayText: string, # Optional. The display text.
-          expression: string, # Optional. The expression of the term assignment.
-          relationGuid: string, # Optional. The GUID of the relationship.
-          source: string, # Optional. The source of the term.
-          status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-          steward: string, # Optional. The steward of the term.
-          termGuid: string, # Optional. The GUID of the term.
-        }
-      ], # Optional. An array of term assignment headers indicating the meanings of the entity.
-      provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
-      proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-      relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
-      status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      updateTime: number, # Optional. The update time of the record.
-      updatedBy: string, # Optional. The user who updated the record.
-      version: number, # Optional. The version of the entity.
-      source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-      contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of entities.
-  referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetHeaderAsync(String,RequestContext)">
+    <member name="GetHeaderAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetHeaderAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -6007,7 +3741,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.GetHeaderAsync("<guid>");
+Response response = await client.GetHeaderAsync("<guid>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("classificationNames")[0].ToString());
@@ -6043,62 +3777,8 @@ Console.WriteLine(result.GetProperty("typeName").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasEntityHeader</c>:
-<code>{
-  classificationNames: [string], # Optional. An array of classification names.
-  classifications: [
-    {
-      entityGuid: string, # Optional. The GUID of the entity.
-      entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-      validityPeriods: [
-        {
-          endTime: string, # Optional. The end of the time boundary.
-          startTime: string, # Optional. The start of the time boundary.
-          timeZone: string, # Optional. The timezone of the time boundary.
-        }
-      ], # Optional. An array of time boundaries indicating validity periods.
-      source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of classifications.
-  displayText: string, # Optional. The display text.
-  guid: string, # Optional. The GUID of the record.
-  isIncomplete: boolean, # Optional. Whether it is a shell entity
-  labels: [string], # Optional. labels
-  meaningNames: [string], # Optional. An array of meanings.
-  meanings: [
-    {
-      confidence: number, # Optional. The confidence of the term assignment.
-      createdBy: string, # Optional. The user who created the record.
-      description: string, # Optional. The description of the term assignment.
-      displayText: string, # Optional. The display text.
-      expression: string, # Optional. The expression of the term assignment.
-      relationGuid: string, # Optional. The GUID of the relationship.
-      source: string, # Optional. The source of the term.
-      status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-      steward: string, # Optional. The steward of the term.
-      termGuid: string, # Optional. The GUID of the term.
-    }
-  ], # Optional. An array of term assignment headers.
-  status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetHeader(String,RequestContext)">
+    <member name="GetHeader(string,RequestContext)">
 <example>
 This sample shows how to call GetHeader with required parameters and parse the result.
 <code><![CDATA[
@@ -6106,7 +3786,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.GetHeader("<guid>");
+Response response = client.GetHeader("<guid>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("classificationNames")[0].ToString());
@@ -6142,62 +3822,8 @@ Console.WriteLine(result.GetProperty("typeName").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasEntityHeader</c>:
-<code>{
-  classificationNames: [string], # Optional. An array of classification names.
-  classifications: [
-    {
-      entityGuid: string, # Optional. The GUID of the entity.
-      entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-      validityPeriods: [
-        {
-          endTime: string, # Optional. The end of the time boundary.
-          startTime: string, # Optional. The start of the time boundary.
-          timeZone: string, # Optional. The timezone of the time boundary.
-        }
-      ], # Optional. An array of time boundaries indicating validity periods.
-      source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-      typeName: string, # Optional. The name of the type.
-      lastModifiedTS: string, # Optional. ETag for concurrency control.
-    }
-  ], # Optional. An array of classifications.
-  displayText: string, # Optional. The display text.
-  guid: string, # Optional. The GUID of the record.
-  isIncomplete: boolean, # Optional. Whether it is a shell entity
-  labels: [string], # Optional. labels
-  meaningNames: [string], # Optional. An array of meanings.
-  meanings: [
-    {
-      confidence: number, # Optional. The confidence of the term assignment.
-      createdBy: string, # Optional. The user who created the record.
-      description: string, # Optional. The description of the term assignment.
-      displayText: string, # Optional. The display text.
-      expression: string, # Optional. The expression of the term assignment.
-      relationGuid: string, # Optional. The GUID of the relationship.
-      source: string, # Optional. The source of the term.
-      status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
-      steward: string, # Optional. The steward of the term.
-      termGuid: string, # Optional. The GUID of the term.
-    }
-  ], # Optional. An array of term assignment headers.
-  status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
-  typeName: string, # Optional. The name of the type.
-  lastModifiedTS: string, # Optional. ETag for concurrency control.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteBusinessMetadataAsync(String,RequestContent,RequestContext)">
+    <member name="DeleteBusinessMetadataAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteBusinessMetadataAsync with required parameters and request content.
 <code><![CDATA[
@@ -6214,7 +3840,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteBusinessMetadata(String,RequestContent,RequestContext)">
+    <member name="DeleteBusinessMetadata(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteBusinessMetadata with required parameters and request content.
 <code><![CDATA[
@@ -6231,7 +3857,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddOrUpdateBusinessMetadataAsync(String,RequestContent,Boolean,RequestContext)">
+    <member name="AddOrUpdateBusinessMetadataAsync(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAsync with required parameters and request content.
 <code><![CDATA[
@@ -6261,7 +3887,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddOrUpdateBusinessMetadata(String,RequestContent,Boolean,RequestContext)">
+    <member name="AddOrUpdateBusinessMetadata(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call AddOrUpdateBusinessMetadata with required parameters and request content.
 <code><![CDATA[
@@ -6291,7 +3917,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteBusinessMetadataAttributesAsync(String,String,RequestContent,RequestContext)">
+    <member name="DeleteBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteBusinessMetadataAttributesAsync with required parameters and request content.
 <code><![CDATA[
@@ -6308,7 +3934,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteBusinessMetadataAttributes(String,String,RequestContent,RequestContext)">
+    <member name="DeleteBusinessMetadataAttributes(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteBusinessMetadataAttributes with required parameters and request content.
 <code><![CDATA[
@@ -6325,7 +3951,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddOrUpdateBusinessMetadataAttributesAsync(String,String,RequestContent,RequestContext)">
+    <member name="AddOrUpdateBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributesAsync with required parameters and request content.
 <code><![CDATA[
@@ -6342,7 +3968,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddOrUpdateBusinessMetadataAttributes(String,String,RequestContent,RequestContext)">
+    <member name="AddOrUpdateBusinessMetadataAttributes(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributes with required parameters and request content.
 <code><![CDATA[
@@ -6361,16 +3987,16 @@ Console.WriteLine(response.Status);
     </member>
     <member name="GetSampleBusinessMetadataTemplateAsync(RequestContext)">
 <example>
-This sample shows how to call GetSampleBusinessMetadataTemplateAsync and parse the result.
+This sample shows how to call GetSampleBusinessMetadataTemplateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = await client.GetSampleBusinessMetadataTemplateAsync();
+Response response = await client.GetSampleBusinessMetadataTemplateAsync(new RequestContext());
 if (response.ContentStream != null)
 {
-    using(Stream outFileStream = File.OpenWrite("<filePath>")
+    using(Stream outFileStream = File.OpenWrite("<filePath>"))
     {
         response.ContentStream.CopyTo(outFileStream);
     }
@@ -6380,16 +4006,16 @@ if (response.ContentStream != null)
     </member>
     <member name="GetSampleBusinessMetadataTemplate(RequestContext)">
 <example>
-This sample shows how to call GetSampleBusinessMetadataTemplate and parse the result.
+This sample shows how to call GetSampleBusinessMetadataTemplate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-Response response = client.GetSampleBusinessMetadataTemplate();
+Response response = client.GetSampleBusinessMetadataTemplate(new RequestContext());
 if (response.ContentStream != null)
 {
-    using(Stream outFileStream = File.OpenWrite("<filePath>")
+    using(Stream outFileStream = File.OpenWrite("<filePath>"))
     {
         response.ContentStream.CopyTo(outFileStream);
     }
@@ -6420,26 +4046,6 @@ Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("pa
 Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>BulkImportResponse</c>:
-<code>{
-  failedImportInfoList: [
-    {
-      childObjectName: string, # Optional. childObjectName
-      importStatus: &quot;SUCCESS&quot; | &quot;FAILED&quot;, # Optional. importStatus
-      parentObjectName: string, # Optional. parentObjectName
-      remarks: string, # Optional. remarks
-    }
-  ], # Optional. failed importInfoList
-  successImportInfoList: [ImportInfo], # Optional. successful importInfoList
-}
-</code>
-
-</remarks>
     </member>
     <member name="ImportBusinessMetadata(RequestContent,RequestContext)">
 <example>
@@ -6464,28 +4070,8 @@ Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("pa
 Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>BulkImportResponse</c>:
-<code>{
-  failedImportInfoList: [
-    {
-      childObjectName: string, # Optional. childObjectName
-      importStatus: &quot;SUCCESS&quot; | &quot;FAILED&quot;, # Optional. importStatus
-      parentObjectName: string, # Optional. parentObjectName
-      remarks: string, # Optional. remarks
-    }
-  ], # Optional. failed importInfoList
-  successImportInfoList: [ImportInfo], # Optional. successful importInfoList
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteLabelsAsync(String,RequestContent,RequestContext)">
+    <member name="DeleteLabelsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteLabelsAsync with required parameters and request content.
 <code><![CDATA[
@@ -6502,7 +4088,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteLabels(String,RequestContent,RequestContext)">
+    <member name="DeleteLabels(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteLabels with required parameters and request content.
 <code><![CDATA[
@@ -6519,7 +4105,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SetLabelsAsync(String,RequestContent,RequestContext)">
+    <member name="SetLabelsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call SetLabelsAsync with required parameters and request content.
 <code><![CDATA[
@@ -6536,7 +4122,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SetLabels(String,RequestContent,RequestContext)">
+    <member name="SetLabels(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call SetLabels with required parameters and request content.
 <code><![CDATA[
@@ -6553,7 +4139,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddLabelAsync(String,RequestContent,RequestContext)">
+    <member name="AddLabelAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddLabelAsync with required parameters and request content.
 <code><![CDATA[
@@ -6570,7 +4156,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddLabel(String,RequestContent,RequestContext)">
+    <member name="AddLabel(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddLabel with required parameters and request content.
 <code><![CDATA[
@@ -6587,7 +4173,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteLabelsByUniqueAttributeAsync(String,RequestContent,String,RequestContext)">
+    <member name="DeleteLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call DeleteLabelsByUniqueAttributeAsync with required parameters and request content.
 <code><![CDATA[
@@ -6617,7 +4203,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteLabelsByUniqueAttribute(String,RequestContent,String,RequestContext)">
+    <member name="DeleteLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call DeleteLabelsByUniqueAttribute with required parameters and request content.
 <code><![CDATA[
@@ -6647,7 +4233,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SetLabelsByUniqueAttributeAsync(String,RequestContent,String,RequestContext)">
+    <member name="SetLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call SetLabelsByUniqueAttributeAsync with required parameters and request content.
 <code><![CDATA[
@@ -6677,7 +4263,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SetLabelsByUniqueAttribute(String,RequestContent,String,RequestContext)">
+    <member name="SetLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call SetLabelsByUniqueAttribute with required parameters and request content.
 <code><![CDATA[
@@ -6707,7 +4293,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddLabelsByUniqueAttributeAsync(String,RequestContent,String,RequestContext)">
+    <member name="AddLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call AddLabelsByUniqueAttributeAsync with required parameters and request content.
 <code><![CDATA[
@@ -6737,7 +4323,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddLabelsByUniqueAttribute(String,RequestContent,String,RequestContext)">
+    <member name="AddLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call AddLabelsByUniqueAttribute with required parameters and request content.
 <code><![CDATA[

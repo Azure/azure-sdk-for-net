@@ -2,17 +2,17 @@
 // Licensed under the MIT License.
 using System.Threading;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Event Argument for a change in the Transfer Status
     /// </summary>
-    public class TransferStatusEventArgs : StorageTransferEventArgs
+    public class TransferStatusEventArgs : DataTransferEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="Storage.DataMovement.StorageTransferStatus"/> of the job.
+        /// Gets the <see cref="Storage.DataMovement.DataTransferStatus"/> of the job.
         /// </summary>
-        public StorageTransferStatus StorageTransferStatus { get; }
+        public DataTransferStatus StorageTransferStatus { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransferStatusEventArgs"/>.
@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement.Models
         /// <param name="cancellationToken"></param>
         public TransferStatusEventArgs(
             string transferId,
-            StorageTransferStatus transferStatus,
+            DataTransferStatus transferStatus,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base (transferId, isRunningSynchronously, cancellationToken)

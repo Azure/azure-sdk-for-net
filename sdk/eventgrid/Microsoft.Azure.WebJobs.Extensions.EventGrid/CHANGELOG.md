@@ -1,6 +1,6 @@
 # Release History
 
-## 3.3.0-beta.1 (Unreleased)
+## 3.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 3.3.0 (2023-06-14)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Andrew Williamson  _([GitHub](https://github.com/andrewjw1995))_
+
+### Features Added
+
+- Added the ability to use Active Directory authentication when using the `EventGrid` output binding. _(A community contribution, courtesy of [andrewjw1995](https://github.com/andrewjw1995))_
 
 ## 3.2.1 (2022-09-08)
 

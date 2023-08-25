@@ -98,8 +98,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCase(true)]
         public void ECDsaDefaultsKeyOps(bool includePrivateParameters)
         {
-#if NET461
-            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net462.");
 #else
             using ECDsa ecdsa = ECDsa.Create();
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
@@ -118,8 +118,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetECDSaTestData))]
         public void SerializeECDsa(string oid, string friendlyName, bool includePrivateParameters)
         {
-#if NET461
-            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net462.");
 #else
             using ECDsa ecdsa = ECDsa.Create();
             try
@@ -148,8 +148,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void FromECDsaNoPrivateKey()
         {
-#if NET461
-            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net462.");
 #else
             using ECDsa ecdsa = ECDsa.Create();
             ECParameters ecParameters = ecdsa.ExportParameters(false);
@@ -162,8 +162,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void ToECDsaNoPrivateKey()
         {
-#if NET461
-            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net462.");
 #else
             JsonWebKey jwk;
             using (ECDsa ecdsa = ECDsa.Create())
@@ -181,8 +181,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetECDSaTestData))]
         public void ToECDsa(string oid, string friendlyName, bool includePrivateParameters)
         {
-#if NET461
-            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net462.");
 #else
             byte[] plaintext = Encoding.UTF8.GetBytes("test");
             byte[] signature = null;
@@ -229,8 +229,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetECDSaInvalidTestData))]
         public void ToECDsaInvalidKey(string curveName, byte[] x, byte[] y, string name, bool nullOnError)
         {
-#if NET461
-            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net462.");
 #else
             JsonWebKey jwk = new JsonWebKey
             {

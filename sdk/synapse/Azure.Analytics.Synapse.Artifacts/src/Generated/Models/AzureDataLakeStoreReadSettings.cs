@@ -28,12 +28,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
         /// <param name="listAfter"> Lists files after the value (exclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string). </param>
         /// <param name="listBefore"> Lists files before the value (inclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string). </param>
-        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
+        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
         /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        internal AzureDataLakeStoreReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, object fileListPath, object listAfter, object listBefore, bool? enablePartitionDiscovery, object partitionRootPath, object deleteFilesAfterCompletion, object modifiedDatetimeStart, object modifiedDatetimeEnd) : base(type, maxConcurrentConnections, additionalProperties)
+        /// <param name="modifiedDatetimeStart"> The start of file's modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeEnd"> The end of file's modified datetime. Type: string (or Expression with resultType string). </param>
+        internal AzureDataLakeStoreReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, object fileListPath, object listAfter, object listBefore, object enablePartitionDiscovery, object partitionRootPath, object deleteFilesAfterCompletion, object modifiedDatetimeStart, object modifiedDatetimeEnd) : base(type, maxConcurrentConnections, additionalProperties)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
@@ -61,15 +61,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ListAfter { get; set; }
         /// <summary> Lists files before the value (inclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string). </summary>
         public object ListBefore { get; set; }
-        /// <summary> Indicates whether to enable partition discovery. </summary>
-        public bool? EnablePartitionDiscovery { get; set; }
+        /// <summary> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </summary>
+        public object EnablePartitionDiscovery { get; set; }
         /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
         public object PartitionRootPath { get; set; }
         /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public object DeleteFilesAfterCompletion { get; set; }
-        /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The start of file's modified datetime. Type: string (or Expression with resultType string). </summary>
         public object ModifiedDatetimeStart { get; set; }
-        /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The end of file's modified datetime. Type: string (or Expression with resultType string). </summary>
         public object ModifiedDatetimeEnd { get; set; }
     }
 }

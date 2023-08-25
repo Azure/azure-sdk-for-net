@@ -31,9 +31,9 @@ namespace Azure.Storage.Blobs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2021-12-02". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-12-02")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -65,9 +65,9 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        /// <summary> Sets properties for a storage account&apos;s Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="storageServiceProperties"> The StorageService properties. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(BlobServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
@@ -89,9 +89,9 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> Sets properties for a storage account&apos;s Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="storageServiceProperties"> The StorageService properties. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
         public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(BlobServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
@@ -133,8 +133,8 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        /// <summary> gets the properties of a storage account&apos;s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -158,8 +158,8 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> gets the properties of a storage account&apos;s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -204,7 +204,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -229,7 +229,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -274,7 +274,7 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null)
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -292,8 +292,8 @@ namespace Azure.Storage.Blobs
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify that the container&apos;s metadata be returned as part of the response body. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify that the container's metadata be returned as part of the response body. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> ListContainersSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -321,8 +321,8 @@ namespace Azure.Storage.Blobs
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify that the container&apos;s metadata be returned as part of the response body. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify that the container's metadata be returned as part of the response body. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> ListContainersSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -372,7 +372,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication. </summary>
         /// <param name="keyInfo"> Key information. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyInfo"/> is null. </exception>
         public async Task<ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders>> GetUserDelegationKeyAsync(KeyInfo keyInfo, int? timeout = null, CancellationToken cancellationToken = default)
@@ -404,7 +404,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication. </summary>
         /// <param name="keyInfo"> Key information. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyInfo"/> is null. </exception>
         public ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> GetUserDelegationKey(KeyInfo keyInfo, int? timeout = null, CancellationToken cancellationToken = default)
@@ -508,7 +508,7 @@ namespace Azure.Storage.Blobs
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="body"> Initial data. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
         public async Task<ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders>> SubmitBatchAsync(long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
@@ -541,7 +541,7 @@ namespace Azure.Storage.Blobs
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="body"> Initial data. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
         public ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders> SubmitBatch(long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
@@ -595,7 +595,7 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null)
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -606,7 +606,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Filter Blobs operation enables callers to list blobs across all containers whose tags match a given search expression.  Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="where"> Filters the results to return only to return only blobs whose tags match the specified expression. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
@@ -635,7 +635,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Filter Blobs operation enables callers to list blobs across all containers whose tags match a given search expression.  Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="where"> Filters the results to return only to return only blobs whose tags match the specified expression. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
@@ -682,8 +682,8 @@ namespace Azure.Storage.Blobs
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify that the container&apos;s metadata be returned as part of the response body. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify that the container's metadata be returned as part of the response body. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> ListContainersSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
@@ -718,8 +718,8 @@ namespace Azure.Storage.Blobs
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify that the container&apos;s metadata be returned as part of the response body. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify that the container's metadata be returned as part of the response body. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> ListContainersSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)

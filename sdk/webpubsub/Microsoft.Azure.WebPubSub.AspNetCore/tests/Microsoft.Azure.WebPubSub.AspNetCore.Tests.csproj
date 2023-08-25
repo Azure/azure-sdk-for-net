@@ -8,12 +8,12 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net462|AnyCPU'">
     <WarningLevel>5</WarningLevel>
   </PropertyGroup>
 
   <!-- Reference the Client Library -->
-  <ItemGroup Condition="$(TargetFramework) != 'net461'">
+  <ItemGroup Condition="$(TargetFramework) != 'net462'">
     <ProjectReference Include="..\src\Microsoft.Azure.WebPubSub.AspNetCore.csproj" />
   </ItemGroup>
 
@@ -24,7 +24,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework) != 'net461'">
+  <ItemGroup Condition="$(TargetFramework) != 'net462'">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 

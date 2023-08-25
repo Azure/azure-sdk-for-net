@@ -20,24 +20,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Continuation token for pagination. </summary>
-        public string Skip { get; set; } = null;
-
+        public string Skip { get; set; }
         /// <summary> Maximum number of results to return. </summary>
-        public int? Count { get; set; } = null;
-
+        public int? Count { get; set; }
         /// <summary> Filter down to the workspace default datastore. </summary>
-        public bool? IsDefault { get; set; } = null;
-
+        public bool? IsDefault { get; set; }
         /// <summary> Names of datastores to return. </summary>
-        public IList<string> Names { get; } = null;
-
+        public IList<string> Names { get; }
         /// <summary> Text to search for in the datastore names. </summary>
-        public string SearchText { get; set; } = null;
-
+        public string SearchText { get; set; }
         /// <summary> Order by property (createdtime | modifiedtime | name). </summary>
-        public string OrderBy { get; set; } = null;
-
+        public string OrderBy { get; set; }
         /// <summary> Order by property in ascending order. </summary>
-        public bool? OrderByAsc { get; set; } = null;
+        public bool? OrderByAsc { get; set; }
     }
 }

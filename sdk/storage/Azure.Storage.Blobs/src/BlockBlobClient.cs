@@ -326,6 +326,15 @@ namespace Azure.Storage.Blobs.Specialized
             _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
         }
 
+        internal BlockBlobClient(
+            Uri blobUri,
+            BlobClientConfiguration clientConfiguration,
+            ClientSideEncryptionOptions clientSideEncryption)
+            : base(blobUri, clientConfiguration, clientSideEncryption)
+        {
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBlobClient"/>
         /// class.
@@ -876,6 +885,12 @@ namespace Azure.Storage.Blobs.Specialized
                     content = content?.WithNoDispose().WithProgress(progressHandler);
 
                     ResponseWithHeaders<BlockBlobUploadHeaders> response;
+
+                    using DisposableBucket disposableBucket = new();
+                    if (ClientSideEncryption != default)
+                    {
+                        disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
+                    }
 
                     if (async)
                     {
@@ -2168,6 +2183,12 @@ namespace Azure.Storage.Blobs.Specialized
 
                     ResponseWithHeaders<BlockBlobCommitBlockListHeaders> response;
 
+                    using DisposableBucket disposableBucket = new();
+                    if (ClientSideEncryption != default)
+                    {
+                        disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
+                    }
+
                     if (async)
                     {
                         response = await BlockBlobRestClient.CommitBlockListAsync(
@@ -3056,8 +3077,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
                             blobContentMD5: options?.HttpHeaders?.ContentHash,
                             blobCacheControl: options?.HttpHeaders?.CacheControl,
-                            // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
-                            // metadata: options?.Metadata,
+                            metadata: options?.Metadata,
                             leaseId: options?.DestinationConditions?.LeaseId,
                             blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -3093,8 +3113,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
                             blobContentMD5: options?.HttpHeaders?.ContentHash,
                             blobCacheControl: options?.HttpHeaders?.CacheControl,
-                            // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
-                            // metadata: options?.Metadata,
+                            metadata: options?.Metadata,
                             leaseId: options?.DestinationConditions?.LeaseId,
                             blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,

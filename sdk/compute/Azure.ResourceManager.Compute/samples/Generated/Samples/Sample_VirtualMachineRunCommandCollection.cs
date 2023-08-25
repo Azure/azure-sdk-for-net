@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateARunCommand()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/runCommandExamples/VirtualMachineRunCommand_CreateOrUpdate.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/runCommandExamples/VirtualMachineRunCommand_CreateOrUpdate.json
             // this example is just showing the usage of "VirtualMachineRunCommands_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Samples
             {
                 Source = new VirtualMachineRunCommandScriptSource()
                 {
-                    Script = "Write-Host Hello World!",
+                    ScriptUri = new Uri("https://mystorageaccount.blob.core.windows.net/scriptcontainer/scriptURI"),
                 },
                 Parameters =
 {
@@ -58,6 +58,13 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
                 RunAsUser = "user1",
                 RunAsPassword = "<runAsPassword>",
                 TimeoutInSeconds = 3600,
+                OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
+                ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/scriptcontainer/scriptURI"),
+                OutputBlobManagedIdentity = new RunCommandManagedIdentity()
+                {
+                    ClientId = "22d35efb-0c99-4041-8c5b-6d24db33a69a",
+                },
+                TreatFailureAsDeploymentFailure = false,
             };
             ArmOperation<VirtualMachineRunCommandResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
             VirtualMachineRunCommandResource result = lro.Value;
@@ -74,7 +81,7 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetARunCommand()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/runCommandExamples/VirtualMachineRunCommand_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/runCommandExamples/VirtualMachineRunCommand_Get.json
             // this example is just showing the usage of "VirtualMachineRunCommands_GetByVirtualMachine" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +116,7 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetARunCommand()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/runCommandExamples/VirtualMachineRunCommand_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/runCommandExamples/VirtualMachineRunCommand_Get.json
             // this example is just showing the usage of "VirtualMachineRunCommands_GetByVirtualMachine" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,7 +147,7 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListRunCommandsInAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/runCommandExamples/VirtualMachineRunCommand_List.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/runCommandExamples/VirtualMachineRunCommand_List.json
             // this example is just showing the usage of "VirtualMachineRunCommands_ListByVirtualMachine" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

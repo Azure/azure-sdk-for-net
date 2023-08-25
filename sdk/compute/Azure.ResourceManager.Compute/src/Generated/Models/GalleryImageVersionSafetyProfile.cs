@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of GalleryImageVersionSafetyProfile. </summary>
         /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
-        /// <param name="isReportedForPolicyViolation"> Indicates whether this image has been reported as violating Microsoft&apos;s policies. </param>
+        /// <param name="isReportedForPolicyViolation"> Indicates whether this image has been reported as violating Microsoft's policies. </param>
         /// <param name="policyViolations"> A list of Policy Violations that have been reported for this Gallery Image Version. </param>
         internal GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, bool? isReportedForPolicyViolation, IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations) : base(allowDeletionOfReplicatedLocations)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             PolicyViolations = policyViolations;
         }
 
-        /// <summary> Indicates whether this image has been reported as violating Microsoft&apos;s policies. </summary>
+        /// <summary> Indicates whether this image has been reported as violating Microsoft's policies. </summary>
         public bool? IsReportedForPolicyViolation { get; }
         /// <summary> A list of Policy Violations that have been reported for this Gallery Image Version. </summary>
         public IReadOnlyList<GalleryImageVersionPolicyViolation> PolicyViolations { get; }

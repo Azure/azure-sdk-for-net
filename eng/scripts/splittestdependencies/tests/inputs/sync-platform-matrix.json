@@ -20,10 +20,10 @@
         "Pool": "azsdk-pool-mms-win-2022-general",
         "TestTargetFramework": "net6.0"
       },
-      "windows2022_NET461": {
+      "windows2022_NET462": {
         "OSVmImage": "windows-2022",
         "Pool": "azsdk-pool-mms-win-2022-general",
-        "TestTargetFramework": "net461"
+        "TestTargetFramework": "net462"
       },
       "macos-11_NETCore3.1": {
         "OSVmImage": "macos-11",

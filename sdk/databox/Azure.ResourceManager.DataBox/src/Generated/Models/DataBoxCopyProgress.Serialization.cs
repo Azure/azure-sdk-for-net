@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -33,6 +35,8 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<long> directoriesErroredOut = default;
             Optional<long> invalidDirectoriesProcessed = default;
             Optional<bool> isEnumerationInProgress = default;
+            Optional<ResponseError> error = default;
+            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountName"u8))
@@ -166,8 +170,31 @@ namespace Azure.ResourceManager.DataBox.Models
                     isEnumerationInProgress = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("actions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CustomerResolutionCode> array = new List<CustomerResolutionCode>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToCustomerResolutionCode());
+                    }
+                    actions = array;
+                    continue;
+                }
             }
-            return new DataBoxCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress));
+            return new DataBoxCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress), error.Value, Optional.ToList(actions));
         }
     }
 }

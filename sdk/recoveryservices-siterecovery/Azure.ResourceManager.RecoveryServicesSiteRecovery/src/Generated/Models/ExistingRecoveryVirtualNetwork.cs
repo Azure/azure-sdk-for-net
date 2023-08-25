@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ExistingRecoveryVirtualNetwork. </summary>
         /// <param name="recoveryVirtualNetworkId"> The recovery virtual network Id. Will throw error, if resource does not exist. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryVirtualNetworkId"/> is null. </exception>
-        public ExistingRecoveryVirtualNetwork(string recoveryVirtualNetworkId)
+        public ExistingRecoveryVirtualNetwork(ResourceIdentifier recoveryVirtualNetworkId)
         {
             Argument.AssertNotNull(recoveryVirtualNetworkId, nameof(recoveryVirtualNetworkId));
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="resourceType"> The class type. </param>
         /// <param name="recoveryVirtualNetworkId"> The recovery virtual network Id. Will throw error, if resource does not exist. </param>
         /// <param name="recoverySubnetName"> The recovery subnet name. </param>
-        internal ExistingRecoveryVirtualNetwork(string resourceType, string recoveryVirtualNetworkId, string recoverySubnetName) : base(resourceType)
+        internal ExistingRecoveryVirtualNetwork(string resourceType, ResourceIdentifier recoveryVirtualNetworkId, string recoverySubnetName) : base(resourceType)
         {
             RecoveryVirtualNetworkId = recoveryVirtualNetworkId;
             RecoverySubnetName = recoverySubnetName;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The recovery virtual network Id. Will throw error, if resource does not exist. </summary>
-        public string RecoveryVirtualNetworkId { get; set; }
+        public ResourceIdentifier RecoveryVirtualNetworkId { get; set; }
         /// <summary> The recovery subnet name. </summary>
         public string RecoverySubnetName { get; set; }
     }

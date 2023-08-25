@@ -85,6 +85,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
             Assert.AreEqual($"{directoryName}/{fileName}", fileClient.Path);
             Assert.AreEqual(uri, fileClient.Uri);
+            Assert.IsNotNull(fileClient.ClientConfiguration.SharedKeyCredential);
         }
 
         [RecordedTest]
@@ -112,6 +113,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
             Assert.AreEqual($"{directoryName}/{fileName}", fileClient.Path);
             Assert.AreEqual(uri, fileClient.Uri);
+            Assert.IsNotNull(fileClient.ClientConfiguration.TokenCredential);
         }
 
         [RecordedTest]
@@ -148,6 +150,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             await connStringFile.GetPropertiesAsync();
             await connStringFile.GetAccessControlAsync();
+            Assert.IsNotNull(connStringFile.ClientConfiguration.SharedKeyCredential);
         }
 
         [RecordedTest]
@@ -187,6 +190,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(properties);
+            Assert.IsNotNull(sasClient.ClientConfiguration.SasCredential);
         }
 
         [RecordedTest]
@@ -942,6 +946,20 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task DeleteAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            // Arrange
+            DataLakeFileClient fileClient = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            await fileClient.DeleteAsync();
+        }
+
+        [RecordedTest]
+        public async Task DeleteAsync_OAuth()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
 
             // Arrange
@@ -4446,6 +4464,31 @@ namespace Azure.Storage.Files.DataLake.Tests
             using var actual = new MemoryStream();
             await file.ReadToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task UploadAsync_EncryptionContext()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            string encryptionContext = "encryptionContext";
+            DataLakeFileUploadOptions options = new DataLakeFileUploadOptions
+            {
+                EncryptionContext = encryptionContext
+            };
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream, options: options);
+
+            // Assert
+            Response<PathProperties> pathProperties = await file.GetPropertiesAsync();
+            Assert.AreEqual(encryptionContext, pathProperties.Value.EncryptionContext);
         }
 
         [RecordedTest]

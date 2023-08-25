@@ -79,9 +79,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public bool EnableCrossEntityTransactions { get { throw null; } set { } }
         public Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { throw null; } set { } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
+        public System.TimeSpan MaxBatchWaitTime { get { throw null; } set { } }
         public int MaxConcurrentCalls { get { throw null; } set { } }
         public int MaxConcurrentSessions { get { throw null; } set { } }
         public int MaxMessageBatchSize { get { throw null; } set { } }
+        public int MinMessageBatchSize { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ProcessErrorAsync { get { throw null; } set { } }
         public System.Func<Azure.Messaging.ServiceBus.ProcessSessionEventArgs, System.Threading.Tasks.Task> SessionClosingAsync { get { throw null; } set { } }
@@ -121,5 +123,6 @@ namespace Microsoft.Extensions.Hosting
     {
         public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddServiceBus(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { throw null; }
         public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddServiceBus(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder, System.Action<Microsoft.Azure.WebJobs.ServiceBus.ServiceBusOptions> configure) { throw null; }
+        public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddServiceBusScaleForTrigger(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder, Microsoft.Azure.WebJobs.Host.Scale.TriggerMetadata triggerMetadata) { throw null; }
     }
 }

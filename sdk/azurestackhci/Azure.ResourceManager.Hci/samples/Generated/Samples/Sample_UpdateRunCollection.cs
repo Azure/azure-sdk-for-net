@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListUpdateRunsUnderClusterResource()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2022-12-01/examples/ListUpdateRuns.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/ListUpdateRuns.json
             // this example is just showing the usage of "UpdateRuns_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_GetUpdateRunsUnderClusterResource()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2022-12-01/examples/PutUpdateRuns.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/PutUpdateRuns.json
             // this example is just showing the usage of "UpdateRuns_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +124,7 @@ Steps =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetUpdateRunsUnderClusterResource()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2022-12-01/examples/GetUpdateRuns.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/GetUpdateRuns.json
             // this example is just showing the usage of "UpdateRuns_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +160,7 @@ Steps =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetUpdateRunsUnderClusterResource()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2022-12-01/examples/GetUpdateRuns.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/GetUpdateRuns.json
             // this example is just showing the usage of "UpdateRuns_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

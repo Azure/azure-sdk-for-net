@@ -43,7 +43,7 @@ function RunOrExitOnFailure()
     }
 }
 
-function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages)
+function Login([string]$subscription, [string]$clusterGroup, [switch]$skipPushImages)
 {
     Write-Host "Logging in to subscription, cluster and container registry"
     az account show *> $null
@@ -73,10 +73,10 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages
         RunOrExitOnFailure kubectl config set-context $clusterName --namespace $defaultNamespace
     }
 
-    if ($pushImages) {
+    if (!$skipPushImages) {
         $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
         $registryName = ($registry | ConvertFrom-Json).name
-        RunOrExitOnFailure az acr login -n $registryName
+        RunOrExitOnFailure az acr login -n $registryName --subscription $subscription
     }
 }
 
@@ -86,10 +86,10 @@ function DeployStressTests(
     # Default to playground environment
     [string]$environment = 'pg',
     [string]$repository = '',
-    [switch]$pushImages,
+    [switch]$skipPushImages,
     [string]$clusterGroup = '',
     [string]$deployId = '',
-    [switch]$login,
+    [switch]$skipLogin,
     [string]$subscription = '',
     [switch]$CI,
     [string]$Namespace,
@@ -125,8 +125,8 @@ function DeployStressTests(
         throw "clusterGroup and subscription parameters must be specified when deploying to an environment that is not pg or prod."
     }
 
-    if ($login) {
-        Login -subscription $subscription -clusterGroup $clusterGroup -pushImages:$pushImages
+    if (!$skipLogin) {
+        Login -subscription $subscription -clusterGroup $clusterGroup -skipPushImages:$skipPushImages
     }
 
     $chartRepoName = 'stress-test-charts'
@@ -162,8 +162,8 @@ function DeployStressTests(
             -deployId $deployer `
             -environment $environment `
             -repositoryBase $repository `
-            -pushImages:$pushImages `
-            -login:$login `
+            -skipPushImages:$skipPushImages `
+            -skipLogin:$skipLogin `
             -clusterGroup $clusterGroup `
             -subscription $subscription
     }
@@ -189,8 +189,8 @@ function DeployStressPackage(
     [string]$deployId,
     [string]$environment,
     [string]$repositoryBase,
-    [switch]$pushImages,
-    [switch]$login,
+    [switch]$skipPushImages,
+    [switch]$skipLogin,
     [string]$clusterGroup,
     [string]$subscription
 ) {
@@ -267,9 +267,12 @@ function DeployStressPackage(
         }
         $dockerfileName = ($dockerFilePath -split { $_ -in '\', '/' })[-1].ToLower()
         $imageTag = $imageTagBase + "/${dockerfileName}:${deployId}"
-        if ($pushImages) {
+        if (!$skipPushImages) {
             Write-Host "Building and pushing stress test docker image '$imageTag'"
             $dockerFile = Get-ChildItem $dockerFilePath
+
+            Write-Host "Setting DOCKER_BUILDKIT=1"
+            $env:DOCKER_BUILDKIT = 1
 
             $dockerBuildCmd = "docker", "build", "-t", $imageTag, "-f", $dockerFile
             foreach ($buildArg in $dockerBuildConfig.scenario.GetEnumerator()) {
@@ -290,8 +293,8 @@ function DeployStressPackage(
 
             Run docker push $imageTag
             if ($LASTEXITCODE) {
-                if ($login) {
-                    Write-Warning "If docker push is failing due to authentication issues, try calling this script with '-Login'"
+                if (!$skipLogin) {
+                    Write-Warning "If docker push is failing due to authentication issues, try calling this script without '-SkipLogin'"
                 }
             }
         }
@@ -385,6 +388,21 @@ function CheckDependencies()
     $minHelmVersion = [AzureEngSemanticVersion]::new($MIN_HELM_VERSION)
     if ($helmVersion.CompareTo($minHelmVersion) -lt 0) {
         throw "Please update helm to version >= $MIN_HELM_VERSION (current version: $helmVersionString)`nAdditional information for updating helm version can be found here: https://helm.sh/docs/intro/install/"
+    }
+
+    # Ensure docker is running via command and handle command hangs
+    if (!$skipPushImages) {
+        $LastErrorActionPreference = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        $job = Start-Job { docker ps; return $LASTEXITCODE }
+        $result = $job | Wait-Job -Timeout 5 | Receive-Job
+
+        $ErrorActionPreference = $LastErrorActionPreference
+        $job | Remove-Job -Force
+
+        if (($result -eq $null -and $job.State -ne "Completed") -or ($result | Select -Last 1) -ne 0) {
+            throw "Docker does not appear to be running. Start/restart docker."
+        }
     }
 
     if ($shouldError) {

@@ -39,8 +39,9 @@ namespace Azure.Identity.Tests
             var options = new ClientCertificateCredentialOptions
             {
                 Transport = config.Transport,
-                DisableAuthorityValidationAndInstanceDiscovery = config.DisableAuthorityValidationAndInstanceDiscovery,
-                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");

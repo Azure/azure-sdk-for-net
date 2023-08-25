@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="data"> Additional parameters for pool creation. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of &quot;*&quot; can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new pool to be created, but to prevent updating an existing pool. Other values will be ignored. </param>
+        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of "*" can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new pool to be created, but to prevent updating an existing pool. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="data"> Additional parameters for pool creation. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of &quot;*&quot; can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new pool to be created, but to prevent updating an existing pool. Other values will be ignored. </param>
+        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of "*" can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new pool to be created, but to prevent updating an existing pool. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
+        /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
-        /// 
+        ///
         ///  name
         ///  properties/allocationState
         ///  properties/allocationStateTransitionTime
@@ -265,10 +265,10 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
+        /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
-        /// 
+        ///
         ///  name
         ///  properties/allocationState
         ///  properties/allocationStateTransitionTime

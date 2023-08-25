@@ -10,17 +10,12 @@
 
 namespace Microsoft.Azure.Management.Maintenance.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Input configuration for a patch run
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class InputPatchConfiguration
     {
         /// <summary>
@@ -44,19 +39,11 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// <param name="linuxParameters">Input parameters specific to patching
         /// Linux machine. For Windows machines, do not pass this
         /// property.</param>
-        /// <param name="preTasks">List of pre tasks. e.g. [{'source'
-        /// :'runbook', 'taskScope': 'Global', 'parameters': { 'arg1':
-        /// 'value1'}}]</param>
-        /// <param name="postTasks">List of post tasks. e.g. [{'source'
-        /// :'runbook', 'taskScope': 'Resource', 'parameters': { 'arg1':
-        /// 'value1'}}]</param>
-        public InputPatchConfiguration(string rebootSetting = default(string), InputWindowsParameters windowsParameters = default(InputWindowsParameters), InputLinuxParameters linuxParameters = default(InputLinuxParameters), IList<TaskProperties> preTasks = default(IList<TaskProperties>), IList<TaskProperties> postTasks = default(IList<TaskProperties>))
+        public InputPatchConfiguration(string rebootSetting = default(string), InputWindowsParameters windowsParameters = default(InputWindowsParameters), InputLinuxParameters linuxParameters = default(InputLinuxParameters))
         {
             RebootSetting = rebootSetting;
             WindowsParameters = windowsParameters;
             LinuxParameters = linuxParameters;
-            PreTasks = preTasks;
-            PostTasks = postTasks;
             CustomInit();
         }
 
@@ -87,20 +74,6 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// </summary>
         [JsonProperty(PropertyName = "linuxParameters")]
         public InputLinuxParameters LinuxParameters { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of pre tasks. e.g. [{'source' :'runbook',
-        /// 'taskScope': 'Global', 'parameters': { 'arg1': 'value1'}}]
-        /// </summary>
-        [JsonProperty(PropertyName = "tasks.preTasks")]
-        public IList<TaskProperties> PreTasks { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of post tasks. e.g. [{'source' :'runbook',
-        /// 'taskScope': 'Resource', 'parameters': { 'arg1': 'value1'}}]
-        /// </summary>
-        [JsonProperty(PropertyName = "tasks.postTasks")]
-        public IList<TaskProperties> PostTasks { get; set; }
 
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.27 (Unreleased)
+## 0.1.0-preview.30 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,40 @@
 
 ### Other Changes
 
+## 0.1.0-preview.29 (2023-08-07)
+
+### Features Added
+- Added SchemaValidator and LruCache types for use with Azure.Data.SchemaRegistry preview library.
+- Added CloudMachine and ProvisionableTemplateAttribute types for use with CloudMachine.
+
+## 0.1.0-preview.28 (2023-07-11)
+
+### Breaking Changes
+
+- Removed `DynamicData` type.
+
+## 0.1.0-preview.27 (2023-05-09)
+
+### Features Added
+
+- Added support for `== null` and value equality for primitives to `DynamicData`.
+- Added support for `Length` property on `DynamicData` arrays.
+- Made name mappings from PascalCase in C# to camelCase in JSON the default for `DynamicData`.
+- Added implicit casts to primitives supported by `JsonElement` and explicit casts for supported reference types.
+
+### Breaking Changes
+
+- Made `MutableJsonDocument` and `MutableJsonElement` internal.
+- Moved `ToDynamicFromJson()` extension method on `BinaryData` to the `Azure` namespace.
+- Removed `DynamicJsonOptions`, `DynamicDataNameMapping` and the `BinaryData` extensions that took parameters of those types.
+- Removed `DynamicDataProperty`.
+
 ## 0.1.0-preview.26 (2023-04-10)
 
 ### Features Added
 
 - Added basic debugger support for DynamicData
+
 ### Breaking Changes
 
 - Removed `DynamicJson` type, and moved its functionality into `DynamicData`.

@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Test.Perf;
@@ -52,7 +51,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Perf
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
-            activity?.Stop();
 
             activity?.SetStatus(Status.Ok);
             activity?.SetTag(SemanticConventions.AttributeHttpMethod, "Get");
@@ -64,6 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Perf
             activity?.SetTag(SemanticConventions.AttributeNetHostPort, "9999");
             activity?.SetTag(SemanticConventions.AttributeHttpUserAgent, "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0");
             activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            activity?.Stop();
 
             _activityBatch = new Batch<Activity>(new Activity[] { activity ?? new Activity("Placeholder") }, 1);
         }

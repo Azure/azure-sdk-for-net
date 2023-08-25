@@ -49,15 +49,24 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Get Biomass Model job&apos;s details. </summary>
+        /// <summary>
+        /// [Protocol Method] Get Biomass Model job's details.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetBiomassModelJobAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetBiomassModelJobAsync(string jobId, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetBiomassModelJobAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetBiomassModelJobAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -75,15 +84,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Get Biomass Model job&apos;s details. </summary>
+        /// <summary>
+        /// [Protocol Method] Get Biomass Model job's details.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetBiomassModelJob(String,RequestContext)']/*" />
-        public virtual Response GetBiomassModelJob(string jobId, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetBiomassModelJob(string,RequestContext)']/*" />
+        public virtual Response GetBiomassModelJob(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -101,15 +119,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Get Sensor Placement Model job&apos;s details. </summary>
+        /// <summary>
+        /// [Protocol Method] Get Sensor Placement Model job's details.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSensorPlacementModelJobAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetSensorPlacementModelJobAsync(string jobId, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSensorPlacementModelJobAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetSensorPlacementModelJobAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -127,15 +154,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Get Sensor Placement Model job&apos;s details. </summary>
+        /// <summary>
+        /// [Protocol Method] Get Sensor Placement Model job's details.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSensorPlacementModelJob(String,RequestContext)']/*" />
-        public virtual Response GetSensorPlacementModelJob(string jobId, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSensorPlacementModelJob(string,RequestContext)']/*" />
+        public virtual Response GetSensorPlacementModelJob(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -153,15 +189,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Get SoilMoisture Model job&apos;s details. </summary>
+        /// <summary>
+        /// [Protocol Method] Get SoilMoisture Model job's details.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSoilMoistureModelJobAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetSoilMoistureModelJobAsync(string jobId, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSoilMoistureModelJobAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetSoilMoistureModelJobAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -179,15 +224,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Get SoilMoisture Model job&apos;s details. </summary>
+        /// <summary>
+        /// [Protocol Method] Get SoilMoisture Model job's details.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSoilMoistureModelJob(String,RequestContext)']/*" />
-        public virtual Response GetSoilMoistureModelJob(string jobId, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSoilMoistureModelJob(string,RequestContext)']/*" />
+        public virtual Response GetSoilMoistureModelJob(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -205,16 +259,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a Biomass Model job. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a Biomass Model job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateBiomassModelJobAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateBiomassModelJobAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateBiomassModelJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -234,16 +297,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a Biomass Model job. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a Biomass Model job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateBiomassModelJob(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateBiomassModelJob(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateBiomassModelJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -263,16 +335,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a Sensor Placement Model job. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a Sensor Placement Model job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSensorPlacementModelJobAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSensorPlacementModelJobAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateSensorPlacementModelJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -292,16 +373,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a Sensor Placement Model job. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a Sensor Placement Model job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSensorPlacementModelJob(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSensorPlacementModelJob(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateSensorPlacementModelJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -321,16 +411,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a SoilMoisture Model job. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a SoilMoisture Model job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSoilMoistureModelJobAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSoilMoistureModelJobAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateSoilMoistureModelJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -350,16 +449,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a SoilMoisture Model job. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a SoilMoisture Model job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSoilMoistureModelJob(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSoilMoistureModelJob(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateSoilMoistureModelJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));

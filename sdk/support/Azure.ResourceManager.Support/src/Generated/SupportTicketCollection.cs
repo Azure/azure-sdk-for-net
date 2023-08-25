@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
-        /// <param name="filter"> The filter to apply on the operation. We support &apos;odata v4.0&apos; filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals (&apos;eq&apos;) operator. For _CreatedDate_ filter, the supported operators are Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;). When using both filters, combine them using the logical &apos;AND&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals ('eq') operator. For _CreatedDate_ filter, the supported operators are Greater Than ('gt') and Greater Than or Equals ('ge'). When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SupportTicketResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
-        /// <param name="filter"> The filter to apply on the operation. We support &apos;odata v4.0&apos; filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals (&apos;eq&apos;) operator. For _CreatedDate_ filter, the supported operators are Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;). When using both filters, combine them using the logical &apos;AND&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals ('eq') operator. For _CreatedDate_ filter, the supported operators are Greater Than ('gt') and Greater Than or Equals ('ge'). When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SupportTicketResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)

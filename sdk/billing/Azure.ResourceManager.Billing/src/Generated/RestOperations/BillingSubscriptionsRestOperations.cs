@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        /// <summary> Moves a subscription&apos;s charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <summary> Moves a subscription's charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="content"> Request parameters that are provided to the move subscription operation. </param>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary> Moves a subscription&apos;s charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <summary> Moves a subscription's charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="content"> Request parameters that are provided to the move subscription operation. </param>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        /// <summary> Validates if a subscription&apos;s charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <summary> Validates if a subscription's charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="content"> Request parameters that are provided to the validate move eligibility operation. </param>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary> Validates if a subscription&apos;s charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <summary> Validates if a subscription's charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="content"> Request parameters that are provided to the validate move eligibility operation. </param>

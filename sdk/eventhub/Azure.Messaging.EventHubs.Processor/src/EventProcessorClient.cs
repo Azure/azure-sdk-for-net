@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -95,7 +96,6 @@ namespace Azure.Messaging.EventHubs
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
         ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<PartitionInitializingEventArgs, Task> PartitionInitializingAsync
         {
@@ -142,7 +142,6 @@ namespace Azure.Messaging.EventHubs
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
         ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<PartitionClosingEventArgs, Task> PartitionClosingAsync
         {
@@ -194,7 +193,6 @@ namespace Azure.Messaging.EventHubs
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
         ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessEventArgs, Task> ProcessEventAsync
         {
@@ -254,7 +252,6 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/TROUBLESHOOTING.md">Troubleshoot Event Hubs issues</seealso>
         ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
         {
@@ -357,7 +354,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
-        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.</para>
+        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
         ///
         ///   <para>If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
@@ -386,7 +384,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
-        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.</para>
+        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
         ///
         ///   <para>If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
@@ -416,7 +415,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
-        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.</para>
+        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
         ///
         ///   <para>If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
@@ -444,7 +444,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
-        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.</para>
+        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
         ///
         ///   <para>If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
@@ -484,7 +485,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
-        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.
+        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
@@ -519,7 +521,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
-        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.
+        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
@@ -554,7 +557,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
-        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.
+        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
@@ -883,7 +887,7 @@ namespace Azure.Messaging.EventHubs
 
             Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
 
-            using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, DiagnosticScope.ActivityKind.Internal);
+            using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
             scope.Start();
 
             try
@@ -1011,6 +1015,7 @@ namespace Azure.Messaging.EventHubs
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
+            var operation = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             var context = default(PartitionContext);
             var eventArgs = default(ProcessEventArgs);
             var caughtExceptions = default(List<Exception>);
@@ -1018,7 +1023,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                Logger.EventBatchProcessingStart(partition.PartitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.EventBatchProcessingStart(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
 
                 // Attempt to process each event in the batch, marking if the batch was non-empty.  Exceptions during
                 // processing should be logged and cached, as the batch must be processed completely to avoid losing events.
@@ -1039,6 +1044,8 @@ namespace Azure.Messaging.EventHubs
 
                     try
                     {
+                        Logger.EventBatchProcessingHandlerCall(eventData.SequenceNumber.ToString(), partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
+
                         context ??= new ProcessorPartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition.PartitionId, () => ReadLastEnqueuedEventProperties(partition.PartitionId));
                         eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(partition.PartitionId, eventData.Offset, eventData.SequenceNumber, updateToken), cancellationToken);
 
@@ -1049,7 +1056,7 @@ namespace Azure.Messaging.EventHubs
                         // This exception is not surfaced to the error handler or bubbled, as the entire batch must be
                         // processed or events will be lost.  Preserve the exceptions, should any occur.
 
-                        Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                        Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, ex.Message);
 
                         caughtExceptions ??= new List<Exception>();
                         caughtExceptions.Add(ex);
@@ -1061,6 +1068,8 @@ namespace Azure.Messaging.EventHubs
 
                 if (emptyBatch)
                 {
+                    Logger.EventBatchProcessingHandlerCall("<< No Event >>", partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
+
                     eventArgs = new ProcessEventArgs(new EmptyPartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition.PartitionId), null, EmptyEventUpdateCheckpoint, cancellationToken);
                     await _processEventAsync(eventArgs).ConfigureAwait(false);
                 }
@@ -1070,12 +1079,12 @@ namespace Azure.Messaging.EventHubs
                 // This exception was either not related to processing events or was the result of sending an empty batch to be
                 // processed.  Since there would be no other caught exceptions, tread this like a single case.
 
-                Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, ex.Message);
                 throw;
             }
             finally
             {
-                Logger.EventBatchProcessingComplete(partition.PartitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.EventBatchProcessingComplete(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
             }
 
             // Deal with any exceptions that occurred while processing the batch.  If more than one was

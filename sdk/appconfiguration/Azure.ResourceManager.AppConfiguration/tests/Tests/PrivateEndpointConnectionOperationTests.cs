@@ -32,8 +32,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [SetUp]
         public async Task TestSetUp()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
                 Initialize();
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
                 string VnetName = Recording.GenerateAssetName("vnetname");
@@ -87,10 +85,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 PrivateEndpointResource = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
                 List<AppConfigurationPrivateEndpointConnectionResource> connections = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
                 Connection = connections.FirstOrDefault();
-            }
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [Test]
         public async Task DeleteTest()
         {
@@ -100,7 +96,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [Test]
         public async Task GetTest()
         {

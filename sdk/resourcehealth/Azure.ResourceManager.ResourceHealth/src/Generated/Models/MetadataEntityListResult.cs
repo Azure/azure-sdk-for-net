@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of MetadataEntityListResult. </summary>
         internal MetadataEntityListResult()
         {
-            Value = new ChangeTrackingList<MetadataEntityData>();
+            Value = new ChangeTrackingList<ResourceHealthMetadataEntityData>();
         }
 
         /// <summary> Initializes a new instance of MetadataEntityListResult. </summary>
         /// <param name="value"> The list of metadata entities. </param>
         /// <param name="nextLink"> The link used to get the next page of metadata. </param>
-        internal MetadataEntityListResult(IReadOnlyList<MetadataEntityData> value, string nextLink)
+        internal MetadataEntityListResult(IReadOnlyList<ResourceHealthMetadataEntityData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of metadata entities. </summary>
-        public IReadOnlyList<MetadataEntityData> Value { get; }
+        public IReadOnlyList<ResourceHealthMetadataEntityData> Value { get; }
         /// <summary> The link used to get the next page of metadata. </summary>
         public string NextLink { get; }
     }

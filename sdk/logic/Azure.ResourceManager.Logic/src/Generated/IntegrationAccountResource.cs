@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// Gets the integration account&apos;s Key Vault keys.
+        /// Gets the integration account's Key Vault keys.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// Gets the integration account&apos;s Key Vault keys.
+        /// Gets the integration account's Key Vault keys.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// Logs the integration account&apos;s tracking events.
+        /// Logs the integration account's tracking events.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// Logs the integration account&apos;s tracking events.
+        /// Logs the integration account's tracking events.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

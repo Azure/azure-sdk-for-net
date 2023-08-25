@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.DataBox.Models
             PreferredDisks = new ChangeTrackingDictionary<string, int>();
             CopyProgress = new ChangeTrackingList<DataBoxDiskCopyProgress>();
             GranularCopyProgress = new ChangeTrackingList<DataBoxDiskGranularCopyProgress>();
+            GranularCopyLogDetails = new ChangeTrackingList<DataBoxDiskGranularCopyLogDetails>();
             DisksAndSizeDetails = new ChangeTrackingDictionary<string, int>();
             JobDetailsType = DataBoxOrderType.DataBoxDisk;
         }
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dataExportDetails"> Details of the data to be exported from azure. </param>
         /// <param name="jobDetailsType"> Indicates the type of job details. </param>
         /// <param name="preferences"> Preferences for the order. </param>
+        /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
         /// <param name="copyLogDetails">
         /// List of copy log details.
         /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -59,13 +61,15 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="preferredDisks"> User preference on what size disks are needed for the job. The map is from the disk size in TB to the count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will be checked against an int. </param>
         /// <param name="copyProgress"> Copy progress per disk. </param>
         /// <param name="granularCopyProgress"> Copy progress per disk. </param>
+        /// <param name="granularCopyLogDetails"> Copy progress per disk. </param>
         /// <param name="disksAndSizeDetails"> Contains the map of disk serial number to the disk size being used for the job. Is returned only after the disks are shipped to the customer. </param>
         /// <param name="passkey"> User entered passkey for DataBox Disk job. </param>
-        internal DataBoxDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, int> preferredDisks, IReadOnlyList<DataBoxDiskCopyProgress> copyProgress, IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress, IReadOnlyDictionary<string, int> disksAndSizeDetails, string passkey) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode)
+        internal DataBoxDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, int> preferredDisks, IReadOnlyList<DataBoxDiskCopyProgress> copyProgress, IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress, IReadOnlyList<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails, IReadOnlyDictionary<string, int> disksAndSizeDetails, string passkey) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode)
         {
             PreferredDisks = preferredDisks;
             CopyProgress = copyProgress;
             GranularCopyProgress = granularCopyProgress;
+            GranularCopyLogDetails = granularCopyLogDetails;
             DisksAndSizeDetails = disksAndSizeDetails;
             Passkey = passkey;
             JobDetailsType = jobDetailsType;
@@ -77,6 +81,8 @@ namespace Azure.ResourceManager.DataBox.Models
         public IReadOnlyList<DataBoxDiskCopyProgress> CopyProgress { get; }
         /// <summary> Copy progress per disk. </summary>
         public IReadOnlyList<DataBoxDiskGranularCopyProgress> GranularCopyProgress { get; }
+        /// <summary> Copy progress per disk. </summary>
+        public IReadOnlyList<DataBoxDiskGranularCopyLogDetails> GranularCopyLogDetails { get; }
         /// <summary> Contains the map of disk serial number to the disk size being used for the job. Is returned only after the disks are shipped to the customer. </summary>
         public IReadOnlyDictionary<string, int> DisksAndSizeDetails { get; }
         /// <summary> User entered passkey for DataBox Disk job. </summary>

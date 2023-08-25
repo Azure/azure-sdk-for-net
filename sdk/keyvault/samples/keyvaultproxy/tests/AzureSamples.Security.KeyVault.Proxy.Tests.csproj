@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);net461</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);net462</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

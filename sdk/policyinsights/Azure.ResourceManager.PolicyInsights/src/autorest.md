@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: PolicyInsights
 namespace: Azure.ResourceManager.PolicyInsights
@@ -28,6 +27,7 @@ override-operation-name:
   PolicyEvents_ListQueryResultsForSubscription: GetPolicyEventQueryResults
   PolicyEvents_ListQueryResultsForResourceGroup: GetPolicyEventQueryResults
   PolicyEvents_ListQueryResultsForManagementGroup: GetPolicyEventQueryResults
+  PolicyEvents_ListQueryResultsForResource: GetPolicyEventQueryResults
 #  PolicyEvents_ListQueryResultsForPolicySetDefinition: GetPolicyEventQueryResults
 #  PolicyEvents_ListQueryResultsForPolicyDefinition: GetPolicyEventQueryResults
 #  PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment: GetPolicyEventQueryResults
@@ -35,6 +35,7 @@ override-operation-name:
   PolicyStates_ListQueryResultsForSubscription: GetPolicyStateQueryResults
   PolicyStates_ListQueryResultsForResourceGroup: GetPolicyStateQueryResults
   PolicyStates_ListQueryResultsForManagementGroup: GetPolicyStateQueryResults
+  PolicyStates_ListQueryResultsForResource: GetPolicyStateQueryResults
 #  PolicyStates_ListQueryResultsForPolicySetDefinition: GetPolicyStateQueryResults
 #  PolicyStates_ListQueryResultsForPolicyDefinition: GetPolicyStateQueryResults
 #  PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment: GetPolicyStateQueryResults
@@ -42,6 +43,7 @@ override-operation-name:
   PolicyStates_SummarizeForManagementGroup: SummarizePolicyStates
   PolicyStates_SummarizeForSubscription: SummarizePolicyStates
   PolicyStates_SummarizeForResourceGroup: SummarizePolicyStates
+  PolicyStates_SummarizeForResource: SummarizePolicyStates
 #  PolicyStates_SummarizeForPolicySetDefinition: SummarizePolicyStates
 #  PolicyStates_SummarizeForPolicyDefinition: SummarizePolicyStates
 #  PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment: SummarizePolicyStates
@@ -53,6 +55,7 @@ override-operation-name:
   PolicyTrackedResources_ListQueryResultsForSubscription: GetPolicyTrackedResourceQueryResults
   PolicyTrackedResources_ListQueryResultsForResourceGroup: GetPolicyTrackedResourceQueryResults
   PolicyTrackedResources_ListQueryResultsForManagementGroup: GetPolicyTrackedResourceQueryResults
+  PolicyTrackedResources_ListQueryResultsForResource: GetPolicyTrackedResourceQueryResults
 
 operation-positions:
   PolicyMetadata_List: collection
@@ -137,6 +140,15 @@ rename-mapping:
   RemediationDeployment.resourceLocation: -|azure-location
   TrackedResourceModificationDetails.deploymentId: -|arm-id
   PolicyTrackedResourcesResourceType: PolicyTrackedResourceType
+
+models-to-treat-empty-string-as-null:
+  - PolicyAssignmentSummary
+  - PolicyDetails
+  - PolicyEvent
+  - PolicyReference
+  - PolicyState
+  - PolicyMetadataData
+  - SlimPolicyMetadata
 
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.

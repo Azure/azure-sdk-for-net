@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a vpn connection to a scalable vpn gateway if it doesn&apos;t exist else updates the existing connection.
+        /// Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a vpn connection to a scalable vpn gateway if it doesn&apos;t exist else updates the existing connection.
+        /// Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

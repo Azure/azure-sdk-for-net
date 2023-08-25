@@ -88,6 +88,31 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("virtualApplianceAsn"u8);
                 writer.WriteNumberValue(VirtualApplianceAsn.Value);
             }
+            if (Optional.IsDefined(SshPublicKey))
+            {
+                writer.WritePropertyName("sshPublicKey"u8);
+                writer.WriteStringValue(SshPublicKey);
+            }
+            if (Optional.IsCollectionDefined(AdditionalNics))
+            {
+                writer.WritePropertyName("additionalNics"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdditionalNics)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Delegation))
+            {
+                writer.WritePropertyName("delegation"u8);
+                writer.WriteObjectValue(Delegation);
+            }
+            if (Optional.IsDefined(PartnerManagedResource))
+            {
+                writer.WritePropertyName("partnerManagedResource"u8);
+                writer.WriteObjectValue(PartnerManagedResource);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -112,10 +137,16 @@ namespace Azure.ResourceManager.Network
             Optional<IList<string>> cloudInitConfigurationBlobs = default;
             Optional<string> cloudInitConfiguration = default;
             Optional<long> virtualApplianceAsn = default;
+            Optional<string> sshPublicKey = default;
             Optional<IReadOnlyList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
+            Optional<IList<VirtualApplianceAdditionalNicProperties>> additionalNics = default;
             Optional<IReadOnlyList<WritableSubResource>> virtualApplianceSites = default;
+            Optional<IReadOnlyList<WritableSubResource>> virtualApplianceConnections = default;
             Optional<IReadOnlyList<WritableSubResource>> inboundSecurityRules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<string> deploymentType = default;
+            Optional<VirtualApplianceDelegationProperties> delegation = default;
+            Optional<PartnerManagedResourceProperties> partnerManagedResource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -256,6 +287,11 @@ namespace Azure.ResourceManager.Network
                             virtualApplianceAsn = property0.Value.GetInt64();
                             continue;
                         }
+                        if (property0.NameEquals("sshPublicKey"u8))
+                        {
+                            sshPublicKey = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("virtualApplianceNics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -270,6 +306,20 @@ namespace Azure.ResourceManager.Network
                             virtualApplianceNics = array;
                             continue;
                         }
+                        if (property0.NameEquals("additionalNics"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<VirtualApplianceAdditionalNicProperties> array = new List<VirtualApplianceAdditionalNicProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(VirtualApplianceAdditionalNicProperties.DeserializeVirtualApplianceAdditionalNicProperties(item));
+                            }
+                            additionalNics = array;
+                            continue;
+                        }
                         if (property0.NameEquals("virtualApplianceSites"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -282,6 +332,20 @@ namespace Azure.ResourceManager.Network
                                 array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             virtualApplianceSites = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualApplianceConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                            }
+                            virtualApplianceConnections = array;
                             continue;
                         }
                         if (property0.NameEquals("inboundSecurityRules"u8))
@@ -307,11 +371,34 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("deploymentType"u8))
+                        {
+                            deploymentType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("delegation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            delegation = VirtualApplianceDelegationProperties.DeserializeVirtualApplianceDelegationProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("partnerManagedResource"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            partnerManagedResource = PartnerManagedResourceProperties.DeserializePartnerManagedResourceProperties(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), Optional.ToList(virtualApplianceNics), Optional.ToList(virtualApplianceSites), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState));
+            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), sshPublicKey.Value, Optional.ToList(virtualApplianceNics), Optional.ToList(additionalNics), Optional.ToList(virtualApplianceSites), Optional.ToList(virtualApplianceConnections), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState), deploymentType.Value, delegation.Value, partnerManagedResource.Value);
         }
     }
 }

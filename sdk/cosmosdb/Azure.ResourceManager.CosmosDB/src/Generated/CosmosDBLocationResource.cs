@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -34,6 +35,8 @@ namespace Azure.ResourceManager.CosmosDB
 
         private readonly ClientDiagnostics _cosmosDBLocationLocationsClientDiagnostics;
         private readonly LocationsRestOperations _cosmosDBLocationLocationsRestClient;
+        private readonly ClientDiagnostics _mongoClustersClientDiagnostics;
+        private readonly MongoClustersRestOperations _mongoClustersRestClient;
         private readonly CosmosDBLocationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CosmosDBLocationResource"/> class for mocking. </summary>
@@ -58,6 +61,8 @@ namespace Azure.ResourceManager.CosmosDB
             _cosmosDBLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string cosmosDBLocationLocationsApiVersion);
             _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBLocationLocationsApiVersion);
+            _mongoClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _mongoClustersRestClient = new MongoClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission.
+        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -116,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission.
+        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -192,6 +197,74 @@ namespace Azure.ResourceManager.CosmosDB
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CheckCosmosDBNameAvailabilityResponse>> CheckMongoClusterNameAailabilityAsync(CheckCosmosDBNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _mongoClustersClientDiagnostics.CreateScope("CosmosDBLocationResource.CheckMongoClusterNameAailability");
+            scope.Start();
+            try
+            {
+                var response = await _mongoClustersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, new AzureLocation(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CheckCosmosDBNameAvailabilityResponse> CheckMongoClusterNameAailability(CheckCosmosDBNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _mongoClustersClientDiagnostics.CreateScope("CosmosDBLocationResource.CheckMongoClusterNameAailability");
+            scope.Start();
+            try
+            {
+                var response = _mongoClustersRestClient.CheckNameAvailability(Id.SubscriptionId, new AzureLocation(Id.Name), content, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

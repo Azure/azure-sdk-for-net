@@ -47,7 +47,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuits"> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the express route port resource. </param>
-        internal ExpressRoutePortData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLinkData> links, IReadOnlyList<WritableSubResource> circuits, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags)
+        /// <param name="billingType"> The billing type of the ExpressRoutePort resource. </param>
+        internal ExpressRoutePortData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLinkData> links, IReadOnlyList<WritableSubResource> circuits, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ExpressRoutePortsBillingType? billingType) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             Identity = identity;
@@ -62,6 +63,7 @@ namespace Azure.ResourceManager.Network
             Circuits = circuits;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
+            BillingType = billingType;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -90,5 +92,7 @@ namespace Azure.ResourceManager.Network
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The resource GUID property of the express route port resource. </summary>
         public Guid? ResourceGuid { get; }
+        /// <summary> The billing type of the ExpressRoutePort resource. </summary>
+        public ExpressRoutePortsBillingType? BillingType { get; set; }
     }
 }

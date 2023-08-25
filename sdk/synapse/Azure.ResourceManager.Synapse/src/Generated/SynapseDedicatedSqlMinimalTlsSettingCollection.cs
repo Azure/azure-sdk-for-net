@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Update workspace managed sql server&apos;s minimal tls settings.
+        /// Update workspace managed sql server's minimal tls settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Update workspace managed sql server&apos;s minimal tls settings.
+        /// Update workspace managed sql server's minimal tls settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s minimal tls settings.
+        /// Get workspace managed sql server's minimal tls settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s minimal tls settings.
+        /// Get workspace managed sql server's minimal tls settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// List workspace managed sql server&apos;s minimal tls settings.
+        /// List workspace managed sql server's minimal tls settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// List workspace managed sql server&apos;s minimal tls settings.
+        /// List workspace managed sql server's minimal tls settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

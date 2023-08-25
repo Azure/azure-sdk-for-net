@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Logic.Models
     {
         /// <summary> Initializes a new instance of AS2MessageConnectionSettings. </summary>
         /// <param name="ignoreCertificateNameMismatch"> The value indicating whether to ignore mismatch in certificate name. </param>
-        /// <param name="supportHttpStatusCodeContinue"> The value indicating whether to support HTTP status code &apos;CONTINUE&apos;. </param>
+        /// <param name="supportHttpStatusCodeContinue"> The value indicating whether to support HTTP status code 'CONTINUE'. </param>
         /// <param name="keepHttpConnectionAlive"> The value indicating whether to keep the connection alive. </param>
         /// <param name="unfoldHttpHeaders"> The value indicating whether to unfold the HTTP headers. </param>
         public AS2MessageConnectionSettings(bool ignoreCertificateNameMismatch, bool supportHttpStatusCodeContinue, bool keepHttpConnectionAlive, bool unfoldHttpHeaders)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         /// <summary> The value indicating whether to ignore mismatch in certificate name. </summary>
         public bool IgnoreCertificateNameMismatch { get; set; }
-        /// <summary> The value indicating whether to support HTTP status code &apos;CONTINUE&apos;. </summary>
+        /// <summary> The value indicating whether to support HTTP status code 'CONTINUE'. </summary>
         public bool SupportHttpStatusCodeContinue { get; set; }
         /// <summary> The value indicating whether to keep the connection alive. </summary>
         public bool KeepHttpConnectionAlive { get; set; }

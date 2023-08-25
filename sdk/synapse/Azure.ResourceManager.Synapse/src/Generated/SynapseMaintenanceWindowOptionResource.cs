@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get list of SQL pool&apos;s available maintenance windows.
+        /// Get list of SQL pool's available maintenance windows.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get list of SQL pool&apos;s available maintenance windows.
+        /// Get list of SQL pool's available maintenance windows.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

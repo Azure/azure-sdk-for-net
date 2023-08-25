@@ -226,6 +226,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var eventHubName = TestEnvironment.SchemaRegistryEventHubName;
             var credential = TestEnvironment.Credential;
 #endif
+
+            // It is recommended that you cache the Event Hubs clients for the lifetime of your
+            // application, closing or disposing when application ends.  This example disposes
+            // after the immediate scope for simplicity.
+
             await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
             await producer.SendAsync(new EventData[] { eventData });
             #endregion
@@ -238,6 +243,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             #region Snippet:SchemaRegistryAvroDecodeEventData
             // construct a consumer and consume the event from our event hub
+
+            // It is recommended that you cache the Event Hubs clients for the lifetime of your
+            // application, closing or disposing when application ends.  This example disposes
+            // after the immediate scope for simplicity.
+
             await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
             await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
             {

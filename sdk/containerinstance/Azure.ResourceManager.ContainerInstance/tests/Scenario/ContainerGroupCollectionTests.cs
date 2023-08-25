@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         public async Task CreateOrUpdate_ConfidentialContainerGroup()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", "eastus2euap");
+            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
             var containerGroupData = CreateContainerGroupData(containerGroupName, isConfidentialSku: true, ccepolicy: null);
             var containerGroups = rg.GetContainerGroups();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         public async Task Get_ConfidentialContainerGroup()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", "eastus2euap");
+            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
             var containerGroupData = CreateContainerGroupData(containerGroupName, isConfidentialSku: true, ccepolicy: null);
             var containerGroups = rg.GetContainerGroups();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             var containerGroupData2 = CreateContainerGroupData(containerGroupName2, "Spot");
             ContainerGroupResource containerGroup2 = (await containerGroups2.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName2, containerGroupData2)).Value;
 
-            ResourceGroupResource rg3 = await CreateResourceGroupAsync(subscription, "testRg3", "eastus2euap");
+            ResourceGroupResource rg3 = await CreateResourceGroupAsync(subscription, "testRg3", AzureLocation.WestUS);
             var containerGroups3 = rg3.GetContainerGroups();
             string containerGroupName3 = Recording.GenerateAssetName("containergrp3");
             var containerGroupData3 = CreateContainerGroupData(containerGroupName3, isConfidentialSku: true, ccepolicy: null);

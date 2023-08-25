@@ -20,12 +20,16 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of SemanticSettings. </summary>
+        /// <param name="defaultConfiguration"> Allows you to set the name of a default semantic configuration in your index, making it optional to pass it on as a query parameter every time. </param>
         /// <param name="configurations"> The semantic configurations for the index. </param>
-        internal SemanticSettings(IList<SemanticConfiguration> configurations)
+        internal SemanticSettings(string defaultConfiguration, IList<SemanticConfiguration> configurations)
         {
+            DefaultConfiguration = defaultConfiguration;
             Configurations = configurations;
         }
 
+        /// <summary> Allows you to set the name of a default semantic configuration in your index, making it optional to pass it on as a query parameter every time. </summary>
+        public string DefaultConfiguration { get; set; }
         /// <summary> The semantic configurations for the index. </summary>
         public IList<SemanticConfiguration> Configurations { get; }
     }

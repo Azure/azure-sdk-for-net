@@ -141,9 +141,12 @@ namespace Azure.ResourceManager.MySql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/queryTexts", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            foreach (var param in queryIds)
+            if (queryIds != null && Optional.IsCollectionDefined(queryIds))
             {
-                uri.AppendQuery("queryIds", param, true);
+                foreach (var param in queryIds)
+                {
+                    uri.AppendQuery("queryIds", param, true);
+                }
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

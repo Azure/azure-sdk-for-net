@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Preferences related to the Encryption. </summary>
-    internal partial class DataBoxEncryptionPreferences
+    public partial class DataBoxEncryptionPreferences
     {
         /// <summary> Initializes a new instance of DataBoxEncryptionPreferences. </summary>
         public DataBoxEncryptionPreferences()
@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Initializes a new instance of DataBoxEncryptionPreferences. </summary>
         /// <param name="doubleEncryption"> Defines secondary layer of software-based encryption enablement. </param>
-        internal DataBoxEncryptionPreferences(DataBoxDoubleEncryption? doubleEncryption)
+        /// <param name="hardwareEncryption"> Defines Hardware level encryption (Only for disk). </param>
+        internal DataBoxEncryptionPreferences(DataBoxDoubleEncryption? doubleEncryption, HardwareEncryption? hardwareEncryption)
         {
             DoubleEncryption = doubleEncryption;
+            HardwareEncryption = hardwareEncryption;
         }
 
         /// <summary> Defines secondary layer of software-based encryption enablement. </summary>
         public DataBoxDoubleEncryption? DoubleEncryption { get; set; }
+        /// <summary> Defines Hardware level encryption (Only for disk). </summary>
+        public HardwareEncryption? HardwareEncryption { get; set; }
     }
 }

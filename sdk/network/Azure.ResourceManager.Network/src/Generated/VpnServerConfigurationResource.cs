@@ -89,6 +89,59 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of VpnServerConfigurationPolicyGroupResources in the VpnServerConfiguration. </summary>
+        /// <returns> An object representing collection of VpnServerConfigurationPolicyGroupResources and their operations over a VpnServerConfigurationPolicyGroupResource. </returns>
+        public virtual VpnServerConfigurationPolicyGroupCollection GetVpnServerConfigurationPolicyGroups()
+        {
+            return GetCachedClient(Client => new VpnServerConfigurationPolicyGroupCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves the details of a ConfigurationPolicyGroup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationPolicyGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationPolicyGroupName"> The name of the ConfigurationPolicyGroup being retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VpnServerConfigurationPolicyGroupResource>> GetVpnServerConfigurationPolicyGroupAsync(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetVpnServerConfigurationPolicyGroups().GetAsync(configurationPolicyGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the details of a ConfigurationPolicyGroup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationPolicyGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationPolicyGroupName"> The name of the ConfigurationPolicyGroup being retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VpnServerConfigurationPolicyGroupResource> GetVpnServerConfigurationPolicyGroup(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetVpnServerConfigurationPolicyGroups().Get(configurationPolicyGroupName, cancellationToken);
+        }
+
         /// <summary>
         /// Retrieves the details of a VpnServerConfiguration.
         /// <list type="bullet">

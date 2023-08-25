@@ -21,19 +21,19 @@ namespace Azure.AI.Translation.Text
     /// Text translation is a cloud-based REST API feature of the Translator service that uses neural
     /// machine translation technology to enable quick and accurate source-to-target text translation
     /// in real time across all supported languages.
-    /// 
+    ///
     /// The following methods are supported by the Text Translation feature:
-    /// 
+    ///
     /// Languages. Returns a list of languages supported by Translate, Transliterate, and Dictionary Lookup operations.
-    /// 
+    ///
     /// Translate. Renders single source-language text to multiple target-language texts with a single request.
-    /// 
+    ///
     /// Transliterate. Converts characters or letters of a source language to the corresponding characters or letters of a target language.
-    /// 
+    ///
     /// Detect. Returns the source code language code and a boolean variable denoting whether the detected language is supported for text translation and transliteration.
-    /// 
+    ///
     /// Dictionary lookup. Returns equivalent words for the source term in the target language.
-    /// 
+    ///
     /// Dictionary example Returns grammatical structure and context examples for the source term and target term pair.
     /// </summary>
     public partial class TextTranslationClient
@@ -58,23 +58,24 @@ namespace Azure.AI.Translation.Text
         /// <param name="scope">
         /// A comma-separated list of names defining the group of languages to return.
         /// Allowed group names are: `translation`, `transliteration` and `dictionary`.
-        /// If no scope is given, then all groups are returned, which is equivalent to passing 
-        /// `scope=translation,transliteration,dictionary`. To decide which set of supported languages 
+        /// If no scope is given, then all groups are returned, which is equivalent to passing
+        /// `scope=translation,transliteration,dictionary`. To decide which set of supported languages
         /// is appropriate for your scenario, see the description of the [response object](#response-body).
         /// </param>
         /// <param name="acceptLanguage">
-        /// The language to use for user interface strings. Some of the fields in the response are names of languages or 
-        /// names of regions. Use this parameter to define the language in which these names are returned. 
-        /// The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr` 
+        /// The language to use for user interface strings. Some of the fields in the response are names of languages or
+        /// names of regions. Use this parameter to define the language in which these names are returned.
+        /// The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr`
         /// to request names in French or use the value `zh-Hant` to request names in Chinese Traditional.
-        /// Names are provided in the English language when a target language is not specified or when localization 
+        /// Names are provided in the English language when a target language is not specified or when localization
         /// is not available.
         /// </param>
         /// <param name="ifNoneMatch">
-        /// Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response. 
+        /// Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response.
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetLanguagesAsync(string,string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<GetLanguagesResult>> GetLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -87,23 +88,24 @@ namespace Azure.AI.Translation.Text
         /// <param name="scope">
         /// A comma-separated list of names defining the group of languages to return.
         /// Allowed group names are: `translation`, `transliteration` and `dictionary`.
-        /// If no scope is given, then all groups are returned, which is equivalent to passing 
-        /// `scope=translation,transliteration,dictionary`. To decide which set of supported languages 
+        /// If no scope is given, then all groups are returned, which is equivalent to passing
+        /// `scope=translation,transliteration,dictionary`. To decide which set of supported languages
         /// is appropriate for your scenario, see the description of the [response object](#response-body).
         /// </param>
         /// <param name="acceptLanguage">
-        /// The language to use for user interface strings. Some of the fields in the response are names of languages or 
-        /// names of regions. Use this parameter to define the language in which these names are returned. 
-        /// The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr` 
+        /// The language to use for user interface strings. Some of the fields in the response are names of languages or
+        /// names of regions. Use this parameter to define the language in which these names are returned.
+        /// The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr`
         /// to request names in French or use the value `zh-Hant` to request names in Chinese Traditional.
-        /// Names are provided in the English language when a target language is not specified or when localization 
+        /// Names are provided in the English language when a target language is not specified or when localization
         /// is not available.
         /// </param>
         /// <param name="ifNoneMatch">
-        /// Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response. 
+        /// Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response.
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetLanguages(string,string,string,string,CancellationToken)']/*" />
         public virtual Response<GetLanguagesResult> GetLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -125,6 +127,7 @@ namespace Azure.AI.Translation.Text
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
@@ -133,7 +136,6 @@ namespace Azure.AI.Translation.Text
             {
                 request.Headers.Add("Accept-Language", acceptLanguage);
             }
-            request.Headers.Add("Accept", "application/json");
             if (ifNoneMatch != null)
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch.Value);
@@ -149,9 +151,12 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/translate", false);
-            foreach (var param in to)
+            if (to != null && Optional.IsCollectionDefined(to))
             {
-                uri.AppendQuery("to", param, true);
+                foreach (var param in to)
+                {
+                    uri.AppendQuery("to", param, true);
+                }
             }
             if (@from != null)
             {
@@ -199,11 +204,11 @@ namespace Azure.AI.Translation.Text
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -222,11 +227,11 @@ namespace Azure.AI.Translation.Text
             uri.AppendQuery("toScript", toScript, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -250,11 +255,11 @@ namespace Azure.AI.Translation.Text
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -272,11 +277,11 @@ namespace Azure.AI.Translation.Text
             uri.AppendQuery("to", to, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -294,11 +299,11 @@ namespace Azure.AI.Translation.Text
             uri.AppendQuery("to", to, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

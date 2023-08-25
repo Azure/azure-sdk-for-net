@@ -14,7 +14,6 @@ namespace Azure.Communication.Email
     /// <summary> Message payload for sending an email. </summary>
     public partial class EmailMessage
     {
-
         /// <summary> Custom email headers to be passed. </summary>
         public IDictionary<string, string> Headers { get; }
         /// <summary> Sender email address from a verified domain. </summary>
@@ -25,7 +24,7 @@ namespace Azure.Communication.Email
         public EmailRecipients Recipients { get; }
         /// <summary> List of attachments. Please note that we limit the total size of an email request (which includes attachments) to 10MB. </summary>
         public IList<EmailAttachment> Attachments { get; }
-        /// <summary> Email addresses where recipients&apos; replies will be sent to. </summary>
+        /// <summary> Email addresses where recipients' replies will be sent to. </summary>
         public IList<EmailAddress> ReplyTo { get; }
         /// <summary> Indicates whether user engagement tracking should be disabled for this request if the resource-level user engagement tracking setting was already enabled in the control plane. </summary>
         public bool? UserEngagementTrackingDisabled { get; set; }

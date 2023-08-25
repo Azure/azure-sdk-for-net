@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation&apos;s description for details. </summary>
+    /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </summary>
     public readonly partial struct MonitorMetricResultType : IEquatable<MonitorMetricResultType>
     {
         private readonly string _value;

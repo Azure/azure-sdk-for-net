@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets the specified load balancer inbound nat rule.
+        /// Gets the specified load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets the specified load balancer inbound nat rule.
+        /// Gets the specified load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -607,6 +607,68 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _loadBalancerRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken);
                 return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrate load balancer to IP Based
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/migrateToIpBased</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancers_MigrateToIpBased</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters supplied to the migrateToIpBased Api. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MigrateLoadBalancerToIPBasedResult>> MigrateToIPBasedAsync(MigrateLoadBalancerToIPBasedContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerResource.MigrateToIPBased");
+            scope.Start();
+            try
+            {
+                var response = await _loadBalancerRestClient.MigrateToIPBasedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrate load balancer to IP Based
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/migrateToIpBased</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancers_MigrateToIpBased</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters supplied to the migrateToIpBased Api. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MigrateLoadBalancerToIPBasedResult> MigrateToIPBased(MigrateLoadBalancerToIPBasedContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerResource.MigrateToIPBased");
+            scope.Start();
+            try
+            {
+                var response = _loadBalancerRestClient.MigrateToIPBased(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
+        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either 'default' or valid Azure region identifier). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
+        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either 'default' or valid Azure region identifier). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
+        /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
+        /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -1104,7 +1104,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the developer portal&apos;s revision specified by its identifier.
+        /// Gets the developer portal's revision specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the developer portal&apos;s revision specified by its identifier.
+        /// Gets the developer portal's revision specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1923,7 +1923,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists the developer portal&apos;s content types. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1945,7 +1945,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists the developer portal&apos;s content types. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1967,7 +1967,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Gets the details of the developer portal's content type. Content types describe content items' properties, validation rules, and constraints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2002,7 +2002,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Gets the details of the developer portal's content type. Content types describe content items' properties, validation rules, and constraints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates or updates the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Custom content types&apos; identifiers need to start with the `c-` prefix. Built-in content types can&apos;t be modified.
+        /// Creates or updates the developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Custom content types' identifiers need to start with the `c-` prefix. Built-in content types can't be modified.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2073,7 +2073,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates or updates the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Custom content types&apos; identifiers need to start with the `c-` prefix. Built-in content types can&apos;t be modified.
+        /// Creates or updates the developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Custom content types' identifiers need to start with the `c-` prefix. Built-in content types can't be modified.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2109,7 +2109,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Removes the specified developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can&apos;t be removed.
+        /// Removes the specified developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can't be removed.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2145,7 +2145,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Removes the specified developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can&apos;t be removed.
+        /// Removes the specified developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can't be removed.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2181,7 +2181,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists developer portal&apos;s content items specified by the provided content type.
+        /// Lists developer portal's content items specified by the provided content type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2208,7 +2208,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists developer portal&apos;s content items specified by the provided content type.
+        /// Lists developer portal's content items specified by the provided content type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2235,7 +2235,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Returns the entity state (ETag) version of the developer portal&apos;s content item specified by its identifier.
+        /// Returns the entity state (ETag) version of the developer portal's content item specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2272,7 +2272,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Returns the entity state (ETag) version of the developer portal&apos;s content item specified by its identifier.
+        /// Returns the entity state (ETag) version of the developer portal's content item specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2309,7 +2309,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Returns the developer portal&apos;s content item specified by its identifier.
+        /// Returns the developer portal's content item specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2346,7 +2346,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Returns the developer portal&apos;s content item specified by its identifier.
+        /// Returns the developer portal's content item specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2383,7 +2383,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates a new developer portal&apos;s content item specified by the provided content type.
+        /// Creates a new developer portal's content item specified by the provided content type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2421,7 +2421,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates a new developer portal&apos;s content item specified by the provided content type.
+        /// Creates a new developer portal's content item specified by the provided content type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2459,7 +2459,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Removes the specified developer portal&apos;s content item.
+        /// Removes the specified developer portal's content item.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2497,7 +2497,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Removes the specified developer portal&apos;s content item.
+        /// Removes the specified developer portal's content item.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -3157,7 +3157,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> is null. </exception>
@@ -3183,7 +3183,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> is null. </exception>
@@ -3209,7 +3209,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="content"> The value of the quota counter to be applied to all quota counter periods. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3237,7 +3237,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="content"> The value of the quota counter to be applied to all quota counter periods. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3265,7 +3265,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3302,7 +3302,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3339,7 +3339,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="content"> The value of the Quota counter to be applied on the specified period. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3378,7 +3378,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="content"> The value of the Quota counter to be applied on the specified period. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

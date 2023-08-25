@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     {
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("U");
+                    created = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("updated"u8))
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     {
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("U");
+                    updated = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("recoverableDays"u8))

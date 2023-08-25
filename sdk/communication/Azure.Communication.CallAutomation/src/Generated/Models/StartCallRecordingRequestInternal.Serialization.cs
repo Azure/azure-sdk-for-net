@@ -47,6 +47,16 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ChannelAffinity))
+            {
+                writer.WritePropertyName("channelAffinity"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChannelAffinity)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(ExternalStorage))
             {
                 writer.WritePropertyName("externalStorage"u8);

@@ -21,18 +21,18 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             // Wait for Event
-            Task<CallAutomationEventData> baseEventTask = handler.WaitForEventProcessorAsync(ev
+            Task<CallAutomationEventBase> baseEventTask = handler.WaitForEventProcessorAsync(ev
                 => ev.CallConnectionId == CallConnectionId
-                && ev.GetType() == typeof(CallConnectedEventData));
+                && ev.GetType() == typeof(CallConnected));
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new CallConnectedEventData(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
-            CallAutomationEventData returnedBaseEvent = await baseEventTask;
+            CallAutomationEventBase returnedBaseEvent = await baseEventTask;
 
             // Assert
             Assert.NotNull(returnedBaseEvent);
-            Assert.AreEqual(typeof(CallConnectedEventData), returnedBaseEvent.GetType());
+            Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
             Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
         }
 
@@ -44,16 +44,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallConnectedEventData(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             // Wait for Event after
-            CallAutomationEventData returnedBaseEvent = await  handler.WaitForEventProcessorAsync(ev
+            CallAutomationEventBase returnedBaseEvent = await  handler.WaitForEventProcessorAsync(ev
                 => ev.CallConnectionId == CallConnectionId
-                && ev.GetType() == typeof(CallConnectedEventData));
+                && ev.GetType() == typeof(CallConnected));
 
             // Assert
             Assert.NotNull(returnedBaseEvent);
-            Assert.AreEqual(typeof(CallConnectedEventData), returnedBaseEvent.GetType());
+            Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
             Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
         }
 
@@ -72,14 +72,14 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             {
                 handler.WaitForEventProcessorAsync(ev
                 => ev.CallConnectionId == "SOMEOTHERID"
-                && ev.GetType() == typeof(CallConnectedEventData), token),
+                && ev.GetType() == typeof(CallConnected), token),
                 handler.WaitForEventProcessorAsync(ev
                 => ev.CallConnectionId == CallConnectionId
-                && ev.GetType() == typeof(CallDisconnectedEventData), token)
+                && ev.GetType() == typeof(CallDisconnected), token)
             };
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new CallConnectedEventData(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             try
             {
@@ -107,13 +107,13 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             {
                 var task = handler.WaitForEventProcessorAsync(ev
                     => ev.CallConnectionId == CallConnectionId
-                    && ev.GetType() == typeof(CallConnectedEventData));
-                SendAndProcessEvent(handler, new CallConnectedEventData(CallConnectionId, ServerCallId, CorelationId, null));
+                    && ev.GetType() == typeof(CallConnected));
+                SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
                 // assert
-                CallAutomationEventData returnedBaseEvent = await task;
+                CallAutomationEventBase returnedBaseEvent = await task;
                 Assert.NotNull(returnedBaseEvent);
-                Assert.AreEqual(typeof(CallConnectedEventData), returnedBaseEvent.GetType());
+                Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
                 Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
             }
         }
@@ -126,30 +126,30 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
             int eventsSent = 5;
 
-            Task<CallAutomationEventData> eventAwaiter = handler.WaitForEventProcessorAsync(ev
+            Task<CallAutomationEventBase> eventAwaiter = handler.WaitForEventProcessorAsync(ev
                 => ev.CallConnectionId == CallConnectionId
-                && ev.GetType() == typeof(CallConnectedEventData));
+                && ev.GetType() == typeof(CallConnected));
 
             // Create and send multiple events to event processor AT ONCE
             for (int i = 0; i < eventsSent; i++)
             {
-                SendAndProcessEvent(handler, new CallConnectedEventData(CallConnectionId, ServerCallId, CorelationId, null));
+                SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
             }
 
             // Wait for event in sequence
             for (int i = 0; i < eventsSent; i++)
             {
                 // Assert
-                CallAutomationEventData returnedBaseEvent = await eventAwaiter;
+                CallAutomationEventBase returnedBaseEvent = await eventAwaiter;
                 Assert.NotNull(returnedBaseEvent);
-                Assert.AreEqual(typeof(CallConnectedEventData), returnedBaseEvent.GetType());
+                Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
                 Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
 
                 if (i < eventsSent - 1)
                 {
                     eventAwaiter = handler.WaitForEventProcessorAsync(ev
                         => ev.CallConnectionId == CallConnectionId
-                        && ev.GetType() == typeof(CallConnectedEventData));
+                        && ev.GetType() == typeof(CallConnected));
                 }
             }
         }

@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.NetApp.Tests
     {
         private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
         private readonly string _pool1Name = "pool1";
-        public static new AzureLocation DefaultLocation = AzureLocation.WestUS2;
+        //public static new AzureLocation DefaultLocation = AzureLocation.WestUS2;
+        public static new AzureLocation DefaultLocation = AzureLocation.EastUS2;
         public static new AzureLocation DefaultLocationString = DefaultLocation;
         internal NetAppAccountBackupCollection _accountBackupCollection;
         internal NetAppVolumeBackupCollection _volumeBackupCollection;
         internal NetAppVolumeResource _volumeResource;
-        internal List<NetAppVault> _vaults;
-        internal NetAppVault _vault;
+
         public ANFBackupTests(bool isAsync) : base(isAsync)
         {
         }
@@ -46,9 +46,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId);
             _accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
             _volumeBackupCollection = _volumeResource.GetNetAppVolumeBackups();
-            //getVault id
-            _vaults = await _netAppAccount.GetVaultsAsync().ToEnumerableAsync();
-            _vault = _vaults.FirstOrDefault();
         }
 
         [TearDown]
@@ -65,37 +62,30 @@ namespace Azure.ResourceManager.NetApp.Tests
                 {
                     NetAppVolumeCollection volumeCollection = pool.GetNetAppVolumes();
                     List<NetAppVolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
+                    Console.WriteLine($"{DateTime.Now.ToLongTimeString()} ClearVolumes run: {volumeList.Count} volumes to clear");
+                    int i = 0;
                     foreach (NetAppVolumeResource volume in volumeList)
                     {
-                        //NetAppVolumeBackupCollection volumeBackupCollection = volume.GetNetAppVolumeBackups();
-                        //List<NetAppVolumeBackupResource> volumeBackupList = await volumeBackupCollection.GetAllAsync().ToEnumerableAsync();
-                        //int count = volumeBackupList.Count;
-                        //foreach (NetAppVolumeBackupResource backup in volumeBackupList)
-                        //{
-                        //    //we cannot delete the last backup for a volume, the volume has to be deleted first and backup deleted on the accountlevel
-                        //    if (count > 1)
-                        //    {
-                        //        await backup.DeleteAsync(WaitUntil.Completed);
-                        //        count--;
-                        //    }
-                        //    else
-                        //    {
-                        //        lastBackupName = backup.Id.Name;
-                        //    }
-                        //}
-                        //disable backups if enabled
+                        i++;
                         if (volume.Data.DataProtection?.Backup?.IsBackupEnabled == true)
                         {
-                            NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, false);
+                            Console.WriteLine($"{DateTime.Now.ToLongTimeString()} ClearVolumes volume: {i} backups is enabled, disabeling {volume.Data.ProvisioningState}, {volume.Data.DataProtection.Backup.IsBackupEnabled}");
+                            NetAppVolumeBackupConfiguration backupPolicyProperties = new()
+                            {
+                                IsBackupEnabled = false
+                            };
                             NetAppVolumePatchDataProtection dataProtectionProperties = new();
                             dataProtectionProperties.Backup = backupPolicyProperties;
                             NetAppVolumePatch volumePatch = new(DefaultLocation);
                             volumePatch.DataProtection = dataProtectionProperties;
                             await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch);
+                            await WaitForVolumeSucceeded(volumeCollection, volume);
                         }
                         await LiveDelay(30000);
+                        Console.WriteLine($"{DateTime.Now.ToLongTimeString()} ClearVolumes volume: {i} {volume.Id.Name} provisioning state is {volume.Data.ProvisioningState}");
                         if (volume.Data.ProvisioningState.Equals("Succeeded") || volume.Data.ProvisioningState.Equals("Failed"))
                         {
+                            Console.WriteLine($"{DateTime.Now.ToLongTimeString()} ClearVolumes delete volume: {i} {volume.Id.Name}");
                             await volume.DeleteAsync(WaitUntil.Completed);
                         }
                         else
@@ -131,11 +121,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             var secondBackupName = Recording.GenerateAssetName("secondBackup-");
             await SetUp();
             Console.WriteLine($"{DateTime.Now} Test CreateDeleteBackup");
-            _vaults.Should().HaveCount(1);
-            Assert.IsNotNull(_vault);
 
             //Update volume to enable backups
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, true);
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new()
+            {
+                IsBackupEnabled = true
+            };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupPolicyProperties;
             NetAppVolumePatch volumePatch = new(DefaultLocation);
@@ -147,7 +138,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
-            Assert.AreEqual(backupPolicyProperties.VaultId, backupVolumeResource.Data.DataProtection.Backup.VaultId);
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
@@ -186,8 +176,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(secondBackupName, secondBackupResource1.Id.Name);
             await LiveDelay(60000);
             await WaitForBackupSucceeded(_volumeBackupCollection, secondBackupName);
-            //Test delete action on backup deleting the second backup
-            await secondBackupResource1.DeleteAsync(WaitUntil.Completed);
+            //Test delete action on backup deleting the first backup
+            await backupResource2.DeleteAsync(WaitUntil.Completed);
             await LiveDelay(40000);
 
             //we cannot delete last backup of existing volume need to delete volume first, or disable backups
@@ -215,14 +205,14 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task UpdateBackup()
         {
-            //getVault id
-            _vaults.Should().HaveCount(1);
-            Assert.IsNotNull(_vault);
             var backupName = Recording.GenerateAssetName("backup-");
             await SetUp();
 
             //Update volume to enable backups
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, true);
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new()
+            {
+                IsBackupEnabled = true
+            };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupPolicyProperties;
             NetAppVolumePatch volumePatch = new(DefaultLocation);
@@ -235,7 +225,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
-            Assert.AreEqual(backupPolicyProperties.VaultId, backupVolumeResource.Data.DataProtection.Backup.VaultId);
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
@@ -271,15 +260,15 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task ListBackups()
         {
-            //getVault id
-            _vaults.Should().HaveCount(1);
-            Assert.IsNotNull(_vault);
             var backupName = Recording.GenerateAssetName("backup-");
             var backupName2 = Recording.GenerateAssetName("backup-");
             await SetUp();
 
             //Update volume to enable backups
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, true);
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new()
+            {
+                IsBackupEnabled = true
+            };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupPolicyProperties;
             NetAppVolumePatch volumePatch = new(DefaultLocation);
@@ -292,7 +281,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
-            Assert.AreEqual(backupPolicyProperties.VaultId, backupVolumeResource.Data.DataProtection.Backup.VaultId);
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
@@ -336,15 +324,15 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task ListAccountBackups()
         {
-            //getVault id
-            _vaults.Should().HaveCount(1);
-            Assert.IsNotNull(_vault);
             var backupName = Recording.GenerateAssetName("backup-");
             var backupName2 = Recording.GenerateAssetName("backup-");
             await SetUp();
 
             //Update volume to enable backups
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, true);
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new()
+            {
+                IsBackupEnabled = true
+            };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupPolicyProperties;
             NetAppVolumePatch volumePatch = new(DefaultLocation);
@@ -357,7 +345,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
-            Assert.AreEqual(backupPolicyProperties.VaultId, backupVolumeResource.Data.DataProtection.Backup.VaultId);
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
@@ -406,14 +393,14 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task GetBackupStatus()
         {
-            //getVault id
-            _vaults.Should().HaveCount(1);
-            Assert.IsNotNull(_vault);
             var backupName = Recording.GenerateAssetName("backup-");
             await SetUp();
 
             //Update volume to enable backups
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, true);
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new()
+            {
+                IsBackupEnabled = true
+            };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupPolicyProperties;
             NetAppVolumePatch volumePatch = new(DefaultLocation);
@@ -426,7 +413,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
-            Assert.AreEqual(backupPolicyProperties.VaultId, backupVolumeResource.Data.DataProtection.Backup.VaultId);
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
@@ -458,15 +444,15 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task CreateVolumeFromBackupCheckRestoreStatus()
         {
-            //getVault id
             string newVolumeName = Recording.GenerateAssetName("restoredVolume-");
             var backupName = Recording.GenerateAssetName("backup-");
             await SetUp();
-            _vaults.Should().HaveCount(1);
-            Assert.IsNotNull(_vault);
             await WaitForVolumeSucceeded(_volumeCollection, _volumeResource);
             //Update volume to enable backups
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, true);
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new()
+            {
+                IsBackupEnabled = true
+            };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupPolicyProperties;
             NetAppVolumePatch volumePatch = new(DefaultLocation);
@@ -480,12 +466,13 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
-            Assert.AreEqual(backupPolicyProperties.VaultId, backupVolumeResource.Data.DataProtection.Backup.VaultId);
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
-            NetAppBackupData backupData = new(DefaultLocation);
-            backupData.Label = "adHocBackup";
+            NetAppBackupData backupData = new(DefaultLocation)
+            {
+                Label = "adHocBackup"
+            };
             NetAppVolumeBackupResource backupResource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, backupData)).Value;
             Assert.IsNotNull(backupResource1);
             Assert.AreEqual(backupName, backupResource1.Id.Name);
@@ -510,10 +497,21 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(newVolumeName, newVolumeResource2.Id.Name);
             await WaitForVolumeSucceeded(_volumeCollection, _restoredVolumeResource);
             await LiveDelay(40000);
+
+            dataProtectionProperties.Backup.IsBackupEnabled = false;
+            volumePatch.DataProtection = dataProtectionProperties;
+            NetAppVolumeResource volumeResourceUpdated = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
+            Assert.IsNotNull(volumeResourceUpdated);
+            await LiveDelay(80000);
             //Get restore status
-            //RestoreStatus restoreStatus = (await newVolumeResource2.GetVolumeRestoreStatusBackupAsync()).Value;
+            //await WaitForRestoreStatusSucceeded(_volumeBackupCollection, backupResource2.Id.Name,  )
+
+            //NetAppRestoreStatus restoreStatus = (await backupVolumeResource.GetRestoreStatusAsync()).Value;
             //Assert.IsNotNull(restoreStatus);
-            //await WaitForRestoreStatusSucceeded(_volumeBackupCollection, backupName, volumeResource: newVolumeResource2);
+
+            //Console.WriteLine($"{DateTime.Now.ToLongTimeString()} RestoreStatus volume: {_restoredVolumeResource.Id.Name} is {restoreStatus.MirrorState}");
+            //await WaitForRestoreStatusSucceeded(_volumeBackupCollection, backupName, volumeResource: _restoredVolumeResource);
+            //await _restoredVolumeResource.DeleteAsync(WaitUntil.Completed);
         }
 
         private async Task WaitForBackupSucceeded(NetAppVolumeBackupCollection volumeBackupCollection, string backupName)
@@ -604,7 +602,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                     {
                         //Check status as well
                         NetAppRestoreStatus restoreStatus = (await volumeResource.GetRestoreStatusAsync()).Value;
-                        Console.WriteLine($"Get RestoreStatus state volume: {volumeResource} run {count} BackupStatus.MirrorState {restoreStatus.MirrorState}, BackupStatus.RelationsShipt status {restoreStatus.RelationshipStatus}");
+                        Console.WriteLine($"Get RestoreStatus state volume: {volumeResource} run {count} RestoreStatus.MirrorState {restoreStatus.MirrorState}, RestoreStatus.RelationsShip status {restoreStatus.RelationshipStatus}");
                         if (restoreStatus.MirrorState == NetAppMirrorState.Mirrored)
                         {
                             return true;

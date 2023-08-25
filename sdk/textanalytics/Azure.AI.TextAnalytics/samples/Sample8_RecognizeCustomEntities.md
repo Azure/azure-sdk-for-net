@@ -1,6 +1,6 @@
-# Recognizing Custom Named Entities from Documents
+# Perform custom named entity recognition (NER)
 
-This sample demonstrates how to recognize custom entities in one or more documents. In order to use this feature, you need to train a model with your own data. For more information on how to do the training, see [train model][train_model].
+This sample demonstrates how to perform custom named entity recognition (NER) on one or more documents. In order to use this feature, you need to train a model with your own data. For more information on how to do the training, see [train model][train_model].
 
 ## Create a `TextAnalyticsClient`
 
@@ -14,9 +14,9 @@ TextAnalyticsClient client = new(endpoint, credential);
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-## Recognizing custom entities in a single or multiple documents
+## Perform custom NER on one or more text documents
 
-To recognize custom entities in documents, set up a `RecognizeCustomEntitiesAction` and call `StartAnalyzeActionsAsync` on the documents. The result is a Long Running operation of type `AnalyzeActionsOperation` which polls for the results from the API. You can use [Azure language studio][azure_language_studio] to train custom models.
+To perform custom NER on one or more text documents, call `RecognizeCustomEntitiesAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns a `RecognizeCustomEntitiesOperation`.
 
 ```C# Snippet:Sample8_RecognizeCustomEntitiesAsync
 string documentA =
@@ -48,67 +48,43 @@ List<TextDocumentInput> batchedDocuments = new()
 // recognize custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition.
 string projectName = "<projectName>";
 string deploymentName = "<deploymentName>";
-RecognizeCustomEntitiesAction recognizeCustomEntitiesAction = new(projectName, deploymentName);
-
-TextAnalyticsActions actions = new()
-{
-    RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { recognizeCustomEntitiesAction }
-};
 
 // Perform the text analysis operation.
-AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchedDocuments, actions);
-await operation.WaitForCompletionAsync();
+RecognizeCustomEntitiesOperation operation = await client.RecognizeCustomEntitiesAsync(WaitUntil.Completed, batchedDocuments, projectName, deploymentName);
 ```
 
-The returned `AnalyzeActionsOperation` contains general information about the status of the operation. It can be requested while the operation is running or when it has completed. For example:
-
-```C# Snippet:Sample8_RecognizeCustomEntitiesAsync_ViewOperationStatus
-// View the operation status.
-Console.WriteLine($"Created On   : {operation.CreatedOn}");
-Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
-Console.WriteLine($"Id           : {operation.Id}");
-Console.WriteLine($"Status       : {operation.Status}");
-Console.WriteLine($"Last Modified: {operation.LastModified}");
-Console.WriteLine();
-```
-
-To view the final results of the long-running operation:
+Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the custom NER, including any errors that might have occurred:
 
 ```C# Snippet:Sample8_RecognizeCustomEntitiesAsync_ViewResults
-await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
+await foreach (RecognizeCustomEntitiesResultCollection documentsInPage in operation.Value)
 {
-    IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesActionResults = documentsInPage.RecognizeCustomEntitiesResults;
-    foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResult in customEntitiesActionResults)
+    foreach (RecognizeEntitiesResult documentResult in documentsInPage)
     {
-        Console.WriteLine($"Action name: {customEntitiesActionResult.ActionName}");
+        Console.WriteLine($"Result for document with Id = \"{documentResult.Id}\":");
 
-        foreach (RecognizeEntitiesResult documentResult in customEntitiesActionResult.DocumentsResults)
+        if (documentResult.HasError)
         {
-            Console.WriteLine($"Result for document with Id = \"{documentResult.Id}\":");
+            Console.WriteLine($"  Error!");
+            Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+            Console.WriteLine($"  Message: {documentResult.Error.Message}");
+            Console.WriteLine();
+            continue;
+        }
 
-            if (documentResult.HasError)
-            {
-                Console.WriteLine($"  Error!");
-                Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
-                Console.WriteLine($"  Message: {documentResult.Error.Message}");
-                Console.WriteLine();
-                continue;
-            }
+        Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
 
-            Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
-
-            foreach (CategorizedEntity entity in documentResult.Entities)
-            {
-                Console.WriteLine($"  Entity: {entity.Text}");
-                Console.WriteLine($"  Category: {entity.Category}");
-                Console.WriteLine($"  Offset: {entity.Offset}");
-                Console.WriteLine($"  Length: {entity.Length}");
-                Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                Console.WriteLine($"  SubCategory: {entity.SubCategory}");
-                Console.WriteLine();
-            }
+        foreach (CategorizedEntity entity in documentResult.Entities)
+        {
+            Console.WriteLine($"  Entity: {entity.Text}");
+            Console.WriteLine($"  Category: {entity.Category}");
+            Console.WriteLine($"  Offset: {entity.Offset}");
+            Console.WriteLine($"  Length: {entity.Length}");
+            Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
+            Console.WriteLine($"  SubCategory: {entity.SubCategory}");
             Console.WriteLine();
         }
+
+        Console.WriteLine();
     }
 }
 ```
@@ -117,6 +93,5 @@ See the [README] of the Text Analytics client library for more information, incl
 
 <!-- LINKS -->
 [train_model]: https://aka.ms/azsdk/textanalytics/customentityrecognition
-[azure_language_studio]: https://language.azure.com/
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

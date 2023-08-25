@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// List all the Smart Groups within a specified subscription. 
+        /// List all the Smart Groups within a specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// List all the Smart Groups within a specified subscription. 
+        /// List all the Smart Groups within a specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

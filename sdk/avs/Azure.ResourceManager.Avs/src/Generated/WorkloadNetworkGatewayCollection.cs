@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway&apos;s display name. </param>
+        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway&apos;s display name. </param>
+        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway&apos;s display name. </param>
+        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway&apos;s display name. </param>
+        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>

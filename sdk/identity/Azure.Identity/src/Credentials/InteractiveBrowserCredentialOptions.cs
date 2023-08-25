@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -63,6 +64,11 @@ namespace Azure.Identity
         public string LoginHint { get; set; }
 
         /// <inheritdoc/>
-        public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
+        public bool DisableInstanceDiscovery { get; set; }
+
+        /// <summary>
+        /// The options for customizing the browser for interactive authentication.
+        /// </summary>
+        public BrowserCustomizationOptions BrowserCustomization { get; set; }
     }
 }

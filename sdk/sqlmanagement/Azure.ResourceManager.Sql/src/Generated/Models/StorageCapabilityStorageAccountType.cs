@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The storage account type for the database&apos;s backups. </summary>
+    /// <summary> The storage account type for the database's backups. </summary>
     public readonly partial struct StorageCapabilityStorageAccountType : IEquatable<StorageCapabilityStorageAccountType>
     {
         private readonly string _value;

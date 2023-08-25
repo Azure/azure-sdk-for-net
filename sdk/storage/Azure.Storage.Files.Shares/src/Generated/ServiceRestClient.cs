@@ -30,9 +30,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2023-01-03". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2022-11-02")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -64,9 +64,9 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        /// <summary> Sets properties for a storage account&apos;s File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="storageServiceProperties"> The StorageService properties. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(ShareServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
@@ -88,9 +88,9 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        /// <summary> Sets properties for a storage account&apos;s File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="storageServiceProperties"> The StorageService properties. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
         public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(ShareServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
@@ -132,8 +132,8 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        /// <summary> Gets the properties of a storage account&apos;s File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Gets the properties of a storage account's File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -157,8 +157,8 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        /// <summary> Gets the properties of a storage account&apos;s File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Gets the properties of a storage account's File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.Shares
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null)
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -222,7 +222,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders>> ListSharesSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -251,7 +251,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> ListSharesSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -295,7 +295,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders>> ListSharesSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
@@ -331,7 +331,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> ListSharesSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)

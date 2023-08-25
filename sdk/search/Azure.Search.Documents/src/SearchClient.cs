@@ -705,9 +705,7 @@ namespace Azure.Search.Documents
                         return Response.FromValue(value, message.Response);
                     }
                     default:
-                        throw async ?
-                            await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :
-                            ClientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -895,9 +893,7 @@ namespace Azure.Search.Documents
                         return Response.FromValue(results, message.Response);
                     }
                     default:
-                        throw async ?
-                            await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :
-                            ClientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -1060,9 +1056,7 @@ namespace Azure.Search.Documents
                         return Response.FromValue(suggestions, message.Response);
                     }
                     default:
-                        throw async ?
-                            await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :
-                            ClientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -1391,9 +1385,7 @@ namespace Azure.Search.Documents
                         return Response.FromValue(value, message.Response);
                     }
                     default:
-                        throw async ?
-                            await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :
-                            ClientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception e)

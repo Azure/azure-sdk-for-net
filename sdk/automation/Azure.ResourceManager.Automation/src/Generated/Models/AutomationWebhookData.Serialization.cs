@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("uri"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("expiryTime"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("lastInvokedTime"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 lastInvokedTime = null;
                                 continue;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("creationTime"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("lastModifiedTime"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.Core.Dynamic;
 using BenchmarkDotNet.Attributes;
 
 namespace Azure.Core.Experimental.Perf.Benchmarks

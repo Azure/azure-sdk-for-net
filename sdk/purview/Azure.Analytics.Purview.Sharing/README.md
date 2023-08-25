@@ -1,8 +1,21 @@
 # Azure Purview Share client library for .NET
 
-Microsoft Purview Share is a fully managed cloud service.
+Microsoft Purview Data Sharing allows data to be shared in-place from Azure Data Lake Storage Gen2 and Azure Storage accounts, both within and across organizations.
 
-**Please rely heavily on the [service's documentation][share_product_documentation] and our [protocol client docs][protocol_client_quickstart] to use this library**
+Data providers may use Microsoft Purview Data Sharing to share their data directly with other users and partners (known as data consumers) without data duplication, while centrally managing their sharing activities from within Microsoft Purview.
+
+For data consumers, Microsoft Purview Data Sharing provides near real-time access to data shared with them by a provider.
+
+Key capabilities delivered by Microsoft Purview Data Sharing include:
+- Share data within the organization or with partners and customers outside of the organization (within the same Azure tenant or across different Azure tenants).
+- Share data from ADLS Gen2 or Blob storage in-place without data duplication.
+- Share data with multiple recipients.
+- Access shared data in near real time.
+- Manage sharing relationships and keep track of who the data is shared with/from, for each ADLSGen2 or Blob Storage account.
+- Terminate share access at any time.
+- Flexible experience through Microsoft Purview governance portal or via REST APIs.
+
+**Please visit the following resources to learn more about this product.**
 
 [Source code][source_code] | [Package (NuGet)][client_nuget_package] | [Product documentation][share_product_documentation]
 
@@ -28,19 +41,11 @@ This example demonstrates using [DefaultAzureCredential][default_cred_ref] to au
 
 Once you have chosen and configured your credential, you can create instances of the `SentSharesClient`.
 
-```C# Snippet:SentSharesClientSample_CreateSentSharesClient
-var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
-var sentShareClient = new SentSharesClient(endPoint, credential);
-```
-
-```C# Snippet:ReceivedSharesClientSample_CreateReceivedSharesClient
-var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
-var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
-```
-
 ## Key concepts
+
+__Data Provider:__ A data provider is the individual who creates a share by selecting a data source, choosing which files and folders to share, and who to share them with. Microsoft Purview then sends an invitation to each data consumer.
+
+__Data Consumer:__ A data consumer is the individual who accepts the invitation by specifying a target storage account in their own Azure subscription that they'll use to access the shared data.
 
 ### Protocol Methods
 
@@ -58,19 +63,28 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-## Examples
+##Examples
 
-The following section shows you how to initialize and authenticate your client and share data.
+### Data Provider Examples
 
-### Create a sent share
+The following code examples demonstrate how data providers can use the Microsoft Azure Java SDK for Purview Sharing to manage their sharing activity.
+
+#### Create a Sent Share Client
+```C# Snippet:SentSharesClientSample_CreateSentSharesClient
+var credential = new DefaultAzureCredential();
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
+var sentShareClient = new SentSharesClient(endPoint, credential);
+```
+
+#### Create a Sent Share
 
 ```C# Snippet:SentSharesClientSample_CreateSentShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 var data = new
@@ -107,31 +121,59 @@ var data = new
 Operation<BinaryData> createResponse = await sentShareClient.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "sentShareId", RequestContent.Create(data));
 ```
 
-### Get a sent share
+#### Get a Sent Share
+
+After creating a sent share, data providers can retrieve it.
 
 ```C# Snippet:SentSharesClientSample_GetSentShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-Response response = await sentShareClient.GetSentShareAsync("sentShareId");
+Response response = await sentShareClient.GetSentShareAsync("sentShareId", new());
 ```
 
-### List sent shares
+#### List Sent Shares
+
+Data providers can also retrieve a list of the sent shares they have created.
 
 ```C# Snippet:SentSharesClientSample_ListSentShares
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-List<BinaryData> response = await sentShareClient.GetAllSentSharesAsync("referenceName").ToEnumerableAsync();
+List<BinaryData> response = await sentShareClient.GetAllSentSharesAsync("referenceName", null, null, new()).ToEnumerableAsync();
 ```
 
-### Create a sent share invitation
+#### Create a Share Invitation to a User
+
+After creating a sent share, the data provider can extend invitations to consumers who may then view the shared data. In this example, an invitation is extended to an individual by specifying their email address.
+
+```C# Snippet:SentSharesClientSample_CreateSentShareUserInvitation
+var credential = new DefaultAzureCredential();
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
+var sentShareClient = new SentSharesClient(endPoint, credential);
+
+var data = new
+{
+    invitationKind = "User",
+    properties = new
+    {
+        TargetEmail = "receiver@microsoft.com",
+        Notify = true,
+    }
+};
+
+Response response = await sentShareClient.CreateSentShareInvitationAsync("sentShareId", "sentShareInvitationId", RequestContent.Create(data));
+```
+
+#### Create a Share Invitation to a Service
+
+Data providers can also extend invitations to services or applications by specifying the tenant id and object id of the service. *The object id used for sending an invitation to a service must be the object id associated with the Enterprise Application (not the application registration)*.
 
 ```C# Snippet:SentSharesClientSample_CreateSentShareInvitation
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 var data = new
@@ -147,41 +189,84 @@ var data = new
 Response response = await sentShareClient.CreateSentShareInvitationAsync("sentShareId", "sentShareInvitationId", RequestContent.Create(data));
 ```
 
-### Get a sent share invitation
+#### Get a sent share invitation
+
+After creating a sent share invitation, data providers can retrieve it.
 
 ```C# Snippet:SentSharesClientSample_GetSentShareInvitation
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-Response response = await sentShareClient.GetSentShareInvitationAsync("sentShareId", "sentShareInvitationId");
+Response response = await sentShareClient.GetSentShareInvitationAsync("sentShareId", "sentShareInvitationId", new());
 ```
 
-### List sent share invitations
+#### List sent share invitations
+
+Data providers can also retrieve a list of the sent share invitations they have created.
 
 ```C# Snippet:SentSharesClientSample_ListSentShareInvitations
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("sentShareId").ToEnumerableAsync();
+List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("sentShareId", null, null, new()).ToEnumerableAsync();
 ```
 
-### List detached received shares
+#### Delete a sent share invitation
+
+Data providers can also retrieve a list of the sent share invitations they have created.
+
+```C# Snippet:SentSharesClientSample_DeleteSentShareInvitation
+var credential = new DefaultAzureCredential();
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
+var sentShareClient = new SentSharesClient(endPoint, credential);
+
+Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "sentShareId", "sentShareInvitationId", new());
+```
+
+#### Delete a sent share
+
+A sent share can be deleted by the data provider to stop sharing their data with all data consumers.
+
+```C# Snippet:SentSharesClientSample_DeleteSentShare
+var credential = new DefaultAzureCredential();
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
+var sentShareClient = new SentSharesClient(endPoint, credential);
+
+Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "sentShareId", new());
+```
+
+### Data Consumer Examples
+
+The following code examples demonstrate how data consumers can use the Microsoft Azure Java SDK for Purview Sharing to manage their sharing activity.
+
+#### Create a Receive Share Client
+```C# Snippet:ReceivedSharesClientSample_CreateReceivedSharesClient
+var credential = new DefaultAzureCredential();
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
+var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
+```
+
+#### List detached received shares
+
+To begin viewing data shared with them, a data consumer must first retrieve a list of detached received shares. Within this list, they can identify a detached received share to attach.
 
 ```C# Snippet:ReceivedSharesClientSample_ListDetachedReceivedShares
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-List<BinaryData> createResponse = await receivedSharesClient.GetAllDetachedReceivedSharesAsync().ToEnumerableAsync();
+List<BinaryData> createResponse = await receivedSharesClient.GetAllDetachedReceivedSharesAsync(null, null, new()).ToEnumerableAsync();
 ```
 
-### Create a received share
+#### Attach a received share
+
+Once the data consumer has identified a received share, they can attach the received share to a location where they can access the shared data. If the received share is already attached, the shared data will be made accessible at the new location specified.
 
 ```C# Snippet:ReceivedSharesClientSample_CreateReceivedShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
 var data = new
@@ -212,55 +297,58 @@ var data = new
 Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "receivedShareId", RequestContent.Create(data));
 ```
 
-### Get a received share
+#### Get a received share
+
+A data consumer can retrieve an individual received share.
 
 ```C# Snippet:ReceivedSharesClientSample_GetReceivedShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId");
+Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId", new());
 ```
 
-### List attached received shares
+#### List attached received shares
+
+Data consumers can also retrieve a list of their attached received shares.
 
 ```C# Snippet:ReceivedSharesClientSample_ListAttachedReceivedShares
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("referenceName").ToEnumerableAsync();
+List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("referenceName", null, null, new()).ToEnumerableAsync();
 ```
 
-### Delete a received share
+#### Delete a received share
+
+Data consumers can also retrieve a list of their attached received shares.
 
 ```C# Snippet:ReceivedSharesClientSample_DeleteReceivedShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "receivedShareId");
+Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "receivedShareId", new());
 ```
 
-### Delete a sent share invitation
+### Share Resouce Examples
 
-```C# Snippet:SentSharesClientSample_DeleteSentShareInvitation
+The following code examples demonstrate how to use the Microsoft Azure Java SDK for Purview Sharing to view share resources. A share resource is the underlying resource from which a provider shares data or the destination where a consumer attaches data shared with them.
+
+#### List share resources
+
+A list of share resources can be retrieved to view all resources within an account where sharing activities have taken place.
+
+```C# Snippet:ShareResourcesClientExample_ListShareResources
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
-var sentShareClient = new SentSharesClient(endPoint, credential);
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
+var shareResourcesClient = new ShareResourcesClient(endPoint, credential);
 
-Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "sentShareId", "sentShareInvitationId");
+List<BinaryData> createResponse = await shareResourcesClient.GetAllShareResourcesAsync(null, null, null).ToEnumerableAsync();
 ```
 
-### Delete a sent share
-
-```C# Snippet:SentSharesClientSample_DeleteSentShare
-var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
-var sentShareClient = new SentSharesClient(endPoint, credential);
-
-Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "sentShareId");
-```
 
 ## Troubleshooting
 

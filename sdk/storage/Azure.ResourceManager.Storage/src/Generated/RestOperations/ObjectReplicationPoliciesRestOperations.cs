@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> List the object replication policies associated with the storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> List the object replication policies associated with the storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Get the object replication policy of the storage account by policy ID. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="objectReplicationPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Get the object replication policy of the storage account by policy ID. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="objectReplicationPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Create or update the object replication policy of the storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
         /// <param name="data"> The object replication policy set to a storage account. A unique policy ID will be created if absent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="objectReplicationPolicyId"/> or <paramref name="data"/> is null. </exception>
@@ -265,9 +265,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Create or update the object replication policy of the storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
         /// <param name="data"> The object replication policy set to a storage account. A unique policy ID will be created if absent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="objectReplicationPolicyId"/> or <paramref name="data"/> is null. </exception>
@@ -320,9 +320,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Deletes the object replication policy associated with the specified storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="objectReplicationPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -347,9 +347,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Deletes the object replication policy associated with the specified storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value &apos;default&apos;. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="objectReplicationPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>

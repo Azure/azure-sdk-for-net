@@ -22,10 +22,10 @@ namespace Azure.Storage.Files.Shares
     {
         private readonly HttpPipeline _pipeline;
         private readonly string _url;
-        private readonly bool? _allowTrailingDot;
         private readonly string _version;
-        private readonly ShareTokenIntent? _fileRequestIntent;
         private readonly string _fileRangeWriteFromUrl;
+        private readonly bool? _allowTrailingDot;
+        private readonly ShareTokenIntent? _fileRequestIntent;
         private readonly bool? _allowSourceTrailingDot;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -35,21 +35,21 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2023-01-03". </param>
+        /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. The default value is "update". </param>
         /// <param name="allowTrailingDot"> If true, the trailing dot will not be trimmed from the target URI. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
         /// <param name="allowSourceTrailingDot"> If true, the trailing dot will not be trimmed from the source URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/>, <paramref name="version"/> or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, bool? allowTrailingDot = null, string version = "2022-11-02", ShareTokenIntent? fileRequestIntent = null, string fileRangeWriteFromUrl = "update", bool? allowSourceTrailingDot = null)
+        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, string fileRangeWriteFromUrl, bool? allowTrailingDot = null, ShareTokenIntent? fileRequestIntent = null, bool? allowSourceTrailingDot = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
-            _allowTrailingDot = allowTrailingDot;
             _version = version ?? throw new ArgumentNullException(nameof(version));
-            _fileRequestIntent = fileRequestIntent;
             _fileRangeWriteFromUrl = fileRangeWriteFromUrl ?? throw new ArgumentNullException(nameof(fileRangeWriteFromUrl));
+            _allowTrailingDot = allowTrailingDot;
+            _fileRequestIntent = fileRequestIntent;
             _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 
@@ -136,7 +136,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Creates a new file or replaces a file. Note it only initializes the file with no content. </summary>
         /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
         /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -169,7 +169,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Creates a new file or replaces a file. Note it only initializes the file with no content. </summary>
         /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
         /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -238,7 +238,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Reads or downloads a file from the system, including its metadata and properties. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return file data only from the specified byte range. </param>
         /// <param name="rangeGetContentMD5"> When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
@@ -262,7 +262,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Reads or downloads a file from the system, including its metadata and properties. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return file data only from the specified byte range. </param>
         /// <param name="rangeGetContentMD5"> When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
@@ -320,7 +320,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Returns all user-defined metadata, standard HTTP properties, and system properties for the file. It does not return the content of the file. </summary>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<FileGetPropertiesHeaders>> GetPropertiesAsync(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
@@ -339,7 +339,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Returns all user-defined metadata, standard HTTP properties, and system properties for the file. It does not return the content of the file. </summary>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<FileGetPropertiesHeaders> GetProperties(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
@@ -386,7 +386,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> removes the file from the storage account. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<FileDeleteHeaders>> DeleteAsync(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
@@ -404,7 +404,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> removes the file from the storage account. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<FileDeleteHeaders> Delete(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
@@ -502,7 +502,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Sets HTTP headers on the file. </summary>
         /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="fileContentLength"> Resizes a file to the specified size. If the specified byte value is less than the current size of the file, then all ranges above the specified byte value are cleared. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -534,7 +534,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Sets HTTP headers on the file. </summary>
         /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="fileContentLength"> Resizes a file to the specified size. If the specified byte value is less than the current size of the file, then all ranges above the specified byte value are cleared. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -599,7 +599,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Updates user-defined metadata for the specified file. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -618,7 +618,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Updates user-defined metadata for the specified file. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -672,7 +672,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -691,7 +691,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -739,7 +739,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
         public async Task<ResponseWithHeaders<FileReleaseLeaseHeaders>> ReleaseLeaseAsync(string leaseId, int? timeout = null, CancellationToken cancellationToken = default)
@@ -763,7 +763,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
         public ResponseWithHeaders<FileReleaseLeaseHeaders> ReleaseLease(string leaseId, int? timeout = null, CancellationToken cancellationToken = default)
@@ -819,7 +819,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
@@ -844,7 +844,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
@@ -899,7 +899,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<FileBreakLeaseHeaders>> BreakLeaseAsync(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
@@ -917,7 +917,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<FileBreakLeaseHeaders> BreakLease(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
@@ -981,10 +981,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Upload a range of bytes to a file. </summary>
-        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. For an update operation, the range can be up to 4 MB in size. For a clear operation, the range can be up to the value of the file&apos;s full size. The File service accepts only a single byte range for the Range and &apos;x-ms-range&apos; headers, and the byte range must be specified in the following format: bytes=startByte-endByte. </param>
+        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. For an update operation, the range can be up to 4 MB in size. For a clear operation, the range can be up to the value of the file's full size. The File service accepts only a single byte range for the Range and 'x-ms-range' headers, and the byte range must be specified in the following format: bytes=startByte-endByte. </param>
         /// <param name="fileRangeWrite"> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. The Range and Content-Length headers must match to perform the update. - Clear: Clears the specified range and releases the space used in storage for that range. To clear a range, set the Content-Length header to zero, and set the Range header to a value that indicates the range to clear, up to maximum file size. </param>
         /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
         /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
         /// <param name="optionalbody"> Initial data. </param>
@@ -1011,10 +1011,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Upload a range of bytes to a file. </summary>
-        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. For an update operation, the range can be up to 4 MB in size. For a clear operation, the range can be up to the value of the file&apos;s full size. The File service accepts only a single byte range for the Range and &apos;x-ms-range&apos; headers, and the byte range must be specified in the following format: bytes=startByte-endByte. </param>
+        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. For an update operation, the range can be up to 4 MB in size. For a clear operation, the range can be up to the value of the file's full size. The File service accepts only a single byte range for the Range and 'x-ms-range' headers, and the byte range must be specified in the following format: bytes=startByte-endByte. </param>
         /// <param name="fileRangeWrite"> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. The Range and Content-Length headers must match to perform the update. - Clear: Clears the specified range and releases the space used in storage for that range. To clear a range, set the Content-Length header to zero, and set the Range header to a value that indicates the range to clear, up to maximum file size. </param>
         /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
         /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
         /// <param name="optionalbody"> Initial data. </param>
@@ -1101,7 +1101,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range"> Writes data to the specified byte range in the file. </param>
         /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source. </param>
         /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
         /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
@@ -1137,7 +1137,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range"> Writes data to the specified byte range in the file. </param>
         /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source. </param>
         /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
         /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
@@ -1214,7 +1214,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Returns the list of valid ranges for a file. </summary>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1243,7 +1243,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Returns the list of valid ranges for a file. </summary>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1345,7 +1345,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Copies a blob or file to a destination file within the storage account. </summary>
         /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -1374,7 +1374,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Copies a blob or file to a destination file within the storage account. </summary>
         /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -1435,7 +1435,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Aborts a pending Copy File operation, and leaves a destination file with zero length and full metadata. </summary>
         /// <param name="copyId"> The copy identifier provided in the x-ms-copy-id header of the original Copy File operation. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copyId"/> is null. </exception>
@@ -1460,7 +1460,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Aborts a pending Copy File operation, and leaves a destination file with zero length and full metadata. </summary>
         /// <param name="copyId"> The copy identifier provided in the x-ms-copy-id header of the original Copy File operation. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copyId"/> is null. </exception>
@@ -1524,7 +1524,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Lists handles for file. </summary>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<ListHandlesResponse, FileListHandlesHeaders>> ListHandlesAsync(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
@@ -1552,7 +1552,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Lists handles for file. </summary>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<ListHandlesResponse, FileListHandlesHeaders> ListHandles(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
@@ -1614,7 +1614,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Closes all handles open for given file. </summary>
         /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1640,7 +1640,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Closes all handles open for given file. </summary>
         /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1745,7 +1745,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Renames a file. </summary>
         /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="replaceIfExists"> Optional. A boolean value for if the destination file already exists, whether this request will overwrite the file or not. If true, the rename will succeed and will overwrite the destination file. If not provided or if false and the destination file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist, the rename will succeed. Note: This value does not override the x-ms-file-copy-ignore-read-only header value. </param>
         /// <param name="ignoreReadOnly"> Optional. A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected. If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the rename to fail. </param>
         /// <param name="sourceLeaseId"> Required if the source file has an active infinite lease. </param>
@@ -1778,7 +1778,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Renames a file. </summary>
         /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="replaceIfExists"> Optional. A boolean value for if the destination file already exists, whether this request will overwrite the file or not. If true, the rename will succeed and will overwrite the destination file. If not provided or if false and the destination file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist, the rename will succeed. Note: This value does not override the x-ms-file-copy-ignore-read-only header value. </param>
         /// <param name="ignoreReadOnly"> Optional. A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected. If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the rename to fail. </param>
         /// <param name="sourceLeaseId"> Required if the source file has an active infinite lease. </param>

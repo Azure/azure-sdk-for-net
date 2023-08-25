@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with th current timestamp. </param>
         /// <param name="dispositionCode"> (Optional) Indicates the outcome of the job, populate this field with your own custom values. </param>
         internal CancelExceptionAction(string kind, string note, string dispositionCode) : base(kind)
         {
@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
             Kind = kind ?? "cancel";
         }
 
-        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </summary>
+        /// <summary> (Optional) A note that will be appended to the jobs' Notes collection with th current timestamp. </summary>
         public string Note { get; set; }
         /// <summary> (Optional) Indicates the outcome of the job, populate this field with your own custom values. </summary>
         public string DispositionCode { get; set; }

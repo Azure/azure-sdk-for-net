@@ -4,16 +4,19 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/e812b54127fad6c9bc2407b33980b0fe385b7717/specification/app/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ad997e99eccc15b7ab4cd66ae3f1f9534a1e2628/specification/app/resource-manager/readme.md
+# tag: package-2023-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -204,6 +207,26 @@ rename-mapping:
   Scheme: ContainerAppHttpScheme
   ContainerAppProbeHttpGetHttpHeadersItem: ContainerAppHttpHeaderInfo
   RegistryInfo.registryUrl: RegistryServer
+  WorkloadProfile.maximumCount: MaximumNodeCount
+  WorkloadProfile.minimumCount: MinimumNodeCount
+  BillingMeterProperties.category: WorkloadProfileCategory
+  TriggerType: ContainerAppJobTriggerType
+  JobTemplate: ContainerAppJobTemplate
+  JobProvisioningState: ContainerAppJobProvisioningState
+  JobPatchPropertiesProperties: ContainerAppJobPatchProperties
+  JobExecution: ContainerAppJobExecution
+  JobExecutionBase: ContainerAppJobExecutionBase
+  JobExecutionTemplate: ContainerAppJobExecutionTemplate
+  JobConfiguration: ContainerAppJobConfiguration
+  Job: ContainerAppJob
+  JobsCollection: ContainerAppJobsCollection
+  ManagedCertificate: ContainerAppManagedCertificate
+  Mtls.enabled: IsMtlsEnabled
+  ServiceBind: ContainerAppServiceBind
+  JobScale: ContainerAppJobScale
+  JobScale.pollingInterval: PollingIntervalInSeconds
+  JobScaleRule: ContainerAppJobScaleRule
+  JobConfigurationEventTriggerConfig: EventTriggerConfiguration
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -218,7 +241,7 @@ override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability
 
 # mgmt-debug:
-#   show-serialized-names: true
+#    show-serialized-names: true
 
 directive:
   - from: swagger-document
@@ -226,4 +249,8 @@ directive:
     transform: >
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
+  # Change type to ResourceIdentifier
+  - from: CommonDefinitions.json
+    where: $.definitions.ServiceBind.properties.serviceId
+    transform: $['x-ms-format'] = 'arm-id'
 ```

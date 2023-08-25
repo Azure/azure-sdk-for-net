@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         }
 
         /// <summary>
-        /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access.
+        /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         }
 
         /// <summary>
-        /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access.
+        /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

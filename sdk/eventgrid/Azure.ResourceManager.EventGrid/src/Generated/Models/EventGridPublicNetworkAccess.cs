@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
     /// This determines if traffic is allowed over public network. By default it is enabled.
-    /// You can further restrict to specific IPs by configuring &lt;seealso cref=&quot;P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainProperties.InboundIpRules&quot; /&gt;
+    /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainProperties.InboundIpRules" /&gt;
     /// </summary>
     public readonly partial struct EventGridPublicNetworkAccess : IEquatable<EventGridPublicNetworkAccess>
     {

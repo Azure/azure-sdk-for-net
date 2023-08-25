@@ -79,17 +79,13 @@ namespace Azure.Storage.Blobs
                     .ConfigureAwait(false);
 
                 _blockIds.Add(blockId);
-                _buffer.Clear();
             }
         }
 
-        protected override async Task FlushInternal(
-            UploadTransferValidationOptions validationOptions,
+        protected override async Task CommitInternal(
             bool async,
             CancellationToken cancellationToken)
         {
-            await AppendInternal(validationOptions, async, cancellationToken).ConfigureAwait(false);
-
             Response<BlobContentInfo> response = await _blockBlobClient.CommitBlockListInternal(
                 base64BlockIds: _blockIds,
                 blobHttpHeaders: _blobHttpHeaders,

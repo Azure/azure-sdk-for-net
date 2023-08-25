@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateAddress_ValidateAddressPost()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/ValidateAddressPost.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/ValidateAddressPost.json
             // this example is just showing the usage of "Service_ValidateAddress" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,18 +33,18 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "YourSubscriptionId";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westus");
-            DataBoxValidateAddressContent content = new DataBoxValidateAddressContent(new DataBoxShippingAddress("16 TOWNSEND ST", "US", "94107")
+            DataBoxValidateAddressContent content = new DataBoxValidateAddressContent(new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
             {
-                StreetAddress2 = "Unit 1",
-                City = "San Francisco",
-                StateOrProvince = "CA",
-                CompanyName = "Microsoft",
+                StreetAddress2 = "XXXX XXXX",
+                City = "XXXX XXXX",
+                StateOrProvince = "XX",
+                CompanyName = "XXXX XXXX",
                 AddressType = DataBoxShippingAddressType.Commercial,
             }, DataBoxSkuName.DataBox);
             AddressValidationOutput result = await subscriptionResource.ValidateAddressAsync(location, content);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateInputs_ValidateInputs()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/ValidateInputs.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/ValidateInputs.json
             // this example is just showing the usage of "Service_ValidateInputs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "YourSubscriptionId";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -79,23 +79,23 @@ new DataTransferDetailsValidationContent(DataBoxSkuName.DataBox,DataBoxJobTransf
 {
 DataImportDetails =
 {
-new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/databoxbvt/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount")))
+new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))
 },
-},new DataBoxValidateAddressContent(new DataBoxShippingAddress("16 TOWNSEND ST","US","94107")
+},new DataBoxValidateAddressContent(new DataBoxShippingAddress("XXXX XXXX","XX","00000")
 {
-StreetAddress2 = "Unit 1",
-City = "San Francisco",
-StateOrProvince = "CA",
-CompanyName = "Microsoft",
+StreetAddress2 = "XXXX XXXX",
+City = "XXXX XXXX",
+StateOrProvince = "XX",
+CompanyName = "XXXX XXXX",
 AddressType = DataBoxShippingAddressType.Commercial,
 },DataBoxSkuName.DataBox)
 {
-TransportPreferencesPreferredShipmentType = TransportShipmentType.MicrosoftManaged,
-},new SubscriptionIsAllowedToCreateJobValidationContent(),new SkuAvailabilityValidationContent(DataBoxSkuName.DataBox,DataBoxJobTransferType.ImportToAzure,"US",new AzureLocation("westus")),new CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName.DataBox),new PreferencesValidationContent(DataBoxSkuName.DataBox)
+TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftManaged),
+},new SubscriptionIsAllowedToCreateJobValidationContent(),new SkuAvailabilityValidationContent(DataBoxSkuName.DataBox,DataBoxJobTransferType.ImportToAzure,"XX",new AzureLocation("westus")),new CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName.DataBox),new PreferencesValidationContent(DataBoxSkuName.DataBox)
 {
 Preference = new DataBoxOrderPreferences()
 {
-TransportPreferencesPreferredShipmentType = TransportShipmentType.MicrosoftManaged,
+TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftManaged),
 },
 }
             });
@@ -109,7 +109,7 @@ TransportPreferencesPreferredShipmentType = TransportShipmentType.MicrosoftManag
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetRegionConfiguration_RegionConfiguration()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/RegionConfiguration.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/RegionConfiguration.json
             // this example is just showing the usage of "Service_RegionConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ TransportPreferencesPreferredShipmentType = TransportShipmentType.MicrosoftManag
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "YourSubscriptionId";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

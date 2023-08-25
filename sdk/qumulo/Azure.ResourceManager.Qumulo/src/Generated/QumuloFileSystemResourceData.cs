@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Qumulo.Models;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Qumulo
             StorageSku = storageSku;
             UserDetails = userDetails;
             DelegatedSubnetId = delegatedSubnetId;
-            PrivateIPs = new ChangeTrackingList<string>();
+            PrivateIPs = new ChangeTrackingList<IPAddress>();
             AdminPassword = adminPassword;
             InitialCapacity = initialCapacity;
         }
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="adminPassword"> Initial administrator password of the resource. </param>
         /// <param name="initialCapacity"> Storage capacity in TB. </param>
         /// <param name="availabilityZone"> Availability zone. </param>
-        internal QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MarketplaceDetails marketplaceDetails, QumuloProvisioningState? provisioningState, StorageSku storageSku, QumuloUserDetails userDetails, string delegatedSubnetId, Uri clusterLoginUri, IList<string> privateIPs, string adminPassword, int initialCapacity, string availabilityZone) : base(id, name, resourceType, systemData, tags, location)
+        internal QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MarketplaceDetails marketplaceDetails, QumuloProvisioningState? provisioningState, StorageSku storageSku, QumuloUserDetails userDetails, string delegatedSubnetId, Uri clusterLoginUri, IList<IPAddress> privateIPs, string adminPassword, int initialCapacity, string availabilityZone) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             MarketplaceDetails = marketplaceDetails;
@@ -91,7 +92,12 @@ namespace Azure.ResourceManager.Qumulo
         public string UserDetailsEmail
         {
             get => UserDetails is null ? default : UserDetails.Email;
-            set => UserDetails = new QumuloUserDetails(value);
+            set
+            {
+                if (UserDetails is null)
+                    UserDetails = new QumuloUserDetails();
+                UserDetails.Email = value;
+            }
         }
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
@@ -99,7 +105,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <summary> File system Id of the resource. </summary>
         public Uri ClusterLoginUri { get; set; }
         /// <summary> Private IPs of the resource. </summary>
-        public IList<string> PrivateIPs { get; }
+        public IList<IPAddress> PrivateIPs { get; }
         /// <summary> Initial administrator password of the resource. </summary>
         public string AdminPassword { get; set; }
         /// <summary> Storage capacity in TB. </summary>

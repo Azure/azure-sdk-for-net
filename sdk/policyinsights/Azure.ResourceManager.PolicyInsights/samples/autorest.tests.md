@@ -23,4 +23,8 @@ testgen:
   - PolicyStates_SummarizeForPolicyDefinition
   - PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment
   - PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment
+  - PolicyEvents_ListQueryResultsForResource
+  - PolicyStates_ListQueryResultsForResource
+  - PolicyStates_SummarizeForResource
+  - PolicyTrackedResources_ListQueryResultsForResource
 ```

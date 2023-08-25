@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
@@ -673,6 +674,161 @@ namespace Azure.Monitor.Query.Tests
 
             var response = await client.QueryWorkspaceAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQuery(query.Value), _logsTestData.DataTimeRange);
             Assert.True(response.Value.Single());
+        }
+
+        [Test]
+        public async Task CanQueryResourceGenericPrimaryWorkspace()
+        {
+            var timespan = TimeSpan.FromSeconds(5);
+
+            var client = CreateClient();
+            // Empty check
+            var results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.AreEqual(0, results.Value.Count);
+
+            // Check if all rows in table were uploaded
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
+
+            // Make sure there is some data in the range specified
+            results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.GreaterOrEqual(results.Value.Count, 3);
+        }
+
+        [Test]
+        public async Task CanQueryResourcePrimaryWorkspace()
+        {
+            var timespan = TimeSpan.FromSeconds(5);
+
+            var client = CreateClient();
+            // Empty check
+            Response<LogsQueryResult> results = await client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.AreEqual(0, results.Value.Table.Rows.Count);
+
+            // Check if all rows in table were uploaded
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
+
+            // Make sure there is some data in the range specified
+            results = await client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.GreaterOrEqual(results.Value.Table.Rows.Count, 3);
+        }
+
+        [Test]
+        public async Task CanQueryResourceSecondaryWorkspace()
+        {
+            var timespan = TimeSpan.FromSeconds(5);
+
+            var client = CreateClient();
+            // Empty check
+            Response<LogsQueryResult> results = await client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.AreEqual(0, results.Value.Table.Rows.Count);
+
+            // Check if all rows in table were uploaded
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
+
+            // Make sure there is some data in the range specified
+            results = await client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.GreaterOrEqual(results.Value.Table.Rows.Count, 3);
+        }
+
+        [Test]
+        public void VerifyInvalidQueryResourceCheckNoBackslash()
+        {
+            var client = CreateClient();
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.SecondaryWorkspaceId.Substring(1)),
+                "search *",
+                _logsTestData.DataTimeRange));
+
+            StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
+        }
+
+        [Test]
+        public async Task CanQueryResourceGenericSecondaryWorkspace()
+        {
+            var timespan = TimeSpan.FromSeconds(5);
+
+            var client = CreateClient();
+            // Empty check
+            var results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.AreEqual(0, results.Value.Count);
+
+            // Check if all rows in table were uploaded
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
+
+            // Make sure there is some data in the range specified
+            results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.GreaterOrEqual(results.Value.Count, 3);
+        }
+
+        [Test]
+        public void VerifyInvalidQueryResourceCheckMultipleBackslash()
+        {
+            var client = CreateClient();
+            LogsQueryOptions options = new LogsQueryOptions();
+            options.IncludeStatistics = true;
+            var resourceId = new ResourceIdentifier("///" + TestEnvironment.WorkspacePrimaryResourceId);
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
+                resourceId,
+                "search *",
+                _logsTestData.DataTimeRange,
+                options));
+
+            StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
+        }
+
+        [Test]
+        public void VerifyQueryResourceInvalidId()
+        {
+            var client = CreateClient();
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId.Remove(15, 36)),
+                "search *",
+                _logsTestData.DataTimeRange));
+
+            StringAssert.StartsWith("The ResourceIdentifier is missing the key for subscriptions.", exception.Message);
         }
 
         public static IEnumerable<FormattableStringWrapper> Queries

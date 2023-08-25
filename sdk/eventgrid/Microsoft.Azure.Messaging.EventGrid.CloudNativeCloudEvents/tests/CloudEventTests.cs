@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
                    new AzureKeyCredential("fakeKey"),
                    options);
             var activity = new Activity($"{nameof(EventGridPublisherClient)}.{nameof(EventGridPublisherClient.SendEvents)}");
-            activity.SetW3CFormat();
+            activity.SetIdFormat(ActivityIdFormat.W3C);
             activity.Start();
             List<CloudEvent> inputEvents = new List<CloudEvent>();
             for (int i = 0; i < 10; i++)

@@ -168,6 +168,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Create a new ContainerRegistryContentClient
             ContainerRegistryContentClient client = new ContainerRegistryContentClient(endpoint, repository, new DefaultAzureCredential());
+            await SetManifestPrerequisites(client);
 
             #region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
 
@@ -180,7 +181,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 {
                     new
                     {
-                        digest = "sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4",
+                        digest = "sha256:721089ae5c4d90e58e3d7f7e6c652a351621fbf37c26eceae23622173ec5a44d",
                         mediaType = ManifestMediaType.DockerManifest.ToString(),
                         platform = new {
                             architecture = ArtifactArchitecture.Amd64.ToString(),
@@ -195,6 +196,30 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             await client.SetManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
 
             #endregion
+        }
+
+        private async Task SetManifestPrerequisites(ContainerRegistryContentClient client)
+        {
+            string layer = "ec0488e025553d34358768c43e24b1954e0056ec4700883252c74f3eec273016";
+            string basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker");
+
+            // Upload config
+            using (FileStream fs = File.OpenRead(Path.Combine(basePath, "config.json")))
+            {
+                _ = await client.UploadBlobAsync(fs);
+            }
+
+            // Upload layer
+            using (FileStream fs = File.OpenRead(Path.Combine(basePath, layer)))
+            {
+                _ = await client.UploadBlobAsync(fs);
+            }
+
+            // Upload manifest
+            using (FileStream fs = File.OpenRead(Path.Combine(basePath, "manifest.json")))
+            {
+                _ = await client.UploadBlobAsync(fs);
+            }
         }
 
         [Test]

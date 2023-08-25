@@ -17,6 +17,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
+using Castle.DynamicProxy;
 
 namespace Azure.Identity.Tests
 {
@@ -68,10 +69,9 @@ namespace Azure.Identity.Tests
 
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
         {
-            var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString();
-            var expiresOn = DateTimeOffset.Parse(expiresOnString, CultureInfo.CurrentCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            var expiresOn = DateTimeOffset.FromUnixTimeSeconds(DateTimeOffset.UtcNow.Add(expiresOffset).ToUnixTimeSeconds());
             var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
-            var xml = @$"<Object Type=""Microsoft.Azure.Commands.Profile.Models.PSAccessToken""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.DateTimeOffset"">{expiresOnString}</Property><Property Name=""TenantId"" Type=""System.String"">{Guid.NewGuid().ToString()}</Property><Property Name=""UserId"" Type=""System.String"">foo@contoso.com</Property><Property Name=""Type"" Type=""System.String"">Bearer</Property></Object>";
+            var xml = @$"<Object Type=""System.Management.Automation.PSCustomObject""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.Int64"">{expiresOn.ToUnixTimeSeconds()}</Property></Object>";
             return (token, expiresOn, xml);
         }
 
@@ -513,15 +513,43 @@ namespace Azure.Identity.Tests
         public static string[] ExtractAdditionalTenantProperty(TokenCredential cred)
         {
             var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
-            var additionallyAllowedTenantIds =  (string[])targetCred.GetType().GetProperty("AdditionallyAllowedTenantIds", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(targetCred);
+            var additionallyAllowedTenantIds = (string[])targetCred.GetType().GetProperty("AdditionallyAllowedTenantIds", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(targetCred);
             return additionallyAllowedTenantIds;
+        }
+
+        public static bool TryGetConfiguredTenantIdForMsalCredential(TokenCredential cred, out string tenantID)
+        {
+            var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
+            object clientObject = targetCred.GetType().GetProperty("Client", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(targetCred);
+            tenantID = clientObject switch
+            {
+                MsalPublicClient msalPub => msalPub?.TenantId,
+                MsalConfidentialClient msalConf => msalConf?.TenantId,
+                _ => null
+            };
+            if (tenantID == null)
+            {
+                tenantID = targetCred.GetType().GetProperty("TenantId", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(targetCred) as string;
+            }
+            return tenantID != null;
+        }
+
+        public static bool IsMsalCredential(TokenCredential cred)
+        {
+            var clientType = GetMsalClientType(cred);
+            return GetMsalClientType(cred) == typeof(MsalPublicClient) || clientType == typeof(MsalConfidentialClient);
         }
 
         public static bool IsCredentialTypePubClient(TokenCredential cred)
         {
-            var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
-            Type clientType = targetCred.GetType().GetProperty("Client", BindingFlags.Instance | BindingFlags.NonPublic)?.PropertyType;
+            var clientType = GetMsalClientType(cred);
             return clientType == typeof(MsalPublicClient);
+        }
+
+        private static Type GetMsalClientType(TokenCredential cred)
+        {
+            var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
+            return targetCred.GetType().GetProperty("Client", BindingFlags.Instance | BindingFlags.NonPublic)?.PropertyType;
         }
 
         public static string CreateClientAssertionJWT(Uri authorityHost, string clientId, string tenantId, X509Certificate2 clientCertificate)

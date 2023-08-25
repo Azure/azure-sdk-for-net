@@ -288,9 +288,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="patch"> Object containing SessionHost definitions. </param>
+        /// <param name="force"> Force flag to update assign, unassign or reassign personal desktop. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<SessionHostResource>> UpdateAsync(SessionHostPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SessionHostResource>> UpdateAsync(SessionHostPatch patch, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = await _sessionHostRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _sessionHostRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, force, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -322,9 +323,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="patch"> Object containing SessionHost definitions. </param>
+        /// <param name="force"> Force flag to update assign, unassign or reassign personal desktop. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<SessionHostResource> Update(SessionHostPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<SessionHostResource> Update(SessionHostPatch patch, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -332,7 +334,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = _sessionHostRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var response = _sessionHostRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, force, cancellationToken);
                 return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

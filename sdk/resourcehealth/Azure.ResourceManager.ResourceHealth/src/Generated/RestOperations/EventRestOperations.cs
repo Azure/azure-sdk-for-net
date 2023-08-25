@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01-preview";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventData>> GetBySubscriptionIdAndTrackingIdAsync(string subscriptionId, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceHealthEventData>> GetBySubscriptionIdAndTrackingIdAsync(string subscriptionId, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        EventData value = default;
+                        ResourceHealthEventData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventData.DeserializeEventData(document.RootElement);
+                        value = ResourceHealthEventData.DeserializeResourceHealthEventData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EventData)null, message.Response);
+                    return Response.FromValue((ResourceHealthEventData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventData> GetBySubscriptionIdAndTrackingId(string subscriptionId, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public Response<ResourceHealthEventData> GetBySubscriptionIdAndTrackingId(string subscriptionId, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        EventData value = default;
+                        ResourceHealthEventData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventData.DeserializeEventData(document.RootElement);
+                        value = ResourceHealthEventData.DeserializeResourceHealthEventData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EventData)null, message.Response);
+                    return Response.FromValue((ResourceHealthEventData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventData>> FetchDetailsBySubscriptionIdAndTrackingIdAsync(string subscriptionId, string eventTrackingId, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceHealthEventData>> FetchDetailsBySubscriptionIdAndTrackingIdAsync(string subscriptionId, string eventTrackingId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        EventData value = default;
+                        ResourceHealthEventData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventData.DeserializeEventData(document.RootElement);
+                        value = ResourceHealthEventData.DeserializeResourceHealthEventData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventData> FetchDetailsBySubscriptionIdAndTrackingId(string subscriptionId, string eventTrackingId, CancellationToken cancellationToken = default)
+        public Response<ResourceHealthEventData> FetchDetailsBySubscriptionIdAndTrackingId(string subscriptionId, string eventTrackingId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        EventData value = default;
+                        ResourceHealthEventData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventData.DeserializeEventData(document.RootElement);
+                        value = ResourceHealthEventData.DeserializeResourceHealthEventData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventData>> GetByTenantIdAndTrackingIdAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceHealthEventData>> GetByTenantIdAndTrackingIdAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
@@ -238,13 +238,13 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        EventData value = default;
+                        ResourceHealthEventData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventData.DeserializeEventData(document.RootElement);
+                        value = ResourceHealthEventData.DeserializeResourceHealthEventData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EventData)null, message.Response);
+                    return Response.FromValue((ResourceHealthEventData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventData> GetByTenantIdAndTrackingId(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public Response<ResourceHealthEventData> GetByTenantIdAndTrackingId(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
@@ -267,13 +267,13 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        EventData value = default;
+                        ResourceHealthEventData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventData.DeserializeEventData(document.RootElement);
+                        value = ResourceHealthEventData.DeserializeResourceHealthEventData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EventData)null, message.Response);
+                    return Response.FromValue((ResourceHealthEventData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventData>> FetchDetailsByTenantIdAndTrackingIdAsync(string eventTrackingId, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceHealthEventData>> FetchDetailsByTenantIdAndTrackingIdAsync(string eventTrackingId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
@@ -311,9 +311,9 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        EventData value = default;
+                        ResourceHealthEventData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventData.DeserializeEventData(document.RootElement);
+                        value = ResourceHealthEventData.DeserializeResourceHealthEventData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventData> FetchDetailsByTenantIdAndTrackingId(string eventTrackingId, CancellationToken cancellationToken = default)
+        public Response<ResourceHealthEventData> FetchDetailsByTenantIdAndTrackingId(string eventTrackingId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        EventData value = default;
+                        ResourceHealthEventData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventData.DeserializeEventData(document.RootElement);
+                        value = ResourceHealthEventData.DeserializeResourceHealthEventData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

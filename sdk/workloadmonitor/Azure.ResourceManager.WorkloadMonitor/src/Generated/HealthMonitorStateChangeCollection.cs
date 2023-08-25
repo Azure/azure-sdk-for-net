@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition).
+        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by heartbeat condition).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition).
+        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by heartbeat condition).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -11,7 +11,7 @@ namespace Azure.Identity
     public class ClientCertificateCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
     {
         /// <summary>
-        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted to disk.
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If no options are specified, the token cache will not be persisted to disk.
         /// </summary>
         public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
 
@@ -26,6 +26,6 @@ namespace Azure.Identity
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
 
         /// <inheritdoc/>
-        public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
+        public bool DisableInstanceDiscovery { get; set; }
     }
 }

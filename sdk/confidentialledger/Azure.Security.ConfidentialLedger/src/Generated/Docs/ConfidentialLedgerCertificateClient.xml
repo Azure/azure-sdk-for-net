@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetLedgerIdentityAsync(String,RequestContext)">
+    <member name="GetLedgerIdentityAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetLedgerIdentityAsync with required parameters and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfidentialLedgerCertificateClient(endpoint, credential);
+var client = new ConfidentialLedgerCertificateClient(endpoint);
 
 Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
 
@@ -16,27 +15,13 @@ Console.WriteLine(result.GetProperty("ledgerId").ToString());
 Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>LedgerIdentityInformation</c>:
-<code>{
-  ledgerId: string, # Optional. Id for the ledger.
-  ledgerTlsCertificate: string, # Required. PEM-encoded certificate used for TLS by the Confidential Ledger.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetLedgerIdentity(String,RequestContext)">
+    <member name="GetLedgerIdentity(string,RequestContext)">
 <example>
 This sample shows how to call GetLedgerIdentity with required parameters and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfidentialLedgerCertificateClient(endpoint, credential);
+var client = new ConfidentialLedgerCertificateClient(endpoint);
 
 Response response = client.GetLedgerIdentity("<ledgerId>");
 
@@ -45,19 +30,6 @@ Console.WriteLine(result.GetProperty("ledgerId").ToString());
 Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>LedgerIdentityInformation</c>:
-<code>{
-  ledgerId: string, # Optional. Id for the ledger.
-  ledgerTlsCertificate: string, # Required. PEM-encoded certificate used for TLS by the Confidential Ledger.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

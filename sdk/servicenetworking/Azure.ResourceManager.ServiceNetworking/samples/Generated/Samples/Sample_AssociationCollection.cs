@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // for more information of creating TrafficControllerResource, please refer to the document of TrafficControllerResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string trafficControllerName = "TC1";
+            string trafficControllerName = "tc1";
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // for more information of creating TrafficControllerResource, please refer to the document of TrafficControllerResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string trafficControllerName = "TC1";
+            string trafficControllerName = "tc1";
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             AssociationCollection collection = trafficController.GetAssociations();
 
             // invoke the operation
-            string associationName = "associatedvnet-2";
+            string associationName = "as1";
             AssociationResource result = await collection.GetAsync(associationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // for more information of creating TrafficControllerResource, please refer to the document of TrafficControllerResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string trafficControllerName = "TC1";
+            string trafficControllerName = "tc1";
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             AssociationCollection collection = trafficController.GetAssociations();
 
             // invoke the operation
-            string associationName = "associatedvnet-2";
+            string associationName = "as1";
             bool result = await collection.ExistsAsync(associationName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // for more information of creating TrafficControllerResource, please refer to the document of TrafficControllerResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string trafficControllerName = "TC1";
+            string trafficControllerName = "tc1";
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
             TrafficControllerResource trafficController = client.GetTrafficControllerResource(trafficControllerResourceId);
 
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             AssociationCollection collection = trafficController.GetAssociations();
 
             // invoke the operation
-            string associationName = "associatedvnet-1";
-            AssociationData data = new AssociationData(new AzureLocation("West US"))
+            string associationName = "as1";
+            AssociationData data = new AssociationData(new AzureLocation("NorthCentralUS"))
             {
                 AssociationType = AssociationType.Subnets,
-                SubnetId = new ResourceIdentifier("subnetFullRef"),
+                SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet-tc/subnets/tc-subnet"),
             };
             ArmOperation<AssociationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, associationName, data);
             AssociationResource result = lro.Value;

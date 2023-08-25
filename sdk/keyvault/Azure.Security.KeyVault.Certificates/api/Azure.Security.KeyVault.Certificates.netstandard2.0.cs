@@ -307,7 +307,9 @@ namespace Azure.Security.KeyVault.Certificates
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public System.Uri VaultUri { get { throw null; } }
         public string Version { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public byte[] X509Thumbprint { get { throw null; } }
+        public string X509ThumbprintString { get { throw null; } }
     }
     public partial class DeleteCertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.DeletedCertificate>
     {

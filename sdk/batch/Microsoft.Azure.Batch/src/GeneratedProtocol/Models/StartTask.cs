@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// maximum retry count is 0, the Batch service does not retry the
         /// Task. If the maximum retry count is -1, the Batch service retries
         /// the Task without limit, however this is not recommended for a start
-        /// task or any task. The default value is 0 (no retries)
+        /// task or any task. The default value is 0 (no retries).
         /// </remarks>
         [JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }

@@ -21,7 +21,5 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The updatable properties of the Frontend. </summary>
-        public FrontendUpdateProperties Properties { get; set; }
     }
 }

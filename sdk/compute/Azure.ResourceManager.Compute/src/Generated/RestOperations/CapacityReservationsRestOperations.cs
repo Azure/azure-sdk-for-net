@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-01";
+            _apiVersion = apiVersion ?? "2023-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>

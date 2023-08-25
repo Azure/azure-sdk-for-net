@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isRestoring"> Restoring. </param>
-        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume&apos;s snapshots (default to true). </param>
+        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </param>
         /// <param name="isKerberosEnabled"> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </param>
         /// <param name="securityStyle"> The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol. </param>
         /// <param name="isSmbEncryptionEnabled"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later. </param>
@@ -77,13 +77,14 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="smbNonBrowsable"> Enables non browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="isSmbContinuouslyAvailable"> Enables continuously available share property for smb volume. Only applicable for SMB volume. </param>
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
-        /// <param name="encryptionKeySource"> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = &apos;Microsoft.KeyVault&apos;. Possible values (case-insensitive) are: &apos;Microsoft.NetApp, Microsoft.KeyVault&apos;. </param>
-        /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = &apos;Microsoft.KeyVault&apos;. </param>
+        /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
+        /// <param name="encryptionKeySource"> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
+        /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
         /// <param name="isLdapEnabled"> Specifies whether LDAP is enabled or not for a given NFS volume. </param>
         /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
-        /// <param name="cloneProgress"> When a volume is being restored from another volume&apos;s snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </param>
+        /// <param name="cloneProgress"> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </param>
         /// <param name="fileAccessLogs"> Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume. </param>
         /// <param name="avsDataStore"> Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. </param>
         /// <param name="dataStoreResourceId"> Data store resource unique identifier. </param>
@@ -101,7 +102,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
-        internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
+        internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Zones = zones;
@@ -132,6 +134,7 @@ namespace Azure.ResourceManager.NetApp
             SmbNonBrowsable = smbNonBrowsable;
             IsSmbContinuouslyAvailable = isSmbContinuouslyAvailable;
             ThroughputMibps = throughputMibps;
+            ActualThroughputMibps = actualThroughputMibps;
             EncryptionKeySource = encryptionKeySource;
             KeyVaultPrivateEndpointResourceId = keyVaultPrivateEndpointResourceId;
             IsLdapEnabled = isLdapEnabled;
@@ -156,6 +159,7 @@ namespace Azure.ResourceManager.NetApp
             EnableSubvolumes = enableSubvolumes;
             ProvisionedAvailabilityZone = provisionedAvailabilityZone;
             IsLargeVolume = isLargeVolume;
+            OriginatingResourceId = originatingResourceId;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -211,7 +215,7 @@ namespace Azure.ResourceManager.NetApp
         public NetAppVolumeDataProtection DataProtection { get; set; }
         /// <summary> Restoring. </summary>
         public bool? IsRestoring { get; set; }
-        /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume&apos;s snapshots (default to true). </summary>
+        /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </summary>
         public bool? IsSnapshotDirectoryVisible { get; set; }
         /// <summary> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </summary>
         public bool? IsKerberosEnabled { get; set; }
@@ -227,9 +231,11 @@ namespace Azure.ResourceManager.NetApp
         public bool? IsSmbContinuouslyAvailable { get; set; }
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
         public float? ThroughputMibps { get; set; }
-        /// <summary> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = &apos;Microsoft.KeyVault&apos;. Possible values (case-insensitive) are: &apos;Microsoft.NetApp, Microsoft.KeyVault&apos;. </summary>
+        /// <summary> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </summary>
+        public float? ActualThroughputMibps { get; }
+        /// <summary> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </summary>
         public NetAppEncryptionKeySource? EncryptionKeySource { get; set; }
-        /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = &apos;Microsoft.KeyVault&apos;. </summary>
+        /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
         public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }
         /// <summary> Specifies whether LDAP is enabled or not for a given NFS volume. </summary>
         public bool? IsLdapEnabled { get; set; }
@@ -239,7 +245,7 @@ namespace Azure.ResourceManager.NetApp
         public int? CoolnessPeriod { get; set; }
         /// <summary> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </summary>
         public string UnixPermissions { get; set; }
-        /// <summary> When a volume is being restored from another volume&apos;s snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </summary>
+        /// <summary> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </summary>
         public int? CloneProgress { get; }
         /// <summary> Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume. </summary>
         public NetAppFileAccessLog? FileAccessLogs { get; }
@@ -275,5 +281,7 @@ namespace Azure.ResourceManager.NetApp
         public string ProvisionedAvailabilityZone { get; }
         /// <summary> Specifies whether volume is a Large Volume or Regular Volume. </summary>
         public bool? IsLargeVolume { get; set; }
+        /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
+        public ResourceIdentifier OriginatingResourceId { get; }
     }
 }

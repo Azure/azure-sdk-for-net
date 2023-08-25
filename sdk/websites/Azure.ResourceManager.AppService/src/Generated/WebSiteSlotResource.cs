@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
@@ -1210,7 +1210,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
@@ -1227,11 +1227,11 @@ namespace Azure.ResourceManager.AppService
             return new WebSiteSlotSourceControlResource(Client, Id.AppendChildResource("sourcecontrols", "web"));
         }
 
-        /// <summary> Gets a collection of WebSiteTriggeredwebJobResources in the WebSiteSlot. </summary>
-        /// <returns> An object representing collection of WebSiteTriggeredwebJobResources and their operations over a WebSiteTriggeredwebJobResource. </returns>
-        public virtual WebSiteTriggeredwebJobCollection GetWebSiteTriggeredwebJobs()
+        /// <summary> Gets a collection of WebSiteSlotTriggeredWebJobResources in the WebSiteSlot. </summary>
+        /// <returns> An object representing collection of WebSiteSlotTriggeredWebJobResources and their operations over a WebSiteSlotTriggeredWebJobResource. </returns>
+        public virtual WebSiteSlotTriggeredWebJobCollection GetWebSiteSlotTriggeredWebJobs()
         {
-            return GetCachedClient(Client => new WebSiteTriggeredwebJobCollection(Client, Id));
+            return GetCachedClient(Client => new WebSiteSlotTriggeredWebJobCollection(Client, Id));
         }
 
         /// <summary>
@@ -1252,9 +1252,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebSiteTriggeredwebJobResource>> GetWebSiteTriggeredwebJobAsync(string webJobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotTriggeredWebJobResource>> GetWebSiteSlotTriggeredWebJobAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            return await GetWebSiteTriggeredwebJobs().GetAsync(webJobName, cancellationToken).ConfigureAwait(false);
+            return await GetWebSiteSlotTriggeredWebJobs().GetAsync(webJobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1275,9 +1275,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebSiteTriggeredwebJobResource> GetWebSiteTriggeredwebJob(string webJobName, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteSlotTriggeredWebJobResource> GetWebSiteSlotTriggeredWebJob(string webJobName, CancellationToken cancellationToken = default)
         {
-            return GetWebSiteTriggeredwebJobs().Get(webJobName, cancellationToken);
+            return GetWebSiteSlotTriggeredWebJobs().Get(webJobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebSiteSlotWebJobResources in the WebSiteSlot. </summary>
@@ -1992,7 +1992,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Updates site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2026,7 +2026,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Updates site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2060,7 +2060,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Gets site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2090,7 +2090,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Gets site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4068,7 +4068,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PerfMonResponseInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PerfMonResponseInfo> GetPerfMonCountersSlotAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -4091,7 +4091,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PerfMonResponseInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PerfMonResponseInfo> GetPerfMonCountersSlot(string filter = null, CancellationToken cancellationToken = default)
@@ -4102,7 +4102,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets web app&apos;s event logs.
+        /// Description for Gets web app's event logs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4132,7 +4132,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets web app&apos;s event logs.
+        /// Description for Gets web app's event logs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4216,7 +4216,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
         public virtual async Task<Response<Stream>> GetPublishingProfileXmlWithSecretsSlotAsync(CsmPublishingProfile publishingProfileOptions, CancellationToken cancellationToken = default)
@@ -4250,7 +4250,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
         public virtual Response<Stream> GetPublishingProfileXmlWithSecretsSlot(CsmPublishingProfile publishingProfileOptions, CancellationToken cancellationToken = default)
@@ -5226,7 +5226,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CsmUsageQuota> GetUsagesSlotAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -5249,7 +5249,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CsmUsageQuota> GetUsagesSlot(string filter = null, CancellationToken cancellationToken = default)

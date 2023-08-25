@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
     <ProjectReference Include="..\tests\Azure.Core.Tests.csproj" />
+    <ProjectReference Include="..\tests\public\Azure.Core.Tests.Public.csproj" />
     <!--
       Explicit references to pull in patched versions of ASP.NET Core packages
     -->
@@ -22,6 +23,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="TestData\JsonFormattedString.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="..\tests\common\TestData\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

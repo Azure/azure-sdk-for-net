@@ -3,13 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -22,10 +17,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         private string[] fileNames => new[]
         {
-            "C:\\Users\\user1\\Documents\file.txt",
-            "C:\\Users\\user1\\Documents\file",
-            "C:\\Users\\user1\\Documents\file\\",
-            "user1\\Documents\file\\",
+            "C:\\Users\\user1\\Documents\\directory",
+            "C:\\Users\\user1\\Documents\\directory1\\",
+            "/user1/Documents/directory",
         };
 
         [Test]
@@ -37,9 +31,21 @@ namespace Azure.Storage.DataMovement.Tests
                 LocalDirectoryStorageResourceContainer storageResource = new LocalDirectoryStorageResourceContainer(path);
 
                 // Assert
-                Assert.AreEqual(path, storageResource.Path);
-                Assert.AreEqual(ProduceUriType.NoUri, storageResource.CanProduceUri);
+                Assert.AreEqual(path, storageResource.Uri.LocalPath);
             }
+        }
+
+        [Test]
+        public void Ctor_Error()
+        {
+            Assert.Catch<ArgumentException>( () =>
+                new LocalDirectoryStorageResourceContainer(""));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalDirectoryStorageResourceContainer("   "));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalDirectoryStorageResourceContainer(default));
         }
 
         [Test]
@@ -47,7 +53,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             List<string> paths = new List<string>();
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             string folderPath = test.DirectoryPath;
 
             for (int i = 0; i < 3; i++)
@@ -58,9 +64,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             List<string> resultPaths = new List<string>();
-            await foreach (StorageResourceBase resource in containerResource.GetStorageResourcesAsync())
+            await foreach (StorageResource resource in containerResource.GetStorageResourcesAsync())
             {
-                resultPaths.Add(resource.Path);
+                resultPaths.Add(resource.Uri.LocalPath);
             }
 
             // Assert
@@ -74,7 +80,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             string folderPath = test.DirectoryPath;
 
             for (int i = 0; i < 3; i++)
@@ -87,7 +93,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
             foreach (string fileName in fileNames)
             {
-                StorageResource resource = containerResource.GetChildStorageResource(fileName);
+                StorageResourceItem resource = containerResource.GetStorageResourceReference(fileName);
                 // Assert
                 await resource.GetPropertiesAsync().ConfigureAwait(false);
             }
@@ -98,7 +104,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             string folderPath = test.DirectoryPath;
 
             for (int i = 0; i < 3; i++)
@@ -119,7 +125,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
             foreach (string fileName in fileNames)
             {
-                StorageResource resource = containerResource.GetChildStorageResource(fileName);
+                StorageResourceItem resource = containerResource.GetStorageResourceReference(fileName);
                 // Assert
                 await resource.GetPropertiesAsync().ConfigureAwait(false);
             }

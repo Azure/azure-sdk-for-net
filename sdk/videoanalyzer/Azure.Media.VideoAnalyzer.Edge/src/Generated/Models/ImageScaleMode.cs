@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Describes the image scaling mode to be applied. Default mode is &apos;pad&apos;. </summary>
+    /// <summary> Describes the image scaling mode to be applied. Default mode is 'pad'. </summary>
     public readonly partial struct ImageScaleMode : IEquatable<ImageScaleMode>
     {
         private readonly string _value;

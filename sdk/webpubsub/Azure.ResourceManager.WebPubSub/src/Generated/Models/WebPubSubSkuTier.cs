@@ -11,8 +11,8 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary>
-    /// Optional tier of this particular SKU. &apos;Standard&apos; or &apos;Free&apos;. 
-    /// 
+    /// Optional tier of this particular SKU. 'Standard' or 'Free'.
+    ///
     /// `Basic` is deprecated, use `Standard` instead.
     /// </summary>
     public readonly partial struct WebPubSubSkuTier : IEquatable<WebPubSubSkuTier>

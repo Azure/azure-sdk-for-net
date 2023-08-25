@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="deleteSubscriptions"> Whether to delete user&apos;s subscription or not. </param>
+        /// <param name="deleteSubscriptions"> Whether to delete user's subscription or not. </param>
         /// <param name="notify"> Send an Account Closed Email notification to the User. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="deleteSubscriptions"> Whether to delete user&apos;s subscription or not. </param>
+        /// <param name="deleteSubscriptions"> Whether to delete user's subscription or not. </param>
         /// <param name="notify"> Send an Account Closed Email notification to the User. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

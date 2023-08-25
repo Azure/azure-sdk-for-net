@@ -222,12 +222,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualWorkspaceResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualWorkspaceResource(Client, VirtualWorkspaceData.DeserializeVirtualWorkspaceData(e)), _virtualWorkspaceWorkspacesClientDiagnostics, Pipeline, "VirtualWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -244,12 +247,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualWorkspaceResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualWorkspaceResource(Client, VirtualWorkspaceData.DeserializeVirtualWorkspaceData(e)), _virtualWorkspaceWorkspacesClientDiagnostics, Pipeline, "VirtualWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

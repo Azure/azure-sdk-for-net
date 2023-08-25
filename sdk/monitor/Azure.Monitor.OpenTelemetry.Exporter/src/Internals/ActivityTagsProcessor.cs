@@ -9,62 +9,74 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal struct ActivityTagsProcessor
     {
-        private static readonly IReadOnlyDictionary<string, OperationType> s_semanticTypeMapping = new Dictionary<string, OperationType>()
-        {
-            [SemanticConventions.AttributeDbStatement] = OperationType.Db,
-            [SemanticConventions.AttributeDbSystem] = OperationType.Db,
-            [SemanticConventions.AttributeDbName] = OperationType.Db,
+        private static readonly string[] s_semantics = {
+            SemanticConventions.AttributeDbStatement,
+            SemanticConventions.AttributeDbSystem,
+            SemanticConventions.AttributeDbName,
 
-            [SemanticConventions.AttributeHttpMethod] = OperationType.Http,
-            [SemanticConventions.AttributeHttpUrl] = OperationType.Http,
-            [SemanticConventions.AttributeHttpStatusCode] = OperationType.Http,
-            [SemanticConventions.AttributeHttpScheme] = OperationType.Http,
-            [SemanticConventions.AttributeHttpHost] = OperationType.Http,
-            [SemanticConventions.AttributeHttpHostPort] = OperationType.Http,
-            [SemanticConventions.AttributeHttpTarget] = OperationType.Http,
-            [SemanticConventions.AttributeHttpUserAgent] = OperationType.Http,
-            [SemanticConventions.AttributeHttpClientIP] = OperationType.Http,
-            [SemanticConventions.AttributeHttpRoute] = OperationType.Http,
+            // required - HTTP
+            SemanticConventions.AttributeHttpMethod,
+            SemanticConventions.AttributeHttpUrl,
+            SemanticConventions.AttributeHttpStatusCode,
+            SemanticConventions.AttributeHttpScheme,
+            SemanticConventions.AttributeHttpHost,
+            SemanticConventions.AttributeHttpHostPort,
+            SemanticConventions.AttributeHttpTarget,
+            SemanticConventions.AttributeHttpUserAgent,
+            SemanticConventions.AttributeHttpRoute,
 
-            [SemanticConventions.AttributePeerService] = OperationType.Common,
-            [SemanticConventions.AttributeNetPeerName] = OperationType.Common,
-            [SemanticConventions.AttributeNetPeerIp] = OperationType.Common,
-            [SemanticConventions.AttributeNetPeerPort] = OperationType.Common,
-            [SemanticConventions.AttributeNetTransport] = OperationType.Common,
-            [SemanticConventions.AttributeNetHostIp] = OperationType.Common,
-            [SemanticConventions.AttributeNetHostPort] = OperationType.Common,
-            [SemanticConventions.AttributeNetHostName] = OperationType.Common,
-            [SemanticConventions.AttributeComponent] = OperationType.Common,
-            ["otel.status_code"] = OperationType.Common,
-            ["sampleRate"] = OperationType.Common,
+            // required - HTTP V2
+            SemanticConventions.AttributeHttpRequestMethod,
+            SemanticConventions.AttributeHttpResponseStatusCode,
+            SemanticConventions.AttributeNetworkProtocolVersion,
+            SemanticConventions.AttributeServerAddress,
+            SemanticConventions.AttributeServerPort,
+            SemanticConventions.AttributeUrlFull,
+            SemanticConventions.AttributeUrlPath,
+            SemanticConventions.AttributeUrlScheme,
+            SemanticConventions.AttributeUrlQuery,
+            SemanticConventions.AttributeUserAgentOriginal,
+            SemanticConventions.AttributeClientAddress,
 
-            [SemanticConventions.AttributeRpcService] = OperationType.Rpc,
-            [SemanticConventions.AttributeRpcSystem] = OperationType.Rpc,
-            [SemanticConventions.AttributeRpcStatus] = OperationType.Rpc,
+            // required - Azure
+            SemanticConventions.AttributeAzureNameSpace,
 
-            [SemanticConventions.AttributeFaasTrigger] = OperationType.FaaS,
-            [SemanticConventions.AttributeFaasExecution] = OperationType.FaaS,
-            [SemanticConventions.AttributeFaasColdStart] = OperationType.FaaS,
-            [SemanticConventions.AttributeFaasDocumentCollection] = OperationType.FaaS,
-            [SemanticConventions.AttributeFaasDocumentOperation] = OperationType.FaaS,
-            [SemanticConventions.AttributeFaasDocumentTime] = OperationType.FaaS,
-            [SemanticConventions.AttributeFaasDocumentName] = OperationType.FaaS,
-            [SemanticConventions.AttributeFaasCron] = OperationType.FaaS,
-            [SemanticConventions.AttributeFaasTime] = OperationType.FaaS,
+            SemanticConventions.AttributePeerService,
+            SemanticConventions.AttributeNetPeerName,
+            SemanticConventions.AttributeNetPeerIp,
+            SemanticConventions.AttributeNetPeerPort,
+            SemanticConventions.AttributeNetTransport,
+            SemanticConventions.AttributeNetHostIp,
+            SemanticConventions.AttributeNetHostPort,
+            SemanticConventions.AttributeNetHostName,
+            SemanticConventions.AttributeComponent,
+            "otel.status_code",
 
-            [SemanticConventions.AttributeEndpointAddress] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingSystem] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingDestination] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingDestinationKind] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingTempDestination] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingUrl] = OperationType.Messaging
+            SemanticConventions.AttributeRpcService,
+            // required - RPC
+            SemanticConventions.AttributeRpcSystem,
+            SemanticConventions.AttributeRpcStatus,
+
+            SemanticConventions.AttributeEndpointAddress,
+            // required - Messaging
+            SemanticConventions.AttributeMessagingSystem,
+            SemanticConventions.AttributeMessagingDestinationName,
+            SemanticConventions.AttributeNetworkProtocolName,
+
+            // Others
+            SemanticConventions.AttributeEnduserId
         };
+
+        private static readonly HashSet<string> s_semanticsSet = new(s_semantics);
 
         public AzMonList MappedTags;
         public AzMonList UnMappedTags;
 
-        private OperationType _tempActivityType;
-        public OperationType activityType;
+        public OperationType activityType { get; set; }
+
+        public string? AzureNamespace { get; private set; } = null;
+
+        public string? EndUserId { get; private set; } = null;
 
         public ActivityTagsProcessor()
         {
@@ -81,29 +93,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     continue;
                 }
 
-                if (tag.Value is Array array)
+                if (s_semanticsSet.Contains(tag.Key))
                 {
-                    AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(tag.Key, array.ToCommaDelimitedString()));
-                    continue;
-                }
+                    switch (tag.Key)
+                    {
+                        case SemanticConventions.AttributeHttpMethod:
+                            activityType = OperationType.Http;
+                            break;
+                        case SemanticConventions.AttributeHttpRequestMethod:
+                            activityType = OperationType.Http | OperationType.V2;
+                            break;
+                        case SemanticConventions.AttributeDbSystem:
+                            activityType = OperationType.Db;
+                            break;
+                        case SemanticConventions.AttributeMessagingSystem:
+                            activityType = OperationType.Messaging;
+                            break;
+                        case SemanticConventions.AttributeAzureNameSpace:
+                            AzureNamespace = tag.Value.ToString();
+                            break;
+                        case SemanticConventions.AttributeEnduserId:
+                            EndUserId = tag.Value.ToString();
+                            continue;
+                    }
 
-                if (!s_semanticTypeMapping.TryGetValue(tag.Key, out _tempActivityType))
-                {
-                    AzMonList.Add(ref UnMappedTags, tag);
-                    continue;
-                }
-
-                if (activityType == OperationType.Unknown || activityType == OperationType.Common)
-                {
-                    activityType = _tempActivityType;
-                }
-
-                if (_tempActivityType == activityType || _tempActivityType == OperationType.Common)
-                {
                     AzMonList.Add(ref MappedTags, tag);
                 }
                 else
                 {
+                    // If the tag value is an array, there is no need to check for semantics;
+                    // directly add it to the Unmapped list.
+                    if (tag.Value is Array array)
+                    {
+                        AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(tag.Key, array.ToCommaDelimitedString()));
+                        continue;
+                    }
+
                     AzMonList.Add(ref UnMappedTags, tag);
                 }
             }

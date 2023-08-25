@@ -30,9 +30,9 @@ namespace Azure.Storage.Queues
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, queue or message that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2018-03-28". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-03-28")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -64,9 +64,9 @@ namespace Azure.Storage.Queues
             return message;
         }
 
-        /// <summary> Sets properties for a storage account&apos;s Queue service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Sets properties for a storage account's Queue service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="storageServiceProperties"> The StorageService properties. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(QueueServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
@@ -88,9 +88,9 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary> Sets properties for a storage account&apos;s Queue service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Sets properties for a storage account's Queue service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="storageServiceProperties"> The StorageService properties. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
         public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(QueueServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
@@ -132,8 +132,8 @@ namespace Azure.Storage.Queues
             return message;
         }
 
-        /// <summary> gets the properties of a storage account&apos;s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> gets the properties of a storage account's Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<QueueServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -157,8 +157,8 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary> gets the properties of a storage account&apos;s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> gets the properties of a storage account's Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<QueueServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -203,7 +203,7 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Retrieves statistics related to replication for the Queue service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<QueueServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -228,7 +228,7 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Retrieves statistics related to replication for the Queue service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<QueueServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -273,7 +273,7 @@ namespace Azure.Storage.Queues
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null)
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -291,8 +291,8 @@ namespace Azure.Storage.Queues
         /// <param name="prefix"> Filters the results to return only queues whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of queues to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all queues remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of queues to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify that the queues&apos; metadata be returned as part of the response body. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify that the queues' metadata be returned as part of the response body. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders>> ListQueuesSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<string> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -320,8 +320,8 @@ namespace Azure.Storage.Queues
         /// <param name="prefix"> Filters the results to return only queues whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of queues to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all queues remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of queues to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify that the queues&apos; metadata be returned as part of the response body. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify that the queues' metadata be returned as part of the response body. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders> ListQueuesSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<string> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
@@ -364,8 +364,8 @@ namespace Azure.Storage.Queues
         /// <param name="prefix"> Filters the results to return only queues whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of queues to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all queues remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of queues to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify that the queues&apos; metadata be returned as part of the response body. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify that the queues' metadata be returned as part of the response body. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders>> ListQueuesSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<string> include = null, int? timeout = null, CancellationToken cancellationToken = default)
@@ -400,8 +400,8 @@ namespace Azure.Storage.Queues
         /// <param name="prefix"> Filters the results to return only queues whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of queues to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all queues remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of queues to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify that the queues&apos; metadata be returned as part of the response body. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify that the queues' metadata be returned as part of the response body. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders> ListQueuesSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<string> include = null, int? timeout = null, CancellationToken cancellationToken = default)

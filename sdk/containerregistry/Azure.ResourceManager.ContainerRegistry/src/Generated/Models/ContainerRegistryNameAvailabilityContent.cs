@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The name of the container registry. </summary>
         public string Name { get; }
-        /// <summary> The resource type of the container registry. This field must be set to &apos;Microsoft.ContainerRegistry/registries&apos;. </summary>
+        /// <summary> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </summary>
         public ContainerRegistryResourceType ResourceType { get; }
     }
 }

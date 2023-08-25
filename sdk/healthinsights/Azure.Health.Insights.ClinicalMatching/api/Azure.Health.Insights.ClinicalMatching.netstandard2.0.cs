@@ -81,10 +81,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         public ClinicalMatchingClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ClinicalMatchingClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> MatchTrials(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string repeatabilityRequestId = null, System.DateTimeOffset? repeatabilityFirstSent = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.Health.Insights.ClinicalMatching.TrialMatcherResult> MatchTrials(Azure.WaitUntil waitUntil, Azure.Health.Insights.ClinicalMatching.TrialMatcherData trialMatcherData, string repeatabilityRequestId = null, System.DateTimeOffset? repeatabilityFirstSent = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> MatchTrialsAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string repeatabilityRequestId = null, System.DateTimeOffset? repeatabilityFirstSent = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.ClinicalMatching.TrialMatcherResult>> MatchTrialsAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.ClinicalMatching.TrialMatcherData trialMatcherData, string repeatabilityRequestId = null, System.DateTimeOffset? repeatabilityFirstSent = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> MatchTrials(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<Azure.Health.Insights.ClinicalMatching.TrialMatcherResult> MatchTrials(Azure.WaitUntil waitUntil, Azure.Health.Insights.ClinicalMatching.TrialMatcherData trialMatcherData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> MatchTrialsAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.ClinicalMatching.TrialMatcherResult>> MatchTrialsAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.ClinicalMatching.TrialMatcherData trialMatcherData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ClinicalMatchingClientOptions : Azure.Core.ClientOptions
     {
@@ -407,6 +407,16 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static bool operator !=(Azure.Health.Insights.ClinicalMatching.GeoJsonType left, Azure.Health.Insights.ClinicalMatching.GeoJsonType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class HealthInsightsClinicalMatchingModelFactory
+    {
+        public static Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence ClinicalNoteEvidence(string id = null, string text = null, int offset = 0, int length = 0) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement ExtendedClinicalCodedElement(string system = null, string code = null, string name = null, string value = null, string semanticType = null, string category = null) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherInference TrialMatcherInference(Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceType type = default(Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceType), string value = null, string description = null, float? confidenceScore = default(float?), System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence> evidence = null, string id = null, Azure.Health.Insights.ClinicalMatching.ClinicalTrialSource? source = default(Azure.Health.Insights.ClinicalMatching.ClinicalTrialSource?), Azure.Health.Insights.ClinicalMatching.ClinicalTrialMetadata metadata = null) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence TrialMatcherInferenceEvidence(string eligibilityCriteriaEvidence = null, Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence patientDataEvidence = null, Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement patientInfoEvidence = null, float? importance = default(float?)) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult TrialMatcherPatientResult(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.TrialMatcherInference> inferences = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement> neededClinicalInfo = null) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherResult TrialMatcherResult(System.Guid jobId = default(System.Guid), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset expirationDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.Health.Insights.ClinicalMatching.JobStatus status = default(Azure.Health.Insights.ClinicalMatching.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, Azure.Health.Insights.ClinicalMatching.TrialMatcherResults results = null) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherResults TrialMatcherResults(System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult> patients = null, string modelVersion = null, System.DateTimeOffset? knowledgeGraphLastUpdateDate = default(System.DateTimeOffset?)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobStatus : System.IEquatable<Azure.Health.Insights.ClinicalMatching.JobStatus>
     {
@@ -534,7 +544,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public System.DateTimeOffset CreatedDateTime { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset ExpirationDateTime { get { throw null; } }
-        public string JobId { get { throw null; } }
+        public System.Guid JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdateDateTime { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.TrialMatcherResults Results { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.JobStatus Status { get { throw null; } }
@@ -549,7 +559,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class AzureHealthInsightsClientBuilderExtensions
+    public static partial class HealthInsightsClinicalMatchingClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClient, Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClientOptions> AddClinicalMatchingClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClient, Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClientOptions> AddClinicalMatchingClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

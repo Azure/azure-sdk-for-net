@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary>
-        /// Get a Traffic Controller Association
+        /// Get a Association
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary>
-        /// Get a Traffic Controller Association
+        /// Get a Association
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary>
-        /// Delete a Traffic Controller Association
+        /// Delete a Association
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary>
-        /// Delete a Traffic Controller Association
+        /// Delete a Association
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary>
-        /// Update a Traffic Controller Association
+        /// Update a Association
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary>
-        /// Update a Traffic Controller Association
+        /// Update a Association
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -1,326 +1,326 @@
 namespace Azure.ResourceManager.VoiceServices
 {
-    public partial class CommunicationsGatewayCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>, System.Collections.IEnumerable
+    public partial class VoiceServicesCommunicationsGatewayCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>, System.Collections.IEnumerable
     {
-        protected CommunicationsGatewayCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string communicationsGatewayName, Azure.ResourceManager.VoiceServices.CommunicationsGatewayData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string communicationsGatewayName, Azure.ResourceManager.VoiceServices.CommunicationsGatewayData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected VoiceServicesCommunicationsGatewayCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string communicationsGatewayName, Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string communicationsGatewayName, Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> Get(string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>> GetAsync(string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> Get(string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> GetAsync(string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CommunicationsGatewayData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VoiceServicesCommunicationsGatewayData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CommunicationsGatewayData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VoiceServicesCommunicationsGatewayData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.BinaryData ApiBridge { get { throw null; } set { } }
         public string AutoGeneratedDomainNameLabel { get { throw null; } }
-        public Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope? AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.VoiceServices.Models.TeamsCodec> Codecs { get { throw null; } }
-        public Azure.ResourceManager.VoiceServices.Models.Connectivity? Connectivity { get { throw null; } set { } }
-        public Azure.ResourceManager.VoiceServices.Models.E911Type? E911Type { get { throw null; } set { } }
+        public Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope? AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec> Codecs { get { throw null; } }
+        public Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity? Connectivity { get { throw null; } set { } }
+        public Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType? E911Type { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EmergencyDialStrings { get { throw null; } }
-        public bool? OnPremMcpEnabled { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform> Platforms { get { throw null; } }
-        public Azure.ResourceManager.VoiceServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.VoiceServices.Models.ServiceRegionProperties> ServiceLocations { get { throw null; } }
-        public Azure.ResourceManager.VoiceServices.Models.Status? Status { get { throw null; } }
+        public bool? IsOnPremMcpEnabled { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform> Platforms { get { throw null; } }
+        public Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties> ServiceLocations { get { throw null; } }
+        public Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus? Status { get { throw null; } }
         public string TeamsVoicemailPilotNumber { get { throw null; } set { } }
     }
-    public partial class CommunicationsGatewayResource : Azure.ResourceManager.ArmResource
+    public partial class VoiceServicesCommunicationsGatewayResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected CommunicationsGatewayResource() { }
-        public virtual Azure.ResourceManager.VoiceServices.CommunicationsGatewayData Data { get { throw null; } }
+        protected VoiceServicesCommunicationsGatewayResource() { }
+        public virtual Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationsGatewayName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource> GetTestLine(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource>> GetTestLineAsync(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.VoiceServices.TestLineCollection GetTestLines() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> Update(Azure.ResourceManager.VoiceServices.Models.CommunicationsGatewayPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>> UpdateAsync(Azure.ResourceManager.VoiceServices.Models.CommunicationsGatewayPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class TestLineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.VoiceServices.TestLineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.TestLineResource>, System.Collections.IEnumerable
-    {
-        protected TestLineCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.VoiceServices.TestLineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string testLineName, Azure.ResourceManager.VoiceServices.TestLineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.VoiceServices.TestLineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string testLineName, Azure.ResourceManager.VoiceServices.TestLineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource> Get(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.VoiceServices.TestLineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.VoiceServices.TestLineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource>> GetAsync(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.VoiceServices.TestLineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.VoiceServices.TestLineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.VoiceServices.TestLineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.TestLineResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class TestLineData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public TestLineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string PhoneNumber { get { throw null; } set { } }
-        public Azure.ResourceManager.VoiceServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.VoiceServices.Models.TestLinePurpose? Purpose { get { throw null; } set { } }
-    }
-    public partial class TestLineResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected TestLineResource() { }
-        public virtual Azure.ResourceManager.VoiceServices.TestLineData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource> Update(Azure.ResourceManager.VoiceServices.Models.TestLinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.TestLineResource>> UpdateAsync(Azure.ResourceManager.VoiceServices.Models.TestLinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> GetVoiceServicesTestLine(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> GetVoiceServicesTestLineAsync(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.VoiceServices.VoiceServicesTestLineCollection GetVoiceServicesTestLines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> Update(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> UpdateAsync(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class VoiceServicesExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityResponse> CheckLocalNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityResponse>> CheckLocalNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> GetCommunicationsGateway(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource>> GetCommunicationsGatewayAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource GetCommunicationsGatewayResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.CommunicationsGatewayCollection GetCommunicationsGateways(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> GetCommunicationsGateways(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> GetCommunicationsGatewaysAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.TestLineResource GetTestLineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult> CheckVoiceServicesNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult>> CheckVoiceServicesNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateway(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> GetVoiceServicesCommunicationsGatewayAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource GetVoiceServicesCommunicationsGatewayResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayCollection GetVoiceServicesCommunicationsGateways(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateways(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGatewaysAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource GetVoiceServicesTestLineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class VoiceServicesTestLineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>, System.Collections.IEnumerable
+    {
+        protected VoiceServicesTestLineCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string testLineName, Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string testLineName, Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> Get(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> GetAsync(string testLineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class VoiceServicesTestLineData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public VoiceServicesTestLineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public string PhoneNumber { get { throw null; } set { } }
+        public Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose? Purpose { get { throw null; } set { } }
+    }
+    public partial class VoiceServicesTestLineResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected VoiceServicesTestLineResource() { }
+        public virtual Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> Update(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> UpdateAsync(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.VoiceServices.Models
 {
     public static partial class ArmVoiceServicesModelFactory
     {
-        public static Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = default(bool?), Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason? reason = default(Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason?), string message = null) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.CommunicationsGatewayData CommunicationsGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VoiceServices.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.VoiceServices.Models.ProvisioningState?), Azure.ResourceManager.VoiceServices.Models.Status? status = default(Azure.ResourceManager.VoiceServices.Models.Status?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.Models.ServiceRegionProperties> serviceLocations = null, Azure.ResourceManager.VoiceServices.Models.Connectivity? connectivity = default(Azure.ResourceManager.VoiceServices.Models.Connectivity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.Models.TeamsCodec> codecs = null, Azure.ResourceManager.VoiceServices.Models.E911Type? e911Type = default(Azure.ResourceManager.VoiceServices.Models.E911Type?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform> platforms = null, System.BinaryData apiBridge = null, Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope?), string autoGeneratedDomainNameLabel = null, string teamsVoicemailPilotNumber = null, bool? onPremMcpEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> emergencyDialStrings = null) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.TestLineData TestLineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VoiceServices.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.VoiceServices.Models.ProvisioningState?), string phoneNumber = null, Azure.ResourceManager.VoiceServices.Models.TestLinePurpose? purpose = default(Azure.ResourceManager.VoiceServices.Models.TestLinePurpose?)) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult VoiceServicesCheckNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason? reason = default(Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData VoiceServicesCommunicationsGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState? provisioningState = default(Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState?), Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus? status = default(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties> serviceLocations = null, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity? connectivity = default(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec> codecs = null, Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType? e911Type = default(Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform> platforms = null, System.BinaryData apiBridge = null, Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope?), string autoGeneratedDomainNameLabel = null, string teamsVoicemailPilotNumber = null, bool? isOnPremMcpEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> emergencyDialStrings = null) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData VoiceServicesTestLineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState? provisioningState = default(Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState?), string phoneNumber = null, Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose? purpose = default(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose?)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AutoGeneratedDomainNameLabelScope : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope>
+    public readonly partial struct VoiceServicesAutoGeneratedDomainNameLabelScope : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AutoGeneratedDomainNameLabelScope(string value) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope NoReuse { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope ResourceGroupReuse { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope SubscriptionReuse { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope TenantReuse { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope other) { throw null; }
+        public VoiceServicesAutoGeneratedDomainNameLabelScope(string value) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope NoReuse { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope ResourceGroupReuse { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope SubscriptionReuse { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope TenantReuse { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.VoiceServices.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CheckNameAvailabilityContent
+    public partial class VoiceServicesCheckNameAvailabilityContent
     {
-        public CheckNameAvailabilityContent() { }
+        public VoiceServicesCheckNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CheckNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason>
+    public partial class VoiceServicesCheckNameAvailabilityResult
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CheckNameAvailabilityReason(string value) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason AlreadyExists { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CheckNameAvailabilityResponse
-    {
-        internal CheckNameAvailabilityResponse() { }
+        internal VoiceServicesCheckNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityReason? Reason { get { throw null; } }
+        public Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason? Reason { get { throw null; } }
     }
-    public partial class CommunicationsGatewayPatch
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceServicesCommunicationsGatewayConnectivity : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity>
     {
-        public CommunicationsGatewayPatch() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceServicesCommunicationsGatewayConnectivity(string value) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity PublicAddress { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class VoiceServicesCommunicationsGatewayPatch
+    {
+        public VoiceServicesCommunicationsGatewayPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommunicationsPlatform : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform>
+    public readonly partial struct VoiceServicesCommunicationsGatewayStatus : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CommunicationsPlatform(string value) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform OperatorConnect { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform TeamsPhoneMobile { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform other) { throw null; }
+        public VoiceServicesCommunicationsGatewayStatus(string value) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus ChangePending { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus Complete { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform left, Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform left, Azure.ResourceManager.VoiceServices.Models.CommunicationsPlatform right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Connectivity : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.Connectivity>
+    public readonly partial struct VoiceServicesCommunicationsPlatform : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Connectivity(string value) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.Models.Connectivity PublicAddress { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VoiceServices.Models.Connectivity other) { throw null; }
+        public VoiceServicesCommunicationsPlatform(string value) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform OperatorConnect { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform TeamsPhoneMobile { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.Connectivity left, Azure.ResourceManager.VoiceServices.Models.Connectivity right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VoiceServices.Models.Connectivity (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.Connectivity left, Azure.ResourceManager.VoiceServices.Models.Connectivity right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsPlatform right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct E911Type : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.E911Type>
+    public readonly partial struct VoiceServicesEmergencyCallType : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public E911Type(string value) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.Models.E911Type DirectToEsrp { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.E911Type Standard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VoiceServices.Models.E911Type other) { throw null; }
+        public VoiceServicesEmergencyCallType(string value) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType DirectToEsrp { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.E911Type left, Azure.ResourceManager.VoiceServices.Models.E911Type right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VoiceServices.Models.E911Type (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.E911Type left, Azure.ResourceManager.VoiceServices.Models.E911Type right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesEmergencyCallType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrimaryRegionProperties
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceServicesNameUnavailableReason : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason>
     {
-        public PrimaryRegionProperties(System.Collections.Generic.IEnumerable<string> operatorAddresses) { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceServicesNameUnavailableReason(string value) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class VoiceServicesPrimaryRegionProperties
+    {
+        public VoiceServicesPrimaryRegionProperties(System.Collections.Generic.IEnumerable<string> operatorAddresses) { }
         public System.Collections.Generic.IList<string> AllowedMediaSourceAddressPrefixes { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedSignalingSourceAddressPrefixes { get { throw null; } }
         public System.Collections.Generic.IList<string> EsrpAddresses { get { throw null; } }
         public System.Collections.Generic.IList<string> OperatorAddresses { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.ProvisioningState>
+    public readonly partial struct VoiceServicesProvisioningState : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.ProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VoiceServices.Models.ProvisioningState other) { throw null; }
+        public VoiceServicesProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.ProvisioningState left, Azure.ResourceManager.VoiceServices.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VoiceServices.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.ProvisioningState left, Azure.ResourceManager.VoiceServices.Models.ProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceRegionProperties
+    public partial class VoiceServicesServiceRegionProperties
     {
-        public ServiceRegionProperties(string name, Azure.ResourceManager.VoiceServices.Models.PrimaryRegionProperties primaryRegionProperties) { }
+        public VoiceServicesServiceRegionProperties(string name, Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties primaryRegionProperties) { }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.VoiceServices.Models.PrimaryRegionProperties PrimaryRegionProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties PrimaryRegionProperties { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.Status>
+    public readonly partial struct VoiceServicesTeamsCodec : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Status(string value) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.Models.Status ChangePending { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.Status Complete { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VoiceServices.Models.Status other) { throw null; }
+        public VoiceServicesTeamsCodec(string value) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec G722 { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec G7222 { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec Pcma { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec Pcmu { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec Silk16 { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec Silk8 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.Status left, Azure.ResourceManager.VoiceServices.Models.Status right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VoiceServices.Models.Status (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.Status left, Azure.ResourceManager.VoiceServices.Models.Status right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TeamsCodec : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.TeamsCodec>
+    public partial class VoiceServicesTestLinePatch
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TeamsCodec(string value) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.Models.TeamsCodec G722 { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.TeamsCodec G7222 { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.TeamsCodec Pcma { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.TeamsCodec Pcmu { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.TeamsCodec Silk16 { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.TeamsCodec Silk8 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VoiceServices.Models.TeamsCodec other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.TeamsCodec left, Azure.ResourceManager.VoiceServices.Models.TeamsCodec right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VoiceServices.Models.TeamsCodec (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.TeamsCodec left, Azure.ResourceManager.VoiceServices.Models.TeamsCodec right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class TestLinePatch
-    {
-        public TestLinePatch() { }
+        public VoiceServicesTestLinePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TestLinePurpose : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.TestLinePurpose>
+    public readonly partial struct VoiceServicesTestLinePurpose : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TestLinePurpose(string value) { throw null; }
-        public static Azure.ResourceManager.VoiceServices.Models.TestLinePurpose Automated { get { throw null; } }
-        public static Azure.ResourceManager.VoiceServices.Models.TestLinePurpose Manual { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VoiceServices.Models.TestLinePurpose other) { throw null; }
+        public VoiceServicesTestLinePurpose(string value) { throw null; }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose Automated { get { throw null; } }
+        public static Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose Manual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.TestLinePurpose left, Azure.ResourceManager.VoiceServices.Models.TestLinePurpose right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VoiceServices.Models.TestLinePurpose (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.TestLinePurpose left, Azure.ResourceManager.VoiceServices.Models.TestLinePurpose right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

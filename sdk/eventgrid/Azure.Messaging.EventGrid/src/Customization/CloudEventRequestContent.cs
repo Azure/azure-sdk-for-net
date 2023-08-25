@@ -61,10 +61,10 @@ namespace Azure.Messaging.EventGrid
                 string currentActivityId = null;
                 string traceState = null;
                 Activity currentActivity = Activity.Current;
-                if (currentActivity != null && currentActivity.IsW3CFormat())
+                if (currentActivity != null && (currentActivity.IdFormat == ActivityIdFormat.W3C))
                 {
                     currentActivityId = currentActivity.Id;
-                    traceState = currentActivity.GetTraceState();
+                    traceState = currentActivity.TraceStateString;
                 }
 
                 foreach (CloudEvent cloudEvent in _cloudEvents)

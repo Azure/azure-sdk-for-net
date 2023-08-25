@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of EmergingIssueListResult. </summary>
         internal EmergingIssueListResult()
         {
-            Value = new ChangeTrackingList<EmergingIssuesGetResultData>();
+            Value = new ChangeTrackingList<ServiceEmergingIssueData>();
         }
 
         /// <summary> Initializes a new instance of EmergingIssueListResult. </summary>
         /// <param name="value"> The list of emerging issues. </param>
         /// <param name="nextLink"> The link used to get the next page of emerging issues. </param>
-        internal EmergingIssueListResult(IReadOnlyList<EmergingIssuesGetResultData> value, string nextLink)
+        internal EmergingIssueListResult(IReadOnlyList<ServiceEmergingIssueData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of emerging issues. </summary>
-        public IReadOnlyList<EmergingIssuesGetResultData> Value { get; }
+        public IReadOnlyList<ServiceEmergingIssueData> Value { get; }
         /// <summary> The link used to get the next page of emerging issues. </summary>
         public string NextLink { get; }
     }

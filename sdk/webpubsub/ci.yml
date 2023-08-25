@@ -41,3 +41,5 @@ extends:
       safeName: MicrosoftAzureWebPubSubAspNetCore
     - name: Microsoft.Azure.WebPubSub.Common
       safeName: MicrosoftAzureWebPubSubCommon
+    - name: Microsoft.Azure.Functions.Worker.Extensions.WebPubSub
+      safeName: MicrosoftAzureFunctionsWorkerExtensionsWebPubSub

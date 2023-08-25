@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,47 +21,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExcludeLastRequest))
             {
                 writer.WritePropertyName("excludeLastRequest"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ExcludeLastRequest);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExcludeLastRequest.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ExcludeLastRequest);
             }
             if (Optional.IsDefined(BaseRequestId))
             {
                 writer.WritePropertyName("baseRequestId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(BaseRequestId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(BaseRequestId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, BaseRequestId);
             }
             if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CustomRfcReadTableFunctionModule);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CustomRfcReadTableFunctionModule.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, CustomRfcReadTableFunctionModule);
             }
             if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SapDataColumnDelimiter);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SapDataColumnDelimiter.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SapDataColumnDelimiter);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(QueryTimeout);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(QueryTimeout.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, QueryTimeout);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -76,38 +57,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryWait);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -127,17 +92,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> excludeLastRequest = default;
-            Optional<BinaryData> baseRequestId = default;
-            Optional<BinaryData> customRfcReadTableFunctionModule = default;
-            Optional<BinaryData> sapDataColumnDelimiter = default;
-            Optional<BinaryData> queryTimeout = default;
+            Optional<DataFactoryElement<bool>> excludeLastRequest = default;
+            Optional<DataFactoryElement<int>> baseRequestId = default;
+            Optional<DataFactoryElement<string>> customRfcReadTableFunctionModule = default;
+            Optional<DataFactoryElement<string>> sapDataColumnDelimiter = default;
+            Optional<DataFactoryElement<string>> queryTimeout = default;
             Optional<BinaryData> additionalColumns = default;
             string type = default;
-            Optional<BinaryData> sourceRetryCount = default;
-            Optional<BinaryData> sourceRetryWait = default;
-            Optional<BinaryData> maxConcurrentConnections = default;
-            Optional<BinaryData> disableMetricsCollection = default;
+            Optional<DataFactoryElement<int>> sourceRetryCount = default;
+            Optional<DataFactoryElement<string>> sourceRetryWait = default;
+            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    excludeLastRequest = BinaryData.FromString(property.Value.GetRawText());
+                    excludeLastRequest = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("baseRequestId"u8))
@@ -157,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    baseRequestId = BinaryData.FromString(property.Value.GetRawText());
+                    baseRequestId = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("customRfcReadTableFunctionModule"u8))
@@ -166,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    customRfcReadTableFunctionModule = BinaryData.FromString(property.Value.GetRawText());
+                    customRfcReadTableFunctionModule = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sapDataColumnDelimiter"u8))
@@ -175,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sapDataColumnDelimiter = BinaryData.FromString(property.Value.GetRawText());
+                    sapDataColumnDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -184,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    queryTimeout = BinaryData.FromString(property.Value.GetRawText());
+                    queryTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
@@ -207,7 +172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
+                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"u8))
@@ -216,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
+                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"u8))
@@ -225,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -234,7 +199,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

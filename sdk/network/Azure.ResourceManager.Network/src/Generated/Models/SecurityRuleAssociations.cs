@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of SecurityRuleAssociations. </summary>
-        /// <param name="networkInterfaceAssociation"> Network interface and it&apos;s custom security rules. </param>
-        /// <param name="subnetAssociation"> Subnet and it&apos;s custom security rules. </param>
+        /// <param name="networkInterfaceAssociation"> Network interface and it's custom security rules. </param>
+        /// <param name="subnetAssociation"> Subnet and it's custom security rules. </param>
         /// <param name="defaultSecurityRules"> Collection of default security rules of the network security group. </param>
         /// <param name="effectiveSecurityRules"> Collection of effective security rules. </param>
         internal SecurityRuleAssociations(NetworkInterfaceAssociation networkInterfaceAssociation, SubnetAssociation subnetAssociation, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules)
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Network.Models
             EffectiveSecurityRules = effectiveSecurityRules;
         }
 
-        /// <summary> Network interface and it&apos;s custom security rules. </summary>
+        /// <summary> Network interface and it's custom security rules. </summary>
         public NetworkInterfaceAssociation NetworkInterfaceAssociation { get; }
-        /// <summary> Subnet and it&apos;s custom security rules. </summary>
+        /// <summary> Subnet and it's custom security rules. </summary>
         public SubnetAssociation SubnetAssociation { get; }
         /// <summary> Collection of default security rules of the network security group. </summary>
         public IReadOnlyList<SecurityRuleData> DefaultSecurityRules { get; }

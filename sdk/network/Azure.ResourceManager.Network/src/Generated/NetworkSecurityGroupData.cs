@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="flushConnection"> When enabled, flows created from Network Security Group connections will be re-evaluated when rules are updates. Initial enablement will trigger re-evaluation. </param>
         /// <param name="securityRules"> A collection of security rules of the network security group. </param>
         /// <param name="defaultSecurityRules"> The default security rules of network security group. </param>
         /// <param name="networkInterfaces"> A collection of references to network interfaces. </param>
@@ -43,9 +44,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="flowLogs"> A collection of references to flow log resources. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network security group resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network security group resource. </param>
-        internal NetworkSecurityGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<SecurityRuleData> securityRules, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<NetworkInterfaceData> networkInterfaces, IReadOnlyList<SubnetData> subnets, IReadOnlyList<FlowLogData> flowLogs, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NetworkSecurityGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, bool? flushConnection, IList<SecurityRuleData> securityRules, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<NetworkInterfaceData> networkInterfaces, IReadOnlyList<SubnetData> subnets, IReadOnlyList<FlowLogData> flowLogs, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
+            FlushConnection = flushConnection;
             SecurityRules = securityRules;
             DefaultSecurityRules = defaultSecurityRules;
             NetworkInterfaces = networkInterfaces;
@@ -57,6 +59,8 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
+        /// <summary> When enabled, flows created from Network Security Group connections will be re-evaluated when rules are updates. Initial enablement will trigger re-evaluation. </summary>
+        public bool? FlushConnection { get; set; }
         /// <summary> A collection of security rules of the network security group. </summary>
         public IList<SecurityRuleData> SecurityRules { get; }
         /// <summary> The default security rules of network security group. </summary>

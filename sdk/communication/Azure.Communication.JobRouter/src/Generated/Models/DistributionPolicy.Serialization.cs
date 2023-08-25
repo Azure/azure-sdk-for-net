@@ -21,10 +21,10 @@ namespace Azure.Communication.JobRouter.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(_offerTtlSeconds))
+            if (Optional.IsDefined(_offerExpiresAfterSeconds))
             {
-                writer.WritePropertyName("offerTtlSeconds"u8);
-                writer.WriteNumberValue(_offerTtlSeconds.Value);
+                writer.WritePropertyName("offerExpiresAfterSeconds"u8);
+                writer.WriteNumberValue(_offerExpiresAfterSeconds.Value);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -42,7 +42,7 @@ namespace Azure.Communication.JobRouter.Models
             }
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<double> offerTtlSeconds = default;
+            Optional<double> offerExpiresAfterSeconds = default;
             Optional<DistributionMode> mode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,13 +56,13 @@ namespace Azure.Communication.JobRouter.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerTtlSeconds"u8))
+                if (property.NameEquals("offerExpiresAfterSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    offerTtlSeconds = property.Value.GetDouble();
+                    offerExpiresAfterSeconds = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -75,7 +75,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new DistributionPolicy(id.Value, name.Value, Optional.ToNullable(offerTtlSeconds), mode.Value);
+            return new DistributionPolicy(id.Value, name.Value, Optional.ToNullable(offerExpiresAfterSeconds), mode.Value);
         }
     }
 }

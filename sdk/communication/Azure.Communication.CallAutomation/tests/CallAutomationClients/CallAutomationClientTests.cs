@@ -7,7 +7,6 @@ using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
-using Newtonsoft.Json.Linq;
 
 namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 {
@@ -51,7 +50,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
             {
-                MediaStreamingOptions = _mediaStreamingConfiguration
+                MediaStreamingOptions = _mediaStreamingConfiguration,
+                OperationContext = "operation_context"
             };
 
             var response = await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false);
@@ -77,34 +77,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
             Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
             Assert.AreEqual("mediaSubscriptionId", response.Value.CallConnectionProperties.MediaSubscriptionId);
-        }
-
-        [TestCaseSource(nameof(TestData_AnswerCall_NoCallbackUri))]
-        public void AnswerCallWithOptions_NullCallbackUri(string incomingCallContext)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: null)
-            {
-                MediaStreamingOptions = _mediaStreamingConfiguration
-            };
-
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
-        }
-
-        [TestCaseSource(nameof(TestData_AnswerCall_NoCallbackUri))]
-        public void AnswerCallWithOptions_HttpCallbackUri(string incomingCallContext)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: new Uri("http://example.com"))
-            {
-                MediaStreamingOptions = _mediaStreamingConfiguration
-            };
-
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -367,7 +339,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.NotNull(properties);
             Assert.AreEqual("callConnectionId", properties.CallConnectionId);
             Assert.AreEqual(CallConnectionState.Connecting, properties.CallConnectionState);
-            Assert.AreEqual("dummySourceUser", properties.SourceIdentity.RawId);
+            Assert.AreEqual("dummySourceUser", properties.Source.RawId);
             Assert.AreEqual("serverCallId", properties.ServerCallId);
             Assert.AreEqual(1, properties.Targets.Count);
         }

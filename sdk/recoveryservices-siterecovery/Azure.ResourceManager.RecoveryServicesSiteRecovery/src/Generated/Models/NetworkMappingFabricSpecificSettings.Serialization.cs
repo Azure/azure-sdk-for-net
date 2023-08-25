@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureToAzure": return AzureToAzureNetworkMappingSettings.DeserializeAzureToAzureNetworkMappingSettings(element);
+                    case "AzureToAzure": return A2ANetworkMappingSettings.DeserializeA2ANetworkMappingSettings(element);
                     case "VmmToAzure": return VmmToAzureNetworkMappingSettings.DeserializeVmmToAzureNetworkMappingSettings(element);
                     case "VmmToVmm": return VmmToVmmNetworkMappingSettings.DeserializeVmmToVmmNetworkMappingSettings(element);
                 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GalleryData>> value = default;
+            Optional<IReadOnlyList<DevCenterGalleryData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<GalleryData> array = new List<GalleryData>();
+                    List<DevCenterGalleryData> array = new List<DevCenterGalleryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryData.DeserializeGalleryData(item));
+                        array.Add(DevCenterGalleryData.DeserializeDevCenterGalleryData(item));
                     }
                     value = array;
                     continue;

@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="urlPathMap"> URL path map resource of the application gateway. </param>
         /// <param name="rewriteRuleSet"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
         /// <param name="redirectConfiguration"> Redirect configuration resource of the application gateway. </param>
+        /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of the application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             ETag = etag;
             RuleType = ruleType;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             UrlPathMap = urlPathMap;
             RewriteRuleSet = rewriteRuleSet;
             RedirectConfiguration = redirectConfiguration;
+            LoadDistributionPolicy = loadDistributionPolicy;
             ProvisioningState = provisioningState;
         }
 
@@ -134,6 +136,20 @@ namespace Azure.ResourceManager.Network.Models
                 if (RedirectConfiguration is null)
                     RedirectConfiguration = new WritableSubResource();
                 RedirectConfiguration.Id = value;
+            }
+        }
+
+        /// <summary> Load Distribution Policy resource of the application gateway. </summary>
+        internal WritableSubResource LoadDistributionPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier LoadDistributionPolicyId
+        {
+            get => LoadDistributionPolicy is null ? default : LoadDistributionPolicy.Id;
+            set
+            {
+                if (LoadDistributionPolicy is null)
+                    LoadDistributionPolicy = new WritableSubResource();
+                LoadDistributionPolicy.Id = value;
             }
         }
 

@@ -12,4 +12,5 @@ testgen:
   sample: true
   skipped-operations:
   - Jobs_Update
+  - Mitigate
 ```

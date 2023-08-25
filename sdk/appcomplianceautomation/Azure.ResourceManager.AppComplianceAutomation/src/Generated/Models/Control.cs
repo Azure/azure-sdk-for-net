@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of Control. </summary>
-        /// <param name="controlId"> The Id of the control. e.g. &quot;Operational Security#10&quot;. </param>
-        /// <param name="controlShortName"> The short name of the control. e.g. &quot;Unsupported OS and Software.&quot;. </param>
-        /// <param name="controlFullName"> The full name of the control. e.g. &quot;Validate that unsupported operating systems and software components are not in use.&quot;. </param>
+        /// <param name="controlId"> The Id of the control. e.g. "Operational Security#10". </param>
+        /// <param name="controlShortName"> The short name of the control. e.g. "Unsupported OS and Software.". </param>
+        /// <param name="controlFullName"> The full name of the control. e.g. "Validate that unsupported operating systems and software components are not in use.". </param>
         /// <param name="controlType"> The control type. </param>
-        /// <param name="controlDescription"> The control&apos;s description. </param>
-        /// <param name="controlDescriptionHyperLink"> The hyper link to the control&apos;s description&apos;. </param>
+        /// <param name="controlDescription"> The control's description. </param>
+        /// <param name="controlDescriptionHyperLink"> The hyper link to the control's description'. </param>
         /// <param name="controlStatus"> Control status. </param>
         /// <param name="assessments"> List of assessments. </param>
         internal Control(string controlId, string controlShortName, string controlFullName, ControlType? controlType, string controlDescription, string controlDescriptionHyperLink, ControlStatus? controlStatus, IReadOnlyList<Assessment> assessments)
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Assessments = assessments;
         }
 
-        /// <summary> The Id of the control. e.g. &quot;Operational Security#10&quot;. </summary>
+        /// <summary> The Id of the control. e.g. "Operational Security#10". </summary>
         public string ControlId { get; }
-        /// <summary> The short name of the control. e.g. &quot;Unsupported OS and Software.&quot;. </summary>
+        /// <summary> The short name of the control. e.g. "Unsupported OS and Software.". </summary>
         public string ControlShortName { get; }
-        /// <summary> The full name of the control. e.g. &quot;Validate that unsupported operating systems and software components are not in use.&quot;. </summary>
+        /// <summary> The full name of the control. e.g. "Validate that unsupported operating systems and software components are not in use.". </summary>
         public string ControlFullName { get; }
         /// <summary> The control type. </summary>
         public ControlType? ControlType { get; }
-        /// <summary> The control&apos;s description. </summary>
+        /// <summary> The control's description. </summary>
         public string ControlDescription { get; }
-        /// <summary> The hyper link to the control&apos;s description&apos;. </summary>
+        /// <summary> The hyper link to the control's description'. </summary>
         public string ControlDescriptionHyperLink { get; }
         /// <summary> Control status. </summary>
         public ControlStatus? ControlStatus { get; }

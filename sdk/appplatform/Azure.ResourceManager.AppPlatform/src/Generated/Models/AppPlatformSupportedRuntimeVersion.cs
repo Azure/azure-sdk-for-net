@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> Initializes a new instance of AppPlatformSupportedRuntimeVersion. </summary>
         /// <param name="value"> The raw value which could be passed to deployment CRUD operations. </param>
-        /// <param name="platform"> The platform of this runtime version (possible values: &quot;Java&quot; or &quot;.NET&quot;). </param>
+        /// <param name="platform"> The platform of this runtime version (possible values: "Java" or ".NET"). </param>
         /// <param name="version"> The detailed version (major.minor) of the platform. </param>
         internal AppPlatformSupportedRuntimeVersion(AppPlatformSupportedRuntimeValue? value, AppPlatformSupportedRuntimePlatform? platform, string version)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> The raw value which could be passed to deployment CRUD operations. </summary>
         public AppPlatformSupportedRuntimeValue? Value { get; }
-        /// <summary> The platform of this runtime version (possible values: &quot;Java&quot; or &quot;.NET&quot;). </summary>
+        /// <summary> The platform of this runtime version (possible values: "Java" or ".NET"). </summary>
         public AppPlatformSupportedRuntimePlatform? Platform { get; }
         /// <summary> The detailed version (major.minor) of the platform. </summary>
         public string Version { get; }

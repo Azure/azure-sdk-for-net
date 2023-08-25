@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetAllShareResourcesAsync(string,string,RequestContext)">
+<example>
+This sample shows how to call GetAllShareResourcesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ShareResourcesClient(endpoint, credential);
+
+await foreach (var item in client.GetAllShareResourcesAsync("<filter>", "<orderby>", new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());
+    Console.WriteLine(result.GetProperty("sentSharesCount").ToString());
+    Console.WriteLine(result.GetProperty("storeKind").ToString());
+    Console.WriteLine(result.GetProperty("storeReference").GetProperty("referenceName").ToString());
+    Console.WriteLine(result.GetProperty("storeReference").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetAllShareResources(string,string,RequestContext)">
+<example>
+This sample shows how to call GetAllShareResources with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ShareResourcesClient(endpoint, credential);
+
+foreach (var item in client.GetAllShareResources("<filter>", "<orderby>", new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());
+    Console.WriteLine(result.GetProperty("sentSharesCount").ToString());
+    Console.WriteLine(result.GetProperty("storeKind").ToString());
+    Console.WriteLine(result.GetProperty("storeReference").GetProperty("referenceName").ToString());
+    Console.WriteLine(result.GetProperty("storeReference").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

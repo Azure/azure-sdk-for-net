@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of DataImportSourcesEventHub. </summary>
         /// <param name="name">
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         /// <param name="consumerGroup"> Event Hub consumer group name. </param>

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,78 +63,46 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Domain);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Domain.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Domain);
             if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
-                writer.WriteObjectValue(AccessToken);
+                JsonSerializer.Serialize(writer, AccessToken);
             }
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Authentication);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Authentication.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Authentication);
             }
             if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WorkspaceResourceId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WorkspaceResourceId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, WorkspaceResourceId);
             }
             if (Optional.IsDefined(ExistingClusterId))
             {
                 writer.WritePropertyName("existingClusterId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ExistingClusterId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExistingClusterId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ExistingClusterId);
             }
             if (Optional.IsDefined(InstancePoolId))
             {
                 writer.WritePropertyName("instancePoolId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(InstancePoolId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(InstancePoolId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, InstancePoolId);
             }
             if (Optional.IsDefined(NewClusterVersion))
             {
                 writer.WritePropertyName("newClusterVersion"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NewClusterVersion);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NewClusterVersion.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, NewClusterVersion);
             }
             if (Optional.IsDefined(NewClusterNumOfWorker))
             {
                 writer.WritePropertyName("newClusterNumOfWorker"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NewClusterNumOfWorker);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NewClusterNumOfWorker.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, NewClusterNumOfWorker);
             }
             if (Optional.IsDefined(NewClusterNodeType))
             {
                 writer.WritePropertyName("newClusterNodeType"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NewClusterNodeType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NewClusterNodeType.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, NewClusterNodeType);
             }
             if (Optional.IsCollectionDefined(NewClusterSparkConf))
             {
@@ -198,56 +167,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NewClusterLogDestination))
             {
                 writer.WritePropertyName("newClusterLogDestination"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NewClusterLogDestination);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NewClusterLogDestination.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, NewClusterLogDestination);
             }
             if (Optional.IsDefined(NewClusterDriverNodeType))
             {
                 writer.WritePropertyName("newClusterDriverNodeType"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NewClusterDriverNodeType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NewClusterDriverNodeType.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, NewClusterDriverNodeType);
             }
             if (Optional.IsDefined(NewClusterInitScripts))
             {
                 writer.WritePropertyName("newClusterInitScripts"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NewClusterInitScripts);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NewClusterInitScripts.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, NewClusterInitScripts);
             }
             if (Optional.IsDefined(NewClusterEnableElasticDisk))
             {
                 writer.WritePropertyName("newClusterEnableElasticDisk"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NewClusterEnableElasticDisk);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NewClusterEnableElasticDisk.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, NewClusterEnableElasticDisk);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PolicyId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PolicyId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PolicyId);
             }
             if (Optional.IsDefined(Credential))
             {
@@ -278,25 +223,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData domain = default;
-            Optional<FactorySecretBaseDefinition> accessToken = default;
-            Optional<BinaryData> authentication = default;
-            Optional<BinaryData> workspaceResourceId = default;
-            Optional<BinaryData> existingClusterId = default;
-            Optional<BinaryData> instancePoolId = default;
-            Optional<BinaryData> newClusterVersion = default;
-            Optional<BinaryData> newClusterNumOfWorker = default;
-            Optional<BinaryData> newClusterNodeType = default;
+            DataFactoryElement<string> domain = default;
+            Optional<DataFactorySecretBaseDefinition> accessToken = default;
+            Optional<DataFactoryElement<string>> authentication = default;
+            Optional<DataFactoryElement<string>> workspaceResourceId = default;
+            Optional<DataFactoryElement<string>> existingClusterId = default;
+            Optional<DataFactoryElement<string>> instancePoolId = default;
+            Optional<DataFactoryElement<string>> newClusterVersion = default;
+            Optional<DataFactoryElement<string>> newClusterNumOfWorker = default;
+            Optional<DataFactoryElement<string>> newClusterNodeType = default;
             Optional<IDictionary<string, BinaryData>> newClusterSparkConf = default;
             Optional<IDictionary<string, BinaryData>> newClusterSparkEnvVars = default;
             Optional<IDictionary<string, BinaryData>> newClusterCustomTags = default;
-            Optional<BinaryData> newClusterLogDestination = default;
-            Optional<BinaryData> newClusterDriverNodeType = default;
-            Optional<BinaryData> newClusterInitScripts = default;
-            Optional<BinaryData> newClusterEnableElasticDisk = default;
-            Optional<BinaryData> encryptedCredential = default;
-            Optional<BinaryData> policyId = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactoryElement<string>> newClusterLogDestination = default;
+            Optional<DataFactoryElement<string>> newClusterDriverNodeType = default;
+            Optional<DataFactoryElement<IList<string>>> newClusterInitScripts = default;
+            Optional<DataFactoryElement<bool>> newClusterEnableElasticDisk = default;
+            Optional<string> encryptedCredential = default;
+            Optional<DataFactoryElement<string>> policyId = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -366,7 +311,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("domain"u8))
                         {
-                            domain = BinaryData.FromString(property0.Value.GetRawText());
+                            domain = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessToken"u8))
@@ -375,7 +320,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            accessToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authentication"u8))
@@ -384,7 +329,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authentication = BinaryData.FromString(property0.Value.GetRawText());
+                            authentication = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("workspaceResourceId"u8))
@@ -393,7 +338,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            workspaceResourceId = BinaryData.FromString(property0.Value.GetRawText());
+                            workspaceResourceId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("existingClusterId"u8))
@@ -402,7 +347,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            existingClusterId = BinaryData.FromString(property0.Value.GetRawText());
+                            existingClusterId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("instancePoolId"u8))
@@ -411,7 +356,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            instancePoolId = BinaryData.FromString(property0.Value.GetRawText());
+                            instancePoolId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("newClusterVersion"u8))
@@ -420,7 +365,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            newClusterVersion = BinaryData.FromString(property0.Value.GetRawText());
+                            newClusterVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("newClusterNumOfWorker"u8))
@@ -429,7 +374,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            newClusterNumOfWorker = BinaryData.FromString(property0.Value.GetRawText());
+                            newClusterNumOfWorker = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("newClusterNodeType"u8))
@@ -438,7 +383,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            newClusterNodeType = BinaryData.FromString(property0.Value.GetRawText());
+                            newClusterNodeType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("newClusterSparkConf"u8))
@@ -510,7 +455,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            newClusterLogDestination = BinaryData.FromString(property0.Value.GetRawText());
+                            newClusterLogDestination = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("newClusterDriverNodeType"u8))
@@ -519,7 +464,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            newClusterDriverNodeType = BinaryData.FromString(property0.Value.GetRawText());
+                            newClusterDriverNodeType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("newClusterInitScripts"u8))
@@ -528,7 +473,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            newClusterInitScripts = BinaryData.FromString(property0.Value.GetRawText());
+                            newClusterInitScripts = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("newClusterEnableElasticDisk"u8))
@@ -537,16 +482,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            newClusterEnableElasticDisk = BinaryData.FromString(property0.Value.GetRawText());
+                            newClusterEnableElasticDisk = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("policyId"u8))
@@ -555,7 +496,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            policyId = BinaryData.FromString(property0.Value.GetRawText());
+                            policyId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("credential"u8))
@@ -564,7 +505,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value);
                             continue;
                         }
                     }
@@ -573,7 +514,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, domain, accessToken.Value, authentication.Value, workspaceResourceId.Value, existingClusterId.Value, instancePoolId.Value, newClusterVersion.Value, newClusterNumOfWorker.Value, newClusterNodeType.Value, Optional.ToDictionary(newClusterSparkConf), Optional.ToDictionary(newClusterSparkEnvVars), Optional.ToDictionary(newClusterCustomTags), newClusterLogDestination.Value, newClusterDriverNodeType.Value, newClusterInitScripts.Value, newClusterEnableElasticDisk.Value, encryptedCredential.Value, policyId.Value, credential.Value);
+            return new AzureDatabricksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, domain, accessToken, authentication.Value, workspaceResourceId.Value, existingClusterId.Value, instancePoolId.Value, newClusterVersion.Value, newClusterNumOfWorker.Value, newClusterNodeType.Value, Optional.ToDictionary(newClusterSparkConf), Optional.ToDictionary(newClusterSparkEnvVars), Optional.ToDictionary(newClusterCustomTags), newClusterLogDestination.Value, newClusterDriverNodeType.Value, newClusterInitScripts.Value, newClusterEnableElasticDisk.Value, encryptedCredential.Value, policyId.Value, credential.Value);
         }
     }
 }

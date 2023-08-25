@@ -15,8 +15,8 @@ using Azure.Identity;
 
 ```C# Snippet:ReceivedSharesClientSample_GetReceivedShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId");
+Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId", new());
 ```

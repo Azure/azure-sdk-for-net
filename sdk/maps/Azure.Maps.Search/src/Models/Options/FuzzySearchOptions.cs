@@ -23,7 +23,7 @@ namespace Azure.Maps.Search
         /// <summary>
         /// Specifies the level of filtering performed on geographies. Narrows the search for specified geography entity types, e.g. return only municipality. The resulting response will contain the geography ID as well as the entity type matched. If you provide more than one entity as a comma separated list, endpoint will return the &apos;smallest entity available&apos;. Returned Geometry ID can be used to get the geometry of that geography via <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon">Get Search Polygon</see> API. The following parameters are ignored when entityType is set:
         /// </summary>
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> heading </description></item>
         /// <item><description> number </description></item>
         /// <item><description> returnRoadUse </description></item>
@@ -35,7 +35,7 @@ namespace Azure.Maps.Search
         /// <summary>
         /// Minimum fuzziness level to be used. Default: 1, minimum: 1 and maximum: 4
         /// </summary>
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> Level 1 has no spell checking. </description></item>
         /// <item><description> Level 2 uses normal n-gram spell checking. For example, query &quot;restrant&quot; can be matched to &quot;restaurant.&quot; </description></item>
         /// <item><description> Level 3 uses sound-like spell checking, and shingle spell checking. Sound-like spell checking is for &quot;rstrnt&quot; to &quot;restaurant&quot; matching. Shingle spell checking is for &quot;mountainview&quot; to &quot;mountain view&quot; matching. </description></item>
@@ -47,7 +47,7 @@ namespace Azure.Maps.Search
         /// Maximum fuzziness level to be used. Default: 2, minimum: 1 and maximum: 4
         /// The search engine will start looking for a match on the level defined by minFuzzyLevel, and will stop searching at the level specified by maxFuzzyLevel.
         /// </summary>
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> Level 1 has no spell checking. </description></item>
         /// <item><description> Level 2 uses normal n-gram spell checking. For example, query &quot;restrant&quot; can be matched to &quot;restaurant.&quot; </description></item>
         /// <item><description> Level 3 uses sound-like spell checking, and shingle spell checking. Sound-like spell checking is for &quot;rstrnt&quot; to &quot;restaurant&quot; matching. Shingle spell checking is for &quot;mountainview&quot; to &quot;mountain view&quot; matching. </description></item>
@@ -59,7 +59,7 @@ namespace Azure.Maps.Search
         /// Indexes which should be utilized for the search.
         ///
         /// Available indexes are:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> <c>Addr</c> - Address ranges </description></item>
         /// <item><description> <c>Geo</c> - Geographies </description></item>
         /// <item><description> <c>PAD</c> - Point Addresses </description></item>
@@ -76,7 +76,7 @@ namespace Azure.Maps.Search
         /// Indexes for which extended postal codes should be included in the results.
         ///
         /// Available indexes are:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> <c>Addr</c> - Address ranges </description></item>
         /// <item><description> <c>Geo</c> - Geographies </description></item>
         /// <item><description> <c>PAD</c> - Point Addresses </description></item>

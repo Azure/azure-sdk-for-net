@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Custom linked service. </summary>
-    public partial class CustomDataSourceLinkedService : FactoryLinkedServiceDefinition
+    public partial class CustomDataSourceLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
         /// <param name="typeProperties"> Custom linked service properties. </param>

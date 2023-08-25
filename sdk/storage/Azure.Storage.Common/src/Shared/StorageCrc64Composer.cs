@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers.Binary;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +12,11 @@ namespace Azure.Storage
     /// </summary>
     internal static class StorageCrc64Composer
     {
+        public static Memory<byte> Compose(params (byte[] Crc64, long OriginalDataLength)[] partitions)
+        {
+            return Compose(partitions.AsEnumerable());
+        }
+
         public static Memory<byte> Compose(IEnumerable<(byte[] Crc64, long OriginalDataLength)> partitions)
         {
             ulong result = Compose(partitions.Select(tup => (BitConverter.ToUInt64(tup.Crc64, 0), tup.OriginalDataLength)));

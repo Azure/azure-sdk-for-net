@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication
 {
-    /// <summary> Type of CommunicationIdentifierModel. </summary>
+    /// <summary> The identifier kind, for example 'communicationUser' or 'phoneNumber'. </summary>
     internal readonly partial struct CommunicationIdentifierModelKind : IEquatable<CommunicationIdentifierModelKind>
     {
         private readonly string _value;

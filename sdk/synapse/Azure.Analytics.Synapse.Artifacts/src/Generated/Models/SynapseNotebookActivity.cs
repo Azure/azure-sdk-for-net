@@ -25,6 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Notebook = notebook;
             Parameters = new ChangeTrackingDictionary<string, NotebookParameter>();
+            SparkConfig = new ChangeTrackingDictionary<string, object>();
             Type = "SynapseNotebook";
         }
 
@@ -32,6 +33,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -40,11 +43,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="notebook"> Synapse notebook reference. </param>
         /// <param name="sparkPool"> The name of the big data pool which will be used to execute the notebook. </param>
         /// <param name="parameters"> Notebook parameters. </param>
-        /// <param name="executorSize"> Number of core and memory to be used for executors allocated in the specified Spark pool for the session, which will be used for overriding &apos;executorCores&apos; and &apos;executorMemory&apos; of the notebook you provide. Type: string (or Expression with resultType string). </param>
-        /// <param name="conf"> Spark configuration properties, which will override the &apos;conf&apos; of the notebook you provide. </param>
-        /// <param name="driverSize"> Number of core and memory to be used for driver allocated in the specified Spark pool for the session, which will be used for overriding &apos;driverCores&apos; and &apos;driverMemory&apos; of the notebook you provide. Type: string (or Expression with resultType string). </param>
-        /// <param name="numExecutors"> Number of executors to launch for this session, which will override the &apos;numExecutors&apos; of the notebook you provide. </param>
-        internal SynapseNotebookActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseNotebookReference notebook, BigDataPoolParametrizationReference sparkPool, IDictionary<string, NotebookParameter> parameters, object executorSize, object conf, object driverSize, int? numExecutors) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="executorSize"> Number of core and memory to be used for executors allocated in the specified Spark pool for the session, which will be used for overriding 'executorCores' and 'executorMemory' of the notebook you provide. Type: string (or Expression with resultType string). </param>
+        /// <param name="conf"> Spark configuration properties, which will override the 'conf' of the notebook you provide. </param>
+        /// <param name="driverSize"> Number of core and memory to be used for driver allocated in the specified Spark pool for the session, which will be used for overriding 'driverCores' and 'driverMemory' of the notebook you provide. Type: string (or Expression with resultType string). </param>
+        /// <param name="numExecutors"> Number of executors to launch for this session, which will override the 'numExecutors' of the notebook you provide. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="configurationType"> The type of the spark config. </param>
+        /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
+        /// <param name="sparkConfig"> Spark configuration property. </param>
+        internal SynapseNotebookActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseNotebookReference notebook, BigDataPoolParametrizationReference sparkPool, IDictionary<string, NotebookParameter> parameters, object executorSize, object conf, object driverSize, object numExecutors, ConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, object> sparkConfig) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Notebook = notebook;
             SparkPool = sparkPool;
@@ -53,6 +59,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Conf = conf;
             DriverSize = driverSize;
             NumExecutors = numExecutors;
+            ConfigurationType = configurationType;
+            TargetSparkConfiguration = targetSparkConfiguration;
+            SparkConfig = sparkConfig;
             Type = type ?? "SynapseNotebook";
         }
 
@@ -62,13 +71,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public BigDataPoolParametrizationReference SparkPool { get; set; }
         /// <summary> Notebook parameters. </summary>
         public IDictionary<string, NotebookParameter> Parameters { get; }
-        /// <summary> Number of core and memory to be used for executors allocated in the specified Spark pool for the session, which will be used for overriding &apos;executorCores&apos; and &apos;executorMemory&apos; of the notebook you provide. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Number of core and memory to be used for executors allocated in the specified Spark pool for the session, which will be used for overriding 'executorCores' and 'executorMemory' of the notebook you provide. Type: string (or Expression with resultType string). </summary>
         public object ExecutorSize { get; set; }
-        /// <summary> Spark configuration properties, which will override the &apos;conf&apos; of the notebook you provide. </summary>
+        /// <summary> Spark configuration properties, which will override the 'conf' of the notebook you provide. </summary>
         public object Conf { get; set; }
-        /// <summary> Number of core and memory to be used for driver allocated in the specified Spark pool for the session, which will be used for overriding &apos;driverCores&apos; and &apos;driverMemory&apos; of the notebook you provide. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Number of core and memory to be used for driver allocated in the specified Spark pool for the session, which will be used for overriding 'driverCores' and 'driverMemory' of the notebook you provide. Type: string (or Expression with resultType string). </summary>
         public object DriverSize { get; set; }
-        /// <summary> Number of executors to launch for this session, which will override the &apos;numExecutors&apos; of the notebook you provide. </summary>
-        public int? NumExecutors { get; set; }
+        /// <summary> Number of executors to launch for this session, which will override the 'numExecutors' of the notebook you provide. Type: integer (or Expression with resultType integer). </summary>
+        public object NumExecutors { get; set; }
+        /// <summary> The type of the spark config. </summary>
+        public ConfigurationType? ConfigurationType { get; set; }
+        /// <summary> The spark configuration of the spark job. </summary>
+        public SparkConfigurationParametrizationReference TargetSparkConfiguration { get; set; }
+        /// <summary> Spark configuration property. </summary>
+        public IDictionary<string, object> SparkConfig { get; }
     }
 }

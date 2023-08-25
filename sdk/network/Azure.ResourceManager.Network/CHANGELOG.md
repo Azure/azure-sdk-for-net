@@ -1,8 +1,87 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.4.0 (2023-07-31)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-02' to 'package-2023-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f5cb37608399dd19760b9ef985a707294e32fbda/specification/network/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.33.0 to 1.34.0.
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.7.0.
+- Obsoleted method 'ArmOperation<VpnProfileResponse> Generatevirtualwanvpnserverconfigurationvpnprofile(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualWanResource.
+- Obsoleted method 'Task<ArmOperation<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualWanResource.
+
+## 1.3.0 (2023-06-30)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-09' to 'package-2023-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0b4a0a3f4bfc198df608f373784505e42e248c2c/specification/network/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.31.0 to 1.33.0.
+- Upgraded Azure.ResourceManager from 1.5.0 to 1.6.0.
+- Obsoleted method 'ArmOperation<PeerRouteList> GetAdvertisedRoutesVirtualHubBgpConnection(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource.
+- Obsoleted method 'Task<ArmOperation<PeerRouteList>> GetAdvertisedRoutesVirtualHubBgpConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource.
+- Obsoleted method 'ArmOperation<PeerRouteList> GetLearnedRoutesVirtualHubBgpConnection(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource.
+- Obsoleted method 'Task<ArmOperation<PeerRouteList>> GetLearnedRoutesVirtualHubBgpConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource.
+- Obsoleted method 'ArmOperation GetEffectiveVirtualHubRoutes(WaitUntil waitUntil, EffectiveRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted method 'Task<ArmOperation> GetEffectiveVirtualHubRoutesAsync(WaitUntil waitUntil, EffectiveRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted method 'ArmOperation GetInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted method 'Task<ArmOperation> GetInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted method 'ArmOperation GetOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted method 'Task<ArmOperation> GetOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource.
+- Obsoleted property 'ApplicationGatewayCustomErrorStatusCode HttpStatus499' in type Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode.
+- Obsoleted property 'LoadBalancerBackendAddressAdminState Drain' in type Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState.
+- Obsoleted type 'Azure.ResourceManager.Network.Models.PeerRouteList'.
+
+## 1.3.0-beta.1 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.2.0 (2023-04-28)
+
+### Features Added
+
+Add new resources:
+- `AdminRuleGroupResource`
+- `ApplicationGatewayWafDynamicManifestResource`
+- `BaseAdminRuleResource`
+- `ConnectivityConfigurationResource`
+- `ExpressRoutePortAuthorizationResource`
+- `ExpressRouteProviderPortResource`
+- `ManagementGroupNetworkManagerConnectionResource`
+- `NetworkGroupResource`
+- `NetworkManagerResource`
+- `NetworkManagerConnectionResource`
+- `RouteMapResource`
+- `RoutingIntentResource`
+- `ScopeConnectionResource`
+- `SecurityAdminConfigurationResource`
+- `PolicySignaturesOverridesForIdpsResource`
+- `NetworkGroupStaticMemberResource`
+- `NetworkManagerConnectionResource`
+- `CloudServiceSwapResource`
+- `VpnServerConfigurationPolicyResource`
 
 ### Breaking Changes
 
@@ -13,6 +92,9 @@
 - Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/34094. Please use `EffectiveNetworkSecurityGroup.TagToIPAddresses` instead of `EffectiveNetworkSecurityGroup.TagMap`.
 
 ### Other Changes
+
+- Upgraded API version to `2022-09-01`.
+- Upgraded dependent `Azure.Core` to `1.31.0`.
 
 ## 1.1.1 (2023-02-13)
 

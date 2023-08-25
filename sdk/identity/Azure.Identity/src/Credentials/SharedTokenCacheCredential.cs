@@ -118,8 +118,8 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, TenantIdResolver.AllTenants);
-                IAccount account = await GetAccountAsync(tenantId, async, cancellationToken).ConfigureAwait(false);
-                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, tenantId, async, cancellationToken).ConfigureAwait(false);
+                IAccount account = await GetAccountAsync(tenantId, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, tenantId, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException ex)
@@ -135,7 +135,7 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<IAccount> GetAccountAsync(string tenantId, bool async, CancellationToken cancellationToken)
+        private async ValueTask<IAccount> GetAccountAsync(string tenantId, bool enableCae, bool async, CancellationToken cancellationToken)
         {
             using var asyncLock = await _accountAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
             if (asyncLock.HasValue)
@@ -151,7 +151,7 @@ namespace Azure.Identity
                 return account;
             }
 
-            List<IAccount> accounts = await Client.GetAccountsAsync(async, cancellationToken).ConfigureAwait(false);
+            List<IAccount> accounts = await Client.GetAccountsAsync(async, enableCae, cancellationToken).ConfigureAwait(false);
 
             if (accounts.Count == 0)
             {

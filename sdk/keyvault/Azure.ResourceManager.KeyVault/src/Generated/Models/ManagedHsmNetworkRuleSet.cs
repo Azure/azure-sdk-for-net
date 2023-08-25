@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of ManagedHsmNetworkRuleSet. </summary>
-        /// <param name="bypass"> Tells what traffic can bypass network rules. This can be &apos;AzureServices&apos; or &apos;None&apos;.  If not specified the default is &apos;AzureServices&apos;. </param>
+        /// <param name="bypass"> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </param>
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             VirtualNetworkRules = virtualNetworkRules;
         }
 
-        /// <summary> Tells what traffic can bypass network rules. This can be &apos;AzureServices&apos; or &apos;None&apos;.  If not specified the default is &apos;AzureServices&apos;. </summary>
+        /// <summary> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </summary>
         public ManagedHsmNetworkRuleBypassOption? Bypass { get; set; }
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
         public ManagedHsmNetworkRuleAction? DefaultAction { get; set; }

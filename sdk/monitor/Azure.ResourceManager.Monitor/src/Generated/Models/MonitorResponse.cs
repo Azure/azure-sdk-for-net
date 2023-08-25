@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     internal partial class MonitorResponse
     {
         /// <summary> Initializes a new instance of MonitorResponse. </summary>
-        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
+        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="value"> the value of the collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="value"/> is null. </exception>
         internal MonitorResponse(string timespan, IEnumerable<MonitorMetric> value)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of MonitorResponse. </summary>
         /// <param name="cost"> The integer value representing the relative cost of the query. </param>
-        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
+        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceregion"> The region of the resource being queried for metrics. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> The integer value representing the relative cost of the query. </summary>
         public int? Cost { get; }
-        /// <summary> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </summary>
+        /// <summary> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </summary>
         public string Timespan { get; }
         /// <summary> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </summary>
         public TimeSpan? Interval { get; }

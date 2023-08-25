@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_UserSessionGet()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2021-07-12/examples/UserSession_Get.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2022-09-09/examples/UserSession_Get.json
             // this example is just showing the usage of "UserSessions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_UserSessionGet()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2021-07-12/examples/UserSession_Get.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2022-09-09/examples/UserSession_Get.json
             // this example is just showing the usage of "UserSessions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_UserSessionList()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2021-07-12/examples/UserSession_List.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2022-09-09/examples/UserSession_List.json
             // this example is just showing the usage of "UserSessions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             UserSessionCollection collection = sessionHost.GetUserSessions();
 
             // invoke the operation and iterate over the result
-            await foreach (UserSessionResource item in collection.GetAllAsync())
+            int? pageSize = 10;
+            bool? isDescending = true;
+            int? initialSkip = 0;
+            await foreach (UserSessionResource item in collection.GetAllAsync(pageSize: pageSize, isDescending: isDescending, initialSkip: initialSkip))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
