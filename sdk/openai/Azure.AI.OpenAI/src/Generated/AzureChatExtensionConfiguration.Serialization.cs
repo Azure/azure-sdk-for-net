@@ -8,23 +8,21 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety
+namespace Azure.AI.OpenAI
 {
-    public partial class ImageData : IUtf8JsonSerializable
+    public partial class AzureChatExtensionConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
-            {
-                writer.WritePropertyName("content"u8);
-                writer.WriteBase64StringValue(Content.ToArray(), "D");
-            }
-            if (Optional.IsDefined(BlobUrl))
-            {
-                writer.WritePropertyName("blobUrl"u8);
-                writer.WriteStringValue(BlobUrl.AbsoluteUri);
-            }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("parameters"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Parameters);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Parameters.ToString()).RootElement);
+#endif
             writer.WriteEndObject();
         }
 

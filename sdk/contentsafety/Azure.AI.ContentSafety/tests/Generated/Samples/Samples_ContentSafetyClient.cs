@@ -268,7 +268,7 @@ namespace Azure.AI.ContentSafety.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ContentSafetyClient(endpoint, credential);
 
-            var body = new AnalyzeImageOptions(new ImageData()
+            var body = new AnalyzeImageOptions(new ContentSafetyImageData()
             {
                 Content = BinaryData.FromString("<your binary data content>"),
                 BlobUrl = new Uri("http://localhost:3000"),

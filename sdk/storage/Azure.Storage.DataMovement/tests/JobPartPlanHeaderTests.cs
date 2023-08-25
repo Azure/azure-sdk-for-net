@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement.Tests
                 metadata: metadata,
                 blobTags: blobTags);
 
-            Assert.AreEqual(header.Version, DataMovementConstants.PlanFile.SchemaVersion);
+            Assert.AreEqual(header.Version, DataMovementConstants.JobPartPlanFile.SchemaVersion);
             Assert.AreEqual(header.StartTime, DefaultStartTime);
             Assert.AreEqual(header.TransferId, DefaultTransferId);
             Assert.AreEqual(header.PartNumber, DefaultPartNumber);
@@ -113,7 +113,7 @@ namespace Azure.Storage.DataMovement.Tests
                 metadata: metadata,
                 blobTags: blobTags);
 
-            using (Stream stream = new MemoryStream(DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
+            using (Stream stream = new MemoryStream(DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Act
                 header.Serialize(stream);
@@ -121,87 +121,87 @@ namespace Azure.Storage.DataMovement.Tests
                 // Assert
                 stream.Position = 0;
 
-                int versionSize = DataMovementConstants.PlanFile.VersionStrNumBytes;
+                int versionSize = DataMovementConstants.JobPartPlanFile.VersionStrNumBytes;
                 byte[] versionBuffer = new byte[versionSize];
                 await stream.ReadAsync(versionBuffer, 0, versionSize);
-                Assert.AreEqual(DataMovementConstants.PlanFile.SchemaVersion.ToByteArray(versionSize), versionBuffer);
+                Assert.AreEqual(DataMovementConstants.JobPartPlanFile.SchemaVersion.ToByteArray(versionSize), versionBuffer);
 
-                int startTimeSize = DataMovementConstants.PlanFile.LongSizeInBytes;
+                int startTimeSize = DataMovementConstants.LongSizeInBytes;
                 byte[] startTimeBuffer = new byte[startTimeSize];
                 await stream.ReadAsync(startTimeBuffer, 0, startTimeSize);
                 Assert.AreEqual(DefaultStartTime.Ticks.ToByteArray(startTimeSize), startTimeBuffer);
 
-                int transferIdSize = DataMovementConstants.PlanFile.TransferIdStrNumBytes;
+                int transferIdSize = DataMovementConstants.JobPartPlanFile.TransferIdStrNumBytes;
                 byte[] transferIdBuffer = new byte[transferIdSize];
                 await stream.ReadAsync(transferIdBuffer, 0, transferIdSize);
                 Assert.AreEqual(DefaultTransferId.ToByteArray(transferIdSize), transferIdBuffer);
 
-                int partNumberSize = DataMovementConstants.PlanFile.LongSizeInBytes;
+                int partNumberSize = DataMovementConstants.LongSizeInBytes;
                 byte[] partNumberBuffer = new byte[partNumberSize];
                 await stream.ReadAsync(partNumberBuffer, 0, partNumberSize);
                 Assert.AreEqual(DefaultPartNumber.ToByteArray(partNumberSize), partNumberBuffer);
 
-                int sourceResourceIdLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int sourceResourceIdLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] sourceResourceIdLengthBuffer = new byte[sourceResourceIdLengthSize];
                 await stream.ReadAsync(sourceResourceIdLengthBuffer, 0, sourceResourceIdLengthSize);
                 Assert.AreEqual(((ushort)DefaultSourceResourceId.Length).ToByteArray(sourceResourceIdLengthSize), sourceResourceIdLengthBuffer);
 
-                int sourceResourceIdSize = DataMovementConstants.PlanFile.ResourceIdNumBytes;
+                int sourceResourceIdSize = DataMovementConstants.JobPartPlanFile.ResourceIdNumBytes;
                 byte[] sourceResourceIdBuffer = new byte[sourceResourceIdSize];
                 await stream.ReadAsync(sourceResourceIdBuffer, 0, sourceResourceIdSize);
                 Assert.AreEqual(DefaultSourceResourceId.ToByteArray(sourceResourceIdSize), sourceResourceIdBuffer);
 
-                int sourcePathLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int sourcePathLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] sourcePathLengthBuffer = new byte[sourcePathLengthSize];
                 await stream.ReadAsync(sourcePathLengthBuffer, 0, sourcePathLengthSize);
                 Assert.AreEqual(((ushort)DefaultSourcePath.Length).ToByteArray(sourcePathLengthSize), sourcePathLengthBuffer);
 
-                int sourcePathSize = DataMovementConstants.PlanFile.PathStrNumBytes;
+                int sourcePathSize = DataMovementConstants.JobPartPlanFile.PathStrNumBytes;
                 byte[] sourcePathBuffer = new byte[sourcePathSize];
                 await stream.ReadAsync(sourcePathBuffer, 0, sourcePathSize);
                 Assert.AreEqual(DefaultSourcePath.ToByteArray(sourcePathSize), sourcePathBuffer);
 
-                int sourceExtraQueryLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int sourceExtraQueryLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] sourceExtraQueryLengthBuffer = new byte[sourceExtraQueryLengthSize];
                 await stream.ReadAsync(sourceExtraQueryLengthBuffer, 0, sourceExtraQueryLengthSize);
                 Assert.AreEqual(((ushort)DefaultSourceQuery.Length).ToByteArray(sourceExtraQueryLengthSize), sourceExtraQueryLengthBuffer);
 
-                int sourceExtraQuerySize = DataMovementConstants.PlanFile.ExtraQueryNumBytes;
+                int sourceExtraQuerySize = DataMovementConstants.JobPartPlanFile.ExtraQueryNumBytes;
                 byte[] sourceExtraQueryBuffer = new byte[sourceExtraQuerySize];
                 await stream.ReadAsync(sourceExtraQueryBuffer, 0, sourceExtraQuerySize);
                 Assert.AreEqual(DefaultSourceQuery.ToByteArray(sourceExtraQuerySize), sourceExtraQueryBuffer);
 
-                int destinationResourceIdLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int destinationResourceIdLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] destinationResourceIdLengthBuffer = new byte[destinationResourceIdLengthSize];
                 await stream.ReadAsync(destinationResourceIdLengthBuffer, 0, destinationResourceIdLengthSize);
                 Assert.AreEqual(((ushort)DefaultDestinationResourceId.Length).ToByteArray(destinationResourceIdLengthSize), destinationResourceIdLengthBuffer);
 
-                int destinationResourceIdSize = DataMovementConstants.PlanFile.ResourceIdNumBytes;
+                int destinationResourceIdSize = DataMovementConstants.JobPartPlanFile.ResourceIdNumBytes;
                 byte[] destinationResourceIdBuffer = new byte[destinationResourceIdSize];
                 await stream.ReadAsync(destinationResourceIdBuffer, 0, destinationResourceIdSize);
                 Assert.AreEqual(DefaultDestinationResourceId.ToByteArray(destinationResourceIdSize), destinationResourceIdBuffer);
 
-                int destinationPathLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int destinationPathLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] destinationPathLengthBuffer = new byte[destinationPathLengthSize];
                 await stream.ReadAsync(destinationPathLengthBuffer, 0, destinationPathLengthSize);
                 Assert.AreEqual(((ushort)DefaultDestinationPath.Length).ToByteArray(destinationPathLengthSize), destinationPathLengthBuffer);
 
-                int destinationPathSize = DataMovementConstants.PlanFile.PathStrNumBytes;
+                int destinationPathSize = DataMovementConstants.JobPartPlanFile.PathStrNumBytes;
                 byte[] destinationPathBuffer = new byte[destinationPathSize];
                 await stream.ReadAsync(destinationPathBuffer, 0, destinationPathSize);
                 Assert.AreEqual(DefaultDestinationPath.ToByteArray(destinationPathSize), destinationPathBuffer);
 
-                int destinationExtraQueryLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int destinationExtraQueryLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] destinationExtraQueryLengthBuffer = new byte[destinationExtraQueryLengthSize];
                 await stream.ReadAsync(destinationExtraQueryLengthBuffer, 0, destinationExtraQueryLengthSize);
                 Assert.AreEqual(((ushort)DefaultDestinationQuery.Length).ToByteArray(destinationExtraQueryLengthSize), destinationExtraQueryLengthBuffer);
 
-                int destinationExtraQuerySize = DataMovementConstants.PlanFile.ExtraQueryNumBytes;
+                int destinationExtraQuerySize = DataMovementConstants.JobPartPlanFile.ExtraQueryNumBytes;
                 byte[] destinationExtraQueryBuffer = new byte[destinationExtraQuerySize];
                 await stream.ReadAsync(destinationExtraQueryBuffer, 0, destinationExtraQuerySize);
                 Assert.AreEqual(DefaultDestinationQuery.ToByteArray(destinationExtraQuerySize), destinationExtraQueryBuffer);
 
-                int oneByte = DataMovementConstants.PlanFile.OneByte;
+                int oneByte = DataMovementConstants.OneByte;
                 byte[] isFinalPartBuffer = new byte[oneByte];
                 await stream.ReadAsync(isFinalPartBuffer, 0, oneByte);
                 Assert.AreEqual(0, isFinalPartBuffer[0]);
@@ -222,7 +222,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await stream.ReadAsync(priorityBuffer, 0, oneByte);
                 Assert.AreEqual(0, priorityBuffer[0]);
 
-                int ttlAfterCompletionSize = DataMovementConstants.PlanFile.LongSizeInBytes;
+                int ttlAfterCompletionSize = DataMovementConstants.LongSizeInBytes;
                 byte[] ttlAfterCompletionBuffer = new byte[ttlAfterCompletionSize];
                 await stream.ReadAsync(ttlAfterCompletionBuffer, 0, ttlAfterCompletionSize);
                 Assert.AreEqual(DefaultTtlAfterCompletion.Ticks.ToByteArray(ttlAfterCompletionSize), ttlAfterCompletionBuffer);
@@ -235,7 +235,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await stream.ReadAsync(folderPropertyModeBuffer, 0, oneByte);
                 Assert.AreEqual((byte)DefaultFolderPropertiesMode, folderPropertyModeBuffer[0]);
 
-                int numberChunksSize = DataMovementConstants.PlanFile.LongSizeInBytes;
+                int numberChunksSize = DataMovementConstants.LongSizeInBytes;
                 byte[] numberChunksBuffer = new byte[numberChunksSize];
                 await stream.ReadAsync(numberChunksBuffer, 0, numberChunksSize);
                 Assert.AreEqual(DefaultNumberChunks.ToByteArray(numberChunksSize), numberChunksBuffer);
@@ -248,52 +248,52 @@ namespace Azure.Storage.DataMovement.Tests
                 await stream.ReadAsync(noGuessMimeTypeBuffer, 0, oneByte);
                 Assert.AreEqual(0, noGuessMimeTypeBuffer[0]);
 
-                int contentTypeLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int contentTypeLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] contentTypeLengthBuffer = new byte[contentTypeLengthSize];
                 await stream.ReadAsync(contentTypeLengthBuffer, 0, contentTypeLengthSize);
                 Assert.AreEqual(((ushort)DefaultContentType.Length).ToByteArray(contentTypeLengthSize), contentTypeLengthBuffer);
 
-                int contentTypeSize = DataMovementConstants.PlanFile.HeaderValueNumBytes;
+                int contentTypeSize = DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes;
                 byte[] contentTypeBuffer = new byte[contentTypeSize];
                 await stream.ReadAsync(contentTypeBuffer, 0, contentTypeSize);
                 Assert.AreEqual(DefaultContentType.ToByteArray(contentTypeSize), contentTypeBuffer);
 
-                int contentEncodingLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int contentEncodingLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] contentEncodingLengthBuffer = new byte[contentEncodingLengthSize];
                 await stream.ReadAsync(contentEncodingLengthBuffer, 0, contentEncodingLengthSize);
                 Assert.AreEqual(((ushort)DefaultContentEncoding.Length).ToByteArray(contentEncodingLengthSize), contentEncodingLengthBuffer);
 
-                int contentEncodingSize = DataMovementConstants.PlanFile.HeaderValueNumBytes;
+                int contentEncodingSize = DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes;
                 byte[] contentEncodingBuffer = new byte[contentEncodingSize];
                 await stream.ReadAsync(contentEncodingBuffer, 0, contentEncodingSize);
                 Assert.AreEqual(DefaultContentEncoding.ToByteArray(contentEncodingSize), contentEncodingBuffer);
 
-                int contentLanguageLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int contentLanguageLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] contentLanguageLengthBuffer = new byte[contentLanguageLengthSize];
                 await stream.ReadAsync(contentLanguageLengthBuffer, 0, contentLanguageLengthSize);
                 Assert.AreEqual(((ushort)DefaultContentLanguage.Length).ToByteArray(contentLanguageLengthSize), contentLanguageLengthBuffer);
 
-                int contentLanguageSize = DataMovementConstants.PlanFile.HeaderValueNumBytes;
+                int contentLanguageSize = DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes;
                 byte[] contentLanguageBuffer = new byte[contentLanguageSize];
                 await stream.ReadAsync(contentLanguageBuffer, 0, contentLanguageSize);
                 Assert.AreEqual(DefaultContentLanguage.ToByteArray(contentLanguageSize), contentLanguageBuffer);
 
-                int contentDispositionLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int contentDispositionLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] contentDispositionLengthBuffer = new byte[contentDispositionLengthSize];
                 await stream.ReadAsync(contentDispositionLengthBuffer, 0, contentDispositionLengthSize);
                 Assert.AreEqual(((ushort)DefaultContentDisposition.Length).ToByteArray(contentDispositionLengthSize), contentDispositionLengthBuffer);
 
-                int contentDispositionSize = DataMovementConstants.PlanFile.HeaderValueNumBytes;
+                int contentDispositionSize = DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes;
                 byte[] contentDispositionBuffer = new byte[contentDispositionSize];
                 await stream.ReadAsync(contentDispositionBuffer, 0, contentDispositionSize);
                 Assert.AreEqual(DefaultContentDisposition.ToByteArray(contentDispositionSize), contentDispositionBuffer);
 
-                int cacheControlLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int cacheControlLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] cacheControlLengthBuffer = new byte[cacheControlLengthSize];
                 await stream.ReadAsync(cacheControlLengthBuffer, 0, cacheControlLengthSize);
                 Assert.AreEqual(((ushort)DefaultCacheControl.Length).ToByteArray(cacheControlLengthSize), cacheControlLengthBuffer);
 
-                int cacheControlSize = DataMovementConstants.PlanFile.HeaderValueNumBytes;
+                int cacheControlSize = DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes;
                 byte[] cacheControlBuffer = new byte[cacheControlSize];
                 await stream.ReadAsync(cacheControlBuffer, 0, cacheControlSize);
                 Assert.AreEqual(DefaultCacheControl.ToByteArray(cacheControlSize), cacheControlBuffer);
@@ -311,23 +311,23 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.AreEqual(0, putMd5Buffer[0]);
 
                 string metadataStr = DictionaryToString(metadata);
-                int metadataLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int metadataLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] metadataLengthBuffer = new byte[metadataLengthSize];
                 await stream.ReadAsync(metadataLengthBuffer, 0, metadataLengthSize);
                 Assert.AreEqual(((ushort)metadataStr.Length).ToByteArray(metadataLengthSize), metadataLengthBuffer);
 
-                int metadataSize = DataMovementConstants.PlanFile.MetadataStrNumBytes;
+                int metadataSize = DataMovementConstants.JobPartPlanFile.MetadataStrNumBytes;
                 byte[] metadataBuffer = new byte[metadataSize];
                 await stream.ReadAsync(metadataBuffer, 0, metadataSize);
                 Assert.AreEqual(metadataStr.ToByteArray(metadataSize), metadataBuffer);
 
                 string blobTagsStr = DictionaryToString(blobTags);
-                int blobTagsLengthSize = DataMovementConstants.PlanFile.LongSizeInBytes;
+                int blobTagsLengthSize = DataMovementConstants.LongSizeInBytes;
                 byte[] blobTagsLengthBuffer = new byte[blobTagsLengthSize];
                 await stream.ReadAsync(blobTagsLengthBuffer, 0, blobTagsLengthSize);
                 Assert.AreEqual(((long)blobTagsStr.Length).ToByteArray(blobTagsLengthSize), blobTagsLengthBuffer);
 
-                int blobTagsSize = DataMovementConstants.PlanFile.BlobTagsStrNumBytes;
+                int blobTagsSize = DataMovementConstants.JobPartPlanFile.BlobTagsStrNumBytes;
                 byte[] blobTagsBuffer = new byte[blobTagsSize];
                 await stream.ReadAsync(blobTagsBuffer, 0, blobTagsSize);
                 Assert.AreEqual(blobTagsStr.ToByteArray(blobTagsSize), blobTagsBuffer);
@@ -336,17 +336,17 @@ namespace Azure.Storage.DataMovement.Tests
                 await stream.ReadAsync(isSourceEncryptedBuffer, 0, oneByte);
                 Assert.AreEqual(0, isSourceEncryptedBuffer[0]);
 
-                int cpkScopeInfoLengthSize = DataMovementConstants.PlanFile.UShortSizeInBytes;
+                int cpkScopeInfoLengthSize = DataMovementConstants.UShortSizeInBytes;
                 byte[] cpkScopeInfoLengthBuffer = new byte[cpkScopeInfoLengthSize];
                 await stream.ReadAsync(cpkScopeInfoLengthBuffer, 0, cpkScopeInfoLengthSize);
                 Assert.AreEqual(((ushort)DefaultCpkScopeInfo.Length).ToByteArray(cpkScopeInfoLengthSize), cpkScopeInfoLengthBuffer);
 
-                int cpkScopeInfoSize = DataMovementConstants.PlanFile.HeaderValueNumBytes;
+                int cpkScopeInfoSize = DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes;
                 byte[] cpkScopeInfoBuffer = new byte[cpkScopeInfoSize];
                 await stream.ReadAsync(cpkScopeInfoBuffer, 0, cpkScopeInfoSize);
                 Assert.AreEqual(DefaultCpkScopeInfo.ToByteArray(cpkScopeInfoSize), cpkScopeInfoBuffer);
 
-                int blockSizeLengthSize = DataMovementConstants.PlanFile.LongSizeInBytes;
+                int blockSizeLengthSize = DataMovementConstants.LongSizeInBytes;
                 byte[] blockSizeLengthBuffer = new byte[blockSizeLengthSize];
                 await stream.ReadAsync(blockSizeLengthBuffer, 0, blockSizeLengthSize);
                 Assert.AreEqual(DefaultBlockSize.ToByteArray(blockSizeLengthSize), blockSizeLengthBuffer);
@@ -428,12 +428,12 @@ namespace Azure.Storage.DataMovement.Tests
                 metadata: metadata,
                 blobTags: blobTags);
 
-            using (Stream stream = new MemoryStream(DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
+            using (Stream stream = new MemoryStream(DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 header.Serialize(stream);
 
                 // Act / Assert
-                DeserializeAndVerify(stream, DataMovementConstants.PlanFile.SchemaVersion, metadata, blobTags);
+                DeserializeAndVerify(stream, DataMovementConstants.JobPartPlanFile.SchemaVersion, metadata, blobTags);
             }
         }
 
@@ -447,7 +447,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Act / Assert
                 Assert.Catch<ArgumentException>(
                     () => JobPartPlanHeader.Deserialize(stream),
-                    $"The checkpoint file schema version {DataMovementConstants.PlanFile.SchemaVersion_b1} is not supported by this version of the SDK.");
+                    $"The checkpoint file schema version {DataMovementConstants.JobPartPlanFile.SchemaVersion_b1} is not supported by this version of the SDK.");
             }
         }
 
@@ -459,7 +459,7 @@ namespace Azure.Storage.DataMovement.Tests
             using (FileStream stream = File.OpenRead(samplePath))
             {
                 // Act / Assert
-                DeserializeAndVerify(stream, DataMovementConstants.PlanFile.SchemaVersion_b2, DataProvider.BuildMetadata(), DataProvider.BuildTags());
+                DeserializeAndVerify(stream, DataMovementConstants.JobPartPlanFile.SchemaVersion_b2, DataProvider.BuildMetadata(), DataProvider.BuildTags());
             }
         }
 
