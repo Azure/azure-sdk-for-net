@@ -129,24 +129,38 @@ namespace Azure.Core.Serialization
 
         public void Add(string key, T? value)
         {
+            int index = GetNextIndex();
+            _indexes[key] = index;
+            _values[index] = value;
             _hasChanges = true;
-            _changed[key] = true;
-            _dictionary.Add(key, value);
+            _changes.SetChanged(index);
+        }
+
+        private int GetNextIndex()
+        {
+            // This will handle Resize() as well.
+            // See example here: https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/Dictionary.cs#L848
+            throw new NotImplementedException();
         }
 
         void ICollection<KeyValuePair<string, T?>>.Add(KeyValuePair<string, T?> item)
         {
+            int index = GetNextIndex();
+            _indexes[item.Key] = index;
+            _values[index] = item.Value;
             _hasChanges = true;
-            _changed[item.Key] = true;
-            (_dictionary as ICollection<KeyValuePair<string, T?>>).Add(item);
+            _changes.SetChanged(index);
         }
 
         void ICollection<KeyValuePair<string, T?>>.Clear()
         {
+            // TODO: this raises the question of how we track changes for deleted elements.
+            // Solve it here.
+
             _hasChanges = true;
-            foreach (string key in _dictionary.Keys)
+            foreach (int index in _indexes.Values)
             {
-                _changed[key] = true;
+                _changes.SetChanged(index);
             }
 
             (_dictionary as ICollection<KeyValuePair<string, T?>>).Clear();
