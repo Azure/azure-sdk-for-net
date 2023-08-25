@@ -20,6 +20,7 @@ namespace Azure.Communication.PhoneNumbers
             }
             Optional<string> phoneNumber = default;
             Optional<OperatorNumberType> numberType = default;
+            Optional<string> isoCountryCode = default;
             Optional<OperatorDetails> operatorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,6 +38,11 @@ namespace Azure.Communication.PhoneNumbers
                     numberType = new OperatorNumberType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("isoCountryCode"u8))
+                {
+                    isoCountryCode = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("operatorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -47,7 +53,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new OperatorInformation(phoneNumber.Value, Optional.ToNullable(numberType), operatorDetails.Value);
+            return new OperatorInformation(phoneNumber.Value, Optional.ToNullable(numberType), isoCountryCode.Value, operatorDetails.Value);
         }
     }
 }

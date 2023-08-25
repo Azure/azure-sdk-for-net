@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Represents metadata about a phone number that is controlled/provided by the phone number&apos;s operator. </summary>
+    /// <summary> Represents metadata about a phone number that is controlled/provided by that phone number's operator. </summary>
     public partial class OperatorInformation
     {
         /// <summary> Initializes a new instance of OperatorInformation. </summary>
@@ -18,11 +18,13 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of OperatorInformation. </summary>
         /// <param name="phoneNumber"> E.164 formatted string representation of the phone number. </param>
         /// <param name="numberType"> Type of service associated with the phone number. </param>
+        /// <param name="isoCountryCode"> ISO 3166-1 two character ('alpha-2') code associated with the phone number. </param>
         /// <param name="operatorDetails"> Represents metadata describing the operator of a phone number. </param>
-        internal OperatorInformation(string phoneNumber, OperatorNumberType? numberType, OperatorDetails operatorDetails)
+        internal OperatorInformation(string phoneNumber, OperatorNumberType? numberType, string isoCountryCode, OperatorDetails operatorDetails)
         {
             PhoneNumber = phoneNumber;
             NumberType = numberType;
+            IsoCountryCode = isoCountryCode;
             OperatorDetails = operatorDetails;
         }
 
@@ -30,6 +32,8 @@ namespace Azure.Communication.PhoneNumbers
         public string PhoneNumber { get; }
         /// <summary> Type of service associated with the phone number. </summary>
         public OperatorNumberType? NumberType { get; }
+        /// <summary> ISO 3166-1 two character ('alpha-2') code associated with the phone number. </summary>
+        public string IsoCountryCode { get; }
         /// <summary> Represents metadata describing the operator of a phone number. </summary>
         public OperatorDetails OperatorDetails { get; }
     }

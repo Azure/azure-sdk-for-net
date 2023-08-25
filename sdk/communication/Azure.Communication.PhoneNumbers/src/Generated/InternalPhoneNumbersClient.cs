@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -32,7 +33,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        internal InternalPhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-05-01-preview")
+        internal InternalPhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-05-01-preview")
         {
             RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -103,6 +104,42 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 return RestClient.GetByNumber(phoneNumber, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Searches for operator information for a given list of phone numbers. </summary>
+        /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<OperatorInformationResult>> OperatorInformationSearchAsync(IEnumerable<string> phoneNumbers = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.OperatorInformationSearch");
+            scope.Start();
+            try
+            {
+                return await RestClient.OperatorInformationSearchAsync(phoneNumbers, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Searches for operator information for a given list of phone numbers. </summary>
+        /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OperatorInformationResult> OperatorInformationSearch(IEnumerable<string> phoneNumbers = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.OperatorInformationSearch");
+            scope.Start();
+            try
+            {
+                return RestClient.OperatorInformationSearch(phoneNumbers, cancellationToken);
             }
             catch (Exception e)
             {

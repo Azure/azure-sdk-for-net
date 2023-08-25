@@ -19,10 +19,10 @@ namespace Azure.Communication.PhoneNumbers
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperatorInformation>> results = default;
+            Optional<IReadOnlyList<OperatorInformation>> values = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"u8))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,11 +33,11 @@ namespace Azure.Communication.PhoneNumbers
                     {
                         array.Add(OperatorInformation.DeserializeOperatorInformation(item));
                     }
-                    results = array;
+                    values = array;
                     continue;
                 }
             }
-            return new OperatorInformationResult(Optional.ToList(results));
+            return new OperatorInformationResult(Optional.ToList(values));
         }
     }
 }

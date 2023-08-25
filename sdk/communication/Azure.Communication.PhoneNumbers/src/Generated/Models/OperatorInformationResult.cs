@@ -10,23 +10,29 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Represents a search result containing operator information for phone numbers. </summary>
+    /// <summary> Represents a search result containing operator information associated with the requested phone numbers. </summary>
     public partial class OperatorInformationResult
     {
         /// <summary> Initializes a new instance of OperatorInformationResult. </summary>
         internal OperatorInformationResult()
         {
-            Results = new ChangeTrackingList<OperatorInformation>();
+            Values = new ChangeTrackingList<OperatorInformation>();
         }
 
         /// <summary> Initializes a new instance of OperatorInformationResult. </summary>
-        /// <param name="results"> Results of the search, this array will have one entry per requested phone number with the relevant operator information for each. </param>
-        internal OperatorInformationResult(IReadOnlyList<OperatorInformation> results)
+        /// <param name="values">
+        /// Results of a search.
+        /// This array will have one entry per requested phone number which will contain the relevant operator information.
+        /// </param>
+        internal OperatorInformationResult(IReadOnlyList<OperatorInformation> values)
         {
-            Results = results;
+            Values = values;
         }
 
-        /// <summary> Results of the search, this array will have one entry per requested phone number with the relevant operator information for each. </summary>
-        public IReadOnlyList<OperatorInformation> Results { get; }
+        /// <summary>
+        /// Results of a search.
+        /// This array will have one entry per requested phone number which will contain the relevant operator information.
+        /// </summary>
+        public IReadOnlyList<OperatorInformation> Values { get; }
     }
 }
