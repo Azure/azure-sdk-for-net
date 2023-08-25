@@ -4,8 +4,6 @@
 
 This release is the first stable release of the CosmosDBForPostgreSql library.
 
-### Features Added
-
 ### Breaking Changes
 
 - Supported new parameters and removed deprecated parameters in all existing resources.
@@ -17,10 +15,6 @@ This release is the first stable release of the CosmosDBForPostgreSql library.
 - Optimized the name of some models and functions.
 - Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2023-06-06)
 
