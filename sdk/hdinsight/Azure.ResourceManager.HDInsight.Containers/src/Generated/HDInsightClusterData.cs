@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HDInsight.Containers
 {
     /// <summary>
-    /// A class representing the Cluster data model.
+    /// A class representing the HDInsightCluster data model.
     /// The cluster.
     /// </summary>
-    public partial class ClusterData : TrackedResourceData
+    public partial class HDInsightClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ClusterData. </summary>
+        /// <summary> Initializes a new instance of HDInsightClusterData. </summary>
         /// <param name="location"> The location. </param>
-        public ClusterData(AzureLocation location) : base(location)
+        public HDInsightClusterData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterData. </summary>
+        /// <summary> Initializes a new instance of HDInsightClusterData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="computeProfile"> The compute profile. </param>
         /// <param name="clusterProfile"> Cluster profile. </param>
         /// <param name="status"> Business status of the resource. </param>
-        internal ClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningStatus? provisioningState, string clusterType, string deploymentId, ComputeProfile computeProfile, ClusterProfile clusterProfile, string status) : base(id, name, resourceType, systemData, tags, location)
+        internal HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningStatus? provisioningState, string clusterType, string deploymentId, ComputeProfile computeProfile, ClusterProfile clusterProfile, string status) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             ClusterType = clusterType;

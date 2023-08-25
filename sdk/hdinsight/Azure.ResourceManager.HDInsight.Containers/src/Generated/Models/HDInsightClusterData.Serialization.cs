@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers
 {
-    public partial class ClusterPoolData : IUtf8JsonSerializable
+    public partial class HDInsightClusterData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,36 +33,26 @@ namespace Azure.ResourceManager.HDInsight.Containers
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedResourceGroupName))
+            if (Optional.IsDefined(ClusterType))
             {
-                writer.WritePropertyName("managedResourceGroupName"u8);
-                writer.WriteStringValue(ManagedResourceGroupName);
-            }
-            if (Optional.IsDefined(ClusterPoolProfile))
-            {
-                writer.WritePropertyName("clusterPoolProfile"u8);
-                writer.WriteObjectValue(ClusterPoolProfile);
+                writer.WritePropertyName("clusterType"u8);
+                writer.WriteStringValue(ClusterType);
             }
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
                 writer.WriteObjectValue(ComputeProfile);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(ClusterProfile))
             {
-                writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
-            }
-            if (Optional.IsDefined(LogAnalyticsProfile))
-            {
-                writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile);
+                writer.WritePropertyName("clusterProfile"u8);
+                writer.WriteObjectValue(ClusterProfile);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static ClusterPoolData DeserializeClusterPoolData(JsonElement element)
+        internal static HDInsightClusterData DeserializeHDInsightClusterData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,14 +65,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ProvisioningStatus> provisioningState = default;
+            Optional<string> clusterType = default;
             Optional<string> deploymentId = default;
-            Optional<string> managedResourceGroupName = default;
-            Optional<string> aksManagedResourceGroupName = default;
-            Optional<ClusterPoolResourcePropertiesClusterPoolProfile> clusterPoolProfile = default;
-            Optional<ClusterPoolResourcePropertiesComputeProfile> computeProfile = default;
-            Optional<ClusterPoolResourcePropertiesAksClusterProfile> aksClusterProfile = default;
-            Optional<ClusterPoolResourcePropertiesNetworkProfile> networkProfile = default;
-            Optional<ClusterPoolResourcePropertiesLogAnalyticsProfile> logAnalyticsProfile = default;
+            Optional<ComputeProfile> computeProfile = default;
+            Optional<ClusterProfile> clusterProfile = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -147,28 +133,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             provisioningState = new ProvisioningStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("clusterType"u8))
+                        {
+                            clusterType = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("deploymentId"u8))
                         {
                             deploymentId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("managedResourceGroupName"u8))
-                        {
-                            managedResourceGroupName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("aksManagedResourceGroupName"u8))
-                        {
-                            aksManagedResourceGroupName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterPoolProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterPoolProfile = ClusterPoolResourcePropertiesClusterPoolProfile.DeserializeClusterPoolResourcePropertiesClusterPoolProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("computeProfile"u8))
@@ -177,34 +149,16 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            computeProfile = ClusterPoolResourcePropertiesComputeProfile.DeserializeClusterPoolResourcePropertiesComputeProfile(property0.Value);
+                            computeProfile = ComputeProfile.DeserializeComputeProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("aksClusterProfile"u8))
+                        if (property0.NameEquals("clusterProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            aksClusterProfile = ClusterPoolResourcePropertiesAksClusterProfile.DeserializeClusterPoolResourcePropertiesAksClusterProfile(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("networkProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkProfile = ClusterPoolResourcePropertiesNetworkProfile.DeserializeClusterPoolResourcePropertiesNetworkProfile(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("logAnalyticsProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            logAnalyticsProfile = ClusterPoolResourcePropertiesLogAnalyticsProfile.DeserializeClusterPoolResourcePropertiesLogAnalyticsProfile(property0.Value);
+                            clusterProfile = ClusterProfile.DeserializeClusterProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -216,7 +170,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                     continue;
                 }
             }
-            return new ClusterPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), deploymentId.Value, managedResourceGroupName.Value, aksManagedResourceGroupName.Value, clusterPoolProfile.Value, computeProfile.Value, aksClusterProfile.Value, networkProfile.Value, logAnalyticsProfile.Value, status.Value);
+            return new HDInsightClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), clusterType.Value, deploymentId.Value, computeProfile.Value, clusterProfile.Value, status.Value);
         }
     }
 }

@@ -14,26 +14,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class FlinkStorageProfile
     {
         /// <summary> Initializes a new instance of FlinkStorageProfile. </summary>
-        /// <param name="storageUri"> Storage account uri which is used for savepoint and checkpoint state. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageUri"/> is null. </exception>
-        public FlinkStorageProfile(string storageUri)
+        /// <param name="storageUriString"> Storage account uri which is used for savepoint and checkpoint state. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageUriString"/> is null. </exception>
+        public FlinkStorageProfile(string storageUriString)
         {
-            Argument.AssertNotNull(storageUri, nameof(storageUri));
+            Argument.AssertNotNull(storageUriString, nameof(storageUriString));
 
-            StorageUri = storageUri;
+            StorageUriString = storageUriString;
         }
 
         /// <summary> Initializes a new instance of FlinkStorageProfile. </summary>
-        /// <param name="storageUri"> Storage account uri which is used for savepoint and checkpoint state. </param>
+        /// <param name="storageUriString"> Storage account uri which is used for savepoint and checkpoint state. </param>
         /// <param name="storagekey"> Storage key is only required for wasb(s) storage. </param>
-        internal FlinkStorageProfile(string storageUri, string storagekey)
+        internal FlinkStorageProfile(string storageUriString, string storagekey)
         {
-            StorageUri = storageUri;
+            StorageUriString = storageUriString;
             Storagekey = storagekey;
         }
 
         /// <summary> Storage account uri which is used for savepoint and checkpoint state. </summary>
-        public string StorageUri { get; set; }
+        public string StorageUriString { get; set; }
         /// <summary> Storage key is only required for wasb(s) storage. </summary>
         public string Storagekey { get; set; }
     }

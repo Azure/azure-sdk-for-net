@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             Optional<IList<ClusterServiceConfigsProfile>> serviceConfigsProfiles = default;
             Optional<SshProfile> sshProfile = default;
-            Optional<AutoscaleProfile> autoscaleProfile = default;
+            Optional<ClusterAutoscaleProfile> autoscaleProfile = default;
             Optional<AuthorizationProfile> authorizationProfile = default;
             Optional<ClusterLogAnalyticsProfile> logAnalyticsProfile = default;
             Optional<ClusterPrometheusProfile> prometheusProfile = default;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    autoscaleProfile = AutoscaleProfile.DeserializeAutoscaleProfile(property.Value);
+                    autoscaleProfile = ClusterAutoscaleProfile.DeserializeClusterAutoscaleProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationProfile"u8))

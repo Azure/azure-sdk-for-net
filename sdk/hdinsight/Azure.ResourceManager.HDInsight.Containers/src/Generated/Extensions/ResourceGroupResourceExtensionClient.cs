@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.HDInsight.Containers
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ClusterPoolResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ClusterPoolResources and their operations over a ClusterPoolResource. </returns>
-        public virtual ClusterPoolCollection GetClusterPools()
+        /// <summary> Gets a collection of HDInsightClusterPoolResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HDInsightClusterPoolResources and their operations over a HDInsightClusterPoolResource. </returns>
+        public virtual HDInsightClusterPoolCollection GetHDInsightClusterPools()
         {
-            return GetCachedClient(Client => new ClusterPoolCollection(Client, Id));
+            return GetCachedClient(Client => new HDInsightClusterPoolCollection(Client, Id));
         }
     }
 }

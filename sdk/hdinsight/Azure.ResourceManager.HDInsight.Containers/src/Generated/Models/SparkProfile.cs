@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Initializes a new instance of SparkProfile. </summary>
-        /// <param name="defaultStorageUri"> The default storage URL. </param>
+        /// <param name="defaultStorageUriString"> The default storage URL. </param>
         /// <param name="metastoreSpec"> The metastore specification for Spark cluster. </param>
         /// <param name="userPluginsSpec"> Spark user plugins spec. </param>
-        internal SparkProfile(string defaultStorageUri, SparkMetastoreSpec metastoreSpec, SparkUserPlugins userPluginsSpec)
+        internal SparkProfile(string defaultStorageUriString, SparkMetastoreSpec metastoreSpec, SparkUserPlugins userPluginsSpec)
         {
-            DefaultStorageUri = defaultStorageUri;
+            DefaultStorageUriString = defaultStorageUriString;
             MetastoreSpec = metastoreSpec;
             UserPluginsSpec = userPluginsSpec;
         }
 
         /// <summary> The default storage URL. </summary>
-        public string DefaultStorageUri { get; set; }
+        public string DefaultStorageUriString { get; set; }
         /// <summary> The metastore specification for Spark cluster. </summary>
         public SparkMetastoreSpec MetastoreSpec { get; set; }
         /// <summary> Spark user plugins spec. </summary>

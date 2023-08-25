@@ -16,7 +16,7 @@ using Azure.ResourceManager.HDInsight.Containers.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Samples
 {
-    public partial class Sample_ClusterResource
+    public partial class Sample_HDInsightClusterResource
     {
         // HDInsightClusterResize
         [NUnit.Framework.Test]
@@ -31,26 +31,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "hiloResourcegroup";
             string clusterPoolName = "clusterpool1";
             string clusterName = "cluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
             ClusterResizeData data = new ClusterResizeData(new AzureLocation("West US 2"))
             {
                 TargetWorkerNodeCount = 5,
             };
-            ArmOperation<ClusterResource> lro = await cluster.ResizeAsync(WaitUntil.Completed, data);
-            ClusterResource result = lro.Value;
+            ArmOperation<HDInsightClusterResource> lro = await hdInsightCluster.ResizeAsync(WaitUntil.Completed, data);
+            HDInsightClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterData resourceData = result.Data;
+            HDInsightClusterData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -68,21 +68,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "hiloResourcegroup";
             string clusterPoolName = "clusterpool1";
             string clusterName = "cluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            ClusterResource result = await cluster.GetAsync();
+            HDInsightClusterResource result = await hdInsightCluster.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterData resourceData = result.Data;
+            HDInsightClusterData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "hiloResourcegroup";
             string clusterPoolName = "clusterpool1";
             string clusterName = "cluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            ClusterPatch patch = new ClusterPatch(new AzureLocation("West US 2"))
+            HDInsightClusterPatch patch = new HDInsightClusterPatch(new AzureLocation("West US 2"))
             {
                 ClusterProfile = new UpdatableClusterProfile()
                 {
@@ -165,7 +165,7 @@ Values =
 })
 },
                     SshProfile = new SshProfile(2),
-                    AutoscaleProfile = new AutoscaleProfile(true)
+                    AutoscaleProfile = new ClusterAutoscaleProfile(true)
                     {
                         GracefulDecommissionTimeout = -1,
                         AutoscaleType = AutoscaleType.ScheduleBased,
@@ -198,12 +198,12 @@ ScheduleDay.Sunday
                     },
                 },
             };
-            ArmOperation<ClusterResource> lro = await cluster.UpdateAsync(WaitUntil.Completed, patch);
-            ClusterResource result = lro.Value;
+            ArmOperation<HDInsightClusterResource> lro = await hdInsightCluster.UpdateAsync(WaitUntil.Completed, patch);
+            HDInsightClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterData resourceData = result.Data;
+            HDInsightClusterData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -221,17 +221,17 @@ ScheduleDay.Sunday
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "rg1";
             string clusterPoolName = "clusterpool1";
             string clusterName = "cluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            await cluster.DeleteAsync(WaitUntil.Completed);
+            await hdInsightCluster.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -249,17 +249,17 @@ ScheduleDay.Sunday
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "rg1";
             string clusterPoolName = "clusterPool1";
             string clusterName = "cluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceConfigResult item in cluster.GetServiceConfigsAsync())
+            await foreach (ServiceConfigResult item in hdInsightCluster.GetServiceConfigsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -280,17 +280,17 @@ ScheduleDay.Sunday
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "rg1";
             string clusterPoolName = "clusterPool1";
             string clusterName = "cluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ClusterInstanceViewResult item in cluster.GetInstanceViewsAsync())
+            await foreach (ClusterInstanceViewResult item in hdInsightCluster.GetInstanceViewsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -311,17 +311,17 @@ ScheduleDay.Sunday
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "rg1";
             string clusterPoolName = "clusterPool1";
             string clusterName = "cluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            ClusterInstanceViewResult result = await cluster.GetInstanceViewAsync();
+            ClusterInstanceViewResult result = await hdInsightCluster.GetInstanceViewAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -339,14 +339,14 @@ ScheduleDay.Sunday
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "hiloResourcegroup";
             string clusterPoolName = "clusterpool1";
             string clusterName = "cluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
             ClusterJob clusterJob = new ClusterJob(new FlinkJobProperties("flink-job-name")
@@ -361,7 +361,7 @@ ScheduleDay.Sunday
 ["savepoint.directory"] = "abfs://flinkjob@hilosa.dfs.core.windows.net/savepoint",
 },
             });
-            ArmOperation<ClusterJob> lro = await cluster.RunJobClusterJobAsync(WaitUntil.Completed, clusterJob);
+            ArmOperation<ClusterJob> lro = await hdInsightCluster.RunJobClusterJobAsync(WaitUntil.Completed, clusterJob);
             ClusterJob result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -380,17 +380,17 @@ ScheduleDay.Sunday
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "hiloResourcegroup";
             string clusterPoolName = "clusterPool1";
             string clusterName = "cluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ClusterJob item in cluster.GetClusterJobsAsync())
+            await foreach (ClusterJob item in hdInsightCluster.GetClusterJobsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

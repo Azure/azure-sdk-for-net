@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<ClusterLogAnalyticsProfile> logAnalyticsProfile = default;
             Optional<ClusterPrometheusProfile> prometheusProfile = default;
             Optional<SshProfile> sshProfile = default;
-            Optional<AutoscaleProfile> autoscaleProfile = default;
+            Optional<ClusterAutoscaleProfile> autoscaleProfile = default;
             Optional<IDictionary<string, BinaryData>> kafkaProfile = default;
             Optional<TrinoProfile> trinoProfile = default;
             Optional<IDictionary<string, BinaryData>> llapProfile = default;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    autoscaleProfile = AutoscaleProfile.DeserializeAutoscaleProfile(property.Value);
+                    autoscaleProfile = ClusterAutoscaleProfile.DeserializeClusterAutoscaleProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kafkaProfile"u8))

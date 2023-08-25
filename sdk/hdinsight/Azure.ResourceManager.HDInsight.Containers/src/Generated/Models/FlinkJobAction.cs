@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NEWValue = "NEW";
+        private const string NewValue = "NEW";
         private const string UpdateValue = "UPDATE";
         private const string StatelessUpdateValue = "STATELESS_UPDATE";
         private const string StopValue = "STOP";
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         private const string DeleteValue = "DELETE";
 
         /// <summary> NEW. </summary>
-        public static FlinkJobAction NEW { get; } = new FlinkJobAction(NEWValue);
+        public static FlinkJobAction New { get; } = new FlinkJobAction(NewValue);
         /// <summary> UPDATE. </summary>
         public static FlinkJobAction Update { get; } = new FlinkJobAction(UpdateValue);
         /// <summary> STATELESS_UPDATE. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageUri"u8);
-            writer.WriteStringValue(StorageUri);
+            writer.WriteStringValue(StorageUriString);
             if (Optional.IsDefined(Storagekey))
             {
                 writer.WritePropertyName("storagekey"u8);

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ClusterPoolData>> value = default;
+            Optional<IReadOnlyList<HDInsightClusterPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    List<ClusterPoolData> array = new List<ClusterPoolData>();
+                    List<HDInsightClusterPoolData> array = new List<HDInsightClusterPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterPoolData.DeserializeClusterPoolData(item));
+                        array.Add(HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(item));
                     }
                     value = array;
                     continue;

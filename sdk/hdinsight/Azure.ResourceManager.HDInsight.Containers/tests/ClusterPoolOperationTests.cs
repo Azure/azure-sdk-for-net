@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.HDInsightOnAks.Tests
 
             string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
 
-            ClusterPoolData clusterPoolData = new ClusterPoolData(Location);
+            HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
 
             string clusterPoolVmSize = "Standard_E4s_v3";
             clusterPoolData.ComputeProfile = new ClusterPoolResourcePropertiesComputeProfile(clusterPoolVmSize);
 
-            ClusterPoolCollection clusterPoolCollection = ResourceGroup.GetClusterPools();
+            HDInsightClusterPoolCollection clusterPoolCollection = ResourceGroup.GetHDInsightClusterPools();
             var clusterPoolResult = await clusterPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, clusterPoolData).ConfigureAwait(false);
 
             // Test get cluster pool

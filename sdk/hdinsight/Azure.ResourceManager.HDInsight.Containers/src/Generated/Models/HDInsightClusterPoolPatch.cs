@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Tags object for patch operations. </summary>
-    public partial class ClusterPoolPatch
+    public partial class HDInsightClusterPoolPatch
     {
-        /// <summary> Initializes a new instance of ClusterPoolPatch. </summary>
-        public ClusterPoolPatch()
+        /// <summary> Initializes a new instance of HDInsightClusterPoolPatch. </summary>
+        public HDInsightClusterPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

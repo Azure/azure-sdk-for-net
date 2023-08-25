@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of ClusterPoolListResult. </summary>
         internal ClusterPoolListResult()
         {
-            Value = new ChangeTrackingList<ClusterPoolData>();
+            Value = new ChangeTrackingList<HDInsightClusterPoolData>();
         }
 
         /// <summary> Initializes a new instance of ClusterPoolListResult. </summary>
         /// <param name="value"> The list of cluster pools. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ClusterPoolListResult(IReadOnlyList<ClusterPoolData> value, string nextLink)
+        internal ClusterPoolListResult(IReadOnlyList<HDInsightClusterPoolData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of cluster pools. </summary>
-        public IReadOnlyList<ClusterPoolData> Value { get; }
+        public IReadOnlyList<HDInsightClusterPoolData> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }

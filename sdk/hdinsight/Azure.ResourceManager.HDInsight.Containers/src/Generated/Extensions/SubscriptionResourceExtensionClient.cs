@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _clusterPoolClientDiagnostics;
-        private ClusterPoolsRestOperations _clusterPoolRestClient;
+        private ClientDiagnostics _hdInsightClusterPoolClusterPoolsClientDiagnostics;
+        private ClusterPoolsRestOperations _hdInsightClusterPoolClusterPoolsRestClient;
         private ClientDiagnostics _locationsClientDiagnostics;
         private LocationsRestOperations _locationsRestClient;
         private ClientDiagnostics _availableClusterPoolVersionsClientDiagnostics;
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
         }
 
-        private ClientDiagnostics ClusterPoolClientDiagnostics => _clusterPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", ClusterPoolResource.ResourceType.Namespace, Diagnostics);
-        private ClusterPoolsRestOperations ClusterPoolRestClient => _clusterPoolRestClient ??= new ClusterPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterPoolResource.ResourceType));
+        private ClientDiagnostics HDInsightClusterPoolClusterPoolsClientDiagnostics => _hdInsightClusterPoolClusterPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", HDInsightClusterPoolResource.ResourceType.Namespace, Diagnostics);
+        private ClusterPoolsRestOperations HDInsightClusterPoolClusterPoolsRestClient => _hdInsightClusterPoolClusterPoolsRestClient ??= new ClusterPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HDInsightClusterPoolResource.ResourceType));
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationsRestOperations LocationsRestClient => _locationsRestClient ??= new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AvailableClusterPoolVersionsClientDiagnostics => _availableClusterPoolVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterPoolResource> GetClusterPoolsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HDInsightClusterPoolResource> GetHDInsightClusterPoolsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClusterPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ClusterPoolResource(Client, ClusterPoolData.DeserializeClusterPoolData(e)), ClusterPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterPools", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), HDInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusterPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterPoolResource> GetClusterPools(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HDInsightClusterPoolResource> GetHDInsightClusterPools(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClusterPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ClusterPoolResource(Client, ClusterPoolData.DeserializeClusterPoolData(e)), ClusterPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterPools", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), HDInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusterPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

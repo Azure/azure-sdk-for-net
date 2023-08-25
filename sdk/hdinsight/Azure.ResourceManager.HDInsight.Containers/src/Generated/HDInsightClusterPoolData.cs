@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HDInsight.Containers
 {
     /// <summary>
-    /// A class representing the ClusterPool data model.
+    /// A class representing the HDInsightClusterPool data model.
     /// Cluster pool.
     /// </summary>
-    public partial class ClusterPoolData : TrackedResourceData
+    public partial class HDInsightClusterPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ClusterPoolData. </summary>
+        /// <summary> Initializes a new instance of HDInsightClusterPoolData. </summary>
         /// <param name="location"> The location. </param>
-        public ClusterPoolData(AzureLocation location) : base(location)
+        public HDInsightClusterPoolData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterPoolData. </summary>
+        /// <summary> Initializes a new instance of HDInsightClusterPoolData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="networkProfile"> Cluster pool network profile. </param>
         /// <param name="logAnalyticsProfile"> Cluster pool log analytics profile to enable OMS agent for AKS cluster. </param>
         /// <param name="status"> Business status of the resource. </param>
-        internal ClusterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningStatus? provisioningState, string deploymentId, string managedResourceGroupName, string aksManagedResourceGroupName, ClusterPoolResourcePropertiesClusterPoolProfile clusterPoolProfile, ClusterPoolResourcePropertiesComputeProfile computeProfile, ClusterPoolResourcePropertiesAksClusterProfile aksClusterProfile, ClusterPoolResourcePropertiesNetworkProfile networkProfile, ClusterPoolResourcePropertiesLogAnalyticsProfile logAnalyticsProfile, string status) : base(id, name, resourceType, systemData, tags, location)
+        internal HDInsightClusterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningStatus? provisioningState, string deploymentId, string managedResourceGroupName, string aksManagedResourceGroupName, ClusterPoolResourcePropertiesClusterPoolProfile clusterPoolProfile, ClusterPoolResourcePropertiesComputeProfile computeProfile, ClusterPoolResourcePropertiesAksClusterProfile aksClusterProfile, ClusterPoolResourcePropertiesNetworkProfile networkProfile, ClusterPoolResourcePropertiesLogAnalyticsProfile logAnalyticsProfile, string status) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             DeploymentId = deploymentId;

@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.HDInsightOnAks.Tests
             // Create cluster pool
             string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
 
-            ClusterPoolData clusterPoolData = new ClusterPoolData(Location);
+            HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
             string clusterPoolVmSize = "Standard_E4s_v3";
             clusterPoolData.ComputeProfile = new ClusterPoolResourcePropertiesComputeProfile(clusterPoolVmSize);
 
-            ClusterPoolCollection clusterPoolCollection = ResourceGroup.GetClusterPools();
+            HDInsightClusterPoolCollection clusterPoolCollection = ResourceGroup.GetHDInsightClusterPools();
             var clusterPoolResult = await clusterPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, clusterPoolData).ConfigureAwait(false);
 
             // Call get available cluster pool version API to get the supported versions per cluster type
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsightOnAks.Tests
             string vmSize = "Standard_D8s_v3";
             int workerCount = 5;
             NodeProfile nodeProfile = new NodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount);
-            var clusterData = new ClusterData(Location);
+            var clusterData = new HDInsightClusterData(Location);
             clusterData.ClusterType = clusterType;
 
             clusterData.ComputeProfile = new ComputeProfile(new List<NodeProfile> { nodeProfile });
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HDInsightOnAks.Tests
             // set trino profile
             clusterData.ClusterProfile.TrinoProfile = new TrinoProfile();
 
-            var clusterCollection = clusterPoolResult.Value.GetClusters();
+            var clusterCollection = clusterPoolResult.Value.GetHDInsightClusters();
             var trinoClusterResult = await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData).ConfigureAwait(false);
 
             // Get trino cluster instance view

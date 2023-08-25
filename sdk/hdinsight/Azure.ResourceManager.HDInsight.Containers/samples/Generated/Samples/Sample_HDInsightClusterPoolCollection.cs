@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Samples
 {
-    public partial class Sample_ClusterPoolCollection
+    public partial class Sample_HDInsightClusterPoolCollection
     {
         // ClusterPoolGet
         [NUnit.Framework.Test]
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ClusterPoolResource
-            ClusterPoolCollection collection = resourceGroupResource.GetClusterPools();
+            // get the collection of this HDInsightClusterPoolResource
+            HDInsightClusterPoolCollection collection = resourceGroupResource.GetHDInsightClusterPools();
 
             // invoke the operation
             string clusterPoolName = "clusterpool1";
-            ClusterPoolResource result = await collection.GetAsync(clusterPoolName);
+            HDInsightClusterPoolResource result = await collection.GetAsync(clusterPoolName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterPoolData resourceData = result.Data;
+            HDInsightClusterPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ClusterPoolResource
-            ClusterPoolCollection collection = resourceGroupResource.GetClusterPools();
+            // get the collection of this HDInsightClusterPoolResource
+            HDInsightClusterPoolCollection collection = resourceGroupResource.GetHDInsightClusterPools();
 
             // invoke the operation
             string clusterPoolName = "clusterpool1";
@@ -103,22 +103,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ClusterPoolResource
-            ClusterPoolCollection collection = resourceGroupResource.GetClusterPools();
+            // get the collection of this HDInsightClusterPoolResource
+            HDInsightClusterPoolCollection collection = resourceGroupResource.GetHDInsightClusterPools();
 
             // invoke the operation
             string clusterPoolName = "clusterpool1";
-            ClusterPoolData data = new ClusterPoolData(new AzureLocation("West US 2"))
+            HDInsightClusterPoolData data = new HDInsightClusterPoolData(new AzureLocation("West US 2"))
             {
                 ClusterPoolVersion = "1.2",
                 ComputeProfile = new ClusterPoolResourcePropertiesComputeProfile("Standard_D3_v2"),
             };
-            ArmOperation<ClusterPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, data);
-            ClusterPoolResource result = lro.Value;
+            ArmOperation<HDInsightClusterPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, data);
+            HDInsightClusterPoolResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterPoolData resourceData = result.Data;
+            HDInsightClusterPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -143,15 +143,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ClusterPoolResource
-            ClusterPoolCollection collection = resourceGroupResource.GetClusterPools();
+            // get the collection of this HDInsightClusterPoolResource
+            HDInsightClusterPoolCollection collection = resourceGroupResource.GetHDInsightClusterPools();
 
             // invoke the operation and iterate over the result
-            await foreach (ClusterPoolResource item in collection.GetAllAsync())
+            await foreach (HDInsightClusterPoolResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ClusterPoolData resourceData = item.Data;
+                HDInsightClusterPoolData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

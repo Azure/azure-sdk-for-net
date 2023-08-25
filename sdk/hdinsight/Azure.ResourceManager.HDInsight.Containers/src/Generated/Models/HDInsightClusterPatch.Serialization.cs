@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterPatch : IUtf8JsonSerializable
+    public partial class HDInsightClusterPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteEndObject();
         }
 
-        internal static ClusterPatch DeserializeClusterPatch(JsonElement element)
+        internal static HDInsightClusterPatch DeserializeHDInsightClusterPatch(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     continue;
                 }
             }
-            return new ClusterPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, clusterProfile.Value);
+            return new HDInsightClusterPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, clusterProfile.Value);
         }
     }
 }

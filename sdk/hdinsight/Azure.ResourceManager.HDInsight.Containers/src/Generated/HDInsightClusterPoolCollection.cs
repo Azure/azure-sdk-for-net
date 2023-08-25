@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HDInsight.Containers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ClusterPoolResource" /> and their operations.
-    /// Each <see cref="ClusterPoolResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ClusterPoolCollection" /> instance call the GetClusterPools method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="HDInsightClusterPoolResource" /> and their operations.
+    /// Each <see cref="HDInsightClusterPoolResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="HDInsightClusterPoolCollection" /> instance call the GetHDInsightClusterPools method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class ClusterPoolCollection : ArmCollection, IEnumerable<ClusterPoolResource>, IAsyncEnumerable<ClusterPoolResource>
+    public partial class HDInsightClusterPoolCollection : ArmCollection, IEnumerable<HDInsightClusterPoolResource>, IAsyncEnumerable<HDInsightClusterPoolResource>
     {
-        private readonly ClientDiagnostics _clusterPoolClientDiagnostics;
-        private readonly ClusterPoolsRestOperations _clusterPoolRestClient;
+        private readonly ClientDiagnostics _hdInsightClusterPoolClusterPoolsClientDiagnostics;
+        private readonly ClusterPoolsRestOperations _hdInsightClusterPoolClusterPoolsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ClusterPoolCollection"/> class for mocking. </summary>
-        protected ClusterPoolCollection()
+        /// <summary> Initializes a new instance of the <see cref="HDInsightClusterPoolCollection"/> class for mocking. </summary>
+        protected HDInsightClusterPoolCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ClusterPoolCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightClusterPoolCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ClusterPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HDInsightClusterPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clusterPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", ClusterPoolResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ClusterPoolResource.ResourceType, out string clusterPoolApiVersion);
-            _clusterPoolRestClient = new ClusterPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, clusterPoolApiVersion);
+            _hdInsightClusterPoolClusterPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", HDInsightClusterPoolResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HDInsightClusterPoolResource.ResourceType, out string hdInsightClusterPoolClusterPoolsApiVersion);
+            _hdInsightClusterPoolClusterPoolsRestClient = new ClusterPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightClusterPoolClusterPoolsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ClusterPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterPoolName, ClusterPoolData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HDInsightClusterPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterPoolName, HDInsightClusterPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clusterPoolClientDiagnostics.CreateScope("ClusterPoolCollection.CreateOrUpdate");
+            using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _clusterPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainersArmOperation<ClusterPoolResource>(new ClusterPoolOperationSource(Client), _clusterPoolClientDiagnostics, Pipeline, _clusterPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _hdInsightClusterPoolClusterPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainersArmOperation<HDInsightClusterPoolResource>(new HDInsightClusterPoolOperationSource(Client), _hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, _hdInsightClusterPoolClusterPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ClusterPoolResource> CreateOrUpdate(WaitUntil waitUntil, string clusterPoolName, ClusterPoolData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HDInsightClusterPoolResource> CreateOrUpdate(WaitUntil waitUntil, string clusterPoolName, HDInsightClusterPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clusterPoolClientDiagnostics.CreateScope("ClusterPoolCollection.CreateOrUpdate");
+            using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _clusterPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, data, cancellationToken);
-                var operation = new ContainersArmOperation<ClusterPoolResource>(new ClusterPoolOperationSource(Client), _clusterPoolClientDiagnostics, Pipeline, _clusterPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _hdInsightClusterPoolClusterPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, data, cancellationToken);
+                var operation = new ContainersArmOperation<HDInsightClusterPoolResource>(new HDInsightClusterPoolOperationSource(Client), _hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, _hdInsightClusterPoolClusterPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,18 +152,18 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
-        public virtual async Task<Response<ClusterPoolResource>> GetAsync(string clusterPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HDInsightClusterPoolResource>> GetAsync(string clusterPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
 
-            using var scope = _clusterPoolClientDiagnostics.CreateScope("ClusterPoolCollection.Get");
+            using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = await _clusterPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, cancellationToken).ConfigureAwait(false);
+                var response = await _hdInsightClusterPoolClusterPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ClusterPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HDInsightClusterPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
-        public virtual Response<ClusterPoolResource> Get(string clusterPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<HDInsightClusterPoolResource> Get(string clusterPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
 
-            using var scope = _clusterPoolClientDiagnostics.CreateScope("ClusterPoolCollection.Get");
+            using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = _clusterPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, cancellationToken);
+                var response = _hdInsightClusterPoolClusterPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ClusterPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HDInsightClusterPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HDInsightClusterPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterPoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ClusterPoolResource(Client, ClusterPoolData.DeserializeClusterPoolData(e)), _clusterPoolClientDiagnostics, Pipeline, "ClusterPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterPoolClusterPoolsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterPoolClusterPoolsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), _hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "HDInsightClusterPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,12 +245,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterPoolResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HDInsightClusterPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterPoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ClusterPoolResource(Client, ClusterPoolData.DeserializeClusterPoolData(e)), _clusterPoolClientDiagnostics, Pipeline, "ClusterPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterPoolClusterPoolsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterPoolClusterPoolsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), _hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "HDInsightClusterPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
 
-            using var scope = _clusterPoolClientDiagnostics.CreateScope("ClusterPoolCollection.Exists");
+            using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _clusterPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hdInsightClusterPoolClusterPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
 
-            using var scope = _clusterPoolClientDiagnostics.CreateScope("ClusterPoolCollection.Exists");
+            using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.Exists");
             scope.Start();
             try
             {
-                var response = _clusterPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, cancellationToken: cancellationToken);
+                var response = _hdInsightClusterPoolClusterPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterPoolName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
         }
 
-        IEnumerator<ClusterPoolResource> IEnumerable<ClusterPoolResource>.GetEnumerator()
+        IEnumerator<HDInsightClusterPoolResource> IEnumerable<HDInsightClusterPoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ClusterPoolResource> IAsyncEnumerable<ClusterPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HDInsightClusterPoolResource> IAsyncEnumerable<HDInsightClusterPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

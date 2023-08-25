@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterPoolPatch : IUtf8JsonSerializable
+    public partial class HDInsightClusterPoolPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

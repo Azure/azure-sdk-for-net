@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="sparkProfile"> The spark cluster profile. </param>
         /// <param name="stubProfile"> Stub cluster profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
-        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentsItem> components, IdentityProfile identityProfile, AuthorizationProfile authorizationProfile, SecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ConnectivityProfile connectivityProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, SshProfile sshProfile, AutoscaleProfile autoscaleProfile, IDictionary<string, BinaryData> kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles)
+        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentsItem> components, IdentityProfile identityProfile, AuthorizationProfile authorizationProfile, SecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ConnectivityProfile connectivityProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, SshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, IDictionary<string, BinaryData> kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles)
         {
             ClusterVersion = clusterVersion;
             OssVersion = ossVersion;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Ssh profile for the cluster. </summary>
         public SshProfile SshProfile { get; set; }
         /// <summary> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </summary>
-        public AutoscaleProfile AutoscaleProfile { get; set; }
+        public ClusterAutoscaleProfile AutoscaleProfile { get; set; }
         /// <summary>
         /// Kafka cluster profile.
         /// <para>

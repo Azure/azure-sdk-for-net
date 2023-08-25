@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Samples
 {
-    public partial class Sample_ClusterPoolResource
+    public partial class Sample_HDInsightClusterPoolResource
     {
         // ClusterPoolGet
         [NUnit.Framework.Test]
@@ -32,20 +32,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterPoolResource created on azure
-            // for more information of creating ClusterPoolResource, please refer to the document of ClusterPoolResource
+            // this example assumes you already have this HDInsightClusterPoolResource created on azure
+            // for more information of creating HDInsightClusterPoolResource, please refer to the document of HDInsightClusterPoolResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "hiloResourcegroup";
             string clusterPoolName = "clusterpool1";
-            ResourceIdentifier clusterPoolResourceId = ClusterPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName);
-            ClusterPoolResource clusterPool = client.GetClusterPoolResource(clusterPoolResourceId);
+            ResourceIdentifier hdInsightClusterPoolResourceId = HDInsightClusterPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName);
+            HDInsightClusterPoolResource hdInsightClusterPool = client.GetHDInsightClusterPoolResource(hdInsightClusterPoolResourceId);
 
             // invoke the operation
-            ClusterPoolResource result = await clusterPool.GetAsync();
+            HDInsightClusterPoolResource result = await hdInsightClusterPool.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterPoolData resourceData = result.Data;
+            HDInsightClusterPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterPoolResource created on azure
-            // for more information of creating ClusterPoolResource, please refer to the document of ClusterPoolResource
+            // this example assumes you already have this HDInsightClusterPoolResource created on azure
+            // for more information of creating HDInsightClusterPoolResource, please refer to the document of HDInsightClusterPoolResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "hiloResourcegroup";
             string clusterPoolName = "clusterpool1";
-            ResourceIdentifier clusterPoolResourceId = ClusterPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName);
-            ClusterPoolResource clusterPool = client.GetClusterPoolResource(clusterPoolResourceId);
+            ResourceIdentifier hdInsightClusterPoolResourceId = HDInsightClusterPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName);
+            HDInsightClusterPoolResource hdInsightClusterPool = client.GetHDInsightClusterPoolResource(hdInsightClusterPoolResourceId);
 
             // invoke the operation
-            ClusterPoolPatch patch = new ClusterPoolPatch()
+            HDInsightClusterPoolPatch patch = new HDInsightClusterPoolPatch()
             {
                 Tags =
 {
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
 ["tag2"] = "value2",
 },
             };
-            ArmOperation<ClusterPoolResource> lro = await clusterPool.UpdateAsync(WaitUntil.Completed, patch);
-            ClusterPoolResource result = lro.Value;
+            ArmOperation<HDInsightClusterPoolResource> lro = await hdInsightClusterPool.UpdateAsync(WaitUntil.Completed, patch);
+            HDInsightClusterPoolResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterPoolData resourceData = result.Data;
+            HDInsightClusterPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -103,16 +103,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterPoolResource created on azure
-            // for more information of creating ClusterPoolResource, please refer to the document of ClusterPoolResource
+            // this example assumes you already have this HDInsightClusterPoolResource created on azure
+            // for more information of creating HDInsightClusterPoolResource, please refer to the document of HDInsightClusterPoolResource
             string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
             string resourceGroupName = "rg1";
             string clusterPoolName = "clusterpool1";
-            ResourceIdentifier clusterPoolResourceId = ClusterPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName);
-            ClusterPoolResource clusterPool = client.GetClusterPoolResource(clusterPoolResourceId);
+            ResourceIdentifier hdInsightClusterPoolResourceId = HDInsightClusterPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName);
+            HDInsightClusterPoolResource hdInsightClusterPool = client.GetHDInsightClusterPoolResource(hdInsightClusterPoolResourceId);
 
             // invoke the operation
-            await clusterPool.DeleteAsync(WaitUntil.Completed);
+            await hdInsightClusterPool.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         // ClusterPoolsListBySubscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetClusterPools_ClusterPoolsListBySubscription()
+        public async Task GetHDInsightClusterPools_ClusterPoolsListBySubscription()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-06-01-preview/examples/ListClusterPoolsSubscription.json
             // this example is just showing the usage of "ClusterPools_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ClusterPoolResource item in subscriptionResource.GetClusterPoolsAsync())
+            await foreach (HDInsightClusterPoolResource item in subscriptionResource.GetHDInsightClusterPoolsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ClusterPoolData resourceData = item.Data;
+                HDInsightClusterPoolData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

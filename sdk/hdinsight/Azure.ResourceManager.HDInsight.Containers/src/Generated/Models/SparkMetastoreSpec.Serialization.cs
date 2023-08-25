@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(DbPasswordSecretName);
             writer.WritePropertyName("keyVaultId"u8);
             writer.WriteStringValue(KeyVaultId);
-            if (Optional.IsDefined(ThriftUri))
+            if (Optional.IsDefined(ThriftUriString))
             {
                 writer.WritePropertyName("thriftUrl"u8);
-                writer.WriteStringValue(ThriftUri);
+                writer.WriteStringValue(ThriftUriString);
             }
             writer.WriteEndObject();
         }

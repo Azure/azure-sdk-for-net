@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class AutoscaleProfile : IUtf8JsonSerializable
+    public partial class ClusterAutoscaleProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteEndObject();
         }
 
-        internal static AutoscaleProfile DeserializeAutoscaleProfile(JsonElement element)
+        internal static ClusterAutoscaleProfile DeserializeClusterAutoscaleProfile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     continue;
                 }
             }
-            return new AutoscaleProfile(enabled, Optional.ToNullable(gracefulDecommissionTimeout), Optional.ToNullable(autoscaleType), scheduleBasedConfig.Value, loadBasedConfig.Value);
+            return new ClusterAutoscaleProfile(enabled, Optional.ToNullable(gracefulDecommissionTimeout), Optional.ToNullable(autoscaleType), scheduleBasedConfig.Value, loadBasedConfig.Value);
         }
     }
 }

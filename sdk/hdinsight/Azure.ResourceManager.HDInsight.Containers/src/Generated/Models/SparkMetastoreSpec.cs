@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="dbUserName"> The database user name. </param>
         /// <param name="dbPasswordSecretName"> The secret name which contains the database user password. </param>
         /// <param name="keyVaultId"> The key vault resource id. </param>
-        /// <param name="thriftUri"> The thrift url. </param>
-        internal SparkMetastoreSpec(string dbServerHost, string dbName, string dbUserName, string dbPasswordSecretName, string keyVaultId, string thriftUri)
+        /// <param name="thriftUriString"> The thrift url. </param>
+        internal SparkMetastoreSpec(string dbServerHost, string dbName, string dbUserName, string dbPasswordSecretName, string keyVaultId, string thriftUriString)
         {
             DbServerHost = dbServerHost;
             DbName = dbName;
             DbUserName = dbUserName;
             DbPasswordSecretName = dbPasswordSecretName;
             KeyVaultId = keyVaultId;
-            ThriftUri = thriftUri;
+            ThriftUriString = thriftUriString;
         }
 
         /// <summary> The database server host. </summary>
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> The key vault resource id. </summary>
         public string KeyVaultId { get; set; }
         /// <summary> The thrift url. </summary>
-        public string ThriftUri { get; set; }
+        public string ThriftUriString { get; set; }
     }
 }

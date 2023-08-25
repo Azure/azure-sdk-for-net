@@ -50,50 +50,50 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region ClusterPoolResource
+        #region HDInsightClusterPoolResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterPoolResource.CreateResourceIdentifier" /> to create a <see cref="ClusterPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HDInsightClusterPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightClusterPoolResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterPoolResource" /> object. </returns>
-        public static ClusterPoolResource GetClusterPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HDInsightClusterPoolResource" /> object. </returns>
+        public static HDInsightClusterPoolResource GetHDInsightClusterPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterPoolResource.ValidateResourceId(id);
-                return new ClusterPoolResource(client, id);
+                HDInsightClusterPoolResource.ValidateResourceId(id);
+                return new HDInsightClusterPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterResource
+        #region HDInsightClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterResource.CreateResourceIdentifier" /> to create a <see cref="ClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HDInsightClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightClusterResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HDInsightClusterResource" /> object. </returns>
+        public static HDInsightClusterResource GetHDInsightClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterResource.ValidateResourceId(id);
-                return new ClusterResource(client, id);
+                HDInsightClusterResource.ValidateResourceId(id);
+                return new HDInsightClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets a collection of ClusterPoolResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of HDInsightClusterPoolResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ClusterPoolResources and their operations over a ClusterPoolResource. </returns>
-        public static ClusterPoolCollection GetClusterPools(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HDInsightClusterPoolResources and their operations over a HDInsightClusterPoolResource. </returns>
+        public static HDInsightClusterPoolCollection GetHDInsightClusterPools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetClusterPools();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHDInsightClusterPools();
         }
 
         /// <summary>
@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentException"> <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterPoolResource>> GetClusterPoolAsync(this ResourceGroupResource resourceGroupResource, string clusterPoolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightClusterPoolResource>> GetHDInsightClusterPoolAsync(this ResourceGroupResource resourceGroupResource, string clusterPoolName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetClusterPools().GetAsync(clusterPoolName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetHDInsightClusterPools().GetAsync(clusterPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentException"> <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterPoolResource> GetClusterPool(this ResourceGroupResource resourceGroupResource, string clusterPoolName, CancellationToken cancellationToken = default)
+        public static Response<HDInsightClusterPoolResource> GetHDInsightClusterPool(this ResourceGroupResource resourceGroupResource, string clusterPoolName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetClusterPools().Get(clusterPoolName, cancellationToken);
+            return resourceGroupResource.GetHDInsightClusterPools().Get(clusterPoolName, cancellationToken);
         }
 
         /// <summary>
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterPoolResource> GetClusterPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HDInsightClusterPoolResource> GetHDInsightClusterPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterPoolsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHDInsightClusterPoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterPoolResource> GetClusterPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HDInsightClusterPoolResource> GetHDInsightClusterPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterPools(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHDInsightClusterPools(cancellationToken);
         }
 
         /// <summary>

@@ -15,19 +15,27 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
   Action: FlinkJobAction
+  Action.NEW: New
+  AutoscaleProfile: ClusterAutoscaleProfile
+  Cluster: HDInsightCluster
+  ClusterPool: HDInsightClusterPool
+  # TODO, remove these when service fix the Uri format before GA
+  FlinkStorageProfile.storageUri: StorageUriString
+  ScriptActionProfile.url: UriString
+  SparkMetastoreSpec.thriftUrl: ThriftUriString
+  SparkProfile.defaultStorageUrl: DefaultStorageUriString
 
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
-  # TODO, service will fix the Uri before GA
-  #'*Uri': 'Uri'
-  #'*Uris': 'Uri'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -51,4 +59,11 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+  - from: hdinsight.json
+    where: $.definitions
+    transform: >
+      delete $.AksClusterProfile.properties.aksClusterAgentPoolIdentityProfile.allOf;
+      $.AksClusterProfile.properties.aksClusterAgentPoolIdentityProfile['$ref'] = '#/definitions/IdentityProfile';
 ```

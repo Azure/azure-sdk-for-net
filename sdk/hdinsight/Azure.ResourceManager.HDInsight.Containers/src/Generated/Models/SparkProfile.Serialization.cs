@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultStorageUri))
+            if (Optional.IsDefined(DefaultStorageUriString))
             {
                 writer.WritePropertyName("defaultStorageUrl"u8);
-                writer.WriteStringValue(DefaultStorageUri);
+                writer.WriteStringValue(DefaultStorageUriString);
             }
             if (Optional.IsDefined(MetastoreSpec))
             {

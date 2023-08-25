@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.HDInsightOnAks.Tests
         public string ResourceGroupName { get; internal set; }
         public Guid TenantIdGuid { get; internal set; }
 
-        public ClusterPoolCollection ClusterPoolCollection { get; set; }
-        public ClusterCollection ClusterCollection { get; set; }
+        public HDInsightClusterPoolCollection ClusterPoolCollection { get; set; }
+        public HDInsightClusterCollection ClusterCollection { get; set; }
         public ResourceGroupResource ResourceGroup { get; set; }
 
         protected HDInsightContainersOperationTestsBase(bool isAsync) : base(isAsync)

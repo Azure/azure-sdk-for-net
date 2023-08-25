@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="logAnalyticsProfile"> Cluster log analytics profile to enable or disable OMS agent for cluster. </param>
         /// <param name="prometheusProfile"> Cluster Prometheus profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
-        internal UpdatableClusterProfile(IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, SshProfile sshProfile, AutoscaleProfile autoscaleProfile, AuthorizationProfile authorizationProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, IList<ScriptActionProfile> scriptActionProfiles)
+        internal UpdatableClusterProfile(IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, SshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, AuthorizationProfile authorizationProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, IList<ScriptActionProfile> scriptActionProfiles)
         {
             ServiceConfigsProfiles = serviceConfigsProfiles;
             SshProfile = sshProfile;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Ssh profile for the cluster. </summary>
         public SshProfile SshProfile { get; set; }
         /// <summary> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </summary>
-        public AutoscaleProfile AutoscaleProfile { get; set; }
+        public ClusterAutoscaleProfile AutoscaleProfile { get; set; }
         /// <summary> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </summary>
         public AuthorizationProfile AuthorizationProfile { get; set; }
         /// <summary> Cluster log analytics profile to enable or disable OMS agent for cluster. </summary>

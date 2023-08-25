@@ -12,15 +12,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> The patch for a cluster. </summary>
-    public partial class ClusterPatch : TrackedResourceData
+    public partial class HDInsightClusterPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ClusterPatch. </summary>
+        /// <summary> Initializes a new instance of HDInsightClusterPatch. </summary>
         /// <param name="location"> The location. </param>
-        public ClusterPatch(AzureLocation location) : base(location)
+        public HDInsightClusterPatch(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterPatch. </summary>
+        /// <summary> Initializes a new instance of HDInsightClusterPatch. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="clusterProfile"> Cluster resource patch properties. </param>
-        internal ClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UpdatableClusterProfile clusterProfile) : base(id, name, resourceType, systemData, tags, location)
+        internal HDInsightClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UpdatableClusterProfile clusterProfile) : base(id, name, resourceType, systemData, tags, location)
         {
             ClusterProfile = clusterProfile;
         }
