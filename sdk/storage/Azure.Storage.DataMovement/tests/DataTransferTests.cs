@@ -38,9 +38,9 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(DataTransferStatus.TransferState.InProgress, false)]
         [TestCase(DataTransferStatus.TransferState.Pausing, false)]
         [TestCase(DataTransferStatus.TransferState.Paused, false)]
-        [TestCase(DataTransferStatus.TransferState.Completed, false)]
-        [TestCase(DataTransferStatus.TransferState.Completed, true)]
-        public void HasCompleted_False(DataTransferStatus.TransferState status, bool HasFailures)
+        [TestCase(DataTransferStatus.TransferState.Stopping, false)]
+        [TestCase(DataTransferStatus.TransferState.Stopping, true)]
+        public void HasCompleted_False(DataTransferStatus.TransferState status, bool hasFailedItems)
         {
             // Arrange
             string transferId = GetNewTransferId();
@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
                 transferManager: transferManager,
-                status: new DataTransferStatus(status, HasFailures, false));
+                status: new DataTransferStatus(status, hasFailedItems, false));
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(DataTransferStatus.TransferState.Completed, true, false)]
         [TestCase(DataTransferStatus.TransferState.Completed, true, true)]
         public void HasCompleted_True(
-            DataTransferStatus status,
+            DataTransferStatus.TransferState state,
             bool hasFailedItems,
             bool hasSkippedItems)
         {
@@ -76,7 +76,7 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
                 transferManager: transferManager,
-                status: status);
+                status: new DataTransferStatus(state, hasFailedItems, hasSkippedItems));
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
@@ -175,7 +175,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             Task pauseTask = transfer.PauseAsync();
 
-            Assert.AreEqual(DataTransferStatus.TransferState.Pausing, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Pausing, transfer.TransferStatus.State);
 
             // Assert
             if (!transfer._state.TrySetTransferState(DataTransferStatus.TransferState.Paused))
@@ -185,7 +185,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             await pauseTask;
 
-            Assert.AreEqual(DataTransferStatus.TransferState.Paused, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Paused, transfer.TransferStatus.State);
             Assert.IsFalse(transfer.HasCompleted);
         }
 
@@ -196,21 +196,23 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(DataTransferStatus.TransferState.Completed, true, false)]
         [TestCase(DataTransferStatus.TransferState.Completed, true, true)]
         public async Task TryPauseAsync_AlreadyPaused(
-            DataTransferStatus status,
+            DataTransferStatus.TransferState state,
             bool hasFailedItems,
             bool hasSkippedItems)
         {
             // Arrange
             string transferId = GetNewTransferId();
 
+            DataTransferStatus originalStatus = new DataTransferStatus(state, hasFailedItems, hasSkippedItems);
+
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
                 transferManager: new(),
-                status: status);
+                status: originalStatus);
 
-            Assert.AreEqual(status, transfer.TransferStatus);
+            Assert.AreEqual(originalStatus, transfer.TransferStatus);
             await transfer.PauseAsync();
-            Assert.AreEqual(status, transfer.TransferStatus);
+            Assert.AreEqual(originalStatus, transfer.TransferStatus);
         }
 
         [Test]
@@ -233,7 +235,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 Assert.AreEqual(exception.Message, "The operation was canceled.");
             }
-            Assert.AreEqual(DataTransferStatus.TransferState.Pausing, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Pausing, transfer.TransferStatus.State);
             Assert.IsFalse(transfer.HasCompleted);
         }
     }

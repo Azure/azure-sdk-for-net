@@ -322,44 +322,6 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task OnTransferFailedAsync()
-        {
-            // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
-            // then don't raise the PartTransferStatusEventHandler
-            if (JobPartStatus.OnFailedItem())
-            {
-                await PartTransferStatusEventHandler.RaiseAsync(
-                        new TransferStatusEventArgs(
-                            _dataTransfer.Id,
-                            JobPartStatus,
-                            false,
-                            _cancellationToken),
-                        nameof(JobPartInternal),
-                        nameof(PartTransferStatusEventHandler),
-                        ClientDiagnostics)
-                        .ConfigureAwait(false);
-            }
-        }
-
-        internal async Task OnTransferSkippedAsync()
-        {
-            // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
-            // then don't raise the PartTransferStatusEventHandler
-            if (JobPartStatus.OnSkippedItem())
-            {
-                await PartTransferStatusEventHandler.RaiseAsync(
-                        new TransferStatusEventArgs(
-                            _dataTransfer.Id,
-                            JobPartStatus,
-                            false,
-                            _cancellationToken),
-                        nameof(JobPartInternal),
-                        nameof(PartTransferStatusEventHandler),
-                        ClientDiagnostics)
-                        .ConfigureAwait(false);
-            }
-        }
-
         /// <summary>
         /// To change all transfer statues at the same time
         /// </summary>
@@ -408,9 +370,24 @@ namespace Azure.Storage.DataMovement
                     .ConfigureAwait(false);
             }
             _progressTracker.IncrementSkippedFiles();
-            await OnTransferSkippedAsync().ConfigureAwait(false);
+
+            // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
+            // then don't raise the PartTransferStatusEventHandler
+            if (JobPartStatus.OnSkippedItem())
+            {
+                await PartTransferStatusEventHandler.RaiseAsync(
+                        new TransferStatusEventArgs(
+                            _dataTransfer.Id,
+                            JobPartStatus,
+                            false,
+                            _cancellationToken),
+                        nameof(JobPartInternal),
+                        nameof(PartTransferStatusEventHandler),
+                        ClientDiagnostics)
+                        .ConfigureAwait(false);
+            }
             //TODO: figure out why we set the Completed state here and not just wait for all the chunks to finish
-            //await OnTransferStateChangedAsync(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+            await OnTransferStateChangedAsync(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -439,9 +416,24 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
                 _progressTracker.IncrementFailedFiles();
+
+                // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
+                // then don't raise the PartTransferStatusEventHandler
+                if (JobPartStatus.OnFailedItem())
+                {
+                    await PartTransferStatusEventHandler.RaiseAsync(
+                            new TransferStatusEventArgs(
+                                _dataTransfer.Id,
+                                JobPartStatus,
+                                false,
+                                _cancellationToken),
+                            nameof(JobPartInternal),
+                            nameof(PartTransferStatusEventHandler),
+                            ClientDiagnostics)
+                            .ConfigureAwait(false);
+                }
             }
             // Trigger job cancellation if the failed handler is enabled
-            await OnTransferFailedAsync().ConfigureAwait(false);
             await TriggerCancellationAsync().ConfigureAwait(false);
             await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
         }

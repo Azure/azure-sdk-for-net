@@ -50,8 +50,9 @@
 - [BREAKING CHANGE] Renamed `ErrorHandlingBehavior` to `DataTransferErrorMode`
 - [BREAKING CHANGE] Renamed `DataTransferErrorMode.StopOnAnyFailures` to `StopOnAnyFailure`
 - [BREAKING CHANGE] Renamed `TransferType` to `DataTransferOrder`
-- [BREAKING CHANGE] Renamed `DataTransferOrder.Unordered` to `Unordered`
+- [BREAKING CHANGE] Renamed `DataTransferOrder.Concurrent` to `Unordered`
 - [BREAKING CHANGE] Renamed `StorageTransferStatus` to `DataTransferStatus`
+- [BREAKING CHANGE] Changed `DataTransferStatus` from `enum` to a `class`.
 - [BREAKING CHANGE] Renamed `StorageResourceCreateMode` to `StorageResourceCreationPreference`.
 - [BREAKING CHANGE] Renamed `StorageResourceCreationPreference` values from `Fail` to `FailIfExists`, `Overwrite` to `OverwriteIfExists` and `Skip` to `SkipIfExists`. `None` was removed, use `FailIfExists` instead.
 - [BREAKING CHANGE] Renamed `DataTransferOptions.CreateMode` to `CreationPreference`.

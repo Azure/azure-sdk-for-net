@@ -189,5 +189,17 @@ namespace Azure.Storage.DataMovement
             => State.Equals(other.State) &&
             HasFailedItems.Equals(other.HasFailedItems) &&
             HasSkippedItems.Equals(other.HasSkippedItems);
+
+        /// <summary>
+        /// Performs a Deep Copy of the <see cref="DataTransferStatus"/>.
+        /// </summary>
+        /// <returns>A deep copy of the respective <see cref="DataTransferStatus"/>.</returns>
+        internal DataTransferStatus DeepCopy()
+            => new DataTransferStatus
+            {
+                State = State,
+                HasFailedItems = HasFailedItems,
+                HasSkippedItems =HasSkippedItems,
+            };
     }
 }

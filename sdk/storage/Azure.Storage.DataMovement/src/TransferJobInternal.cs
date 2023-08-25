@@ -386,7 +386,7 @@ namespace Azure.Storage.DataMovement
                 await TransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
                         transferId: _dataTransfer.Id,
-                        transferStatus: _dataTransfer.TransferStatus,
+                        transferStatus: _dataTransfer.TransferStatus.DeepCopy(),
                         isRunningSynchronously: false,
                         cancellationToken: _cancellationToken),
                     nameof(TransferJobInternal),

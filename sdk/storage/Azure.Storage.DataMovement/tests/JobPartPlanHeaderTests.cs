@@ -401,11 +401,11 @@ namespace Azure.Storage.DataMovement.Tests
 
                 byte[] atomicJobHasFailedItemsBuffer = new byte[oneByte];
                 await stream.ReadAsync(atomicJobHasFailedItemsBuffer, 0, oneByte);
-                Assert.AreEqual((byte)DefaultJobStatus.State, atomicJobHasFailedItemsBuffer[0]);
+                Assert.AreEqual(Convert.ToByte(DefaultJobStatus.HasFailedItems), atomicJobHasFailedItemsBuffer[0]);
 
                 byte[] atomicJobHasSkippedItemsBuffer = new byte[oneByte];
                 await stream.ReadAsync(atomicJobHasSkippedItemsBuffer, 0, oneByte);
-                Assert.AreEqual((byte)DefaultJobStatus.State, atomicJobHasSkippedItemsBuffer[0]);
+                Assert.AreEqual(Convert.ToByte(DefaultJobStatus.HasSkippedItems), atomicJobHasSkippedItemsBuffer[0]);
 
                 byte[] atomicPartStateBuffer = new byte[oneByte];
                 await stream.ReadAsync(atomicPartStateBuffer, 0, oneByte);
@@ -413,11 +413,11 @@ namespace Azure.Storage.DataMovement.Tests
 
                 byte[] atomiPartHasFailedItemsBuffer = new byte[oneByte];
                 await stream.ReadAsync(atomiPartHasFailedItemsBuffer, 0, oneByte);
-                Assert.AreEqual((byte)DefaultJobStatus.State, atomiPartHasFailedItemsBuffer[0]);
+                Assert.AreEqual(Convert.ToByte(DefaultJobStatus.HasFailedItems), atomiPartHasFailedItemsBuffer[0]);
 
                 byte[] atomicPartHasSkippedItemsBuffer = new byte[oneByte];
                 await stream.ReadAsync(atomicPartHasSkippedItemsBuffer, 0, oneByte);
-                Assert.AreEqual((byte)DefaultJobStatus.State, atomicPartHasSkippedItemsBuffer[0]);
+                Assert.AreEqual(Convert.ToByte(DefaultJobStatus.HasSkippedItems), atomicPartHasSkippedItemsBuffer[0]);
             }
         }
 
@@ -434,7 +434,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public void Deserialize()
+         public void Deserialize()
         {
             // Arrange
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -475,7 +475,21 @@ namespace Azure.Storage.DataMovement.Tests
             using (FileStream stream = File.OpenRead(samplePath))
             {
                 // Act / Assert
-                DeserializeAndVerify(stream, DataMovementConstants.PlanFile.SchemaVersion_b2, DataProvider.BuildMetadata(), DataProvider.BuildTags());
+                Assert.Catch<ArgumentException>(
+                    () => JobPartPlanHeader.Deserialize(stream),
+                    $"The checkpoint file schema version {DataMovementConstants.PlanFile.SchemaVersion_b2} is not supported by this version of the SDK.");
+            }
+        }
+
+        [Test]
+        public void Deserialize_File_Version_b3()
+        {
+            // Arrange
+            string samplePath = Path.Combine("Resources", "SampleJobPartPlanFile.steVb3");
+            using (FileStream stream = File.OpenRead(samplePath))
+            {
+                // Act / Assert
+                DeserializeAndVerify(stream, DataMovementConstants.PlanFile.SchemaVersion_b3, DataProvider.BuildMetadata(), DataProvider.BuildTags());
             }
         }
 
@@ -556,8 +570,12 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(deserializedHeader.DeleteSnapshotsOption, DefaultDeleteSnapshotsOption);
             Assert.AreEqual(deserializedHeader.PermanentDeleteOption, DefaultPermanentDeleteOption);
             Assert.AreEqual(deserializedHeader.RehydratePriorityType, DefaultRehydratePriorityType);
-            Assert.AreEqual(deserializedHeader.AtomicJobStatus, DefaultJobStatus);
-            Assert.AreEqual(deserializedHeader.AtomicPartStatus, DefaultPartStatus);
+            Assert.AreEqual(DefaultJobStatus.State, deserializedHeader.AtomicJobStatus.State);
+            Assert.AreEqual(DefaultJobStatus.HasFailedItems, deserializedHeader.AtomicJobStatus.HasFailedItems);
+            Assert.AreEqual(DefaultJobStatus.HasSkippedItems, deserializedHeader.AtomicJobStatus.HasSkippedItems);
+            Assert.AreEqual(DefaultPartStatus.State, deserializedHeader.AtomicPartStatus.State);
+            Assert.AreEqual(DefaultPartStatus.HasFailedItems, deserializedHeader.AtomicPartStatus.HasFailedItems);
+            Assert.AreEqual(DefaultPartStatus.HasSkippedItems, deserializedHeader.AtomicPartStatus.HasSkippedItems);
         }
     }
 }

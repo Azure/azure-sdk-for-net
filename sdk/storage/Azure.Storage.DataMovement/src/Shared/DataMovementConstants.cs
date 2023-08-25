@@ -60,7 +60,8 @@ namespace Azure.Storage.DataMovement
         {
             internal const string SchemaVersion_b1 = "b1";
             internal const string SchemaVersion_b2 = "b2";
-            internal const string SchemaVersion = SchemaVersion_b2; // TODO: remove b for beta
+            internal const string SchemaVersion_b3 = "b3";
+            internal const string SchemaVersion = SchemaVersion_b3; // TODO: remove b for beta
 
             // Job Plan file extension. e.g. the file extension will look like {transferid}--{jobpartNumber}.steV{schemaVersion}
             internal const string FileExtension = ".steV";
@@ -228,12 +229,10 @@ namespace Azure.Storage.DataMovement
             internal const int AtomicPartStatusHasFailedIndex = AtomicPartStatusStateIndex + OneByte;
             /// <summary>Index: 49027</summary>
             internal const int AtomicPartStatusHasSkippedIndex = AtomicPartStatusHasFailedIndex + OneByte;
-            /// <summary>Index: 49028</summary>
-            internal const int AtomicPartStatusIndex = AtomicPartStatusHasSkippedIndex + OneByte;
             /// <summary>
             /// Size of the JobPart Header: 49029
             /// </summary>
-            internal const int JobPartHeaderSizeInBytes = AtomicPartStatusIndex + OneByte;
+            internal const int JobPartHeaderSizeInBytes = AtomicPartStatusHasSkippedIndex + OneByte;
         }
 
         internal static class ErrorCode

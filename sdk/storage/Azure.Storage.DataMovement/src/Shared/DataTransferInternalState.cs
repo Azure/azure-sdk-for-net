@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the state of the transfer
     /// </summary>
-    internal class DataTransferState
+    internal class DataTransferInternalState
     {
         private string _id;
         private DataTransferStatus _status;
@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="id">The transfer ID of the transfer object.</param>
         /// <param name="status">The Transfer Status of the Transfer. See <see cref="DataTransferStatus"/>.</param>
-        public DataTransferState(
+        public DataTransferInternalState(
             string id = default,
             DataTransferStatus status = default)
         {
@@ -59,9 +59,7 @@ namespace Azure.Storage.DataMovement
         public bool HasCompleted
         {
             get {
-                // TODO: look to whether before a paused state was considered completed..
-                return (DataTransferStatus.TransferState.Completed == _status.State ||
-                        DataTransferStatus.TransferState.Paused == _status.State);
+                return DataTransferStatus.TransferState.Completed == _status.State;
             }
             internal set { }
         }

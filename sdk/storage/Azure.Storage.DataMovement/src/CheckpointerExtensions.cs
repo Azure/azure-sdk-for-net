@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement
             bool hasSkippedItems = Convert.ToBoolean(hasSkippedItemsByte);
 
             // Transfers marked as fully completed are not resumable
-            return transferState.Equals(DataTransferStatus.TransferState.Completed) && !hasFailedItems && !hasSkippedItems;
+            return transferState != DataTransferStatus.TransferState.Completed || hasFailedItems || hasSkippedItems;
         }
 
         internal static async Task<DataTransferProperties> GetDataTransferPropertiesAsync(
