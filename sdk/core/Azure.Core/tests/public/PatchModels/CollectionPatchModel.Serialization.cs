@@ -28,7 +28,7 @@ namespace Azure.Core.Tests.PatchModels
                 {
                     variables = MergePatchDictionary<string>.Deserialize(
                         property.Value,
-                        e => e.GetString()!,
+                        e => e.GetString(),
                         (w, s) => w.WriteStringValue(s));
                 }
 

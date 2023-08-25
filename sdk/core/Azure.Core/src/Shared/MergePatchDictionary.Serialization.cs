@@ -37,7 +37,7 @@ namespace Azure.Core.Serialization
         {
             writer.WriteStartObject();
 
-            foreach (KeyValuePair<string, T> kvp in _dictionary)
+            foreach (KeyValuePair<string, T?> kvp in _dictionary)
             {
                 if (kvp.Value == null)
                 {
@@ -82,11 +82,11 @@ namespace Azure.Core.Serialization
         #region Deserialize
 
         public static MergePatchDictionary<T> Deserialize(JsonElement element,
-            Func<JsonElement, T> deserializeItem,
-            Action<Utf8JsonWriter, T> serializeItem,
-            Func<T, bool>? itemHasChanges = default)
+            Func<JsonElement, T?> deserializeItem,
+            Action<Utf8JsonWriter, T?> serializeItem,
+            Func<T?, bool>? itemHasChanges = default)
         {
-            Dictionary<string, T> values = new();
+            Dictionary<string, T?> values = new();
             foreach (JsonProperty property in element.EnumerateObject())
             {
                 values.Add(property.Name, deserializeItem(property.Value));
