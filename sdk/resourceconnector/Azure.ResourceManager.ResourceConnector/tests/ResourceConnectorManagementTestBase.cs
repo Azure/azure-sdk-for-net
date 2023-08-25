@@ -7,6 +7,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using System;
 
 namespace Azure.ResourceManager.ResourceConnector.Tests
 {
@@ -30,7 +31,10 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            Client = GetArmClient();
+            ArmClientOptions options = new ArmClientOptions();
+            options.Environment = new ArmEnvironment(new Uri("https://api-dogfood.resources.windows-int.net"), "https://api-dogfood.resources.windows-int.net");
+            Client = GetArmClient(options);
+
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
