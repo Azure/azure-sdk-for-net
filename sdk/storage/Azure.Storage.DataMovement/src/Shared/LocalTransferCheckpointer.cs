@@ -125,8 +125,8 @@ namespace Azure.Storage.DataMovement
                 // Enumerate all the job parts with the transfer id
                 foreach (string path in Directory.EnumerateFiles(_pathToCheckpointer, searchPattern, SearchOption.TopDirectoryOnly)
                     .Where(f => Path.HasExtension(string.Concat(
-                        DataMovementConstants.PlanFile.FileExtension,
-                        DataMovementConstants.PlanFile.SchemaVersion))))
+                        DataMovementConstants.JobPartPlanFile.FileExtension,
+                        DataMovementConstants.JobPartPlanFile.SchemaVersion))))
                 {
                     // Ensure each file has the matching header
                     if (JobPartPlanFileName.TryParseJobPartPlanFileName(path, out JobPartPlanFileName partPlanFileName))
@@ -181,7 +181,7 @@ namespace Azure.Storage.DataMovement
         {
             if (_transferStates.TryGetValue(transferId, out Dictionary<int, JobPartPlanFile> jobPartFiles))
             {
-                Stream copiedStream = new MemoryStream(DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes);
+                Stream copiedStream = new MemoryStream(DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes);
                 // MMF lock
                 await jobPartFiles[partNumber].WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
 
@@ -190,7 +190,7 @@ namespace Azure.Storage.DataMovement
                     path: jobPartFiles[partNumber].FilePath,
                     mode: FileMode.Open,
                     mapName: null,
-                    capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
+                    capacity: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
                 {
                     using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, readSize, MemoryMappedFileAccess.Read))
                     {
@@ -240,7 +240,7 @@ namespace Azure.Storage.DataMovement
                         path: jobPartFiles[partNumber].FilePath,
                         mode: FileMode.Open,
                         mapName: null,
-                        capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
+                        capacity: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
                     {
                         using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(chunkIndex, buffer.Length, MemoryMappedFileAccess.Write))
                         {
@@ -305,8 +305,8 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.PlanFile.OneByte;
-            int offset = DataMovementConstants.PlanFile.AtomicJobStatusIndex;
+            long length = DataMovementConstants.OneByte;
+            int offset = DataMovementConstants.JobPartPlanFile.AtomicJobStatusIndex;
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             if (_transferStates.TryGetValue(transferId, out Dictionary<int, JobPartPlanFile> jobPartFiles))
@@ -320,7 +320,7 @@ namespace Azure.Storage.DataMovement
                             path: jobPartPair.Value.FilePath,
                             mode: FileMode.Open,
                             mapName: null,
-                            capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
+                            capacity: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
                     {
                         using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
                         {
@@ -348,8 +348,8 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.PlanFile.OneByte;
-            int offset = DataMovementConstants.PlanFile.AtomicPartStatusIndex;
+            long length = DataMovementConstants.OneByte;
+            int offset = DataMovementConstants.JobPartPlanFile.AtomicPartStatusIndex;
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             if (_transferStates.TryGetValue(transferId, out Dictionary<int, JobPartPlanFile> jobPartFiles))
@@ -363,7 +363,7 @@ namespace Azure.Storage.DataMovement
                                 path: file.FilePath,
                                 mode: FileMode.Open,
                                 mapName: null,
-                                capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
+                                capacity: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
                     {
                         using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
                         {
@@ -397,8 +397,8 @@ namespace Azure.Storage.DataMovement
             // Retrieve all valid checkpointer files stored in the checkpointer path.
             foreach (string path in Directory.EnumerateFiles(_pathToCheckpointer, "*", SearchOption.TopDirectoryOnly)
                 .Where(f => Path.HasExtension(string.Concat(
-                    DataMovementConstants.PlanFile.FileExtension,
-                    DataMovementConstants.PlanFile.SchemaVersion))))
+                    DataMovementConstants.JobPartPlanFile.FileExtension,
+                    DataMovementConstants.JobPartPlanFile.SchemaVersion))))
             {
                 // Ensure each file has the correct format
                 if (JobPartPlanFileName.TryParseJobPartPlanFileName(path, out JobPartPlanFileName partPlanFileName))

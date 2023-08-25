@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> An image response item that provides a URL from which an image may be accessed. </summary>
-    public partial class ImageLocation
+    public partial class InternalImageLocation
     {
-        /// <summary> Initializes a new instance of ImageLocation. </summary>
+        /// <summary> Initializes a new instance of InternalImageLocation. </summary>
         /// <param name="url"> The URL that provides temporary access to download the generated image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        internal ImageLocation(Uri url)
+        internal InternalImageLocation(Uri url)
         {
             Argument.AssertNotNull(url, nameof(url));
 
