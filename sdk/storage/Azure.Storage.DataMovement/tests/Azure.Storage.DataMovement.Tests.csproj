@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement client library tests</AssemblyTitle>
-    <DefineConstants>BlobDataMovementSDK;$(DefineConstants)</DefineConstants>
+    <DefineConstants>DataMovementSDK;$(DefineConstants)</DefineConstants>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>

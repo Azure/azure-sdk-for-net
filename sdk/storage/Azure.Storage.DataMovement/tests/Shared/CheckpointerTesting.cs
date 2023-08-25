@@ -1,12 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias DMBlobs;
+
 using Azure.Storage.Test;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System;
+#if BlobDataMovementSDK
+using DMBlobs::Azure.Storage.DataMovement.JobPlan;
+#else
 using Azure.Storage.DataMovement.JobPlan;
+#endif
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
