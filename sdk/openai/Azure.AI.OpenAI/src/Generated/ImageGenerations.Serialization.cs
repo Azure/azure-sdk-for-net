@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             DateTimeOffset created = default;
-            IReadOnlyList<InternalImageLocation> data = default;
+            IReadOnlyList<ImageLocation> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("created"u8))
