@@ -72,6 +72,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
             if (validate)
             {
+                // Validate the request body. If the validation fails, throw a request validation
+                // exception that will return a 500 error back to eSTS.
                 try
                 {
                     Helpers.ValidateGraph(eventRequest);
