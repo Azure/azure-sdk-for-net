@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string name = default;
             ClusterInstanceViewStatus status = default;
-            IReadOnlyList<ServiceStatus> serviceStatuses = default;
+            IReadOnlyList<HDInsightServiceStatus> serviceStatuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         }
                         if (property0.NameEquals("serviceStatuses"u8))
                         {
-                            List<ServiceStatus> array = new List<ServiceStatus>();
+                            List<HDInsightServiceStatus> array = new List<HDInsightServiceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceStatus.DeserializeServiceStatus(item));
+                                array.Add(HDInsightServiceStatus.DeserializeHDInsightServiceStatus(item));
                             }
                             serviceStatuses = array;
                             continue;

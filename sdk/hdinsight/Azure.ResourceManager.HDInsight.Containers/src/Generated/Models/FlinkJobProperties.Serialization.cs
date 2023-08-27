@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<string> jobOutput = default;
             Optional<string> actionResult = default;
             Optional<string> lastSavePoint = default;
-            JobType jobType = default;
+            ClusterJobType jobType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobName"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("jobType"u8))
                 {
-                    jobType = new JobType(property.Value.GetString());
+                    jobType = new ClusterJobType(property.Value.GetString());
                     continue;
                 }
             }

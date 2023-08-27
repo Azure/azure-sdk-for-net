@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ScaleActionType actionType = default;
             int evaluationCount = default;
             string scalingMetric = default;
-            ComparisonRule comparisonRule = default;
+            HDInsightComparisonRule comparisonRule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("comparisonRule"u8))
                 {
-                    comparisonRule = ComparisonRule.DeserializeComparisonRule(property.Value);
+                    comparisonRule = HDInsightComparisonRule.DeserializeHDInsightComparisonRule(property.Value);
                     continue;
                 }
             }

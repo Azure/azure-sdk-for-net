@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     {
         /// <summary> Initializes a new instance of UnknownClusterJobProperties. </summary>
         /// <param name="jobType"> Type of cluster job. </param>
-        internal UnknownClusterJobProperties(JobType jobType) : base(jobType)
+        internal UnknownClusterJobProperties(ClusterJobType jobType) : base(jobType)
         {
             JobType = jobType;
         }

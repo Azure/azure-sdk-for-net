@@ -11,21 +11,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class ClusterAutoscaleProfile
     {
         /// <summary> Initializes a new instance of ClusterAutoscaleProfile. </summary>
-        /// <param name="enabled"> This indicates whether auto scale is enabled on HDInsight on AKS cluster. </param>
-        public ClusterAutoscaleProfile(bool enabled)
+        /// <param name="isEnabled"> This indicates whether auto scale is enabled on HDInsight on AKS cluster. </param>
+        public ClusterAutoscaleProfile(bool isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of ClusterAutoscaleProfile. </summary>
-        /// <param name="enabled"> This indicates whether auto scale is enabled on HDInsight on AKS cluster. </param>
+        /// <param name="isEnabled"> This indicates whether auto scale is enabled on HDInsight on AKS cluster. </param>
         /// <param name="gracefulDecommissionTimeout"> This property is for graceful decommission timeout; It has a default setting of 3600 seconds before forced shutdown takes place. This is the maximal time to wait for running containers and applications to complete before transition a DECOMMISSIONING node into DECOMMISSIONED. The default value is 3600 seconds. Negative value (like -1) is handled as infinite timeout. </param>
         /// <param name="autoscaleType"> User to specify which type of Autoscale to be implemented - Scheduled Based or Load Based. </param>
         /// <param name="scheduleBasedConfig"> Profiles of schedule based Autoscale. </param>
         /// <param name="loadBasedConfig"> Profiles of load based Autoscale. </param>
-        internal ClusterAutoscaleProfile(bool enabled, int? gracefulDecommissionTimeout, AutoscaleType? autoscaleType, ScheduleBasedConfig scheduleBasedConfig, LoadBasedConfig loadBasedConfig)
+        internal ClusterAutoscaleProfile(bool isEnabled, int? gracefulDecommissionTimeout, ClusterAutoscaleType? autoscaleType, ScheduleBasedConfig scheduleBasedConfig, LoadBasedConfig loadBasedConfig)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             GracefulDecommissionTimeout = gracefulDecommissionTimeout;
             AutoscaleType = autoscaleType;
             ScheduleBasedConfig = scheduleBasedConfig;
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> This indicates whether auto scale is enabled on HDInsight on AKS cluster. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> This property is for graceful decommission timeout; It has a default setting of 3600 seconds before forced shutdown takes place. This is the maximal time to wait for running containers and applications to complete before transition a DECOMMISSIONING node into DECOMMISSIONED. The default value is 3600 seconds. Negative value (like -1) is handled as infinite timeout. </summary>
         public int? GracefulDecommissionTimeout { get; set; }
         /// <summary> User to specify which type of Autoscale to be implemented - Scheduled Based or Load Based. </summary>
-        public AutoscaleType? AutoscaleType { get; set; }
+        public ClusterAutoscaleType? AutoscaleType { get; set; }
         /// <summary> Profiles of schedule based Autoscale. </summary>
         public ScheduleBasedConfig ScheduleBasedConfig { get; set; }
         /// <summary> Profiles of load based Autoscale. </summary>

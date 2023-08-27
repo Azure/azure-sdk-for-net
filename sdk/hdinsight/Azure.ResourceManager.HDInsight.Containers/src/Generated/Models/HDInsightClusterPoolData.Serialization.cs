@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningStatus> provisioningState = default;
+            Optional<HDInsightProvisioningStatus> provisioningState = default;
             Optional<string> deploymentId = default;
             Optional<string> managedResourceGroupName = default;
             Optional<string> aksManagedResourceGroupName = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningStatus(property0.Value.GetString());
+                            provisioningState = new HDInsightProvisioningStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deploymentId"u8))

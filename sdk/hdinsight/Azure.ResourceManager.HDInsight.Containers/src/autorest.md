@@ -22,10 +22,57 @@ rename-mapping:
   Action: FlinkJobAction
   Action.NEW: New
   AutoscaleProfile: ClusterAutoscaleProfile
+  AutoscaleProfile.enabled: IsEnabled
+  AutoscaleType: ClusterAutoscaleType
   Cluster: HDInsightCluster
   ClusterPool: HDInsightClusterPool
+  ClusterComponentsItem: ClusterComponentItem
+  ClusterInstanceViewsResult: ClusterInstanceViewListResult
+  ClusterJobList: ClusterJobListResult
+  ClusterListResult: HDInsightClusterListResult
+  ClusterLogAnalyticsApplicationLogs.stdOutEnabled: IsStdOutEnabled
+  ClusterLogAnalyticsApplicationLogs.stdErrorEnabled: IsStdErrorEnabled
+  ClusterLogAnalyticsProfile.enabled: IsEnabled
+  ClusterLogAnalyticsProfile.metricsEnabled: IsMetricsEnabled
+  ClusterPoolListResult: HDInsightClusterPoolListData
+  ClusterPoolLogAnalyticsProfile.enabled: IsEnabled
+  ClusterPoolVersionsListResult: ClusterPoolVersionListResult
+  ClusterPrometheusProfile.enabled: IsEnabled
+  ClusterResizeData: ClusterResizeContent
+  ClusterVersion: HDInsightClusterVersion
+  ClusterVersionsListResult: HDInsightClusterVersionListResult
+  ComparisonOperator: HDInsightComparisonOperator
+  ComparisonRule: HDInsightComparisonRule
+  ComputeResourceDefinition: ComputeResourceRequirement
+  ConnectivityProfile: ClusterConnectivityProfile
+  ContentEncoding: HDInsightContentEncoding
+  IdentityProfile: HDInsightIdentityProfile
+  JobType: ClusterJobType
+  LoadBasedConfig: LoadBasedConfig
+  LoadBasedConfig.pollInterval: PollIntervalInSeconds
+  NameAvailabilityParameters: HDInsightNameAvailabilityContent
+  NameAvailabilityResult: HDInsightNameAvailabilityResult
+  NameAvailabilityResult.nameAvailable: IsNameAvailable
+  NodeProfile: ClusterComputeNodeProfile
+  ProvisioningStatus: HDInsightProvisioningStatus
   ScaleActionType.scaleup: ScaleUp
   ScaleActionType.scaledown: ScaleDown
+  Schedule: AutoscaleSchedule
+  Schedule.startTime: StartOn|date-time
+  Schedule.endTime: EndOn|date-time
+  ScheduleDay: AutoscaleScheduleDay
+  SecretReference: ClusterSecretReference
+  SecretsProfile: ClusterSecretsProfile
+  ServiceConfigListResult: ClusterServiceConfigListResult
+  ServiceConfigListResultValueEntity: ClusterServiceConfigValueEntity
+  ServiceConfigResult: ClusterServiceConfigResult
+  ServiceStatus: HDInsightServiceStatus
+  SparkUserPlugins: SparkUserPluginListResult
+  SshProfile: ClusterSshProfile
+  TrinoCoordinator.debug.enable: IsEnabled
+  TrinoUserPlugin.enabled: IsEnabled
+  TrinoUserPlugins: TrinoUserPluginListResult
+  TrinoWorker.debug.enable: IsEnabled
   # TODO, remove these when service fix the Uri format before GA
   FlinkHiveCatalogOption.metastoreDbConnectionURL: MetastoreDBConnectionUriString
   FlinkStorageProfile.storageUri: StorageUriString
@@ -64,6 +111,9 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   Db: DB|db
+
+override-operation-name:
+  Locations_CheckNameAvailability: CheckHDInsightNameAvailability
 
 directive:
   - from: hdinsight.json

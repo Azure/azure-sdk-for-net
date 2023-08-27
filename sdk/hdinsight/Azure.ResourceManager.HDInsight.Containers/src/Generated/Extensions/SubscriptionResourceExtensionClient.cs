@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The name and type of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailabilityResult>> CheckNameAvailabilityLocationAsync(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckHDInsightNameAvailability");
             scope.Start();
             try
             {
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The name and type of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailabilityResult> CheckNameAvailabilityLocation(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckHDInsightNameAvailability");
             scope.Start();
             try
             {
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterVersion> GetAvailableClusterVersionsByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HDInsightClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HDInsightClusterVersion> GetAvailableClusterVersionsByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterVersion.DeserializeClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -247,12 +247,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterVersion> GetAvailableClusterVersionsByLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HDInsightClusterVersion> GetAvailableClusterVersionsByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterVersion.DeserializeClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
         }
     }
 }

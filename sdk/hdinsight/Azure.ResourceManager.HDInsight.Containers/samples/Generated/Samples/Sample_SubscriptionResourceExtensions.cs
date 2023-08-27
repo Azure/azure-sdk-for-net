@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         // LocationsNameAvailability
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckNameAvailabilityLocation_LocationsNameAvailability()
+        public async Task CheckHDInsightNameAvailability_LocationsNameAvailability()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-06-01-preview/examples/LocationsNameAvailability.json
             // this example is just showing the usage of "Locations_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("southeastasia");
-            NameAvailabilityContent content = new NameAvailabilityContent()
+            HDInsightNameAvailabilityContent content = new HDInsightNameAvailabilityContent()
             {
                 Name = "contosemember1",
                 ResourceType = "Microsoft.HDInsight/clusterPools/clusters",
             };
-            NameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityLocationAsync(location, content);
+            HDInsightNameAvailabilityResult result = await subscriptionResource.CheckHDInsightNameAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westus2");
-            await foreach (ClusterVersion item in subscriptionResource.GetAvailableClusterVersionsByLocationAsync(location))
+            await foreach (HDInsightClusterVersion item in subscriptionResource.GetAvailableClusterVersionsByLocationAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

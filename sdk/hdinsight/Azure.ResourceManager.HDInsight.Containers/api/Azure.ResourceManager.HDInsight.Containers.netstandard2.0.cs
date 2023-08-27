@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         public HDInsightClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile { get { throw null; } set { } }
         public string ClusterType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.NodeProfile> ComputeNodes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComputeNodeProfile> ComputeNodes { get { throw null; } set { } }
         public string DeploymentId { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? ProvisioningState { get { throw null; } }
         public string Status { get { throw null; } }
     }
     public partial class HDInsightClusterPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource>, System.Collections.IEnumerable
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolLogAnalyticsProfile LogAnalyticsProfile { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? ProvisioningState { get { throw null; } }
         public string Status { get { throw null; } }
     }
     public partial class HDInsightClusterPoolResource : Azure.ResourceManager.ArmResource
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult>> GetInstanceViewAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult> GetInstanceViews(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult> GetInstanceViewsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResult> GetServiceConfigs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResult> GetServiceConfigsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult> GetServiceConfigs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult> GetServiceConfigsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource> Resize(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource>> ResizeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource> Resize(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource>> ResizeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.Models.ClusterJob> RunJobClusterJob(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterJob clusterJob, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.Containers.Models.ClusterJob>> RunJobClusterJobAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Containers.Models.ClusterJob clusterJob, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
     }
     public static partial class HDInsightContainersExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityResult> CheckNameAvailabilityLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityResult>> CheckNameAvailabilityLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersion> GetAvailableClusterVersionsByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersion> GetAvailableClusterVersionsByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion> GetAvailableClusterVersionsByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion> GetAvailableClusterVersionsByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource> GetHDInsightClusterPool(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource>> GetHDInsightClusterPoolAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource GetHDInsightClusterPoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -131,33 +131,33 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class AksClusterProfile
     {
         internal AksClusterProfile() { }
-        public Azure.ResourceManager.HDInsight.Containers.Models.IdentityProfile AksClusterAgentPoolIdentityProfile { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile AksClusterAgentPoolIdentityProfile { get { throw null; } }
         public Azure.Core.ResourceIdentifier AksClusterResourceId { get { throw null; } }
         public string AksVersion { get { throw null; } }
     }
     public static partial class ArmHDInsightContainersModelFactory
     {
-        public static Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile AksClusterProfile(Azure.Core.ResourceIdentifier aksClusterResourceId = null, Azure.ResourceManager.HDInsight.Containers.Models.IdentityProfile aksClusterAgentPoolIdentityProfile = null, string aksVersion = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentsItem ClusterComponentsItem(string name = null, string version = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult ClusterInstanceViewResult(string name = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ServiceStatus> serviceStatuses = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile AksClusterProfile(Azure.Core.ResourceIdentifier aksClusterResourceId = null, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile aksClusterAgentPoolIdentityProfile = null, string aksVersion = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem ClusterComponentItem(string name = null, string version = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile ClusterConnectivityProfile(string webFqdn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.SshConnectivityEndpoint> ssh = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult ClusterInstanceViewResult(string name = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightServiceStatus> serviceStatuses = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus ClusterInstanceViewStatus(string ready = null, string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterJob ClusterJob(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterJobProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile ClusterPoolComputeProfile(string vmSize = null, int? count = default(int?)) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion ClusterPoolVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string clusterPoolVersionValue = null, string aksVersion = null, bool? isPreview = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentsItem> components = null, Azure.ResourceManager.HDInsight.Containers.Models.IdentityProfile identityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile authorizationProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.SecretsProfile secretsProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigsProfile> serviceConfigsProfiles = null, Azure.ResourceManager.HDInsight.Containers.Models.ConnectivityProfile connectivityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? prometheusProfileEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.SshProfile sshProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleProfile autoscaleProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> kafkaProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile trinoProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> llapProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.FlinkProfile flinkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.SparkProfile sparkProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> stubProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> scriptActionProfiles = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeData ClusterResizeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? targetWorkerNodeCount = default(int?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersion ClusterVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string clusterType = null, string clusterVersionValue = null, string ossVersion = null, string clusterPoolVersion = null, bool? isPreview = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentsItem> components = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ConnectivityProfile ConnectivityProfile(string webFqdn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.SshConnectivityEndpoint> ssh = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> components = null, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile identityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile authorizationProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretsProfile secretsProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigsProfile> serviceConfigsProfiles = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile connectivityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? isEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile sshProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleProfile autoscaleProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> kafkaProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile trinoProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> llapProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.FlinkProfile flinkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.SparkProfile sparkProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> stubProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> scriptActionProfiles = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent ClusterResizeContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? targetWorkerNodeCount = default(int?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigResult ClusterServiceConfigResult(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, System.Collections.Generic.IReadOnlyDictionary<string, string> customKeys = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigValueEntity> defaultKeys = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigValueEntity ClusterServiceConfigValueEntity(string value = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile ClusterSshProfile(int count = 0, string podPrefix = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.FlinkJobProperties FlinkJobProperties(string jobName = null, string jobJarDirectory = null, string jarName = null, string entryClass = null, string args = null, string savePointName = null, Azure.ResourceManager.HDInsight.Containers.Models.FlinkJobAction? action = default(Azure.ResourceManager.HDInsight.Containers.Models.FlinkJobAction?), System.Collections.Generic.IDictionary<string, string> flinkConfiguration = null, string jobId = null, string status = null, string jobOutput = null, string actionResult = null, string lastSavePoint = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData HDInsightClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus?), string clusterType = null, string deploymentId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.NodeProfile> computeNodes = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile clusterProfile = null, string status = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData HDInsightClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus?), string clusterType = null, string deploymentId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComputeNodeProfile> computeNodes = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile clusterProfile = null, string status = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterPatch HDInsightClusterPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile clusterProfile = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData HDInsightClusterPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus?), string deploymentId = null, string managedResourceGroupName = null, string aksManagedResourceGroupName = null, string clusterPoolVersion = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile computeProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile aksClusterProfile = null, Azure.Core.ResourceIdentifier networkSubnetId = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolLogAnalyticsProfile logAnalyticsProfile = null, string status = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityResult NameAvailabilityResult(bool? nameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultValueEntity ServiceConfigListResultValueEntity(string value = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResult ServiceConfigResult(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, System.Collections.Generic.IReadOnlyDictionary<string, string> customKeys = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultValueEntity> defaultKeys = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ServiceStatus ServiceStatus(string kind = null, string ready = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData HDInsightClusterPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus?), string deploymentId = null, string managedResourceGroupName = null, string aksManagedResourceGroupName = null, string clusterPoolVersion = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile computeProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile aksClusterProfile = null, Azure.Core.ResourceIdentifier networkSubnetId = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolLogAnalyticsProfile logAnalyticsProfile = null, string status = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion HDInsightClusterVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string clusterType = null, string clusterVersion = null, string ossVersion = null, string clusterPoolVersion = null, bool? isPreview = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> components = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityResult HDInsightNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightServiceStatus HDInsightServiceStatus(string kind = null, string ready = null, string message = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.SshConnectivityEndpoint SshConnectivityEndpoint(string endpoint = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.SshProfile SshProfile(int count = 0, string podPrefix = null) { throw null; }
     }
     public partial class AuthorizationProfile
     {
@@ -165,53 +165,97 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public System.Collections.Generic.IList<string> UserIds { get { throw null; } }
     }
+    public partial class AutoscaleSchedule
+    {
+        public AutoscaleSchedule(System.DateTimeOffset startOn, System.DateTimeOffset endOn, int count, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay> days) { }
+        public int Count { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay> Days { get { throw null; } }
+        public System.DateTimeOffset EndOn { get { throw null; } set { } }
+        public System.DateTimeOffset StartOn { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AutoscaleType : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleType>
+    public readonly partial struct AutoscaleScheduleDay : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AutoscaleType(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleType LoadBased { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleType ScheduleBased { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleType other) { throw null; }
+        public AutoscaleScheduleDay(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay Friday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay Monday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay Saturday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay Sunday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay Thursday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay Tuesday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay Wednesday { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleType left, Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleType left, Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay left, Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay left, Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleScheduleDay right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ClusterAutoscaleProfile
     {
-        public ClusterAutoscaleProfile(bool enabled) { }
-        public Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleType? AutoscaleType { get { throw null; } set { } }
-        public bool Enabled { get { throw null; } set { } }
+        public ClusterAutoscaleProfile(bool isEnabled) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType? AutoscaleType { get { throw null; } set { } }
         public int? GracefulDecommissionTimeout { get { throw null; } set { } }
+        public bool IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.LoadBasedConfig LoadBasedConfig { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ScheduleBasedConfig ScheduleBasedConfig { get { throw null; } set { } }
     }
-    public partial class ClusterComponentsItem
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterAutoscaleType : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType>
     {
-        internal ClusterComponentsItem() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterAutoscaleType(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType LoadBased { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType ScheduleBased { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType left, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType left, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ClusterComponentItem
+    {
+        internal ClusterComponentItem() { }
         public string Name { get { throw null; } }
         public string Version { get { throw null; } }
+    }
+    public partial class ClusterComputeNodeProfile
+    {
+        public ClusterComputeNodeProfile(string nodeProfileType, string vmSize, int count) { }
+        public int Count { get { throw null; } set { } }
+        public string NodeProfileType { get { throw null; } set { } }
+        public string VmSize { get { throw null; } set { } }
     }
     public partial class ClusterConfigFile
     {
         public ClusterConfigFile(string fileName) { }
         public string Content { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ContentEncoding? Encoding { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightContentEncoding? Encoding { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Values { get { throw null; } }
+    }
+    public partial class ClusterConnectivityProfile
+    {
+        internal ClusterConnectivityProfile() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.SshConnectivityEndpoint> Ssh { get { throw null; } }
+        public string WebFqdn { get { throw null; } }
     }
     public partial class ClusterInstanceViewResult
     {
         internal ClusterInstanceViewResult() { }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.ServiceStatus> ServiceStatuses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightServiceStatus> ServiceStatuses { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus Status { get { throw null; } }
     }
     public partial class ClusterInstanceViewStatus
@@ -233,15 +277,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class ClusterLogAnalyticsApplicationLogs
     {
         public ClusterLogAnalyticsApplicationLogs() { }
-        public bool? StdErrorEnabled { get { throw null; } set { } }
-        public bool? StdOutEnabled { get { throw null; } set { } }
+        public bool? IsStdErrorEnabled { get { throw null; } set { } }
+        public bool? IsStdOutEnabled { get { throw null; } set { } }
     }
     public partial class ClusterLogAnalyticsProfile
     {
-        public ClusterLogAnalyticsProfile(bool enabled) { }
+        public ClusterLogAnalyticsProfile(bool isEnabled) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsApplicationLogs ApplicationLogs { get { throw null; } set { } }
-        public bool Enabled { get { throw null; } set { } }
-        public bool? MetricsEnabled { get { throw null; } set { } }
+        public bool IsEnabled { get { throw null; } set { } }
+        public bool? IsMetricsEnabled { get { throw null; } set { } }
     }
     public partial class ClusterPoolComputeProfile
     {
@@ -251,8 +295,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class ClusterPoolLogAnalyticsProfile
     {
-        public ClusterPoolLogAnalyticsProfile(bool enabled) { }
-        public bool Enabled { get { throw null; } set { } }
+        public ClusterPoolLogAnalyticsProfile(bool isEnabled) { }
+        public bool IsEnabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WorkspaceId { get { throw null; } set { } }
     }
     public partial class ClusterPoolVersion : Azure.ResourceManager.Models.ResourceData
@@ -264,31 +308,45 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class ClusterProfile
     {
-        public ClusterProfile(string clusterVersion, string ossVersion, Azure.ResourceManager.HDInsight.Containers.Models.IdentityProfile identityProfile, Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile authorizationProfile) { }
+        public ClusterProfile(string clusterVersion, string ossVersion, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile identityProfile, Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile authorizationProfile) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile AuthorizationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleProfile AutoscaleProfile { get { throw null; } set { } }
         public string ClusterVersion { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentsItem> Components { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ConnectivityProfile ConnectivityProfile { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> Components { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile ConnectivityProfile { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.FlinkProfile FlinkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.IdentityProfile IdentityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile IdentityProfile { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> KafkaProfile { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> LlapProfile { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile LogAnalyticsProfile { get { throw null; } set { } }
         public string OssVersion { get { throw null; } set { } }
-        public bool? PrometheusProfileEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> ScriptActionProfiles { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.SecretsProfile SecretsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretsProfile SecretsProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigsProfile> ServiceConfigsProfiles { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.SparkProfile SparkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.SshProfile SshProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile SshProfile { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> StubProfile { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile TrinoProfile { get { throw null; } set { } }
     }
-    public partial class ClusterResizeData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ClusterResizeContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ClusterResizeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ClusterResizeContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public int? TargetWorkerNodeCount { get { throw null; } set { } }
+    }
+    public partial class ClusterSecretReference
+    {
+        public ClusterSecretReference(string referenceName, Azure.ResourceManager.HDInsight.Containers.Models.KeyVaultObjectType keyVaultObjectType, string keyVaultObjectName) { }
+        public string KeyVaultObjectName { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.KeyVaultObjectType KeyVaultObjectType { get { throw null; } set { } }
+        public string ReferenceName { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+    }
+    public partial class ClusterSecretsProfile
+    {
+        public ClusterSecretsProfile(Azure.Core.ResourceIdentifier keyVaultResourceId) { }
+        public Azure.Core.ResourceIdentifier KeyVaultResourceId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretReference> Secrets { get { throw null; } }
     }
     public partial class ClusterServiceConfig
     {
@@ -296,77 +354,41 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public string Component { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterConfigFile> Files { get { throw null; } }
     }
+    public partial class ClusterServiceConfigResult
+    {
+        internal ClusterServiceConfigResult() { }
+        public string ComponentName { get { throw null; } }
+        public string Content { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> CustomKeys { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigValueEntity> DefaultKeys { get { throw null; } }
+        public string FileName { get { throw null; } }
+        public string Path { get { throw null; } }
+        public string ServiceConfigListResultPropertiesType { get { throw null; } }
+        public string ServiceName { get { throw null; } }
+    }
     public partial class ClusterServiceConfigsProfile
     {
         public ClusterServiceConfigsProfile(string serviceName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfig> configs) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfig> Configs { get { throw null; } }
         public string ServiceName { get { throw null; } set { } }
     }
-    public partial class ClusterVersion : Azure.ResourceManager.Models.ResourceData
+    public partial class ClusterServiceConfigValueEntity
     {
-        public ClusterVersion() { }
-        public string ClusterPoolVersion { get { throw null; } set { } }
-        public string ClusterType { get { throw null; } set { } }
-        public string ClusterVersionValue { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentsItem> Components { get { throw null; } }
-        public bool? IsPreview { get { throw null; } set { } }
-        public string OssVersion { get { throw null; } set { } }
+        internal ClusterServiceConfigValueEntity() { }
+        public string Description { get { throw null; } }
+        public string Value { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComparisonOperator : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator>
+    public partial class ClusterSshProfile
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComparisonOperator(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator GreaterThan { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator GreaterThanOrEqual { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator LessThan { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator LessThanOrEqual { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator left, Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator left, Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator right) { throw null; }
-        public override string ToString() { throw null; }
+        public ClusterSshProfile(int count) { }
+        public int Count { get { throw null; } set { } }
+        public string PodPrefix { get { throw null; } }
     }
-    public partial class ComparisonRule
+    public partial class ComputeResourceRequirement
     {
-        public ComparisonRule(Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator @operator, float threshold) { }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ComparisonOperator Operator { get { throw null; } set { } }
-        public float Threshold { get { throw null; } set { } }
-    }
-    public partial class ComputeResourceDefinition
-    {
-        public ComputeResourceDefinition(float cpu, long memory) { }
+        public ComputeResourceRequirement(float cpu, long memory) { }
         public float Cpu { get { throw null; } set { } }
         public long Memory { get { throw null; } set { } }
-    }
-    public partial class ConnectivityProfile
-    {
-        internal ConnectivityProfile() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.SshConnectivityEndpoint> Ssh { get { throw null; } }
-        public string WebFqdn { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContentEncoding : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.ContentEncoding>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContentEncoding(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ContentEncoding Base64 { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ContentEncoding None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.ContentEncoding other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.ContentEncoding left, Azure.ResourceManager.HDInsight.Containers.Models.ContentEncoding right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.ContentEncoding (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.ContentEncoding left, Azure.ResourceManager.HDInsight.Containers.Models.ContentEncoding right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class FlinkHiveCatalogOption
     {
@@ -419,13 +441,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class FlinkProfile
     {
-        public FlinkProfile(Azure.ResourceManager.HDInsight.Containers.Models.FlinkStorageProfile storage, Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceDefinition jobManager, Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceDefinition taskManager) { }
+        public FlinkProfile(Azure.ResourceManager.HDInsight.Containers.Models.FlinkStorageProfile storage, Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement jobManager, Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement taskManager) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.FlinkHiveCatalogOption CatalogOptionsHive { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceDefinition HistoryServer { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceDefinition JobManager { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement HistoryServer { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement JobManager { get { throw null; } set { } }
         public int? NumReplicas { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.FlinkStorageProfile Storage { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceDefinition TaskManager { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ComputeResourceRequirement TaskManager { get { throw null; } set { } }
     }
     public partial class FlinkStorageProfile
     {
@@ -443,6 +465,107 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public HDInsightClusterPoolPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class HDInsightClusterVersion : Azure.ResourceManager.Models.ResourceData
+    {
+        public HDInsightClusterVersion() { }
+        public string ClusterPoolVersion { get { throw null; } set { } }
+        public string ClusterType { get { throw null; } set { } }
+        public string ClusterVersion { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> Components { get { throw null; } }
+        public bool? IsPreview { get { throw null; } set { } }
+        public string OssVersion { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HDInsightComparisonOperator : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HDInsightComparisonOperator(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator GreaterThan { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator GreaterThanOrEqual { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator LessThan { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator LessThanOrEqual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator left, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator left, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class HDInsightComparisonRule
+    {
+        public HDInsightComparisonRule(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator @operator, float threshold) { }
+        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonOperator Operator { get { throw null; } set { } }
+        public float Threshold { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HDInsightContentEncoding : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightContentEncoding>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HDInsightContentEncoding(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightContentEncoding Base64 { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightContentEncoding None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightContentEncoding other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightContentEncoding left, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightContentEncoding right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.HDInsightContentEncoding (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightContentEncoding left, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightContentEncoding right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class HDInsightIdentityProfile
+    {
+        public HDInsightIdentityProfile(Azure.Core.ResourceIdentifier msiResourceId, string msiClientId, string msiObjectId) { }
+        public string MsiClientId { get { throw null; } set { } }
+        public string MsiObjectId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
+    }
+    public partial class HDInsightNameAvailabilityContent
+    {
+        public HDInsightNameAvailabilityContent() { }
+        public string Name { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } set { } }
+    }
+    public partial class HDInsightNameAvailabilityResult
+    {
+        internal HDInsightNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Reason { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HDInsightProvisioningStatus : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HDInsightProvisioningStatus(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus Accepted { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus Canceled { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus left, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus left, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightProvisioningStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class HDInsightServiceStatus
+    {
+        internal HDInsightServiceStatus() { }
+        public string Kind { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Ready { get { throw null; } }
+    }
     public partial class HiveCatalogOption
     {
         public HiveCatalogOption(string catalogName, string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName, string metastoreWarehouseDir) { }
@@ -451,13 +574,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public string MetastoreDBConnectionUriString { get { throw null; } set { } }
         public string MetastoreDBConnectionUserName { get { throw null; } set { } }
         public string MetastoreWarehouseDir { get { throw null; } set { } }
-    }
-    public partial class IdentityProfile
-    {
-        public IdentityProfile(Azure.Core.ResourceIdentifier msiResourceId, string msiClientId, string msiObjectId) { }
-        public string MsiClientId { get { throw null; } set { } }
-        public string MsiObjectId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyVaultObjectType : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.KeyVaultObjectType>
@@ -484,48 +600,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public int? CooldownPeriod { get { throw null; } set { } }
         public int MaxNodes { get { throw null; } set { } }
         public int MinNodes { get { throw null; } set { } }
-        public int? PollInterval { get { throw null; } set { } }
+        public int? PollIntervalInSeconds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ScalingRule> ScalingRules { get { throw null; } }
-    }
-    public partial class NameAvailabilityContent
-    {
-        public NameAvailabilityContent() { }
-        public string Name { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
-    }
-    public partial class NameAvailabilityResult
-    {
-        internal NameAvailabilityResult() { }
-        public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
-        public string Reason { get { throw null; } }
-    }
-    public partial class NodeProfile
-    {
-        public NodeProfile(string nodeProfileType, string vmSize, int count) { }
-        public int Count { get { throw null; } set { } }
-        public string NodeProfileType { get { throw null; } set { } }
-        public string VmSize { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningStatus : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningStatus(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus Accepted { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus Canceled { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus left, Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus left, Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScaleActionType : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.ScaleActionType>
@@ -547,49 +623,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class ScalingRule
     {
-        public ScalingRule(Azure.ResourceManager.HDInsight.Containers.Models.ScaleActionType actionType, int evaluationCount, string scalingMetric, Azure.ResourceManager.HDInsight.Containers.Models.ComparisonRule comparisonRule) { }
+        public ScalingRule(Azure.ResourceManager.HDInsight.Containers.Models.ScaleActionType actionType, int evaluationCount, string scalingMetric, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonRule comparisonRule) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.ScaleActionType ActionType { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ComparisonRule ComparisonRule { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightComparisonRule ComparisonRule { get { throw null; } set { } }
         public int EvaluationCount { get { throw null; } set { } }
         public string ScalingMetric { get { throw null; } set { } }
     }
-    public partial class Schedule
-    {
-        public Schedule(string startTime, string endTime, int count, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay> days) { }
-        public int Count { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay> Days { get { throw null; } }
-        public string EndTime { get { throw null; } set { } }
-        public string StartTime { get { throw null; } set { } }
-    }
     public partial class ScheduleBasedConfig
     {
-        public ScheduleBasedConfig(string timeZone, int defaultCount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.Schedule> schedules) { }
+        public ScheduleBasedConfig(string timeZone, int defaultCount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleSchedule> schedules) { }
         public int DefaultCount { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.Schedule> Schedules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.AutoscaleSchedule> Schedules { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScheduleDay : System.IEquatable<Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScheduleDay(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay Friday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay Monday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay Saturday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay Sunday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay Thursday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay Tuesday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay Wednesday { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay left, Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay left, Azure.ResourceManager.HDInsight.Containers.Models.ScheduleDay right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ScriptActionProfile
     {
@@ -601,45 +646,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public bool? ShouldPersist { get { throw null; } set { } }
         public int? TimeoutInMinutes { get { throw null; } set { } }
         public string UriString { get { throw null; } set { } }
-    }
-    public partial class SecretReference
-    {
-        public SecretReference(string referenceName, Azure.ResourceManager.HDInsight.Containers.Models.KeyVaultObjectType keyVaultObjectType, string keyVaultObjectName) { }
-        public string KeyVaultObjectName { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.KeyVaultObjectType KeyVaultObjectType { get { throw null; } set { } }
-        public string ReferenceName { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-    }
-    public partial class SecretsProfile
-    {
-        public SecretsProfile(Azure.Core.ResourceIdentifier keyVaultResourceId) { }
-        public Azure.Core.ResourceIdentifier KeyVaultResourceId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.SecretReference> Secrets { get { throw null; } }
-    }
-    public partial class ServiceConfigListResultValueEntity
-    {
-        internal ServiceConfigListResultValueEntity() { }
-        public string Description { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    public partial class ServiceConfigResult
-    {
-        internal ServiceConfigResult() { }
-        public string ComponentName { get { throw null; } }
-        public string Content { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> CustomKeys { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultValueEntity> DefaultKeys { get { throw null; } }
-        public string FileName { get { throw null; } }
-        public string Path { get { throw null; } }
-        public string ServiceConfigListResultPropertiesType { get { throw null; } }
-        public string ServiceName { get { throw null; } }
-    }
-    public partial class ServiceStatus
-    {
-        internal ServiceStatus() { }
-        public string Kind { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Ready { get { throw null; } }
     }
     public partial class SparkMetastoreSpec
     {
@@ -668,17 +674,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         internal SshConnectivityEndpoint() { }
         public string Endpoint { get { throw null; } }
     }
-    public partial class SshProfile
-    {
-        public SshProfile(int count) { }
-        public int Count { get { throw null; } set { } }
-        public string PodPrefix { get { throw null; } }
-    }
     public partial class TrinoCoordinator
     {
         public TrinoCoordinator() { }
-        public bool? Enable { get { throw null; } set { } }
         public bool? HighAvailabilityEnabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public bool? Suspend { get { throw null; } set { } }
     }
@@ -702,14 +702,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class TrinoUserPlugin
     {
         public TrinoUserPlugin() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
     }
     public partial class TrinoWorker
     {
         public TrinoWorker() { }
-        public bool? Enable { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public bool? Suspend { get { throw null; } set { } }
     }
@@ -718,10 +718,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public UpdatableClusterProfile() { }
         public Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile AuthorizationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleProfile AutoscaleProfile { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile LogAnalyticsProfile { get { throw null; } set { } }
-        public bool? PrometheusProfileEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> ScriptActionProfiles { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigsProfile> ServiceConfigsProfiles { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.SshProfile SshProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile SshProfile { get { throw null; } set { } }
     }
 }

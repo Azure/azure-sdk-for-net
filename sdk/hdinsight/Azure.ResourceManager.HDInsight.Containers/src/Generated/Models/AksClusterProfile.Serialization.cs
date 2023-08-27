@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             Optional<ResourceIdentifier> aksClusterResourceId = default;
-            Optional<IdentityProfile> aksClusterAgentPoolIdentityProfile = default;
+            Optional<HDInsightIdentityProfile> aksClusterAgentPoolIdentityProfile = default;
             Optional<string> aksVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    aksClusterAgentPoolIdentityProfile = IdentityProfile.DeserializeIdentityProfile(property.Value);
+                    aksClusterAgentPoolIdentityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("aksVersion"u8))

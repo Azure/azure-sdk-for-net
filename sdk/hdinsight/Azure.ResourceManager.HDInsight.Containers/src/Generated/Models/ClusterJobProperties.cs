@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         /// <summary> Initializes a new instance of ClusterJobProperties. </summary>
         /// <param name="jobType"> Type of cluster job. </param>
-        internal ClusterJobProperties(JobType jobType)
+        internal ClusterJobProperties(ClusterJobType jobType)
         {
             JobType = jobType;
         }
 
         /// <summary> Type of cluster job. </summary>
-        internal JobType JobType { get; set; }
+        internal ClusterJobType JobType { get; set; }
     }
 }

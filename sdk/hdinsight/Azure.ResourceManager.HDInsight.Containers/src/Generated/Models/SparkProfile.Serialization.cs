@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             Optional<string> defaultStorageUrl = default;
             Optional<SparkMetastoreSpec> metastoreSpec = default;
-            Optional<SparkUserPlugins> userPluginsSpec = default;
+            Optional<SparkUserPluginListResult> userPluginsSpec = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultStorageUrl"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    userPluginsSpec = SparkUserPlugins.DeserializeSparkUserPlugins(property.Value);
+                    userPluginsSpec = SparkUserPluginListResult.DeserializeSparkUserPluginListResult(property.Value);
                     continue;
                 }
             }

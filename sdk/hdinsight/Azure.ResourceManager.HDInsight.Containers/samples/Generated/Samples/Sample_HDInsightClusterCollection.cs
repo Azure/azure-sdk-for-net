@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
                 ClusterType = "kafka",
                 ComputeNodes =
 {
-new NodeProfile("worker","Standard_D3_v2",4)
+new ClusterComputeNodeProfile("worker","Standard_D3_v2",4)
 },
-                ClusterProfile = new ClusterProfile("1.0.1", "2.4.1", new IdentityProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"), "de91f1d8-767f-460a-ac11-3cf103f74b34", "40491351-c240-4042-91e0-f644a1d2b441"), new AuthorizationProfile()
+                ClusterProfile = new ClusterProfile("1.0.1", "2.4.1", new HDInsightIdentityProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"), "de91f1d8-767f-460a-ac11-3cf103f74b34", "40491351-c240-4042-91e0-f644a1d2b441"), new AuthorizationProfile()
                 {
                     UserIds =
 {
@@ -162,27 +162,27 @@ new NodeProfile("worker","Standard_D3_v2",4)
 },
                 })
                 {
-                    SshProfile = new SshProfile(2),
+                    SshProfile = new ClusterSshProfile(2),
                     AutoscaleProfile = new ClusterAutoscaleProfile(true)
                     {
                         GracefulDecommissionTimeout = 3600,
-                        AutoscaleType = AutoscaleType.ScheduleBased,
-                        ScheduleBasedConfig = new ScheduleBasedConfig("Cen. Australia Standard Time", 10, new Schedule[]
+                        AutoscaleType = ClusterAutoscaleType.ScheduleBased,
+                        ScheduleBasedConfig = new ScheduleBasedConfig("Cen. Australia Standard Time", 10, new AutoscaleSchedule[]
             {
-new Schedule("00:00","12:00",20,new ScheduleDay[]
+new AutoscaleSchedule(DateTimeOffset.Parse("00:00"),DateTimeOffset.Parse("12:00"),20,new AutoscaleScheduleDay[]
 {
-ScheduleDay.Monday
-}),new Schedule("00:00","12:00",25,new ScheduleDay[]
+AutoscaleScheduleDay.Monday
+}),new AutoscaleSchedule(DateTimeOffset.Parse("00:00"),DateTimeOffset.Parse("12:00"),25,new AutoscaleScheduleDay[]
 {
-ScheduleDay.Sunday
+AutoscaleScheduleDay.Sunday
 })
             }),
                         LoadBasedConfig = new LoadBasedConfig(10, 20, new ScalingRule[]
             {
-new ScalingRule(ScaleActionType.ScaleUp,3,"cpu",new ComparisonRule(ComparisonOperator.GreaterThan,90)),new ScalingRule(ScaleActionType.ScaleDown,3,"cpu",new ComparisonRule(ComparisonOperator.LessThan,20))
+new ScalingRule(ScaleActionType.ScaleUp,3,"cpu",new HDInsightComparisonRule(HDInsightComparisonOperator.GreaterThan,90)),new ScalingRule(ScaleActionType.ScaleDown,3,"cpu",new HDInsightComparisonRule(HDInsightComparisonOperator.LessThan,20))
             })
                         {
-                            PollInterval = 60,
+                            PollIntervalInSeconds = 60,
                             CooldownPeriod = 300,
                         },
                     },
@@ -232,9 +232,9 @@ new ScalingRule(ScaleActionType.ScaleUp,3,"cpu",new ComparisonRule(ComparisonOpe
                 ClusterType = "spark",
                 ComputeNodes =
 {
-new NodeProfile("worker","Standard_D3_v2",4)
+new ClusterComputeNodeProfile("worker","Standard_D3_v2",4)
 },
-                ClusterProfile = new ClusterProfile("0.0.1", "2.2.3", new IdentityProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"), "de91f1d8-767f-460a-ac11-3cf103f74b34", "40491351-c240-4042-91e0-f644a1d2b441"), new AuthorizationProfile()
+                ClusterProfile = new ClusterProfile("0.0.1", "2.2.3", new HDInsightIdentityProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"), "de91f1d8-767f-460a-ac11-3cf103f74b34", "40491351-c240-4042-91e0-f644a1d2b441"), new AuthorizationProfile()
                 {
                     UserIds =
 {
@@ -280,7 +280,7 @@ Values =
 })
 })
 },
-                    SshProfile = new SshProfile(2),
+                    SshProfile = new ClusterSshProfile(2),
                     SparkProfile = new SparkProfile(),
                 },
             };

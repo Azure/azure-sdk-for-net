@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="logAnalyticsProfile"> Cluster pool log analytics profile to enable OMS agent for AKS cluster. </param>
         /// <param name="status"> Business status of the resource. </param>
         /// <returns> A new <see cref="Containers.HDInsightClusterPoolData"/> instance for mocking. </returns>
-        public static HDInsightClusterPoolData HDInsightClusterPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningStatus? provisioningState = null, string deploymentId = null, string managedResourceGroupName = null, string aksManagedResourceGroupName = null, string clusterPoolVersion = null, ClusterPoolComputeProfile computeProfile = null, AksClusterProfile aksClusterProfile = null, ResourceIdentifier networkSubnetId = null, ClusterPoolLogAnalyticsProfile logAnalyticsProfile = null, string status = null)
+        public static HDInsightClusterPoolData HDInsightClusterPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HDInsightProvisioningStatus? provisioningState = null, string deploymentId = null, string managedResourceGroupName = null, string aksManagedResourceGroupName = null, string clusterPoolVersion = null, ClusterPoolComputeProfile computeProfile = null, AksClusterProfile aksClusterProfile = null, ResourceIdentifier networkSubnetId = null, ClusterPoolLogAnalyticsProfile logAnalyticsProfile = null, string status = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="aksClusterAgentPoolIdentityProfile"> Identity properties of the AKS cluster agentpool MSI. </param>
         /// <param name="aksVersion"> AKS control plane and default node pool version of this ClusterPool. </param>
         /// <returns> A new <see cref="Models.AksClusterProfile"/> instance for mocking. </returns>
-        public static AksClusterProfile AksClusterProfile(ResourceIdentifier aksClusterResourceId = null, IdentityProfile aksClusterAgentPoolIdentityProfile = null, string aksVersion = null)
+        public static AksClusterProfile AksClusterProfile(ResourceIdentifier aksClusterResourceId = null, HDInsightIdentityProfile aksClusterAgentPoolIdentityProfile = null, string aksVersion = null)
         {
             return new AksClusterProfile(aksClusterResourceId, aksClusterAgentPoolIdentityProfile, aksVersion);
         }
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="clusterProfile"> Cluster profile. </param>
         /// <param name="status"> Business status of the resource. </param>
         /// <returns> A new <see cref="Containers.HDInsightClusterData"/> instance for mocking. </returns>
-        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningStatus? provisioningState = null, string clusterType = null, string deploymentId = null, IEnumerable<NodeProfile> computeNodes = null, ClusterProfile clusterProfile = null, string status = null)
+        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HDInsightProvisioningStatus? provisioningState = null, string clusterType = null, string deploymentId = null, IEnumerable<ClusterComputeNodeProfile> computeNodes = null, ClusterProfile clusterProfile = null, string status = null)
         {
             tags ??= new Dictionary<string, string>();
-            computeNodes ??= new List<NodeProfile>();
+            computeNodes ??= new List<ClusterComputeNodeProfile>();
 
             return new HDInsightClusterData(id, name, resourceType, systemData, tags, location, provisioningState, clusterType, deploymentId, computeNodes != null ? new ComputeProfile(computeNodes?.ToList()) : null, clusterProfile, status);
         }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="serviceConfigsProfiles"> The service configs profiles. </param>
         /// <param name="connectivityProfile"> Cluster connectivity profile. </param>
         /// <param name="logAnalyticsProfile"> Cluster log analytics profile to enable or disable OMS agent for cluster. </param>
-        /// <param name="prometheusProfileEnabled"> Cluster Prometheus profile. </param>
+        /// <param name="isEnabled"> Cluster Prometheus profile. </param>
         /// <param name="sshProfile"> Ssh profile for the cluster. </param>
         /// <param name="autoscaleProfile"> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </param>
         /// <param name="kafkaProfile"> Kafka cluster profile. </param>
@@ -104,36 +104,36 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="stubProfile"> Stub cluster profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
         /// <returns> A new <see cref="Models.ClusterProfile"/> instance for mocking. </returns>
-        public static ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, IEnumerable<ClusterComponentsItem> components = null, IdentityProfile identityProfile = null, AuthorizationProfile authorizationProfile = null, SecretsProfile secretsProfile = null, IEnumerable<ClusterServiceConfigsProfile> serviceConfigsProfiles = null, ConnectivityProfile connectivityProfile = null, ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? prometheusProfileEnabled = null, SshProfile sshProfile = null, ClusterAutoscaleProfile autoscaleProfile = null, IDictionary<string, BinaryData> kafkaProfile = null, TrinoProfile trinoProfile = null, IDictionary<string, BinaryData> llapProfile = null, FlinkProfile flinkProfile = null, SparkProfile sparkProfile = null, IDictionary<string, BinaryData> stubProfile = null, IEnumerable<ScriptActionProfile> scriptActionProfiles = null)
+        public static ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, IEnumerable<ClusterComponentItem> components = null, HDInsightIdentityProfile identityProfile = null, AuthorizationProfile authorizationProfile = null, ClusterSecretsProfile secretsProfile = null, IEnumerable<ClusterServiceConfigsProfile> serviceConfigsProfiles = null, ClusterConnectivityProfile connectivityProfile = null, ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? isEnabled = null, ClusterSshProfile sshProfile = null, ClusterAutoscaleProfile autoscaleProfile = null, IDictionary<string, BinaryData> kafkaProfile = null, TrinoProfile trinoProfile = null, IDictionary<string, BinaryData> llapProfile = null, FlinkProfile flinkProfile = null, SparkProfile sparkProfile = null, IDictionary<string, BinaryData> stubProfile = null, IEnumerable<ScriptActionProfile> scriptActionProfiles = null)
         {
-            components ??= new List<ClusterComponentsItem>();
+            components ??= new List<ClusterComponentItem>();
             serviceConfigsProfiles ??= new List<ClusterServiceConfigsProfile>();
             kafkaProfile ??= new Dictionary<string, BinaryData>();
             llapProfile ??= new Dictionary<string, BinaryData>();
             stubProfile ??= new Dictionary<string, BinaryData>();
             scriptActionProfiles ??= new List<ScriptActionProfile>();
 
-            return new ClusterProfile(clusterVersion, ossVersion, components?.ToList(), identityProfile, authorizationProfile, secretsProfile, serviceConfigsProfiles?.ToList(), connectivityProfile, logAnalyticsProfile, prometheusProfileEnabled.HasValue ? new ClusterPrometheusProfile(prometheusProfileEnabled.Value) : null, sshProfile, autoscaleProfile, kafkaProfile, trinoProfile, llapProfile, flinkProfile, sparkProfile, stubProfile, scriptActionProfiles?.ToList());
+            return new ClusterProfile(clusterVersion, ossVersion, components?.ToList(), identityProfile, authorizationProfile, secretsProfile, serviceConfigsProfiles?.ToList(), connectivityProfile, logAnalyticsProfile, isEnabled.HasValue ? new ClusterPrometheusProfile(isEnabled.Value) : null, sshProfile, autoscaleProfile, kafkaProfile, trinoProfile, llapProfile, flinkProfile, sparkProfile, stubProfile, scriptActionProfiles?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ClusterComponentsItem. </summary>
+        /// <summary> Initializes a new instance of ClusterComponentItem. </summary>
         /// <param name="name"></param>
         /// <param name="version"></param>
-        /// <returns> A new <see cref="Models.ClusterComponentsItem"/> instance for mocking. </returns>
-        public static ClusterComponentsItem ClusterComponentsItem(string name = null, string version = null)
+        /// <returns> A new <see cref="Models.ClusterComponentItem"/> instance for mocking. </returns>
+        public static ClusterComponentItem ClusterComponentItem(string name = null, string version = null)
         {
-            return new ClusterComponentsItem(name, version);
+            return new ClusterComponentItem(name, version);
         }
 
-        /// <summary> Initializes a new instance of ConnectivityProfile. </summary>
+        /// <summary> Initializes a new instance of ClusterConnectivityProfile. </summary>
         /// <param name="webFqdn"> Web connectivity endpoint details. </param>
         /// <param name="ssh"> List of SSH connectivity endpoints. </param>
-        /// <returns> A new <see cref="Models.ConnectivityProfile"/> instance for mocking. </returns>
-        public static ConnectivityProfile ConnectivityProfile(string webFqdn = null, IEnumerable<SshConnectivityEndpoint> ssh = null)
+        /// <returns> A new <see cref="Models.ClusterConnectivityProfile"/> instance for mocking. </returns>
+        public static ClusterConnectivityProfile ClusterConnectivityProfile(string webFqdn = null, IEnumerable<SshConnectivityEndpoint> ssh = null)
         {
             ssh ??= new List<SshConnectivityEndpoint>();
 
-            return new ConnectivityProfile(webFqdn != null ? new WebConnectivityEndpoint(webFqdn) : null, ssh?.ToList());
+            return new ClusterConnectivityProfile(webFqdn != null ? new WebConnectivityEndpoint(webFqdn) : null, ssh?.ToList());
         }
 
         /// <summary> Initializes a new instance of SshConnectivityEndpoint. </summary>
@@ -150,16 +150,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new SshConnectivityEndpoint(endpoint);
         }
 
-        /// <summary> Initializes a new instance of SshProfile. </summary>
+        /// <summary> Initializes a new instance of ClusterSshProfile. </summary>
         /// <param name="count"> Number of ssh pods per cluster. </param>
         /// <param name="podPrefix"> Prefix of the pod names. Pod number will be appended to the prefix. The ingress URLs for the pods will be available at &lt;clusterFqdn&gt;/&lt;sshBasePath&gt;/&lt;prefix&gt;-&lt;number&gt;. </param>
-        /// <returns> A new <see cref="Models.SshProfile"/> instance for mocking. </returns>
-        public static SshProfile SshProfile(int count = default, string podPrefix = null)
+        /// <returns> A new <see cref="Models.ClusterSshProfile"/> instance for mocking. </returns>
+        public static ClusterSshProfile ClusterSshProfile(int count = default, string podPrefix = null)
         {
-            return new SshProfile(count, podPrefix);
+            return new ClusterSshProfile(count, podPrefix);
         }
 
-        /// <summary> Initializes a new instance of ClusterResizeData. </summary>
+        /// <summary> Initializes a new instance of ClusterResizeContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="targetWorkerNodeCount"> Target node count of worker node. </param>
-        /// <returns> A new <see cref="Models.ClusterResizeData"/> instance for mocking. </returns>
-        public static ClusterResizeData ClusterResizeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, int? targetWorkerNodeCount = null)
+        /// <returns> A new <see cref="Models.ClusterResizeContent"/> instance for mocking. </returns>
+        public static ClusterResizeContent ClusterResizeContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, int? targetWorkerNodeCount = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ClusterResizeData(id, name, resourceType, systemData, tags, location, targetWorkerNodeCount);
+            return new ClusterResizeContent(id, name, resourceType, systemData, tags, location, targetWorkerNodeCount);
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterPatch. </summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new ClusterJob(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ServiceConfigResult. </summary>
+        /// <summary> Initializes a new instance of ClusterServiceConfigResult. </summary>
         /// <param name="serviceName"> Service Config Name. </param>
         /// <param name="fileName"> File Name. </param>
         /// <param name="content"> Content in the service config file. </param>
@@ -216,32 +216,32 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="path"> Config file path. </param>
         /// <param name="customKeys"> The custom keys. </param>
         /// <param name="defaultKeys"> The default keys. </param>
-        /// <returns> A new <see cref="Models.ServiceConfigResult"/> instance for mocking. </returns>
-        public static ServiceConfigResult ServiceConfigResult(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, IReadOnlyDictionary<string, string> customKeys = null, IReadOnlyDictionary<string, ServiceConfigListResultValueEntity> defaultKeys = null)
+        /// <returns> A new <see cref="Models.ClusterServiceConfigResult"/> instance for mocking. </returns>
+        public static ClusterServiceConfigResult ClusterServiceConfigResult(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, IReadOnlyDictionary<string, string> customKeys = null, IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys = null)
         {
             customKeys ??= new Dictionary<string, string>();
-            defaultKeys ??= new Dictionary<string, ServiceConfigListResultValueEntity>();
+            defaultKeys ??= new Dictionary<string, ClusterServiceConfigValueEntity>();
 
-            return new ServiceConfigResult(serviceName, fileName, content, componentName, serviceConfigListResultPropertiesType, path, customKeys, defaultKeys);
+            return new ClusterServiceConfigResult(serviceName, fileName, content, componentName, serviceConfigListResultPropertiesType, path, customKeys, defaultKeys);
         }
 
-        /// <summary> Initializes a new instance of ServiceConfigListResultValueEntity. </summary>
+        /// <summary> Initializes a new instance of ClusterServiceConfigValueEntity. </summary>
         /// <param name="value"> Config value. </param>
         /// <param name="description"> Config description. </param>
-        /// <returns> A new <see cref="Models.ServiceConfigListResultValueEntity"/> instance for mocking. </returns>
-        public static ServiceConfigListResultValueEntity ServiceConfigListResultValueEntity(string value = null, string description = null)
+        /// <returns> A new <see cref="Models.ClusterServiceConfigValueEntity"/> instance for mocking. </returns>
+        public static ClusterServiceConfigValueEntity ClusterServiceConfigValueEntity(string value = null, string description = null)
         {
-            return new ServiceConfigListResultValueEntity(value, description);
+            return new ClusterServiceConfigValueEntity(value, description);
         }
 
-        /// <summary> Initializes a new instance of NameAvailabilityResult. </summary>
-        /// <param name="nameAvailable"> Indicator of availability of the Microsoft.HDInsight resource name. </param>
+        /// <summary> Initializes a new instance of HDInsightNameAvailabilityResult. </summary>
+        /// <param name="isNameAvailable"> Indicator of availability of the Microsoft.HDInsight resource name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The error message of unavailability. </param>
-        /// <returns> A new <see cref="Models.NameAvailabilityResult"/> instance for mocking. </returns>
-        public static NameAvailabilityResult NameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.HDInsightNameAvailabilityResult"/> instance for mocking. </returns>
+        public static HDInsightNameAvailabilityResult HDInsightNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new NameAvailabilityResult(nameAvailable, reason, message);
+            return new HDInsightNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of ClusterInstanceViewResult. </summary>
@@ -249,9 +249,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="status"> Status of the instance view. </param>
         /// <param name="serviceStatuses"> List of statuses of relevant services that make up the HDInsight on aks cluster to surface to the customer. </param>
         /// <returns> A new <see cref="Models.ClusterInstanceViewResult"/> instance for mocking. </returns>
-        public static ClusterInstanceViewResult ClusterInstanceViewResult(string name = null, ClusterInstanceViewStatus status = null, IEnumerable<ServiceStatus> serviceStatuses = null)
+        public static ClusterInstanceViewResult ClusterInstanceViewResult(string name = null, ClusterInstanceViewStatus status = null, IEnumerable<HDInsightServiceStatus> serviceStatuses = null)
         {
-            serviceStatuses ??= new List<ServiceStatus>();
+            serviceStatuses ??= new List<HDInsightServiceStatus>();
 
             return new ClusterInstanceViewResult(name, status, serviceStatuses?.ToList());
         }
@@ -266,14 +266,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new ClusterInstanceViewStatus(ready, reason, message);
         }
 
-        /// <summary> Initializes a new instance of ServiceStatus. </summary>
+        /// <summary> Initializes a new instance of HDInsightServiceStatus. </summary>
         /// <param name="kind"> Kind of the service. E.g. "Zookeeper". </param>
         /// <param name="ready"> Indicates if the service is ready / healthy. Values can be "true", "false", "unknown" or anything else. </param>
         /// <param name="message"> A message describing the error if any. </param>
-        /// <returns> A new <see cref="Models.ServiceStatus"/> instance for mocking. </returns>
-        public static ServiceStatus ServiceStatus(string kind = null, string ready = null, string message = null)
+        /// <returns> A new <see cref="Models.HDInsightServiceStatus"/> instance for mocking. </returns>
+        public static HDInsightServiceStatus HDInsightServiceStatus(string kind = null, string ready = null, string message = null)
         {
-            return new ServiceStatus(kind, ready, message);
+            return new HDInsightServiceStatus(kind, ready, message);
         }
 
         /// <summary> Initializes a new instance of ClusterPoolVersion. </summary>
@@ -290,23 +290,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new ClusterPoolVersion(id, name, resourceType, systemData, clusterPoolVersionValue, aksVersion, isPreview);
         }
 
-        /// <summary> Initializes a new instance of ClusterVersion. </summary>
+        /// <summary> Initializes a new instance of HDInsightClusterVersion. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="clusterType"> The type of cluster. </param>
-        /// <param name="clusterVersionValue"> Version with three part. </param>
+        /// <param name="clusterVersion"> Version with three part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
         /// <param name="clusterPoolVersion"> The two part cluster pool version. If the cluster version is before cluster pool version on-board, the return value will be empty string. </param>
         /// <param name="isPreview"> Indicate if this version is in preview or not. </param>
         /// <param name="components"> Component list of this cluster type and version. </param>
-        /// <returns> A new <see cref="Models.ClusterVersion"/> instance for mocking. </returns>
-        public static ClusterVersion ClusterVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string clusterType = null, string clusterVersionValue = null, string ossVersion = null, string clusterPoolVersion = null, bool? isPreview = null, IEnumerable<ClusterComponentsItem> components = null)
+        /// <returns> A new <see cref="Models.HDInsightClusterVersion"/> instance for mocking. </returns>
+        public static HDInsightClusterVersion HDInsightClusterVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string clusterType = null, string clusterVersion = null, string ossVersion = null, string clusterPoolVersion = null, bool? isPreview = null, IEnumerable<ClusterComponentItem> components = null)
         {
-            components ??= new List<ClusterComponentsItem>();
+            components ??= new List<ClusterComponentItem>();
 
-            return new ClusterVersion(id, name, resourceType, systemData, clusterType, clusterVersionValue, ossVersion, clusterPoolVersion, isPreview, components?.ToList());
+            return new HDInsightClusterVersion(id, name, resourceType, systemData, clusterType, clusterVersion, ossVersion, clusterPoolVersion, isPreview, components?.ToList());
         }
 
         /// <summary> Initializes a new instance of FlinkJobProperties. </summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             flinkConfiguration ??= new Dictionary<string, string>();
 
-            return new FlinkJobProperties(JobType.FlinkJob, jobName, jobJarDirectory, jarName, entryClass, args, savePointName, action, flinkConfiguration, jobId, status, jobOutput, actionResult, lastSavePoint);
+            return new FlinkJobProperties(ClusterJobType.FlinkJob, jobName, jobJarDirectory, jarName, entryClass, args, savePointName, action, flinkConfiguration, jobId, status, jobOutput, actionResult, lastSavePoint);
         }
     }
 }

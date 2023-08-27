@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             // set the IdentityProfile
             string msiClientId = userMsi.Value.Data.ClientId.ToString();
             string msiObjectId = userMsi.Value.Data.PrincipalId.ToString();
-            var identityProfile = new IdentityProfile(msiResourceId: userMsi.Value.Id, msiClientId: msiClientId, msiObjectId: msiObjectId);
+            var identityProfile = new HDInsightIdentityProfile(msiResourceId: userMsi.Value.Id, msiClientId: msiClientId, msiObjectId: msiObjectId);
 
             // authorization profile
             // my user Id
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             // trino profile
             string vmSize = "Standard_D8s_v3";
             int workerCount = 5;
-            NodeProfile nodeProfile = new NodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount);
+            ClusterComputeNodeProfile nodeProfile = new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount);
             var clusterData = new HDInsightClusterData(Location);
             clusterData.ClusterType = clusterType;
 
-            clusterData.ComputeProfile = new ComputeProfile(new List<NodeProfile> { nodeProfile });
+            clusterData.ComputeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { nodeProfile });
 
-            clusterData.ClusterProfile = new ClusterProfile(clusterVersion: availableClusterVersionResult.ClusterVersionValue, ossVersion: availableClusterVersionResult.OssVersion, identityProfile: identityProfile, authorizationProfile: authorizationProfile);
+            clusterData.ClusterProfile = new ClusterProfile(clusterVersion: availableClusterVersionResult.ClusterVersion, ossVersion: availableClusterVersionResult.OssVersion, identityProfile: identityProfile, authorizationProfile: authorizationProfile);
 
             // set trino profile
             clusterData.ClusterProfile.TrinoProfile = new TrinoProfile();

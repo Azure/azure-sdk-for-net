@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="logAnalyticsProfile"> Cluster log analytics profile to enable or disable OMS agent for cluster. </param>
         /// <param name="prometheusProfile"> Cluster Prometheus profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
-        internal UpdatableClusterProfile(IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, SshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, AuthorizationProfile authorizationProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, IList<ScriptActionProfile> scriptActionProfiles)
+        internal UpdatableClusterProfile(IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, AuthorizationProfile authorizationProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, IList<ScriptActionProfile> scriptActionProfiles)
         {
             ServiceConfigsProfiles = serviceConfigsProfiles;
             SshProfile = sshProfile;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> The service configs profiles. </summary>
         public IList<ClusterServiceConfigsProfile> ServiceConfigsProfiles { get; }
         /// <summary> Ssh profile for the cluster. </summary>
-        public SshProfile SshProfile { get; set; }
+        public ClusterSshProfile SshProfile { get; set; }
         /// <summary> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </summary>
         public ClusterAutoscaleProfile AutoscaleProfile { get; set; }
         /// <summary> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </summary>
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Cluster Prometheus profile. </summary>
         internal ClusterPrometheusProfile PrometheusProfile { get; set; }
         /// <summary> Enable Prometheus for cluster or not. </summary>
-        public bool? PrometheusProfileEnabled
+        public bool? IsEnabled
         {
-            get => PrometheusProfile is null ? default(bool?) : PrometheusProfile.Enabled;
+            get => PrometheusProfile is null ? default(bool?) : PrometheusProfile.IsEnabled;
             set
             {
                 PrometheusProfile = value.HasValue ? new ClusterPrometheusProfile(value.Value) : null;

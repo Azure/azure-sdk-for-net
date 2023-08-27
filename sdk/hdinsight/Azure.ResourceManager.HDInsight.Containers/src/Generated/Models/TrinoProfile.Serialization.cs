@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             Optional<CatalogOptions> catalogOptions = default;
             Optional<TrinoCoordinator> coordinator = default;
-            Optional<TrinoUserPlugins> userPluginsSpec = default;
+            Optional<TrinoUserPluginListResult> userPluginsSpec = default;
             Optional<TrinoUserTelemetry> userTelemetrySpec = default;
             Optional<TrinoWorker> worker = default;
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    userPluginsSpec = TrinoUserPlugins.DeserializeTrinoUserPlugins(property.Value);
+                    userPluginsSpec = TrinoUserPluginListResult.DeserializeTrinoUserPluginListResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userTelemetrySpec"u8))

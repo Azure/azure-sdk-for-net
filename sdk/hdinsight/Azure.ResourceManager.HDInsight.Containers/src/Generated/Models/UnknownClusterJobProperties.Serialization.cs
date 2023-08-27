@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            JobType jobType = "Unknown";
+            ClusterJobType jobType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobType"u8))
                 {
-                    jobType = new JobType(property.Value.GetString());
+                    jobType = new ClusterJobType(property.Value.GetString());
                     continue;
                 }
             }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="defaultStorageUriString"> The default storage URL. </param>
         /// <param name="metastoreSpec"> The metastore specification for Spark cluster. </param>
         /// <param name="userPluginsSpec"> Spark user plugins spec. </param>
-        internal SparkProfile(string defaultStorageUriString, SparkMetastoreSpec metastoreSpec, SparkUserPlugins userPluginsSpec)
+        internal SparkProfile(string defaultStorageUriString, SparkMetastoreSpec metastoreSpec, SparkUserPluginListResult userPluginsSpec)
         {
             DefaultStorageUriString = defaultStorageUriString;
             MetastoreSpec = metastoreSpec;
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> The metastore specification for Spark cluster. </summary>
         public SparkMetastoreSpec MetastoreSpec { get; set; }
         /// <summary> Spark user plugins spec. </summary>
-        internal SparkUserPlugins UserPluginsSpec { get; set; }
+        internal SparkUserPluginListResult UserPluginsSpec { get; set; }
         /// <summary> Spark user plugins. </summary>
         public IList<SparkUserPlugin> Plugins
         {
             get
             {
                 if (UserPluginsSpec is null)
-                    UserPluginsSpec = new SparkUserPlugins();
+                    UserPluginsSpec = new SparkUserPluginListResult();
                 return UserPluginsSpec.Plugins;
             }
         }

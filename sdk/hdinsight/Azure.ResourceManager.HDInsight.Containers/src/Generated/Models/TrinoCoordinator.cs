@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         /// <summary> Initializes a new instance of TrinoCoordinator. </summary>
         /// <param name="highAvailabilityEnabled"> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </param>
-        /// <param name="enable"> The flag that if enable debug or not. </param>
+        /// <param name="isEnabled"> The flag that if enable debug or not. </param>
         /// <param name="port"> The debug port. </param>
         /// <param name="suspend"> The flag that if suspend debug or not. </param>
-        internal TrinoCoordinator(bool? highAvailabilityEnabled, bool? enable, int? port, bool? suspend)
+        internal TrinoCoordinator(bool? highAvailabilityEnabled, bool? isEnabled, int? port, bool? suspend)
         {
             HighAvailabilityEnabled = highAvailabilityEnabled;
-            Enable = enable;
+            IsEnabled = isEnabled;
             Port = port;
             Suspend = suspend;
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </summary>
         public bool? HighAvailabilityEnabled { get; set; }
         /// <summary> The flag that if enable debug or not. </summary>
-        public bool? Enable { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The debug port. </summary>
         public int? Port { get; set; }
         /// <summary> The flag that if suspend debug or not. </summary>

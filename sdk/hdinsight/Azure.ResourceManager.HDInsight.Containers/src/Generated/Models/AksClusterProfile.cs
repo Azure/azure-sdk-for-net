@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="aksClusterResourceId"> ARM Resource ID of the AKS cluster. </param>
         /// <param name="aksClusterAgentPoolIdentityProfile"> Identity properties of the AKS cluster agentpool MSI. </param>
         /// <param name="aksVersion"> AKS control plane and default node pool version of this ClusterPool. </param>
-        internal AksClusterProfile(ResourceIdentifier aksClusterResourceId, IdentityProfile aksClusterAgentPoolIdentityProfile, string aksVersion)
+        internal AksClusterProfile(ResourceIdentifier aksClusterResourceId, HDInsightIdentityProfile aksClusterAgentPoolIdentityProfile, string aksVersion)
         {
             AksClusterResourceId = aksClusterResourceId;
             AksClusterAgentPoolIdentityProfile = aksClusterAgentPoolIdentityProfile;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> ARM Resource ID of the AKS cluster. </summary>
         public ResourceIdentifier AksClusterResourceId { get; }
         /// <summary> Identity properties of the AKS cluster agentpool MSI. </summary>
-        public IdentityProfile AksClusterAgentPoolIdentityProfile { get; }
+        public HDInsightIdentityProfile AksClusterAgentPoolIdentityProfile { get; }
         /// <summary> AKS control plane and default node pool version of this ClusterPool. </summary>
         public string AksVersion { get; }
     }

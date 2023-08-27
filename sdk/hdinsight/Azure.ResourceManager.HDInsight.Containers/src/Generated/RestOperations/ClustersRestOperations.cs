@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ClusterListResult>> ListByClusterPoolNameAsync(string subscriptionId, string resourceGroupName, string clusterPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<HDInsightClusterListResult>> ListByClusterPoolNameAsync(string subscriptionId, string resourceGroupName, string clusterPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ClusterListResult value = default;
+                        HDInsightClusterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
+                        value = HDInsightClusterListResult.DeserializeHDInsightClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ClusterListResult> ListByClusterPoolName(string subscriptionId, string resourceGroupName, string clusterPoolName, CancellationToken cancellationToken = default)
+        public Response<HDInsightClusterListResult> ListByClusterPoolName(string subscriptionId, string resourceGroupName, string clusterPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ClusterListResult value = default;
+                        HDInsightClusterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
+                        value = HDInsightClusterListResult.DeserializeHDInsightClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
         }
 
-        internal HttpMessage CreateResizeRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterResizeData data)
+        internal HttpMessage CreateResizeRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterResizeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -148,19 +148,19 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterPoolName"> The name of the cluster pool. </param>
         /// <param name="clusterName"> The name of the HDInsight cluster. </param>
-        /// <param name="data"> Resize a cluster. </param>
+        /// <param name="content"> Resize a cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/>, <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/>, <paramref name="clusterName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResizeAsync(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterResizeData data, CancellationToken cancellationToken = default)
+        public async Task<Response> ResizeAsync(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterResizeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateResizeRequest(subscriptionId, resourceGroupName, clusterPoolName, clusterName, data);
+            using var message = CreateResizeRequest(subscriptionId, resourceGroupName, clusterPoolName, clusterName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -177,19 +177,19 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterPoolName"> The name of the cluster pool. </param>
         /// <param name="clusterName"> The name of the HDInsight cluster. </param>
-        /// <param name="data"> Resize a cluster. </param>
+        /// <param name="content"> Resize a cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/>, <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/>, <paramref name="clusterName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Resize(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterResizeData data, CancellationToken cancellationToken = default)
+        public Response Resize(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterResizeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateResizeRequest(subscriptionId, resourceGroupName, clusterPoolName, clusterName, data);
+            using var message = CreateResizeRequest(subscriptionId, resourceGroupName, clusterPoolName, clusterName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceConfigListResult>> ListServiceConfigsAsync(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterServiceConfigListResult>> ListServiceConfigsAsync(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -579,9 +579,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ServiceConfigListResult value = default;
+                        ClusterServiceConfigListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceConfigListResult.DeserializeServiceConfigListResult(document.RootElement);
+                        value = ClusterServiceConfigListResult.DeserializeClusterServiceConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceConfigListResult> ListServiceConfigs(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<ClusterServiceConfigListResult> ListServiceConfigs(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -610,9 +610,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ServiceConfigListResult value = default;
+                        ClusterServiceConfigListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceConfigListResult.DeserializeServiceConfigListResult(document.RootElement);
+                        value = ClusterServiceConfigListResult.DeserializeClusterServiceConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ClusterInstanceViewsResult>> ListInstanceViewsAsync(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterInstanceViewListResult>> ListInstanceViewsAsync(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -664,9 +664,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ClusterInstanceViewsResult value = default;
+                        ClusterInstanceViewListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ClusterInstanceViewsResult.DeserializeClusterInstanceViewsResult(document.RootElement);
+                        value = ClusterInstanceViewListResult.DeserializeClusterInstanceViewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ClusterInstanceViewsResult> ListInstanceViews(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<ClusterInstanceViewListResult> ListInstanceViews(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -695,9 +695,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ClusterInstanceViewsResult value = default;
+                        ClusterInstanceViewListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ClusterInstanceViewsResult.DeserializeClusterInstanceViewsResult(document.RootElement);
+                        value = ClusterInstanceViewListResult.DeserializeClusterInstanceViewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ClusterListResult>> ListByClusterPoolNameNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<HDInsightClusterListResult>> ListByClusterPoolNameNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -825,9 +825,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ClusterListResult value = default;
+                        HDInsightClusterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
+                        value = HDInsightClusterListResult.DeserializeHDInsightClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ClusterListResult> ListByClusterPoolNameNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, CancellationToken cancellationToken = default)
+        public Response<HDInsightClusterListResult> ListByClusterPoolNameNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -856,9 +856,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ClusterListResult value = default;
+                        HDInsightClusterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
+                        value = HDInsightClusterListResult.DeserializeHDInsightClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceConfigListResult>> ListServiceConfigsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterServiceConfigListResult>> ListServiceConfigsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -903,9 +903,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ServiceConfigListResult value = default;
+                        ClusterServiceConfigListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceConfigListResult.DeserializeServiceConfigListResult(document.RootElement);
+                        value = ClusterServiceConfigListResult.DeserializeClusterServiceConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceConfigListResult> ListServiceConfigsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<ClusterServiceConfigListResult> ListServiceConfigsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -936,9 +936,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ServiceConfigListResult value = default;
+                        ClusterServiceConfigListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceConfigListResult.DeserializeServiceConfigListResult(document.RootElement);
+                        value = ClusterServiceConfigListResult.DeserializeClusterServiceConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ClusterInstanceViewsResult>> ListInstanceViewsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterInstanceViewListResult>> ListInstanceViewsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -983,9 +983,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ClusterInstanceViewsResult value = default;
+                        ClusterInstanceViewListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ClusterInstanceViewsResult.DeserializeClusterInstanceViewsResult(document.RootElement);
+                        value = ClusterInstanceViewListResult.DeserializeClusterInstanceViewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ClusterInstanceViewsResult> ListInstanceViewsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<ClusterInstanceViewListResult> ListInstanceViewsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1016,9 +1016,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 case 200:
                     {
-                        ClusterInstanceViewsResult value = default;
+                        ClusterInstanceViewListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ClusterInstanceViewsResult.DeserializeClusterInstanceViewsResult(document.RootElement);
+                        value = ClusterInstanceViewListResult.DeserializeClusterInstanceViewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

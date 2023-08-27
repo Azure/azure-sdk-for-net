@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="userPluginsSpec"> Trino user plugins spec. </param>
         /// <param name="userTelemetrySpec"> User telemetry. </param>
         /// <param name="worker"> Trino worker. </param>
-        internal TrinoProfile(CatalogOptions catalogOptions, TrinoCoordinator coordinator, TrinoUserPlugins userPluginsSpec, TrinoUserTelemetry userTelemetrySpec, TrinoWorker worker)
+        internal TrinoProfile(CatalogOptions catalogOptions, TrinoCoordinator coordinator, TrinoUserPluginListResult userPluginsSpec, TrinoUserTelemetry userTelemetrySpec, TrinoWorker worker)
         {
             CatalogOptions = catalogOptions;
             Coordinator = coordinator;
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Trino Coordinator. </summary>
         public TrinoCoordinator Coordinator { get; set; }
         /// <summary> Trino user plugins spec. </summary>
-        internal TrinoUserPlugins UserPluginsSpec { get; set; }
+        internal TrinoUserPluginListResult UserPluginsSpec { get; set; }
         /// <summary> Trino user plugins. </summary>
         public IList<TrinoUserPlugin> Plugins
         {
             get
             {
                 if (UserPluginsSpec is null)
-                    UserPluginsSpec = new TrinoUserPlugins();
+                    UserPluginsSpec = new TrinoUserPluginListResult();
                 return UserPluginsSpec.Plugins;
             }
         }

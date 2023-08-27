@@ -11,28 +11,28 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class ClusterLogAnalyticsProfile
     {
         /// <summary> Initializes a new instance of ClusterLogAnalyticsProfile. </summary>
-        /// <param name="enabled"> True if log analytics is enabled for the cluster, otherwise false. </param>
-        public ClusterLogAnalyticsProfile(bool enabled)
+        /// <param name="isEnabled"> True if log analytics is enabled for the cluster, otherwise false. </param>
+        public ClusterLogAnalyticsProfile(bool isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of ClusterLogAnalyticsProfile. </summary>
-        /// <param name="enabled"> True if log analytics is enabled for the cluster, otherwise false. </param>
+        /// <param name="isEnabled"> True if log analytics is enabled for the cluster, otherwise false. </param>
         /// <param name="applicationLogs"> Collection of logs to be enabled or disabled for log analytics. </param>
-        /// <param name="metricsEnabled"> True if metrics are enabled, otherwise false. </param>
-        internal ClusterLogAnalyticsProfile(bool enabled, ClusterLogAnalyticsApplicationLogs applicationLogs, bool? metricsEnabled)
+        /// <param name="isMetricsEnabled"> True if metrics are enabled, otherwise false. </param>
+        internal ClusterLogAnalyticsProfile(bool isEnabled, ClusterLogAnalyticsApplicationLogs applicationLogs, bool? isMetricsEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             ApplicationLogs = applicationLogs;
-            MetricsEnabled = metricsEnabled;
+            IsMetricsEnabled = isMetricsEnabled;
         }
 
         /// <summary> True if log analytics is enabled for the cluster, otherwise false. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> Collection of logs to be enabled or disabled for log analytics. </summary>
         public ClusterLogAnalyticsApplicationLogs ApplicationLogs { get; set; }
         /// <summary> True if metrics are enabled, otherwise false. </summary>
-        public bool? MetricsEnabled { get; set; }
+        public bool? IsMetricsEnabled { get; set; }
     }
 }

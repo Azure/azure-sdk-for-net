@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="identityProfile"> Identity Profile with details of an MSI. </param>
         /// <param name="authorizationProfile"> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/>, <paramref name="ossVersion"/>, <paramref name="identityProfile"/> or <paramref name="authorizationProfile"/> is null. </exception>
-        public ClusterProfile(string clusterVersion, string ossVersion, IdentityProfile identityProfile, AuthorizationProfile authorizationProfile)
+        public ClusterProfile(string clusterVersion, string ossVersion, HDInsightIdentityProfile identityProfile, AuthorizationProfile authorizationProfile)
         {
             Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
             Argument.AssertNotNull(ossVersion, nameof(ossVersion));
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
             ClusterVersion = clusterVersion;
             OssVersion = ossVersion;
-            Components = new ChangeTrackingList<ClusterComponentsItem>();
+            Components = new ChangeTrackingList<ClusterComponentItem>();
             IdentityProfile = identityProfile;
             AuthorizationProfile = authorizationProfile;
             ServiceConfigsProfiles = new ChangeTrackingList<ClusterServiceConfigsProfile>();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="sparkProfile"> The spark cluster profile. </param>
         /// <param name="stubProfile"> Stub cluster profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
-        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentsItem> components, IdentityProfile identityProfile, AuthorizationProfile authorizationProfile, SecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ConnectivityProfile connectivityProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, SshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, IDictionary<string, BinaryData> kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles)
+        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentItem> components, HDInsightIdentityProfile identityProfile, AuthorizationProfile authorizationProfile, ClusterSecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterConnectivityProfile connectivityProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, IDictionary<string, BinaryData> kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles)
         {
             ClusterVersion = clusterVersion;
             OssVersion = ossVersion;
@@ -87,25 +87,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Version with three part. </summary>
         public string OssVersion { get; set; }
         /// <summary> Component list of this cluster type and version. </summary>
-        public IReadOnlyList<ClusterComponentsItem> Components { get; }
+        public IReadOnlyList<ClusterComponentItem> Components { get; }
         /// <summary> Identity Profile with details of an MSI. </summary>
-        public IdentityProfile IdentityProfile { get; set; }
+        public HDInsightIdentityProfile IdentityProfile { get; set; }
         /// <summary> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </summary>
         public AuthorizationProfile AuthorizationProfile { get; set; }
         /// <summary> The cluster secret profile. </summary>
-        public SecretsProfile SecretsProfile { get; set; }
+        public ClusterSecretsProfile SecretsProfile { get; set; }
         /// <summary> The service configs profiles. </summary>
         public IList<ClusterServiceConfigsProfile> ServiceConfigsProfiles { get; }
         /// <summary> Cluster connectivity profile. </summary>
-        public ConnectivityProfile ConnectivityProfile { get; }
+        public ClusterConnectivityProfile ConnectivityProfile { get; }
         /// <summary> Cluster log analytics profile to enable or disable OMS agent for cluster. </summary>
         public ClusterLogAnalyticsProfile LogAnalyticsProfile { get; set; }
         /// <summary> Cluster Prometheus profile. </summary>
         internal ClusterPrometheusProfile PrometheusProfile { get; set; }
         /// <summary> Enable Prometheus for cluster or not. </summary>
-        public bool? PrometheusProfileEnabled
+        public bool? IsEnabled
         {
-            get => PrometheusProfile is null ? default(bool?) : PrometheusProfile.Enabled;
+            get => PrometheusProfile is null ? default(bool?) : PrometheusProfile.IsEnabled;
             set
             {
                 PrometheusProfile = value.HasValue ? new ClusterPrometheusProfile(value.Value) : null;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Ssh profile for the cluster. </summary>
-        public SshProfile SshProfile { get; set; }
+        public ClusterSshProfile SshProfile { get; set; }
         /// <summary> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </summary>
         public ClusterAutoscaleProfile AutoscaleProfile { get; set; }
         /// <summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="defaultCount"> Setting default node count of current schedule configuration. Default node count specifies the number of nodes which are default when an specified scaling operation is executed (scale up/scale down). </param>
         /// <param name="schedules"> This specifies the schedules where scheduled based Autoscale to be enabled, the user has a choice to set multiple rules within the schedule across days and times (start/end). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> or <paramref name="schedules"/> is null. </exception>
-        public ScheduleBasedConfig(string timeZone, int defaultCount, IEnumerable<Schedule> schedules)
+        public ScheduleBasedConfig(string timeZone, int defaultCount, IEnumerable<AutoscaleSchedule> schedules)
         {
             Argument.AssertNotNull(timeZone, nameof(timeZone));
             Argument.AssertNotNull(schedules, nameof(schedules));
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="timeZone"> User has to specify the timezone on which the schedule has to be set for schedule based autoscale configuration. </param>
         /// <param name="defaultCount"> Setting default node count of current schedule configuration. Default node count specifies the number of nodes which are default when an specified scaling operation is executed (scale up/scale down). </param>
         /// <param name="schedules"> This specifies the schedules where scheduled based Autoscale to be enabled, the user has a choice to set multiple rules within the schedule across days and times (start/end). </param>
-        internal ScheduleBasedConfig(string timeZone, int defaultCount, IList<Schedule> schedules)
+        internal ScheduleBasedConfig(string timeZone, int defaultCount, IList<AutoscaleSchedule> schedules)
         {
             TimeZone = timeZone;
             DefaultCount = defaultCount;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Setting default node count of current schedule configuration. Default node count specifies the number of nodes which are default when an specified scaling operation is executed (scale up/scale down). </summary>
         public int DefaultCount { get; set; }
         /// <summary> This specifies the schedules where scheduled based Autoscale to be enabled, the user has a choice to set multiple rules within the schedule across days and times (start/end). </summary>
-        public IList<Schedule> Schedules { get; }
+        public IList<AutoscaleSchedule> Schedules { get; }
     }
 }

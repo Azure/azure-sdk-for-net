@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string fileName = default;
             Optional<string> content = default;
-            Optional<ContentEncoding> encoding = default;
+            Optional<HDInsightContentEncoding> encoding = default;
             Optional<string> path = default;
             Optional<IDictionary<string, string>> values = default;
             foreach (var property in element.EnumerateObject())
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    encoding = new ContentEncoding(property.Value.GetString());
+                    encoding = new HDInsightContentEncoding(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("path"u8))

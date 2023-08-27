@@ -13,23 +13,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class ClusterPoolLogAnalyticsProfile
     {
         /// <summary> Initializes a new instance of ClusterPoolLogAnalyticsProfile. </summary>
-        /// <param name="enabled"> True if log analytics is enabled for cluster pool, otherwise false. </param>
-        public ClusterPoolLogAnalyticsProfile(bool enabled)
+        /// <param name="isEnabled"> True if log analytics is enabled for cluster pool, otherwise false. </param>
+        public ClusterPoolLogAnalyticsProfile(bool isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of ClusterPoolLogAnalyticsProfile. </summary>
-        /// <param name="enabled"> True if log analytics is enabled for cluster pool, otherwise false. </param>
+        /// <param name="isEnabled"> True if log analytics is enabled for cluster pool, otherwise false. </param>
         /// <param name="workspaceId"> Log analytics workspace to associate with the OMS agent. </param>
-        internal ClusterPoolLogAnalyticsProfile(bool enabled, ResourceIdentifier workspaceId)
+        internal ClusterPoolLogAnalyticsProfile(bool isEnabled, ResourceIdentifier workspaceId)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             WorkspaceId = workspaceId;
         }
 
         /// <summary> True if log analytics is enabled for cluster pool, otherwise false. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> Log analytics workspace to associate with the OMS agent. </summary>
         public ResourceIdentifier WorkspaceId { get; set; }
     }

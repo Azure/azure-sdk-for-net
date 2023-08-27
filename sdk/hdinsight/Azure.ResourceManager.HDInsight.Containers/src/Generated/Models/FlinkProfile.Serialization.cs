@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             FlinkStorageProfile storage = default;
             Optional<int> numReplicas = default;
-            ComputeResourceDefinition jobManager = default;
-            Optional<ComputeResourceDefinition> historyServer = default;
-            ComputeResourceDefinition taskManager = default;
+            ComputeResourceRequirement jobManager = default;
+            Optional<ComputeResourceRequirement> historyServer = default;
+            ComputeResourceRequirement taskManager = default;
             Optional<FlinkCatalogOptions> catalogOptions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("jobManager"u8))
                 {
-                    jobManager = ComputeResourceDefinition.DeserializeComputeResourceDefinition(property.Value);
+                    jobManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value);
                     continue;
                 }
                 if (property.NameEquals("historyServer"u8))
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    historyServer = ComputeResourceDefinition.DeserializeComputeResourceDefinition(property.Value);
+                    historyServer = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taskManager"u8))
                 {
-                    taskManager = ComputeResourceDefinition.DeserializeComputeResourceDefinition(property.Value);
+                    taskManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value);
                     continue;
                 }
                 if (property.NameEquals("catalogOptions"u8))

@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StdOutEnabled))
+            if (Optional.IsDefined(IsStdOutEnabled))
             {
                 writer.WritePropertyName("stdOutEnabled"u8);
-                writer.WriteBooleanValue(StdOutEnabled.Value);
+                writer.WriteBooleanValue(IsStdOutEnabled.Value);
             }
-            if (Optional.IsDefined(StdErrorEnabled))
+            if (Optional.IsDefined(IsStdErrorEnabled))
             {
                 writer.WritePropertyName("stdErrorEnabled"u8);
-                writer.WriteBooleanValue(StdErrorEnabled.Value);
+                writer.WriteBooleanValue(IsStdErrorEnabled.Value);
             }
             writer.WriteEndObject();
         }

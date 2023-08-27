@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of ComputeProfile. </summary>
         /// <param name="nodes"> The nodes definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodes"/> is null. </exception>
-        public ComputeProfile(IEnumerable<NodeProfile> nodes)
+        public ComputeProfile(IEnumerable<ClusterComputeNodeProfile> nodes)
         {
             Argument.AssertNotNull(nodes, nameof(nodes));
 
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         /// <summary> Initializes a new instance of ComputeProfile. </summary>
         /// <param name="nodes"> The nodes definitions. </param>
-        internal ComputeProfile(IList<NodeProfile> nodes)
+        internal ComputeProfile(IList<ClusterComputeNodeProfile> nodes)
         {
             Nodes = nodes;
         }
 
         /// <summary> The nodes definitions. </summary>
-        public IList<NodeProfile> Nodes { get; }
+        public IList<ClusterComputeNodeProfile> Nodes { get; }
     }
 }

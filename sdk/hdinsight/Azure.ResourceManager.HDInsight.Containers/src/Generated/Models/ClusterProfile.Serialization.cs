@@ -156,15 +156,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string clusterVersion = default;
             string ossVersion = default;
-            Optional<IReadOnlyList<ClusterComponentsItem>> components = default;
-            IdentityProfile identityProfile = default;
+            Optional<IReadOnlyList<ClusterComponentItem>> components = default;
+            HDInsightIdentityProfile identityProfile = default;
             AuthorizationProfile authorizationProfile = default;
-            Optional<SecretsProfile> secretsProfile = default;
+            Optional<ClusterSecretsProfile> secretsProfile = default;
             Optional<IList<ClusterServiceConfigsProfile>> serviceConfigsProfiles = default;
-            Optional<ConnectivityProfile> connectivityProfile = default;
+            Optional<ClusterConnectivityProfile> connectivityProfile = default;
             Optional<ClusterLogAnalyticsProfile> logAnalyticsProfile = default;
             Optional<ClusterPrometheusProfile> prometheusProfile = default;
-            Optional<SshProfile> sshProfile = default;
+            Optional<ClusterSshProfile> sshProfile = default;
             Optional<ClusterAutoscaleProfile> autoscaleProfile = default;
             Optional<IDictionary<string, BinaryData>> kafkaProfile = default;
             Optional<TrinoProfile> trinoProfile = default;
@@ -191,17 +191,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    List<ClusterComponentsItem> array = new List<ClusterComponentsItem>();
+                    List<ClusterComponentItem> array = new List<ClusterComponentItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterComponentsItem.DeserializeClusterComponentsItem(item));
+                        array.Add(ClusterComponentItem.DeserializeClusterComponentItem(item));
                     }
                     components = array;
                     continue;
                 }
                 if (property.NameEquals("identityProfile"u8))
                 {
-                    identityProfile = IdentityProfile.DeserializeIdentityProfile(property.Value);
+                    identityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationProfile"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    secretsProfile = SecretsProfile.DeserializeSecretsProfile(property.Value);
+                    secretsProfile = ClusterSecretsProfile.DeserializeClusterSecretsProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceConfigsProfiles"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    connectivityProfile = ConnectivityProfile.DeserializeConnectivityProfile(property.Value);
+                    connectivityProfile = ClusterConnectivityProfile.DeserializeClusterConnectivityProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logAnalyticsProfile"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    sshProfile = SshProfile.DeserializeSshProfile(property.Value);
+                    sshProfile = ClusterSshProfile.DeserializeClusterSshProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoscaleProfile"u8))

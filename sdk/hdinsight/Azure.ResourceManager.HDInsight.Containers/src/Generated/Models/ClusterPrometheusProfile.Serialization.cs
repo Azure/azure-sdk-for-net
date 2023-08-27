@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WriteEndObject();
         }
 

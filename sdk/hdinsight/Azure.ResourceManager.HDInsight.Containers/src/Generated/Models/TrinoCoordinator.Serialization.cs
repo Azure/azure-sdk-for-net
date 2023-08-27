@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             writer.WritePropertyName("debug"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enable))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
-                writer.WriteBooleanValue(Enable.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Port))
             {

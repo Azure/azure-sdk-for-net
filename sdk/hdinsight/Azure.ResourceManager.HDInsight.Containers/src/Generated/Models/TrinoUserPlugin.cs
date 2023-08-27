@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Initializes a new instance of TrinoUserPlugin. </summary>
-        /// <param name="enabled"> Denotes whether the plugin is active or not. </param>
+        /// <param name="isEnabled"> Denotes whether the plugin is active or not. </param>
         /// <param name="name"> This field maps to the sub-directory in trino plugins location, that will contain all the plugins under path. </param>
         /// <param name="path"> Fully qualified path to the folder containing the plugins. </param>
-        internal TrinoUserPlugin(bool? enabled, string name, string path)
+        internal TrinoUserPlugin(bool? isEnabled, string name, string path)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Name = name;
             Path = path;
         }
 
         /// <summary> Denotes whether the plugin is active or not. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> This field maps to the sub-directory in trino plugins location, that will contain all the plugins under path. </summary>
         public string Name { get; set; }
         /// <summary> Fully qualified path to the folder containing the plugins. </summary>

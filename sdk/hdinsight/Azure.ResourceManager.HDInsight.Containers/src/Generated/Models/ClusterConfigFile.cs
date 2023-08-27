@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// List of key value pairs
         /// where key represents a valid service configuration name and value represents the value of the config.
         /// </param>
-        internal ClusterConfigFile(string fileName, string content, ContentEncoding? encoding, string path, IDictionary<string, string> values)
+        internal ClusterConfigFile(string fileName, string content, HDInsightContentEncoding? encoding, string path, IDictionary<string, string> values)
         {
             FileName = fileName;
             Content = content;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Free form content of the entire configuration file. </summary>
         public string Content { get; set; }
         /// <summary> This property indicates if the content is encoded and is case-insensitive. Please set the value to base64 if the content is base64 encoded. Set it to none or skip it if the content is plain text. </summary>
-        public ContentEncoding? Encoding { get; set; }
+        public HDInsightContentEncoding? Encoding { get; set; }
         /// <summary> Path of the config file if content is specified. </summary>
         public string Path { get; set; }
         /// <summary>

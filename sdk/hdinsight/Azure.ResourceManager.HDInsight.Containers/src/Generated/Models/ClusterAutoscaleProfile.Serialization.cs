@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(GracefulDecommissionTimeout))
             {
                 writer.WritePropertyName("gracefulDecommissionTimeout"u8);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             bool enabled = default;
             Optional<int> gracefulDecommissionTimeout = default;
-            Optional<AutoscaleType> autoscaleType = default;
+            Optional<ClusterAutoscaleType> autoscaleType = default;
             Optional<ScheduleBasedConfig> scheduleBasedConfig = default;
             Optional<LoadBasedConfig> loadBasedConfig = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    autoscaleType = new AutoscaleType(property.Value.GetString());
+                    autoscaleType = new ClusterAutoscaleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scheduleBasedConfig"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string timeZone = default;
             int defaultCount = default;
-            IList<Schedule> schedules = default;
+            IList<AutoscaleSchedule> schedules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeZone"u8))
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("schedules"u8))
                 {
-                    List<Schedule> array = new List<Schedule>();
+                    List<AutoscaleSchedule> array = new List<AutoscaleSchedule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Schedule.DeserializeSchedule(item));
+                        array.Add(AutoscaleSchedule.DeserializeAutoscaleSchedule(item));
                     }
                     schedules = array;
                     continue;

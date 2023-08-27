@@ -32,15 +32,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            IList<NodeProfile> nodes = default;
+            IList<ClusterComputeNodeProfile> nodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodes"u8))
                 {
-                    List<NodeProfile> array = new List<NodeProfile>();
+                    List<ClusterComputeNodeProfile> array = new List<ClusterComputeNodeProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeProfile.DeserializeNodeProfile(item));
+                        array.Add(ClusterComputeNodeProfile.DeserializeClusterComputeNodeProfile(item));
                     }
                     nodes = array;
                     continue;

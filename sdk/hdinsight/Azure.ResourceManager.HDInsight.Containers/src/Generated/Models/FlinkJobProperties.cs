@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
             JobName = jobName;
             FlinkConfiguration = new ChangeTrackingDictionary<string, string>();
-            JobType = JobType.FlinkJob;
+            JobType = ClusterJobType.FlinkJob;
         }
 
         /// <summary> Initializes a new instance of FlinkJobProperties. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="jobOutput"> Output of job. </param>
         /// <param name="actionResult"> Action result of job. </param>
         /// <param name="lastSavePoint"> The last savepoint. </param>
-        internal FlinkJobProperties(JobType jobType, string jobName, string jobJarDirectory, string jarName, string entryClass, string args, string savePointName, FlinkJobAction? action, IDictionary<string, string> flinkConfiguration, string jobId, string status, string jobOutput, string actionResult, string lastSavePoint) : base(jobType)
+        internal FlinkJobProperties(ClusterJobType jobType, string jobName, string jobJarDirectory, string jarName, string entryClass, string args, string savePointName, FlinkJobAction? action, IDictionary<string, string> flinkConfiguration, string jobId, string status, string jobOutput, string actionResult, string lastSavePoint) : base(jobType)
         {
             JobName = jobName;
             JobJarDirectory = jobJarDirectory;

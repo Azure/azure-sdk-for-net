@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteNumberValue(MinNodes);
             writer.WritePropertyName("maxNodes"u8);
             writer.WriteNumberValue(MaxNodes);
-            if (Optional.IsDefined(PollInterval))
+            if (Optional.IsDefined(PollIntervalInSeconds))
             {
                 writer.WritePropertyName("pollInterval"u8);
-                writer.WriteNumberValue(PollInterval.Value);
+                writer.WriteNumberValue(PollIntervalInSeconds.Value);
             }
             if (Optional.IsDefined(CooldownPeriod))
             {

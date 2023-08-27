@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="scalingMetric"> Metrics name for individual workloads. For example: cpu. </param>
         /// <param name="comparisonRule"> The comparison rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingMetric"/> or <paramref name="comparisonRule"/> is null. </exception>
-        public ScalingRule(ScaleActionType actionType, int evaluationCount, string scalingMetric, ComparisonRule comparisonRule)
+        public ScalingRule(ScaleActionType actionType, int evaluationCount, string scalingMetric, HDInsightComparisonRule comparisonRule)
         {
             Argument.AssertNotNull(scalingMetric, nameof(scalingMetric));
             Argument.AssertNotNull(comparisonRule, nameof(comparisonRule));
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Metrics name for individual workloads. For example: cpu. </summary>
         public string ScalingMetric { get; set; }
         /// <summary> The comparison rule. </summary>
-        public ComparisonRule ComparisonRule { get; set; }
+        public HDInsightComparisonRule ComparisonRule { get; set; }
     }
 }

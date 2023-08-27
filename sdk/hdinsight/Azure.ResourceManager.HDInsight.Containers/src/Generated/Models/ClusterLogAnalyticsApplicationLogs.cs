@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Initializes a new instance of ClusterLogAnalyticsApplicationLogs. </summary>
-        /// <param name="stdOutEnabled"> True if stdout is enabled, otherwise false. </param>
-        /// <param name="stdErrorEnabled"> True if stderror is enabled, otherwise false. </param>
-        internal ClusterLogAnalyticsApplicationLogs(bool? stdOutEnabled, bool? stdErrorEnabled)
+        /// <param name="isStdOutEnabled"> True if stdout is enabled, otherwise false. </param>
+        /// <param name="isStdErrorEnabled"> True if stderror is enabled, otherwise false. </param>
+        internal ClusterLogAnalyticsApplicationLogs(bool? isStdOutEnabled, bool? isStdErrorEnabled)
         {
-            StdOutEnabled = stdOutEnabled;
-            StdErrorEnabled = stdErrorEnabled;
+            IsStdOutEnabled = isStdOutEnabled;
+            IsStdErrorEnabled = isStdErrorEnabled;
         }
 
         /// <summary> True if stdout is enabled, otherwise false. </summary>
-        public bool? StdOutEnabled { get; set; }
+        public bool? IsStdOutEnabled { get; set; }
         /// <summary> True if stderror is enabled, otherwise false. </summary>
-        public bool? StdErrorEnabled { get; set; }
+        public bool? IsStdErrorEnabled { get; set; }
     }
 }

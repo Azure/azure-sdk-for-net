@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            ClusterResizeData data = new ClusterResizeData(new AzureLocation("West US 2"))
+            ClusterResizeContent content = new ClusterResizeContent(new AzureLocation("West US 2"))
             {
                 TargetWorkerNodeCount = 5,
             };
-            ArmOperation<HDInsightClusterResource> lro = await hdInsightCluster.ResizeAsync(WaitUntil.Completed, data);
+            ArmOperation<HDInsightClusterResource> lro = await hdInsightCluster.ResizeAsync(WaitUntil.Completed, content);
             HDInsightClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -164,19 +164,19 @@ Values =
 })
 })
 },
-                    SshProfile = new SshProfile(2),
+                    SshProfile = new ClusterSshProfile(2),
                     AutoscaleProfile = new ClusterAutoscaleProfile(true)
                     {
                         GracefulDecommissionTimeout = -1,
-                        AutoscaleType = AutoscaleType.ScheduleBased,
-                        ScheduleBasedConfig = new ScheduleBasedConfig("Cen. Australia Standard Time", 3, new Schedule[]
+                        AutoscaleType = ClusterAutoscaleType.ScheduleBased,
+                        ScheduleBasedConfig = new ScheduleBasedConfig("Cen. Australia Standard Time", 3, new AutoscaleSchedule[]
             {
-new Schedule("00:00","12:00",3,new ScheduleDay[]
+new AutoscaleSchedule(DateTimeOffset.Parse("00:00"),DateTimeOffset.Parse("12:00"),3,new AutoscaleScheduleDay[]
 {
-new ScheduleDay("Monday, Tuesday, Wednesday")
-}),new Schedule("00:00","12:00",3,new ScheduleDay[]
+new AutoscaleScheduleDay("Monday, Tuesday, Wednesday")
+}),new AutoscaleSchedule(DateTimeOffset.Parse("00:00"),DateTimeOffset.Parse("12:00"),3,new AutoscaleScheduleDay[]
 {
-ScheduleDay.Sunday
+AutoscaleScheduleDay.Sunday
 })
             }),
                     },
@@ -191,10 +191,10 @@ ScheduleDay.Sunday
                     {
                         ApplicationLogs = new ClusterLogAnalyticsApplicationLogs()
                         {
-                            StdOutEnabled = true,
-                            StdErrorEnabled = true,
+                            IsStdOutEnabled = true,
+                            IsStdErrorEnabled = true,
                         },
-                        MetricsEnabled = true,
+                        IsMetricsEnabled = true,
                     },
                 },
             };
@@ -259,7 +259,7 @@ ScheduleDay.Sunday
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceConfigResult item in hdInsightCluster.GetServiceConfigsAsync())
+            await foreach (ClusterServiceConfigResult item in hdInsightCluster.GetServiceConfigsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

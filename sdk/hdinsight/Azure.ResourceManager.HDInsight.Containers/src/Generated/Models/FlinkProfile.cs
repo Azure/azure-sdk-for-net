@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="jobManager"> Job Manager container/ process CPU and memory requirements. </param>
         /// <param name="taskManager"> Task Manager container/ process CPU and memory requirements. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storage"/>, <paramref name="jobManager"/> or <paramref name="taskManager"/> is null. </exception>
-        public FlinkProfile(FlinkStorageProfile storage, ComputeResourceDefinition jobManager, ComputeResourceDefinition taskManager)
+        public FlinkProfile(FlinkStorageProfile storage, ComputeResourceRequirement jobManager, ComputeResourceRequirement taskManager)
         {
             Argument.AssertNotNull(storage, nameof(storage));
             Argument.AssertNotNull(jobManager, nameof(jobManager));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="historyServer"> History Server container/ process CPU and memory requirements. </param>
         /// <param name="taskManager"> Task Manager container/ process CPU and memory requirements. </param>
         /// <param name="catalogOptions"> Flink cluster catalog options. </param>
-        internal FlinkProfile(FlinkStorageProfile storage, int? numReplicas, ComputeResourceDefinition jobManager, ComputeResourceDefinition historyServer, ComputeResourceDefinition taskManager, FlinkCatalogOptions catalogOptions)
+        internal FlinkProfile(FlinkStorageProfile storage, int? numReplicas, ComputeResourceRequirement jobManager, ComputeResourceRequirement historyServer, ComputeResourceRequirement taskManager, FlinkCatalogOptions catalogOptions)
         {
             Storage = storage;
             NumReplicas = numReplicas;
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> The number of task managers. </summary>
         public int? NumReplicas { get; set; }
         /// <summary> Job Manager container/ process CPU and memory requirements. </summary>
-        public ComputeResourceDefinition JobManager { get; set; }
+        public ComputeResourceRequirement JobManager { get; set; }
         /// <summary> History Server container/ process CPU and memory requirements. </summary>
-        public ComputeResourceDefinition HistoryServer { get; set; }
+        public ComputeResourceRequirement HistoryServer { get; set; }
         /// <summary> Task Manager container/ process CPU and memory requirements. </summary>
-        public ComputeResourceDefinition TaskManager { get; set; }
+        public ComputeResourceRequirement TaskManager { get; set; }
         /// <summary> Flink cluster catalog options. </summary>
         internal FlinkCatalogOptions CatalogOptions { get; set; }
         /// <summary> Hive Catalog Option for Flink cluster. </summary>
