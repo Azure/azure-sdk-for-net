@@ -139,6 +139,7 @@ rename-mapping:
   GlobalParameterListResponse: DataFactoryGlobalParameterListResult
   GlobalParameterResource: DataFactoryGlobalParameter
   GlobalParameterSpecification: DataFactoryGlobalParameterProperties
+  GlobalParameterSpecification.type: GlobalParameterType
   HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   HDInsightOnDemandLinkedService.typeProperties.timeToLive: TimeToLiveExpression
   HttpSource: DataFactoryHttpFileSource
@@ -204,6 +205,7 @@ rename-mapping:
   QueryDataFlowDebugSessionsResponse: DataFlowDebugSessionInfoListResult
   ScriptActivityParameterType.Timespan: TimeSpan
   ScriptActivityTypePropertiesLogSettings: ScriptActivityTypeLogSettings
+  ScriptActivityScriptBlock.type: ScriptType
   SecretBase: DataFactorySecret
   SecureInputOutputPolicy.secureInput: IsSecureInputEnabled
   SecureInputOutputPolicy.secureOutput: IsSecureOutputEnabled

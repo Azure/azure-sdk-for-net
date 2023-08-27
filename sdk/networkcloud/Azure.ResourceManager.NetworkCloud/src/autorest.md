@@ -119,7 +119,7 @@ prepend-rp-prefix:
   - L3Network
   - NetworkInterface
   - Nic
-  - OSDisk
+  - OsDisk
   - Rack
   - RackDefinition
   - RackSku

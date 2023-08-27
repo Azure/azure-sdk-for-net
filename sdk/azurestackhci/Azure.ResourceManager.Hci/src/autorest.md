@@ -97,7 +97,7 @@ rename-mapping:
   Step: HciUpdateStep
   OfferCollection: HciOfferCollection
   OfferData: HciOfferData
-
+  ClusterPatch.identity.type: ManagedServiceIdentityType
 
 directive:
   - from: swagger-document

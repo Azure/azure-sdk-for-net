@@ -68,7 +68,7 @@ prepend-rp-prefix:
   - StorageAccountInformation
   - StorageAccountInformationListResult
   - FirewallState
-  - FirewallAllowAzureIPsState
+  - FirewallAllowAzureIpsState
   - CapabilityInformation
   - HiveMetastore
   - SasTokenInformation

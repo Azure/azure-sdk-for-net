@@ -38,7 +38,7 @@ prepend-rp-prefix:
   - AppTemplate
   - AppTemplatesResult
   - NetworkAction
-  - NetworkRuleSetIPRule
+  - NetworkRuleSetIpRule
   - NetworkRuleSets
   - ProvisioningState
   - PublicNetworkAccess

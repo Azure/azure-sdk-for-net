@@ -42,7 +42,6 @@ prepend-rp-prefix:
 - MetricsContent
 - MetricsStatusContent
 - MetricsStatusResult
-- MonitoredResourceListResult
 - MonitoringStatus
 - OrganizationInfo
 - OrgCreationSource
@@ -59,9 +58,9 @@ prepend-rp-prefix:
 - TagRule
 - UsageType
 - UserInfo
-- VmExtensionPayload
-- VmHostsListResponse
-- VmInfo
+- VMExtensionPayload
+- VMHostsListResponse
+- VMInfo
 
 rename-rules:
   CPU: Cpu
@@ -115,7 +114,7 @@ rename-mapping:
   MetricsStatusResponse: NewRelicMetricsStatusResult
   MonitoredResource: NewRelicResourceMonitorResult
   MonitoredResource.id: -|arm-id
-  MonitoredResourceListResponse: MonitoredResourceListResult
+  MonitoredResourceListResponse: NewRelicObservabilityMonitoredResourceListResult
   MonitoringStatus.Disabled: IsDisabled
   MonitoringStatus.Enabled: IsEnabled
   NewrelicAgentData.LocalIPAddress: -|ip-address

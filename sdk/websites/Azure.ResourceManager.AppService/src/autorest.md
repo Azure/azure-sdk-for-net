@@ -375,7 +375,7 @@ rename-mapping:
   StaticSiteUserProvidedFunctionApp: StaticSiteUserProvidedFunctionAppProperties # just rename this to avoid collision, this class will be automatically removed
   StaticSiteCustomDomainRequestPropertiesARMResource: StaticSiteCustomDomainContent
   User: PublishingUser
-  WorkerPoolResource: WorkerPool
+  WorkerPoolResource: AppServiceWorkerPool
   CsmPublishingProfileOptions: CsmPublishingProfile
   StaticSiteTemplateOptions: StaticSiteTemplate
   PrivateLinkResource: AppServicePrivateLinkResourceData
@@ -594,10 +594,9 @@ prepend-rp-prefix:
   - UsageState
   - CorsSettings
   - SourceControl
-  - WorkerPool
   - ForwardProxy
-  - IPSecurityRestriction
-  - IPFilterTag
+  - IpSecurityRestriction
+  - IpFilterTag
   - VirtualNetworkProfile
 
 models-to-treat-empty-string-as-null:
