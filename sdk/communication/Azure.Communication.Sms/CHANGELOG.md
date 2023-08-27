@@ -1,12 +1,18 @@
 # Release History
 
 ## 1.0.2 (2021-10-05)
+
+### Other Changes
 - Dependency versions updated.
 
 ## 1.0.1 (2021-05-25)
+
+### Other Changes
 - Dependency versions updated.
 
 ## 1.0.0 (2021-03-29)
+
+### Other Changes
 Updated `Azure.Communication.Sms` version.
 
 ## 1.0.0-beta.4 (2021-03-09)
