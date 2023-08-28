@@ -239,5 +239,3 @@ output IDENTITY_WEBAPP_USER_DEFINED_IDENTITY string = usermgdid.id
 output IDENTITY_STORAGE_NAME_1 string = sa.name
 output IDENTITY_STORAGE_NAME_2 string = sa2.name
 output IDENTITY_FUNCTION_NAME string = azfunc.name
-#disable-next-line outputs-should-not-contain-secrets
-// output IDENTITY_FUNCTION_KEY string = func.listsecrets().key
