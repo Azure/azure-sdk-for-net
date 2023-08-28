@@ -6409,7 +6409,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataFactory.Models.SelfHostedIntegrationRuntimeNode> Nodes { get { throw null; } }
         public string PushedVersion { get { throw null; } }
         public System.DateTimeOffset? ScheduledUpdateOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Uri> ServiceUris { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> ServiceUriStringList { get { throw null; } }
         public System.Guid? TaskQueueId { get { throw null; } }
         public System.TimeSpan? UpdateDelayOffset { get { throw null; } }
         public string Version { get { throw null; } }
