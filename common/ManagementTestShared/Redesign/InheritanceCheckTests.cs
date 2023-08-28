@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.TestFramework
             {
                 if (type.IsClass && type.IsPublic && !exceptionList.Contains(type.Name))
                 {
-                    if (type.Name.EndsWith("Resource") && typeof(ArmResource).IsAssignableFrom(type))
+                    if (type.Name.EndsWith("Resource") && !typeof(ArmResource).IsAssignableFrom(type))
                     {
                         errorList.Add(type.Name);
                     }
 
-                    if (type.Name.EndsWith("Collection") && typeof(ArmCollection).IsAssignableFrom(type))
+                    if (type.Name.EndsWith("Collection") && !typeof(ArmCollection).IsAssignableFrom(type))
                     {
                         errorList.Add(type.Name);
                     }
