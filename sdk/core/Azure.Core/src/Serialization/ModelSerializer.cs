@@ -87,7 +87,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal parameterless constructor.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
-        public static T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
+        public static T? Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -105,7 +105,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal parameterless constructor.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
-        public static T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelSerializerFormat format)
+        public static T? Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelSerializerFormat format)
             where T : IModelSerializable<T>
             => Deserialize<T>(data, ModelSerializerOptions.GetOptions(format));
 
@@ -120,7 +120,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal parameterless constructor.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
-        public static object Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerOptions? options = default)
+        public static object? Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerOptions? options = default)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(returnType, nameof(returnType));
@@ -141,7 +141,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal parameterless constructor.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
-        public static object Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerFormat format)
+        public static object? Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerFormat format)
             => Deserialize(data, returnType, ModelSerializerOptions.GetOptions(format));
 
         /// <summary>
@@ -185,12 +185,12 @@ namespace Azure.Core.Serialization
             Type typeToActivate = returnType;
             if (returnType.IsAbstract)
             {
-                AbstractHierarchyDeserializerAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(AbstractHierarchyDeserializerAttribute)) as AbstractHierarchyDeserializerAttribute;
+                AbstractTypeDeserializerAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(AbstractTypeDeserializerAttribute)) as AbstractTypeDeserializerAttribute;
                 if (attribute is null)
                 {
-                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(AbstractHierarchyDeserializerAttribute)} to be used with {nameof(ModelSerializer)}");
+                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(AbstractTypeDeserializerAttribute)} to be used with {nameof(ModelSerializer)}");
                 }
-                typeToActivate = attribute.TypeToActivate;
+                typeToActivate = attribute.DeserializationProxy;
             }
 
             var obj = Activator.CreateInstance(typeToActivate, true);

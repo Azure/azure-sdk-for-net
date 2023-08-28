@@ -12,23 +12,23 @@ namespace Azure.Core.Serialization
     /// and return an instance of that subtype.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class AbstractHierarchyDeserializerAttribute : Attribute
+    public sealed class AbstractTypeDeserializerAttribute : Attribute
     {
         /// <summary>
-        /// Instantiates a new instance of the <see cref="AbstractHierarchyDeserializerAttribute"/> class.
+        /// Instantiates a new instance of the <see cref="AbstractTypeDeserializerAttribute"/> class.
         /// </summary>
-        /// <param name="typeToActivate">The <see cref="Type"/> to activate and call deserialize on.</param>
-        public AbstractHierarchyDeserializerAttribute([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type typeToActivate)
+        /// <param name="deserializationProxy">The <see cref="Type"/> to create and call deserialize on.</param>
+        public AbstractTypeDeserializerAttribute([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type deserializationProxy)
         {
-            TypeToActivate = typeToActivate;
+            DeserializationProxy = deserializationProxy;
         }
 
         /// <summary>
-        /// Gets the <see cref="Type"/> to activate and call deserialize on.
+        /// Gets the <see cref="Type"/> to create and call deserialize on.
         /// The type must have a public or non-public parameterless constructor.
         /// The type must implement <see cref="IModelSerializable{T}"/> where T is the type of the abstract class.
         /// </summary>
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)]
-        public Type TypeToActivate { get; }
+        public Type DeserializationProxy { get; }
     }
 }
