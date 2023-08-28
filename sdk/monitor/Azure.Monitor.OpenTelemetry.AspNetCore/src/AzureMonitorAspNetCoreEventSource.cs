@@ -11,6 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     /// <summary>
     /// EventSource for the AzureMonitor AspNetCore Distro.
     /// EventSource Guid at Runtime: 928cf0a7-3e20-5f5d-a14f-0e62fdc972e6.
+    /// (This guid can be found by debugging this class and inspecting the "Log" singleton and reading the "Guid" property).
     /// </summary>
     /// <remarks>
     /// PerfView Instructions:
