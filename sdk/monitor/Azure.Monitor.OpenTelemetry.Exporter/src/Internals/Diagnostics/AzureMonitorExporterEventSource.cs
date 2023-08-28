@@ -37,7 +37,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         internal const string EventSourceName = "OpenTelemetry-AzureMonitor-Exporter";
 
         internal static readonly AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
+#if DEBUG
         internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
+#endif
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

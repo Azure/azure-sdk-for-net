@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement client library tests</AssemblyTitle>
-    <DefineConstants>BlobDataMovementSDK;$(DefineConstants)</DefineConstants>
+    <DefineConstants>DataMovementSDK;$(DefineConstants)</DefineConstants>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
@@ -10,7 +10,9 @@
     <PackageReference Include="System.IO.FileSystem.AccessControl" VersionOverride="5.0.0" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.DataMovement.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement.Blobs\src\Azure.Storage.DataMovement.Blobs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement.Blobs\src\Azure.Storage.DataMovement.Blobs.csproj">
+      <Aliases>DMBlobs</Aliases>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared\Core" />
