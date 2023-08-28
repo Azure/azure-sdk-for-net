@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = await _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionOperationSource(Client), _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionOperationSource(Client), _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionOperationSource(Client), _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionOperationSource(Client), _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
