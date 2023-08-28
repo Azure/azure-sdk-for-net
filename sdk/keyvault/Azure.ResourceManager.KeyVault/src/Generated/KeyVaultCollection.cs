@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _keyVaultVaultsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation<KeyVaultResource>(new KeyVaultOperationSource(Client), _keyVaultVaultsClientDiagnostics, Pipeline, _keyVaultVaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new KeyVaultArmOperation<KeyVaultResource>(new KeyVaultOperationSource(Client), _keyVaultVaultsClientDiagnostics, Pipeline, _keyVaultVaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _keyVaultVaultsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, cancellationToken);
-                var operation = new KeyVaultArmOperation<KeyVaultResource>(new KeyVaultOperationSource(Client), _keyVaultVaultsClientDiagnostics, Pipeline, _keyVaultVaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new KeyVaultArmOperation<KeyVaultResource>(new KeyVaultOperationSource(Client), _keyVaultVaultsClientDiagnostics, Pipeline, _keyVaultVaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
