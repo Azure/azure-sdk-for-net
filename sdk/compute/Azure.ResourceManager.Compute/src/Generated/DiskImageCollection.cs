@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _diskImageImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, imageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<DiskImageResource>(new DiskImageOperationSource(Client), _diskImageImagesClientDiagnostics, Pipeline, _diskImageImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<DiskImageResource>(new DiskImageOperationSource(Client), _diskImageImagesClientDiagnostics, Pipeline, _diskImageImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _diskImageImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, imageName, data, cancellationToken);
-                var operation = new ComputeArmOperation<DiskImageResource>(new DiskImageOperationSource(Client), _diskImageImagesClientDiagnostics, Pipeline, _diskImageImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<DiskImageResource>(new DiskImageOperationSource(Client), _diskImageImagesClientDiagnostics, Pipeline, _diskImageImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
