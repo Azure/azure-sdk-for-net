@@ -625,12 +625,14 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             using var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
 
-            if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
+            if ((diagnosticScope.IsEnabled) && (eventBatch.Count > 0))
             {
                 var isBatch = (EventBatchMaximumCount > 1);
 
                 if (isBatch && ActivityExtensions.SupportsActivitySource)
+                {
                     diagnosticScope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventBatch.Count);
+                }
 
                 foreach (var eventData in eventBatch)
                 {
@@ -669,7 +671,16 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             try
             {
-                Logger.EventProcessorProcessingHandlerStart(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, eventBatch.Count);
+                var startingSequenceNumber = default(string);
+                var endingSequenceNumber = default(string);
+
+                if (eventBatch.Count > 0)
+                {
+                    startingSequenceNumber = eventBatch[0].SequenceNumber.ToString();
+                    endingSequenceNumber = eventBatch[eventBatch.Count - 1].SequenceNumber.ToString();
+                }
+
+                Logger.EventProcessorProcessingHandlerStart(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, eventBatch.Count, startingSequenceNumber, endingSequenceNumber);
                 await OnProcessingEventBatchAsync(eventBatch, partition, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -1595,8 +1606,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     var startingOwnedPartitionCount = LoadBalancer.OwnedPartitionCount;
-
-                    Logger.EventProcessorLoadBalancingCycleStart(Identifier, EventHubName, partitionIds?.Length ?? 0, startingOwnedPartitionCount);
                     cycleDuration = ValueStopwatch.StartNew();
 
                     try
@@ -1622,6 +1631,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
 
                     // Execute the current load balancing cycle.
+
+                    Logger.EventProcessorLoadBalancingCycleStart(Identifier, EventHubName, partitionIds?.Length ?? 0, startingOwnedPartitionCount);
 
                     var totalPartitions = partitionIds?.Length ?? 0;
                     var remainingTimeUntilNextCycle = await PerformLoadBalancingAsync(cycleDuration, partitionIds, cancellationToken).ConfigureAwait(false);

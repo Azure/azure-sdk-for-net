@@ -1,12 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias DMBlobs;
+
 using Azure.Storage.Test;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System;
+#if BlobDataMovementSDK
+using DMBlobs::Azure.Storage.DataMovement.JobPlan;
+#else
 using Azure.Storage.DataMovement.JobPlan;
+#endif
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -50,7 +56,7 @@ namespace Azure.Storage.DataMovement.Tests
         internal const DataTransferStatus DefaultPartStatus = DataTransferStatus.Queued;
 
         internal static JobPartPlanHeader CreateDefaultJobPartHeader(
-            string version = DataMovementConstants.PlanFile.SchemaVersion,
+            string version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
             DateTimeOffset startTime = default,
             string transferId = DefaultTransferId,
             long partNumber = DefaultPartNumber,
@@ -167,7 +173,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         internal static async Task AssertJobPlanHeaderAsync(JobPartPlanHeader header, Stream stream)
         {
-            int headerSize = DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes;
+            int headerSize = DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes;
             using var originalHeaderStream = new MemoryStream(headerSize);
             header.Serialize(originalHeaderStream);
             originalHeaderStream.Seek(0, SeekOrigin.Begin);
