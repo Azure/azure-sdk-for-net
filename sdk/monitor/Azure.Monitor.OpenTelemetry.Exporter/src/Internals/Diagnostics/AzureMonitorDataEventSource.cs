@@ -12,6 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
     /// EventSource for the AzureMonitor Telemetry.
     /// This can be used to collect telemetry that should be emitted by the exporter.
     /// EventSource Guid at Runtime: cf17323b-4fb7-53b5-2824-934d0ce75082.
+    /// (This guid can be found by debugging this class and inspecting the "Log" singleton and reading the "Guid" property).
     /// </summary>
     /// <remarks>
     /// PerfView Instructions:
