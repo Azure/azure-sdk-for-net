@@ -6,10 +6,10 @@ using static System.Net.Mime.MediaTypeNames;
 namespace Azure.Communication.Messages
 {
     /// <summary>  </summary>
-    public class MessageTemplateQuickActionValue: MessageTemplateValue
+    public class MessageTemplateQuickAction: MessageTemplateValue
     {
         /// <summary>  </summary>
-        public MessageTemplateQuickActionValue(string name, string text = null, string payload = null) : base(name)
+        public MessageTemplateQuickAction(string name, string text = null, string payload = null) : base(name)
         {
             Text = text;
             Payload = payload;

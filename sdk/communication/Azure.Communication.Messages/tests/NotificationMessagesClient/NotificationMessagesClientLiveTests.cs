@@ -106,8 +106,8 @@ namespace Azure.Communication.Messages.Tests
             IEnumerable<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
 
             var name = new MessageTemplateText("name", "Gloria");
-            var yes = new MessageTemplateQuickActionValue("yes", null, "Yay!");
-            var no = new MessageTemplateQuickActionValue("no", null, "Nay!");
+            var yes = new MessageTemplateQuickAction("yes", null, "Yay!");
+            var no = new MessageTemplateQuickAction("no", null, "Nay!");
 
             IEnumerable<MessageTemplateValue> values = new List<MessageTemplateValue> { name, yes, no };
             MessageTemplateWhatsAppBindings bindings = new MessageTemplateWhatsAppBindings(
