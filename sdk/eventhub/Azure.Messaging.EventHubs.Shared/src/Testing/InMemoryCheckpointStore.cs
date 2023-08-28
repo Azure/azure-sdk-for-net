@@ -239,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Tests
             lock (_checkpointLock)
             {
                 var key = (fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
-                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, DateTimeOffset.Now.ToString() sequenceNumber);
+                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, DateTimeOffset.Now.ToString(), sequenceNumber);
 
                 Log($"Checkpoint with partition id = '{partitionId}' updated successfully.");
             }
