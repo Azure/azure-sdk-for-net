@@ -18,5 +18,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             EventSourceTestHelper.MethodsAreImplementedConsistentlyWithTheirAttributes(AzureMonitorExporterEventSource.Log);
         }
+
+        [Fact]
+        public void EventSourceTest_AzureMonitorDataEventSource()
+        {
+            EventSourceTestHelper.MethodsAreImplementedConsistentlyWithTheirAttributes(AzureMonitorDataEventSource.Log);
+        }
     }
 }

@@ -89,6 +89,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 content.WriteNewLine();
             }
 
+            AzureMonitorDataEventSource.Log.Telemetry(content);
+
 #if DEBUG
             TelemetryDebugWriter.WriteTelemetry(content);
 #endif
@@ -98,6 +100,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal HttpMessage CreateTrackRequest(ReadOnlyMemory<byte> body)
         {
+            AzureMonitorDataEventSource.Log.TelemetryFromStorage(body);
+
 #if DEBUG
             TelemetryDebugWriter.WriteTelemetryFromStorage(body);
 #endif
