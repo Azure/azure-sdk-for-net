@@ -1,0 +1,15 @@
+is_global = true
+
+dotnet_diagnostic.AZM0010.severity = warning
+dotnet_diagnostic.AZM0011.severity = warning
+dotnet_diagnostic.AZM0012.severity = warning
+dotnet_diagnostic.AZM0013.severity = warning
+dotnet_diagnostic.AZM0014.severity = warning
+
+dotnet_diagnostic.AZM0020.severity = warning
+
+dotnet_diagnostic.AZM0030.severity = warning
+
+# alternative, enable by category
+# dotnet_analyzer_diagnostic.category-mgmt.severity = warning
+# dotnet_analyzer_diagnostic.category-mgmt-extra.severity = warning

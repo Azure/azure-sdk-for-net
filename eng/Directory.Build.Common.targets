@@ -121,6 +121,10 @@
     </AdditionalFiles>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(EnableMgmtSdkAnalyzers)' == 'true'">
+    <EditorConfigFiles Include="$(RepoEngPath)/mgmt.globalconfig" />
+  </ItemGroup>
+
   <!-- Enable SourceLink -->
   <ItemGroup Condition="'$(EnableSourceLink)' == 'true'">
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
