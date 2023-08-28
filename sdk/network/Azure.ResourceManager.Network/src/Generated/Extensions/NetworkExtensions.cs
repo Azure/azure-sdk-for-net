@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkInterfaceResource" /> object. </returns>
         public static NetworkInterfaceResource GetNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<NetworkInterfaceResource>(() =>
             {
                 NetworkInterfaceResource.ValidateResourceId(id);
                 return new NetworkInterfaceResource(client, id);

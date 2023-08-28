@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> publicIPAddress = default;
             Optional<WritableSubResource> privateLinkConfiguration = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> httpListeners = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -168,20 +167,11 @@ namespace Azure.ResourceManager.Network.Models
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("httpListeners"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            httpListeners = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new ApplicationGatewayFrontendIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateLinkConfiguration, Optional.ToNullable(provisioningState), httpListeners);
+            return new ApplicationGatewayFrontendIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateLinkConfiguration, Optional.ToNullable(provisioningState));
         }
     }
 }

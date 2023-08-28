@@ -30,8 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. </param>
         /// <param name="privateLinkConfiguration"> Reference to the application gateway private link configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        /// <param name="httpListeners"> Reference to the application gateway http listeners. </param>
-        internal ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, NetworkProvisioningState? provisioningState, WritableSubResource httpListeners) : base(id, name, resourceType)
+        internal ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             ETag = etag;
             PrivateIPAddress = privateIPAddress;
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Network.Models
             PublicIPAddress = publicIPAddress;
             PrivateLinkConfiguration = privateLinkConfiguration;
             ProvisioningState = provisioningState;
-            HttpListeners = httpListeners;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -93,12 +91,5 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The provisioning state of the frontend IP configuration resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> Reference to the application gateway http listeners. </summary>
-        internal WritableSubResource HttpListeners { get; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier HttpListenersId
-        {
-            get => HttpListeners?.Id;
-        }
     }
 }
