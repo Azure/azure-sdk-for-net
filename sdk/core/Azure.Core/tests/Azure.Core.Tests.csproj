@@ -11,6 +11,7 @@
     <PackageReference Include="Azure.Identity" />
     <!--Azure.Core.Experimental reference can be removed when DynamicJson moves to Azure.Core.-->
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" />
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
