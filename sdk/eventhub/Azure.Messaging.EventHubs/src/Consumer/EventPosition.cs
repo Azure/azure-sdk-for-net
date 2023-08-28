@@ -75,6 +75,15 @@ namespace Azure.Messaging.EventHubs.Consumer
         public long? SequenceNumber { get; set; }
 
         /// <summary>
+        ///   An optional sequence number to associate with the checkpoint, intended as informational metadata. The offset will be used to determine
+        ///   positioning.
+        /// </summary>
+        ///
+        /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
+        ///
+        public string InformationalSequenceNumber { get; set; }
+
+        /// <summary>
         ///   The enqueue time of the event identified by this position.
         /// </summary>
         ///
@@ -83,7 +92,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         internal DateTimeOffset? EnqueuedTime { get; set; }
 
         /// <summary>
-        ///   Holds the passed in info from the constructor.
+        ///   Holds the offset value passed in by the constructor.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
