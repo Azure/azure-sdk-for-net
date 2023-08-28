@@ -61,7 +61,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             Assert.True(testReceiver.ReceiveTimeout.Equals(testReceiveTimeout),
                 $"Unexpected receive timeout {testReceiver.ReceiveTimeout}");
             Assert.NotNull(testReceiver.Options);
-            Assert.Equal(testReceiver.Options.Identifier, tag);
+            Assert.Equal(tag, testReceiver.Options.Identifier);
 
             // EnableReceiverRuntimeMetric is false by default. This case is a convenient opportunity to
             // verify that RuntimeInformation was not updated when the option is false.

@@ -30,11 +30,5 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> The Id of this queue. </summary>
         public string Id { get; }
-        /// <summary> The name of this queue. </summary>
-        public string Name { get; set; }
-        /// <summary> The ID of the distribution policy that will determine how a job is distributed to workers. </summary>
-        public string DistributionPolicyId { get; set; }
-        /// <summary> (Optional) The ID of the exception policy that determines various job escalation rules. </summary>
-        public string ExceptionPolicyId { get; set; }
     }
 }

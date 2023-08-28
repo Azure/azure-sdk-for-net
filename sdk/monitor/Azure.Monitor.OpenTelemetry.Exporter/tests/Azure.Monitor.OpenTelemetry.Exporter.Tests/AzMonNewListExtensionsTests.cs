@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Xunit;
 
@@ -11,13 +12,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     public class AzMonNewListExtensionsTests
     {
         [Theory]
-        [InlineData("http", "example.com", "8080", "/search", "q=OpenTelemetry", "http://example.com:8080/search?q=OpenTelemetry")]
-        [InlineData(null, "example.com", "8080", "/search", "q=OpenTelemetry", "example.com:8080/search?q=OpenTelemetry")]
-        [InlineData("http", null, "8080", "/search", "q=OpenTelemetry", null)]
-        [InlineData("http", "example.com", null, "/search", "q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")]
-        [InlineData("http", "example.com", "8080", null, "q=OpenTelemetry", "http://example.com:8080/?q=OpenTelemetry")]
+        [InlineData("http", "example.com", "8080", "/search", "?q=OpenTelemetry", "http://example.com:8080/search?q=OpenTelemetry")]
+        [InlineData("http", "example.com", null, "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")]
+        [InlineData("http", "example.com", "8080", "/", "?q=OpenTelemetry", "http://example.com:8080/?q=OpenTelemetry")]
         [InlineData("http", "example.com", "8080", "/search", null, "http://example.com:8080/search")]
-        public void GetNewRequestUrl_ReturnsCorrectUrl(string urlScheme, string serverAddress, string serverPort, string urlPath, string urlQuery, string expectedUrl)
+        public void GetNewRequestUrl_ReturnsCorrectUrl(string urlScheme, string serverAddress, string? serverPort, string urlPath, string? urlQuery, string expectedUrl)
         {
             // Arrange
             AzMonList tagObjects = AzMonList.Initialize();
@@ -27,11 +26,56 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeUrlPath, urlPath));
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeUrlQuery, urlQuery));
 
+            // Validate the length with the same logic from code.
+            int colonLength = serverPort == null ? 0 : 1;
+            serverPort ??= string.Empty;
+            urlQuery ??= string.Empty;
+            var length = urlScheme.Length + Uri.SchemeDelimiter.Length + serverAddress.Length + serverPort.Length + colonLength + urlPath.Length + urlQuery.Length;
+
             // Act
             string? url = tagObjects.GetNewSchemaRequestUrl();
 
             // Assert
             Assert.Equal(expectedUrl, url);
+            Assert.Equal(length, url?.Length);
+        }
+
+        [Theory]
+        [InlineData("my.servicebus.windows.net", "amqp", "queueName", "amqp://my.servicebus.windows.net/queueName", "my.servicebus.windows.net/queueName")]
+        [InlineData("my.servicebus.windows.net", "amqp", "", "amqp://my.servicebus.windows.net", "my.servicebus.windows.net")]
+        [InlineData("", "amqp", "queueName", null, null)]
+        [InlineData("my.servicebus.windows.net", "", "queueName", "my.servicebus.windows.net/queueName", "my.servicebus.windows.net/queueName")]
+        [InlineData("my.servicebus.windows.net", null, null, "my.servicebus.windows.net", "my.servicebus.windows.net")]
+        [InlineData(null, "amqp", "queueName", null, null)]
+        public void GetMessagingUrlAndSourceOrTarget_ReturnsCorrectResult(string serverAddress, string protocolName, string destinationName, string expectedUrl, string expectedSourceOrTarget)
+        {
+            // Arrange
+            AzMonList tagObjects = AzMonList.Initialize();
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerAddress, serverAddress));
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetworkProtocolName, protocolName));
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeMessagingDestinationName, destinationName));
+
+            // Act
+            var (messagingUrl, sourceOrTarget) = tagObjects.GetMessagingUrlAndSourceOrTarget(ActivityKind.Producer);
+
+            // Assert
+            Assert.Equal(expectedUrl, messagingUrl);
+            Assert.Equal(expectedSourceOrTarget, sourceOrTarget);
+        }
+
+        [Fact]
+        public void GetMessagingUrlAndSourceOrTarget_NullTagObjects_ReturnsNull()
+        {
+            // Arrange
+            AzMonList tagObjects = AzMonList.Initialize();
+            var activityKind = ActivityKind.Consumer;
+
+            // Act
+            var (messagingUrl, sourceOrTarget) = tagObjects.GetMessagingUrlAndSourceOrTarget(activityKind);
+
+            // Assert
+            Assert.Null(messagingUrl);
+            Assert.Null(sourceOrTarget);
         }
 
         [Theory]

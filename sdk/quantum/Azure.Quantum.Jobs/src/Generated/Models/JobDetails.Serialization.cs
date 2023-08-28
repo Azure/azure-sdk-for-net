@@ -168,7 +168,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        metadata = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -261,7 +260,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        tags = null;
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -38,6 +38,11 @@ var data = new {
         assetTypes = new[] {
             "<String>"
         },
+        facet = new {
+            count = 1234,
+            facet = "<facet>",
+            sort = new {},
+        },
     },
 };
 
@@ -120,6 +125,11 @@ var data = new {
     taxonomySetting = new {
         assetTypes = new[] {
             "<String>"
+        },
+        facet = new {
+            count = 1234,
+            facet = "<facet>",
+            sort = new {},
         },
     },
 };

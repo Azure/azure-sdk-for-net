@@ -23,8 +23,8 @@ namespace Azure.Verticals.AgriFood.Farming
     {
         protected Attachments() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string attachmentId, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string attachmentId, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string attachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string attachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string partyId, string attachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string attachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Download(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
@@ -255,8 +255,8 @@ namespace Azure.Verticals.AgriFood.Farming
     {
         protected InsightAttachments() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Download(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.RequestContext context) { throw null; }
@@ -634,7 +634,7 @@ namespace Azure.Verticals.AgriFood.Farming
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class FarmBeatsClientBuilderExtensions
+    public static partial class VerticalsAgriFoodFarmingClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Verticals.AgriFood.Farming.FarmBeatsClient, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions> AddFarmBeatsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Verticals.AgriFood.Farming.FarmBeatsClient, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions> AddFarmBeatsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

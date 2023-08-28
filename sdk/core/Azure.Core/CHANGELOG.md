@@ -1,14 +1,24 @@
 # Release History
 
-## 1.34.0-beta.1 (Unreleased)
+## 1.35.0-beta.1 (Unreleased)
 
 ### Features Added
+
+-Added `ModelSerializer` which provides a public API to serialize and deserialize models.  The new API works with any classes that implement `IModelSerializeable`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.34.0 (2023-07-11)
+
+### Features Added
+
+- Added `IsCaeEnabled` property to `TokenRequestContext` to enabled per-request support for Continuous Access Evaluation
+- Updated dependency on System.Diagnostics.DiagnosticSource
+- Added `ContentLengthLong` property to `ResponseHeaders`
 
 ## 1.33.0 (2023-06-16)
 

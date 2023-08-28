@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="InferCancerProfileAsync(WaitUntil,OncoPhenotypeData,string,DateTimeOffset?,CancellationToken)">
+    <member name="InferCancerProfileAsync(WaitUntil,OncoPhenotypeData,CancellationToken)">
 <example>
 This sample shows how to call InferCancerProfileAsync with required parameters.
 <code><![CDATA[
@@ -49,11 +49,11 @@ var oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
         CheckForCancerCase = true,
     },
 };
-var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
 ]]></code>
 </example>
     </member>
-    <member name="InferCancerProfile(WaitUntil,OncoPhenotypeData,string,DateTimeOffset?,CancellationToken)">
+    <member name="InferCancerProfile(WaitUntil,OncoPhenotypeData,CancellationToken)">
 <example>
 This sample shows how to call InferCancerProfile with required parameters.
 <code><![CDATA[
@@ -101,11 +101,11 @@ var oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
         CheckForCancerCase = true,
     },
 };
-var operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
 ]]></code>
 </example>
     </member>
-    <member name="InferCancerProfileAsync(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
+    <member name="InferCancerProfileAsync(WaitUntil,RequestContent,RequestContext)">
 <example>
 This sample shows how to call InferCancerProfileAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -178,7 +178,7 @@ var data = new {
     },
 };
 
-var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -210,7 +210,7 @@ Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToSt
 ]]></code>
 </example>
     </member>
-    <member name="InferCancerProfile(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
+    <member name="InferCancerProfile(WaitUntil,RequestContent,RequestContext)">
 <example>
 This sample shows how to call InferCancerProfile with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -283,7 +283,7 @@ var data = new {
     },
 };
 
-var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

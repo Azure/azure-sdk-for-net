@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 await Initialize().ConfigureAwait(false);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/37421")]
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/37421")]
         public async Task PrivateEndpointConnectionCreateAndUpdate()
         {
             IgnoreTestInLiveMode();

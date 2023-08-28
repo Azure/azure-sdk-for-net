@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimeDebugInfo. </summary>
         /// <param name="properties">
         /// Integration runtime properties.
-        /// Please note <see cref="DataFactoryIntegrationRuntimeDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataFactoryIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFactoryIntegrationRuntimeDebugInfo(DataFactoryIntegrationRuntimeDefinition properties)
+        public DataFactoryIntegrationRuntimeDebugInfo(DataFactoryIntegrationRuntimeProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Integration runtime properties.
-        /// Please note <see cref="DataFactoryIntegrationRuntimeDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataFactoryIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </summary>
-        public DataFactoryIntegrationRuntimeDefinition Properties { get; }
+        public DataFactoryIntegrationRuntimeProperties Properties { get; }
     }
 }

@@ -1144,6 +1144,13 @@ var data = new {
                 activeLearningSuggestions = new[] {
                     new {
                         clusterHead = "<clusterHead>",
+                        suggestedQuestions = new[] {
+                            new {
+                                question = "<question>",
+                                userSuggestedCount = 1234,
+                                autoSuggestedCount = 1234,
+                            }
+                        },
                     }
                 },
             }
@@ -1259,6 +1266,13 @@ var data = new {
                 activeLearningSuggestions = new[] {
                     new {
                         clusterHead = "<clusterHead>",
+                        suggestedQuestions = new[] {
+                            new {
+                                question = "<question>",
+                                userSuggestedCount = 1234,
+                                autoSuggestedCount = 1234,
+                            }
+                        },
                     }
                 },
             }

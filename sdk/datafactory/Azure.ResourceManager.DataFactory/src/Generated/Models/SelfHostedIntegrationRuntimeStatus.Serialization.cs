@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<TimeSpan> updateDelayOffset = default;
             Optional<TimeSpan> localTimeZoneOffset = default;
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<IReadOnlyList<Uri>> serviceUrls = default;
-            Optional<IntegrationRuntimeAutoUpdate> autoUpdate = default;
+            Optional<IReadOnlyList<string>> serviceUrls = default;
+            Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
             Optional<string> versionStatus = default;
             Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
             Optional<string> pushedVersion = default;
@@ -164,17 +164,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<Uri> array = new List<Uri>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new Uri(item.GetString()));
-                                }
+                                array.Add(item.GetString());
                             }
                             serviceUrls = array;
                             continue;
@@ -185,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            autoUpdate = new IntegrationRuntimeAutoUpdate(property0.Value.GetString());
+                            autoUpdate = new IntegrationRuntimeAutoUpdateState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("versionStatus"u8))

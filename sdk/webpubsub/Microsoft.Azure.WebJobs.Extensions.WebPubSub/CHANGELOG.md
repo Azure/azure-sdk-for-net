@@ -1,6 +1,16 @@
 # Release History
 
-## 1.6.0 (2023-06-30)
+## 1.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.6.0 (2023-07-12)
 
 ### Bugs Fixed
 - Fix secondary key validation failed.

@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Communication.CallAutomation.Models;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using System;
 
@@ -138,6 +139,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        public async Task TransferCallToParticipantAsyncWithTransferee_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier);
+            options.Transferee = new CommunicationUserIdentifier("transfereeid");
+
+            var response = await callConnection.TransferCallToParticipantAsync(options).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public void TransferCallToParticipant_simpleMethod_202Accepted(CallInvite callInvite)
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
@@ -153,6 +166,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier));
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        public void TransferCallToParticipantWithTransferee_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier);
+            options.Transferee = new CommunicationUserIdentifier("transfereeid");
+
+            var response = callConnection.TransferCallToParticipant(options);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -175,19 +200,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
-        }
-
-        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
-        public void TransferCallToParticipant_ExceedsMaxOperationContextLength(CallInvite callInvite)
-        {
-            var callConnection = CreateMockCallConnection(202);
-
-            var options = new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier) {
-                OperationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
-            };
-            ArgumentException? ex = Assert.Throws<ArgumentException>(() => callConnection.TransferCallToParticipant(options));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.OperationContextExceedsMaxLength));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
@@ -220,35 +232,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await callConnection.AddParticipantAsync(new AddParticipantOptions(null)).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.True(ex?.Message.Contains("Value cannot be null."));
-        }
-
-        [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
-        public void AddParticipantsAsync_ExceedsInvitationTimeOut(CommunicationIdentifier participantToAdd)
-        {
-            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
-            var callInvite = new CallInvite((CommunicationUserIdentifier)participantToAdd);
-
-            var options = new AddParticipantOptions(callInvite) {
-                InvitationTimeoutInSeconds = CallAutomationConstants.InputValidation.MaxInvitationTimeoutInSeconds + 1
-            };
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.AddParticipantAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidInvitationTimeoutInSeconds));
-        }
-
-        [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
-        public void AddParticipantsAsync_NegativeInvitationTimeOut(CommunicationIdentifier participantToAdd)
-        {
-            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
-            var callInvite = new CallInvite((CommunicationUserIdentifier)participantToAdd);
-
-            var options = new AddParticipantOptions(callInvite)
-            {
-                InvitationTimeoutInSeconds = 0
-            };
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.AddParticipantAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidInvitationTimeoutInSeconds));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
@@ -375,17 +358,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var response = callConnection.RemoveParticipant(participantToRemove);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
-        }
-
-        [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
-        public void RemoveParticipants_ExceedsMaxOperationContextLength(CommunicationIdentifier participantToRemove)
-        {
-            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
-
-            var operationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength);
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantAsync(participantToRemove, operationContext).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.OperationContextExceedsMaxLength));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
@@ -561,12 +533,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
         private static IEnumerable<object?[]> TestData_TransferCallToParticipant()
         {
+            var callInvite = new CallInvite(new CommunicationUserIdentifier("userId"));
+            callInvite.CustomContext.Add(new VoipHeader("key1", "value1"));
             return new[]
             {
                 new object?[]
                 {
-                    new CallInvite(new CommunicationUserIdentifier("userId")){
-                        VoipHeaders = {{ "key1", "value1" }}}
+                    callInvite
                 },
             };
         }

@@ -549,31 +549,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData("peerservice", null, null, null)]
-        [InlineData(null, "servicename.com", null, "8888")]
-        [InlineData(null, null, "127.0.0.1", "8888")]
-        public void DbNameIsAppendedToTargetDerivedFromNetAttributesforDBDependencyTarget(string peerService, string netPeerName, string netPeerIp, string netPeerPort)
+        [InlineData("peerservice", null, null, null, null, null, null, "peerservice | DbName")]
+        [InlineData(null, "servicename.com", null, "8888", null, null, null, "servicename.com:8888 | DbName")]
+        [InlineData(null, null, "127.0.0.1", "8888", null, null, null, "127.0.0.1:8888 | DbName")]
+        [InlineData(null, null, null, null, "servername.com", null, "8888", "servername.com:8888 | DbName")]
+        [InlineData(null, null, null, null, null, "127.0.0.5", "8888", "127.0.0.5:8888 | DbName")]
+        public void DbNameIsAppendedToTargetDerivedFromNetAttributesforDBDependencyTarget(string peerService, string netPeerName, string netPeerIp, string netPeerPort, string serverAddress, string serverSocketAddress, string serverPort, string expectedTarget)
         {
             var mappedTags = AzMonList.Initialize();
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributePeerService, peerService));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetPeerName, netPeerName));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetPeerIp, netPeerIp));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetPeerPort, netPeerPort));
+            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerAddress, serverAddress));
+            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerPort, serverPort));
+            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerSocketAddress, serverSocketAddress));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbName, "DbName"));
-            string? hostName = null;
-            if (peerService != null)
-            {
-                hostName = peerService;
-            }
-            if (netPeerName != null)
-            {
-                hostName = $"{netPeerName}:{netPeerPort}";
-            }
-            if (netPeerIp != null)
-            {
-                hostName = $"{netPeerIp}:{netPeerPort}";
-            }
-            string expectedTarget = $"{hostName} | DbName";
+
             Assert.Equal(expectedTarget, mappedTags.GetDbDependencyTargetAndName().DbTarget);
         }
 

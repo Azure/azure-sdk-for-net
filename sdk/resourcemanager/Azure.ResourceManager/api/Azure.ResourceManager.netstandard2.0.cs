@@ -458,6 +458,7 @@ namespace Azure.ResourceManager.Models
     public static partial class ResourceManagerModelFactory
     {
         public static Azure.ResourceManager.Resources.Models.ApiProfile ApiProfile(string profileVersion = null, string apiVersion = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings AvailabilityZoneMappings(string logicalZone = null, string physicalZone = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.AzureRoleDefinition AzureRoleDefinition(string id = null, string name = null, bool? isServiceRole = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Permission> permissions = null, System.Collections.Generic.IEnumerable<string> scopes = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition DataManifestCustomResourceFunctionDefinition(string name = null, Azure.Core.ResourceType? fullyQualifiedResourceType = default(Azure.Core.ResourceType?), System.Collections.Generic.IEnumerable<string> defaultProperties = null, bool? allowCustomProperties = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Resources.DataPolicyManifestData DataPolicyManifestData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> namespaces = null, string policyMode = null, bool? isBuiltInOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ResourceTypeAliases> resourceTypeAliases = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect> effects = null, System.Collections.Generic.IEnumerable<string> fieldValues = null, System.Collections.Generic.IEnumerable<string> standard = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition> customDefinitions = null) { throw null; }
@@ -465,7 +466,8 @@ namespace Azure.ResourceManager.Models
         public static Azure.ResourceManager.ManagementGroups.Models.DescendantData DescendantData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, Azure.Core.ResourceIdentifier parentId = null) { throw null; }
         public static Azure.ResourceManager.Resources.FeatureData FeatureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string featureState = null) { throw null; }
         public static Azure.ResourceManager.Resources.GenericResourceData GenericResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ArmPlan plan = null, System.BinaryData properties = null, string kind = null, string managedBy = null, Azure.ResourceManager.Resources.Models.ResourcesSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? changedOn = default(System.DateTimeOffset?), string provisioningState = null) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, Azure.ResourceManager.Resources.Models.LocationType? locationType = default(Azure.ResourceManager.Resources.Models.LocationType?), string displayName = null, string regionalDisplayName = null, Azure.ResourceManager.Resources.Models.LocationMetadata metadata = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.LocationExpanded LocationExpanded(string id, string subscriptionId, string name, Azure.ResourceManager.Resources.Models.LocationType? locationType, string displayName, string regionalDisplayName, Azure.ResourceManager.Resources.Models.LocationMetadata metadata) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, Azure.ResourceManager.Resources.Models.LocationType? locationType = default(Azure.ResourceManager.Resources.Models.LocationType?), string displayName = null, string regionalDisplayName = null, Azure.ResourceManager.Resources.Models.LocationMetadata metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings> availabilityZoneMappings = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ManagedByTenant ManagedByTenant(System.Guid? tenantId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo ManagementGroupChildInfo(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? childType = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType?), string id = null, string name = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo> children = null) { throw null; }
         public static Azure.ResourceManager.ManagementGroups.ManagementGroupData ManagementGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? tenantId = default(System.Guid?), string displayName = null, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo details = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo> children = null) { throw null; }
@@ -1250,6 +1252,12 @@ namespace Azure.ResourceManager.Resources.Models
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
     }
+    public partial class AvailabilityZoneMappings
+    {
+        internal AvailabilityZoneMappings() { }
+        public string LogicalZone { get { throw null; } }
+        public string PhysicalZone { get { throw null; } }
+    }
     public partial class AzureRoleDefinition
     {
         internal AzureRoleDefinition() { }
@@ -1323,6 +1331,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class LocationExpanded
     {
         internal LocationExpanded() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings> AvailabilityZoneMappings { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.LocationType? LocationType { get { throw null; } }

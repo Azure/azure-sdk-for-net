@@ -63,10 +63,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("mlEndpoint"u8);
-            JsonSerializer.Serialize(writer, MlEndpoint);
+            JsonSerializer.Serialize(writer, MLEndpoint);
             writer.WritePropertyName("apiKey"u8);
-            writer.WriteObjectValue(ApiKey);
-            if (Optional.IsDefined(UpdateResourceEndpoint))
+            JsonSerializer.Serialize(writer, ApiKey); if (Optional.IsDefined(UpdateResourceEndpoint))
             {
                 writer.WritePropertyName("updateResourceEndpoint"u8);
                 JsonSerializer.Serialize(writer, UpdateResourceEndpoint);
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey);
+                JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
             if (Optional.IsDefined(Tenant))
             {
@@ -89,11 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -130,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
             Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<DataFactoryElement<string>> tenant = default;
-            Optional<BinaryData> encryptedCredential = default;
+            Optional<string> encryptedCredential = default;
             Optional<DataFactoryElement<string>> authentication = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -206,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("apiKey"u8))
                         {
-                            apiKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            apiKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("updateResourceEndpoint"u8))
@@ -233,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -247,11 +242,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("authentication"u8))
@@ -269,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, mlEndpoint, apiKey, updateResourceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, encryptedCredential.Value, authentication.Value);
+            return new AzureMLLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, mlEndpoint, apiKey, updateResourceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, encryptedCredential.Value, authentication.Value);
         }
     }
 }

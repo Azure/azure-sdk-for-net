@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Association entity details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AssociationContract : Resource
+    public partial class AssociationContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the AssociationContract class.

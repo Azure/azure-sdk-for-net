@@ -4,8 +4,8 @@
 using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.DataMovement.JobPlan;
+using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
 {

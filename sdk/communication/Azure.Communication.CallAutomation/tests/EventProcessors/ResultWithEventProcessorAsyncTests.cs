@@ -143,9 +143,17 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callInvite = new CallInvite(new CommunicationUserIdentifier(TargetUser));
             var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            var transferee = new CommunicationIdentifierModel();
+            transferee.CommunicationUser = new CommunicationUserIdentifierModel(TransfereeUser);
+            transferee.RawId = TransfereeUser;
+
+            var transferTarget = new CommunicationIdentifierModel();
+            transferTarget.CommunicationUser = new CommunicationUserIdentifierModel(TargetUser);
+            transferTarget.RawId = TargetUser;
+            var internalEvent = new CallTransferAcceptedInternal(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, transferTarget, transferee);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new CallTransferAccepted(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
+            SendAndProcessEvent(handler, new CallTransferAccepted(internalEvent));
 
             TransferCallToParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -157,6 +165,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(typeof(CallTransferAccepted), returnedResult.SuccessResult.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
             Assert.AreEqual(response.Value.OperationContext, returnedResult.SuccessResult.OperationContext);
+            Assert.AreEqual(transferee.CommunicationUser.Id, returnedResult.SuccessResult.Transferee.RawId);
+            Assert.AreEqual(transferTarget.CommunicationUser.Id, returnedResult.SuccessResult.TransferTarget.RawId);
         }
 
         [Test]
@@ -199,7 +209,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
+            SendAndProcessEvent(handler, CommunicationCallAutomationModelFactory.AddParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
             AddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -226,7 +236,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
+            SendAndProcessEvent(handler, CommunicationCallAutomationModelFactory.AddParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
             AddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -407,7 +417,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CallAutomationModelFactory.RemoveParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
+            SendAndProcessEvent(handler, CommunicationCallAutomationModelFactory.RemoveParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
             RemoveParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -434,7 +444,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CallAutomationModelFactory.RemoveParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
+            SendAndProcessEvent(handler, CommunicationCallAutomationModelFactory.RemoveParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
             RemoveParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -504,6 +514,82 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.NotNull(returnedResult.FailureResult);
             Assert.IsNull(returnedResult.SuccessResult);
             Assert.AreEqual(typeof(SendDtmfFailed), returnedResult.FailureResult.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
+            Assert.AreEqual(OperationContext, returnedResult.FailureResult.OperationContext);
+        }
+
+        [Test]
+        public async Task StartDialogEventResultSuccessTest()
+        {
+            int successCode = (int)HttpStatusCode.Created;
+
+            var callConnection = CreateMockCallConnection(successCode, DialogPayload);
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
+
+            var dialogContext = new Dictionary<string, object>();
+            var startDialogOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", dialogContext)
+            {
+                OperationContext = OperationContext
+            };
+
+            var response = callConnection.GetCallDialog().StartDialog(startDialogOptions);
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, new DialogStarted(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation(), "dialogId", DialogInputType.PowerVirtualAgents));
+
+            DialogEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(true, returnedResult.IsSuccess);
+            Assert.NotNull(returnedResult.DialogStartedSuccessEvent);
+            Assert.IsNull(returnedResult.DialogCompletedSuccessResult);
+            Assert.IsNull(returnedResult.DialogConsentSuccessEvent);
+            Assert.IsNull(returnedResult.DialogHangupSuccessEvent);
+            Assert.IsNull(returnedResult.DialogLanguageChangeEvent);
+            Assert.IsNull(returnedResult.DialogSensitivityUpdateEvent);
+            Assert.IsNull(returnedResult.DialogTransferSuccessEvent);
+            Assert.IsNull(returnedResult.FailureResult);
+            Assert.AreEqual(typeof(DialogStarted), returnedResult.DialogStartedSuccessEvent.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.DialogStartedSuccessEvent.CallConnectionId);
+            Assert.AreEqual(OperationContext, returnedResult.DialogStartedSuccessEvent.OperationContext);
+        }
+
+        [Test]
+        public async Task StartDialogEventResultFailedTest()
+        {
+            int successCode = (int)HttpStatusCode.Created;
+
+            var callConnection = CreateMockCallConnection(successCode, DialogPayload);
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
+
+            var dialogContext = new Dictionary<string, object>();
+            var startDialogOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", dialogContext)
+            {
+                OperationContext = OperationContext
+            };
+
+            var response = callConnection.GetCallDialog().StartDialog(startDialogOptions);
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, new DialogFailed(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation(), "dialogId", DialogInputType.PowerVirtualAgents));
+
+            DialogEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(false, returnedResult.IsSuccess);
+            Assert.IsNull(returnedResult.DialogStartedSuccessEvent);
+            Assert.IsNull(returnedResult.DialogCompletedSuccessResult);
+            Assert.IsNull(returnedResult.DialogConsentSuccessEvent);
+            Assert.IsNull(returnedResult.DialogHangupSuccessEvent);
+            Assert.IsNull(returnedResult.DialogLanguageChangeEvent);
+            Assert.IsNull(returnedResult.DialogSensitivityUpdateEvent);
+            Assert.IsNull(returnedResult.DialogTransferSuccessEvent);
+            Assert.NotNull(returnedResult.FailureResult);
+            Assert.AreEqual(typeof(DialogFailed), returnedResult.FailureResult.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
             Assert.AreEqual(OperationContext, returnedResult.FailureResult.OperationContext);
         }

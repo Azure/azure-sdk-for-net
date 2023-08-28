@@ -11,50 +11,40 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// The BlockBlobStorageResource class.
     /// </summary>
-    public class BlockBlobStorageResource : StorageResourceSingle
+    public class BlockBlobStorageResource : StorageResourceItem
     {
         internal BlockBlobClient BlobClient { get; set; }
         internal BlockBlobStorageResourceOptions _options;
+        internal long? _length;
+        internal ETag? _etagDownloadLock = default;
 
         /// <summary>
         /// In order to ensure the block list is sent in the correct order
         /// we will order them by the offset (i.e. {offset, block_id}).
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
-        private long? _length;
-        private ETag? _etagDownloadLock = default;
 
         /// <summary>
         /// The identifier for the type of storage resource.
         /// </summary>
-        public override string ResourceId => "BlockBlob";
+        protected override string ResourceId => "BlockBlob";
 
         /// <summary>
-        /// Gets the URL of the storage resource.
+        /// Gets the Uri of the StorageResource
         /// </summary>
         public override Uri Uri => BlobClient.Uri;
 
         /// <summary>
-        /// Gets the path of the storage resource.
-        /// </summary>
-        public override string Path => BlobClient.Name;
-
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        public override bool CanProduceUri => true;
-
-        /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.
         /// </summary>
-        public override TransferType TransferType => TransferType.Concurrent;
+        protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
 
         /// <summary>
         /// Store Max Initial Size that a Put Blob can get to.
@@ -64,14 +54,14 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        public override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
+        protected override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
-        public override long? Length => _length;
+        protected override long? Length => _length;
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
@@ -119,8 +109,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.</param>
-        /// <returns>The <see cref="ReadStreamStorageResourceResult"/> resulting from the upload operation.</returns>
-        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        /// <returns>The <see cref="StorageResourceReadStreamResult"/> resulting from the upload operation.</returns>
+        protected override async Task<StorageResourceReadStreamResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default)
@@ -136,34 +126,37 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Consumes the readable stream to upload.
         /// </summary>
-        /// <param name="position">The offset at which which the stream will be copied to. Default value is 0.</param>
-        /// <param name="overwrite">
-        /// If set to true, will overwrite the blob if it currently exists.
+        /// <param name="stream">
+        /// The stream containing the data to be consumed and uploaded.
         /// </param>
         /// <param name="streamLength">
         /// The length of the content stream.
         /// </param>
-        /// <param name="completeLength">
-        /// The expected complete length of the blob.
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if it currently exists.
         /// </param>
-        /// <param name="stream">The stream containing the data to be consumed and uploaded.</param>
-        /// <param name="options">Options for the storage resource. See <see cref="StorageResourceWriteToOffsetOptions"/>.</param>
+        /// <param name="completeLength">
+        /// The expected complete length of the resource item.
+        /// </param>
+        /// <param name="options">
+        /// Options for the storage resource. See <see cref="StorageResourceWriteToOffsetOptions"/>.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task WriteFromStreamAsync(
+        protected override async Task CopyFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
-            long position = 0,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
+            long position = options?.Position != default ? options.Position.Value : 0;
             if ((streamLength == completeLength) && position == 0)
             {
                 // Default to Upload
@@ -174,7 +167,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 return;
             }
 
-            string id = Shared.StorageExtensions.GenerateBlockId(position);
+            string id = Azure.Storage.Shared.StorageExtensions.GenerateBlockId(position);
             if (!_blocks.TryAdd(position, id))
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the block list.");
@@ -189,7 +182,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResourceSingle"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceItem"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
@@ -203,8 +196,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task CopyFromUriAsync(
-            StorageResourceSingle sourceResource,
+        protected override async Task CopyFromUriAsync(
+            StorageResourceItem sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
@@ -223,7 +216,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL. Supports ranged operations.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResourceSingle"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceItem"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="range">The range of the blob to upload/copy.</param>
         /// <param name="overwrite">
@@ -238,11 +231,11 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task CopyBlockFromUriAsync(
-            StorageResourceSingle sourceResource,
+        protected override async Task CopyBlockFromUriAsync(
+            StorageResourceItem sourceResource,
             HttpRange range,
             bool overwrite,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -265,8 +258,12 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
-        public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -275,9 +272,33 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
+        /// Gets the Authorization Header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        {
+            return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override async Task CompleteTransferAsync(
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>The Task which Commits the list of ids</returns>
+        protected override async Task CompleteTransferAsync(
             bool overwrite,
             CancellationToken cancellationToken = default)
         {
@@ -304,169 +325,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// If the storage resource exists and is deleted, true will be returned.
         /// Otherwise if the storage resource does not exist, false will be returned.
         /// </returns>
-        public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static async Task<BlockBlobStorageResource> RehydrateResourceAsync(
-            DataTransferProperties transferProperties,
-            bool isSource,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
-
-            BlockBlobStorageResourceOptions options =
-                await checkpointer.GetBlockBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-
-            return new BlockBlobStorageResource(
-                new BlockBlobClient(new Uri(storedPath)),
-                options);
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <param name="sharedKeyCredential">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static async Task<BlockBlobStorageResource> RehydrateResourceAsync(
-            DataTransferProperties transferProperties,
-            bool isSource,
-            StorageSharedKeyCredential sharedKeyCredential,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
-
-            BlockBlobStorageResourceOptions options =
-                await checkpointer.GetBlockBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-
-            return new BlockBlobStorageResource(
-                new BlockBlobClient(new Uri(storedPath), sharedKeyCredential),
-                options);
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <param name="tokenCredential">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static async Task<BlockBlobStorageResource> RehydrateResourceAsync(
-            DataTransferProperties transferProperties,
-            bool isSource,
-            TokenCredential tokenCredential,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
-
-            BlockBlobStorageResourceOptions options =
-                await checkpointer.GetBlockBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-
-            return new BlockBlobStorageResource(
-                new BlockBlobClient(new Uri(storedPath), tokenCredential),
-                options);
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <param name="sasCredential">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static async Task<BlockBlobStorageResource> RehydrateResourceAsync(
-            DataTransferProperties transferProperties,
-            bool isSource,
-            AzureSasCredential sasCredential,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
-
-            BlockBlobStorageResourceOptions options =
-                await checkpointer.GetBlockBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-
-            return new BlockBlobStorageResource(
-                new BlockBlobClient(new Uri(storedPath),sasCredential),
-                options);
         }
 
         private void GrabEtag(Response response)

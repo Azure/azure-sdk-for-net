@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Models
     /// <summary>
     /// Helper class that acts as a factory for read-only models, to mock the types in <c>Azure.Search.Documents.Models</c>.
     /// </summary>
-    [CodeGenModel("SearchServiceModelFactory")]
+    [CodeGenModel("SearchDocumentsModelFactory")]
     [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
     public static partial class SearchModelFactory
     {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="MatchTrialsAsync(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)">
+    <member name="MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)">
 <example>
 This sample shows how to call MatchTrialsAsync with required parameters.
 <code><![CDATA[
@@ -83,6 +83,7 @@ var trialMatcherData = new TrialMatcherData(new PatientRecord[]
                     AcceptedAgeRange = new AcceptedAgeRange()
 {
                         MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                        MaximumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
                     },
                 },
             }
@@ -150,11 +151,11 @@ var trialMatcherData = new TrialMatcherData(new PatientRecord[]
         IncludeEvidence = true,
     },
 };
-var operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
 ]]></code>
 </example>
     </member>
-    <member name="MatchTrials(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)">
+    <member name="MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)">
 <example>
 This sample shows how to call MatchTrials with required parameters.
 <code><![CDATA[
@@ -236,6 +237,7 @@ var trialMatcherData = new TrialMatcherData(new PatientRecord[]
                     AcceptedAgeRange = new AcceptedAgeRange()
 {
                         MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                        MaximumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
                     },
                 },
             }
@@ -303,11 +305,11 @@ var trialMatcherData = new TrialMatcherData(new PatientRecord[]
         IncludeEvidence = true,
     },
 };
-var operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
 ]]></code>
 </example>
     </member>
-    <member name="MatchTrialsAsync(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
+    <member name="MatchTrialsAsync(WaitUntil,RequestContent,RequestContext)">
 <example>
 This sample shows how to call MatchTrialsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -478,7 +480,7 @@ var data = new {
     },
 };
 
-var operation = await client.MatchTrialsAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = await client.MatchTrialsAsync(WaitUntil.Completed, RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -531,7 +533,7 @@ Console.WriteLine(result.GetProperty("results").GetProperty("knowledgeGraphLastU
 ]]></code>
 </example>
     </member>
-    <member name="MatchTrials(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
+    <member name="MatchTrials(WaitUntil,RequestContent,RequestContext)">
 <example>
 This sample shows how to call MatchTrials with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -702,7 +704,7 @@ var data = new {
     },
 };
 
-var operation = client.MatchTrials(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = client.MatchTrials(WaitUntil.Completed, RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

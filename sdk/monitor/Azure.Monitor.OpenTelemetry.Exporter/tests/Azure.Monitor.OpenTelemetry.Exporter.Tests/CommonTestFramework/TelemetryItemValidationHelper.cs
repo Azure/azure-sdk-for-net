@@ -141,15 +141,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            var expectedTagsCount = 5;
-
-            if (activityKind == ActivityKind.Server)
-            {
-                expectedTagsCount = 7;
-
-                Assert.Contains("ai.operation.name", telemetryItem.Tags.Keys);
-                Assert.Contains("ai.location.ip", telemetryItem.Tags.Keys);
-            }
+            var expectedTagsCount = 6;
 
             Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
             Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);

@@ -86,7 +86,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeHttpHostName = "host.name";
         public const string AttributeHttpHostPort = "host.port";
         public const string AttributeHttpRoute = "http.route";
-        public const string AttributeHttpClientIP = "http.client_ip";
         public const string AttributeHttpUserAgent = "http.user_agent";
         public const string AttributeHttpRequestContentLength = "http.request_content_length";
         public const string AttributeHttpRequestContentLengthUncompressed = "http.request_content_length_uncompressed";
@@ -152,6 +151,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeExceptionStacktrace = "exception.stacktrace";
 
         // Http v1.21.0 https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/http.md
+        public const string AttributeClientAddress = "client.address"; // replaces: "http.client_ip" (AttributeHttpClientIp)
         public const string AttributeHttpRequestMethod = "http.request.method"; // replaces: "http.method" (AttributeHttpMethod)
         public const string AttributeHttpResponseStatusCode = "http.response.status_code"; // replaces: "http.status_code" (AttributeHttpStatusCode)
         public const string AttributeNetworkProtocolVersion = "network.protocol.version"; // replaces: "http.flavor" (AttributeHttpFlavor)
@@ -162,5 +162,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeUrlScheme = "url.scheme"; // replaces: "http.scheme" (AttributeHttpScheme)
         public const string AttributeUrlQuery = "url.query";
         public const string AttributeUserAgentOriginal = "user_agent.original"; // replaces: "http.user_agent" (AttributeHttpUserAgent)
+        public const string AttributeServerSocketAddress = "server.socket.address"; // replaces: "net.peer.ip" (AttributeNetPeerIp)
+
+        // Messaging v1.21.0 https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/messaging.md
+        public const string AttributeMessagingDestinationName = "messaging.destination.name";
+        public const string AttributeNetworkProtocolName = "network.protocol.name";
     }
 }

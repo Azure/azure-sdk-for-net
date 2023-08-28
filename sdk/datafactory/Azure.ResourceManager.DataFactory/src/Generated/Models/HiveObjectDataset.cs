@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Hive Server dataset. </summary>
-    public partial class HiveObjectDataset : DataFactoryDatasetDefinition
+    public partial class HiveObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of HiveObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

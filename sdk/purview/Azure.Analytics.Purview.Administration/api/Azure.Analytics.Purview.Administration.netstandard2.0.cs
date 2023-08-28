@@ -64,8 +64,8 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Azure.AsyncPageable<System.BinaryData> GetMetadataPoliciesAsync(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetMetadataPolicy(string policyId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetadataPolicyAsync(string policyId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response UpdateMetadataPolicy(string policyId, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateMetadataPolicyAsync(string policyId, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response UpdateMetadataPolicy(string policyId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateMetadataPolicyAsync(string policyId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class PurviewMetadataRolesClient
     {

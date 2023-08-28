@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 

@@ -22,7 +22,5 @@ namespace Azure.Communication.JobRouter
             ScheduleAndSuspendMode = scheduleAndSuspendMode;
             _suspendMode = suspendMode;
         }
-        /// <summary> Gets or sets the schedule and suspend mode. </summary>
-        public ScheduleAndSuspendMode ScheduleAndSuspendMode { get; set; }
     }
 }

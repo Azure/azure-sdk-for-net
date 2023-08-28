@@ -111,59 +111,6 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RecoverableDatabaseResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of RecoverableDatabaseResources and their operations over a RecoverableDatabaseResource. </returns>
-        public virtual RecoverableDatabaseCollection GetRecoverableDatabases()
-        {
-            return GetCachedClient(Client => new RecoverableDatabaseCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a recoverable database, which is a resource representing a database's geo backup
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoverableDatabases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RecoverableDatabaseResource>> GetRecoverableDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
-        {
-            return await GetRecoverableDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a recoverable database, which is a resource representing a database's geo backup
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoverableDatabases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RecoverableDatabaseResource> GetRecoverableDatabase(string databaseName, CancellationToken cancellationToken = default)
-        {
-            return GetRecoverableDatabases().Get(databaseName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SqlServerCommunicationLinkResources in the SqlServer. </summary>
         /// <returns> An object representing collection of SqlServerCommunicationLinkResources and their operations over a SqlServerCommunicationLinkResource. </returns>
         public virtual SqlServerCommunicationLinkCollection GetSqlServerCommunicationLinks()
@@ -370,59 +317,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<EncryptionProtectorResource> GetEncryptionProtector(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             return GetEncryptionProtectors().Get(encryptionProtectorName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of FailoverGroupResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of FailoverGroupResources and their operations over a FailoverGroupResource. </returns>
-        public virtual FailoverGroupCollection GetFailoverGroups()
-        {
-            return GetCachedClient(Client => new FailoverGroupCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a failover group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/failoverGroups/{failoverGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FailoverGroups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="failoverGroupName"> The name of the failover group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FailoverGroupResource>> GetFailoverGroupAsync(string failoverGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetFailoverGroups().GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a failover group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/failoverGroups/{failoverGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FailoverGroups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="failoverGroupName"> The name of the failover group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<FailoverGroupResource> GetFailoverGroup(string failoverGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetFailoverGroups().Get(failoverGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlFirewallRuleResources in the SqlServer. </summary>
@@ -1158,63 +1052,6 @@ namespace Azure.ResourceManager.Sql
             return GetOutboundFirewallRules().Get(outboundRuleFqdn, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RestorableDroppedDatabaseResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of RestorableDroppedDatabaseResources and their operations over a RestorableDroppedDatabaseResource. </returns>
-        public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
-        {
-            return GetCachedClient(Client => new RestorableDroppedDatabaseCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a restorable dropped database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDroppedDatabases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return await GetRestorableDroppedDatabases().GetAsync(restorableDroppedDatabaseId, expand, filter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a restorable dropped database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDroppedDatabases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RestorableDroppedDatabaseResource> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetRestorableDroppedDatabases().Get(restorableDroppedDatabaseId, expand, filter, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SqlServerConnectionPolicyResources in the SqlServer. </summary>
         /// <returns> An object representing collection of SqlServerConnectionPolicyResources and their operations over a SqlServerConnectionPolicyResource. </returns>
         public virtual SqlServerConnectionPolicyCollection GetSqlServerConnectionPolicies()
@@ -1262,112 +1099,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<SqlServerConnectionPolicyResource> GetSqlServerConnectionPolicy(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             return GetSqlServerConnectionPolicies().Get(connectionPolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ElasticPoolResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ElasticPoolResources and their operations over a ElasticPoolResource. </returns>
-        public virtual ElasticPoolCollection GetElasticPools()
-        {
-            return GetCachedClient(Client => new ElasticPoolCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets an elastic pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticPools_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ElasticPoolResource>> GetElasticPoolAsync(string elasticPoolName, CancellationToken cancellationToken = default)
-        {
-            return await GetElasticPools().GetAsync(elasticPoolName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an elastic pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticPools_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ElasticPoolResource> GetElasticPool(string elasticPoolName, CancellationToken cancellationToken = default)
-        {
-            return GetElasticPools().Get(elasticPoolName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of IPv6FirewallRuleResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of IPv6FirewallRuleResources and their operations over a IPv6FirewallRuleResource. </returns>
-        public virtual IPv6FirewallRuleCollection GetIPv6FirewallRules()
-        {
-            return GetCachedClient(Client => new IPv6FirewallRuleCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets an IPv6 firewall rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IPv6FirewallRuleResource>> GetIPv6FirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
-        {
-            return await GetIPv6FirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an IPv6 firewall rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<IPv6FirewallRuleResource> GetIPv6FirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
-        {
-            return GetIPv6FirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerBlobAuditingPolicyResources in the SqlServer. </summary>
@@ -1517,55 +1248,6 @@ namespace Azure.ResourceManager.Sql
             return GetServerAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlServerSqlVulnerabilityAssessmentResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of SqlServerSqlVulnerabilityAssessmentResources and their operations over a SqlServerSqlVulnerabilityAssessmentResource. </returns>
-        public virtual SqlServerSqlVulnerabilityAssessmentCollection GetSqlServerSqlVulnerabilityAssessments()
-        {
-            return GetCachedClient(Client => new SqlServerSqlVulnerabilityAssessmentCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets SQL Vulnerability Assessment policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentsSettings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerSqlVulnerabilityAssessmentResource>> GetSqlServerSqlVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlServerSqlVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets SQL Vulnerability Assessment policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentsSettings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<SqlServerSqlVulnerabilityAssessmentResource> GetSqlServerSqlVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
-        {
-            return GetSqlServerSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SqlDatabaseResources in the SqlServer. </summary>
         /// <returns> An object representing collection of SqlDatabaseResources and their operations over a SqlDatabaseResource. </returns>
         public virtual SqlDatabaseCollection GetSqlDatabases()
@@ -1621,6 +1303,328 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<SqlDatabaseResource> GetSqlDatabase(string databaseName, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetSqlDatabases().Get(databaseName, expand, filter, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ElasticPoolResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of ElasticPoolResources and their operations over a ElasticPoolResource. </returns>
+        public virtual ElasticPoolCollection GetElasticPools()
+        {
+            return GetCachedClient(Client => new ElasticPoolCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an elastic pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ElasticPoolResource>> GetElasticPoolAsync(string elasticPoolName, CancellationToken cancellationToken = default)
+        {
+            return await GetElasticPools().GetAsync(elasticPoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an elastic pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ElasticPoolResource> GetElasticPool(string elasticPoolName, CancellationToken cancellationToken = default)
+        {
+            return GetElasticPools().Get(elasticPoolName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RecoverableDatabaseResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of RecoverableDatabaseResources and their operations over a RecoverableDatabaseResource. </returns>
+        public virtual RecoverableDatabaseCollection GetRecoverableDatabases()
+        {
+            return GetCachedClient(Client => new RecoverableDatabaseCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a recoverable database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoverableDatabases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RecoverableDatabaseResource>> GetRecoverableDatabaseAsync(string databaseName, string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return await GetRecoverableDatabases().GetAsync(databaseName, expand, filter, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a recoverable database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoverableDatabases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RecoverableDatabaseResource> GetRecoverableDatabase(string databaseName, string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetRecoverableDatabases().Get(databaseName, expand, filter, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RestorableDroppedDatabaseResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of RestorableDroppedDatabaseResources and their operations over a RestorableDroppedDatabaseResource. </returns>
+        public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
+        {
+            return GetCachedClient(Client => new RestorableDroppedDatabaseCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a restorable dropped database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedDatabases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return await GetRestorableDroppedDatabases().GetAsync(restorableDroppedDatabaseId, expand, filter, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a restorable dropped database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedDatabases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RestorableDroppedDatabaseResource> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetRestorableDroppedDatabases().Get(restorableDroppedDatabaseId, expand, filter, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of FailoverGroupResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of FailoverGroupResources and their operations over a FailoverGroupResource. </returns>
+        public virtual FailoverGroupCollection GetFailoverGroups()
+        {
+            return GetCachedClient(Client => new FailoverGroupCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a failover group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/failoverGroups/{failoverGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FailoverGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="failoverGroupName"> The name of the failover group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FailoverGroupResource>> GetFailoverGroupAsync(string failoverGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetFailoverGroups().GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a failover group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/failoverGroups/{failoverGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FailoverGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="failoverGroupName"> The name of the failover group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FailoverGroupResource> GetFailoverGroup(string failoverGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetFailoverGroups().Get(failoverGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of IPv6FirewallRuleResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of IPv6FirewallRuleResources and their operations over a IPv6FirewallRuleResource. </returns>
+        public virtual IPv6FirewallRuleCollection GetIPv6FirewallRules()
+        {
+            return GetCachedClient(Client => new IPv6FirewallRuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an IPv6 firewall rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IPv6FirewallRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IPv6FirewallRuleResource>> GetIPv6FirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            return await GetIPv6FirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an IPv6 firewall rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IPv6FirewallRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IPv6FirewallRuleResource> GetIPv6FirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetIPv6FirewallRules().Get(firewallRuleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlServerSqlVulnerabilityAssessmentResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerSqlVulnerabilityAssessmentResources and their operations over a SqlServerSqlVulnerabilityAssessmentResource. </returns>
+        public virtual SqlServerSqlVulnerabilityAssessmentCollection GetSqlServerSqlVulnerabilityAssessments()
+        {
+            return GetCachedClient(Client => new SqlServerSqlVulnerabilityAssessmentCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets SQL Vulnerability Assessment policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentsSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlServerSqlVulnerabilityAssessmentResource>> GetSqlServerSqlVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlServerSqlVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets SQL Vulnerability Assessment policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentsSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerSqlVulnerabilityAssessmentResource> GetSqlServerSqlVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlServerSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
 
         /// <summary>

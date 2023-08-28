@@ -17,7 +17,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class MiscellaneousOperationsLiveTests : DocumentAnalysisLiveTestBase
     {
         private readonly IReadOnlyDictionary<string, string> _testingTags = new Dictionary<string, string>()
@@ -167,7 +166,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotNull(model.ModelId);
             Assert.AreNotEqual(default(DateTimeOffset), model.CreatedOn);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 if (model.ExpiresOn.HasValue)
                 {
@@ -176,18 +175,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
             else
             {
-                // We have changed the following validation because of a service bug. This needs to be updated once the bug is fixed.
-                // More information: https://github.com/Azure/azure-sdk-for-net/issues/35809
-
-                /* The expected behavior. This must be added back once the service bug is fixed.
                 Assert.Null(model.ExpiresOn);
-                */
-
-                // The current behavior. This 'if' block must be completely removed once the service bug is fixed.
-                if (model.ExpiresOn.HasValue)
-                {
-                    Assert.Greater(model.ExpiresOn, model.CreatedOn);
-                }
             }
 
             // TODO add validation for Doctypes https://github.com/Azure/azure-sdk-for-net-pr/issues/1432

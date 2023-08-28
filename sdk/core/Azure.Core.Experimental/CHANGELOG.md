@@ -1,16 +1,26 @@
 # Release History
 
-## 0.1.0-preview.28 (Unreleased)
+## 0.1.0-preview.30 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Removed `DynamicData` type.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.29 (2023-08-07)
+
+### Features Added
+- Added SchemaValidator and LruCache types for use with Azure.Data.SchemaRegistry preview library.
+- Added CloudMachine and ProvisionableTemplateAttribute types for use with CloudMachine.
+
+## 0.1.0-preview.28 (2023-07-11)
+
+### Breaking Changes
+
+- Removed `DynamicData` type.
 
 ## 0.1.0-preview.27 (2023-05-09)
 

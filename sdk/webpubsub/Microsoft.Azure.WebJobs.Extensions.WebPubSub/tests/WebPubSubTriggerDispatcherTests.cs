@@ -102,6 +102,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
+        [TestCase("sha256=something,sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
+        [TestCase("sha256=something, sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
+        [TestCase("sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561, sha256=something")]
+        [TestCase("sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561,sha256=something")]
+        public async Task TestProcessRequest_MultiSignaturesSuccess(string signatures)
+        {
+            var dispatcher = SetupDispatcher(connectionString: $"Endpoint=http://{TestOrigin};Port=8080;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { signatures }, httpMethod: "GET", origin: new string[] { TestOrigin });
+            var response = await dispatcher.ExecuteAsync(request);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
         [TestCase("application/xml", HttpStatusCode.BadRequest)]
         public async Task TestProcessRequest_MessageMediaTypes(string mediaType, HttpStatusCode expectedCode)
         {

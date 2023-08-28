@@ -28,7 +28,13 @@ namespace Azure.Communication.CallAutomation
         internal CallRecordingRestClient CallRecordingRestClient { get; }
         internal CallDialogRestClient CallDialogRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
-        internal CommunicationUserIdentifier Source { get; }
+
+        /// <summary>
+        /// CommunicationUserIdentifier that makes the outbound call.
+        /// This can be provided by providing CallAutomationClientOption during construction of CallAutomationClient.
+        /// If left blank, service will create one each request.
+        /// </summary>
+        public CommunicationUserIdentifier Source { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
@@ -167,13 +173,8 @@ namespace Azure.Communication.CallAutomation
                 if (options == null) throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var answerResponse = await AzureCommunicationServicesRestClient.AnswerCallAsync(request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                var answerResponse = await AzureCommunicationServicesRestClient.AnswerCallAsync(request, cancellationToken).ConfigureAwait(false);
 
                 var result = new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value));
                 result.SetEventProcessor(EventProcessor, answerResponse.Value.CallConnectionId, null);
@@ -220,12 +221,8 @@ namespace Azure.Communication.CallAutomation
                 if (options == null) throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var answerResponse = AzureCommunicationServicesRestClient.AnswerCall(request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken);
+                var answerResponse = AzureCommunicationServicesRestClient.AnswerCall(request, cancellationToken);
 
                 var result = new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value));
                 result.SetEventProcessor(EventProcessor, answerResponse.Value.CallConnectionId, null);
@@ -242,21 +239,11 @@ namespace Azure.Communication.CallAutomation
 
         private AnswerCallRequestInternal CreateAnswerCallRequest(AnswerCallOptions options)
         {
-            // validate callbackUri
-            if (!IsValidHttpsUri(options.CallbackUri))
-            {
-                throw new ArgumentException(CallAutomationErrorMessages.InvalidHttpsUriMessage);
-            }
-
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
             // Add custom cognitive service domain name
-            if (options.AzureCognitiveServicesEndpointUrl != null)
+            if (options.AzureCognitiveServicesEndpointUri != null)
             {
-                if (!IsValidHttpsUri(options.AzureCognitiveServicesEndpointUrl))
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidCognitiveServiceHttpsUriMessage);
-                }
-                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
+                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
             }
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.AnsweredByIdentifier = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
@@ -294,18 +281,12 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 request.CustomContext = new CustomContextInternal(
-                   options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
-                   options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
+                   options.CallInvite.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.SipHeaders,
+                   options.CallInvite.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.VoipHeaders);
 
-                return await AzureCommunicationServicesRestClient.RedirectCallAsync(
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken
-                    ).ConfigureAwait(false);
+                return await AzureCommunicationServicesRestClient.RedirectCallAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -343,17 +324,12 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 request.CustomContext = new CustomContextInternal(
-                   options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
-                   options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
+                   options.CallInvite.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.SipHeaders,
+                   options.CallInvite.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.VoipHeaders);
 
-                return AzureCommunicationServicesRestClient.RedirectCall(
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken);
+                return AzureCommunicationServicesRestClient.RedirectCall(request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -390,14 +366,8 @@ namespace Azure.Communication.CallAutomation
 
                 RejectCallRequestInternal request = new RejectCallRequestInternal(options.IncomingCallContext);
                 request.CallRejectReason = options.CallRejectReason.ToString();
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                return await AzureCommunicationServicesRestClient.RejectCallAsync(
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken
-                    ).ConfigureAwait(false);
+                return await AzureCommunicationServicesRestClient.RejectCallAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -434,14 +404,8 @@ namespace Azure.Communication.CallAutomation
 
                 RejectCallRequestInternal request = new RejectCallRequestInternal(options.IncomingCallContext);
                 request.CallRejectReason = options.CallRejectReason.ToString();
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                return AzureCommunicationServicesRestClient.RejectCall(
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken
-                    );
+                return AzureCommunicationServicesRestClient.RejectCall(request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -486,14 +450,8 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken
-                    ).ConfigureAwait(false);
+                var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(request, cancellationToken).ConfigureAwait(false);
 
                 var result = new CreateCallResult(
                     GetCallConnection(createCallResponse.Value.CallConnectionId),
@@ -546,14 +504,8 @@ namespace Azure.Communication.CallAutomation
                 if (options == null) throw new ArgumentNullException(nameof(options));
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken
-                    );
+                var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(request, cancellationToken);
 
                 var result = new CreateCallResult(
                     GetCallConnection(createCallResponse.Value.CallConnectionId),
@@ -591,14 +543,8 @@ namespace Azure.Communication.CallAutomation
                 }
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken
-                    ).ConfigureAwait(false);
+                var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(request, cancellationToken).ConfigureAwait(false);
 
                 var result = new CreateCallResult(
                     GetCallConnection(createCallResponse.Value.CallConnectionId),
@@ -636,14 +582,8 @@ namespace Azure.Communication.CallAutomation
                 }
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken
-                    );
+                var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(request, cancellationToken);
 
                 var result = new CreateCallResult(
                     GetCallConnection(createCallResponse.Value.CallConnectionId),
@@ -674,17 +614,13 @@ namespace Azure.Communication.CallAutomation
             };
 
             request.CustomContext = new CustomContextInternal(
-               options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
-               options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
+               options.CallInvite.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.SipHeaders,
+               options.CallInvite.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.VoipHeaders);
 
             // Add custom cognitive service domain name
-            if (options.AzureCognitiveServicesEndpointUrl != null)
+            if (options.AzureCognitiveServicesEndpointUri != null)
             {
-                if (!IsValidHttpsUri(options.AzureCognitiveServicesEndpointUrl))
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidCognitiveServiceHttpsUriMessage);
-                }
-                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
+                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
             }
             request.OperationContext = options.OperationContext;
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
@@ -706,17 +642,13 @@ namespace Azure.Communication.CallAutomation
             };
 
             request.CustomContext = new CustomContextInternal(
-               options.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.SipHeaders,
-               options.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.VoipHeaders);
+               options.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.SipHeaders,
+               options.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.VoipHeaders);
 
             // Add custom cognitive service domain name
-            if (options.AzureCognitiveServicesEndpointUrl != null)
+            if (options.AzureCognitiveServicesEndpointUri != null)
             {
-                if (!IsValidHttpsUri(options.AzureCognitiveServicesEndpointUrl))
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidCognitiveServiceHttpsUriMessage);
-                }
-                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
+                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
             }
             request.OperationContext = options.OperationContext;
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
@@ -785,25 +717,6 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 return EventProcessor;
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get source identity used by Call Automation client.
-        /// </summary>
-        /// <returns></returns>
-        public virtual CommunicationUserIdentifier GetSourceIdentity()
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetSourceIdentity)}");
-            scope.Start();
-            try
-            {
-                return Source;
             }
             catch (Exception ex)
             {

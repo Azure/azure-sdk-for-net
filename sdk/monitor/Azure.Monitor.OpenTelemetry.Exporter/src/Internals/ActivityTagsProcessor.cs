@@ -23,7 +23,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeHttpHostPort,
             SemanticConventions.AttributeHttpTarget,
             SemanticConventions.AttributeHttpUserAgent,
-            SemanticConventions.AttributeHttpClientIP,
             SemanticConventions.AttributeHttpRoute,
 
             // required - HTTP V2
@@ -37,6 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeUrlScheme,
             SemanticConventions.AttributeUrlQuery,
             SemanticConventions.AttributeUserAgentOriginal,
+            SemanticConventions.AttributeClientAddress,
 
             // required - Azure
             SemanticConventions.AttributeAzureNameSpace,
@@ -51,7 +51,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeNetHostName,
             SemanticConventions.AttributeComponent,
             "otel.status_code",
-            "sampleRate",
 
             SemanticConventions.AttributeRpcService,
             // required - RPC
@@ -61,10 +60,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeEndpointAddress,
             // required - Messaging
             SemanticConventions.AttributeMessagingSystem,
-            SemanticConventions.AttributeMessagingDestination,
-            SemanticConventions.AttributeMessagingDestinationKind,
-            SemanticConventions.AttributeMessagingTempDestination,
-            SemanticConventions.AttributeMessagingUrl,
+            SemanticConventions.AttributeMessagingDestinationName,
+            SemanticConventions.AttributeNetworkProtocolName,
 
             // Others
             SemanticConventions.AttributeEnduserId
@@ -75,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public AzMonList MappedTags;
         public AzMonList UnMappedTags;
 
-        public OperationType activityType { get; private set; }
+        public OperationType activityType { get; set; }
 
         public string? AzureNamespace { get; private set; } = null;
 

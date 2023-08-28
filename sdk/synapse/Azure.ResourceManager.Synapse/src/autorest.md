@@ -14,6 +14,7 @@ tag: package-composite-v2
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+use-core-datafactory-replacements: false
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true   # Mitigate the duplication schema 'ErrorResponse' issue

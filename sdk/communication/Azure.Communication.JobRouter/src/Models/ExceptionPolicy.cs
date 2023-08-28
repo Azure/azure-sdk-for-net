@@ -39,5 +39,8 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> (Optional) A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule. </summary>
         public IDictionary<string, ExceptionRule> ExceptionRules { get; } = new Dictionary<string, ExceptionRule>();
+
+        /// <summary> (Optional) The name of the exception policy. </summary>
+        public string Name { get; internal set; }
     }
 }

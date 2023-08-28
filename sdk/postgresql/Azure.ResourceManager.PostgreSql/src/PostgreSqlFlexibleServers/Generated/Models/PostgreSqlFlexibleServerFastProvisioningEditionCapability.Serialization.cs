@@ -18,11 +18,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
+            Optional<string> supportedTier = default;
             Optional<string> supportedSku = default;
             Optional<long> supportedStorageGb = default;
             Optional<string> supportedServerVersions = default;
+            Optional<int> serverCount = default;
+            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("supportedTier"u8))
+                {
+                    supportedTier = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("supportedSku"u8))
                 {
                     supportedSku = property.Value.GetString();
@@ -42,8 +51,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedServerVersions = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("serverCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
+                    continue;
+                }
+                if (property.NameEquals("reason"u8))
+                {
+                    reason = property.Value.GetString();
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(supportedSku.Value, Optional.ToNullable(supportedStorageGb), supportedServerVersions.Value);
+            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(Optional.ToNullable(status), reason.Value, supportedTier.Value, supportedSku.Value, Optional.ToNullable(supportedStorageGb), supportedServerVersions.Value, Optional.ToNullable(serverCount));
         }
     }
 }

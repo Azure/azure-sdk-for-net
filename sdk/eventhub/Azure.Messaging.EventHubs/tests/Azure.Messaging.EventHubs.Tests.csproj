@@ -12,16 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
-    <PackageReference Include="Microsoft.Azure.Amqp" />
-    <PackageReference Include="Microsoft.Azure.Management.EventHub" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
-    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="Microsoft.Azure.EventHubs" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Polly" />
     <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.ValueTuple" />
