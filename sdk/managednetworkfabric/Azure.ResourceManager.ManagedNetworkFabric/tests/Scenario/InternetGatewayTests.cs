@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         {
             TestContext.Out.WriteLine($"Entered into the Internet Gateway tests....");
 
-            ResourceIdentifier networkFabricInternetGatewayResourceId = NetworkFabricInternetGatewayResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.InternetGatewayName);
+            ResourceIdentifier networkFabricInternetGatewayResourceId = NetworkFabricInternetGatewayResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.NFCResourceGroupName, TestEnvironment.InternetGatewayName);
             NetworkFabricInternetGatewayResource networkFabricInternetGateway = Client.GetNetworkFabricInternetGatewayResource(networkFabricInternetGatewayResourceId);
 
             // invoke the get operation

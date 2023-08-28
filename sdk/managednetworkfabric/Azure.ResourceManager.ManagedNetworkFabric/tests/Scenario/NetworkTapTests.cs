@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [Test]
         [RecordedTest]
         [AsyncOnly]
-        public async Task NetworkTapList()
+        public async Task NetworkTap()
         {
-            TestContext.Out.WriteLine($"Entered into the NetworkTapList tests....");
+            TestContext.Out.WriteLine($"Entered into the NetworkTap tests....");
             TestContext.Out.WriteLine($"Provided TestEnvironment.NetworkTapName name : {TestEnvironment.NetworkTapName}");
             ResourceIdentifier networkTapRuleResourceId = NetworkTapResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkTapName);
             TestContext.Out.WriteLine($"networkTapRuleResourceId: {networkTapRuleResourceId}");
-            TestContext.Out.WriteLine($"NetworkTapList Test started.....");
+            TestContext.Out.WriteLine($"NetworkTap Test started.....");
             NetworkTapCollection collection = ResourceGroupResource.GetNetworkTaps();
 
             // Create
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ArmOperation<NetworkTapResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkTapName, data);
             NetworkTapResource createResult = lro.Value;
             Assert.AreEqual(createResult.Data.Name, TestEnvironment.NetworkTapName);
+            TestContext.Out.WriteLine($"Created.....{createResult.Data.Id}");
 
             // Update
             // Patch not supported now. Will enable it once supported.
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             NetworkTapResource ntResource = Client.GetNetworkTapResource(networkTapRuleResourceId);
             // Get
-            TestContext.Out.WriteLine($"GET started.....");
+            TestContext.Out.WriteLine($"GET started.....{networkTapRuleResourceId.ToString()}");
             NetworkTapResource getResult = await ntResource.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
             Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkTapName);

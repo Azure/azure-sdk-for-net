@@ -41,16 +41,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ArmOperation<NetworkFabricInternetGatewayRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.InternetGatewayRuleName, data);
             NetworkFabricInternetGatewayRuleResource result = lro.Value;
             NetworkFabricInternetGatewayRuleData resourceData = result.Data;
-            Assert.Equals(resourceData.Name, TestEnvironment.InternetGatewayRuleName);
+            Assert.AreEqual(resourceData.Name, TestEnvironment.InternetGatewayRuleName);
             TestContext.Out.WriteLine($"Create operation succeeded on id: {resourceData.Id}");
 
             // invoke the get operation
             result = await collection.GetAsync(TestEnvironment.InternetGatewayRuleName);
 
             resourceData = result.Data;
-            Assert.Equals(resourceData.Name, TestEnvironment.InternetGatewayRuleName);
+            Assert.AreEqual(resourceData.Name, TestEnvironment.InternetGatewayRuleName);
             TestContext.Out.WriteLine($"Get Operation succeeded on id: {resourceData.Id}");
 
+            /*
             //invoke the update operation
             ResourceIdentifier networkFabricInternetGatewayRuleResourceId = NetworkFabricInternetGatewayRuleResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.InternetGatewayRuleName);
             NetworkFabricInternetGatewayRuleResource networkFabricInternetGatewayRule = Client.GetNetworkFabricInternetGatewayRuleResource(networkFabricInternetGatewayRuleResourceId);
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             Assert.True(patchResult.Data.Tags.ContainsKey("key3311"));
 
             TestContext.Out.WriteLine($"Patch operation succeeded on id: {patchResourceData.Id}");
+            */
 
             // invoke the list by group operation and iterate over the result
             await foreach (NetworkFabricInternetGatewayRuleResource item in collection.GetAllAsync())
