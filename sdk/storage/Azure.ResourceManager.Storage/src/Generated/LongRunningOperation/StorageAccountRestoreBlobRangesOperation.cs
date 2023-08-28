@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        internal StorageAccountRestoreBlobRangesOperation(IOperationSource<BlobRestoreStatus> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal StorageAccountRestoreBlobRangesOperation(IOperationSource<BlobRestoreStatus> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, Core.OperationFinalStateVia finalStateVia)
         {
             _operation = new StorageArmOperation<BlobRestoreStatus>(source, clientDiagnostics, pipeline, request, response, finalStateVia);
             _operationSource = source;
