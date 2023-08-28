@@ -35,6 +35,8 @@ namespace Azure.ResourceManager.Marketplace
 
         private readonly ClientDiagnostics _privateStoreClientDiagnostics;
         private readonly PrivateStoreRestOperations _privateStoreRestClient;
+        private readonly ClientDiagnostics _defaultClientDiagnostics;
+        private readonly MarketplaceRPServiceRestOperations _defaultRestClient;
         private readonly PrivateStoreData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateStoreResource"/> class for mocking. </summary>
@@ -59,6 +61,8 @@ namespace Azure.ResourceManager.Marketplace
             _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string privateStoreApiVersion);
             _privateStoreRestClient = new PrivateStoreRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreApiVersion);
+            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _defaultRestClient = new MarketplaceRPServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -1201,6 +1205,50 @@ namespace Azure.ResourceManager.Marketplace
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// All rules approved in the private store that are relevant for user subscriptions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryUserRules</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="payload"> The QueryUserRulesProperties to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Rule> QueryUserRulesAsync(QueryUserRulesProperties payload = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), payload);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Rule.DeserializeRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// All rules approved in the private store that are relevant for user subscriptions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryUserRules</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="payload"> The QueryUserRulesProperties to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Rule> QueryUserRules(QueryUserRulesProperties payload = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), payload);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, Rule.DeserializeRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
         }
     }
 }
