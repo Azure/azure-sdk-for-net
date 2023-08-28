@@ -49,18 +49,12 @@ namespace Azure.ResourceManager.TestFramework
             {
                 if (type.IsClass && type.IsPublic && !exceptionList.Contains(type.Name))
                 {
-                    if (type.Name.EndsWith("Resource")
-                        && !type.Name.Equals("ArmResource")
-                        && !type.Name.Equals("WritableSubResource")
-                        && !type.Name.Equals("SubResource")
-                        && !type.BaseType.Name.Equals("ArmResource"))
+                    if (type.Name.EndsWith("Resource") && typeof(ArmResource).IsAssignableFrom(type))
                     {
                         errorList.Add(type.Name);
                     }
 
-                    if (type.Name.EndsWith("Collection")
-                        && !type.Name.Equals("ArmCollection")
-                        && !type.BaseType.Name.Equals("ArmCollection"))
+                    if (type.Name.EndsWith("Collection") && typeof(ArmCollection).IsAssignableFrom(type))
                     {
                         errorList.Add(type.Name);
                     }
@@ -73,8 +67,8 @@ namespace Azure.ResourceManager.TestFramework
                 }
             }
 
-            Assert.IsEmpty(exceptionList, "InherentCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
-            Assert.IsEmpty(errorList, "InherentCheck failed with Type: " + string.Join(",", errorList));
+            Assert.IsEmpty(exceptionList, "InheritanceCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
+            Assert.IsEmpty(errorList, "InheritanceCheck failed with Type: " + string.Join(",", errorList));
         }
     }
 }
