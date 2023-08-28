@@ -1121,7 +1121,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 using HttpMessage message = CreateCreateSnapshotRequest(name, content, contentType, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1160,7 +1160,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 using HttpMessage message = CreateCreateSnapshotRequest(name, content, contentType, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
