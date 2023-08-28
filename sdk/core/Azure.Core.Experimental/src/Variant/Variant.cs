@@ -6,11 +6,12 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace Azure {
+namespace Azure
+{
     /// <summary>
     /// Used to store primitive values without boxing, and other instances.
     /// </summary>
-    public readonly partial struct Value
+    public readonly partial struct Variant
     {
         private readonly Union _union;
         private readonly object? _object;
@@ -19,7 +20,7 @@ namespace Azure {
         /// Creates instance.
         /// </summary>
         /// <param name="value"></param>
-        public Value(object? value)
+        public Variant(object? value)
         {
             _object = value;
             _union = default;
@@ -81,7 +82,7 @@ namespace Azure {
         /// Stores byte in this value.
         /// </summary>
         /// <param name="value"></param>
-        public Value(byte value)
+        public Variant(byte value)
         {
             this = default;
             _object = TypeFlags.Byte;
@@ -92,7 +93,7 @@ namespace Azure {
         /// Stores nullable byte in this value.
         /// </summary>
         /// <param name="value"></param>
-        public Value(byte? value)
+        public Variant(byte? value)
         {
             this = default;
             if (value.HasValue)
@@ -110,22 +111,22 @@ namespace Azure {
         /// Casts byte to value.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(byte value) => new(value);
+        public static implicit operator Variant(byte value) => new(value);
         /// <summary>
         /// Casts value to byte, if possible.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator byte(in Value value) => value.As<byte>();
+        public static explicit operator byte(in Variant value) => value.As<byte>();
         /// <summary>
         /// Casts nullable byte to value.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(byte? value) => new(value);
+        public static implicit operator Variant(byte? value) => new(value);
         /// <summary>
         /// Casts value to nullable byte, if possible.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator byte?(in Value value) => value.As<byte?>();
+        public static explicit operator byte?(in Variant value) => value.As<byte?>();
         #endregion
 
         #region SByte
@@ -133,7 +134,7 @@ namespace Azure {
         /// Stores sbyte in this value.
         /// </summary>
         /// <param name="value"></param>
-        public Value(sbyte value)
+        public Variant(sbyte value)
         {
             this = default;
             _object = TypeFlags.SByte;
@@ -144,7 +145,7 @@ namespace Azure {
         /// Stores nullable sbyte in this value.
         /// </summary>
         /// <param name="value"></param>
-        public Value(sbyte? value)
+        public Variant(sbyte? value)
         {
             this = default;
             if (value.HasValue)
@@ -162,22 +163,22 @@ namespace Azure {
         /// Casts sbyte to value.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(sbyte value) => new(value);
+        public static implicit operator Variant(sbyte value) => new(value);
         /// <summary>
         /// Casts value to sbyte, if possible.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator sbyte(in Value value) => value.As<sbyte>();
+        public static explicit operator sbyte(in Variant value) => value.As<sbyte>();
         /// <summary>
         /// Casts nullable sbyte to value.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(sbyte? value) => new(value);
+        public static implicit operator Variant(sbyte? value) => new(value);
         /// <summary>
         /// Casts value to nullable sbyte, if possible.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator sbyte?(in Value value) => value.As<sbyte?>();
+        public static explicit operator sbyte?(in Variant value) => value.As<sbyte?>();
         #endregion
 
         #region Boolean
@@ -185,7 +186,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(bool value)
+        public Variant(bool value)
         {
             this = default;
             _object = TypeFlags.Boolean;
@@ -196,7 +197,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(bool? value)
+        public Variant(bool? value)
         {
             this = default;
             if (value.HasValue)
@@ -213,22 +214,22 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(bool value) => new(value);
+        public static implicit operator Variant(bool value) => new(value);
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator bool(in Value value) => value.As<bool>();
+        public static explicit operator bool(in Variant value) => value.As<bool>();
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(bool? value) => new(value);
+        public static implicit operator Variant(bool? value) => new(value);
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator bool?(in Value value) => value.As<bool?>();
+        public static explicit operator bool?(in Variant value) => value.As<bool?>();
         #endregion
 
         #region Char
@@ -236,7 +237,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(char value)
+        public Variant(char value)
         {
             this = default;
             _object = TypeFlags.Char;
@@ -246,7 +247,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(char? value)
+        public Variant(char? value)
         {
             this = default;
             if (value.HasValue)
@@ -263,22 +264,22 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(char value) => new(value);
+        public static implicit operator Variant(char value) => new(value);
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator char(in Value value) => value.As<char>();
+        public static explicit operator char(in Variant value) => value.As<char>();
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(char? value) => new(value);
+        public static implicit operator Variant(char? value) => new(value);
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator char?(in Value value) => value.As<char?>();
+        public static explicit operator char?(in Variant value) => value.As<char?>();
         #endregion
 
         #region Int16
@@ -286,7 +287,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(short value)
+        public Variant(short value)
         {
             this = default;
             _object = TypeFlags.Int16;
@@ -296,7 +297,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(short? value)
+        public Variant(short? value)
         {
             this = default;
             if (value.HasValue)
@@ -314,22 +315,22 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(short value) => new(value);
+        public static implicit operator Variant(short value) => new(value);
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator short(in Value value) => value.As<short>();
+        public static explicit operator short(in Variant value) => value.As<short>();
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(short? value) => new(value);
+        public static implicit operator Variant(short? value) => new(value);
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator short?(in Value value) => value.As<short?>();
+        public static explicit operator short?(in Variant value) => value.As<short?>();
         #endregion
 
         #region Int32
@@ -337,7 +338,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(int value)
+        public Variant(int value)
         {
             this = default;
             _object = TypeFlags.Int32;
@@ -348,7 +349,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(int? value)
+        public Variant(int? value)
         {
             this = default;
             if (value.HasValue)
@@ -366,25 +367,25 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(int value) => new(value);
+        public static implicit operator Variant(int value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator int(in Value value) => value.As<int>();
+        public static explicit operator int(in Variant value) => value.As<int>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(int? value) => new(value);
+        public static implicit operator Variant(int? value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator int?(in Value value) => value.As<int?>();
+        public static explicit operator int?(in Variant value) => value.As<int?>();
         #endregion
 
         #region Int64
@@ -392,7 +393,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(long value)
+        public Variant(long value)
         {
             this = default;
             _object = TypeFlags.Int64;
@@ -403,7 +404,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(long? value)
+        public Variant(long? value)
         {
             this = default;
             if (value.HasValue)
@@ -421,25 +422,25 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(long value) => new(value);
+        public static implicit operator Variant(long value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator long(in Value value) => value.As<long>();
+        public static explicit operator long(in Variant value) => value.As<long>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(long? value) => new(value);
+        public static implicit operator Variant(long? value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator long?(in Value value) => value.As<long?>();
+        public static explicit operator long?(in Variant value) => value.As<long?>();
         #endregion
 
         #region UInt16
@@ -448,7 +449,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(ushort value)
+        public Variant(ushort value)
         {
             this = default;
             _object = TypeFlags.UInt16;
@@ -459,7 +460,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(ushort? value)
+        public Variant(ushort? value)
         {
             this = default;
             if (value.HasValue)
@@ -477,25 +478,25 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(ushort value) => new(value);
+        public static implicit operator Variant(ushort value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator ushort(in Value value) => value.As<ushort>();
+        public static explicit operator ushort(in Variant value) => value.As<ushort>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(ushort? value) => new(value);
+        public static implicit operator Variant(ushort? value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator ushort?(in Value value) => value.As<ushort?>();
+        public static explicit operator ushort?(in Variant value) => value.As<ushort?>();
         #endregion
 
         #region UInt32
@@ -504,7 +505,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(uint value)
+        public Variant(uint value)
         {
             this = default;
             _object = TypeFlags.UInt32;
@@ -515,7 +516,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(uint? value)
+        public Variant(uint? value)
         {
             this = default;
             if (value.HasValue)
@@ -533,25 +534,25 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(uint value) => new(value);
+        public static implicit operator Variant(uint value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator uint(in Value value) => value.As<uint>();
+        public static explicit operator uint(in Variant value) => value.As<uint>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(uint? value) => new(value);
+        public static implicit operator Variant(uint? value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator uint?(in Value value) => value.As<uint?>();
+        public static explicit operator uint?(in Variant value) => value.As<uint?>();
         #endregion
 
         #region UInt64
@@ -560,7 +561,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(ulong value)
+        public Variant(ulong value)
         {
             this = default;
             _object = TypeFlags.UInt64;
@@ -571,7 +572,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(ulong? value)
+        public Variant(ulong? value)
         {
             this = default;
             if (value.HasValue)
@@ -589,25 +590,25 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(ulong value) => new(value);
+        public static implicit operator Variant(ulong value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator ulong(in Value value) => value.As<ulong>();
+        public static explicit operator ulong(in Variant value) => value.As<ulong>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(ulong? value) => new(value);
+        public static implicit operator Variant(ulong? value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator ulong?(in Value value) => value.As<ulong?>();
+        public static explicit operator ulong?(in Variant value) => value.As<ulong?>();
         #endregion
 
         #region Single
@@ -616,7 +617,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(float value)
+        public Variant(float value)
         {
             this = default;
             _object = TypeFlags.Single;
@@ -627,7 +628,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(float? value)
+        public Variant(float? value)
         {
             this = default;
             if (value.HasValue)
@@ -645,25 +646,25 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(float value) => new(value);
+        public static implicit operator Variant(float value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator float(in Value value) => value.As<float>();
+        public static explicit operator float(in Variant value) => value.As<float>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(float? value) => new(value);
+        public static implicit operator Variant(float? value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator float?(in Value value) => value.As<float?>();
+        public static explicit operator float?(in Variant value) => value.As<float?>();
         #endregion
 
         #region Double
@@ -672,7 +673,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(double value)
+        public Variant(double value)
         {
             this = default;
             _object = TypeFlags.Double;
@@ -683,7 +684,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(double? value)
+        public Variant(double? value)
         {
             this = default;
             if (value.HasValue)
@@ -701,25 +702,25 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(double value) => new(value);
+        public static implicit operator Variant(double value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator double(in Value value) => value.As<double>();
+        public static explicit operator double(in Variant value) => value.As<double>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(double? value) => new(value);
+        public static implicit operator Variant(double? value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator double?(in Value value) => value.As<double?>();
+        public static explicit operator double?(in Variant value) => value.As<double?>();
         #endregion
 
         #region DateTimeOffset
@@ -728,7 +729,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(DateTimeOffset value)
+        public Variant(DateTimeOffset value)
         {
             this = default;
             TimeSpan offset = value.Offset;
@@ -753,7 +754,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(DateTimeOffset? value)
+        public Variant(DateTimeOffset? value)
         {
             this = default;
             if (!value.HasValue)
@@ -770,25 +771,25 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(DateTimeOffset value) => new(value);
+        public static implicit operator Variant(DateTimeOffset value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator DateTimeOffset(in Value value) => value.As<DateTimeOffset>();
+        public static explicit operator DateTimeOffset(in Variant value) => value.As<DateTimeOffset>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(DateTimeOffset? value) => new(value);
+        public static implicit operator Variant(DateTimeOffset? value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator DateTimeOffset?(in Value value) => value.As<DateTimeOffset?>();
+        public static explicit operator DateTimeOffset?(in Variant value) => value.As<DateTimeOffset?>();
         #endregion
 
         #region DateTime
@@ -797,7 +798,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(DateTime value)
+        public Variant(DateTime value)
         {
             this = default;
 
@@ -809,7 +810,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public Value(DateTime? value)
+        public Variant(DateTime? value)
         {
             this = default;
             if (value.HasValue)
@@ -827,25 +828,25 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(DateTime value) => new(value);
+        public static implicit operator Variant(DateTime value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator DateTime(in Value value) => value.As<DateTime>();
+        public static explicit operator DateTime(in Variant value) => value.As<DateTime>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(DateTime? value) => new(value);
+        public static implicit operator Variant(DateTime? value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator DateTime?(in Value value) => value.As<DateTime?>();
+        public static explicit operator DateTime?(in Variant value) => value.As<DateTime?>();
         #endregion
 
         #region ArraySegment
@@ -854,7 +855,7 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="segment"></param>
-        public Value(ArraySegment<byte> segment)
+        public Variant(ArraySegment<byte> segment)
         {
             this = default;
             byte[]? array = segment.Array;
@@ -878,19 +879,19 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(ArraySegment<byte> value) => new(value);
+        public static implicit operator Variant(ArraySegment<byte> value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator ArraySegment<byte>(in Value value) => value.As<ArraySegment<byte>>();
+        public static explicit operator ArraySegment<byte>(in Variant value) => value.As<ArraySegment<byte>>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="segment"></param>
-        public Value(ArraySegment<char> segment)
+        public Variant(ArraySegment<char> segment)
         {
             this = default;
             char[]? array = segment.Array;
@@ -914,13 +915,13 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(ArraySegment<char> value) => new(value);
+        public static implicit operator Variant(ArraySegment<char> value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator ArraySegment<char>(in Value value) => value.As<ArraySegment<char>>();
+        public static explicit operator ArraySegment<char>(in Variant value) => value.As<ArraySegment<char>>();
         #endregion
 
         #region Decimal
@@ -929,25 +930,25 @@ namespace Azure {
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(decimal value) => new(value);
+        public static implicit operator Variant(decimal value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator decimal(in Value value) => value.As<decimal>();
+        public static explicit operator decimal(in Variant value) => value.As<decimal>();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(decimal? value) => value.HasValue ? new(value.Value) : new(value);
+        public static implicit operator Variant(decimal? value) => value.HasValue ? new(value.Value) : new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator decimal?(in Value value) => value.As<decimal?>();
+        public static explicit operator decimal?(in Variant value) => value.As<decimal?>();
         #endregion
 
         #region T
@@ -957,52 +958,82 @@ namespace Azure {
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Value Create<T>(T value)
+        public static Variant Create<T>(T value)
         {
             // Explicit cast for types we don't box
-            if (typeof(T) == typeof(bool)) return new(Unsafe.As<T, bool>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(byte)) return new(Unsafe.As<T, byte>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(sbyte)) return new(Unsafe.As<T, sbyte>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(char)) return new(Unsafe.As<T, char>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(short)) return new(Unsafe.As<T, short>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(int)) return new(Unsafe.As<T, int>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(long)) return new(Unsafe.As<T, long>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(ushort)) return new(Unsafe.As<T, ushort>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(uint)) return new(Unsafe.As<T, uint>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(ulong)) return new(Unsafe.As<T, ulong>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(float)) return new(Unsafe.As<T, float>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(double)) return new(Unsafe.As<T, double>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(DateTime)) return new(Unsafe.As<T, DateTime>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(DateTimeOffset)) return new(Unsafe.As<T, DateTimeOffset>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(bool))
+                return new(Unsafe.As<T, bool>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(byte))
+                return new(Unsafe.As<T, byte>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(sbyte))
+                return new(Unsafe.As<T, sbyte>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(char))
+                return new(Unsafe.As<T, char>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(short))
+                return new(Unsafe.As<T, short>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(int))
+                return new(Unsafe.As<T, int>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(long))
+                return new(Unsafe.As<T, long>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(ushort))
+                return new(Unsafe.As<T, ushort>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(uint))
+                return new(Unsafe.As<T, uint>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(ulong))
+                return new(Unsafe.As<T, ulong>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(float))
+                return new(Unsafe.As<T, float>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(double))
+                return new(Unsafe.As<T, double>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(DateTime))
+                return new(Unsafe.As<T, DateTime>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(DateTimeOffset))
+                return new(Unsafe.As<T, DateTimeOffset>(ref Unsafe.AsRef(value)));
 
-            if (typeof(T) == typeof(bool?)) return new(Unsafe.As<T, bool?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(byte?)) return new(Unsafe.As<T, byte?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(sbyte?)) return new(Unsafe.As<T, sbyte?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(char?)) return new(Unsafe.As<T, char?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(short?)) return new(Unsafe.As<T, short?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(int?)) return new(Unsafe.As<T, int?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(long?)) return new(Unsafe.As<T, long?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(ushort?)) return new(Unsafe.As<T, ushort?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(uint?)) return new(Unsafe.As<T, uint?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(ulong?)) return new(Unsafe.As<T, ulong?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(float?)) return new(Unsafe.As<T, float?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(double?)) return new(Unsafe.As<T, double?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(DateTime?)) return new(Unsafe.As<T, DateTime?>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(DateTimeOffset?)) return new(Unsafe.As<T, DateTimeOffset?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(bool?))
+                return new(Unsafe.As<T, bool?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(byte?))
+                return new(Unsafe.As<T, byte?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(sbyte?))
+                return new(Unsafe.As<T, sbyte?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(char?))
+                return new(Unsafe.As<T, char?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(short?))
+                return new(Unsafe.As<T, short?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(int?))
+                return new(Unsafe.As<T, int?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(long?))
+                return new(Unsafe.As<T, long?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(ushort?))
+                return new(Unsafe.As<T, ushort?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(uint?))
+                return new(Unsafe.As<T, uint?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(ulong?))
+                return new(Unsafe.As<T, ulong?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(float?))
+                return new(Unsafe.As<T, float?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(double?))
+                return new(Unsafe.As<T, double?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(DateTime?))
+                return new(Unsafe.As<T, DateTime?>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(DateTimeOffset?))
+                return new(Unsafe.As<T, DateTimeOffset?>(ref Unsafe.AsRef(value)));
 
-            if (typeof(T) == typeof(ArraySegment<byte>)) return new(Unsafe.As<T, ArraySegment<byte>>(ref Unsafe.AsRef(value)));
-            if (typeof(T) == typeof(ArraySegment<char>)) return new(Unsafe.As<T, ArraySegment<char>>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(ArraySegment<byte>))
+                return new(Unsafe.As<T, ArraySegment<byte>>(ref Unsafe.AsRef(value)));
+            if (typeof(T) == typeof(ArraySegment<char>))
+                return new(Unsafe.As<T, ArraySegment<char>>(ref Unsafe.AsRef(value)));
 
             if (typeof(T).IsEnum)
             {
                 Debug.Assert(Unsafe.SizeOf<T>() <= sizeof(ulong));
-                return new Value(StraightCastFlag<T>.Instance, Unsafe.As<T, ulong>(ref value));
+                return new Variant(StraightCastFlag<T>.Instance, Unsafe.As<T, ulong>(ref value));
             }
 
-            return new Value(value);
+            return new Variant(value);
         }
 
-        private Value(object o, ulong u)
+        private Variant(object o, ulong u)
         {
             _union = default;
             _object = o;
