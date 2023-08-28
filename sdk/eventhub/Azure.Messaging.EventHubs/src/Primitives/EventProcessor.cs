@@ -744,13 +744,16 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // was passed.  In the event that initialization is run and encounters an
                 // exception, it takes responsibility for firing the error handler.
 
-                var (startingPosition, checkpointUsed) = startingPositionOverride switch
+                var (startingPosition, checkpoint) = startingPositionOverride switch
                 {
-                    _ when startingPositionOverride.HasValue => (startingPositionOverride.Value, false),
+                    _ when startingPositionOverride.HasValue => (startingPositionOverride.Value, null),
                     _ => await InitializePartitionForProcessingAsync(partition, cancellationSource.Token).ConfigureAwait(false)
                 };
 
-                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed);
+                var checkpointUsed = (checkpoint != null);
+                var checkpointLastModified = checkpointUsed ? checkpoint.LastModified.ToString() : null;
+
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed, checkpointLastModified);
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
@@ -1803,7 +1806,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   exception will then be bubbled to callers.
         /// </remarks>
         ///
-        private async Task<(EventPosition Position, bool CheckpointUsed)> InitializePartitionForProcessingAsync(TPartition partition,
+        private async Task<(EventPosition Position, EventProcessorCheckpoint CheckpointUsed)> InitializePartitionForProcessingAsync(TPartition partition,
                                                                                                                 CancellationToken cancellationToken)
         {
             var operationDescription = Resources.OperationClaimOwnership;
@@ -1825,10 +1828,10 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 if (checkpoint != null)
                 {
-                    return (checkpoint.StartingPosition, true);
+                    return (checkpoint.StartingPosition, checkpoint);
                 }
 
-                return (Options.DefaultStartingPosition, false);
+                return (Options.DefaultStartingPosition, null);
             }
             catch (Exception ex)
             {

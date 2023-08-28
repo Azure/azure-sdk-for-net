@@ -193,7 +193,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     ConsumerGroup = data.ConsumerGroup,
                     PartitionId = data.PartitionId,
                     ClientAuthorIdentifier = "Id",
-                    StartingPosition = EventPosition.FromOffset(data.Offset, false)
+                    StartingPosition = EventPosition.FromOffset(data.Offset, false),
+                    LastModified = DateTimeOffset.Parse(data.LastModified)
                 };
 
             lock (_checkpointLock)
@@ -238,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Tests
             lock (_checkpointLock)
             {
                 var key = (fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
-                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber);
+                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, DateTimeOffset.Now.ToString() sequenceNumber);
 
                 Log($"Checkpoint with partition id = '{partitionId}' updated successfully.");
             }
@@ -277,12 +278,14 @@ namespace Azure.Messaging.EventHubs.Tests
             public string PartitionId { get; }
             public long Offset { get; }
             public long? SequenceNumber { get; }
+            public string LastModified { get; }
 
             public CheckpointData(string fullyQualifiedNamespace,
                                   string eventHubName,
                                   string consumerGroup,
                                   string partitionId,
                                   long offset,
+                                  string lastModified,
                                   long? sequenceNumber = default)
             {
                FullyQualifiedNamespace = fullyQualifiedNamespace;
@@ -291,6 +294,7 @@ namespace Azure.Messaging.EventHubs.Tests
                PartitionId = partitionId;
                Offset = offset;
                SequenceNumber = sequenceNumber;
+               LastModified = lastModified;
             }
         }
     }

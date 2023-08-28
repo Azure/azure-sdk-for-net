@@ -429,7 +429,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
         /// <param name="metadata">The metadata of the blob that represents the checkpoint.</param>
-        /// <param name="modifiedDate">The date/time that the blob representing the checkpoint was last modified.</param>
+        /// <param name="modifiedDate">The date and time that the blob representing the checkpoint was last modified.</param>
         ///
         /// <returns>A <see cref="EventProcessorCheckpoint"/> initialized with checkpoint properties if the checkpoint exists, otherwise <code>null</code>.</returns>
         ///
@@ -885,7 +885,6 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             public long? Offset { get; set; }
             public long? SequenceNumber { get; set; }
-            public DateTimeOffset? LastModified { get; set; }
         }
     }
 }

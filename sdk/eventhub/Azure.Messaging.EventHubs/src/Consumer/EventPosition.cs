@@ -118,6 +118,30 @@ namespace Azure.Messaging.EventHubs.Consumer
         }
 
         /// <summary>
+        ///   Corresponds to an event with the specified sequence number and replication segment in the partition for use with geo replication enable Event Hubs namespaces.  By default, the event with this <paramref name="sequenceNumber"/>
+        ///   will be read.  Setting <paramref name="isInclusive"/> to <c>false</c> will skip the event with that sequence number and begin
+        ///   reading at the next available event.
+        /// </summary>
+        ///
+        /// <param name="sequenceNumber">The sequence number assigned to an event when it was enqueued in the partition.</param>
+        /// <param name="replicationSegment">The replication segment associated</param>
+        /// <param name="isInclusive">When <c>true</c>, the event with the <paramref name="sequenceNumber"/> is included; otherwise the next event in sequence will be read.</param>
+        ///
+        /// <returns>The specified position of an event in the partition.</returns>
+        ///
+        internal static EventPosition FromSequenceNumber(long sequenceNumber,
+                                                         string replicationSegment,
+                                                         bool isInclusive = true)
+        {
+            return new EventPosition
+            {
+                ReplicationSegment = replicationSegment,
+                SequenceNumber = sequenceNumber,
+                IsInclusive = isInclusive
+            };
+        }
+
+        /// <summary>
         ///   Corresponds to a specific date and time within the partition to begin seeking an event; the event enqueued on or after
         ///   the specified <paramref name="enqueuedTime" /> will be read.
         /// </summary>
