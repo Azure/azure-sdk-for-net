@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
@@ -264,7 +265,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, 0, default, "", "id", CancellationToken.None);
+            await target.UpdateCheckpointAsync(new EventProcessorCheckpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, "id", EventPosition.FromOffset(0, default)), CancellationToken.None);
             mockLog.Verify(log => log.UpdateCheckpointStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, "id"));
             mockLog.Verify(log => log.UpdateCheckpointComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, "id"));
         }
@@ -292,7 +293,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, 0, 0, "", "id", CancellationToken.None);
+            await target.UpdateCheckpointAsync(new EventProcessorCheckpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, "id", EventPosition.FromOffset(0, 0)), CancellationToken.None);
             mockLog.Verify(log => log.UpdateCheckpointStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, "id"));
             mockLog.Verify(log => log.UpdateCheckpointComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, "id"));
         }
@@ -317,7 +318,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var target = new BlobCheckpointStoreInternal(mockContainerClient);
             target.Logger = mockLog.Object;
 
-            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, 123, 456, "", "id", CancellationToken.None), Throws.Exception.EqualTo(expectedException));
+            Assert.That(async () => await target.UpdateCheckpointAsync(new EventProcessorCheckpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, "id", EventPosition.FromOffset(123, 456)), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
             mockLog.Verify(log => log.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, "id", expectedException.Message));
         }
 

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs.Primitives
 {
@@ -223,8 +224,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
-                                                      CancellationToken cancellationToken) =>
-            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, null, Identifier, cancellationToken);
+                                                      CancellationToken cancellationToken)
+        {
+            var eventPosition = sequenceNumber == null ? EventPosition.FromOffset(offset) : EventPosition.FromOffset(offset, sequenceNumber.Value);
+            return _checkpointStore.UpdateCheckpointAsync(new EventProcessorCheckpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, eventPosition), cancellationToken);
+        }
 
         /// <summary>
         ///   Requests a list of the ownership assignments for partitions between each of the cooperating event processor

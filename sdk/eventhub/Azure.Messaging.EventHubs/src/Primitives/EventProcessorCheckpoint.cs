@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Security.Cryptography.X509Certificates;
 using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs.Primitives
@@ -57,5 +58,25 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         public EventPosition StartingPosition { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventProcessorCheckpoint"/> class.
+        /// </summary>
+        public EventProcessorCheckpoint()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventProcessorCheckpoint"/> class.
+        /// </summary>
+        public EventProcessorCheckpoint(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, EventPosition startingPosition)
+        {
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            PartitionId = partitionId;
+            ClientAuthorIdentifier = clientIdentifier;
+            StartingPosition = startingPosition;
+        }
     }
 }

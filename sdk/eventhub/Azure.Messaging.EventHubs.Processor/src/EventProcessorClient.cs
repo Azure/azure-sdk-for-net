@@ -896,7 +896,8 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-               return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, null, Identifier, cancellationToken);
+                var eventPosition = sequenceNumber == null ? EventPosition.FromOffset(offset) : EventPosition.FromOffset(offset, sequenceNumber.Value);
+                return CheckpointStore.UpdateCheckpointAsync(new EventProcessorCheckpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, eventPosition), cancellationToken);
             }
             catch (Exception ex)
             {

@@ -354,38 +354,24 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   that an event processor should begin reading from.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
-        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
-        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
-        /// <param name="replicationSegment">The replication segment associated with this checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
-        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+        /// <param name="checkpoint">The <see cref="EventProcessorCheckpoint"/> to use as the checkpoint.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        public override async Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
-                                                         string eventHubName,
-                                                         string consumerGroup,
-                                                         string partitionId,
-                                                         long offset,
-                                                         long? sequenceNumber,
-                                                         string replicationSegment,
-                                                         string clientIdentifier,
+        public override async Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier);
+            UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientAuthorIdentifier);
 
-            var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
+            var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLowerInvariant(), checkpoint.EventHubName.ToLowerInvariant(), checkpoint.ConsumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
 
             var metadata = new Dictionary<string, string>()
             {
-                { BlobMetadataKey.Offset, offset.ToString(CultureInfo.InvariantCulture) },
-                { BlobMetadataKey.SequenceNumber, (sequenceNumber ?? long.MinValue).ToString(CultureInfo.InvariantCulture) },
-                { BlobMetadataKey.ClientAuthorIdentifier, clientIdentifier },
-                { BlobMetadataKey.ReplicationSegment,  replicationSegment }
+                { BlobMetadataKey.Offset, checkpoint.StartingPosition.Offset },
+                { BlobMetadataKey.SequenceNumber, (checkpoint.StartingPosition.SequenceNumber ?? long.MinValue).ToString(CultureInfo.InvariantCulture) },
+                { BlobMetadataKey.ClientAuthorIdentifier, checkpoint.ClientAuthorIdentifier },
+                { BlobMetadataKey.ReplicationSegment,  checkpoint.StartingPosition.ReplicationSegment }
             };
 
             try
@@ -406,17 +392,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, ex);
+                UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientAuthorIdentifier, ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, ex);
+                UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientAuthorIdentifier, ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier);
+                UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientAuthorIdentifier);
             }
         }
 

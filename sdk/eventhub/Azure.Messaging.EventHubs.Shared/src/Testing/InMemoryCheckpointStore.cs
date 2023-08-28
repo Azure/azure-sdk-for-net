@@ -193,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ConsumerGroup = data.ConsumerGroup,
                     PartitionId = data.PartitionId,
                     ClientAuthorIdentifier = "Id",
-                    StartingPosition = EventPosition.FromOffset(data.Offset, false),
+                    StartingPosition = new EventPosition { Offset = data.Offset, IsInclusive = false },
                     LastModified = DateTimeOffset.Parse(data.LastModified)
                 };
 
@@ -216,32 +216,18 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   that an event processor should begin reading from.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
-        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
-        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
-        /// <param name="replicationSegment">The replication group epoch associated with this checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
-        /// <param name="clientIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
+        /// <param name="checkpoint">The <see cref="EventProcessorCheckpoint"/> to use as the checkpoint.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
-                                                   string eventHubName,
-                                                   string consumerGroup,
-                                                   string partitionId,
-                                                   long offset,
-                                                   long? sequenceNumber,
-                                                   string replicationSegment,
-                                                   string clientIdentifier,
+        public override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
                                                    CancellationToken cancellationToken = default)
         {
             lock (_checkpointLock)
             {
-                var key = (fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
-                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, DateTimeOffset.Now.ToString(), sequenceNumber);
+                var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
+                Checkpoints[key] = new CheckpointData(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.StartingPosition.Offset, DateTimeOffset.Now.ToString(), checkpoint.StartingPosition.SequenceNumber);
 
-                Log($"Checkpoint with partition id = '{partitionId}' updated successfully.");
+                Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated successfully.");
             }
 
             return Task.CompletedTask;
@@ -276,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public string EventHubName { get; }
             public string ConsumerGroup { get; }
             public string PartitionId { get; }
-            public long Offset { get; }
+            public string Offset { get; }
             public long? SequenceNumber { get; }
             public string LastModified { get; }
 
@@ -284,7 +270,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                   string eventHubName,
                                   string consumerGroup,
                                   string partitionId,
-                                  long offset,
+                                  string offset,
                                   string lastModified,
                                   long? sequenceNumber = default)
             {

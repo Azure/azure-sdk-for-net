@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 };
 
                 await checkpointStore.ClaimOwnershipAsync(ownershipList, default);
-                Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId", 10, 20, "", "Id", default), Throws.Nothing);
+                Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(new EventProcessorCheckpoint("namespace", "eventHubName", "consumerGroup", "partitionId", "Id", EventPosition.FromOffset(10, 20)), default), Throws.Nothing);
             }
         }
 

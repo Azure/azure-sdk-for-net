@@ -920,7 +920,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             mockCheckpointStore
-                .Setup(storage => storage.UpdateCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Setup(storage => storage.UpdateCheckpointAsync(It.IsAny<EventProcessorCheckpoint>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             processorClient.ProcessEventAsync += eventArgs =>
@@ -948,14 +948,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 mockCheckpointStore
                     .Verify(storage => storage.UpdateCheckpointAsync(
-                        processorClient.FullyQualifiedNamespace,
-                        processorClient.EventHubName,
-                        processorClient.ConsumerGroup,
-                        capturedEventArgs[index].Partition.PartitionId,
-                        capturedEventArgs[index].Data.Offset,
-                        capturedEventArgs[index].Data.SequenceNumber,
-                        null,
-                        processorClient.Identifier,
+                        new EventProcessorCheckpoint(
+                            processorClient.FullyQualifiedNamespace,
+                            processorClient.EventHubName,
+                            processorClient.ConsumerGroup,
+                            capturedEventArgs[index].Partition.PartitionId,
+                            processorClient.Identifier,
+                            EventPosition.FromOffset(capturedEventArgs[index].Data.Offset, capturedEventArgs[index].Data.SequenceNumber, true)),
                         It.IsAny<CancellationToken>()),
                     Times.Once,
                     $"Creating a checkpoint for index { index } should have invoked the storage manager correctly.");
@@ -1000,14 +999,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockCheckpointStore
                 .Verify(storage => storage.UpdateCheckpointAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<long>(),
-                    It.IsAny<long?>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
+                    It.IsAny<EventProcessorCheckpoint>(),
                     It.IsAny<CancellationToken>()),
                 Times.Never);
 
@@ -1453,14 +1445,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockStorage
                 .Verify(storage => storage.UpdateCheckpointAsync(
-                    processorClient.FullyQualifiedNamespace,
-                    processorClient.EventHubName,
-                    processorClient.ConsumerGroup,
-                    partitionId,
-                    offset,
-                    sequenceNumber,
-                    null,
-                    processorClient.Identifier,
+                    new EventProcessorCheckpoint(
+                        processorClient.FullyQualifiedNamespace,
+                        processorClient.EventHubName,
+                        processorClient.ConsumerGroup,
+                        partitionId,
+                        processorClient.Identifier,
+                        EventPosition.FromOffset(offset, sequenceNumber, true)),
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 
@@ -1542,14 +1533,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockStorage
                 .Setup(storage => storage.UpdateCheckpointAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<long>(),
-                    It.IsAny<long?>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
+                    It.IsAny<EventProcessorCheckpoint>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedException);
 

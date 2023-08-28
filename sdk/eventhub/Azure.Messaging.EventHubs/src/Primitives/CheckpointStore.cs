@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs.Primitives
 {
@@ -86,31 +87,24 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                    string partitionId,
                                                    long offset,
                                                    long? sequenceNumber,
-                                                   CancellationToken cancellationToken) => UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, null, null, cancellationToken);
+                                                   CancellationToken cancellationToken)
+        {
+            if (sequenceNumber == null)
+            {
+                return UpdateCheckpointAsync(new EventProcessorCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, null, EventPosition.FromOffset(offset)), cancellationToken);
+            }
+            return UpdateCheckpointAsync(new EventProcessorCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, null, EventPosition.FromOffset(offset, sequenceNumber.Value)), cancellationToken);
+        }
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
         ///   that an event processor should begin reading from.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
-        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
-        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
-        /// <param name="replicationGroupEpoch">The replication group epoch associated with this checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
-        /// <param name="clientIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
+        /// <param name="checkpoint">The <see cref="EventProcessorCheckpoint"/> to use as the checkpoint.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        public virtual Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
-                                                       string eventHubName,
-                                                       string consumerGroup,
-                                                       string partitionId,
-                                                       long offset,
-                                                       long? sequenceNumber,
-                                                       string replicationGroupEpoch,
-                                                       string clientIdentifier,
-                                                       CancellationToken cancellationToken) => throw new NotImplementedException();
+        public virtual Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
+                                                  CancellationToken cancellationToken) => throw new NotImplementedException();
     }
 }
