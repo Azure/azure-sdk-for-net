@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.TypeSpec;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -11,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a credential capable of providing an OAuth token.
     /// </summary>
-    public abstract class TokenCredential
+    public abstract class TokenCredential : Credential
     {
         /// <summary>
         /// Gets an <see cref="AccessToken"/> for the specified set of scopes.
