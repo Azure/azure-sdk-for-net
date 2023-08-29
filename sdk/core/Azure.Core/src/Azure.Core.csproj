@@ -53,6 +53,10 @@
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
+    <Compile Include="Shared\BitVector640.cs" />
+    <Compile Include="Shared\BitVector128.cs" />
+    <Compile Include="Shared\BitVectorHeapBacked.cs" />
+    <Compile Include="Shared\BitVector64.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
