@@ -50,7 +50,7 @@ param(
 Set-StrictMode -Version 3
 
 $fullMetadata = Get-CSVMetadata
-$monikers = @("latest", "preview", "legacy")
+$monikers = @("latest", "preview")
 foreach($moniker in $monikers) {
   # The onboarded packages return is key-value pair, which key is the package index, and value is the package info from {metadata}.json
   # E.g. 
