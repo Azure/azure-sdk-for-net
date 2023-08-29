@@ -15,4 +15,20 @@
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="D:\git\azure-sdk-for-net\sdk\core\System.TypeSpec\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\DotNetPackageIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\DotNetPackageIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\DotNetPackageIcon.png" />
+  </ItemGroup>
 </Project>
