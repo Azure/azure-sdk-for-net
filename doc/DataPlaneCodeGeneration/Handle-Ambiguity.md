@@ -54,11 +54,6 @@ The first solution is our preference, so when codegen detects the existing of am
 
 Only when protocol method already GAed so that we cannot change it, the codegen will choose the second strategy.
 
-TO-DO: I actually don't know the difference between these two flags.
-We also have two flags to let end user decide solution. But these two flags would be deprecated at any time.
-- use-overloads-between-protocol-and-convenience: default `true`. With this flag unset, we will always generate optional `RequestContext` for protocol methods. If ambiguity happens, we append `Value` to name of convenience methods.
-- keep-non-overloadable-protocol-signature: default `false`. With this flag set, we will always generate optional `RequestContext` for protocol methods. If ambiguity happens, we append `Value` to name of convenience methods.
-
 ## Scope of ambiguity we handle
 
 Not all the pairs of protocol method and convenience method will have such problem. Below is a case when there is no ambiguity if users are calling normally by passing a `model` or a `content`. (They could not pass in `null` because it will throw error)
