@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,12 +20,14 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapsePrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionData"/>. </summary>
         public SynapsePrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,11 +35,13 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="privateEndpoint"> The private endpoint which the connection belongs to. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal SynapsePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, SynapsePrivateLinkServiceConnectionState connectionState, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapsePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, SynapsePrivateLinkServiceConnectionState connectionState, string provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> The private endpoint which the connection belongs to. </summary>

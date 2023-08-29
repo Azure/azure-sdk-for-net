@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of App Service Environments. </summary>
     internal partial class AppServiceEnvironmentListResult
     {
-        /// <summary> Initializes a new instance of AppServiceEnvironmentListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceEnvironmentListResult(IEnumerable<AppServiceEnvironmentData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal AppServiceEnvironmentListResult(IReadOnlyList<AppServiceEnvironmentData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceEnvironmentListResult(IReadOnlyList<AppServiceEnvironmentData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentListResult"/> for deserialization. </summary>
+        internal AppServiceEnvironmentListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

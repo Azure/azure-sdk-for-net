@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> The FileSystemList. </summary>
     internal partial class FileSystemList
     {
-        /// <summary> Initializes a new instance of FileSystemList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileSystemList"/>. </summary>
         internal FileSystemList()
         {
             Filesystems = new ChangeTrackingList<FileSystem>();
         }
 
-        /// <summary> Initializes a new instance of FileSystemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemList"/>. </summary>
         /// <param name="filesystems"></param>
-        internal FileSystemList(IReadOnlyList<FileSystem> filesystems)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileSystemList(IReadOnlyList<FileSystem> filesystems, Dictionary<string, BinaryData> rawData)
         {
             Filesystems = filesystems;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the filesystems. </summary>

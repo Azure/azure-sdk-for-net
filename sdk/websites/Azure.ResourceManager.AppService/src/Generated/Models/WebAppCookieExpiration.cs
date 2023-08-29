@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the session cookie's expiration. </summary>
     public partial class WebAppCookieExpiration
     {
-        /// <summary> Initializes a new instance of WebAppCookieExpiration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppCookieExpiration"/>. </summary>
         public WebAppCookieExpiration()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppCookieExpiration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppCookieExpiration"/>. </summary>
         /// <param name="convention"> The convention used when determining the session cookie's expiration. </param>
         /// <param name="timeToExpiration"> The time after the request is made when the session cookie should expire. </param>
-        internal WebAppCookieExpiration(CookieExpirationConvention? convention, string timeToExpiration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppCookieExpiration(CookieExpirationConvention? convention, string timeToExpiration, Dictionary<string, BinaryData> rawData)
         {
             Convention = convention;
             TimeToExpiration = timeToExpiration;
+            _rawData = rawData;
         }
 
         /// <summary> The convention used when determining the session cookie's expiration. </summary>

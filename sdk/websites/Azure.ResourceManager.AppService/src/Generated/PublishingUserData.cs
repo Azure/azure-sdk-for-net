@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,14 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class PublishingUserData : ResourceData
     {
-        /// <summary> Initializes a new instance of PublishingUserData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PublishingUserData"/>. </summary>
         public PublishingUserData()
         {
         }
 
-        /// <summary> Initializes a new instance of PublishingUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublishingUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publishingPasswordHashSalt"> Password hash salt used for publishing. </param>
         /// <param name="scmUri"> Url of SCM site. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal PublishingUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublishingUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PublishingUserName = publishingUserName;
             PublishingPassword = publishingPassword;
@@ -41,6 +45,7 @@ namespace Azure.ResourceManager.AppService
             PublishingPasswordHashSalt = publishingPasswordHashSalt;
             ScmUri = scmUri;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Username used for publishing. </summary>

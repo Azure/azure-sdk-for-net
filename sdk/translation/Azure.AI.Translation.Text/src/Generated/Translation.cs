@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,6 +14,8 @@ namespace Azure.AI.Translation.Text
     /// <summary> Translation result. </summary>
     public partial class Translation
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of Translation. </summary>
         /// <param name="to"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
@@ -32,13 +35,20 @@ namespace Azure.AI.Translation.Text
         /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>
         /// <param name="alignment"> Alignment information. </param>
         /// <param name="sentLen"> Sentence boundaries in the input and output texts. </param>
-        internal Translation(string to, string text, TransliteratedText transliteration, TranslatedTextAlignment alignment, SentenceLength sentLen)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Translation(string to, string text, TransliteratedText transliteration, TranslatedTextAlignment alignment, SentenceLength sentLen, Dictionary<string, BinaryData> rawData)
         {
             To = to;
             Text = text;
             Transliteration = transliteration;
             Alignment = alignment;
             SentLen = sentLen;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Translation"/> for deserialization. </summary>
+        internal Translation()
+        {
         }
 
         /// <summary> A string representing the language code of the target language. </summary>

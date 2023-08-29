@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Application logs to file system configuration. </summary>
     internal partial class FileSystemApplicationLogsConfig
     {
-        /// <summary> Initializes a new instance of FileSystemApplicationLogsConfig. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileSystemApplicationLogsConfig"/>. </summary>
         public FileSystemApplicationLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of FileSystemApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemApplicationLogsConfig"/>. </summary>
         /// <param name="level"> Log level. </param>
-        internal FileSystemApplicationLogsConfig(WebAppLogLevel? level)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileSystemApplicationLogsConfig(WebAppLogLevel? level, Dictionary<string, BinaryData> rawData)
         {
             Level = level;
+            _rawData = rawData;
         }
 
         /// <summary> Log level. </summary>

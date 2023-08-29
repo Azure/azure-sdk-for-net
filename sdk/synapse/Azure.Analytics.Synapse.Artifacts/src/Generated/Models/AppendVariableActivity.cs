@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Append value for a Variable of type Array. </summary>
     public partial class AppendVariableActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppendVariableActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppendVariableActivity(string name) : base(name)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AppendVariable";
         }
 
-        /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppendVariableActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -40,6 +40,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             VariableName = variableName;
             Value = value;
             Type = type ?? "AppendVariable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppendVariableActivity"/> for deserialization. </summary>
+        internal AppendVariableActivity()
+        {
         }
 
         /// <summary> Name of the variable whose value needs to be appended to. </summary>

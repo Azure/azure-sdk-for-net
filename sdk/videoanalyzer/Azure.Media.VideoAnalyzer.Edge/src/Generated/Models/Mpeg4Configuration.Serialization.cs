@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class Mpeg4Configuration : IUtf8JsonSerializable
+    public partial class Mpeg4Configuration : IUtf8JsonSerializable, IModelJsonSerializable<Mpeg4Configuration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Mpeg4Configuration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Mpeg4Configuration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(GovLength))
             {
@@ -25,17 +33,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Mpeg4Configuration DeserializeMpeg4Configuration(JsonElement element)
+        internal static Mpeg4Configuration DeserializeMpeg4Configuration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<float> govLength = default;
             Optional<Mpeg4Profile> profile = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("govLength"u8))
@@ -56,8 +79,57 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     profile = new Mpeg4Profile(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Mpeg4Configuration(Optional.ToNullable(govLength), Optional.ToNullable(profile));
+            return new Mpeg4Configuration(Optional.ToNullable(govLength), Optional.ToNullable(profile), rawData);
+        }
+
+        Mpeg4Configuration IModelJsonSerializable<Mpeg4Configuration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMpeg4Configuration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Mpeg4Configuration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Mpeg4Configuration IModelSerializable<Mpeg4Configuration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMpeg4Configuration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(Mpeg4Configuration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator Mpeg4Configuration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMpeg4Configuration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class RemoteDeviceAdapterDeleteRequest : IUtf8JsonSerializable
+    public partial class RemoteDeviceAdapterDeleteRequest : IUtf8JsonSerializable, IModelJsonSerializable<RemoteDeviceAdapterDeleteRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RemoteDeviceAdapterDeleteRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RemoteDeviceAdapterDeleteRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RemoteDeviceAdapterDeleteRequest>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -22,11 +30,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RemoteDeviceAdapterDeleteRequest DeserializeRemoteDeviceAdapterDeleteRequest(JsonElement element)
+        internal static RemoteDeviceAdapterDeleteRequest DeserializeRemoteDeviceAdapterDeleteRequest(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +56,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string name = default;
             string methodName = default;
             Optional<string> apiVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -51,8 +74,57 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RemoteDeviceAdapterDeleteRequest(methodName, apiVersion.Value, name);
+            return new RemoteDeviceAdapterDeleteRequest(methodName, apiVersion.Value, name, rawData);
+        }
+
+        RemoteDeviceAdapterDeleteRequest IModelJsonSerializable<RemoteDeviceAdapterDeleteRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RemoteDeviceAdapterDeleteRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemoteDeviceAdapterDeleteRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RemoteDeviceAdapterDeleteRequest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RemoteDeviceAdapterDeleteRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RemoteDeviceAdapterDeleteRequest IModelSerializable<RemoteDeviceAdapterDeleteRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RemoteDeviceAdapterDeleteRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRemoteDeviceAdapterDeleteRequest(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RemoteDeviceAdapterDeleteRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RemoteDeviceAdapterDeleteRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRemoteDeviceAdapterDeleteRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

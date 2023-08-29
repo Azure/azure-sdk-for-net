@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Execution policy for an activity. </summary>
     public partial class ActivityPolicy
     {
-        /// <summary> Initializes a new instance of ActivityPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityPolicy"/>. </summary>
         public ActivityPolicy()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ActivityPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityPolicy"/>. </summary>
         /// <param name="timeout"> Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="retry"> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="retryIntervalInSeconds"> Interval between each retry attempt (in seconds). The default is 30 sec. </param>

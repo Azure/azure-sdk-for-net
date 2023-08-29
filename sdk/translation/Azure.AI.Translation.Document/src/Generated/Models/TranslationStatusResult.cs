@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Translation.Document.Models;
 using Azure.Core;
@@ -15,7 +16,9 @@ namespace Azure.AI.Translation.Document
     /// <summary> Translation job status response. </summary>
     public partial class TranslationStatusResult
     {
-        /// <summary> Initializes a new instance of TranslationStatusResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TranslationStatusResult"/>. </summary>
         /// <param name="id"> Id of the operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
@@ -34,14 +37,15 @@ namespace Azure.AI.Translation.Document
             Summary = summary;
         }
 
-        /// <summary> Initializes a new instance of TranslationStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationStatusResult"/>. </summary>
         /// <param name="id"> Id of the operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
         /// <param name="summary"></param>
-        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, JsonElement error, StatusSummary summary)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, JsonElement error, StatusSummary summary, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             CreatedOn = createdOn;
@@ -49,6 +53,12 @@ namespace Azure.AI.Translation.Document
             Status = status;
             _error = error;
             Summary = summary;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationStatusResult"/> for deserialization. </summary>
+        internal TranslationStatusResult()
+        {
         }
         /// <summary> List of possible statuses for job or document. </summary>
         public DocumentTranslationStatus Status { get; }

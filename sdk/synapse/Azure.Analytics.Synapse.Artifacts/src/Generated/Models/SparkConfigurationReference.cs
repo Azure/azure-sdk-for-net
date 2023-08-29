@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Spark configuration reference. </summary>
     public partial class SparkConfigurationReference
     {
-        /// <summary> Initializes a new instance of SparkConfigurationReference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkConfigurationReference"/>. </summary>
         /// <param name="type"> Spark configuration reference type. </param>
         /// <param name="referenceName"> Reference spark configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -23,6 +26,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             ReferenceName = referenceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkConfigurationReference"/>. </summary>
+        /// <param name="type"> Spark configuration reference type. </param>
+        /// <param name="referenceName"> Reference spark configuration name. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkConfigurationReference(SparkConfigurationReferenceType type, string referenceName, Dictionary<string, BinaryData> rawData)
+        {
+            Type = type;
+            ReferenceName = referenceName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkConfigurationReference"/> for deserialization. </summary>
+        internal SparkConfigurationReference()
+        {
         }
 
         /// <summary> Spark configuration reference type. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse;
@@ -14,12 +16,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A sensitivity label update operation. </summary>
     public partial class SynapseSensitivityLabelUpdate : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseSensitivityLabelUpdate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSensitivityLabelUpdate"/>. </summary>
         public SynapseSensitivityLabelUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSensitivityLabelUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSensitivityLabelUpdate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,13 +33,15 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="table"> Table name of the column to update. </param>
         /// <param name="column"> Column name to update. </param>
         /// <param name="sensitivityLabel"> The sensitivity label information to apply on a column. </param>
-        internal SynapseSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseSensitivityLabelUpdateKind? op, string schema, string table, string column, SynapseSensitivityLabelData sensitivityLabel) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseSensitivityLabelUpdateKind? op, string schema, string table, string column, SynapseSensitivityLabelData sensitivityLabel, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Op = op;
             Schema = schema;
             Table = table;
             Column = column;
             SensitivityLabel = sensitivityLabel;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the op. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,22 +15,26 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A snapshot of an app. </summary>
     public partial class AppSnapshot : ResourceData
     {
-        /// <summary> Initializes a new instance of AppSnapshot. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppSnapshot"/>. </summary>
         public AppSnapshot()
         {
         }
 
-        /// <summary> Initializes a new instance of AppSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSnapshot"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="time"> The time the snapshot was taken. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppSnapshot(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string time, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppSnapshot(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string time, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Time = time;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> The time the snapshot was taken. </summary>

@@ -6,16 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.TextAnalytics.Legacy;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
-    internal partial class TasksStateTasksSentimentAnalysisTasksItem
+    internal partial class TasksStateTasksSentimentAnalysisTasksItem : IUtf8JsonSerializable, IModelJsonSerializable<TasksStateTasksSentimentAnalysisTasksItem>
     {
-        internal static TasksStateTasksSentimentAnalysisTasksItem DeserializeTasksStateTasksSentimentAnalysisTasksItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TasksStateTasksSentimentAnalysisTasksItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TasksStateTasksSentimentAnalysisTasksItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TasksStateTasksSentimentAnalysisTasksItem>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                writer.WriteObjectValue(Results);
+            }
+            writer.WritePropertyName("lastUpdateDateTime"u8);
+            writer.WriteStringValue(LastUpdateDateTime, "O");
+            if (Optional.IsDefined(TaskName))
+            {
+                writer.WritePropertyName("taskName"u8);
+                writer.WriteStringValue(TaskName);
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TasksStateTasksSentimentAnalysisTasksItem DeserializeTasksStateTasksSentimentAnalysisTasksItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +65,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> taskName = default;
             State status = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -50,8 +92,57 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     status = property.Value.GetString().ToState();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TasksStateTasksSentimentAnalysisTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            return new TasksStateTasksSentimentAnalysisTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value, rawData);
+        }
+
+        TasksStateTasksSentimentAnalysisTasksItem IModelJsonSerializable<TasksStateTasksSentimentAnalysisTasksItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TasksStateTasksSentimentAnalysisTasksItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTasksStateTasksSentimentAnalysisTasksItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TasksStateTasksSentimentAnalysisTasksItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TasksStateTasksSentimentAnalysisTasksItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TasksStateTasksSentimentAnalysisTasksItem IModelSerializable<TasksStateTasksSentimentAnalysisTasksItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TasksStateTasksSentimentAnalysisTasksItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTasksStateTasksSentimentAnalysisTasksItem(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TasksStateTasksSentimentAnalysisTasksItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TasksStateTasksSentimentAnalysisTasksItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTasksStateTasksSentimentAnalysisTasksItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -14,21 +14,25 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Domain purchase consent object, representing acceptance of applicable legal agreements. </summary>
     public partial class DomainPurchaseConsent
     {
-        /// <summary> Initializes a new instance of DomainPurchaseConsent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DomainPurchaseConsent"/>. </summary>
         public DomainPurchaseConsent()
         {
             AgreementKeys = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DomainPurchaseConsent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainPurchaseConsent"/>. </summary>
         /// <param name="agreementKeys"> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </param>
         /// <param name="agreedBy"> Client IP address. </param>
         /// <param name="agreedOn"> Timestamp when the agreements were accepted. </param>
-        internal DomainPurchaseConsent(IList<string> agreementKeys, string agreedBy, DateTimeOffset? agreedOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DomainPurchaseConsent(IList<string> agreementKeys, string agreedBy, DateTimeOffset? agreedOn, Dictionary<string, BinaryData> rawData)
         {
             AgreementKeys = agreementKeys;
             AgreedBy = agreedBy;
             AgreedOn = agreedOn;
+            _rawData = rawData;
         }
 
         /// <summary> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </summary>

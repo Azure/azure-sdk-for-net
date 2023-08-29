@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapVirtualInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SapVirtualInstanceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Workloads
             Configuration = configuration;
         }
 
-        /// <summary> Initializes a new instance of SapVirtualInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +61,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="state"> Defines the Virtual Instance for SAP state. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Indicates any errors on the Virtual Instance for SAP solutions resource. </param>
-        internal SapVirtualInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UserAssignedServiceIdentity identity, SapEnvironmentType environment, SapProductType sapProduct, SapConfiguration configuration, ManagedRGConfiguration managedResourceGroupConfiguration, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceState? state, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapVirtualInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UserAssignedServiceIdentity identity, SapEnvironmentType environment, SapProductType sapProduct, SapConfiguration configuration, ManagedRGConfiguration managedResourceGroupConfiguration, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceState? state, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Environment = environment;
@@ -71,6 +74,12 @@ namespace Azure.ResourceManager.Workloads
             State = state;
             ProvisioningState = provisioningState;
             Errors = errors;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceData"/> for deserialization. </summary>
+        internal SapVirtualInstanceData()
+        {
         }
 
         /// <summary> A pre-created user assigned identity with appropriate roles assigned. To learn more on identity and roles required, visit the ACSS how-to-guide. </summary>

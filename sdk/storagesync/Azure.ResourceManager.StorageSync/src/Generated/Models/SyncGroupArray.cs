@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StorageSync;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Array of SyncGroup. </summary>
     internal partial class SyncGroupArray
     {
-        /// <summary> Initializes a new instance of SyncGroupArray. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncGroupArray"/>. </summary>
         internal SyncGroupArray()
         {
             Value = new ChangeTrackingList<StorageSyncGroupData>();
         }
 
-        /// <summary> Initializes a new instance of SyncGroupArray. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupArray"/>. </summary>
         /// <param name="value"> Collection of SyncGroup. </param>
-        internal SyncGroupArray(IReadOnlyList<StorageSyncGroupData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncGroupArray(IReadOnlyList<StorageSyncGroupData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Collection of SyncGroup. </summary>

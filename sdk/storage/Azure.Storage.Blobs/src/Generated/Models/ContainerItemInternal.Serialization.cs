@@ -5,16 +5,55 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ContainerItemInternal
+    internal partial class ContainerItemInternal : IXmlSerializable, IModelSerializable<ContainerItemInternal>
     {
-        internal static ContainerItemInternal DeserializeContainerItemInternal(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "Container");
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Deleted))
+            {
+                writer.WriteStartElement("Deleted");
+                writer.WriteValue(Deleted.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WriteStartElement("Version");
+                writer.WriteValue(Version);
+                writer.WriteEndElement();
+            }
+            writer.WriteObjectValue(Properties, "Properties");
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                foreach (var pair in Metadata)
+                {
+                    writer.WriteStartElement("String");
+                    writer.WriteValue(pair.Value);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ContainerItemInternal DeserializeContainerItemInternal(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string name = default;
             bool? deleted = default;
             string version = default;
@@ -45,7 +84,53 @@ namespace Azure.Storage.Blobs.Models
                 }
                 metadata = dictionary;
             }
-            return new ContainerItemInternal(name, deleted, version, properties, metadata);
+            return new ContainerItemInternal(name, deleted, version, properties, metadata, default);
+        }
+
+        BinaryData IModelSerializable<ContainerItemInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ContainerItemInternal IModelSerializable<ContainerItemInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeContainerItemInternal(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(ContainerItemInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerItemInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeContainerItemInternal(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

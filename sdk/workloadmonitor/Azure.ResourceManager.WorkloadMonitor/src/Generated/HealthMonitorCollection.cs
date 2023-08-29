@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorResource(Client, HealthMonitorData.DeserializeHealthMonitorData(e)), _healthMonitorClientDiagnostics, Pipeline, "HealthMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HealthMonitorResource(Client, HealthMonitorData.DeserializeHealthMonitorData(e)), _healthMonitorClientDiagnostics, Pipeline, "HealthMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorResource(Client, HealthMonitorData.DeserializeHealthMonitorData(e)), _healthMonitorClientDiagnostics, Pipeline, "HealthMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HealthMonitorResource(Client, HealthMonitorData.DeserializeHealthMonitorData(e)), _healthMonitorClientDiagnostics, Pipeline, "HealthMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

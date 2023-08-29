@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The UnknownSapConfiguration. </summary>
     internal partial class UnknownSapConfiguration : SapConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownSapConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSapConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
-        internal UnknownSapConfiguration(SapConfigurationType configurationType) : base(configurationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSapConfiguration(SapConfigurationType configurationType, Dictionary<string, BinaryData> rawData) : base(configurationType, rawData)
         {
             ConfigurationType = configurationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSapConfiguration"/> for deserialization. </summary>
+        internal UnknownSapConfiguration()
+        {
         }
     }
 }

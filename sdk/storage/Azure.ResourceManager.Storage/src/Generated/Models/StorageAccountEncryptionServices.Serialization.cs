@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountEncryptionServices : IUtf8JsonSerializable
+    public partial class StorageAccountEncryptionServices : IUtf8JsonSerializable, IModelJsonSerializable<StorageAccountEncryptionServices>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageAccountEncryptionServices>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageAccountEncryptionServices>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Blob))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageAccountEncryptionServices DeserializeStorageAccountEncryptionServices(JsonElement element)
+        internal static StorageAccountEncryptionServices DeserializeStorageAccountEncryptionServices(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<StorageEncryptionService> file = default;
             Optional<StorageEncryptionService> table = default;
             Optional<StorageEncryptionService> queue = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"u8))
@@ -86,8 +109,57 @@ namespace Azure.ResourceManager.Storage.Models
                     queue = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageAccountEncryptionServices(blob.Value, file.Value, table.Value, queue.Value);
+            return new StorageAccountEncryptionServices(blob.Value, file.Value, table.Value, queue.Value, rawData);
+        }
+
+        StorageAccountEncryptionServices IModelJsonSerializable<StorageAccountEncryptionServices>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountEncryptionServices(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageAccountEncryptionServices>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageAccountEncryptionServices IModelSerializable<StorageAccountEncryptionServices>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageAccountEncryptionServices(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StorageAccountEncryptionServices model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StorageAccountEncryptionServices(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageAccountEncryptionServices(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

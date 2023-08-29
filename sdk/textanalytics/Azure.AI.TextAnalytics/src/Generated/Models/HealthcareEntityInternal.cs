@@ -15,7 +15,9 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The HealthcareEntity. </summary>
     internal partial class HealthcareEntityInternal
     {
-        /// <summary> Initializes a new instance of HealthcareEntityInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntityInternal"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
@@ -34,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Models
             Links = new ChangeTrackingList<EntityDataSource>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareEntityInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntityInternal"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
@@ -44,7 +46,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>
-        internal HealthcareEntityInternal(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareEntityAssertion assertion, string name, IList<EntityDataSource> links)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareEntityInternal(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareEntityAssertion assertion, string name, IList<EntityDataSource> links, Dictionary<string, BinaryData> rawData)
         {
             Text = text;
             Category = category;
@@ -55,6 +58,12 @@ namespace Azure.AI.TextAnalytics.Models
             Assertion = assertion;
             Name = name;
             Links = links;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntityInternal"/> for deserialization. </summary>
+        internal HealthcareEntityInternal()
+        {
         }
 
         /// <summary> Entity text as appears in the request. </summary>

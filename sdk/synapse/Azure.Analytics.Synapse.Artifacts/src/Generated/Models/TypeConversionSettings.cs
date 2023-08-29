@@ -5,24 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Type conversion settings. </summary>
     public partial class TypeConversionSettings
     {
-        /// <summary> Initializes a new instance of TypeConversionSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TypeConversionSettings"/>. </summary>
         public TypeConversionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of TypeConversionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TypeConversionSettings"/>. </summary>
         /// <param name="allowDataTruncation"> Whether to allow data truncation when converting the data. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="treatBooleanAsNumber"> Whether to treat boolean values as numbers. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="dateTimeFormat"> The format for DateTime values. Type: string (or Expression with resultType string). </param>
         /// <param name="dateTimeOffsetFormat"> The format for DateTimeOffset values. Type: string (or Expression with resultType string). </param>
         /// <param name="timeSpanFormat"> The format for TimeSpan values. Type: string (or Expression with resultType string). </param>
         /// <param name="culture"> The culture used to convert data from/to string. Type: string (or Expression with resultType string). </param>
-        internal TypeConversionSettings(object allowDataTruncation, object treatBooleanAsNumber, object dateTimeFormat, object dateTimeOffsetFormat, object timeSpanFormat, object culture)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TypeConversionSettings(object allowDataTruncation, object treatBooleanAsNumber, object dateTimeFormat, object dateTimeOffsetFormat, object timeSpanFormat, object culture, Dictionary<string, BinaryData> rawData)
         {
             AllowDataTruncation = allowDataTruncation;
             TreatBooleanAsNumber = treatBooleanAsNumber;
@@ -30,6 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DateTimeOffsetFormat = dateTimeOffsetFormat;
             TimeSpanFormat = timeSpanFormat;
             Culture = culture;
+            _rawData = rawData;
         }
 
         /// <summary> Whether to allow data truncation when converting the data. Type: boolean (or Expression with resultType boolean). </summary>

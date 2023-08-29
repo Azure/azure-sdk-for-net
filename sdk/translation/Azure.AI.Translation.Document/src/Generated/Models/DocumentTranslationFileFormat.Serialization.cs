@@ -5,16 +5,74 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class DocumentTranslationFileFormat
+    public partial class DocumentTranslationFileFormat : IUtf8JsonSerializable, IModelJsonSerializable<DocumentTranslationFileFormat>
     {
-        internal static DocumentTranslationFileFormat DeserializeDocumentTranslationFileFormat(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DocumentTranslationFileFormat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DocumentTranslationFileFormat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("format"u8);
+            writer.WriteStringValue(Format);
+            writer.WritePropertyName("fileExtensions"u8);
+            writer.WriteStartArray();
+            foreach (var item in FileExtensions)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("contentTypes"u8);
+            writer.WriteStartArray();
+            foreach (var item in ContentTypes)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(DefaultFormatVersion))
+            {
+                writer.WritePropertyName("defaultVersion"u8);
+                writer.WriteStringValue(DefaultFormatVersion);
+            }
+            if (Optional.IsCollectionDefined(FormatVersions))
+            {
+                writer.WritePropertyName("versions"u8);
+                writer.WriteStartArray();
+                foreach (var item in FormatVersions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DocumentTranslationFileFormat DeserializeDocumentTranslationFileFormat(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +82,7 @@ namespace Azure.AI.Translation.Document
             IReadOnlyList<string> contentTypes = default;
             Optional<string> defaultVersion = default;
             Optional<IReadOnlyList<string>> versions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("format"u8))
@@ -70,8 +129,57 @@ namespace Azure.AI.Translation.Document
                     versions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DocumentTranslationFileFormat(format, fileExtensions, contentTypes, defaultVersion.Value, Optional.ToList(versions));
+            return new DocumentTranslationFileFormat(format, fileExtensions, contentTypes, defaultVersion.Value, Optional.ToList(versions), rawData);
+        }
+
+        DocumentTranslationFileFormat IModelJsonSerializable<DocumentTranslationFileFormat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentTranslationFileFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DocumentTranslationFileFormat>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DocumentTranslationFileFormat IModelSerializable<DocumentTranslationFileFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDocumentTranslationFileFormat(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DocumentTranslationFileFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DocumentTranslationFileFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDocumentTranslationFileFormat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

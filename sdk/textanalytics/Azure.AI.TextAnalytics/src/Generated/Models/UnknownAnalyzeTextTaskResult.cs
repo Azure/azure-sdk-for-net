@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The UnknownAnalyzeTextTaskResult. </summary>
     internal partial class UnknownAnalyzeTextTaskResult : AnalyzeTextTaskResult
     {
-        /// <summary> Initializes a new instance of UnknownAnalyzeTextTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeTextTaskResult"/>. </summary>
         /// <param name="kind"> Enumeration of supported Text Analysis task results. </param>
-        internal UnknownAnalyzeTextTaskResult(AnalyzeTextTaskResultsKind kind) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAnalyzeTextTaskResult(AnalyzeTextTaskResultsKind kind, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeTextTaskResult"/> for deserialization. </summary>
+        internal UnknownAnalyzeTextTaskResult()
+        {
         }
     }
 }

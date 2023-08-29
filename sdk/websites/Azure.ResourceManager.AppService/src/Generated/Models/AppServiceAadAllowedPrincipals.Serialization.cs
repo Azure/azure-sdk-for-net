@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceAadAllowedPrincipals : IUtf8JsonSerializable
+    public partial class AppServiceAadAllowedPrincipals : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceAadAllowedPrincipals>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceAadAllowedPrincipals>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceAadAllowedPrincipals>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Groups))
             {
@@ -36,17 +43,32 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceAadAllowedPrincipals DeserializeAppServiceAadAllowedPrincipals(JsonElement element)
+        internal static AppServiceAadAllowedPrincipals DeserializeAppServiceAadAllowedPrincipals(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> groups = default;
             Optional<IList<string>> identities = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groups"u8))
@@ -77,8 +99,57 @@ namespace Azure.ResourceManager.AppService.Models
                     identities = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceAadAllowedPrincipals(Optional.ToList(groups), Optional.ToList(identities));
+            return new AppServiceAadAllowedPrincipals(Optional.ToList(groups), Optional.ToList(identities), rawData);
+        }
+
+        AppServiceAadAllowedPrincipals IModelJsonSerializable<AppServiceAadAllowedPrincipals>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceAadAllowedPrincipals(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceAadAllowedPrincipals>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceAadAllowedPrincipals IModelSerializable<AppServiceAadAllowedPrincipals>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceAadAllowedPrincipals(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AppServiceAadAllowedPrincipals model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AppServiceAadAllowedPrincipals(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceAadAllowedPrincipals(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

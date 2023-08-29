@@ -5,15 +5,57 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class StatusSummary
+    internal partial class StatusSummary : IUtf8JsonSerializable, IModelJsonSerializable<StatusSummary>
     {
-        internal static StatusSummary DeserializeStatusSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StatusSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StatusSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("total"u8);
+            writer.WriteNumberValue(Total);
+            writer.WritePropertyName("failed"u8);
+            writer.WriteNumberValue(Failed);
+            writer.WritePropertyName("success"u8);
+            writer.WriteNumberValue(Success);
+            writer.WritePropertyName("inProgress"u8);
+            writer.WriteNumberValue(InProgress);
+            writer.WritePropertyName("notYetStarted"u8);
+            writer.WriteNumberValue(NotYetStarted);
+            writer.WritePropertyName("cancelled"u8);
+            writer.WriteNumberValue(Cancelled);
+            writer.WritePropertyName("totalCharacterCharged"u8);
+            writer.WriteNumberValue(TotalCharacterCharged);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StatusSummary DeserializeStatusSummary(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +67,7 @@ namespace Azure.AI.Translation.Document.Models
             int notYetStarted = default;
             int cancelled = default;
             long totalCharacterCharged = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("total"u8))
@@ -62,8 +105,57 @@ namespace Azure.AI.Translation.Document.Models
                     totalCharacterCharged = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged);
+            return new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged, rawData);
+        }
+
+        StatusSummary IModelJsonSerializable<StatusSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStatusSummary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StatusSummary>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StatusSummary IModelSerializable<StatusSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStatusSummary(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StatusSummary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StatusSummary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStatusSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

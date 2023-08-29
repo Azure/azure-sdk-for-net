@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The linked integration runtime information. </summary>
     public partial class SynapseLinkedIntegrationRuntime
     {
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntime. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntime"/>. </summary>
         internal SynapseLinkedIntegrationRuntime()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntime"/>. </summary>
         /// <param name="name"> The name of the linked integration runtime. </param>
         /// <param name="subscriptionId"> The subscription ID for which the linked integration runtime belong to. </param>
         /// <param name="dataFactoryName"> The name of the workspace for which the linked integration runtime belong to. </param>
         /// <param name="dataFactoryLocation"> The location of the workspace for which the linked integration runtime belong to. </param>
         /// <param name="createOn"> The creating time of the linked integration runtime. </param>
-        internal SynapseLinkedIntegrationRuntime(string name, string subscriptionId, string dataFactoryName, string dataFactoryLocation, DateTimeOffset? createOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseLinkedIntegrationRuntime(string name, string subscriptionId, string dataFactoryName, string dataFactoryLocation, DateTimeOffset? createOn, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             SubscriptionId = subscriptionId;
             DataFactoryName = dataFactoryName;
             DataFactoryLocation = dataFactoryLocation;
             CreateOn = createOn;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the linked integration runtime. </summary>

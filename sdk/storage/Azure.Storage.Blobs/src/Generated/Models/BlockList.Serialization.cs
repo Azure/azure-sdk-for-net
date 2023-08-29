@@ -5,16 +5,48 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlockList
+    public partial class BlockList : IXmlSerializable, IModelSerializable<BlockList>
     {
-        internal static BlockList DeserializeBlockList(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "BlockList");
+            if (Optional.IsCollectionDefined(CommittedBlocks))
+            {
+                writer.WriteStartElement("CommittedBlocks");
+                foreach (var item in CommittedBlocks)
+                {
+                    writer.WriteObjectValue(item, "Block");
+                }
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(UncommittedBlocks))
+            {
+                writer.WriteStartElement("UncommittedBlocks");
+                foreach (var item in UncommittedBlocks)
+                {
+                    writer.WriteObjectValue(item, "Block");
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlockList DeserializeBlockList(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             IEnumerable<BlobBlock> committedBlocks = default;
             IEnumerable<BlobBlock> uncommittedBlocks = default;
             if (element.Element("CommittedBlocks") is XElement committedBlocksElement)
@@ -35,7 +67,53 @@ namespace Azure.Storage.Blobs.Models
                 }
                 uncommittedBlocks = array;
             }
-            return new BlockList(committedBlocks, uncommittedBlocks);
+            return new BlockList(committedBlocks, uncommittedBlocks, default);
+        }
+
+        BinaryData IModelSerializable<BlockList>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlockList IModelSerializable<BlockList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeBlockList(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(BlockList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BlockList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlockList(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

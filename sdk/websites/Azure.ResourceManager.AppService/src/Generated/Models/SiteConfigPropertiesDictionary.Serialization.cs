@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteConfigPropertiesDictionary
+    public partial class SiteConfigPropertiesDictionary : IUtf8JsonSerializable, IModelJsonSerializable<SiteConfigPropertiesDictionary>
     {
-        internal static SiteConfigPropertiesDictionary DeserializeSiteConfigPropertiesDictionary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteConfigPropertiesDictionary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteConfigPropertiesDictionary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteConfigPropertiesDictionary DeserializeSiteConfigPropertiesDictionary(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> linuxFxVersion = default;
             Optional<string> javaVersion = default;
             Optional<string> powerShellVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("use32BitWorkerProcess"u8))
@@ -48,8 +77,57 @@ namespace Azure.ResourceManager.AppService.Models
                     powerShellVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteConfigPropertiesDictionary(Optional.ToNullable(use32BitWorkerProcess), linuxFxVersion.Value, javaVersion.Value, powerShellVersion.Value);
+            return new SiteConfigPropertiesDictionary(Optional.ToNullable(use32BitWorkerProcess), linuxFxVersion.Value, javaVersion.Value, powerShellVersion.Value, rawData);
+        }
+
+        SiteConfigPropertiesDictionary IModelJsonSerializable<SiteConfigPropertiesDictionary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteConfigPropertiesDictionary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteConfigPropertiesDictionary>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteConfigPropertiesDictionary IModelSerializable<SiteConfigPropertiesDictionary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteConfigPropertiesDictionary(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SiteConfigPropertiesDictionary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SiteConfigPropertiesDictionary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteConfigPropertiesDictionary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

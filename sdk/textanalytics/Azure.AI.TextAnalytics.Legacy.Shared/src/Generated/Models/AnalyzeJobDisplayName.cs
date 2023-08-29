@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The AnalyzeJobDisplayName. </summary>
     internal partial class AnalyzeJobDisplayName
     {
-        /// <summary> Initializes a new instance of AnalyzeJobDisplayName. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobDisplayName"/>. </summary>
         internal AnalyzeJobDisplayName()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalyzeJobDisplayName. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobDisplayName"/>. </summary>
         /// <param name="displayName"></param>
-        internal AnalyzeJobDisplayName(string displayName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeJobDisplayName(string displayName, Dictionary<string, BinaryData> rawData)
         {
             DisplayName = displayName;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the display name. </summary>

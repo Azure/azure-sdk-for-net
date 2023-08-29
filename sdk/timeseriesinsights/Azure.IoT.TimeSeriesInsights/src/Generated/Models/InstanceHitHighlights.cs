@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Highlighted text of time series instance to be displayed to the user. Highlighting inserts &lt;hit&gt; and &lt;/hit&gt; tags in the portions of text that matched the search string. Do not use any of the highlighted properties to do further API calls. </summary>
     internal partial class InstanceHitHighlights
     {
-        /// <summary> Initializes a new instance of InstanceHitHighlights. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstanceHitHighlights"/>. </summary>
         internal InstanceHitHighlights()
         {
             TimeSeriesId = new ChangeTrackingList<string>();
@@ -23,7 +26,7 @@ namespace Azure.IoT.TimeSeriesInsights
             InstanceFieldValues = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of InstanceHitHighlights. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceHitHighlights"/>. </summary>
         /// <param name="timeSeriesId"> List of highlighted string values of Time Series ID for displaying. Cannot be used to lookup instance. </param>
         /// <param name="typeName"> Highlighted time series type name that this instance belongs to. </param>
         /// <param name="name"> Highlighted name of time series instance. May be null. </param>
@@ -32,7 +35,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="hierarchyNames"> List of highlighted time series hierarchy names that time series instance belongs to. Cannot be used to lookup hierarchies. May be null. </param>
         /// <param name="instanceFieldNames"> List of highlighted time series instance field names. May be null. </param>
         /// <param name="instanceFieldValues"> List of highlighted time series instance field values. May be null. </param>
-        internal InstanceHitHighlights(IReadOnlyList<string> timeSeriesId, string typeName, string name, string description, IReadOnlyList<string> hierarchyIds, IReadOnlyList<string> hierarchyNames, IReadOnlyList<string> instanceFieldNames, IReadOnlyList<string> instanceFieldValues)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstanceHitHighlights(IReadOnlyList<string> timeSeriesId, string typeName, string name, string description, IReadOnlyList<string> hierarchyIds, IReadOnlyList<string> hierarchyNames, IReadOnlyList<string> instanceFieldNames, IReadOnlyList<string> instanceFieldValues, Dictionary<string, BinaryData> rawData)
         {
             TimeSeriesId = timeSeriesId;
             TypeName = typeName;
@@ -42,6 +46,7 @@ namespace Azure.IoT.TimeSeriesInsights
             HierarchyNames = hierarchyNames;
             InstanceFieldNames = instanceFieldNames;
             InstanceFieldValues = instanceFieldValues;
+            _rawData = rawData;
         }
 
         /// <summary> List of highlighted string values of Time Series ID for displaying. Cannot be used to lookup instance. </summary>

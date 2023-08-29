@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomEntitiesLROTask : IUtf8JsonSerializable
+    internal partial class CustomEntitiesLROTask : IUtf8JsonSerializable, IModelJsonSerializable<CustomEntitiesLROTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomEntitiesLROTask>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomEntitiesLROTask>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CustomEntitiesLROTask>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Parameters))
             {
@@ -27,11 +35,25 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomEntitiesLROTask DeserializeCustomEntitiesLROTask(JsonElement element)
+        internal static CustomEntitiesLROTask DeserializeCustomEntitiesLROTask(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<CustomEntitiesTaskParameters> parameters = default;
             AnalyzeTextLROTaskKind kind = default;
             Optional<string> taskName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -60,8 +83,57 @@ namespace Azure.AI.TextAnalytics.Models
                     taskName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomEntitiesLROTask(taskName.Value, kind, parameters.Value);
+            return new CustomEntitiesLROTask(taskName.Value, kind, parameters.Value, rawData);
+        }
+
+        CustomEntitiesLROTask IModelJsonSerializable<CustomEntitiesLROTask>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CustomEntitiesLROTask>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomEntitiesLROTask(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomEntitiesLROTask>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CustomEntitiesLROTask>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomEntitiesLROTask IModelSerializable<CustomEntitiesLROTask>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CustomEntitiesLROTask>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomEntitiesLROTask(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CustomEntitiesLROTask model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CustomEntitiesLROTask(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomEntitiesLROTask(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

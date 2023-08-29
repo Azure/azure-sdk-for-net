@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Run notebook error. </summary>
     public partial class RunNotebookError
     {
-        /// <summary> Initializes a new instance of RunNotebookError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunNotebookError"/>. </summary>
         internal RunNotebookError()
         {
             Traceback = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RunNotebookError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookError"/>. </summary>
         /// <param name="ename"> Error name. </param>
         /// <param name="evalue"> Error message. </param>
         /// <param name="traceback"> Error trace. </param>
-        internal RunNotebookError(string ename, string evalue, IReadOnlyList<string> traceback)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunNotebookError(string ename, string evalue, IReadOnlyList<string> traceback, Dictionary<string, BinaryData> rawData)
         {
             Ename = ename;
             Evalue = evalue;
             Traceback = traceback;
+            _rawData = rawData;
         }
 
         /// <summary> Error name. </summary>

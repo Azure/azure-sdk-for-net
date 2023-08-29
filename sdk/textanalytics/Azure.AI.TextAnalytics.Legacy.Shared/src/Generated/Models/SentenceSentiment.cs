@@ -15,7 +15,9 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The SentenceSentiment. </summary>
     internal partial class SentenceSentiment
     {
-        /// <summary> Initializes a new instance of SentenceSentiment. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SentenceSentiment"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
@@ -36,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Assessments = new ChangeTrackingList<SentenceAssessment>();
         }
 
-        /// <summary> Initializes a new instance of SentenceSentiment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceSentiment"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
@@ -44,7 +46,8 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="length"> The length of the sentence. </param>
         /// <param name="targets"> The array of sentence targets for the sentence. </param>
         /// <param name="assessments"> The array of assessments for the sentence. </param>
-        internal SentenceSentiment(string text, SentenceSentimentValue sentiment, SentimentConfidenceScorePerLabel confidenceScores, int offset, int length, IReadOnlyList<SentenceTarget> targets, IReadOnlyList<SentenceAssessment> assessments)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentenceSentiment(string text, SentenceSentimentValue sentiment, SentimentConfidenceScorePerLabel confidenceScores, int offset, int length, IReadOnlyList<SentenceTarget> targets, IReadOnlyList<SentenceAssessment> assessments, Dictionary<string, BinaryData> rawData)
         {
             Text = text;
             Sentiment = sentiment;
@@ -53,6 +56,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             Length = length;
             Targets = targets;
             Assessments = assessments;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentenceSentiment"/> for deserialization. </summary>
+        internal SentenceSentiment()
+        {
         }
 
         /// <summary> The sentence text. </summary>

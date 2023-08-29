@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Describes the capabilities/features allowed for a specific SKU. </summary>
     public partial class AppServiceSkuCapability
     {
-        /// <summary> Initializes a new instance of AppServiceSkuCapability. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuCapability"/>. </summary>
         public AppServiceSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuCapability"/>. </summary>
         /// <param name="name"> Name of the SKU capability. </param>
         /// <param name="value"> Value of the SKU capability. </param>
         /// <param name="reason"> Reason of the SKU capability. </param>
-        internal AppServiceSkuCapability(string name, string value, string reason)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceSkuCapability(string name, string value, string reason, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
             Reason = reason;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the SKU capability. </summary>

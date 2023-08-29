@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateGetStaticSiteBuildsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildStaticSitesRestClient.CreateGetStaticSiteBuildsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildResource(Client, StaticSiteBuildData.DeserializeStaticSiteBuildData(e)), _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StaticSiteBuildResource(Client, StaticSiteBuildData.DeserializeStaticSiteBuildData(e)), _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateGetStaticSiteBuildsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildStaticSitesRestClient.CreateGetStaticSiteBuildsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildResource(Client, StaticSiteBuildData.DeserializeStaticSiteBuildData(e)), _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StaticSiteBuildResource(Client, StaticSiteBuildData.DeserializeStaticSiteBuildData(e)), _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

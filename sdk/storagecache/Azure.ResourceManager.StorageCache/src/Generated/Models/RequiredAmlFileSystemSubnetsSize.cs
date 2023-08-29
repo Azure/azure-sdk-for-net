@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Information about the number of available IP addresses that are required for the AML file system. </summary>
     public partial class RequiredAmlFileSystemSubnetsSize
     {
-        /// <summary> Initializes a new instance of RequiredAmlFileSystemSubnetsSize. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RequiredAmlFileSystemSubnetsSize"/>. </summary>
         internal RequiredAmlFileSystemSubnetsSize()
         {
         }
 
-        /// <summary> Initializes a new instance of RequiredAmlFileSystemSubnetsSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequiredAmlFileSystemSubnetsSize"/>. </summary>
         /// <param name="filesystemSubnetSize"> The number of available IP addresses that are required for the AML file system. </param>
-        internal RequiredAmlFileSystemSubnetsSize(int? filesystemSubnetSize)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RequiredAmlFileSystemSubnetsSize(int? filesystemSubnetSize, Dictionary<string, BinaryData> rawData)
         {
             FilesystemSubnetSize = filesystemSubnetSize;
+            _rawData = rawData;
         }
 
         /// <summary> The number of available IP addresses that are required for the AML file system. </summary>

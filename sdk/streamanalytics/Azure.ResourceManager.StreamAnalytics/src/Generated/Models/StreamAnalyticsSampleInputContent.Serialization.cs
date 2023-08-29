@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsSampleInputContent : IUtf8JsonSerializable
+    public partial class StreamAnalyticsSampleInputContent : IUtf8JsonSerializable, IModelJsonSerializable<StreamAnalyticsSampleInputContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamAnalyticsSampleInputContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamAnalyticsSampleInputContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
@@ -35,7 +44,119 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("dataLocale"u8);
                 writer.WriteStringValue(DataLocalion.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static StreamAnalyticsSampleInputContent DeserializeStreamAnalyticsSampleInputContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<StreamingJobInputData> input = default;
+            Optional<string> compatibilityLevel = default;
+            Optional<Uri> eventsUri = default;
+            Optional<AzureLocation> dataLocale = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("input"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    input = StreamingJobInputData.DeserializeStreamingJobInputData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("compatibilityLevel"u8))
+                {
+                    compatibilityLevel = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("eventsUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eventsUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataLocale"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataLocale = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new StreamAnalyticsSampleInputContent(input.Value, compatibilityLevel.Value, eventsUri.Value, Optional.ToNullable(dataLocale), rawData);
+        }
+
+        StreamAnalyticsSampleInputContent IModelJsonSerializable<StreamAnalyticsSampleInputContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsSampleInputContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamAnalyticsSampleInputContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamAnalyticsSampleInputContent IModelSerializable<StreamAnalyticsSampleInputContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsSampleInputContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StreamAnalyticsSampleInputContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StreamAnalyticsSampleInputContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamAnalyticsSampleInputContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

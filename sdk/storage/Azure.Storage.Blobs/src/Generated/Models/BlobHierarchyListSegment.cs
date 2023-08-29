@@ -15,7 +15,9 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The BlobHierarchyListSegment. </summary>
     internal partial class BlobHierarchyListSegment
     {
-        /// <summary> Initializes a new instance of BlobHierarchyListSegment. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobHierarchyListSegment"/>. </summary>
         /// <param name="blobItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobItems"/> is null. </exception>
         internal BlobHierarchyListSegment(IEnumerable<BlobItemInternal> blobItems)
@@ -26,13 +28,20 @@ namespace Azure.Storage.Blobs.Models
             BlobItems = blobItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of BlobHierarchyListSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobHierarchyListSegment"/>. </summary>
         /// <param name="blobPrefixes"></param>
         /// <param name="blobItems"></param>
-        internal BlobHierarchyListSegment(IReadOnlyList<BlobPrefix> blobPrefixes, IReadOnlyList<BlobItemInternal> blobItems)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobHierarchyListSegment(IReadOnlyList<BlobPrefix> blobPrefixes, IReadOnlyList<BlobItemInternal> blobItems, Dictionary<string, BinaryData> rawData)
         {
             BlobPrefixes = blobPrefixes;
             BlobItems = blobItems;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobHierarchyListSegment"/> for deserialization. </summary>
+        internal BlobHierarchyListSegment()
+        {
         }
 
         /// <summary> Gets the blob prefixes. </summary>

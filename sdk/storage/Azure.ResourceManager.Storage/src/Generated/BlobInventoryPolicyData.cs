@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -18,22 +19,26 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class BlobInventoryPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyData"/>. </summary>
         public BlobInventoryPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="lastModifiedOn"> Returns the last modified date and time of the blob inventory policy. </param>
         /// <param name="policySchema"> The storage account blob inventory policy object. It is composed of policy rules. </param>
-        internal BlobInventoryPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, BlobInventoryPolicySchema policySchema) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobInventoryPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, BlobInventoryPolicySchema policySchema, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             PolicySchema = policySchema;
+            _rawData = rawData;
         }
 
         /// <summary> Returns the last modified date and time of the blob inventory policy. </summary>

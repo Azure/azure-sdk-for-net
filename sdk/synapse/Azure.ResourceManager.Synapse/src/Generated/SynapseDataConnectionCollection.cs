@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseDataConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataConnectionKustoPoolDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDataConnectionResource(Client, SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e)), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new SynapseDataConnectionResource(Client, SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e)), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseDataConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataConnectionKustoPoolDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDataConnectionResource(Client, SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e)), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new SynapseDataConnectionResource(Client, SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e)), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

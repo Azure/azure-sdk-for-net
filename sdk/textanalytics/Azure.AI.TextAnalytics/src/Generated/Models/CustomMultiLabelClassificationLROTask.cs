@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Use custom models to classify text into multi label taxonomy. </summary>
     internal partial class CustomMultiLabelClassificationLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of CustomMultiLabelClassificationLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationLROTask"/>. </summary>
         public CustomMultiLabelClassificationLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.CustomMultiLabelClassification;
         }
 
-        /// <summary> Initializes a new instance of CustomMultiLabelClassificationLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationLROTask"/>. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for a Custom Multi Classification task. </param>
-        internal CustomMultiLabelClassificationLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomMultiLabelClassificationTaskParameters parameters) : base(taskName, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomMultiLabelClassificationLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomMultiLabelClassificationTaskParameters parameters, Dictionary<string, BinaryData> rawData) : base(taskName, kind, rawData)
         {
             Parameters = parameters;
             Kind = kind;

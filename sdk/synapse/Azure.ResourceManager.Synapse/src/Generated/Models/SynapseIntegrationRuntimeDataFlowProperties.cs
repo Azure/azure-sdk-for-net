@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Data flow properties for managed integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeDataFlowProperties
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeDataFlowProperties"/>. </summary>
         public SynapseIntegrationRuntimeDataFlowProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeDataFlowProperties"/>. </summary>
         /// <param name="computeType"> Compute type of the cluster which will execute data flow job. </param>
         /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </param>
         /// <param name="timeToLive"> Time to live (in minutes) setting of the cluster which will execute data flow job. </param>

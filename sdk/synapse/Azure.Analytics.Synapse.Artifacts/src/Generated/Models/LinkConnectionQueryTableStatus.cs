@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkConnectionQueryTableStatus. </summary>
     public partial class LinkConnectionQueryTableStatus
     {
-        /// <summary> Initializes a new instance of LinkConnectionQueryTableStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionQueryTableStatus"/>. </summary>
         internal LinkConnectionQueryTableStatus()
         {
             Value = new ChangeTrackingList<LinkTableStatus>();
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionQueryTableStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionQueryTableStatus"/>. </summary>
         /// <param name="value"> Link tables' status. </param>
         /// <param name="continuationToken"> Continuation token to query table status. </param>
-        internal LinkConnectionQueryTableStatus(IReadOnlyList<LinkTableStatus> value, object continuationToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkConnectionQueryTableStatus(IReadOnlyList<LinkTableStatus> value, object continuationToken, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             ContinuationToken = continuationToken;
+            _rawData = rawData;
         }
 
         /// <summary> Link tables' status. </summary>

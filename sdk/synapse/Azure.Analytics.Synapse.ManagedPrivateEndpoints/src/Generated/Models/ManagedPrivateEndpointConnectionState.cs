@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     /// <summary> The connection state of a managed private endpoint. </summary>
     public partial class ManagedPrivateEndpointConnectionState
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointConnectionState. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointConnectionState"/>. </summary>
         public ManagedPrivateEndpointConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointConnectionState"/>. </summary>
         /// <param name="status"> The approval status. </param>
         /// <param name="description"> The managed private endpoint description. </param>
         /// <param name="actionsRequired"> The actions required on the managed private endpoint. </param>
-        internal ManagedPrivateEndpointConnectionState(string status, string description, string actionsRequired)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedPrivateEndpointConnectionState(string status, string description, string actionsRequired, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _rawData = rawData;
         }
 
         /// <summary> The approval status. </summary>

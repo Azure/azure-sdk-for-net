@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Details of the customer managed key associated with the workspace. </summary>
     public partial class CustomerManagedKeyDetails
     {
-        /// <summary> Initializes a new instance of CustomerManagedKeyDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomerManagedKeyDetails"/>. </summary>
         public CustomerManagedKeyDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomerManagedKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerManagedKeyDetails"/>. </summary>
         /// <param name="status"> The customer managed key status on the workspace. </param>
         /// <param name="key"> The key object of the workspace. </param>
-        internal CustomerManagedKeyDetails(string status, WorkspaceKeyDetails key)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomerManagedKeyDetails(string status, WorkspaceKeyDetails key, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Key = key;
+            _rawData = rawData;
         }
 
         /// <summary> The customer managed key status on the workspace. </summary>

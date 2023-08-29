@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class LivePipelineSetRequestBody : IUtf8JsonSerializable
+    internal partial class LivePipelineSetRequestBody : IUtf8JsonSerializable, IModelJsonSerializable<LivePipelineSetRequestBody>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LivePipelineSetRequestBody>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LivePipelineSetRequestBody>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<LivePipelineSetRequestBody>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -32,11 +40,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LivePipelineSetRequestBody DeserializeLivePipelineSetRequestBody(JsonElement element)
+        internal static LivePipelineSetRequestBody DeserializeLivePipelineSetRequestBody(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +68,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<LivePipelineProperties> properties = default;
             string methodName = default;
             Optional<string> apiVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -81,8 +104,57 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LivePipelineSetRequestBody(methodName, apiVersion.Value, name, systemData.Value, properties.Value);
+            return new LivePipelineSetRequestBody(methodName, apiVersion.Value, name, systemData.Value, properties.Value, rawData);
+        }
+
+        LivePipelineSetRequestBody IModelJsonSerializable<LivePipelineSetRequestBody>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LivePipelineSetRequestBody>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLivePipelineSetRequestBody(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LivePipelineSetRequestBody>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LivePipelineSetRequestBody>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LivePipelineSetRequestBody IModelSerializable<LivePipelineSetRequestBody>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LivePipelineSetRequestBody>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLivePipelineSetRequestBody(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LivePipelineSetRequestBody model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LivePipelineSetRequestBody(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLivePipelineSetRequestBody(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

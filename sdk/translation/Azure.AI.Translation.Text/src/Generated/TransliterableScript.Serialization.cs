@@ -5,17 +5,58 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class TransliterableScript
+    public partial class TransliterableScript : IUtf8JsonSerializable, IModelJsonSerializable<TransliterableScript>
     {
-        internal static TransliterableScript DeserializeTransliterableScript(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TransliterableScript>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TransliterableScript>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TransliterableScript>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("toScripts"u8);
+            writer.WriteStartArray();
+            foreach (var item in ToScripts)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("nativeName"u8);
+            writer.WriteStringValue(NativeName);
+            writer.WritePropertyName("dir"u8);
+            writer.WriteStringValue(Dir);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TransliterableScript DeserializeTransliterableScript(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +66,7 @@ namespace Azure.AI.Translation.Text
             string name = default;
             string nativeName = default;
             string dir = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("toScripts"u8))
@@ -57,16 +99,57 @@ namespace Azure.AI.Translation.Text
                     dir = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TransliterableScript(code, name, nativeName, dir, toScripts);
+            return new TransliterableScript(code, name, nativeName, dir, toScripts, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new TransliterableScript FromResponse(Response response)
+        TransliterableScript IModelJsonSerializable<TransliterableScript>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTransliterableScript(document.RootElement);
+            ModelSerializerHelper.ValidateFormat<TransliterableScript>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTransliterableScript(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TransliterableScript>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TransliterableScript>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TransliterableScript IModelSerializable<TransliterableScript>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TransliterableScript>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTransliterableScript(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TransliterableScript model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TransliterableScript(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTransliterableScript(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

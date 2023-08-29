@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseGeoBackupPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseGeoBackupPolicySqlPoolGeoBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseGeoBackupPolicyResource(Client, SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(e)), _synapseGeoBackupPolicySqlPoolGeoBackupPoliciesClientDiagnostics, Pipeline, "SynapseGeoBackupPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new SynapseGeoBackupPolicyResource(Client, SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(e)), _synapseGeoBackupPolicySqlPoolGeoBackupPoliciesClientDiagnostics, Pipeline, "SynapseGeoBackupPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseGeoBackupPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseGeoBackupPolicySqlPoolGeoBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseGeoBackupPolicyResource(Client, SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(e)), _synapseGeoBackupPolicySqlPoolGeoBackupPoliciesClientDiagnostics, Pipeline, "SynapseGeoBackupPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new SynapseGeoBackupPolicyResource(Client, SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(e)), _synapseGeoBackupPolicySqlPoolGeoBackupPoliciesClientDiagnostics, Pipeline, "SynapseGeoBackupPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Properties describing the software upgrade state of the cache. </summary>
     public partial class StorageCacheUpgradeStatus
     {
-        /// <summary> Initializes a new instance of StorageCacheUpgradeStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUpgradeStatus"/>. </summary>
         internal StorageCacheUpgradeStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUpgradeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUpgradeStatus"/>. </summary>
         /// <param name="currentFirmwareVersion"> Version string of the firmware currently installed on this cache. </param>
         /// <param name="firmwareUpdateStatus"> True if there is a firmware update ready to install on this cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </param>
         /// <param name="firmwareUpdateDeadline"> Time at which the pending firmware update will automatically be installed on the cache. </param>
         /// <param name="lastFirmwareUpdate"> Time of the last successful firmware update. </param>
         /// <param name="pendingFirmwareVersion"> When firmwareUpdateAvailable is true, this field holds the version string for the update. </param>
-        internal StorageCacheUpgradeStatus(string currentFirmwareVersion, StorageCacheFirmwareStatusType? firmwareUpdateStatus, DateTimeOffset? firmwareUpdateDeadline, DateTimeOffset? lastFirmwareUpdate, string pendingFirmwareVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheUpgradeStatus(string currentFirmwareVersion, StorageCacheFirmwareStatusType? firmwareUpdateStatus, DateTimeOffset? firmwareUpdateDeadline, DateTimeOffset? lastFirmwareUpdate, string pendingFirmwareVersion, Dictionary<string, BinaryData> rawData)
         {
             CurrentFirmwareVersion = currentFirmwareVersion;
             FirmwareUpdateStatus = firmwareUpdateStatus;
             FirmwareUpdateDeadline = firmwareUpdateDeadline;
             LastFirmwareUpdate = lastFirmwareUpdate;
             PendingFirmwareVersion = pendingFirmwareVersion;
+            _rawData = rawData;
         }
 
         /// <summary> Version string of the firmware currently installed on this cache. </summary>

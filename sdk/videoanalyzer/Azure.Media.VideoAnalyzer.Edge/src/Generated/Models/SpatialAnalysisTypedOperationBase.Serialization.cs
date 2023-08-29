@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisTypedOperationBase : IUtf8JsonSerializable
+    public partial class SpatialAnalysisTypedOperationBase : IUtf8JsonSerializable, IModelJsonSerializable<SpatialAnalysisTypedOperationBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SpatialAnalysisTypedOperationBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SpatialAnalysisTypedOperationBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisTypedOperationBase>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Debug))
             {
@@ -52,11 +60,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SpatialAnalysisTypedOperationBase DeserializeSpatialAnalysisTypedOperationBase(JsonElement element)
+        internal static SpatialAnalysisTypedOperationBase DeserializeSpatialAnalysisTypedOperationBase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,6 +93,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "#Microsoft.VideoAnalyzer.SpatialAnalysisPersonZoneCrossingOperation": return SpatialAnalysisPersonZoneCrossingOperation.DeserializeSpatialAnalysisPersonZoneCrossingOperation(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<string> debug = default;
             Optional<string> calibrationConfiguration = default;
             Optional<string> cameraConfiguration = default;
@@ -79,6 +103,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> trackerNodeConfiguration = default;
             Optional<string> enableFaceMaskClassifier = default;
             string type = "SpatialAnalysisTypedOperationBase";
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("debug"u8))
@@ -121,8 +146,57 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SpatialAnalysisTypedOperationBase(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value);
+            return new SpatialAnalysisTypedOperationBase(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, rawData);
+        }
+
+        SpatialAnalysisTypedOperationBase IModelJsonSerializable<SpatialAnalysisTypedOperationBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisTypedOperationBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpatialAnalysisTypedOperationBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SpatialAnalysisTypedOperationBase>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisTypedOperationBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SpatialAnalysisTypedOperationBase IModelSerializable<SpatialAnalysisTypedOperationBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisTypedOperationBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSpatialAnalysisTypedOperationBase(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SpatialAnalysisTypedOperationBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SpatialAnalysisTypedOperationBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSpatialAnalysisTypedOperationBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

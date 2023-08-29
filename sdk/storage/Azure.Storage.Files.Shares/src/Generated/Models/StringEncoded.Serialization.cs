@@ -5,14 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
+using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class StringEncoded
+    internal partial class StringEncoded : IXmlSerializable, IModelSerializable<StringEncoded>
     {
-        internal static StringEncoded DeserializeStringEncoded(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "StringEncoded");
+            if (Optional.IsDefined(Encoded))
+            {
+                writer.WriteStartAttribute("Encoded");
+                writer.WriteValue(Encoded.Value);
+                writer.WriteEndAttribute();
+            }
+            writer.WriteValue(Content);
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static StringEncoded DeserializeStringEncoded(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             bool? encoded = default;
             string content = default;
             if (element.Attribute("Encoded") is XAttribute encodedAttribute)
@@ -20,7 +42,53 @@ namespace Azure.Storage.Files.Shares.Models
                 encoded = (bool?)encodedAttribute;
             }
             content = element.Value;
-            return new StringEncoded(encoded, content);
+            return new StringEncoded(encoded, content, default);
+        }
+
+        BinaryData IModelSerializable<StringEncoded>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        StringEncoded IModelSerializable<StringEncoded>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeStringEncoded(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(StringEncoded model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StringEncoded(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeStringEncoded(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

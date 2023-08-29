@@ -16,13 +16,15 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the WebSiteInstanceStatus data model. </summary>
     public partial class WebSiteInstanceStatusData : ResourceData
     {
-        /// <summary> Initializes a new instance of WebSiteInstanceStatusData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebSiteInstanceStatusData"/>. </summary>
         public WebSiteInstanceStatusData()
         {
             Containers = new ChangeTrackingDictionary<string, ContainerInfo>();
         }
 
-        /// <summary> Initializes a new instance of WebSiteInstanceStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteInstanceStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +36,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="healthCheckUri"> Link to the console to web app instance. </param>
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, Uri healthCheckUri, IDictionary<string, ContainerInfo> containers, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, Uri healthCheckUri, IDictionary<string, ContainerInfo> containers, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             StatusUri = statusUri;
@@ -43,6 +46,7 @@ namespace Azure.ResourceManager.AppService
             HealthCheckUri = healthCheckUri;
             Containers = containers;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the state. </summary>

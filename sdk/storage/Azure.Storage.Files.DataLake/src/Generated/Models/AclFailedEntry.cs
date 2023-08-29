@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The AclFailedEntry. </summary>
     internal partial class AclFailedEntry
     {
-        /// <summary> Initializes a new instance of AclFailedEntry. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AclFailedEntry"/>. </summary>
         internal AclFailedEntry()
         {
         }
 
-        /// <summary> Initializes a new instance of AclFailedEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="AclFailedEntry"/>. </summary>
         /// <param name="name"></param>
         /// <param name="type"></param>
         /// <param name="errorMessage"></param>
-        internal AclFailedEntry(string name, string type, string errorMessage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AclFailedEntry(string name, string type, string errorMessage, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Type = type;
             ErrorMessage = errorMessage;
+            _rawData = rawData;
         }
     }
 }

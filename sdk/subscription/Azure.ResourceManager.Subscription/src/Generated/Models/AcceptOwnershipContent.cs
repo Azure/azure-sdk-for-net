@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Subscription.Models
 {
     /// <summary> The parameters required to accept subscription ownership. </summary>
     public partial class AcceptOwnershipContent
     {
-        /// <summary> Initializes a new instance of AcceptOwnershipContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipContent"/>. </summary>
         public AcceptOwnershipContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipContent"/>. </summary>
+        /// <param name="properties"> Accept subscription ownership request properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcceptOwnershipContent(AcceptOwnershipRequestProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Accept subscription ownership request properties. </summary>

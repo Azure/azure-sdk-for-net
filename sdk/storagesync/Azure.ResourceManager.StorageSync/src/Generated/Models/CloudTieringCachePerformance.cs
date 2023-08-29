@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Server endpoint cloud tiering status object. </summary>
     public partial class CloudTieringCachePerformance
     {
-        /// <summary> Initializes a new instance of CloudTieringCachePerformance. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudTieringCachePerformance"/>. </summary>
         internal CloudTieringCachePerformance()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringCachePerformance. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringCachePerformance"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="cacheHitBytes"> Count of bytes that were served from the local server. </param>
         /// <param name="cacheMissBytes"> Count of bytes that were served from the cloud. </param>
         /// <param name="cacheHitBytesPercent"> Percentage of total bytes (hit + miss) that were served from the local server. </param>
-        internal CloudTieringCachePerformance(DateTimeOffset? lastUpdatedOn, long? cacheHitBytes, long? cacheMissBytes, int? cacheHitBytesPercent)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudTieringCachePerformance(DateTimeOffset? lastUpdatedOn, long? cacheHitBytes, long? cacheMissBytes, int? cacheHitBytesPercent, Dictionary<string, BinaryData> rawData)
         {
             LastUpdatedOn = lastUpdatedOn;
             CacheHitBytes = cacheHitBytes;
             CacheMissBytes = cacheMissBytes;
             CacheHitBytesPercent = cacheHitBytesPercent;
+            _rawData = rawData;
         }
 
         /// <summary> Last updated timestamp. </summary>

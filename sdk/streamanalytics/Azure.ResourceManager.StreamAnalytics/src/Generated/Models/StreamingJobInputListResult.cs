@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StreamAnalytics;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Object containing a list of inputs under a streaming job. </summary>
     internal partial class StreamingJobInputListResult
     {
-        /// <summary> Initializes a new instance of StreamingJobInputListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputListResult"/>. </summary>
         internal StreamingJobInputListResult()
         {
             Value = new ChangeTrackingList<StreamingJobInputData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingJobInputListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputListResult"/>. </summary>
         /// <param name="value"> A list of inputs under a streaming job. Populated by a 'List' operation. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal StreamingJobInputListResult(IReadOnlyList<StreamingJobInputData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobInputListResult(IReadOnlyList<StreamingJobInputData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of inputs under a streaming job. Populated by a 'List' operation. </summary>

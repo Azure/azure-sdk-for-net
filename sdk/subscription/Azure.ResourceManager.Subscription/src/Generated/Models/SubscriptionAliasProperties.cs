@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Put subscription creation result properties. </summary>
     public partial class SubscriptionAliasProperties
     {
-        /// <summary> Initializes a new instance of SubscriptionAliasProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasProperties"/>. </summary>
         internal SubscriptionAliasProperties()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionAliasProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasProperties"/>. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="displayName"> The display name of the subscription. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
@@ -38,7 +40,8 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="managementGroupId"> The Management Group Id. </param>
         /// <param name="createdOn"> Created Time. </param>
         /// <param name="tags"> Tags for the subscription. </param>
-        internal SubscriptionAliasProperties(string subscriptionId, string displayName, SubscriptionProvisioningState? provisioningState, Uri acceptOwnershipUri, AcceptOwnershipState? acceptOwnershipState, string billingScope, SubscriptionWorkload? workload, string resellerId, string subscriptionOwnerId, string managementGroupId, DateTimeOffset? createdOn, IReadOnlyDictionary<string, string> tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionAliasProperties(string subscriptionId, string displayName, SubscriptionProvisioningState? provisioningState, Uri acceptOwnershipUri, AcceptOwnershipState? acceptOwnershipState, string billingScope, SubscriptionWorkload? workload, string resellerId, string subscriptionOwnerId, string managementGroupId, DateTimeOffset? createdOn, IReadOnlyDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
         {
             SubscriptionId = subscriptionId;
             DisplayName = displayName;
@@ -52,6 +55,7 @@ namespace Azure.ResourceManager.Subscription.Models
             ManagementGroupId = managementGroupId;
             CreatedOn = createdOn;
             Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Newly created subscription Id. </summary>

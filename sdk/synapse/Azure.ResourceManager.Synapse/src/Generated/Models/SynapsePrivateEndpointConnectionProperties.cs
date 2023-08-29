@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,20 +15,24 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Properties of a private endpoint connection. </summary>
     public partial class SynapsePrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionProperties"/>. </summary>
         internal SynapsePrivateEndpointConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> The private endpoint which the connection belongs to. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal SynapsePrivateEndpointConnectionProperties(SubResource privateEndpoint, SynapsePrivateLinkServiceConnectionState connectionState, string provisioningState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapsePrivateEndpointConnectionProperties(SubResource privateEndpoint, SynapsePrivateLinkServiceConnectionState connectionState, string provisioningState, Dictionary<string, BinaryData> rawData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> The private endpoint which the connection belongs to. </summary>

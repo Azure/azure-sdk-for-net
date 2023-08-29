@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Trigger based on range of status codes. </summary>
     public partial class StatusCodesRangeBasedTrigger
     {
-        /// <summary> Initializes a new instance of StatusCodesRangeBasedTrigger. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StatusCodesRangeBasedTrigger"/>. </summary>
         public StatusCodesRangeBasedTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of StatusCodesRangeBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusCodesRangeBasedTrigger"/>. </summary>
         /// <param name="statusCodes"> HTTP status code. </param>
         /// <param name="path"></param>
         /// <param name="count"> Request Count. </param>
         /// <param name="timeInterval"> Time interval. </param>
-        internal StatusCodesRangeBasedTrigger(string statusCodes, string path, int? count, string timeInterval)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StatusCodesRangeBasedTrigger(string statusCodes, string path, int? count, string timeInterval, Dictionary<string, BinaryData> rawData)
         {
             StatusCodes = statusCodes;
             Path = path;
             Count = count;
             TimeInterval = timeInterval;
+            _rawData = rawData;
         }
 
         /// <summary> HTTP status code. </summary>

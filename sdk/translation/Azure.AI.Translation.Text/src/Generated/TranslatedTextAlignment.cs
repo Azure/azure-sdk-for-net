@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,6 +14,8 @@ namespace Azure.AI.Translation.Text
     /// <summary> Alignment information object. </summary>
     public partial class TranslatedTextAlignment
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of TranslatedTextAlignment. </summary>
         /// <param name="proj">
         /// Maps input text to translated text. The alignment information is only provided when the request
@@ -28,6 +31,27 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(proj, nameof(proj));
 
             Proj = proj;
+        }
+
+        /// <summary> Initializes a new instance of TranslatedTextAlignment. </summary>
+        /// <param name="proj">
+        /// Maps input text to translated text. The alignment information is only provided when the request
+        /// parameter includeAlignment is true. Alignment is returned as a string value of the following
+        /// format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]].
+        /// The colon separates start and end index, the dash separates the languages, and space separates the words.
+        /// One word may align with zero, one, or multiple words in the other language, and the aligned words may
+        /// be non-contiguous. When no alignment information is available, the alignment element will be empty.
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranslatedTextAlignment(string proj, Dictionary<string, BinaryData> rawData)
+        {
+            Proj = proj;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslatedTextAlignment"/> for deserialization. </summary>
+        internal TranslatedTextAlignment()
+        {
         }
 
         /// <summary>

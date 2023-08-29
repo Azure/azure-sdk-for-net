@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkStatementOutput. </summary>
     public partial class SparkStatementOutput
     {
-        /// <summary> Initializes a new instance of SparkStatementOutput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkStatementOutput"/>. </summary>
         /// <param name="executionCount"></param>
         internal SparkStatementOutput(int executionCount)
         {
@@ -21,14 +24,15 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Traceback = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SparkStatementOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementOutput"/>. </summary>
         /// <param name="status"></param>
         /// <param name="executionCount"></param>
         /// <param name="data"> Any object. </param>
         /// <param name="errorName"></param>
         /// <param name="errorValue"></param>
         /// <param name="traceback"></param>
-        internal SparkStatementOutput(string status, int executionCount, object data, string errorName, string errorValue, IReadOnlyList<string> traceback)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkStatementOutput(string status, int executionCount, object data, string errorName, string errorValue, IReadOnlyList<string> traceback, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             ExecutionCount = executionCount;
@@ -36,6 +40,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
             ErrorName = errorName;
             ErrorValue = errorValue;
             Traceback = traceback;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkStatementOutput"/> for deserialization. </summary>
+        internal SparkStatementOutput()
+        {
         }
 
         /// <summary> Gets the status. </summary>

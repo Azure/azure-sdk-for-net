@@ -5,15 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class FilterBlobItem
+    internal partial class FilterBlobItem : IXmlSerializable, IModelSerializable<FilterBlobItem>
     {
-        internal static FilterBlobItem DeserializeFilterBlobItem(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "Blob");
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("ContainerName");
+            writer.WriteValue(ContainerName);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Tags))
+            {
+                writer.WriteObjectValue(Tags, "Tags");
+            }
+            if (Optional.IsDefined(VersionId))
+            {
+                writer.WriteStartElement("VersionId");
+                writer.WriteValue(VersionId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsCurrentVersion))
+            {
+                writer.WriteStartElement("IsCurrentVersion");
+                writer.WriteValue(IsCurrentVersion.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static FilterBlobItem DeserializeFilterBlobItem(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string name = default;
             string containerName = default;
             BlobTags tags = default;
@@ -39,7 +75,53 @@ namespace Azure.Storage.Blobs.Models
             {
                 isCurrentVersion = (bool?)isCurrentVersionElement;
             }
-            return new FilterBlobItem(name, containerName, tags, versionId, isCurrentVersion);
+            return new FilterBlobItem(name, containerName, tags, versionId, isCurrentVersion, default);
+        }
+
+        BinaryData IModelSerializable<FilterBlobItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        FilterBlobItem IModelSerializable<FilterBlobItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeFilterBlobItem(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(FilterBlobItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FilterBlobItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeFilterBlobItem(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

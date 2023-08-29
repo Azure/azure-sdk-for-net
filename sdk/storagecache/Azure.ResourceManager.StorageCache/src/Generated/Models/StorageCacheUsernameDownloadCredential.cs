@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> When present, these are the credentials for the secure LDAP connection. </summary>
     public partial class StorageCacheUsernameDownloadCredential
     {
-        /// <summary> Initializes a new instance of StorageCacheUsernameDownloadCredential. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsernameDownloadCredential"/>. </summary>
         public StorageCacheUsernameDownloadCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsernameDownloadCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsernameDownloadCredential"/>. </summary>
         /// <param name="bindDistinguishedName"> The Bind Distinguished Name identity to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </param>
         /// <param name="bindPassword"> The Bind password to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </param>
-        internal StorageCacheUsernameDownloadCredential(string bindDistinguishedName, string bindPassword)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheUsernameDownloadCredential(string bindDistinguishedName, string bindPassword, Dictionary<string, BinaryData> rawData)
         {
             BindDistinguishedName = bindDistinguishedName;
             BindPassword = bindPassword;
+            _rawData = rawData;
         }
 
         /// <summary> The Bind Distinguished Name identity to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </summary>

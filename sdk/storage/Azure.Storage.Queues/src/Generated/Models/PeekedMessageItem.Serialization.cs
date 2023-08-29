@@ -6,15 +6,43 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal partial class PeekedMessageItem
+    internal partial class PeekedMessageItem : IXmlSerializable, IModelSerializable<PeekedMessageItem>
     {
-        internal static PeekedMessageItem DeserializePeekedMessageItem(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "QueueMessage");
+            writer.WriteStartElement("MessageId");
+            writer.WriteValue(MessageId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("InsertionTime");
+            writer.WriteValue(InsertionTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("ExpirationTime");
+            writer.WriteValue(ExpirationTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("DequeueCount");
+            writer.WriteValue(DequeueCount);
+            writer.WriteEndElement();
+            writer.WriteStartElement("MessageText");
+            writer.WriteValue(MessageText);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static PeekedMessageItem DeserializePeekedMessageItem(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string messageId = default;
             DateTimeOffset insertionTime = default;
             DateTimeOffset expirationTime = default;
@@ -40,7 +68,53 @@ namespace Azure.Storage.Queues.Models
             {
                 messageText = (string)messageTextElement;
             }
-            return new PeekedMessageItem(messageId, insertionTime, expirationTime, dequeueCount, messageText);
+            return new PeekedMessageItem(messageId, insertionTime, expirationTime, dequeueCount, messageText, default);
+        }
+
+        BinaryData IModelSerializable<PeekedMessageItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        PeekedMessageItem IModelSerializable<PeekedMessageItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializePeekedMessageItem(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(PeekedMessageItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PeekedMessageItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializePeekedMessageItem(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

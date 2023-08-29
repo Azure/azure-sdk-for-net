@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -12,20 +14,24 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
     public partial class AppServiceCertificateProperties
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateProperties"/>. </summary>
         public AppServiceCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateProperties"/>. </summary>
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        internal AppServiceCertificateProperties(ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceCertificateProperties(ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, Dictionary<string, BinaryData> rawData)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> Key Vault resource Id. </summary>

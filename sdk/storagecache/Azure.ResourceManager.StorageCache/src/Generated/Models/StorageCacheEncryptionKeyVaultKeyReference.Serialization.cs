@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheEncryptionKeyVaultKeyReference : IUtf8JsonSerializable
+    public partial class StorageCacheEncryptionKeyVaultKeyReference : IUtf8JsonSerializable, IModelJsonSerializable<StorageCacheEncryptionKeyVaultKeyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageCacheEncryptionKeyVaultKeyReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageCacheEncryptionKeyVaultKeyReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyUrl"u8);
             writer.WriteStringValue(KeyUri.AbsoluteUri);
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, SourceVault); if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
         }
 
-        internal static StorageCacheEncryptionKeyVaultKeyReference DeserializeStorageCacheEncryptionKeyVaultKeyReference(JsonElement element)
+        internal static StorageCacheEncryptionKeyVaultKeyReference DeserializeStorageCacheEncryptionKeyVaultKeyReference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri keyUrl = default;
             WritableSubResource sourceVault = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUrl"u8))
@@ -43,8 +65,57 @@ namespace Azure.ResourceManager.StorageCache.Models
                     sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageCacheEncryptionKeyVaultKeyReference(keyUrl, sourceVault);
+            return new StorageCacheEncryptionKeyVaultKeyReference(keyUrl, sourceVault, rawData);
+        }
+
+        StorageCacheEncryptionKeyVaultKeyReference IModelJsonSerializable<StorageCacheEncryptionKeyVaultKeyReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheEncryptionKeyVaultKeyReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageCacheEncryptionKeyVaultKeyReference>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageCacheEncryptionKeyVaultKeyReference IModelSerializable<StorageCacheEncryptionKeyVaultKeyReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageCacheEncryptionKeyVaultKeyReference(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StorageCacheEncryptionKeyVaultKeyReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StorageCacheEncryptionKeyVaultKeyReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageCacheEncryptionKeyVaultKeyReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

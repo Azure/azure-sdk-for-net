@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
@@ -14,9 +17,22 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// </summary>
     public abstract partial class EndpointBaseUpdateProperties
     {
-        /// <summary> Initializes a new instance of EndpointBaseUpdateProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointBaseUpdateProperties"/>. </summary>
         protected EndpointBaseUpdateProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EndpointBaseUpdateProperties"/>. </summary>
+        /// <param name="endpointType"> The Endpoint resource type. </param>
+        /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointBaseUpdateProperties(EndpointType endpointType, string description, Dictionary<string, BinaryData> rawData)
+        {
+            EndpointType = endpointType;
+            Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> The Endpoint resource type. </summary>

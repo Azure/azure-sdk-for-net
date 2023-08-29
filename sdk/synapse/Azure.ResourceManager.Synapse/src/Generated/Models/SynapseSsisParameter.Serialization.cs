@@ -5,15 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSsisParameter
+    public partial class SynapseSsisParameter : IUtf8JsonSerializable, IModelJsonSerializable<SynapseSsisParameter>
     {
-        internal static SynapseSsisParameter DeserializeSynapseSsisParameter(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseSsisParameter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseSsisParameter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(DataType))
+            {
+                writer.WritePropertyName("dataType"u8);
+                writer.WriteStringValue(DataType);
+            }
+            if (Optional.IsDefined(IsRequired))
+            {
+                writer.WritePropertyName("required"u8);
+                writer.WriteBooleanValue(IsRequired.Value);
+            }
+            if (Optional.IsDefined(IsSensitive))
+            {
+                writer.WritePropertyName("sensitive"u8);
+                writer.WriteBooleanValue(IsSensitive.Value);
+            }
+            if (Optional.IsDefined(DesignDefaultValue))
+            {
+                writer.WritePropertyName("designDefaultValue"u8);
+                writer.WriteStringValue(DesignDefaultValue);
+            }
+            if (Optional.IsDefined(DefaultValue))
+            {
+                writer.WritePropertyName("defaultValue"u8);
+                writer.WriteStringValue(DefaultValue);
+            }
+            if (Optional.IsDefined(SensitiveDefaultValue))
+            {
+                writer.WritePropertyName("sensitiveDefaultValue"u8);
+                writer.WriteStringValue(SensitiveDefaultValue);
+            }
+            if (Optional.IsDefined(ValueType))
+            {
+                writer.WritePropertyName("valueType"u8);
+                writer.WriteStringValue(ValueType);
+            }
+            if (Optional.IsDefined(ValueSet))
+            {
+                writer.WritePropertyName("valueSet"u8);
+                writer.WriteBooleanValue(ValueSet.Value);
+            }
+            if (Optional.IsDefined(Variable))
+            {
+                writer.WritePropertyName("variable"u8);
+                writer.WriteStringValue(Variable);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseSsisParameter DeserializeSynapseSsisParameter(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +118,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> valueType = default;
             Optional<bool> valueSet = default;
             Optional<string> variable = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,8 +197,57 @@ namespace Azure.ResourceManager.Synapse.Models
                     variable = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseSsisParameter(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value);
+            return new SynapseSsisParameter(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value, rawData);
+        }
+
+        SynapseSsisParameter IModelJsonSerializable<SynapseSsisParameter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSsisParameter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseSsisParameter>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseSsisParameter IModelSerializable<SynapseSsisParameter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseSsisParameter(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SynapseSsisParameter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SynapseSsisParameter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseSsisParameter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

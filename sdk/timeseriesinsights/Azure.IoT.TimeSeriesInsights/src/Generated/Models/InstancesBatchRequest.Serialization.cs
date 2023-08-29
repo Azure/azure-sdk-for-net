@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class InstancesBatchRequest : IUtf8JsonSerializable
+    internal partial class InstancesBatchRequest : IUtf8JsonSerializable, IModelJsonSerializable<InstancesBatchRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstancesBatchRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InstancesBatchRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Get))
             {
@@ -45,7 +53,133 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static InstancesBatchRequest DeserializeInstancesBatchRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<InstancesRequestBatchGetOrDelete> @get = default;
+            Optional<IList<TimeSeriesInstance>> put = default;
+            Optional<IList<TimeSeriesInstance>> update = default;
+            Optional<InstancesRequestBatchGetOrDelete> delete = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("get"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @get = InstancesRequestBatchGetOrDelete.DeserializeInstancesRequestBatchGetOrDelete(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("put"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesInstance> array = new List<TimeSeriesInstance>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesInstance.DeserializeTimeSeriesInstance(item));
+                    }
+                    put = array;
+                    continue;
+                }
+                if (property.NameEquals("update"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesInstance> array = new List<TimeSeriesInstance>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesInstance.DeserializeTimeSeriesInstance(item));
+                    }
+                    update = array;
+                    continue;
+                }
+                if (property.NameEquals("delete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delete = InstancesRequestBatchGetOrDelete.DeserializeInstancesRequestBatchGetOrDelete(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new InstancesBatchRequest(@get.Value, Optional.ToList(put), Optional.ToList(update), delete.Value, rawData);
+        }
+
+        InstancesBatchRequest IModelJsonSerializable<InstancesBatchRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstancesBatchRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InstancesBatchRequest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InstancesBatchRequest IModelSerializable<InstancesBatchRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInstancesBatchRequest(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InstancesBatchRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InstancesBatchRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInstancesBatchRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

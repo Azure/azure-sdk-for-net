@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlPoolStoredProcedureActivityConverter))]
-    public partial class SqlPoolStoredProcedureActivity : IUtf8JsonSerializable
+    public partial class SqlPoolStoredProcedureActivity : IUtf8JsonSerializable, IModelJsonSerializable<SqlPoolStoredProcedureActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlPoolStoredProcedureActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlPoolStoredProcedureActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SqlPoolStoredProcedureActivity>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sqlPool"u8);
             writer.WriteObjectValue(SqlPool);
@@ -84,8 +90,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SqlPoolStoredProcedureActivity DeserializeSqlPoolStoredProcedureActivity(JsonElement element)
+        internal static SqlPoolStoredProcedureActivity DeserializeSqlPoolStoredProcedureActivity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -205,6 +213,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SqlPoolStoredProcedureActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, sqlPool, storedProcedureName, Optional.ToDictionary(storedProcedureParameters));
+        }
+
+        SqlPoolStoredProcedureActivity IModelJsonSerializable<SqlPoolStoredProcedureActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SqlPoolStoredProcedureActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlPoolStoredProcedureActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlPoolStoredProcedureActivity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SqlPoolStoredProcedureActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlPoolStoredProcedureActivity IModelSerializable<SqlPoolStoredProcedureActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SqlPoolStoredProcedureActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlPoolStoredProcedureActivity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SqlPoolStoredProcedureActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SqlPoolStoredProcedureActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlPoolStoredProcedureActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SqlPoolStoredProcedureActivityConverter : JsonConverter<SqlPoolStoredProcedureActivity>

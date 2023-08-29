@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SelfDependencyTumblingWindowTriggerReferenceConverter))]
-    public partial class SelfDependencyTumblingWindowTriggerReference : IUtf8JsonSerializable
+    public partial class SelfDependencyTumblingWindowTriggerReference : IUtf8JsonSerializable, IModelJsonSerializable<SelfDependencyTumblingWindowTriggerReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SelfDependencyTumblingWindowTriggerReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SelfDependencyTumblingWindowTriggerReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SelfDependencyTumblingWindowTriggerReference>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("offset"u8);
             writer.WriteStringValue(Offset);
@@ -27,11 +34,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SelfDependencyTumblingWindowTriggerReference DeserializeSelfDependencyTumblingWindowTriggerReference(JsonElement element)
+        internal static SelfDependencyTumblingWindowTriggerReference DeserializeSelfDependencyTumblingWindowTriggerReference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string offset = default;
             Optional<string> size = default;
             string type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offset"u8))
@@ -56,8 +78,57 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SelfDependencyTumblingWindowTriggerReference(type, offset, size.Value);
+            return new SelfDependencyTumblingWindowTriggerReference(type, offset, size.Value, rawData);
+        }
+
+        SelfDependencyTumblingWindowTriggerReference IModelJsonSerializable<SelfDependencyTumblingWindowTriggerReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SelfDependencyTumblingWindowTriggerReference>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelfDependencyTumblingWindowTriggerReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SelfDependencyTumblingWindowTriggerReference>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SelfDependencyTumblingWindowTriggerReference>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SelfDependencyTumblingWindowTriggerReference IModelSerializable<SelfDependencyTumblingWindowTriggerReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SelfDependencyTumblingWindowTriggerReference>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSelfDependencyTumblingWindowTriggerReference(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SelfDependencyTumblingWindowTriggerReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SelfDependencyTumblingWindowTriggerReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSelfDependencyTumblingWindowTriggerReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SelfDependencyTumblingWindowTriggerReferenceConverter : JsonConverter<SelfDependencyTumblingWindowTriggerReference>

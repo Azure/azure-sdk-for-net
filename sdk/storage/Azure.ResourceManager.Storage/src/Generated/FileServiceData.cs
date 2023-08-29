@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class FileServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of FileServiceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileServiceData"/>. </summary>
         public FileServiceData()
         {
         }
 
-        /// <summary> Initializes a new instance of FileServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +35,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cors"> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </param>
         /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
         /// <param name="protocolSettings"> Protocol settings for file service. </param>
-        internal FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, ProtocolSettings protocolSettings) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, ProtocolSettings protocolSettings, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Cors = cors;
             ShareDeleteRetentionPolicy = shareDeleteRetentionPolicy;
             ProtocolSettings = protocolSettings;
+            _rawData = rawData;
         }
 
         /// <summary> Sku name and tier. </summary>

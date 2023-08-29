@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,14 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class HybridConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridConnectionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionData"/>. </summary>
         public HybridConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceBusNamespace, string relayName, ResourceIdentifier relayArmId, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceBusNamespace, string relayName, ResourceIdentifier relayArmId, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ServiceBusNamespace = serviceBusNamespace;
             RelayName = relayName;
@@ -49,6 +54,7 @@ namespace Azure.ResourceManager.AppService
             SendKeyValue = sendKeyValue;
             ServiceBusSuffix = serviceBusSuffix;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the Service Bus namespace. </summary>

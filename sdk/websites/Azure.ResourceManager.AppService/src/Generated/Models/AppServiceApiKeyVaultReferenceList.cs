@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The AppServiceApiKeyVaultReferenceList. </summary>
     internal partial class AppServiceApiKeyVaultReferenceList
     {
-        /// <summary> Initializes a new instance of AppServiceApiKeyVaultReferenceList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceApiKeyVaultReferenceList"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceApiKeyVaultReferenceList(IEnumerable<ApiKeyVaultReferenceData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppServiceApiKeyVaultReferenceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceApiKeyVaultReferenceList"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal AppServiceApiKeyVaultReferenceList(IReadOnlyList<ApiKeyVaultReferenceData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceApiKeyVaultReferenceList(IReadOnlyList<ApiKeyVaultReferenceData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceApiKeyVaultReferenceList"/> for deserialization. </summary>
+        internal AppServiceApiKeyVaultReferenceList()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

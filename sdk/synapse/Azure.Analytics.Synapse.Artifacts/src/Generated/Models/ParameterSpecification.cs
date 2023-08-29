@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Definition of a single parameter for an entity. </summary>
     public partial class ParameterSpecification
     {
-        /// <summary> Initializes a new instance of ParameterSpecification. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ParameterSpecification"/>. </summary>
         /// <param name="type"> Parameter type. </param>
         public ParameterSpecification(ParameterType type)
         {
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of ParameterSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterSpecification"/>. </summary>
         /// <param name="type"> Parameter type. </param>
         /// <param name="defaultValue"> Default value of parameter. </param>
-        internal ParameterSpecification(ParameterType type, object defaultValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParameterSpecification(ParameterType type, object defaultValue, Dictionary<string, BinaryData> rawData)
         {
             Type = type;
             DefaultValue = defaultValue;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParameterSpecification"/> for deserialization. </summary>
+        internal ParameterSpecification()
+        {
         }
 
         /// <summary> Parameter type. </summary>

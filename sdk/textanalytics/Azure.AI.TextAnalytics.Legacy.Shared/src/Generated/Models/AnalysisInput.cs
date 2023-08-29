@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -13,7 +14,9 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The AnalysisInput. </summary>
     internal partial class AnalysisInput
     {
-        /// <summary> Initializes a new instance of AnalysisInput. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisInput"/>. </summary>
         /// <param name="analysisInputValue"> Contains a set of input documents to be analyzed by the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInputValue"/> is null. </exception>
         public AnalysisInput(MultiLanguageBatchInput analysisInputValue)
@@ -21,6 +24,20 @@ namespace Azure.AI.TextAnalytics.Legacy
             Argument.AssertNotNull(analysisInputValue, nameof(analysisInputValue));
 
             AnalysisInputValue = analysisInputValue;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisInput"/>. </summary>
+        /// <param name="analysisInputValue"> Contains a set of input documents to be analyzed by the service. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisInput(MultiLanguageBatchInput analysisInputValue, Dictionary<string, BinaryData> rawData)
+        {
+            AnalysisInputValue = analysisInputValue;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisInput"/> for deserialization. </summary>
+        internal AnalysisInput()
+        {
         }
 
         /// <summary> Contains a set of input documents to be analyzed by the service. </summary>

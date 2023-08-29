@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Rules that can be defined for auto-heal. </summary>
     public partial class AutoHealRules
     {
-        /// <summary> Initializes a new instance of AutoHealRules. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoHealRules"/>. </summary>
         public AutoHealRules()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoHealRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoHealRules"/>. </summary>
         /// <param name="triggers"> Conditions that describe when to execute the auto-heal actions. </param>
         /// <param name="actions"> Actions to be executed when a rule is triggered. </param>
-        internal AutoHealRules(AutoHealTriggers triggers, AutoHealActions actions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoHealRules(AutoHealTriggers triggers, AutoHealActions actions, Dictionary<string, BinaryData> rawData)
         {
             Triggers = triggers;
             Actions = actions;
+            _rawData = rawData;
         }
 
         /// <summary> Conditions that describe when to execute the auto-heal actions. </summary>

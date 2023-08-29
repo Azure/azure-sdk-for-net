@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> The StringEncoded. </summary>
     internal partial class StringEncoded
     {
-        /// <summary> Initializes a new instance of StringEncoded. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StringEncoded"/>. </summary>
         internal StringEncoded()
         {
         }
 
-        /// <summary> Initializes a new instance of StringEncoded. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringEncoded"/>. </summary>
         /// <param name="encoded"></param>
         /// <param name="content"></param>
-        internal StringEncoded(bool? encoded, string content)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StringEncoded(bool? encoded, string content, Dictionary<string, BinaryData> rawData)
         {
             Encoded = encoded;
             Content = content;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the encoded. </summary>

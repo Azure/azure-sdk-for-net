@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP Disk Configuration contains 'recommended disk' details and list of supported disks detail for a volume type. </summary>
     public partial class SapDiskConfiguration
     {
-        /// <summary> Initializes a new instance of SapDiskConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfiguration"/>. </summary>
         internal SapDiskConfiguration()
         {
             SupportedConfigurations = new ChangeTrackingList<SupportedConfigurationsDiskDetails>();
         }
 
-        /// <summary> Initializes a new instance of SapDiskConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfiguration"/>. </summary>
         /// <param name="recommendedConfiguration"> The recommended disk details for a given VM Sku. </param>
         /// <param name="supportedConfigurations"> The list of supported disks for a given VM Sku. </param>
-        internal SapDiskConfiguration(DiskVolumeConfiguration recommendedConfiguration, IReadOnlyList<SupportedConfigurationsDiskDetails> supportedConfigurations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapDiskConfiguration(DiskVolumeConfiguration recommendedConfiguration, IReadOnlyList<SupportedConfigurationsDiskDetails> supportedConfigurations, Dictionary<string, BinaryData> rawData)
         {
             RecommendedConfiguration = recommendedConfiguration;
             SupportedConfigurations = supportedConfigurations;
+            _rawData = rawData;
         }
 
         /// <summary> The recommended disk details for a given VM Sku. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,7 +14,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The Video Analyzer edge module can act as a transparent gateway for video, enabling IoT devices to send video to the cloud from behind a firewall. A remote device adapter should be created for each such IoT device. Communication between the cloud and IoT device would then flow via the Video Analyzer edge module. </summary>
     public partial class RemoteDeviceAdapter
     {
-        /// <summary> Initializes a new instance of RemoteDeviceAdapter. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapter"/>. </summary>
         /// <param name="name"> The unique identifier for the remote device adapter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RemoteDeviceAdapter(string name)
@@ -23,15 +26,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RemoteDeviceAdapter. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapter"/>. </summary>
         /// <param name="name"> The unique identifier for the remote device adapter. </param>
         /// <param name="systemData"> Read-only system metadata associated with this object. </param>
         /// <param name="properties"> Properties of the remote device adapter. </param>
-        internal RemoteDeviceAdapter(string name, SystemData systemData, RemoteDeviceAdapterProperties properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoteDeviceAdapter(string name, SystemData systemData, RemoteDeviceAdapterProperties properties, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             SystemData = systemData;
             Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapter"/> for deserialization. </summary>
+        internal RemoteDeviceAdapter()
+        {
         }
 
         /// <summary> The unique identifier for the remote device adapter. </summary>

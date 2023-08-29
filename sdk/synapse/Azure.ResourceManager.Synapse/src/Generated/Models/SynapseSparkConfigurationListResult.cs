@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of SparkConfiguration resources. </summary>
     internal partial class SynapseSparkConfigurationListResult
     {
-        /// <summary> Initializes a new instance of SynapseSparkConfigurationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkConfigurationListResult"/>. </summary>
         /// <param name="value"> List of SparkConfiguration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SynapseSparkConfigurationListResult(IEnumerable<SynapseSparkConfigurationData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.Synapse.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SynapseSparkConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkConfigurationListResult"/>. </summary>
         /// <param name="value"> List of SparkConfiguration. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal SynapseSparkConfigurationListResult(IReadOnlyList<SynapseSparkConfigurationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSparkConfigurationListResult(IReadOnlyList<SynapseSparkConfigurationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkConfigurationListResult"/> for deserialization. </summary>
+        internal SynapseSparkConfigurationListResult()
+        {
         }
 
         /// <summary> List of SparkConfiguration. </summary>

@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The Project resource. </summary>
     public partial class StorageMoverProjectPatch
     {
-        /// <summary> Initializes a new instance of StorageMoverProjectPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverProjectPatch"/>. </summary>
         public StorageMoverProjectPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverProjectPatch"/>. </summary>
+        /// <param name="description"> A description for the Project. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMoverProjectPatch(string description, Dictionary<string, BinaryData> rawData)
+        {
+            Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> A description for the Project. </summary>

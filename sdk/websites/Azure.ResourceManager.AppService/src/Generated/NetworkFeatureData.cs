@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -18,14 +19,16 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class NetworkFeatureData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFeatureData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFeatureData"/>. </summary>
         public NetworkFeatureData()
         {
             HybridConnections = new ChangeTrackingList<RelayServiceConnectionEntityData>();
             HybridConnectionsV2 = new ChangeTrackingList<HybridConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFeatureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFeatureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,13 +38,15 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hybridConnections"> The Hybrid Connections summary view. </param>
         /// <param name="hybridConnectionsV2"> The Hybrid Connection V2 (Service Bus) view. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal NetworkFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string virtualNetworkName, AppServiceVirtualNetworkProperties virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string virtualNetworkName, AppServiceVirtualNetworkProperties virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             VirtualNetworkName = virtualNetworkName;
             VirtualNetworkConnection = virtualNetworkConnection;
             HybridConnections = hybridConnections;
             HybridConnectionsV2 = hybridConnectionsV2;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> The Virtual Network name. </summary>

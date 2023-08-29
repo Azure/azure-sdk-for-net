@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> A namespace junction. </summary>
     public partial class NamespaceJunction
     {
-        /// <summary> Initializes a new instance of NamespaceJunction. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceJunction"/>. </summary>
         public NamespaceJunction()
         {
         }
 
-        /// <summary> Initializes a new instance of NamespaceJunction. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceJunction"/>. </summary>
         /// <param name="namespacePath"> Namespace path on a cache for a Storage Target. </param>
         /// <param name="targetPath"> Path in Storage Target to which namespacePath points. </param>
         /// <param name="nfsExport"> NFS export where targetPath exists. </param>
         /// <param name="nfsAccessPolicy"> Name of the access policy applied to this junction. </param>
-        internal NamespaceJunction(string namespacePath, string targetPath, string nfsExport, string nfsAccessPolicy)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NamespaceJunction(string namespacePath, string targetPath, string nfsExport, string nfsAccessPolicy, Dictionary<string, BinaryData> rawData)
         {
             NamespacePath = namespacePath;
             TargetPath = targetPath;
             NfsExport = nfsExport;
             NfsAccessPolicy = nfsAccessPolicy;
+            _rawData = rawData;
         }
 
         /// <summary> Namespace path on a cache for a Storage Target. </summary>

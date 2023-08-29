@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Condition applicable to the resource, or to the job overall, that warrant customer attention. </summary>
     public partial class StreamingJobDiagnosticCondition
     {
-        /// <summary> Initializes a new instance of StreamingJobDiagnosticCondition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobDiagnosticCondition"/>. </summary>
         internal StreamingJobDiagnosticCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobDiagnosticCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobDiagnosticCondition"/>. </summary>
         /// <param name="since"> The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time. </param>
         /// <param name="code"> The opaque diagnostic code. </param>
         /// <param name="message"> The human-readable message describing the condition in detail. Localized in the Accept-Language of the client request. </param>
-        internal StreamingJobDiagnosticCondition(DateTimeOffset? since, string code, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobDiagnosticCondition(DateTimeOffset? since, string code, string message, Dictionary<string, BinaryData> rawData)
         {
             Since = since;
             Code = code;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time. </summary>

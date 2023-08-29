@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -19,22 +21,26 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseDataConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseDataConnectionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionData"/>. </summary>
         public SynapseDataConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDataConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
-        internal SynapseDataConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDataConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Resource location. </summary>

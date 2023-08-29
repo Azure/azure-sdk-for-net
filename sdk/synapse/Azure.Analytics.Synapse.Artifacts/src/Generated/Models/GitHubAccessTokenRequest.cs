@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The GitHubAccessTokenRequest. </summary>
     public partial class GitHubAccessTokenRequest
     {
-        /// <summary> Initializes a new instance of GitHubAccessTokenRequest. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenRequest"/>. </summary>
         /// <param name="gitHubClientId"> The GitHub Client Id. </param>
         /// <param name="gitHubAccessCode"> The GitHub Access code. </param>
         /// <param name="gitHubAccessTokenBaseUrl"> The GitHub access token base URL. </param>
@@ -27,6 +30,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             GitHubClientId = gitHubClientId;
             GitHubAccessCode = gitHubAccessCode;
             GitHubAccessTokenBaseUrl = gitHubAccessTokenBaseUrl;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenRequest"/>. </summary>
+        /// <param name="gitHubClientId"> The GitHub Client Id. </param>
+        /// <param name="gitHubAccessCode"> The GitHub Access code. </param>
+        /// <param name="gitHubAccessTokenBaseUrl"> The GitHub access token base URL. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubAccessTokenRequest(string gitHubClientId, string gitHubAccessCode, string gitHubAccessTokenBaseUrl, Dictionary<string, BinaryData> rawData)
+        {
+            GitHubClientId = gitHubClientId;
+            GitHubAccessCode = gitHubAccessCode;
+            GitHubAccessTokenBaseUrl = gitHubAccessTokenBaseUrl;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenRequest"/> for deserialization. </summary>
+        internal GitHubAccessTokenRequest()
+        {
         }
 
         /// <summary> The GitHub Client Id. </summary>

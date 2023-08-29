@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class StorageErrorError
+    internal partial class StorageErrorError : IUtf8JsonSerializable, IModelJsonSerializable<StorageErrorError>, IXmlSerializable, IModelSerializable<StorageErrorError>
     {
-        internal static StorageErrorError DeserializeStorageErrorError(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "StorageErrorError");
+            if (Optional.IsDefined(Code))
+            {
+                writer.WriteStartElement("Code");
+                writer.WriteValue(Code);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WriteStartElement("Message");
+                writer.WriteValue(Message);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static StorageErrorError DeserializeStorageErrorError(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string code = default;
             string message = default;
             if (element.Element("Code") is XElement codeElement)
@@ -25,17 +52,52 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 message = (string)messageElement;
             }
-            return new StorageErrorError(code, message);
+            return new StorageErrorError(code, message, default);
         }
 
-        internal static StorageErrorError DeserializeStorageErrorError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageErrorError>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageErrorError>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("Code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("Message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageErrorError DeserializeStorageErrorError(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> code = default;
             Optional<string> message = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Code"u8))
@@ -48,8 +110,82 @@ namespace Azure.Storage.Files.DataLake.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageErrorError(code.Value, message.Value);
+            return new StorageErrorError(code.Value, message.Value, rawData);
+        }
+
+        StorageErrorError IModelJsonSerializable<StorageErrorError>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageErrorError(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageErrorError>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            if (options.Format == ModelSerializerFormat.Json)
+            {
+                return ModelSerializer.SerializeCore(this, options);
+            }
+            else
+            {
+                options ??= ModelSerializerOptions.DefaultWireOptions;
+                using MemoryStream stream = new MemoryStream();
+                using XmlWriter writer = XmlWriter.Create(stream);
+                Serialize(writer, null, options);
+                writer.Flush();
+                if (stream.Position > int.MaxValue)
+                {
+                    return BinaryData.FromStream(stream);
+                }
+                else
+                {
+                    return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                }
+            }
+        }
+
+        StorageErrorError IModelSerializable<StorageErrorError>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            if (data.ToMemory().Span.StartsWith("{"u8))
+            {
+                using var doc = JsonDocument.Parse(data);
+                return DeserializeStorageErrorError(doc.RootElement, options);
+            }
+            else
+            {
+                return DeserializeStorageErrorError(XElement.Load(data.ToStream()), options);
+            }
+        }
+
+        public static implicit operator RequestContent(StorageErrorError model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create((IModelSerializable<StorageErrorError>)model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StorageErrorError(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeStorageErrorError(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

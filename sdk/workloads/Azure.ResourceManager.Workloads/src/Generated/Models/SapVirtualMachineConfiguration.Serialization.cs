@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapVirtualMachineConfiguration : IUtf8JsonSerializable
+    public partial class SapVirtualMachineConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<SapVirtualMachineConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapVirtualMachineConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapVirtualMachineConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("vmSize"u8);
             writer.WriteStringValue(VmSize);
@@ -21,11 +29,25 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteObjectValue(ImageReference);
             writer.WritePropertyName("osProfile"u8);
             writer.WriteObjectValue(OSProfile);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SapVirtualMachineConfiguration DeserializeSapVirtualMachineConfiguration(JsonElement element)
+        internal static SapVirtualMachineConfiguration DeserializeSapVirtualMachineConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string vmSize = default;
             SapImageReference imageReference = default;
             SapOSProfile osProfile = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"u8))
@@ -50,8 +73,57 @@ namespace Azure.ResourceManager.Workloads.Models
                     osProfile = SapOSProfile.DeserializeSapOSProfile(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SapVirtualMachineConfiguration(vmSize, imageReference, osProfile);
+            return new SapVirtualMachineConfiguration(vmSize, imageReference, osProfile, rawData);
+        }
+
+        SapVirtualMachineConfiguration IModelJsonSerializable<SapVirtualMachineConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapVirtualMachineConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapVirtualMachineConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapVirtualMachineConfiguration IModelSerializable<SapVirtualMachineConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapVirtualMachineConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SapVirtualMachineConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SapVirtualMachineConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSapVirtualMachineConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

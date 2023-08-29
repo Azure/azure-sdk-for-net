@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class Activity
     {
-        /// <summary> Initializes a new instance of Activity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Activity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public Activity(string name)
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of Activity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Activity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -50,6 +50,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DependsOn = dependsOn;
             UserProperties = userProperties;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Activity"/> for deserialization. </summary>
+        internal Activity()
+        {
         }
 
         /// <summary> Activity name. </summary>

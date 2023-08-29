@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Response of a single operation on a batch of time series types. Exactly one of "get", "put" or "delete" will be set. </summary>
     internal partial class TypesBatchResponse
     {
-        /// <summary> Initializes a new instance of TypesBatchResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TypesBatchResponse"/>. </summary>
         internal TypesBatchResponse()
         {
             Get = new ChangeTrackingList<TimeSeriesTypeOperationResult>();
@@ -21,15 +24,17 @@ namespace Azure.IoT.TimeSeriesInsights
             Delete = new ChangeTrackingList<TimeSeriesOperationError>();
         }
 
-        /// <summary> Initializes a new instance of TypesBatchResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TypesBatchResponse"/>. </summary>
         /// <param name="get"> List of types or error objects corresponding by position to the "get" array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="put"> List of types or error objects corresponding by position to the "put" array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="delete"> List of error objects corresponding by position to the "delete" array in the request - null when the operation is successful. </param>
-        internal TypesBatchResponse(IReadOnlyList<TimeSeriesTypeOperationResult> @get, IReadOnlyList<TimeSeriesTypeOperationResult> put, IReadOnlyList<TimeSeriesOperationError> delete)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TypesBatchResponse(IReadOnlyList<TimeSeriesTypeOperationResult> @get, IReadOnlyList<TimeSeriesTypeOperationResult> put, IReadOnlyList<TimeSeriesOperationError> delete, Dictionary<string, BinaryData> rawData)
         {
             Get = @get;
             Put = put;
             Delete = delete;
+            _rawData = rawData;
         }
 
         /// <summary> List of types or error objects corresponding by position to the "get" array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </summary>

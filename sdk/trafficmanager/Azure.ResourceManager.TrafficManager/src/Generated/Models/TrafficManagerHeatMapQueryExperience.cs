@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> Class representing a Traffic Manager HeatMap query experience properties. </summary>
     public partial class TrafficManagerHeatMapQueryExperience
     {
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapQueryExperience. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapQueryExperience"/>. </summary>
         /// <param name="endpointId"> The id of the endpoint from the 'endpoints' array which these queries were routed to. </param>
         /// <param name="queryCount"> The number of queries originating from this location. </param>
         public TrafficManagerHeatMapQueryExperience(int endpointId, int queryCount)
@@ -19,15 +24,22 @@ namespace Azure.ResourceManager.TrafficManager.Models
             QueryCount = queryCount;
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapQueryExperience. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapQueryExperience"/>. </summary>
         /// <param name="endpointId"> The id of the endpoint from the 'endpoints' array which these queries were routed to. </param>
         /// <param name="queryCount"> The number of queries originating from this location. </param>
         /// <param name="latency"> The latency experienced by queries originating from this location. </param>
-        internal TrafficManagerHeatMapQueryExperience(int endpointId, int queryCount, double? latency)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficManagerHeatMapQueryExperience(int endpointId, int queryCount, double? latency, Dictionary<string, BinaryData> rawData)
         {
             EndpointId = endpointId;
             QueryCount = queryCount;
             Latency = latency;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapQueryExperience"/> for deserialization. </summary>
+        internal TrafficManagerHeatMapQueryExperience()
+        {
         }
 
         /// <summary> The id of the endpoint from the 'endpoints' array which these queries were routed to. </summary>

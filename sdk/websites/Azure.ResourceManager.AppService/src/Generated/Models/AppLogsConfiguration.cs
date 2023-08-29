@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The AppLogsConfiguration. </summary>
     public partial class AppLogsConfiguration
     {
-        /// <summary> Initializes a new instance of AppLogsConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppLogsConfiguration"/>. </summary>
         public AppLogsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of AppLogsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLogsConfiguration"/>. </summary>
         /// <param name="destination"></param>
         /// <param name="logAnalyticsConfiguration"></param>
-        internal AppLogsConfiguration(string destination, LogAnalyticsConfiguration logAnalyticsConfiguration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppLogsConfiguration(string destination, LogAnalyticsConfiguration logAnalyticsConfiguration, Dictionary<string, BinaryData> rawData)
         {
             Destination = destination;
             LogAnalyticsConfiguration = logAnalyticsConfiguration;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the destination. </summary>

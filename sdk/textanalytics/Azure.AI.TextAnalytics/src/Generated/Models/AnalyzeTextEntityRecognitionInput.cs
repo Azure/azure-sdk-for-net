@@ -5,15 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The AnalyzeTextEntityRecognitionInput. </summary>
     internal partial class AnalyzeTextEntityRecognitionInput : AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextEntityRecognitionInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextEntityRecognitionInput"/>. </summary>
         public AnalyzeTextEntityRecognitionInput()
         {
             Kind = AnalyzeTextTaskKind.EntityRecognition;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextEntityRecognitionInput"/>. </summary>
+        /// <param name="kind"> Enumeration of supported Text Analysis tasks. </param>
+        /// <param name="analysisInput"></param>
+        /// <param name="parameters"> Supported parameters for an Entity Recognition task. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextEntityRecognitionInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, EntitiesTaskParameters parameters, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
+        {
+            AnalysisInput = analysisInput;
+            Parameters = parameters;
+            Kind = kind;
         }
 
         /// <summary> Gets or sets the analysis input. </summary>

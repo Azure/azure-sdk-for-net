@@ -6,17 +6,99 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionDetailedStatusConverter))]
-    public partial class LinkConnectionDetailedStatus
+    public partial class LinkConnectionDetailedStatus : IUtf8JsonSerializable, IModelJsonSerializable<LinkConnectionDetailedStatus>
     {
-        internal static LinkConnectionDetailedStatus DeserializeLinkConnectionDetailedStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinkConnectionDetailedStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinkConnectionDetailedStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(IsApplyingChanges))
+            {
+                writer.WritePropertyName("isApplyingChanges"u8);
+                writer.WriteBooleanValue(IsApplyingChanges.Value);
+            }
+            if (Optional.IsDefined(IsPartiallyFailed))
+            {
+                writer.WritePropertyName("isPartiallyFailed"u8);
+                writer.WriteBooleanValue(IsPartiallyFailed.Value);
+            }
+            if (Optional.IsDefined(StartTime))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteObjectValue(StartTime);
+            }
+            if (Optional.IsDefined(StopTime))
+            {
+                writer.WritePropertyName("stopTime"u8);
+                writer.WriteObjectValue(StopTime);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(ContinuousRunId))
+            {
+                writer.WritePropertyName("continuousRunId"u8);
+                writer.WriteStringValue(ContinuousRunId);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (Optional.IsDefined(RefreshStatus))
+            {
+                writer.WritePropertyName("refreshStatus"u8);
+                writer.WriteObjectValue(RefreshStatus);
+            }
+            if (Optional.IsDefined(LandingZoneCredentialExpireTime))
+            {
+                writer.WritePropertyName("landingZoneCredentialExpireTime"u8);
+                writer.WriteStringValue(LandingZoneCredentialExpireTime.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LinkConnectionDetailedStatus DeserializeLinkConnectionDetailedStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> error = default;
             Optional<LinkConnectionRefreshStatus> refreshStatus = default;
             Optional<DateTimeOffset> landingZoneCredentialExpireTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,15 +200,64 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     landingZoneCredentialExpireTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LinkConnectionDetailedStatus(id.Value, name.Value, Optional.ToNullable(isApplyingChanges), Optional.ToNullable(isPartiallyFailed), startTime.Value, stopTime.Value, status.Value, continuousRunId.Value, error.Value, refreshStatus.Value, Optional.ToNullable(landingZoneCredentialExpireTime));
+            return new LinkConnectionDetailedStatus(id.Value, name.Value, Optional.ToNullable(isApplyingChanges), Optional.ToNullable(isPartiallyFailed), startTime.Value, stopTime.Value, status.Value, continuousRunId.Value, error.Value, refreshStatus.Value, Optional.ToNullable(landingZoneCredentialExpireTime), rawData);
+        }
+
+        LinkConnectionDetailedStatus IModelJsonSerializable<LinkConnectionDetailedStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkConnectionDetailedStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinkConnectionDetailedStatus>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinkConnectionDetailedStatus IModelSerializable<LinkConnectionDetailedStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinkConnectionDetailedStatus(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LinkConnectionDetailedStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LinkConnectionDetailedStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLinkConnectionDetailedStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class LinkConnectionDetailedStatusConverter : JsonConverter<LinkConnectionDetailedStatus>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionDetailedStatus model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override LinkConnectionDetailedStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

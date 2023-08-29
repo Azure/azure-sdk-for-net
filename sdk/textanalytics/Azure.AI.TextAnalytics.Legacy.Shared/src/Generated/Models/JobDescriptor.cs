@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The JobDescriptor. </summary>
     internal partial class JobDescriptor
     {
-        /// <summary> Initializes a new instance of JobDescriptor. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobDescriptor"/>. </summary>
         public JobDescriptor()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobDescriptor"/>. </summary>
+        /// <param name="displayName"> Optional display name for the analysis job. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobDescriptor(string displayName, Dictionary<string, BinaryData> rawData)
+        {
+            DisplayName = displayName;
+            _rawData = rawData;
         }
 
         /// <summary> Optional display name for the analysis job. </summary>

@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebJobWebAppsRestClient.CreateListWebJobsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotWebJobWebAppsRestClient.CreateListWebJobsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotWebJobResource(Client, WebJobData.DeserializeWebJobData(e)), _webSiteSlotWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteSlotWebJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WebSiteSlotWebJobResource(Client, WebJobData.DeserializeWebJobData(e)), _webSiteSlotWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteSlotWebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebJobWebAppsRestClient.CreateListWebJobsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotWebJobWebAppsRestClient.CreateListWebJobsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotWebJobResource(Client, WebJobData.DeserializeWebJobData(e)), _webSiteSlotWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteSlotWebJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WebSiteSlotWebJobResource(Client, WebJobData.DeserializeWebJobData(e)), _webSiteSlotWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteSlotWebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
