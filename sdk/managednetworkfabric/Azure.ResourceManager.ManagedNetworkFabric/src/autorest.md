@@ -63,7 +63,7 @@ rename-mapping:
   ExternalNetwork.properties.networkToNetworkInterconnectId: -|arm-id
   InternalNetwork: NetworkFabricInternalNetwork
   InternetGateway: NetworkFabricInternetGateway
-  InternetGateway.properties.ipv4Address: -|ip-address
+  InternetGateway.properties.ipv4Address: IpV4Address
   InternetGatewayRule: NetworkFabricInternetGatewayRule
   InternetGatewayRule.properties.internetGatewayIds: -|arm-id
   IpCommunity: NetworkFabricIpCommunity
