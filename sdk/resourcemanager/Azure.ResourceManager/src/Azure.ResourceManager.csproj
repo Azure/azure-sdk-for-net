@@ -10,6 +10,10 @@
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)/../../../../sdk/core/Azure.Core/src/Shared/</AzureCoreSharedSources>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Assets\Profile\2020-09-01-hybrid.json" />
   </ItemGroup>
@@ -17,6 +21,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)InitializationConstructorAttribute.cs" LinkBase="Shared\Core" />
+    
     <Compile Include="$(AzureCoreSharedSources)PropertyReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
