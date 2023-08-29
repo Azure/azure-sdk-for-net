@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Class containing feature settings of vault. </summary>
-    internal partial class FeatureSettings
+    public partial class FeatureSettings
     {
         /// <summary> Initializes a new instance of FeatureSettings. </summary>
         public FeatureSettings()
@@ -17,9 +17,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of FeatureSettings. </summary>
         /// <param name="crossSubscriptionRestoreSettings"> CrossSubscriptionRestore Settings. </param>
-        internal FeatureSettings(CrossSubscriptionRestoreSettings crossSubscriptionRestoreSettings)
+        /// <param name="crossRegionRestoreSettings"></param>
+        internal FeatureSettings(CrossSubscriptionRestoreSettings crossSubscriptionRestoreSettings, CrossRegionRestoreSettings crossRegionRestoreSettings)
         {
             CrossSubscriptionRestoreSettings = crossSubscriptionRestoreSettings;
+            CrossRegionRestoreSettings = crossRegionRestoreSettings;
         }
 
         /// <summary> CrossSubscriptionRestore Settings. </summary>
@@ -33,6 +35,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 if (CrossSubscriptionRestoreSettings is null)
                     CrossSubscriptionRestoreSettings = new CrossSubscriptionRestoreSettings();
                 CrossSubscriptionRestoreSettings.State = value;
+            }
+        }
+
+        /// <summary> Gets or sets the cross region restore settings. </summary>
+        internal CrossRegionRestoreSettings CrossRegionRestoreSettings { get; set; }
+        /// <summary> CrossRegionRestore state. </summary>
+        public CrossRegionRestoreState? CrossRegionRestoreState
+        {
+            get => CrossRegionRestoreSettings is null ? default : CrossRegionRestoreSettings.State;
+            set
+            {
+                if (CrossRegionRestoreSettings is null)
+                    CrossRegionRestoreSettings = new CrossRegionRestoreSettings();
+                CrossRegionRestoreSettings.State = value;
             }
         }
     }
