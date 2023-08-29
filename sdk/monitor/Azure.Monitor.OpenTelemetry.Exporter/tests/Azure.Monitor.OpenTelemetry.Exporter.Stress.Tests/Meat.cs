@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Taken from https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/test/OpenTelemetry.Tests.Stress
 using System;
 using System.Runtime.CompilerServices;
 using OpenTelemetry.Trace;
 using Azure.Core.TestFramework;
 using System.Diagnostics;
 using OpenTelemetry;
-using Azure.Identity;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Stress.Tests;
 
@@ -17,6 +17,8 @@ public partial class Program
     private static ActivitySource s_activitySource = new ActivitySource(ActivitySourceName);
     private static AzureMonitorTraceExporter? s_azureMonitorTraceExporter;
     private static Batch<Activity> s_batch;
+    private static readonly MockResponse s_response = new MockResponse(200, "OK");
+
     public static void Main()
     {
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", "InstrumentationKey=00000000-0000-0000-0000-000000000000");
@@ -24,15 +26,14 @@ public partial class Program
         //TODO: Metrics and Logs
         InitTraces();
 
-        Stress(concurrency: 0, prometheusPort: 9464);
+        Stress(concurrency: 1, prometheusPort: 9464);
     }
 
     private static void InitTraces()
     {
         // Set up SDK
         var options = new AzureMonitorExporterOptions();
-        MockResponse response = new MockResponse(200, "OK");
-        options.Transport = new MockTransport((_) => response);
+        options.Transport = new MockTransport((_) => s_response);
         s_azureMonitorTraceExporter = new AzureMonitorTraceExporter(options);
         Sdk.CreateTracerProviderBuilder()
             .SetSampler(new AlwaysOnSampler())

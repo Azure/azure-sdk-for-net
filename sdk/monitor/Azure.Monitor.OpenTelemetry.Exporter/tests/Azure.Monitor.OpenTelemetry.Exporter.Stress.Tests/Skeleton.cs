@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Taken from https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/test/OpenTelemetry.Tests.Stress
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
