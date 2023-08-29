@@ -17,9 +17,6 @@ az webapp deploy --resource-group $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] 
 
 # clean up
 Remove-Item -Force -Recurse "$workingFolder/Pub"
-if ($null -ne $Env:AGENT_WORKFOLDER) {
-    Remove-Item -Force -Recurse "$webappRoot/%AGENT_WORKFOLDER%"
-}
 
 # Deploy the function app
 dotnet publish "$webappRoot/Integration.Identity.Func/Integration.Identity.Func.csproj" -o "$workingFolder/Pub" /p:EnableSourceLink=false
@@ -28,8 +25,5 @@ az functionapp deployment source config-zip -g rg-chrissidentity -n t56c18047933
 
 # clean up
 Remove-Item -Force -Recurse "$workingFolder/Pub"
-if ($null -ne $Env:AGENT_WORKFOLDER) {
-    Remove-Item -Force -Recurse "$webappRoot/%AGENT_WORKFOLDER%"
-}
 
 az logout
