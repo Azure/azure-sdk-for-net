@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementPortalSignInSettingData : IUtf8JsonSerializable
+    public partial class ApiManagementPortalSignInSettingData : IUtf8JsonSerializable, IModelJsonSerializable<ApiManagementPortalSignInSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiManagementPortalSignInSettingData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiManagementPortalSignInSettingData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteBooleanValue(IsRedirectEnabled.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiManagementPortalSignInSettingData DeserializeApiManagementPortalSignInSettingData(JsonElement element)
+        internal static ApiManagementPortalSignInSettingData DeserializeApiManagementPortalSignInSettingData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> enabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -85,8 +108,57 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApiManagementPortalSignInSettingData(id, name, type, systemData.Value, Optional.ToNullable(enabled));
+            return new ApiManagementPortalSignInSettingData(id, name, type, systemData.Value, Optional.ToNullable(enabled), rawData);
+        }
+
+        ApiManagementPortalSignInSettingData IModelJsonSerializable<ApiManagementPortalSignInSettingData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementPortalSignInSettingData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiManagementPortalSignInSettingData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiManagementPortalSignInSettingData IModelSerializable<ApiManagementPortalSignInSettingData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiManagementPortalSignInSettingData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ApiManagementPortalSignInSettingData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ApiManagementPortalSignInSettingData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiManagementPortalSignInSettingData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

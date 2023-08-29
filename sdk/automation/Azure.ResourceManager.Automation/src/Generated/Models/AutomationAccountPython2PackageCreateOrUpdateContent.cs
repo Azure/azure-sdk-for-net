@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update module operation. </summary>
     public partial class AutomationAccountPython2PackageCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationAccountPython2PackageCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
         public AutomationAccountPython2PackageCreateOrUpdateContent(AutomationContentLink contentLink)
@@ -23,6 +25,22 @@ namespace Azure.ResourceManager.Automation.Models
 
             Tags = new ChangeTrackingDictionary<string, string>();
             ContentLink = contentLink;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAccountPython2PackageCreateOrUpdateContent(IDictionary<string, string> tags, AutomationContentLink contentLink, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            ContentLink = contentLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AutomationAccountPython2PackageCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Gets or sets the tags attached to the resource. </summary>

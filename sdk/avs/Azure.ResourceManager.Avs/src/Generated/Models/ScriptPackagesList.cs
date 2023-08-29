@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of the available script packages. </summary>
     internal partial class ScriptPackagesList
     {
-        /// <summary> Initializes a new instance of ScriptPackagesList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptPackagesList"/>. </summary>
         internal ScriptPackagesList()
         {
             Value = new ChangeTrackingList<ScriptPackageData>();
         }
 
-        /// <summary> Initializes a new instance of ScriptPackagesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptPackagesList"/>. </summary>
         /// <param name="value"> List of script package resources. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal ScriptPackagesList(IReadOnlyList<ScriptPackageData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptPackagesList(IReadOnlyList<ScriptPackageData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of script package resources. </summary>

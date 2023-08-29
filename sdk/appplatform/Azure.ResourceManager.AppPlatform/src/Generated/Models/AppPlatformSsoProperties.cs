@@ -14,23 +14,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Single sign-on related configuration. </summary>
     public partial class AppPlatformSsoProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformSsoProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSsoProperties"/>. </summary>
         public AppPlatformSsoProperties()
         {
             Scope = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSsoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSsoProperties"/>. </summary>
         /// <param name="scope"> It defines the specific actions applications can be allowed to do on a user's behalf. </param>
         /// <param name="clientId"> The public identifier for the application. </param>
         /// <param name="clientSecret"> The secret known only to the application and the authorization server. </param>
         /// <param name="issuerUri"> The URI of Issuer Identifier. </param>
-        internal AppPlatformSsoProperties(IList<string> scope, string clientId, string clientSecret, Uri issuerUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformSsoProperties(IList<string> scope, string clientId, string clientSecret, Uri issuerUri, Dictionary<string, BinaryData> rawData)
         {
             Scope = scope;
             ClientId = clientId;
             ClientSecret = clientSecret;
             IssuerUri = issuerUri;
+            _rawData = rawData;
         }
 
         /// <summary> It defines the specific actions applications can be allowed to do on a user's behalf. </summary>

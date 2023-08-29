@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The multiregion settings Cognitive Services account. </summary>
     public partial class CognitiveServicesMultiRegionSettings
     {
-        /// <summary> Initializes a new instance of CognitiveServicesMultiRegionSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesMultiRegionSettings"/>. </summary>
         public CognitiveServicesMultiRegionSettings()
         {
             Regions = new ChangeTrackingList<CognitiveServicesRegionSetting>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesMultiRegionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesMultiRegionSettings"/>. </summary>
         /// <param name="routingMethod"> Multiregion routing methods. </param>
         /// <param name="regions"></param>
-        internal CognitiveServicesMultiRegionSettings(CognitiveServicesRoutingMethod? routingMethod, IList<CognitiveServicesRegionSetting> regions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesMultiRegionSettings(CognitiveServicesRoutingMethod? routingMethod, IList<CognitiveServicesRegionSetting> regions, Dictionary<string, BinaryData> rawData)
         {
             RoutingMethod = routingMethod;
             Regions = regions;
+            _rawData = rawData;
         }
 
         /// <summary> Multiregion routing methods. </summary>

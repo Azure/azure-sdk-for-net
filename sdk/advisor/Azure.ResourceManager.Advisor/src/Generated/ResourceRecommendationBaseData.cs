@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Advisor
     /// </summary>
     public partial class ResourceRecommendationBaseData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceRecommendationBaseData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceRecommendationBaseData"/>. </summary>
         public ResourceRecommendationBaseData()
         {
             Metadata = new ChangeTrackingDictionary<string, BinaryData>();
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Advisor
             ExposedMetadataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceRecommendationBaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceRecommendationBaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +56,8 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="actions"> The list of recommended actions to implement recommendation. </param>
         /// <param name="remediation"> The automated way to apply recommendation. </param>
         /// <param name="exposedMetadataProperties"> The recommendation metadata properties exposed to customer to provide additional information. </param>
-        internal ResourceRecommendationBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Category? category, Impact? impact, string impactedField, string impactedValue, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> metadata, string recommendationTypeId, Risk? risk, ShortDescription shortDescription, IList<Guid> suppressionIds, IDictionary<string, string> extendedProperties, ResourceMetadata resourceMetadata, string description, string label, string learnMoreLink, string potentialBenefits, IList<IDictionary<string, BinaryData>> actions, IDictionary<string, BinaryData> remediation, IDictionary<string, BinaryData> exposedMetadataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceRecommendationBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Category? category, Impact? impact, string impactedField, string impactedValue, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> metadata, string recommendationTypeId, Risk? risk, ShortDescription shortDescription, IList<Guid> suppressionIds, IDictionary<string, string> extendedProperties, ResourceMetadata resourceMetadata, string description, string label, string learnMoreLink, string potentialBenefits, IList<IDictionary<string, BinaryData>> actions, IDictionary<string, BinaryData> remediation, IDictionary<string, BinaryData> exposedMetadataProperties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Category = category;
             Impact = impact;
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.Advisor
             Actions = actions;
             Remediation = remediation;
             ExposedMetadataProperties = exposedMetadataProperties;
+            _rawData = rawData;
         }
 
         /// <summary> The category of the recommendation. </summary>

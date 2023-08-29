@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A site for the channel. </summary>
     public partial class BotChannelSite
     {
-        /// <summary> Initializes a new instance of BotChannelSite. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotChannelSite"/>. </summary>
         /// <param name="siteName"> Site name. </param>
         /// <param name="isEnabled"> Whether this site is enabled for DirectLine channel. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Models
             TrustedOrigins = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BotChannelSite. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotChannelSite"/>. </summary>
         /// <param name="tenantId"> Tenant Id. </param>
         /// <param name="siteId"> Site Id. </param>
         /// <param name="siteName"> Site name. </param>
@@ -48,7 +50,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="trustedOrigins"> List of Trusted Origin URLs for this site. This field is applicable only if isSecureSiteEnabled is True. </param>
         /// <param name="isWebChatSpeechEnabled"> Whether this site is enabled for Webchat Speech. </param>
         /// <param name="isWebchatPreviewEnabled"> Whether this site is enabled for preview versions of Webchat. </param>
-        internal BotChannelSite(Guid? tenantId, string siteId, string siteName, string key, string key2, bool isEnabled, bool? isTokenEnabled, bool? isEndpointParametersEnabled, bool? isDetailedLoggingEnabled, bool? isBlockUserUploadEnabled, bool? isNoStorageEnabled, ETag? etag, string appId, bool? isV1Enabled, bool? isV3Enabled, bool? isSecureSiteEnabled, IList<string> trustedOrigins, bool? isWebChatSpeechEnabled, bool? isWebchatPreviewEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotChannelSite(Guid? tenantId, string siteId, string siteName, string key, string key2, bool isEnabled, bool? isTokenEnabled, bool? isEndpointParametersEnabled, bool? isDetailedLoggingEnabled, bool? isBlockUserUploadEnabled, bool? isNoStorageEnabled, ETag? etag, string appId, bool? isV1Enabled, bool? isV3Enabled, bool? isSecureSiteEnabled, IList<string> trustedOrigins, bool? isWebChatSpeechEnabled, bool? isWebchatPreviewEnabled, Dictionary<string, BinaryData> rawData)
         {
             TenantId = tenantId;
             SiteId = siteId;
@@ -69,6 +72,12 @@ namespace Azure.ResourceManager.BotService.Models
             TrustedOrigins = trustedOrigins;
             IsWebChatSpeechEnabled = isWebChatSpeechEnabled;
             IsWebchatPreviewEnabled = isWebchatPreviewEnabled;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BotChannelSite"/> for deserialization. </summary>
+        internal BotChannelSite()
+        {
         }
 
         /// <summary> Tenant Id. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleRecurrence : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleRecurrence : IUtf8JsonSerializable, IModelJsonSerializable<AlertProcessingRuleRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AlertProcessingRuleRecurrence>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AlertProcessingRuleRecurrence>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlertProcessingRuleRecurrence DeserializeAlertProcessingRuleRecurrence(JsonElement element)
+        internal static AlertProcessingRuleRecurrence DeserializeAlertProcessingRuleRecurrence(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,7 +67,88 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     case "Weekly": return AlertProcessingRuleWeeklyRecurrence.DeserializeAlertProcessingRuleWeeklyRecurrence(element);
                 }
             }
-            return UnknownRecurrence.DeserializeUnknownRecurrence(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            RecurrenceType recurrenceType = default;
+            Optional<TimeSpan> startTime = default;
+            Optional<TimeSpan> endTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recurrenceType"u8))
+                {
+                    recurrenceType = new RecurrenceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("startTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startTime = property.Value.GetTimeSpan("T");
+                    continue;
+                }
+                if (property.NameEquals("endTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endTime = property.Value.GetTimeSpan("T");
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), rawData);
+        }
+
+        AlertProcessingRuleRecurrence IModelJsonSerializable<AlertProcessingRuleRecurrence>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertProcessingRuleRecurrence(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AlertProcessingRuleRecurrence>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AlertProcessingRuleRecurrence IModelSerializable<AlertProcessingRuleRecurrence>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAlertProcessingRuleRecurrence(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AlertProcessingRuleRecurrence model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AlertProcessingRuleRecurrence(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAlertProcessingRuleRecurrence(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

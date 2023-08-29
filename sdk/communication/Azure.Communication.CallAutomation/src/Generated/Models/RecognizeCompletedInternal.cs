@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The RecognizeCompleted. </summary>
     internal partial class RecognizeCompletedInternal
     {
-        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeCompletedInternal"/>. </summary>
         internal RecognizeCompletedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeCompletedInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -32,7 +37,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
         /// <param name="speechResult"> Defines the result for RecognitionType = Speech and SpeechOrDtmf. </param>
-        internal RecognizeCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, DtmfResult dtmfResult, ChoiceResult choiceResult, SpeechResult speechResult)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecognizeCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, DtmfResult dtmfResult, ChoiceResult choiceResult, SpeechResult speechResult, Dictionary<string, BinaryData> rawData)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -44,6 +50,7 @@ namespace Azure.Communication.CallAutomation
             DtmfResult = dtmfResult;
             ChoiceResult = choiceResult;
             SpeechResult = speechResult;
+            _rawData = rawData;
         }
         /// <summary>
         /// Defines the result for RecognitionType = Dtmf

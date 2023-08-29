@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class SavingsPlanOrderPaymentDetail : IUtf8JsonSerializable
+    public partial class SavingsPlanOrderPaymentDetail : IUtf8JsonSerializable, IModelJsonSerializable<SavingsPlanOrderPaymentDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SavingsPlanOrderPaymentDetail>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SavingsPlanOrderPaymentDetail>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DueOn))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("billingAccount"u8);
                 writer.WriteStringValue(BillingAccount);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SavingsPlanOrderPaymentDetail DeserializeSavingsPlanOrderPaymentDetail(JsonElement element)
+        internal static SavingsPlanOrderPaymentDetail DeserializeSavingsPlanOrderPaymentDetail(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +83,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<BillingBenefitsPaymentStatus> status = default;
             Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
             Optional<string> billingAccount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dueDate"u8))
@@ -123,8 +145,57 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     billingAccount = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SavingsPlanOrderPaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), extendedStatusInfo.Value, billingAccount.Value);
+            return new SavingsPlanOrderPaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), extendedStatusInfo.Value, billingAccount.Value, rawData);
+        }
+
+        SavingsPlanOrderPaymentDetail IModelJsonSerializable<SavingsPlanOrderPaymentDetail>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanOrderPaymentDetail(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SavingsPlanOrderPaymentDetail>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SavingsPlanOrderPaymentDetail IModelSerializable<SavingsPlanOrderPaymentDetail>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSavingsPlanOrderPaymentDetail(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SavingsPlanOrderPaymentDetail model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SavingsPlanOrderPaymentDetail(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSavingsPlanOrderPaymentDetail(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

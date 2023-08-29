@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> User identity used for CMK. </summary>
     internal partial class EncryptionPropertiesIdentity
     {
-        /// <summary> Initializes a new instance of EncryptionPropertiesIdentity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionPropertiesIdentity"/>. </summary>
         public EncryptionPropertiesIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionPropertiesIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionPropertiesIdentity"/>. </summary>
         /// <param name="userAssignedIdentity"> The user identity used for CMK. It will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        internal EncryptionPropertiesIdentity(BinaryData userAssignedIdentity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionPropertiesIdentity(BinaryData userAssignedIdentity, Dictionary<string, BinaryData> rawData)
         {
             UserAssignedIdentity = userAssignedIdentity;
+            _rawData = rawData;
         }
 
         /// <summary>

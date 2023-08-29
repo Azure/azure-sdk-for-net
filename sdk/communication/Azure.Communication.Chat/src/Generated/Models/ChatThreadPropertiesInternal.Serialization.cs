@@ -6,16 +6,56 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatThreadPropertiesInternal
+    internal partial class ChatThreadPropertiesInternal : IUtf8JsonSerializable, IModelJsonSerializable<ChatThreadPropertiesInternal>
     {
-        internal static ChatThreadPropertiesInternal DeserializeChatThreadPropertiesInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ChatThreadPropertiesInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ChatThreadPropertiesInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("topic"u8);
+            writer.WriteStringValue(Topic);
+            writer.WritePropertyName("createdOn"u8);
+            writer.WriteStringValue(CreatedOn, "O");
+            writer.WritePropertyName("createdByCommunicationIdentifier"u8);
+            writer.WriteObjectValue(CreatedByCommunicationIdentifier);
+            if (Optional.IsDefined(DeletedOn))
+            {
+                writer.WritePropertyName("deletedOn"u8);
+                writer.WriteStringValue(DeletedOn.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ChatThreadPropertiesInternal DeserializeChatThreadPropertiesInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +65,7 @@ namespace Azure.Communication.Chat
             DateTimeOffset createdOn = default;
             CommunicationIdentifierModel createdByCommunicationIdentifier = default;
             Optional<DateTimeOffset> deletedOn = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -56,8 +97,57 @@ namespace Azure.Communication.Chat
                     deletedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, Optional.ToNullable(deletedOn));
+            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, Optional.ToNullable(deletedOn), rawData);
+        }
+
+        ChatThreadPropertiesInternal IModelJsonSerializable<ChatThreadPropertiesInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatThreadPropertiesInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ChatThreadPropertiesInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ChatThreadPropertiesInternal IModelSerializable<ChatThreadPropertiesInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeChatThreadPropertiesInternal(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ChatThreadPropertiesInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ChatThreadPropertiesInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeChatThreadPropertiesInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

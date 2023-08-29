@@ -5,22 +5,55 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class CreateChatThreadResultInternal
+    internal partial class CreateChatThreadResultInternal : IUtf8JsonSerializable, IModelJsonSerializable<CreateChatThreadResultInternal>
     {
-        internal static CreateChatThreadResultInternal DeserializeCreateChatThreadResultInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CreateChatThreadResultInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CreateChatThreadResultInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ChatThread))
+            {
+                writer.WritePropertyName("chatThread"u8);
+                writer.WriteObjectValue(ChatThread);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CreateChatThreadResultInternal DeserializeCreateChatThreadResultInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ChatThreadPropertiesInternal> chatThread = default;
             Optional<IReadOnlyList<ChatError>> invalidParticipants = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("chatThread"u8))
@@ -46,8 +79,57 @@ namespace Azure.Communication.Chat
                     invalidParticipants = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CreateChatThreadResultInternal(chatThread.Value, Optional.ToList(invalidParticipants));
+            return new CreateChatThreadResultInternal(chatThread.Value, Optional.ToList(invalidParticipants), rawData);
+        }
+
+        CreateChatThreadResultInternal IModelJsonSerializable<CreateChatThreadResultInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateChatThreadResultInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CreateChatThreadResultInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CreateChatThreadResultInternal IModelSerializable<CreateChatThreadResultInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCreateChatThreadResultInternal(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CreateChatThreadResultInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CreateChatThreadResultInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCreateChatThreadResultInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,26 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Azure query for the update configuration. </summary>
     public partial class AzureQueryProperties
     {
-        /// <summary> Initializes a new instance of AzureQueryProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureQueryProperties"/>. </summary>
         public AzureQueryProperties()
         {
             Scope = new ChangeTrackingList<string>();
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of AzureQueryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureQueryProperties"/>. </summary>
         /// <param name="scope"> List of Subscription or Resource Group ARM Ids. </param>
         /// <param name="locations"> List of locations to scope the query to. </param>
         /// <param name="tagSettings"> Tag settings for the VM. </param>
-        internal AzureQueryProperties(IList<string> scope, IList<AzureLocation> locations, QueryTagSettingsProperties tagSettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureQueryProperties(IList<string> scope, IList<AzureLocation> locations, QueryTagSettingsProperties tagSettings, Dictionary<string, BinaryData> rawData)
         {
             Scope = scope;
             Locations = locations;
             TagSettings = tagSettings;
+            _rawData = rawData;
         }
 
         /// <summary> List of Subscription or Resource Group ARM Ids. </summary>

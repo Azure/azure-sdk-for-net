@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class PaymentMethodProjectionProperties : IUtf8JsonSerializable
+    public partial class PaymentMethodProjectionProperties : IUtf8JsonSerializable, IModelJsonSerializable<PaymentMethodProjectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PaymentMethodProjectionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PaymentMethodProjectionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Family))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PaymentMethodProjectionProperties DeserializePaymentMethodProjectionProperties(JsonElement element)
+        internal static PaymentMethodProjectionProperties DeserializePaymentMethodProjectionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.Billing.Models
             Optional<string> displayName = default;
             Optional<IList<PaymentMethodLogo>> logos = default;
             Optional<PaymentMethodStatus> status = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,8 +144,57 @@ namespace Azure.ResourceManager.Billing.Models
                     status = new PaymentMethodStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PaymentMethodProjectionProperties(id.Value, Optional.ToNullable(family), type.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status));
+            return new PaymentMethodProjectionProperties(id.Value, Optional.ToNullable(family), type.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status), rawData);
+        }
+
+        PaymentMethodProjectionProperties IModelJsonSerializable<PaymentMethodProjectionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePaymentMethodProjectionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PaymentMethodProjectionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PaymentMethodProjectionProperties IModelSerializable<PaymentMethodProjectionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePaymentMethodProjectionProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PaymentMethodProjectionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PaymentMethodProjectionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePaymentMethodProjectionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

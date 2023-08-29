@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CdnEndpointResource(Client, CdnEndpointData.DeserializeCdnEndpointData(e)), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CdnEndpointResource(Client, CdnEndpointData.DeserializeCdnEndpointData(e)), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CdnEndpointResource(Client, CdnEndpointData.DeserializeCdnEndpointData(e)), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CdnEndpointResource(Client, CdnEndpointData.DeserializeCdnEndpointData(e)), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

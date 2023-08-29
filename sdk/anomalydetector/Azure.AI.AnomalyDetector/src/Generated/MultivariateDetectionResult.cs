@@ -15,6 +15,8 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Detection results for the resultId value. </summary>
     public partial class MultivariateDetectionResult
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
@@ -34,11 +36,18 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> Detection result for each time stamp. </param>
-        internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results, Dictionary<string, BinaryData> rawData)
         {
             ResultId = resultId;
             Summary = summary;
             Results = results;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateDetectionResult"/> for deserialization. </summary>
+        internal MultivariateDetectionResult()
+        {
         }
 
         /// <summary> Result identifier that's used to fetch the results of an inference call. </summary>

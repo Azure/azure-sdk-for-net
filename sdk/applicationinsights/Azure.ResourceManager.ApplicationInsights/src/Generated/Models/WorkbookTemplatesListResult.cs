@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> WorkbookTemplate list result. </summary>
     internal partial class WorkbookTemplatesListResult
     {
-        /// <summary> Initializes a new instance of WorkbookTemplatesListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplatesListResult"/>. </summary>
         internal WorkbookTemplatesListResult()
         {
             Value = new ChangeTrackingList<WorkbookTemplateData>();
         }
 
-        /// <summary> Initializes a new instance of WorkbookTemplatesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplatesListResult"/>. </summary>
         /// <param name="value"> An array of workbook templates. </param>
-        internal WorkbookTemplatesListResult(IReadOnlyList<WorkbookTemplateData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkbookTemplatesListResult(IReadOnlyList<WorkbookTemplateData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> An array of workbook templates. </summary>

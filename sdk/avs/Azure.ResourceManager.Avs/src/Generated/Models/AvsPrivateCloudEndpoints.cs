@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Endpoint addresses. </summary>
     public partial class AvsPrivateCloudEndpoints
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudEndpoints. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEndpoints"/>. </summary>
         internal AvsPrivateCloudEndpoints()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEndpoints"/>. </summary>
         /// <param name="nsxtManager"> Endpoint for the NSX-T Data Center manager. </param>
         /// <param name="vcsa"> Endpoint for Virtual Center Server Appliance. </param>
         /// <param name="hcxCloudManager"> Endpoint for the HCX Cloud Manager. </param>
-        internal AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager, Dictionary<string, BinaryData> rawData)
         {
             NsxtManager = nsxtManager;
             Vcsa = vcsa;
             HcxCloudManager = hcxCloudManager;
+            _rawData = rawData;
         }
 
         /// <summary> Endpoint for the NSX-T Data Center manager. </summary>

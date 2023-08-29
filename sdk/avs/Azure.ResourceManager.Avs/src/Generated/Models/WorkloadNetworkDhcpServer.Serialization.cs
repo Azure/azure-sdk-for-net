@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class WorkloadNetworkDhcpServer : IUtf8JsonSerializable
+    public partial class WorkloadNetworkDhcpServer : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadNetworkDhcpServer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadNetworkDhcpServer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadNetworkDhcpServer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WorkloadNetworkDhcpServer>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerAddress))
             {
@@ -38,11 +45,25 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadNetworkDhcpServer DeserializeWorkloadNetworkDhcpServer(JsonElement element)
+        internal static WorkloadNetworkDhcpServer DeserializeWorkloadNetworkDhcpServer(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<IReadOnlyList<string>> segments = default;
             Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
             Optional<long> revision = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverAddress"u8))
@@ -112,8 +134,57 @@ namespace Azure.ResourceManager.Avs.Models
                     revision = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadNetworkDhcpServer(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serverAddress.Value, Optional.ToNullable(leaseTime));
+            return new WorkloadNetworkDhcpServer(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serverAddress.Value, Optional.ToNullable(leaseTime), rawData);
+        }
+
+        WorkloadNetworkDhcpServer IModelJsonSerializable<WorkloadNetworkDhcpServer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadNetworkDhcpServer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadNetworkDhcpServer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadNetworkDhcpServer>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadNetworkDhcpServer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadNetworkDhcpServer IModelSerializable<WorkloadNetworkDhcpServer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadNetworkDhcpServer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadNetworkDhcpServer(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadNetworkDhcpServer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadNetworkDhcpServer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadNetworkDhcpServer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

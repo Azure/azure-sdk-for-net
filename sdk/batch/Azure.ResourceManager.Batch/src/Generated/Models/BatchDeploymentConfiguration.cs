@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Deployment configuration properties. </summary>
     public partial class BatchDeploymentConfiguration
     {
-        /// <summary> Initializes a new instance of BatchDeploymentConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchDeploymentConfiguration"/>. </summary>
         public BatchDeploymentConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchDeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchDeploymentConfiguration"/>. </summary>
         /// <param name="cloudServiceConfiguration"> This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch account was created with its poolAllocationMode property set to 'UserSubscription'. </param>
         /// <param name="vmConfiguration"> This property and cloudServiceConfiguration are mutually exclusive and one of the properties must be specified. </param>
-        internal BatchDeploymentConfiguration(BatchCloudServiceConfiguration cloudServiceConfiguration, BatchVmConfiguration vmConfiguration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchDeploymentConfiguration(BatchCloudServiceConfiguration cloudServiceConfiguration, BatchVmConfiguration vmConfiguration, Dictionary<string, BinaryData> rawData)
         {
             CloudServiceConfiguration = cloudServiceConfiguration;
             VmConfiguration = vmConfiguration;
+            _rawData = rawData;
         }
 
         /// <summary> This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch account was created with its poolAllocationMode property set to 'UserSubscription'. </summary>

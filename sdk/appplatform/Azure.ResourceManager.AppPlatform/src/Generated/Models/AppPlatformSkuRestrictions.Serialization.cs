@@ -5,16 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformSkuRestrictions
+    public partial class AppPlatformSkuRestrictions : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformSkuRestrictions>
     {
-        internal static AppPlatformSkuRestrictions DeserializeAppPlatformSkuRestrictions(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformSkuRestrictions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformSkuRestrictions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RestrictionsType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(RestrictionsType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Values))
+            {
+                writer.WritePropertyName("values"u8);
+                writer.WriteStartArray();
+                foreach (var item in Values)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RestrictionInfo))
+            {
+                writer.WritePropertyName("restrictionInfo"u8);
+                writer.WriteObjectValue(RestrictionInfo);
+            }
+            if (Optional.IsDefined(ReasonCode))
+            {
+                writer.WritePropertyName("reasonCode"u8);
+                writer.WriteStringValue(ReasonCode.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AppPlatformSkuRestrictions DeserializeAppPlatformSkuRestrictions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +75,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IReadOnlyList<string>> values = default;
             Optional<AppPlatformSkuRestrictionInfo> restrictionInfo = default;
             Optional<AppPlatformSkuRestrictionsReasonCode> reasonCode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -66,8 +119,57 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     reasonCode = new AppPlatformSkuRestrictionsReasonCode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
+            return new AppPlatformSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode), rawData);
+        }
+
+        AppPlatformSkuRestrictions IModelJsonSerializable<AppPlatformSkuRestrictions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformSkuRestrictions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformSkuRestrictions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformSkuRestrictions IModelSerializable<AppPlatformSkuRestrictions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformSkuRestrictions(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AppPlatformSkuRestrictions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AppPlatformSkuRestrictions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformSkuRestrictions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,24 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Uploaded Jar binary for a deployment. </summary>
     public partial class JarUploadedUserSourceInfo : AppPlatformUploadedUserSourceInfo
     {
-        /// <summary> Initializes a new instance of JarUploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="JarUploadedUserSourceInfo"/>. </summary>
         public JarUploadedUserSourceInfo()
         {
             UserSourceInfoType = "Jar";
         }
 
-        /// <summary> Initializes a new instance of JarUploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="JarUploadedUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
         /// <param name="relativePath"> Relative path of the storage which stores the source. </param>
         /// <param name="runtimeVersion"> Runtime version of the Jar file. </param>
         /// <param name="jvmOptions"> JVM parameter. </param>
-        internal JarUploadedUserSourceInfo(string userSourceInfoType, string version, string relativePath, string runtimeVersion, string jvmOptions) : base(userSourceInfoType, version, relativePath)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JarUploadedUserSourceInfo(string userSourceInfoType, string version, string relativePath, string runtimeVersion, string jvmOptions, Dictionary<string, BinaryData> rawData) : base(userSourceInfoType, version, relativePath, rawData)
         {
             RuntimeVersion = runtimeVersion;
             JvmOptions = jvmOptions;

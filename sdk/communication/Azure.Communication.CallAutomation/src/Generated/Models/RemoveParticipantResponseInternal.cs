@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The response payload for removing participants of the call. </summary>
     internal partial class RemoveParticipantResponseInternal
     {
-        /// <summary> Initializes a new instance of RemoveParticipantResponseInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantResponseInternal"/>. </summary>
         internal RemoveParticipantResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of RemoveParticipantResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantResponseInternal"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        internal RemoveParticipantResponseInternal(string operationContext)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoveParticipantResponseInternal(string operationContext, Dictionary<string, BinaryData> rawData)
         {
             OperationContext = operationContext;
+            _rawData = rawData;
         }
 
         /// <summary> The operation context provided by client. </summary>

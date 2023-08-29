@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,27 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> FarmBeats update request. </summary>
     public partial class FarmBeatPatch
     {
-        /// <summary> Initializes a new instance of FarmBeatPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FarmBeatPatch"/>. </summary>
         public FarmBeatPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FarmBeatPatch"/>. </summary>
+        /// <param name="location"> Geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="properties"> FarmBeats ARM Resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FarmBeatPatch(AzureLocation? location, ManagedServiceIdentity identity, FarmBeatsUpdateProperties properties, IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Location = location;
+            Identity = identity;
+            Properties = properties;
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Geo-location where the resource lives. </summary>

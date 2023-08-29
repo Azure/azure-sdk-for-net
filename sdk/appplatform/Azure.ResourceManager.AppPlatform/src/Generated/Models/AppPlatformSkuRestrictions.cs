@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Restrictions where the SKU cannot be used. </summary>
     public partial class AppPlatformSkuRestrictions
     {
-        /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuRestrictions"/>. </summary>
         internal AppPlatformSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: 'Location', 'Zone'. </param>
         /// <param name="values">
         /// Gets the value of restrictions. If the restriction type is set to
@@ -27,12 +30,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// </param>
         /// <param name="restrictionInfo"> Gets the information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: 'QuotaId', 'NotAvailableForSubscription'. </param>
-        internal AppPlatformSkuRestrictions(AppPlatformSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, AppPlatformSkuRestrictionInfo restrictionInfo, AppPlatformSkuRestrictionsReasonCode? reasonCode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformSkuRestrictions(AppPlatformSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, AppPlatformSkuRestrictionInfo restrictionInfo, AppPlatformSkuRestrictionsReasonCode? reasonCode, Dictionary<string, BinaryData> rawData)
         {
             RestrictionsType = restrictionsType;
             Values = values;
             RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the type of restrictions. Possible values include: 'Location', 'Zone'. </summary>

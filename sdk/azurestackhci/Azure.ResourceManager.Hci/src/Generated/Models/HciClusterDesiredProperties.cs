@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Desired properties of the cluster. </summary>
     public partial class HciClusterDesiredProperties
     {
-        /// <summary> Initializes a new instance of HciClusterDesiredProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HciClusterDesiredProperties"/>. </summary>
         public HciClusterDesiredProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HciClusterDesiredProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterDesiredProperties"/>. </summary>
         /// <param name="windowsServerSubscription"> Desired state of Windows Server Subscription. </param>
         /// <param name="diagnosticLevel"> Desired level of diagnostic data emitted by the cluster. </param>
-        internal HciClusterDesiredProperties(WindowsServerSubscription? windowsServerSubscription, HciClusterDiagnosticLevel? diagnosticLevel)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterDesiredProperties(WindowsServerSubscription? windowsServerSubscription, HciClusterDiagnosticLevel? diagnosticLevel, Dictionary<string, BinaryData> rawData)
         {
             WindowsServerSubscription = windowsServerSubscription;
             DiagnosticLevel = diagnosticLevel;
+            _rawData = rawData;
         }
 
         /// <summary> Desired state of Windows Server Subscription. </summary>

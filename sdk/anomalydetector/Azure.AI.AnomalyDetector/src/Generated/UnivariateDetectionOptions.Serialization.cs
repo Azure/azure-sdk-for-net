@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class UnivariateDetectionOptions : IUtf8JsonSerializable
+    public partial class UnivariateDetectionOptions : IUtf8JsonSerializable, IModelJsonSerializable<UnivariateDetectionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UnivariateDetectionOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UnivariateDetectionOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("series"u8);
             writer.WriteStartArray();
@@ -57,15 +65,164 @@ namespace Azure.AI.AnomalyDetector
                 writer.WritePropertyName("imputeFixedValue"u8);
                 writer.WriteNumberValue(ImputeFixedValue.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal static UnivariateDetectionOptions DeserializeUnivariateDetectionOptions(JsonElement element, ModelSerializerOptions options = default)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<TimeSeriesPoint> series = default;
+            Optional<TimeGranularity> granularity = default;
+            Optional<int> customInterval = default;
+            Optional<int> period = default;
+            Optional<float> maxAnomalyRatio = default;
+            Optional<int> sensitivity = default;
+            Optional<ImputeMode> imputeMode = default;
+            Optional<float> imputeFixedValue = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("series"u8))
+                {
+                    List<TimeSeriesPoint> array = new List<TimeSeriesPoint>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesPoint.DeserializeTimeSeriesPoint(item));
+                    }
+                    series = array;
+                    continue;
+                }
+                if (property.NameEquals("granularity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    granularity = new TimeGranularity(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("customInterval"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customInterval = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("period"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    period = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxAnomalyRatio"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxAnomalyRatio = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("sensitivity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sensitivity = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("imputeMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imputeMode = new ImputeMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("imputeFixedValue"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imputeFixedValue = property.Value.GetSingle();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnivariateDetectionOptions(series, Optional.ToNullable(granularity), Optional.ToNullable(customInterval), Optional.ToNullable(period), Optional.ToNullable(maxAnomalyRatio), Optional.ToNullable(sensitivity), Optional.ToNullable(imputeMode), Optional.ToNullable(imputeFixedValue), rawData);
+        }
+
+        UnivariateDetectionOptions IModelJsonSerializable<UnivariateDetectionOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnivariateDetectionOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UnivariateDetectionOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UnivariateDetectionOptions IModelSerializable<UnivariateDetectionOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUnivariateDetectionOptions(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(UnivariateDetectionOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator UnivariateDetectionOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUnivariateDetectionOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

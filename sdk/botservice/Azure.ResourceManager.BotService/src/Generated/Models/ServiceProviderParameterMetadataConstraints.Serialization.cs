@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    internal partial class ServiceProviderParameterMetadataConstraints
+    internal partial class ServiceProviderParameterMetadataConstraints : IUtf8JsonSerializable, IModelJsonSerializable<ServiceProviderParameterMetadataConstraints>
     {
-        internal static ServiceProviderParameterMetadataConstraints DeserializeServiceProviderParameterMetadataConstraints(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceProviderParameterMetadataConstraints>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceProviderParameterMetadataConstraints>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsRequired))
+            {
+                writer.WritePropertyName("required"u8);
+                writer.WriteBooleanValue(IsRequired.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServiceProviderParameterMetadataConstraints DeserializeServiceProviderParameterMetadataConstraints(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> required = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("required"u8))
@@ -30,8 +64,57 @@ namespace Azure.ResourceManager.BotService.Models
                     required = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceProviderParameterMetadataConstraints(Optional.ToNullable(required));
+            return new ServiceProviderParameterMetadataConstraints(Optional.ToNullable(required), rawData);
+        }
+
+        ServiceProviderParameterMetadataConstraints IModelJsonSerializable<ServiceProviderParameterMetadataConstraints>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceProviderParameterMetadataConstraints(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceProviderParameterMetadataConstraints>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceProviderParameterMetadataConstraints IModelSerializable<ServiceProviderParameterMetadataConstraints>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceProviderParameterMetadataConstraints(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServiceProviderParameterMetadataConstraints model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServiceProviderParameterMetadataConstraints(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceProviderParameterMetadataConstraints(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

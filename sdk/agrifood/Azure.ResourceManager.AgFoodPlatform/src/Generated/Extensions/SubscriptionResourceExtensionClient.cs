@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFarmBeats", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFarmBeats", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFarmBeats", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFarmBeats", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

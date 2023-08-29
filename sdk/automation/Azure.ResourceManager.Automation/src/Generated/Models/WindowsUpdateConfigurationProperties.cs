@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,28 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Windows specific update configuration. </summary>
     public partial class WindowsUpdateConfigurationProperties
     {
-        /// <summary> Initializes a new instance of WindowsUpdateConfigurationProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WindowsUpdateConfigurationProperties"/>. </summary>
         public WindowsUpdateConfigurationProperties()
         {
             ExcludedKBNumbers = new ChangeTrackingList<string>();
             IncludedKBNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WindowsUpdateConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsUpdateConfigurationProperties"/>. </summary>
         /// <param name="includedUpdateClassifications"> Update classification included in the software update configuration. A comma separated string with required values. </param>
         /// <param name="excludedKBNumbers"> KB numbers excluded from the software update configuration. </param>
         /// <param name="includedKBNumbers"> KB numbers included from the software update configuration. </param>
         /// <param name="rebootSetting"> Reboot setting for the software update configuration. </param>
-        internal WindowsUpdateConfigurationProperties(WindowsUpdateClassification? includedUpdateClassifications, IList<string> excludedKBNumbers, IList<string> includedKBNumbers, string rebootSetting)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsUpdateConfigurationProperties(WindowsUpdateClassification? includedUpdateClassifications, IList<string> excludedKBNumbers, IList<string> includedKBNumbers, string rebootSetting, Dictionary<string, BinaryData> rawData)
         {
             IncludedUpdateClassifications = includedUpdateClassifications;
             ExcludedKBNumbers = excludedKBNumbers;
             IncludedKBNumbers = includedKBNumbers;
             RebootSetting = rebootSetting;
+            _rawData = rawData;
         }
 
         /// <summary> Update classification included in the software update configuration. A comma separated string with required values. </summary>

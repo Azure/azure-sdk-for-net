@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> The result of an attestation operation. </summary>
     internal partial class AttestationResponse
     {
-        /// <summary> Initializes a new instance of AttestationResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttestationResponse"/>. </summary>
         internal AttestationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of AttestationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationResponse"/>. </summary>
         /// <param name="token"> An RFC 7519 JSON Web Token, the body of which is an AttestationResult object. </param>
-        internal AttestationResponse(string token)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationResponse(string token, Dictionary<string, BinaryData> rawData)
         {
             Token = token;
+            _rawData = rawData;
         }
 
         /// <summary> An RFC 7519 JSON Web Token, the body of which is an AttestationResult object. </summary>

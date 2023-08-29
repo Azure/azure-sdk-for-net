@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationStoresRestClient.CreateListDeletedRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationStoresRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedAppConfigurationStoreResource(Client, DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(e)), _configurationStoresClientDiagnostics, Pipeline, "DeletedAppConfigurationStoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DeletedAppConfigurationStoreResource(Client, DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(e)), _configurationStoresClientDiagnostics, Pipeline, "DeletedAppConfigurationStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationStoresRestClient.CreateListDeletedRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationStoresRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedAppConfigurationStoreResource(Client, DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(e)), _configurationStoresClientDiagnostics, Pipeline, "DeletedAppConfigurationStoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DeletedAppConfigurationStoreResource(Client, DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(e)), _configurationStoresClientDiagnostics, Pipeline, "DeletedAppConfigurationStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountEndpointDependency
+    public partial class BatchAccountEndpointDependency : IUtf8JsonSerializable, IModelJsonSerializable<BatchAccountEndpointDependency>
     {
-        internal static BatchAccountEndpointDependency DeserializeBatchAccountEndpointDependency(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchAccountEndpointDependency>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchAccountEndpointDependency>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BatchAccountEndpointDependency DeserializeBatchAccountEndpointDependency(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<string> domainName = default;
             Optional<string> description = default;
             Optional<IReadOnlyList<BatchEndpointDetail>> endpointDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -48,8 +76,57 @@ namespace Azure.ResourceManager.Batch.Models
                     endpointDetails = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchAccountEndpointDependency(domainName.Value, description.Value, Optional.ToList(endpointDetails));
+            return new BatchAccountEndpointDependency(domainName.Value, description.Value, Optional.ToList(endpointDetails), rawData);
+        }
+
+        BatchAccountEndpointDependency IModelJsonSerializable<BatchAccountEndpointDependency>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchAccountEndpointDependency(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchAccountEndpointDependency>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchAccountEndpointDependency IModelSerializable<BatchAccountEndpointDependency>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchAccountEndpointDependency(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BatchAccountEndpointDependency model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BatchAccountEndpointDependency(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchAccountEndpointDependency(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

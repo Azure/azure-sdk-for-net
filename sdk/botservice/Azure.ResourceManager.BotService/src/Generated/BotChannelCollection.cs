@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.BotService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelChannelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botChannelChannelsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BotChannelResource(Client, BotChannelData.DeserializeBotChannelData(e)), _botChannelChannelsClientDiagnostics, Pipeline, "BotChannelCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BotChannelResource(Client, BotChannelData.DeserializeBotChannelData(e)), _botChannelChannelsClientDiagnostics, Pipeline, "BotChannelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.BotService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelChannelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botChannelChannelsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BotChannelResource(Client, BotChannelData.DeserializeBotChannelData(e)), _botChannelChannelsClientDiagnostics, Pipeline, "BotChannelCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BotChannelResource(Client, BotChannelData.DeserializeBotChannelData(e)), _botChannelChannelsClientDiagnostics, Pipeline, "BotChannelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

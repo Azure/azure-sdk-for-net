@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Virtual disk model. </summary>
     public partial class VirtualDisk
     {
-        /// <summary> Initializes a new instance of VirtualDisk. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualDisk"/>. </summary>
         public VirtualDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDisk"/>. </summary>
         /// <param name="name"> Gets or sets the name of the disk. </param>
         /// <param name="displayName"> Gets the display name of the virtual disk as shown in the vmmServer. This is the fallback label for a disk when the name is not set. </param>
         /// <param name="diskId"> Gets or sets the disk id. </param>
@@ -30,7 +35,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="templateDiskId"> Gets or sets the disk id in the template. </param>
         /// <param name="storageQoSPolicy"> The QoS policy for the disk. </param>
         /// <param name="createDiffDisk"> Gets or sets a value indicating diff disk. </param>
-        internal VirtualDisk(string name, string displayName, string diskId, int? diskSizeGB, int? maxDiskSizeGB, int? bus, int? lun, string busType, string vhdType, string volumeType, string vhdFormatType, string templateDiskId, StorageQoSPolicyDetails storageQoSPolicy, CreateDiffDisk? createDiffDisk)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualDisk(string name, string displayName, string diskId, int? diskSizeGB, int? maxDiskSizeGB, int? bus, int? lun, string busType, string vhdType, string volumeType, string vhdFormatType, string templateDiskId, StorageQoSPolicyDetails storageQoSPolicy, CreateDiffDisk? createDiffDisk, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             DisplayName = displayName;
@@ -46,6 +52,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             TemplateDiskId = templateDiskId;
             StorageQoSPolicy = storageQoSPolicy;
             CreateDiffDisk = createDiffDisk;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the name of the disk. </summary>

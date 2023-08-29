@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Alert modification item. </summary>
     public partial class ServiceAlertModificationItemInfo
     {
-        /// <summary> Initializes a new instance of ServiceAlertModificationItemInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationItemInfo"/>. </summary>
         public ServiceAlertModificationItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertModificationItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationItemInfo"/>. </summary>
         /// <param name="modificationEvent"> Reason for the modification. </param>
         /// <param name="oldValue"> Old value. </param>
         /// <param name="newValue"> New value. </param>
@@ -23,7 +28,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="modifiedBy"> Modified user details (Principal client name). </param>
         /// <param name="comments"> Modification comments. </param>
         /// <param name="description"> Description of the modification. </param>
-        internal ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent, string oldValue, string newValue, string modifiedAt, string modifiedBy, string comments, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent, string oldValue, string newValue, string modifiedAt, string modifiedBy, string comments, string description, Dictionary<string, BinaryData> rawData)
         {
             ModificationEvent = modificationEvent;
             OldValue = oldValue;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             ModifiedBy = modifiedBy;
             Comments = comments;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Reason for the modification. </summary>

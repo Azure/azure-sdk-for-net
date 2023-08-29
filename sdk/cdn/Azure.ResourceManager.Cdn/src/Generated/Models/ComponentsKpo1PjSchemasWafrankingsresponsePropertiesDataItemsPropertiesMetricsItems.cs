@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems. </summary>
     public partial class ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems
     {
-        /// <summary> Initializes a new instance of ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems"/>. </summary>
         internal ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems()
         {
         }
 
-        /// <summary> Initializes a new instance of ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems"/>. </summary>
         /// <param name="metric"></param>
         /// <param name="value"></param>
         /// <param name="percentage"></param>
-        internal ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(string metric, long? value, double? percentage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(string metric, long? value, double? percentage, Dictionary<string, BinaryData> rawData)
         {
             Metric = metric;
             Value = value;
             Percentage = percentage;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the metric. </summary>

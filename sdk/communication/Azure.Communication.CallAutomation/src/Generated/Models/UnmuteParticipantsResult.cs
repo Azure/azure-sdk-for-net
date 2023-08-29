@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The response payload for unmuting participants from the call. </summary>
     public partial class UnmuteParticipantsResult
     {
-        /// <summary> Initializes a new instance of UnmuteParticipantsResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnmuteParticipantsResult"/>. </summary>
         internal UnmuteParticipantsResult()
         {
         }
 
-        /// <summary> Initializes a new instance of UnmuteParticipantsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnmuteParticipantsResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        internal UnmuteParticipantsResult(string operationContext)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnmuteParticipantsResult(string operationContext, Dictionary<string, BinaryData> rawData)
         {
             OperationContext = operationContext;
+            _rawData = rawData;
         }
 
         /// <summary> The operation context provided by client. </summary>

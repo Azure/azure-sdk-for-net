@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Defines the delete checkpoint action properties. </summary>
     public partial class VirtualMachineDeleteCheckpoint
     {
-        /// <summary> Initializes a new instance of VirtualMachineDeleteCheckpoint. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineDeleteCheckpoint"/>. </summary>
         public VirtualMachineDeleteCheckpoint()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineDeleteCheckpoint"/>. </summary>
+        /// <param name="id"> ID of the checkpoint to be deleted. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineDeleteCheckpoint(string id, Dictionary<string, BinaryData> rawData)
+        {
+            Id = id;
+            _rawData = rawData;
         }
 
         /// <summary> ID of the checkpoint to be deleted. </summary>

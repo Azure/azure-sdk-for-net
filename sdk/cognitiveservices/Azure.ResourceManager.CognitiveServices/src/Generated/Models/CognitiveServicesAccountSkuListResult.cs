@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The list of cognitive services accounts operation response. </summary>
     internal partial class CognitiveServicesAccountSkuListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountSkuListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountSkuListResult"/>. </summary>
         internal CognitiveServicesAccountSkuListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesAccountSku>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountSkuListResult"/>. </summary>
         /// <param name="value"> Gets the list of Cognitive Services accounts and their properties. </param>
-        internal CognitiveServicesAccountSkuListResult(IReadOnlyList<CognitiveServicesAccountSku> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesAccountSkuListResult(IReadOnlyList<CognitiveServicesAccountSku> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the list of Cognitive Services accounts and their properties. </summary>

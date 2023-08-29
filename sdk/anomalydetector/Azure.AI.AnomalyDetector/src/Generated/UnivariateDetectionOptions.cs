@@ -15,6 +15,8 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Request of the entire or last anomaly detection. </summary>
     public partial class UnivariateDetectionOptions
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of UnivariateDetectionOptions. </summary>
         /// <param name="series">
         /// Time series data points. Points should be sorted by time stamp in ascending
@@ -65,7 +67,8 @@ namespace Azure.AI.AnomalyDetector
         /// Specifies the value to fill. It's used when granularity is not "none"
         /// and imputeMode is "fixed".
         /// </param>
-        internal UnivariateDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity? granularity, int? customInterval, int? period, float? maxAnomalyRatio, int? sensitivity, ImputeMode? imputeMode, float? imputeFixedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnivariateDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity? granularity, int? customInterval, int? period, float? maxAnomalyRatio, int? sensitivity, ImputeMode? imputeMode, float? imputeFixedValue, Dictionary<string, BinaryData> rawData)
         {
             Series = series;
             Granularity = granularity;
@@ -75,6 +78,12 @@ namespace Azure.AI.AnomalyDetector
             Sensitivity = sensitivity;
             ImputeMode = imputeMode;
             ImputeFixedValue = imputeFixedValue;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnivariateDetectionOptions"/> for deserialization. </summary>
+        internal UnivariateDetectionOptions()
+        {
         }
 
         /// <summary>

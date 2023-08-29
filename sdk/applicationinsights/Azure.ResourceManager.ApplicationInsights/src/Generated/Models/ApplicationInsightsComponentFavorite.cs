@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Properties that define a favorite that is associated to an Application Insights component. </summary>
     public partial class ApplicationInsightsComponentFavorite
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFavorite. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFavorite"/>. </summary>
         public ApplicationInsightsComponentFavorite()
         {
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFavorite. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFavorite"/>. </summary>
         /// <param name="name"> The user-defined name of the favorite. </param>
         /// <param name="config"> Configuration of this particular favorite, which are driven by the Azure portal UX. Configuration data is a string containing valid JSON. </param>
         /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="category"> Favorite category, as defined by the user at creation time. </param>
         /// <param name="isGeneratedFromTemplate"> Flag denoting wether or not this favorite was generated from a template. </param>
         /// <param name="userId"> Unique user id of the specific user that owns this favorite. </param>
-        internal ApplicationInsightsComponentFavorite(string name, string config, string version, string favoriteId, FavoriteType? favoriteType, string sourceType, string timeModified, IList<string> tags, string category, bool? isGeneratedFromTemplate, string userId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentFavorite(string name, string config, string version, string favoriteId, FavoriteType? favoriteType, string sourceType, string timeModified, IList<string> tags, string category, bool? isGeneratedFromTemplate, string userId, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Config = config;
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Category = category;
             IsGeneratedFromTemplate = isGeneratedFromTemplate;
             UserId = userId;
+            _rawData = rawData;
         }
 
         /// <summary> The user-defined name of the favorite. </summary>

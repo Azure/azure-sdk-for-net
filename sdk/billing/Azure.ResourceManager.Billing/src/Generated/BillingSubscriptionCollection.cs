@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Billing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionRestClient.CreateListByBillingAccountRequest(_billingAccountName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionResource(Client, BillingSubscriptionData.DeserializeBillingSubscriptionData(e)), _billingSubscriptionClientDiagnostics, Pipeline, "BillingSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BillingSubscriptionResource(Client, BillingSubscriptionData.DeserializeBillingSubscriptionData(e)), _billingSubscriptionClientDiagnostics, Pipeline, "BillingSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Billing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionRestClient.CreateListByBillingAccountRequest(_billingAccountName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionResource(Client, BillingSubscriptionData.DeserializeBillingSubscriptionData(e)), _billingSubscriptionClientDiagnostics, Pipeline, "BillingSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BillingSubscriptionResource(Client, BillingSubscriptionData.DeserializeBillingSubscriptionData(e)), _billingSubscriptionClientDiagnostics, Pipeline, "BillingSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

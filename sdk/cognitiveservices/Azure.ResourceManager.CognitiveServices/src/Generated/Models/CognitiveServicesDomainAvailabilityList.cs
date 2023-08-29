@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Domain availability. </summary>
     public partial class CognitiveServicesDomainAvailabilityList
     {
-        /// <summary> Initializes a new instance of CognitiveServicesDomainAvailabilityList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesDomainAvailabilityList"/>. </summary>
         internal CognitiveServicesDomainAvailabilityList()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesDomainAvailabilityList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesDomainAvailabilityList"/>. </summary>
         /// <param name="isSubdomainAvailable"> Indicates the given SKU is available or not. </param>
         /// <param name="reason"> Reason why the SKU is not available. </param>
         /// <param name="subdomainName"> The subdomain name to use. </param>
         /// <param name="domainAvailabilityType"> The Type of the resource. </param>
         /// <param name="kind"> The Kind of the resource. </param>
-        internal CognitiveServicesDomainAvailabilityList(bool? isSubdomainAvailable, string reason, string subdomainName, string domainAvailabilityType, string kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesDomainAvailabilityList(bool? isSubdomainAvailable, string reason, string subdomainName, string domainAvailabilityType, string kind, Dictionary<string, BinaryData> rawData)
         {
             IsSubdomainAvailable = isSubdomainAvailable;
             Reason = reason;
             SubdomainName = subdomainName;
             DomainAvailabilityType = domainAvailabilityType;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates the given SKU is available or not. </summary>

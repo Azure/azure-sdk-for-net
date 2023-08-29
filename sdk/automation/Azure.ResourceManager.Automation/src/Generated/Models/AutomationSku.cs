@@ -5,27 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The account SKU. </summary>
     public partial class AutomationSku
     {
-        /// <summary> Initializes a new instance of AutomationSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationSku"/>. </summary>
         /// <param name="name"> Gets or sets the SKU name of the account. </param>
         public AutomationSku(AutomationSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of AutomationSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSku"/>. </summary>
         /// <param name="name"> Gets or sets the SKU name of the account. </param>
         /// <param name="family"> Gets or sets the SKU family. </param>
         /// <param name="capacity"> Gets or sets the SKU capacity. </param>
-        internal AutomationSku(AutomationSkuName name, string family, int? capacity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationSku(AutomationSkuName name, string family, int? capacity, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Family = family;
             Capacity = capacity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationSku"/> for deserialization. </summary>
+        internal AutomationSku()
+        {
         }
 
         /// <summary> Gets or sets the SKU name of the account. </summary>

@@ -5,11 +5,16 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Manner of aligning multiple variables. </summary>
     public partial class AlignPolicy
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of AlignPolicy. </summary>
         public AlignPolicy()
         {
@@ -22,11 +27,13 @@ namespace Azure.AI.AnomalyDetector
         /// </param>
         /// <param name="fillNAMethod"> Field that indicates how missing values will be filled. </param>
         /// <param name="paddingValue"> Field that's required when fillNAMethod is Fixed. </param>
-        internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue, Dictionary<string, BinaryData> rawData)
         {
             AlignMode = alignMode;
             FillNAMethod = fillNAMethod;
             PaddingValue = paddingValue;
+            _rawData = rawData;
         }
 
         /// <summary>

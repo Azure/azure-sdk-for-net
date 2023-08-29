@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Blueprint.Models
 {
     /// <summary> Error code and message. </summary>
     public partial class AzureResourceManagerError
     {
-        /// <summary> Initializes a new instance of AzureResourceManagerError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureResourceManagerError"/>. </summary>
         public AzureResourceManagerError()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureResourceManagerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResourceManagerError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
-        internal AzureResourceManagerError(string code, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureResourceManagerError(string code, string message, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Error code. </summary>

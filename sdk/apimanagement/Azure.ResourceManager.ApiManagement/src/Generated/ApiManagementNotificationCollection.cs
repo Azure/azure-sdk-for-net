@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementNotificationNotificationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementNotificationNotificationRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementNotificationResource(Client, ApiManagementNotificationData.DeserializeApiManagementNotificationData(e)), _apiManagementNotificationNotificationClientDiagnostics, Pipeline, "ApiManagementNotificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementNotificationResource(Client, ApiManagementNotificationData.DeserializeApiManagementNotificationData(e)), _apiManagementNotificationNotificationClientDiagnostics, Pipeline, "ApiManagementNotificationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementNotificationNotificationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementNotificationNotificationRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementNotificationResource(Client, ApiManagementNotificationData.DeserializeApiManagementNotificationData(e)), _apiManagementNotificationNotificationClientDiagnostics, Pipeline, "ApiManagementNotificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementNotificationResource(Client, ApiManagementNotificationData.DeserializeApiManagementNotificationData(e)), _apiManagementNotificationNotificationClientDiagnostics, Pipeline, "ApiManagementNotificationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

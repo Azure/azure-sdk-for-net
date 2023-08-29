@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnManagedHttpsContent : IUtf8JsonSerializable
+    public partial class CdnManagedHttpsContent : IUtf8JsonSerializable, IModelJsonSerializable<CdnManagedHttpsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CdnManagedHttpsContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CdnManagedHttpsContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CdnManagedHttpsContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSourceParameters"u8);
             writer.WriteObjectValue(CertificateSourceParameters);
@@ -26,11 +34,25 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CdnManagedHttpsContent DeserializeCdnManagedHttpsContent(JsonElement element)
+        internal static CdnManagedHttpsContent DeserializeCdnManagedHttpsContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CertificateSource certificateSource = default;
             SecureDeliveryProtocolType protocolType = default;
             Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateSourceParameters"u8))
@@ -65,8 +88,57 @@ namespace Azure.ResourceManager.Cdn.Models
                     minimumTlsVersion = property.Value.GetString().ToCdnMinimumTlsVersion();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CdnManagedHttpsContent(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion), certificateSourceParameters);
+            return new CdnManagedHttpsContent(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion), certificateSourceParameters, rawData);
+        }
+
+        CdnManagedHttpsContent IModelJsonSerializable<CdnManagedHttpsContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CdnManagedHttpsContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCdnManagedHttpsContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CdnManagedHttpsContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CdnManagedHttpsContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CdnManagedHttpsContent IModelSerializable<CdnManagedHttpsContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CdnManagedHttpsContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCdnManagedHttpsContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CdnManagedHttpsContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CdnManagedHttpsContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCdnManagedHttpsContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

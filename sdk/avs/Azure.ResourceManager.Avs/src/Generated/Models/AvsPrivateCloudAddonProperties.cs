@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
@@ -12,20 +16,25 @@ namespace Azure.ResourceManager.Avs.Models
     /// Please note <see cref="AvsPrivateCloudAddonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AddonArcProperties"/>, <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownAddonProperties))]
     public abstract partial class AvsPrivateCloudAddonProperties
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudAddonProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonProperties"/>. </summary>
         protected AvsPrivateCloudAddonProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudAddonProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
-        internal AvsPrivateCloudAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData)
         {
             AddonType = addonType;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> The type of private cloud addon. </summary>

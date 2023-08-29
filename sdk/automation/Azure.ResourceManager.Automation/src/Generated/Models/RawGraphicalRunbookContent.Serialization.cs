@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class RawGraphicalRunbookContent : IUtf8JsonSerializable
+    public partial class RawGraphicalRunbookContent : IUtf8JsonSerializable, IModelJsonSerializable<RawGraphicalRunbookContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RawGraphicalRunbookContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RawGraphicalRunbookContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SchemaVersion))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("runbookType"u8);
                 writer.WriteStringValue(RunbookType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RawGraphicalRunbookContent DeserializeRawGraphicalRunbookContent(JsonElement element)
+        internal static RawGraphicalRunbookContent DeserializeRawGraphicalRunbookContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> schemaVersion = default;
             Optional<string> runbookDefinition = default;
             Optional<GraphRunbookType> runbookType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaVersion"u8))
@@ -63,8 +86,57 @@ namespace Azure.ResourceManager.Automation.Models
                     runbookType = new GraphRunbookType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RawGraphicalRunbookContent(schemaVersion.Value, runbookDefinition.Value, Optional.ToNullable(runbookType));
+            return new RawGraphicalRunbookContent(schemaVersion.Value, runbookDefinition.Value, Optional.ToNullable(runbookType), rawData);
+        }
+
+        RawGraphicalRunbookContent IModelJsonSerializable<RawGraphicalRunbookContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRawGraphicalRunbookContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RawGraphicalRunbookContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RawGraphicalRunbookContent IModelSerializable<RawGraphicalRunbookContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRawGraphicalRunbookContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RawGraphicalRunbookContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RawGraphicalRunbookContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRawGraphicalRunbookContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

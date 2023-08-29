@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of schedule parameters. </summary>
     public partial class SoftwareUpdateConfigurationScheduleProperties
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationScheduleProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationScheduleProperties"/>. </summary>
         public SoftwareUpdateConfigurationScheduleProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationScheduleProperties"/>. </summary>
         /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
         /// <param name="startInMinutes"> Gets the start time's offset in minutes. </param>
         /// <param name="expireOn"> Gets or sets the end time of the schedule. </param>
@@ -32,7 +35,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        internal SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn, double? startInMinutes, DateTimeOffset? expireOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, long? interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn, double? startInMinutes, DateTimeOffset? expireOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, long? interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, Dictionary<string, BinaryData> rawData)
         {
             StartOn = startOn;
             StartInMinutes = startInMinutes;
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the start time of the schedule. </summary>

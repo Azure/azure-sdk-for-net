@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformApiPortalProperties : IUtf8JsonSerializable
+    public partial class AppPlatformApiPortalProperties : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformApiPortalProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformApiPortalProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformApiPortalProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsPublic))
             {
@@ -62,11 +68,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("ssoProperties"u8);
                 writer.WriteObjectValue(SsoProperties);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformApiPortalProperties DeserializeAppPlatformApiPortalProperties(JsonElement element)
+        internal static AppPlatformApiPortalProperties DeserializeAppPlatformApiPortalProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppPlatformSsoProperties> ssoProperties = default;
             Optional<AppPlatformApiPortalResourceRequirements> resourceRequests = default;
             Optional<IReadOnlyList<AppPlatformApiPortalInstance>> instances = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -192,8 +213,57 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     instances = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformApiPortalProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), Optional.ToList(gatewayIds), Optional.ToList(sourceUris), ssoProperties.Value, resourceRequests.Value, Optional.ToList(instances));
+            return new AppPlatformApiPortalProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), Optional.ToList(gatewayIds), Optional.ToList(sourceUris), ssoProperties.Value, resourceRequests.Value, Optional.ToList(instances), rawData);
+        }
+
+        AppPlatformApiPortalProperties IModelJsonSerializable<AppPlatformApiPortalProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformApiPortalProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformApiPortalProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformApiPortalProperties IModelSerializable<AppPlatformApiPortalProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformApiPortalProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AppPlatformApiPortalProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AppPlatformApiPortalProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformApiPortalProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

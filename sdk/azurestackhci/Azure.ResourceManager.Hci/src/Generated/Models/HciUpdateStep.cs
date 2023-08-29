@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Progress representation of the update run steps. </summary>
     public partial class HciUpdateStep
     {
-        /// <summary> Initializes a new instance of HciUpdateStep. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HciUpdateStep"/>. </summary>
         public HciUpdateStep()
         {
             Steps = new ChangeTrackingList<HciUpdateStep>();
         }
 
-        /// <summary> Initializes a new instance of HciUpdateStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciUpdateStep"/>. </summary>
         /// <param name="name"> Name of the step. </param>
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
@@ -29,7 +31,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
         /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
         /// <param name="steps"> Recursive model for child steps of this step. </param>
-        internal HciUpdateStep(string name, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, IList<HciUpdateStep> steps)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciUpdateStep(string name, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, IList<HciUpdateStep> steps, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Description = description;
@@ -39,6 +42,7 @@ namespace Azure.ResourceManager.Hci.Models
             EndTimeUtc = endTimeUtc;
             LastUpdatedTimeUtc = lastUpdatedTimeUtc;
             Steps = steps;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the step. </summary>

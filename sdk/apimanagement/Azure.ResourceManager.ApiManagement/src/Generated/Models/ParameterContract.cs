@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Operation parameters details. </summary>
     public partial class ParameterContract
     {
-        /// <summary> Initializes a new instance of ParameterContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ParameterContract"/>. </summary>
         /// <param name="name"> Parameter name. </param>
         /// <param name="parameterContractType"> Parameter type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameterContractType"/> is null. </exception>
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Examples = new ChangeTrackingDictionary<string, ParameterExampleContract>();
         }
 
-        /// <summary> Initializes a new instance of ParameterContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterContract"/>. </summary>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
         /// <param name="parameterContractType"> Parameter type. </param>
@@ -39,7 +41,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="schemaId"> Schema identifier. </param>
         /// <param name="typeName"> Type name defined by the schema. </param>
         /// <param name="examples"> Exampled defined for the parameter. </param>
-        internal ParameterContract(string name, string description, string parameterContractType, string defaultValue, bool? isRequired, IList<string> values, string schemaId, string typeName, IDictionary<string, ParameterExampleContract> examples)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParameterContract(string name, string description, string parameterContractType, string defaultValue, bool? isRequired, IList<string> values, string schemaId, string typeName, IDictionary<string, ParameterExampleContract> examples, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Description = description;
@@ -50,6 +53,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             SchemaId = schemaId;
             TypeName = typeName;
             Examples = examples;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParameterContract"/> for deserialization. </summary>
+        internal ParameterContract()
+        {
         }
 
         /// <summary> Parameter name. </summary>

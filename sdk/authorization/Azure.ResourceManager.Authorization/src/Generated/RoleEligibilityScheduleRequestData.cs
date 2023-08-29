@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class RoleEligibilityScheduleRequestData : ResourceData
     {
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestData"/>. </summary>
         public RoleEligibilityScheduleRequestData()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +51,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="expirationType"> Type of the role eligibility schedule expiration. </param>
         /// <param name="endOn"> End DateTime of the role eligibility schedule. </param>
         /// <param name="duration"> Duration of the role eligibility schedule in TimeSpan. </param>
-        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, RoleManagementScheduleRequestType? requestType, RoleManagementScheduleStatus? status, string approvalId, ResourceIdentifier targetRoleEligibilityScheduleId, ResourceIdentifier targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, RoleManagementExpandedProperties expandedProperties, DateTimeOffset? startOn, RoleManagementScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, RoleManagementScheduleRequestType? requestType, RoleManagementScheduleStatus? status, string approvalId, ResourceIdentifier targetRoleEligibilityScheduleId, ResourceIdentifier targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, RoleManagementExpandedProperties expandedProperties, DateTimeOffset? startOn, RoleManagementScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -70,6 +74,7 @@ namespace Azure.ResourceManager.Authorization
             ExpirationType = expirationType;
             EndOn = endOn;
             Duration = duration;
+            _rawData = rawData;
         }
 
         /// <summary> The role eligibility schedule request scope. </summary>

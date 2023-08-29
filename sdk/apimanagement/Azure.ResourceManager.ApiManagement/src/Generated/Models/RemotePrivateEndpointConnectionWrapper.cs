@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,13 +15,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Remote Private Endpoint Connection resource. </summary>
     public partial class RemotePrivateEndpointConnectionWrapper
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionWrapper. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionWrapper"/>. </summary>
         public RemotePrivateEndpointConnectionWrapper()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionWrapper"/>. </summary>
         /// <param name="id"> Private Endpoint connection resource id. </param>
         /// <param name="name"> Private Endpoint Connection Name. </param>
         /// <param name="resourceType"> Private Endpoint Connection Resource Type. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="groupIds"> All the Group ids. </param>
-        internal RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id, string name, ResourceType? resourceType, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id, string name, ResourceType? resourceType, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -37,6 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
             GroupIds = groupIds;
+            _rawData = rawData;
         }
 
         /// <summary> Private Endpoint connection resource id. </summary>

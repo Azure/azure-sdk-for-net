@@ -5,19 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The parameters to provide for the Microsoft Teams channel. </summary>
     public partial class SkypeChannelProperties
     {
-        /// <summary> Initializes a new instance of SkypeChannelProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SkypeChannelProperties"/>. </summary>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         public SkypeChannelProperties(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of SkypeChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkypeChannelProperties"/>. </summary>
         /// <param name="isMessagingEnabled"> Enable messaging for Skype channel. </param>
         /// <param name="isMediaCardsEnabled"> Enable media cards for Skype channel. </param>
         /// <param name="isVideoEnabled"> Enable video for Skype channel. </param>
@@ -28,7 +33,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="callingWebHook"> Calling web hook for Skype channel. </param>
         /// <param name="incomingCallRoute"> Incoming call route for Skype channel. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        internal SkypeChannelProperties(bool? isMessagingEnabled, bool? isMediaCardsEnabled, bool? isVideoEnabled, bool? isCallingEnabled, bool? isScreenSharingEnabled, bool? isGroupsEnabled, string groupsMode, string callingWebHook, string incomingCallRoute, bool isEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SkypeChannelProperties(bool? isMessagingEnabled, bool? isMediaCardsEnabled, bool? isVideoEnabled, bool? isCallingEnabled, bool? isScreenSharingEnabled, bool? isGroupsEnabled, string groupsMode, string callingWebHook, string incomingCallRoute, bool isEnabled, Dictionary<string, BinaryData> rawData)
         {
             IsMessagingEnabled = isMessagingEnabled;
             IsMediaCardsEnabled = isMediaCardsEnabled;
@@ -40,6 +46,12 @@ namespace Azure.ResourceManager.BotService.Models
             CallingWebHook = callingWebHook;
             IncomingCallRoute = incomingCallRoute;
             IsEnabled = isEnabled;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SkypeChannelProperties"/> for deserialization. </summary>
+        internal SkypeChannelProperties()
+        {
         }
 
         /// <summary> Enable messaging for Skype channel. </summary>

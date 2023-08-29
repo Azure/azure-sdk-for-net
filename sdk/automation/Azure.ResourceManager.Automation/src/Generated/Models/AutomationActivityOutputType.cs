@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the activity output type. </summary>
     public partial class AutomationActivityOutputType
     {
-        /// <summary> Initializes a new instance of AutomationActivityOutputType. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityOutputType"/>. </summary>
         internal AutomationActivityOutputType()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationActivityOutputType. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityOutputType"/>. </summary>
         /// <param name="name"> Gets or sets the name of the activity output type. </param>
         /// <param name="activityOutputType"> Gets or sets the type of the activity output type. </param>
-        internal AutomationActivityOutputType(string name, string activityOutputType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationActivityOutputType(string name, string activityOutputType, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ActivityOutputType = activityOutputType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the name of the activity output type. </summary>

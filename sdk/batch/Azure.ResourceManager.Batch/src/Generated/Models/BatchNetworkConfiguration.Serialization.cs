@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchNetworkConfiguration : IUtf8JsonSerializable
+    public partial class BatchNetworkConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<BatchNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchNetworkConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchNetworkConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
@@ -40,11 +48,25 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchNetworkConfiguration DeserializeBatchNetworkConfiguration(JsonElement element)
+        internal static BatchNetworkConfiguration DeserializeBatchNetworkConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +76,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<PoolEndpointConfiguration> endpointConfiguration = default;
             Optional<BatchPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
             Optional<bool> enableAcceleratedNetworking = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -101,8 +124,57 @@ namespace Azure.ResourceManager.Batch.Models
                     enableAcceleratedNetworking = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value, Optional.ToNullable(enableAcceleratedNetworking));
+            return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value, Optional.ToNullable(enableAcceleratedNetworking), rawData);
+        }
+
+        BatchNetworkConfiguration IModelJsonSerializable<BatchNetworkConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchNetworkConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchNetworkConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchNetworkConfiguration IModelSerializable<BatchNetworkConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchNetworkConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BatchNetworkConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BatchNetworkConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchNetworkConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

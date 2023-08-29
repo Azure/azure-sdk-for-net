@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,26 @@ namespace Azure.ResourceManager.Automanage
     /// </summary>
     public partial class AutomanageConfigurationProfileAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileAssignmentData"/>. </summary>
         public AutomanageConfigurationProfileAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the configuration profile assignment. </param>
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
-        internal AutomanageConfigurationProfileAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutomanageConfigurationProfileAssignmentProperties properties, string managedBy) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomanageConfigurationProfileAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutomanageConfigurationProfileAssignmentProperties properties, string managedBy, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ManagedBy = managedBy;
+            _rawData = rawData;
         }
 
         /// <summary> Properties of the configuration profile assignment. </summary>

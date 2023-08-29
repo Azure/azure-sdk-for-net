@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -12,22 +14,26 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> A private container registry. </summary>
     public partial class BatchVmContainerRegistry
     {
-        /// <summary> Initializes a new instance of BatchVmContainerRegistry. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchVmContainerRegistry"/>. </summary>
         public BatchVmContainerRegistry()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchVmContainerRegistry. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmContainerRegistry"/>. </summary>
         /// <param name="userName"> The user name to log into the registry server. </param>
         /// <param name="password"> The password to log into the registry server. </param>
         /// <param name="registryServer"> If omitted, the default is "docker.io". </param>
         /// <param name="identity"> The reference to a user assigned identity associated with the Batch pool which a compute node will use. </param>
-        internal BatchVmContainerRegistry(string userName, string password, string registryServer, ComputeNodeIdentityReference identity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchVmContainerRegistry(string userName, string password, string registryServer, ComputeNodeIdentityReference identity, Dictionary<string, BinaryData> rawData)
         {
             UserName = userName;
             Password = password;
             RegistryServer = registryServer;
             Identity = identity;
+            _rawData = rawData;
         }
 
         /// <summary> The user name to log into the registry server. </summary>

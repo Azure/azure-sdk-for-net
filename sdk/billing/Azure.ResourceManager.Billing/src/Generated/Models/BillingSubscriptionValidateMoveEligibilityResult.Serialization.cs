@@ -5,21 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingSubscriptionValidateMoveEligibilityResult
+    public partial class BillingSubscriptionValidateMoveEligibilityResult : IUtf8JsonSerializable, IModelJsonSerializable<BillingSubscriptionValidateMoveEligibilityResult>
     {
-        internal static BillingSubscriptionValidateMoveEligibilityResult DeserializeBillingSubscriptionValidateMoveEligibilityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BillingSubscriptionValidateMoveEligibilityResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BillingSubscriptionValidateMoveEligibilityResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ErrorDetails))
+            {
+                writer.WritePropertyName("errorDetails"u8);
+                writer.WriteObjectValue(ErrorDetails);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BillingSubscriptionValidateMoveEligibilityResult DeserializeBillingSubscriptionValidateMoveEligibilityResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isMoveEligible = default;
             Optional<BillingSubscriptionValidateMoveEligibilityError> errorDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isMoveEligible"u8))
@@ -40,8 +74,57 @@ namespace Azure.ResourceManager.Billing.Models
                     errorDetails = BillingSubscriptionValidateMoveEligibilityError.DeserializeBillingSubscriptionValidateMoveEligibilityError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BillingSubscriptionValidateMoveEligibilityResult(Optional.ToNullable(isMoveEligible), errorDetails.Value);
+            return new BillingSubscriptionValidateMoveEligibilityResult(Optional.ToNullable(isMoveEligible), errorDetails.Value, rawData);
+        }
+
+        BillingSubscriptionValidateMoveEligibilityResult IModelJsonSerializable<BillingSubscriptionValidateMoveEligibilityResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingSubscriptionValidateMoveEligibilityResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BillingSubscriptionValidateMoveEligibilityResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BillingSubscriptionValidateMoveEligibilityResult IModelSerializable<BillingSubscriptionValidateMoveEligibilityResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBillingSubscriptionValidateMoveEligibilityResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BillingSubscriptionValidateMoveEligibilityResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BillingSubscriptionValidateMoveEligibilityResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBillingSubscriptionValidateMoveEligibilityResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

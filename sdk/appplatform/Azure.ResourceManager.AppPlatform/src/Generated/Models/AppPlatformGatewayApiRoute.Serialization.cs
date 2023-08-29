@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformGatewayApiRoute : IUtf8JsonSerializable
+    public partial class AppPlatformGatewayApiRoute : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformGatewayApiRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformGatewayApiRoute>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformGatewayApiRoute>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Title))
             {
@@ -77,11 +83,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformGatewayApiRoute DeserializeAppPlatformGatewayApiRoute(JsonElement element)
+        internal static AppPlatformGatewayApiRoute DeserializeAppPlatformGatewayApiRoute(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +115,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IList<string>> filters = default;
             Optional<int> order = default;
             Optional<IList<string>> tags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -185,8 +206,57 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     tags = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformGatewayApiRoute(title.Value, description.Value, uri.Value, Optional.ToNullable(ssoEnabled), Optional.ToNullable(tokenRelay), Optional.ToList(predicates), Optional.ToList(filters), Optional.ToNullable(order), Optional.ToList(tags));
+            return new AppPlatformGatewayApiRoute(title.Value, description.Value, uri.Value, Optional.ToNullable(ssoEnabled), Optional.ToNullable(tokenRelay), Optional.ToList(predicates), Optional.ToList(filters), Optional.ToNullable(order), Optional.ToList(tags), rawData);
+        }
+
+        AppPlatformGatewayApiRoute IModelJsonSerializable<AppPlatformGatewayApiRoute>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformGatewayApiRoute(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformGatewayApiRoute>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformGatewayApiRoute IModelSerializable<AppPlatformGatewayApiRoute>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformGatewayApiRoute(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AppPlatformGatewayApiRoute model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AppPlatformGatewayApiRoute(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformGatewayApiRoute(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

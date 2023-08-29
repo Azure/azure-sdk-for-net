@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,27 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Group the result set. </summary>
     public partial class ServiceAlertSummaryGroup
     {
-        /// <summary> Initializes a new instance of ServiceAlertSummaryGroup. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertSummaryGroup"/>. </summary>
         public ServiceAlertSummaryGroup()
         {
             Values = new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertSummaryGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertSummaryGroup"/>. </summary>
         /// <param name="total"> Total count of the result set. </param>
         /// <param name="smartGroupsCount"> Total count of the smart groups. </param>
         /// <param name="groupedBy"> Name of the field aggregated. </param>
         /// <param name="values"> List of the items. </param>
-        internal ServiceAlertSummaryGroup(long? total, long? smartGroupsCount, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertSummaryGroup(long? total, long? smartGroupsCount, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values, Dictionary<string, BinaryData> rawData)
         {
             Total = total;
             SmartGroupsCount = smartGroupsCount;
             GroupedBy = groupedBy;
             Values = values;
+            _rawData = rawData;
         }
 
         /// <summary> Total count of the result set. </summary>

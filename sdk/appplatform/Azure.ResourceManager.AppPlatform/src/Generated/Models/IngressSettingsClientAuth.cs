@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Client-Certification Authentication. </summary>
     internal partial class IngressSettingsClientAuth
     {
-        /// <summary> Initializes a new instance of IngressSettingsClientAuth. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IngressSettingsClientAuth"/>. </summary>
         public IngressSettingsClientAuth()
         {
             Certificates = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IngressSettingsClientAuth. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngressSettingsClientAuth"/>. </summary>
         /// <param name="certificates"> Collection of certificate resource id. </param>
-        internal IngressSettingsClientAuth(IList<string> certificates)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngressSettingsClientAuth(IList<string> certificates, Dictionary<string, BinaryData> rawData)
         {
             Certificates = certificates;
+            _rawData = rawData;
         }
 
         /// <summary> Collection of certificate resource id. </summary>

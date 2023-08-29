@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class LineChannelProperties : IUtf8JsonSerializable
+    public partial class LineChannelProperties : IUtf8JsonSerializable, IModelJsonSerializable<LineChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LineChannelProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LineChannelProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("lineRegistrations"u8);
             writer.WriteStartArray();
@@ -24,11 +30,25 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LineChannelProperties DeserializeLineChannelProperties(JsonElement element)
+        internal static LineChannelProperties DeserializeLineChannelProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +56,7 @@ namespace Azure.ResourceManager.BotService.Models
             IList<LineRegistration> lineRegistrations = default;
             Optional<Uri> callbackUrl = default;
             Optional<bool> isValidated = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lineRegistrations"u8))
@@ -66,8 +87,57 @@ namespace Azure.ResourceManager.BotService.Models
                     isValidated = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LineChannelProperties(lineRegistrations, callbackUrl.Value, Optional.ToNullable(isValidated));
+            return new LineChannelProperties(lineRegistrations, callbackUrl.Value, Optional.ToNullable(isValidated), rawData);
+        }
+
+        LineChannelProperties IModelJsonSerializable<LineChannelProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLineChannelProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LineChannelProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LineChannelProperties IModelSerializable<LineChannelProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLineChannelProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LineChannelProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LineChannelProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLineChannelProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

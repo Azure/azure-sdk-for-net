@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductTagTagRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductTagTagRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementProductTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementProductTagTagClientDiagnostics, Pipeline, "ApiManagementProductTagCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementProductTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementProductTagTagClientDiagnostics, Pipeline, "ApiManagementProductTagCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductTagTagRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductTagTagRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementProductTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementProductTagTagClientDiagnostics, Pipeline, "ApiManagementProductTagCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementProductTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementProductTagTagClientDiagnostics, Pipeline, "ApiManagementProductTagCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

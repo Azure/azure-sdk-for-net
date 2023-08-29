@@ -15,7 +15,9 @@ namespace Azure.Communication.Chat
     /// <summary> A paged collection of chat message read receipts. </summary>
     internal partial class ChatMessageReadReceiptsCollection
     {
-        /// <summary> Initializes a new instance of ChatMessageReadReceiptsCollection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatMessageReadReceiptsCollection"/>. </summary>
         /// <param name="value"> Collection of chat message read receipts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ChatMessageReadReceiptsCollection(IEnumerable<ChatMessageReadReceiptInternal> value)
@@ -25,13 +27,20 @@ namespace Azure.Communication.Chat
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ChatMessageReadReceiptsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageReadReceiptsCollection"/>. </summary>
         /// <param name="value"> Collection of chat message read receipts. </param>
         /// <param name="nextLink"> If there are more chat message read receipts that can be retrieved, the next link will be populated. </param>
-        internal ChatMessageReadReceiptsCollection(IReadOnlyList<ChatMessageReadReceiptInternal> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatMessageReadReceiptsCollection(IReadOnlyList<ChatMessageReadReceiptInternal> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatMessageReadReceiptsCollection"/> for deserialization. </summary>
+        internal ChatMessageReadReceiptsCollection()
+        {
         }
 
         /// <summary> Collection of chat message read receipts. </summary>

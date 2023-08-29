@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
     public partial class AppConfigurationKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of AppConfigurationKeyVaultProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyVaultProperties"/>. </summary>
         public AppConfigurationKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyVaultProperties"/>. </summary>
         /// <param name="keyIdentifier"> The URI of the key vault key used to encrypt data. </param>
         /// <param name="identityClientId"> The client id of the identity which will be used to access key vault. </param>
-        internal AppConfigurationKeyVaultProperties(string keyIdentifier, string identityClientId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationKeyVaultProperties(string keyIdentifier, string identityClientId, Dictionary<string, BinaryData> rawData)
         {
             KeyIdentifier = keyIdentifier;
             IdentityClientId = identityClientId;
+            _rawData = rawData;
         }
 
         /// <summary> The URI of the key vault key used to encrypt data. </summary>

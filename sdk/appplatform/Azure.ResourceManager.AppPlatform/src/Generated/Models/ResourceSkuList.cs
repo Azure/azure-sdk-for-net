@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Azure Spring Apps SKU and a possible link for next set. </summary>
     internal partial class ResourceSkuList
     {
-        /// <summary> Initializes a new instance of ResourceSkuList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuList"/>. </summary>
         internal ResourceSkuList()
         {
             Value = new ChangeTrackingList<AvailableAppPlatformSku>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuList"/>. </summary>
         /// <param name="value"> Collection of resource SKU. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal ResourceSkuList(IReadOnlyList<AvailableAppPlatformSku> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceSkuList(IReadOnlyList<AvailableAppPlatformSku> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Collection of resource SKU. </summary>

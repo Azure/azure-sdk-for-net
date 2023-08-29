@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPolicyExpirationRule : IUtf8JsonSerializable
+    public partial class RoleManagementPolicyExpirationRule : IUtf8JsonSerializable, IModelJsonSerializable<RoleManagementPolicyExpirationRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoleManagementPolicyExpirationRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoleManagementPolicyExpirationRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RoleManagementPolicyExpirationRule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsExpirationRequired))
             {
@@ -38,11 +45,25 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoleManagementPolicyExpirationRule DeserializeRoleManagementPolicyExpirationRule(JsonElement element)
+        internal static RoleManagementPolicyExpirationRule DeserializeRoleManagementPolicyExpirationRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +73,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isExpirationRequired"u8))
@@ -91,8 +113,57 @@ namespace Azure.ResourceManager.Authorization.Models
                     target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, Optional.ToNullable(isExpirationRequired), Optional.ToNullable(maximumDuration));
+            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, Optional.ToNullable(isExpirationRequired), Optional.ToNullable(maximumDuration), rawData);
+        }
+
+        RoleManagementPolicyExpirationRule IModelJsonSerializable<RoleManagementPolicyExpirationRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoleManagementPolicyExpirationRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleManagementPolicyExpirationRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoleManagementPolicyExpirationRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoleManagementPolicyExpirationRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoleManagementPolicyExpirationRule IModelSerializable<RoleManagementPolicyExpirationRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoleManagementPolicyExpirationRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoleManagementPolicyExpirationRule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RoleManagementPolicyExpirationRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RoleManagementPolicyExpirationRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoleManagementPolicyExpirationRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CacheExpirationActionProperties : IUtf8JsonSerializable
+    public partial class CacheExpirationActionProperties : IUtf8JsonSerializable, IModelJsonSerializable<CacheExpirationActionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CacheExpirationActionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CacheExpirationActionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
@@ -34,11 +41,25 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("cacheDuration");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CacheExpirationActionProperties DeserializeCacheExpirationActionProperties(JsonElement element)
+        internal static CacheExpirationActionProperties DeserializeCacheExpirationActionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CacheBehaviorSetting cacheBehavior = default;
             CdnCacheLevel cacheType = default;
             Optional<TimeSpan?> cacheDuration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -74,8 +96,57 @@ namespace Azure.ResourceManager.Cdn.Models
                     cacheDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CacheExpirationActionProperties(typeName, cacheBehavior, cacheType, Optional.ToNullable(cacheDuration));
+            return new CacheExpirationActionProperties(typeName, cacheBehavior, cacheType, Optional.ToNullable(cacheDuration), rawData);
+        }
+
+        CacheExpirationActionProperties IModelJsonSerializable<CacheExpirationActionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCacheExpirationActionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CacheExpirationActionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CacheExpirationActionProperties IModelSerializable<CacheExpirationActionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCacheExpirationActionProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CacheExpirationActionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CacheExpirationActionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCacheExpirationActionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

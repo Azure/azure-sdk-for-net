@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.Communication.Chat
     /// <summary> Result of the create chat thread operation. </summary>
     internal partial class CreateChatThreadResultInternal
     {
-        /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadResultInternal"/>. </summary>
         internal CreateChatThreadResultInternal()
         {
             InvalidParticipants = new ChangeTrackingList<ChatError>();
         }
 
-        /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadResultInternal"/>. </summary>
         /// <param name="chatThread"> Chat thread. </param>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
-        internal CreateChatThreadResultInternal(ChatThreadPropertiesInternal chatThread, IReadOnlyList<ChatError> invalidParticipants)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateChatThreadResultInternal(ChatThreadPropertiesInternal chatThread, IReadOnlyList<ChatError> invalidParticipants, Dictionary<string, BinaryData> rawData)
         {
             ChatThread = chatThread;
             InvalidParticipants = invalidParticipants;
+            _rawData = rawData;
         }
 
         /// <summary> Chat thread. </summary>

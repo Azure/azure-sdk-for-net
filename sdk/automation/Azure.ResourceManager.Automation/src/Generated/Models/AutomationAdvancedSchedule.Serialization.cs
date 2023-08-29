@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationAdvancedSchedule : IUtf8JsonSerializable
+    public partial class AutomationAdvancedSchedule : IUtf8JsonSerializable, IModelJsonSerializable<AutomationAdvancedSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutomationAdvancedSchedule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutomationAdvancedSchedule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(WeekDays))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationAdvancedSchedule DeserializeAutomationAdvancedSchedule(JsonElement element)
+        internal static AutomationAdvancedSchedule DeserializeAutomationAdvancedSchedule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<IList<string>> weekDays = default;
             Optional<IList<int>> monthDays = default;
             Optional<IList<AutomationAdvancedScheduleMonthlyOccurrence>> monthlyOccurrences = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("weekDays"u8))
@@ -102,8 +124,57 @@ namespace Azure.ResourceManager.Automation.Models
                     monthlyOccurrences = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutomationAdvancedSchedule(Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences));
+            return new AutomationAdvancedSchedule(Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), rawData);
+        }
+
+        AutomationAdvancedSchedule IModelJsonSerializable<AutomationAdvancedSchedule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationAdvancedSchedule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutomationAdvancedSchedule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutomationAdvancedSchedule IModelSerializable<AutomationAdvancedSchedule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutomationAdvancedSchedule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AutomationAdvancedSchedule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AutomationAdvancedSchedule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutomationAdvancedSchedule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

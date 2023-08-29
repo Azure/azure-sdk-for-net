@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGlobalSchemaResource(Client, ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e)), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementGlobalSchemaResource(Client, ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e)), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGlobalSchemaResource(Client, ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e)), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementGlobalSchemaResource(Client, ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e)), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

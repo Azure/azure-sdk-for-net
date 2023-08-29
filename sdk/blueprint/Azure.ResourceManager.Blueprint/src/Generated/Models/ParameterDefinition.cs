@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Represent a parameter with constrains and metadata. </summary>
     public partial class ParameterDefinition
     {
-        /// <summary> Initializes a new instance of ParameterDefinition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinition"/>. </summary>
         /// <param name="templateParameterType"> Allowed data types for Resource Manager template parameters. </param>
         public ParameterDefinition(TemplateParameterType templateParameterType)
         {
@@ -22,14 +24,15 @@ namespace Azure.ResourceManager.Blueprint.Models
             AllowedValues = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinition"/>. </summary>
         /// <param name="templateParameterType"> Allowed data types for Resource Manager template parameters. </param>
         /// <param name="defaultValue"> Default Value for this parameter. </param>
         /// <param name="allowedValues"> Array of allowed values for this parameter. </param>
         /// <param name="displayName"> DisplayName of this parameter/resourceGroup. </param>
         /// <param name="description"> Description of this parameter/resourceGroup. </param>
         /// <param name="strongType"> StrongType for UI to render rich experience during blueprint assignment. Supported strong types are resourceType, principalId and location. </param>
-        internal ParameterDefinition(TemplateParameterType templateParameterType, BinaryData defaultValue, IList<BinaryData> allowedValues, string displayName, string description, string strongType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParameterDefinition(TemplateParameterType templateParameterType, BinaryData defaultValue, IList<BinaryData> allowedValues, string displayName, string description, string strongType, Dictionary<string, BinaryData> rawData)
         {
             TemplateParameterType = templateParameterType;
             DefaultValue = defaultValue;
@@ -37,6 +40,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             DisplayName = displayName;
             Description = description;
             StrongType = strongType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinition"/> for deserialization. </summary>
+        internal ParameterDefinition()
+        {
         }
 
         /// <summary> Allowed data types for Resource Manager template parameters. </summary>

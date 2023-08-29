@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
     /// <summary> Shared status properties between all blueprint resources. </summary>
     public partial class BlueprintResourceStatusBase
     {
-        /// <summary> Initializes a new instance of BlueprintResourceStatusBase. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlueprintResourceStatusBase"/>. </summary>
         internal BlueprintResourceStatusBase()
         {
         }
 
-        /// <summary> Initializes a new instance of BlueprintResourceStatusBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlueprintResourceStatusBase"/>. </summary>
         /// <param name="timeCreated"> Creation time of this blueprint definition. </param>
         /// <param name="lastModified"> Last modified time of this blueprint definition. </param>
-        internal BlueprintResourceStatusBase(DateTimeOffset? timeCreated, DateTimeOffset? lastModified)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlueprintResourceStatusBase(DateTimeOffset? timeCreated, DateTimeOffset? lastModified, Dictionary<string, BinaryData> rawData)
         {
             TimeCreated = timeCreated;
             LastModified = lastModified;
+            _rawData = rawData;
         }
 
         /// <summary> Creation time of this blueprint definition. </summary>

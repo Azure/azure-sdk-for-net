@@ -5,22 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformGatewayOperatorProperties
+    public partial class AppPlatformGatewayOperatorProperties : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformGatewayOperatorProperties>
     {
-        internal static AppPlatformGatewayOperatorProperties DeserializeAppPlatformGatewayOperatorProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformGatewayOperatorProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformGatewayOperatorProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AppPlatformGatewayOperatorProperties DeserializeAppPlatformGatewayOperatorProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AppPlatformGatewayOperatorResourceRequirements> resourceRequests = default;
             Optional<IReadOnlyList<AppPlatformGatewayInstance>> instances = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceRequests"u8))
@@ -46,8 +74,57 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     instances = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformGatewayOperatorProperties(resourceRequests.Value, Optional.ToList(instances));
+            return new AppPlatformGatewayOperatorProperties(resourceRequests.Value, Optional.ToList(instances), rawData);
+        }
+
+        AppPlatformGatewayOperatorProperties IModelJsonSerializable<AppPlatformGatewayOperatorProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformGatewayOperatorProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformGatewayOperatorProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformGatewayOperatorProperties IModelSerializable<AppPlatformGatewayOperatorProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformGatewayOperatorProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AppPlatformGatewayOperatorProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AppPlatformGatewayOperatorProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformGatewayOperatorProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

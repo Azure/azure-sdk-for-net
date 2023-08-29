@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiIssueAttachmentRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiIssueAttachmentRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiIssueAttachmentResource(Client, ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(e)), _apiIssueAttachmentClientDiagnostics, Pipeline, "ApiIssueAttachmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiIssueAttachmentResource(Client, ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(e)), _apiIssueAttachmentClientDiagnostics, Pipeline, "ApiIssueAttachmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiIssueAttachmentRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiIssueAttachmentRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiIssueAttachmentResource(Client, ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(e)), _apiIssueAttachmentClientDiagnostics, Pipeline, "ApiIssueAttachmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiIssueAttachmentResource(Client, ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(e)), _apiIssueAttachmentClientDiagnostics, Pipeline, "ApiIssueAttachmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

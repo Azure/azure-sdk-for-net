@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> A set of Azure Batch account keys. </summary>
     public partial class BatchAccountKeys
     {
-        /// <summary> Initializes a new instance of BatchAccountKeys. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountKeys"/>. </summary>
         internal BatchAccountKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchAccountKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountKeys"/>. </summary>
         /// <param name="accountName"> The Batch account name. </param>
         /// <param name="primary"> The primary key associated with the account. </param>
         /// <param name="secondary"> The secondary key associated with the account. </param>
-        internal BatchAccountKeys(string accountName, string primary, string secondary)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountKeys(string accountName, string primary, string secondary, Dictionary<string, BinaryData> rawData)
         {
             AccountName = accountName;
             Primary = primary;
             Secondary = secondary;
+            _rawData = rawData;
         }
 
         /// <summary> The Batch account name. </summary>

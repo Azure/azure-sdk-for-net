@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The connection type property associated with the entity. </summary>
     public partial class ConnectionTypeAssociationProperty
     {
-        /// <summary> Initializes a new instance of ConnectionTypeAssociationProperty. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionTypeAssociationProperty"/>. </summary>
         public ConnectionTypeAssociationProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionTypeAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionTypeAssociationProperty"/>. </summary>
         /// <param name="name"> Gets or sets the name of the connection type. </param>
-        internal ConnectionTypeAssociationProperty(string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionTypeAssociationProperty(string name, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the name of the connection type. </summary>

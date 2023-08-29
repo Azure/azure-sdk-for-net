@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The response body returned for a request to Bot Service Management to check per subscription hostSettings. </summary>
     public partial class BotServiceHostSettingsResult
     {
-        /// <summary> Initializes a new instance of BotServiceHostSettingsResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotServiceHostSettingsResult"/>. </summary>
         internal BotServiceHostSettingsResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BotServiceHostSettingsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceHostSettingsResult"/>. </summary>
         /// <param name="oAuthUri"> For in-conversation bot user authentication. </param>
         /// <param name="toBotFromChannelOpenIdMetadataUri"> For verifying incoming tokens from the channels. </param>
         /// <param name="toBotFromChannelTokenIssuer"> For verifying incoming tokens from the channels. </param>
@@ -26,7 +29,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="toChannelFromBotOAuthScope"> For getting access token to channels from bot host. </param>
         /// <param name="validateAuthority"> Per cloud OAuth setting on whether authority is validated. </param>
         /// <param name="botOpenIdMetadata"> Same as toBotFromChannelOpenIdMetadataUrl, used by SDK &lt; v4.12. </param>
-        internal BotServiceHostSettingsResult(Uri oAuthUri, Uri toBotFromChannelOpenIdMetadataUri, string toBotFromChannelTokenIssuer, Uri toBotFromEmulatorOpenIdMetadataUri, Uri toChannelFromBotLoginUri, string toChannelFromBotOAuthScope, bool? validateAuthority, string botOpenIdMetadata)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotServiceHostSettingsResult(Uri oAuthUri, Uri toBotFromChannelOpenIdMetadataUri, string toBotFromChannelTokenIssuer, Uri toBotFromEmulatorOpenIdMetadataUri, Uri toChannelFromBotLoginUri, string toChannelFromBotOAuthScope, bool? validateAuthority, string botOpenIdMetadata, Dictionary<string, BinaryData> rawData)
         {
             OAuthUri = oAuthUri;
             ToBotFromChannelOpenIdMetadataUri = toBotFromChannelOpenIdMetadataUri;
@@ -36,6 +40,7 @@ namespace Azure.ResourceManager.BotService.Models
             ToChannelFromBotOAuthScope = toChannelFromBotOAuthScope;
             ValidateAuthority = validateAuthority;
             BotOpenIdMetadata = botOpenIdMetadata;
+            _rawData = rawData;
         }
 
         /// <summary> For in-conversation bot user authentication. </summary>

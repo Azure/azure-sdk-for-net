@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Action status. </summary>
     internal partial class ServiceAlertActionStatus
     {
-        /// <summary> Initializes a new instance of ServiceAlertActionStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertActionStatus"/>. </summary>
         public ServiceAlertActionStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertActionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertActionStatus"/>. </summary>
         /// <param name="isSuppressed"> Value indicating whether alert is suppressed. </param>
-        internal ServiceAlertActionStatus(bool? isSuppressed)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertActionStatus(bool? isSuppressed, Dictionary<string, BinaryData> rawData)
         {
             IsSuppressed = isSuppressed;
+            _rawData = rawData;
         }
 
         /// <summary> Value indicating whether alert is suppressed. </summary>

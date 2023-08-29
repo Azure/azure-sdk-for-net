@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
 
@@ -14,7 +15,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for answering the call. </summary>
     internal partial class AnswerCallRequestInternal
     {
-        /// <summary> Initializes a new instance of AnswerCallRequestInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUri"/> is null. </exception>
@@ -25,6 +28,30 @@ namespace Azure.Communication.CallAutomation
 
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
+        /// <param name="incomingCallContext"> The context associated with the call. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        /// <param name="azureCognitiveServicesEndpointUrl"> The endpoint URL of the Azure Cognitive Services resource attached. </param>
+        /// <param name="answeredByIdentifier"> The identifier of the call automation entity which answers the call. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, string azureCognitiveServicesEndpointUrl, CommunicationUserIdentifierModel answeredByIdentifier, Dictionary<string, BinaryData> rawData)
+        {
+            IncomingCallContext = incomingCallContext;
+            CallbackUri = callbackUri;
+            OperationContext = operationContext;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
+            AzureCognitiveServicesEndpointUrl = azureCognitiveServicesEndpointUrl;
+            AnsweredByIdentifier = answeredByIdentifier;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/> for deserialization. </summary>
+        internal AnswerCallRequestInternal()
+        {
         }
 
         /// <summary> The context associated with the call. </summary>

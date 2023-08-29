@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class PipelineDiagnosticSettings : IUtf8JsonSerializable
+    public partial class PipelineDiagnosticSettings : IUtf8JsonSerializable, IModelJsonSerializable<PipelineDiagnosticSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PipelineDiagnosticSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PipelineDiagnosticSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Request))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PipelineDiagnosticSettings DeserializePipelineDiagnosticSettings(JsonElement element)
+        internal static PipelineDiagnosticSettings DeserializePipelineDiagnosticSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<HttpMessageDiagnostic> request = default;
             Optional<HttpMessageDiagnostic> response = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("request"u8))
@@ -56,8 +79,57 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     response = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PipelineDiagnosticSettings(request.Value, response.Value);
+            return new PipelineDiagnosticSettings(request.Value, response.Value, rawData);
+        }
+
+        PipelineDiagnosticSettings IModelJsonSerializable<PipelineDiagnosticSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineDiagnosticSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PipelineDiagnosticSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PipelineDiagnosticSettings IModelSerializable<PipelineDiagnosticSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePipelineDiagnosticSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PipelineDiagnosticSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PipelineDiagnosticSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePipelineDiagnosticSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

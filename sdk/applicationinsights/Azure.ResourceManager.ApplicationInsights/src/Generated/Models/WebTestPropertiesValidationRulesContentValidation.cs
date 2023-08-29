@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> The collection of content validation properties. </summary>
     public partial class WebTestPropertiesValidationRulesContentValidation
     {
-        /// <summary> Initializes a new instance of WebTestPropertiesValidationRulesContentValidation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesValidationRulesContentValidation"/>. </summary>
         public WebTestPropertiesValidationRulesContentValidation()
         {
         }
 
-        /// <summary> Initializes a new instance of WebTestPropertiesValidationRulesContentValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesValidationRulesContentValidation"/>. </summary>
         /// <param name="contentMatch"> Content to look for in the return of the WebTest.  Must not be null or empty. </param>
         /// <param name="ignoreCase"> When set, this value makes the ContentMatch validation case insensitive. </param>
         /// <param name="passIfTextFound"> When true, validation will pass if there is a match for the ContentMatch string.  If false, validation will fail if there is a match. </param>
-        internal WebTestPropertiesValidationRulesContentValidation(string contentMatch, bool? ignoreCase, bool? passIfTextFound)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebTestPropertiesValidationRulesContentValidation(string contentMatch, bool? ignoreCase, bool? passIfTextFound, Dictionary<string, BinaryData> rawData)
         {
             ContentMatch = contentMatch;
             IgnoreCase = ignoreCase;
             PassIfTextFound = passIfTextFound;
+            _rawData = rawData;
         }
 
         /// <summary> Content to look for in the return of the WebTest.  Must not be null or empty. </summary>

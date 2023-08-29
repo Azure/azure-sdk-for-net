@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<AutomanageConfigurationProfileVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileVersionResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "AutomanageConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new AutomanageConfigurationProfileVersionResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "AutomanageConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<AutomanageConfigurationProfileVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileVersionResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "AutomanageConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new AutomanageConfigurationProfileVersionResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "AutomanageConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -2594,7 +2594,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestRestClient.CreateListByComponentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webTestRestClient.CreateListByComponentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebTestResource(Client, WebTestData.DeserializeWebTestData(e)), _webTestClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTests", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WebTestResource(Client, WebTestData.DeserializeWebTestData(e)), _webTestClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTests", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2616,7 +2616,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestRestClient.CreateListByComponentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webTestRestClient.CreateListByComponentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebTestResource(Client, WebTestData.DeserializeWebTestData(e)), _webTestClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTests", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WebTestResource(Client, WebTestData.DeserializeWebTestData(e)), _webTestClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTests", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

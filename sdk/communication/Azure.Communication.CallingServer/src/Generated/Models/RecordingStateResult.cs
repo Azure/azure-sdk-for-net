@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The RecordingStateResponse. </summary>
     public partial class RecordingStateResult
     {
-        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecordingStateResult"/>. </summary>
         internal RecordingStateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordingStateResult"/>. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
-        internal RecordingStateResult(string recordingId, RecordingState? recordingState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecordingStateResult(string recordingId, RecordingState? recordingState, Dictionary<string, BinaryData> rawData)
         {
             RecordingId = recordingId;
             RecordingState = recordingState;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the recording id. </summary>

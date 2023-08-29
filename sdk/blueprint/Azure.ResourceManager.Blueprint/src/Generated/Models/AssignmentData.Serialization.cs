@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Blueprint.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint
 {
-    public partial class AssignmentData : IUtf8JsonSerializable
+    public partial class AssignmentData : IUtf8JsonSerializable, IModelJsonSerializable<AssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AssignmentData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AssignmentData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
             writer.WriteObjectValue(Identity);
@@ -66,11 +73,25 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WriteObjectValue(Locks);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AssignmentData DeserializeAssignmentData(JsonElement element)
+        internal static AssignmentData DeserializeAssignmentData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,6 +111,7 @@ namespace Azure.ResourceManager.Blueprint
             Optional<AssignmentStatus> status = default;
             Optional<AssignmentLockSettings> locks = default;
             Optional<AssignmentProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -205,8 +227,57 @@ namespace Azure.ResourceManager.Blueprint
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AssignmentData(id, name, type, systemData.Value, identity, displayName.Value, description.Value, blueprintId.Value, scope.Value, parameters, resourceGroups, status.Value, locks.Value, Optional.ToNullable(provisioningState), location);
+            return new AssignmentData(id, name, type, systemData.Value, identity, displayName.Value, description.Value, blueprintId.Value, scope.Value, parameters, resourceGroups, status.Value, locks.Value, Optional.ToNullable(provisioningState), location, rawData);
+        }
+
+        AssignmentData IModelJsonSerializable<AssignmentData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssignmentData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AssignmentData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AssignmentData IModelSerializable<AssignmentData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAssignmentData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AssignmentData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AssignmentData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAssignmentData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

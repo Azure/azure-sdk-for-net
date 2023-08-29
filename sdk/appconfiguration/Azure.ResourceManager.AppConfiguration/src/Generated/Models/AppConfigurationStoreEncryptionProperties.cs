@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The encryption settings for a configuration store. </summary>
     internal partial class AppConfigurationStoreEncryptionProperties
     {
-        /// <summary> Initializes a new instance of AppConfigurationStoreEncryptionProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreEncryptionProperties"/>. </summary>
         public AppConfigurationStoreEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationStoreEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreEncryptionProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Key vault properties. </param>
-        internal AppConfigurationStoreEncryptionProperties(AppConfigurationKeyVaultProperties keyVaultProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationStoreEncryptionProperties(AppConfigurationKeyVaultProperties keyVaultProperties, Dictionary<string, BinaryData> rawData)
         {
             KeyVaultProperties = keyVaultProperties;
+            _rawData = rawData;
         }
 
         /// <summary> Key vault properties. </summary>

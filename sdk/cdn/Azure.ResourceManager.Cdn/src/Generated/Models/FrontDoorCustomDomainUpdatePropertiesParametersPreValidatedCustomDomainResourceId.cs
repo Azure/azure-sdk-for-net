@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -12,16 +14,20 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
     internal partial class FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
     {
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId"/>. </summary>
         public FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        internal FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(ResourceIdentifier id)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(ResourceIdentifier id, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
+            _rawData = rawData;
         }
 
         /// <summary> Resource ID. </summary>

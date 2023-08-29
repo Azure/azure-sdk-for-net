@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Subnet configuration for segment. </summary>
     public partial class WorkloadNetworkSegmentSubnet
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentSubnet. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentSubnet"/>. </summary>
         public WorkloadNetworkSegmentSubnet()
         {
             DhcpRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentSubnet"/>. </summary>
         /// <param name="dhcpRanges"> DHCP Range assigned for subnet. </param>
         /// <param name="gatewayAddress"> Gateway address. </param>
-        internal WorkloadNetworkSegmentSubnet(IList<string> dhcpRanges, string gatewayAddress)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkSegmentSubnet(IList<string> dhcpRanges, string gatewayAddress, Dictionary<string, BinaryData> rawData)
         {
             DhcpRanges = dhcpRanges;
             GatewayAddress = gatewayAddress;
+            _rawData = rawData;
         }
 
         /// <summary> DHCP Range assigned for subnet. </summary>

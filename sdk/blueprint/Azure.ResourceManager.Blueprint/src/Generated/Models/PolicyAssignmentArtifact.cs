@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Blueprint artifact that applies a Policy assignment. </summary>
     public partial class PolicyAssignmentArtifact : ArtifactData
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentArtifact"/>. </summary>
         /// <param name="policyDefinitionId"> Azure resource ID of the policy definition. </param>
         /// <param name="parameters"> Parameter values for the policy definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionId"/> or <paramref name="parameters"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Kind = ArtifactKind.PolicyAssignment;
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentArtifact"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <param name="policyDefinitionId"> Azure resource ID of the policy definition. </param>
         /// <param name="parameters"> Parameter values for the policy definition. </param>
         /// <param name="resourceGroup"> Name of the resource group placeholder to which the policy will be assigned. </param>
-        internal PolicyAssignmentArtifact(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArtifactKind kind, string displayName, string description, IList<string> dependsOn, string policyDefinitionId, IDictionary<string, ParameterValue> parameters, string resourceGroup) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyAssignmentArtifact(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArtifactKind kind, string displayName, string description, IList<string> dependsOn, string policyDefinitionId, IDictionary<string, ParameterValue> parameters, string resourceGroup, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -52,6 +53,11 @@ namespace Azure.ResourceManager.Blueprint.Models
             Parameters = parameters;
             ResourceGroup = resourceGroup;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentArtifact"/> for deserialization. </summary>
+        internal PolicyAssignmentArtifact()
+        {
         }
 
         /// <summary> One-liner string explain this resource. </summary>

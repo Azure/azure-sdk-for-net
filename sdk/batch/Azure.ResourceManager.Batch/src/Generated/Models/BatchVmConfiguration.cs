@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
     public partial class BatchVmConfiguration
     {
-        /// <summary> Initializes a new instance of BatchVmConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchVmConfiguration"/>. </summary>
         /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </param>
         /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the 'List supported node agent SKUs' operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/> or <paramref name="nodeAgentSkuId"/> is null. </exception>
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
             Extensions = new ChangeTrackingList<BatchVmExtension>();
         }
 
-        /// <summary> Initializes a new instance of BatchVmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmConfiguration"/>. </summary>
         /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </param>
         /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the 'List supported node agent SKUs' operation. </param>
         /// <param name="windowsConfiguration"> This property must not be specified if the imageReference specifies a Linux OS image. </param>
@@ -46,7 +48,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="nodePlacementConfiguration"> This configuration will specify rules on how nodes in the pool will be physically allocated. </param>
         /// <param name="extensions"> If specified, the extensions mentioned in this configuration will be installed on each node. </param>
         /// <param name="osDisk"> Contains configuration for ephemeral OSDisk settings. </param>
-        internal BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<BatchVmExtension> extensions, OSDisk osDisk)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<BatchVmExtension> extensions, OSDisk osDisk, Dictionary<string, BinaryData> rawData)
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -58,6 +61,12 @@ namespace Azure.ResourceManager.Batch.Models
             NodePlacementConfiguration = nodePlacementConfiguration;
             Extensions = extensions;
             OSDisk = osDisk;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchVmConfiguration"/> for deserialization. </summary>
+        internal BatchVmConfiguration()
+        {
         }
 
         /// <summary> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </summary>

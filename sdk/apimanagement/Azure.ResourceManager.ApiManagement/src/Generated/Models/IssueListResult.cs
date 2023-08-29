@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,21 +15,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Issue list representation. </summary>
     internal partial class IssueListResult
     {
-        /// <summary> Initializes a new instance of IssueListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IssueListResult"/>. </summary>
         internal IssueListResult()
         {
             Value = new ChangeTrackingList<IssueContractData>();
         }
 
-        /// <summary> Initializes a new instance of IssueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueListResult"/>. </summary>
         /// <param name="value"> Issue values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal IssueListResult(IReadOnlyList<IssueContractData> value, long? count, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IssueListResult(IReadOnlyList<IssueContractData> value, long? count, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Issue values. </summary>

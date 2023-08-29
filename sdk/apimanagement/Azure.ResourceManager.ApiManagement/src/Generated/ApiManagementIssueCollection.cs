@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementIssueIssueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementIssueIssueRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementIssueResource(Client, IssueContractData.DeserializeIssueContractData(e)), _apiManagementIssueIssueClientDiagnostics, Pipeline, "ApiManagementIssueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementIssueResource(Client, IssueContractData.DeserializeIssueContractData(e)), _apiManagementIssueIssueClientDiagnostics, Pipeline, "ApiManagementIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementIssueIssueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementIssueIssueRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementIssueResource(Client, IssueContractData.DeserializeIssueContractData(e)), _apiManagementIssueIssueClientDiagnostics, Pipeline, "ApiManagementIssueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementIssueResource(Client, IssueContractData.DeserializeIssueContractData(e)), _apiManagementIssueIssueClientDiagnostics, Pipeline, "ApiManagementIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

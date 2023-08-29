@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Collection compose of storage resources list and a possible link for next page. </summary>
     internal partial class StorageResourceList
     {
-        /// <summary> Initializes a new instance of StorageResourceList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageResourceList"/>. </summary>
         internal StorageResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformStorageData>();
         }
 
-        /// <summary> Initializes a new instance of StorageResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageResourceList"/>. </summary>
         /// <param name="value"> The storage resources list. </param>
         /// <param name="nextLink"> The link to next page of storage list. </param>
-        internal StorageResourceList(IReadOnlyList<AppPlatformStorageData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageResourceList(IReadOnlyList<AppPlatformStorageData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The storage resources list. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
@@ -25,16 +28,20 @@ namespace Azure.ResourceManager.Cdn.Models
     /// </summary>
     public partial class CdnSku
     {
-        /// <summary> Initializes a new instance of CdnSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CdnSku"/>. </summary>
         public CdnSku()
         {
         }
 
-        /// <summary> Initializes a new instance of CdnSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnSku"/>. </summary>
         /// <param name="name"> Name of the pricing tier. </param>
-        internal CdnSku(CdnSkuName? name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnSku(CdnSkuName? name, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the pricing tier. </summary>

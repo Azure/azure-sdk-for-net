@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class PlaySourceInternal : IUtf8JsonSerializable
+    internal partial class PlaySourceInternal : IUtf8JsonSerializable, IModelJsonSerializable<PlaySourceInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PlaySourceInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PlaySourceInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType.ToString());
@@ -37,7 +45,125 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("ssmlSource"u8);
                 writer.WriteObjectValue(SsmlSource);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PlaySourceInternal DeserializePlaySourceInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            PlaySourceTypeInternal sourceType = default;
+            Optional<string> playSourceId = default;
+            Optional<FileSourceInternal> fileSource = default;
+            Optional<TextSourceInternal> textSource = default;
+            Optional<SsmlSourceInternal> ssmlSource = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sourceType"u8))
+                {
+                    sourceType = new PlaySourceTypeInternal(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("playSourceId"u8))
+                {
+                    playSourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fileSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileSource = FileSourceInternal.DeserializeFileSourceInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("textSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    textSource = TextSourceInternal.DeserializeTextSourceInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("ssmlSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ssmlSource = SsmlSourceInternal.DeserializeSsmlSourceInternal(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PlaySourceInternal(sourceType, playSourceId.Value, fileSource.Value, textSource.Value, ssmlSource.Value, rawData);
+        }
+
+        PlaySourceInternal IModelJsonSerializable<PlaySourceInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePlaySourceInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PlaySourceInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PlaySourceInternal IModelSerializable<PlaySourceInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePlaySourceInternal(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PlaySourceInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PlaySourceInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePlaySourceInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

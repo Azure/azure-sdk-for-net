@@ -5,16 +5,78 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountThrottlingRule
+    public partial class ServiceAccountThrottlingRule : IUtf8JsonSerializable, IModelJsonSerializable<ServiceAccountThrottlingRule>
     {
-        internal static ServiceAccountThrottlingRule DeserializeServiceAccountThrottlingRule(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceAccountThrottlingRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceAccountThrottlingRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Key))
+            {
+                writer.WritePropertyName("key"u8);
+                writer.WriteStringValue(Key);
+            }
+            if (Optional.IsDefined(RenewalPeriod))
+            {
+                writer.WritePropertyName("renewalPeriod"u8);
+                writer.WriteNumberValue(RenewalPeriod.Value);
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(MinCount))
+            {
+                writer.WritePropertyName("minCount"u8);
+                writer.WriteNumberValue(MinCount.Value);
+            }
+            if (Optional.IsDefined(IsDynamicThrottlingEnabled))
+            {
+                writer.WritePropertyName("dynamicThrottlingEnabled"u8);
+                writer.WriteBooleanValue(IsDynamicThrottlingEnabled.Value);
+            }
+            if (Optional.IsCollectionDefined(MatchPatterns))
+            {
+                writer.WritePropertyName("matchPatterns"u8);
+                writer.WriteStartArray();
+                foreach (var item in MatchPatterns)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServiceAccountThrottlingRule DeserializeServiceAccountThrottlingRule(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<float> minCount = default;
             Optional<bool> dynamicThrottlingEnabled = default;
             Optional<IReadOnlyList<ServiceAccountThrottlingMatchPattern>> matchPatterns = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -82,8 +145,57 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     matchPatterns = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceAccountThrottlingRule(key.Value, Optional.ToNullable(renewalPeriod), Optional.ToNullable(count), Optional.ToNullable(minCount), Optional.ToNullable(dynamicThrottlingEnabled), Optional.ToList(matchPatterns));
+            return new ServiceAccountThrottlingRule(key.Value, Optional.ToNullable(renewalPeriod), Optional.ToNullable(count), Optional.ToNullable(minCount), Optional.ToNullable(dynamicThrottlingEnabled), Optional.ToList(matchPatterns), rawData);
+        }
+
+        ServiceAccountThrottlingRule IModelJsonSerializable<ServiceAccountThrottlingRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAccountThrottlingRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceAccountThrottlingRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceAccountThrottlingRule IModelSerializable<ServiceAccountThrottlingRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceAccountThrottlingRule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServiceAccountThrottlingRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServiceAccountThrottlingRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceAccountThrottlingRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

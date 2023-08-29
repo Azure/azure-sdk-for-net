@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class ScriptExecutionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScriptExecutionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionData"/>. </summary>
         public ScriptExecutionData()
         {
             Parameters = new ChangeTrackingList<ScriptExecutionParameterDetails>();
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Avs
             Errors = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ScriptExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,7 +60,8 @@ namespace Azure.ResourceManager.Avs
         /// <param name="information"> Standard information out stream from the powershell execution. </param>
         /// <param name="warnings"> Standard warning out stream from the powershell execution. </param>
         /// <param name="errors"> Standard error output stream from the powershell execution. </param>
-        internal ScriptExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier scriptCmdletId, IList<ScriptExecutionParameterDetails> parameters, IList<ScriptExecutionParameterDetails> hiddenParameters, string failureReason, string timeout, string retention, DateTimeOffset? submittedOn, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, ScriptExecutionProvisioningState? provisioningState, IList<string> output, BinaryData namedOutputs, IReadOnlyList<string> information, IReadOnlyList<string> warnings, IReadOnlyList<string> errors) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier scriptCmdletId, IList<ScriptExecutionParameterDetails> parameters, IList<ScriptExecutionParameterDetails> hiddenParameters, string failureReason, string timeout, string retention, DateTimeOffset? submittedOn, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, ScriptExecutionProvisioningState? provisioningState, IList<string> output, BinaryData namedOutputs, IReadOnlyList<string> information, IReadOnlyList<string> warnings, IReadOnlyList<string> errors, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ScriptCmdletId = scriptCmdletId;
             Parameters = parameters;
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.Avs
             Information = information;
             Warnings = warnings;
             Errors = errors;
+            _rawData = rawData;
         }
 
         /// <summary> A reference to the script cmdlet resource if user is running a AVS script. </summary>

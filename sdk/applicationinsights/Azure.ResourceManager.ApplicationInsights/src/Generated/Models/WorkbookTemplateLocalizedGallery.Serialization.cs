@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WorkbookTemplateLocalizedGallery : IUtf8JsonSerializable
+    public partial class WorkbookTemplateLocalizedGallery : IUtf8JsonSerializable, IModelJsonSerializable<WorkbookTemplateLocalizedGallery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkbookTemplateLocalizedGallery>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkbookTemplateLocalizedGallery>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TemplateData))
             {
@@ -36,17 +42,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkbookTemplateLocalizedGallery DeserializeWorkbookTemplateLocalizedGallery(JsonElement element)
+        internal static WorkbookTemplateLocalizedGallery DeserializeWorkbookTemplateLocalizedGallery(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<BinaryData> templateData = default;
             Optional<IList<WorkbookTemplateGallery>> galleries = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateData"u8))
@@ -72,8 +93,57 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     galleries = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkbookTemplateLocalizedGallery(templateData.Value, Optional.ToList(galleries));
+            return new WorkbookTemplateLocalizedGallery(templateData.Value, Optional.ToList(galleries), rawData);
+        }
+
+        WorkbookTemplateLocalizedGallery IModelJsonSerializable<WorkbookTemplateLocalizedGallery>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkbookTemplateLocalizedGallery(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkbookTemplateLocalizedGallery>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkbookTemplateLocalizedGallery IModelSerializable<WorkbookTemplateLocalizedGallery>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkbookTemplateLocalizedGallery(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkbookTemplateLocalizedGallery model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkbookTemplateLocalizedGallery(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkbookTemplateLocalizedGallery(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

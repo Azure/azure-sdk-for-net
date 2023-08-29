@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class CognitiveServicesPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateLinkResourceListResult"/>. </summary>
         internal CognitiveServicesPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal CognitiveServicesPrivateLinkResourceListResult(IReadOnlyList<CognitiveServicesPrivateLinkResource> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesPrivateLinkResourceListResult(IReadOnlyList<CognitiveServicesPrivateLinkResource> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private link resources. </summary>

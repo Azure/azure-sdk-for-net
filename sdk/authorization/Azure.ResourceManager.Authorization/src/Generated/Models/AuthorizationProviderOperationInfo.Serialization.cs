@@ -6,15 +6,83 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class AuthorizationProviderOperationInfo
+    public partial class AuthorizationProviderOperationInfo : IUtf8JsonSerializable, IModelJsonSerializable<AuthorizationProviderOperationInfo>
     {
-        internal static AuthorizationProviderOperationInfo DeserializeAuthorizationProviderOperationInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AuthorizationProviderOperationInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AuthorizationProviderOperationInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Origin))
+            {
+                writer.WritePropertyName("origin"u8);
+                writer.WriteStringValue(Origin);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
+#endif
+                }
+                else
+                {
+                    writer.WriteNull("properties");
+                }
+            }
+            if (Optional.IsDefined(IsDataAction))
+            {
+                writer.WritePropertyName("isDataAction"u8);
+                writer.WriteBooleanValue(IsDataAction.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AuthorizationProviderOperationInfo DeserializeAuthorizationProviderOperationInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +93,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<string> origin = default;
             Optional<BinaryData> properties = default;
             Optional<bool> isDataAction = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -66,8 +135,57 @@ namespace Azure.ResourceManager.Authorization.Models
                     isDataAction = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AuthorizationProviderOperationInfo(name.Value, displayName.Value, description.Value, origin.Value, properties.Value, Optional.ToNullable(isDataAction));
+            return new AuthorizationProviderOperationInfo(name.Value, displayName.Value, description.Value, origin.Value, properties.Value, Optional.ToNullable(isDataAction), rawData);
+        }
+
+        AuthorizationProviderOperationInfo IModelJsonSerializable<AuthorizationProviderOperationInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthorizationProviderOperationInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AuthorizationProviderOperationInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AuthorizationProviderOperationInfo IModelSerializable<AuthorizationProviderOperationInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAuthorizationProviderOperationInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AuthorizationProviderOperationInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AuthorizationProviderOperationInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAuthorizationProviderOperationInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

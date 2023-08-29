@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Cognitive Services Model. </summary>
     public partial class CognitiveServicesModel
     {
-        /// <summary> Initializes a new instance of CognitiveServicesModel. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesModel"/>. </summary>
         internal CognitiveServicesModel()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesModel"/>. </summary>
         /// <param name="model"> Model Metadata. </param>
         /// <param name="kind"> The Kind of the Model. </param>
         /// <param name="skuName"> The SKU of the Model. </param>
-        internal CognitiveServicesModel(CognitiveServicesAccountModel model, string kind, string skuName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesModel(CognitiveServicesAccountModel model, string kind, string skuName, Dictionary<string, BinaryData> rawData)
         {
             Model = model;
             Kind = kind;
             SkuName = skuName;
+            _rawData = rawData;
         }
 
         /// <summary> Model Metadata. </summary>
