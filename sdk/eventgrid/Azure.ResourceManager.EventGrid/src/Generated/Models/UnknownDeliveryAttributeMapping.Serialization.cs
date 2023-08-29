@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownDeliveryAttributeMapping : IUtf8JsonSerializable
+    internal partial class UnknownDeliveryAttributeMapping : IUtf8JsonSerializable, IModelJsonSerializable<DeliveryAttributeMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeliveryAttributeMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeliveryAttributeMapping>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -22,31 +28,44 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MappingType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownDeliveryAttributeMapping DeserializeUnknownDeliveryAttributeMapping(JsonElement element)
+        internal static DeliveryAttributeMapping DeserializeUnknownDeliveryAttributeMapping(JsonElement element, ModelSerializerOptions options = default) => DeserializeDeliveryAttributeMapping(element, options);
+
+        DeliveryAttributeMapping IModelJsonSerializable<DeliveryAttributeMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> name = default;
-            DeliveryAttributeMappingType type = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new DeliveryAttributeMappingType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDeliveryAttributeMapping(name.Value, type);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDeliveryAttributeMapping(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeliveryAttributeMapping>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeliveryAttributeMapping IModelSerializable<DeliveryAttributeMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeliveryAttributeMapping(doc.RootElement, options);
         }
     }
 }

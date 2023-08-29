@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> User telemetry. </summary>
     internal partial class TrinoUserTelemetry
     {
-        /// <summary> Initializes a new instance of TrinoUserTelemetry. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrinoUserTelemetry"/>. </summary>
         public TrinoUserTelemetry()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoUserTelemetry. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoUserTelemetry"/>. </summary>
         /// <param name="storage"> Trino user telemetry definition. </param>
-        internal TrinoUserTelemetry(TrinoTelemetryConfig storage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrinoUserTelemetry(TrinoTelemetryConfig storage, Dictionary<string, BinaryData> rawData)
         {
             Storage = storage;
+            _rawData = rawData;
         }
 
         /// <summary> Trino user telemetry definition. </summary>

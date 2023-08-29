@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> User info. </summary>
     public partial class DynatraceMonitorUserInfo
     {
-        /// <summary> Initializes a new instance of DynatraceMonitorUserInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorUserInfo"/>. </summary>
         public DynatraceMonitorUserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceMonitorUserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorUserInfo"/>. </summary>
         /// <param name="firstName"> First Name of the user. </param>
         /// <param name="lastName"> Last Name of the user. </param>
         /// <param name="emailAddress"> Email of the user used by Dynatrace for contacting them if needed. </param>
         /// <param name="phoneNumber"> Phone number of the user used by Dynatrace for contacting them if needed. </param>
         /// <param name="country"> Country of the user. </param>
-        internal DynatraceMonitorUserInfo(string firstName, string lastName, string emailAddress, string phoneNumber, string country)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceMonitorUserInfo(string firstName, string lastName, string emailAddress, string phoneNumber, string country, Dictionary<string, BinaryData> rawData)
         {
             FirstName = firstName;
             LastName = lastName;
             EmailAddress = emailAddress;
             PhoneNumber = phoneNumber;
             Country = country;
+            _rawData = rawData;
         }
 
         /// <summary> First Name of the user. </summary>

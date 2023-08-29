@@ -5,20 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    public partial class DnsForwardingRulesetVirtualNetworkLinkData : IUtf8JsonSerializable
+    public partial class DnsForwardingRulesetVirtualNetworkLinkData : IUtf8JsonSerializable, IModelJsonSerializable<DnsForwardingRulesetVirtualNetworkLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DnsForwardingRulesetVirtualNetworkLinkData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DnsForwardingRulesetVirtualNetworkLinkData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -35,11 +41,25 @@ namespace Azure.ResourceManager.DnsResolver
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DnsForwardingRulesetVirtualNetworkLinkData DeserializeDnsForwardingRulesetVirtualNetworkLinkData(JsonElement element)
+        internal static DnsForwardingRulesetVirtualNetworkLinkData DeserializeDnsForwardingRulesetVirtualNetworkLinkData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +72,7 @@ namespace Azure.ResourceManager.DnsResolver
             WritableSubResource virtualNetwork = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<DnsResolverProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -127,8 +148,57 @@ namespace Azure.ResourceManager.DnsResolver
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
+            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        DnsForwardingRulesetVirtualNetworkLinkData IModelJsonSerializable<DnsForwardingRulesetVirtualNetworkLinkData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsForwardingRulesetVirtualNetworkLinkData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DnsForwardingRulesetVirtualNetworkLinkData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DnsForwardingRulesetVirtualNetworkLinkData IModelSerializable<DnsForwardingRulesetVirtualNetworkLinkData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDnsForwardingRulesetVirtualNetworkLinkData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DnsForwardingRulesetVirtualNetworkLinkData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DnsForwardingRulesetVirtualNetworkLinkData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDnsForwardingRulesetVirtualNetworkLinkData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

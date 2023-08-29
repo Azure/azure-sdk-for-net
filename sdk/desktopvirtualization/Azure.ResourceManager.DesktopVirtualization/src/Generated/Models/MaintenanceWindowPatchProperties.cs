@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Maintenance window starting hour and day of week. </summary>
     public partial class MaintenanceWindowPatchProperties
     {
-        /// <summary> Initializes a new instance of MaintenanceWindowPatchProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowPatchProperties"/>. </summary>
         public MaintenanceWindowPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowPatchProperties"/>. </summary>
         /// <param name="hour"> The update start hour of the day. (0 - 23). </param>
         /// <param name="dayOfWeek"> Day of the week. </param>
-        internal MaintenanceWindowPatchProperties(int? hour, DesktopVirtualizationDayOfWeek? dayOfWeek)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceWindowPatchProperties(int? hour, DesktopVirtualizationDayOfWeek? dayOfWeek, Dictionary<string, BinaryData> rawData)
         {
             Hour = hour;
             DayOfWeek = dayOfWeek;
+            _rawData = rawData;
         }
 
         /// <summary> The update start hour of the day. (0 - 23). </summary>

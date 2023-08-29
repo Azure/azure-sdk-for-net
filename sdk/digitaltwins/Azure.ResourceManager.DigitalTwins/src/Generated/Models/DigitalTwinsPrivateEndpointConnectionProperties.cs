@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,23 +15,27 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The properties of a private endpoint connection. </summary>
     public partial class DigitalTwinsPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPrivateEndpointConnectionProperties"/>. </summary>
         public DigitalTwinsPrivateEndpointConnectionProperties()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="privateEndpoint"> The private endpoint. </param>
         /// <param name="groupIds"> The list of group ids for the private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The connection state. </param>
-        internal DigitalTwinsPrivateEndpointConnectionProperties(DigitalTwinsPrivateLinkResourceProvisioningState? provisioningState, SubResource privateEndpoint, IList<string> groupIds, DigitalTwinsPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsPrivateEndpointConnectionProperties(DigitalTwinsPrivateLinkResourceProvisioningState? provisioningState, SubResource privateEndpoint, IList<string> groupIds, DigitalTwinsPrivateLinkServiceConnectionState privateLinkServiceConnectionState, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            _rawData = rawData;
         }
 
         /// <summary> The provisioning state. </summary>

@@ -5,14 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the Event Subscription update. </summary>
     public partial class NamespaceTopicEventSubscriptionPatch
     {
-        /// <summary> Initializes a new instance of NamespaceTopicEventSubscriptionPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionPatch"/>. </summary>
         public NamespaceTopicEventSubscriptionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionPatch"/>. </summary>
+        /// <param name="deliveryConfiguration"> Information about the delivery configuration of the event subscription. </param>
+        /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
+        /// <param name="filtersConfiguration"> Information about the filter for the event subscription. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NamespaceTopicEventSubscriptionPatch(DeliveryConfiguration deliveryConfiguration, DeliverySchema? eventDeliverySchema, FiltersConfiguration filtersConfiguration, Dictionary<string, BinaryData> rawData)
+        {
+            DeliveryConfiguration = deliveryConfiguration;
+            EventDeliverySchema = eventDeliverySchema;
+            FiltersConfiguration = filtersConfiguration;
+            _rawData = rawData;
         }
 
         /// <summary> Information about the delivery configuration of the event subscription. </summary>

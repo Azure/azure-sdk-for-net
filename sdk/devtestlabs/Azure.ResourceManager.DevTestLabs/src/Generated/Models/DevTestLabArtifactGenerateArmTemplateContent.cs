@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Parameters for generating an ARM template for deploying artifacts. </summary>
     public partial class DevTestLabArtifactGenerateArmTemplateContent
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactGenerateArmTemplateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactGenerateArmTemplateContent"/>. </summary>
         public DevTestLabArtifactGenerateArmTemplateContent()
         {
             Parameters = new ChangeTrackingList<DevTestLabParameter>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactGenerateArmTemplateContent"/>. </summary>
+        /// <param name="vmName"> The resource name of the virtual machine. </param>
+        /// <param name="parameters"> The parameters of the ARM template. </param>
+        /// <param name="location"> The location of the virtual machine. </param>
+        /// <param name="fileUploadOptions"> Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabArtifactGenerateArmTemplateContent(string vmName, IList<DevTestLabParameter> parameters, AzureLocation? location, DevTestLabFileUploadOption? fileUploadOptions, Dictionary<string, BinaryData> rawData)
+        {
+            VmName = vmName;
+            Parameters = parameters;
+            Location = location;
+            FileUploadOptions = fileUploadOptions;
+            _rawData = rawData;
         }
 
         /// <summary> The resource name of the virtual machine. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> The properties that make up the expected REST response. </summary>
     public partial class RestResponse
     {
-        /// <summary> Initializes a new instance of RestResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestResponse"/>. </summary>
         public RestResponse()
         {
             SuccessStatusCodes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RestResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestResponse"/>. </summary>
         /// <param name="successStatusCodes"> The HTTP status codes expected in a successful health check response. The response is expected to match one of the given status codes. If no expected status codes are provided, default expected status code is 200 OK. </param>
         /// <param name="regex"> The regular expressions to match the response content with. </param>
-        internal RestResponse(IList<string> successStatusCodes, RestResponseRegex regex)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestResponse(IList<string> successStatusCodes, RestResponseRegex regex, Dictionary<string, BinaryData> rawData)
         {
             SuccessStatusCodes = successStatusCodes;
             Regex = regex;
+            _rawData = rawData;
         }
 
         /// <summary> The HTTP status codes expected in a successful health check response. The response is expected to match one of the given status codes. If no expected status codes are provided, default expected status code is 200 OK. </summary>

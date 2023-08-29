@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridNamespaceClientClientsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridNamespaceClientClientsRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceClientResource(Client, EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(e)), _eventGridNamespaceClientClientsClientDiagnostics, Pipeline, "EventGridNamespaceClientCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EventGridNamespaceClientResource(Client, EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(e)), _eventGridNamespaceClientClientsClientDiagnostics, Pipeline, "EventGridNamespaceClientCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridNamespaceClientClientsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridNamespaceClientClientsRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceClientResource(Client, EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(e)), _eventGridNamespaceClientClientsClientDiagnostics, Pipeline, "EventGridNamespaceClientCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EventGridNamespaceClientResource(Client, EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(e)), _eventGridNamespaceClientClientsClientDiagnostics, Pipeline, "EventGridNamespaceClientCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

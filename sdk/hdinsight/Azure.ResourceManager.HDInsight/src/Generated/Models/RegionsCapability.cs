@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The regions capability. </summary>
     public partial class RegionsCapability
     {
-        /// <summary> Initializes a new instance of RegionsCapability. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegionsCapability"/>. </summary>
         internal RegionsCapability()
         {
             Available = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RegionsCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionsCapability"/>. </summary>
         /// <param name="available"> The list of region capabilities. </param>
-        internal RegionsCapability(IReadOnlyList<string> available)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegionsCapability(IReadOnlyList<string> available, Dictionary<string, BinaryData> rawData)
         {
             Available = available;
+            _rawData = rawData;
         }
 
         /// <summary> The list of region capabilities. </summary>

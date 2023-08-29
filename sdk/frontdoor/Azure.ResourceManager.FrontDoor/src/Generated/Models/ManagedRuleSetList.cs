@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the list of managed rule sets for the policy. </summary>
     internal partial class ManagedRuleSetList
     {
-        /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetList"/>. </summary>
         public ManagedRuleSetList()
         {
             ManagedRuleSets = new ChangeTrackingList<ManagedRuleSet>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetList"/>. </summary>
         /// <param name="managedRuleSets"> List of rule sets. </param>
-        internal ManagedRuleSetList(IList<ManagedRuleSet> managedRuleSets)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleSetList(IList<ManagedRuleSet> managedRuleSets, Dictionary<string, BinaryData> rawData)
         {
             ManagedRuleSets = managedRuleSets;
+            _rawData = rawData;
         }
 
         /// <summary> List of rule sets. </summary>

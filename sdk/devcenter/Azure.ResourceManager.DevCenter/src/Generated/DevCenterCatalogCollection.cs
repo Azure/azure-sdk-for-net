@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterCatalogCatalogsRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterCatalogCatalogsRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterCatalogResource(Client, DevCenterCatalogData.DeserializeDevCenterCatalogData(e)), _devCenterCatalogCatalogsClientDiagnostics, Pipeline, "DevCenterCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterCatalogResource(Client, DevCenterCatalogData.DeserializeDevCenterCatalogData(e)), _devCenterCatalogCatalogsClientDiagnostics, Pipeline, "DevCenterCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterCatalogCatalogsRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterCatalogCatalogsRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterCatalogResource(Client, DevCenterCatalogData.DeserializeDevCenterCatalogData(e)), _devCenterCatalogCatalogsClientDiagnostics, Pipeline, "DevCenterCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterCatalogResource(Client, DevCenterCatalogData.DeserializeDevCenterCatalogData(e)), _devCenterCatalogCatalogsClientDiagnostics, Pipeline, "DevCenterCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

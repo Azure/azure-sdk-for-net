@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class UpdateTopicSpacesConfigurationInfo : IUtf8JsonSerializable
+    public partial class UpdateTopicSpacesConfigurationInfo : IUtf8JsonSerializable, IModelJsonSerializable<UpdateTopicSpacesConfigurationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UpdateTopicSpacesConfigurationInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UpdateTopicSpacesConfigurationInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
@@ -50,7 +58,149 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("routingIdentityInfo"u8);
                 writer.WriteObjectValue(RoutingIdentityInfo);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static UpdateTopicSpacesConfigurationInfo DeserializeUpdateTopicSpacesConfigurationInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<TopicSpacesConfigurationState> state = default;
+            Optional<string> routeTopicResourceId = default;
+            Optional<RoutingEnrichments> routingEnrichments = default;
+            Optional<ClientAuthenticationSettings> clientAuthentication = default;
+            Optional<int> maximumSessionExpiryInHours = default;
+            Optional<int> maximumClientSessionsPerAuthenticationName = default;
+            Optional<RoutingIdentityInfo> routingIdentityInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new TopicSpacesConfigurationState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("routeTopicResourceId"u8))
+                {
+                    routeTopicResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("routingEnrichments"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("clientAuthentication"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientAuthentication = ClientAuthenticationSettings.DeserializeClientAuthenticationSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("maximumSessionExpiryInHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maximumSessionExpiryInHours = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maximumClientSessionsPerAuthenticationName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maximumClientSessionsPerAuthenticationName = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("routingIdentityInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    routingIdentityInfo = RoutingIdentityInfo.DeserializeRoutingIdentityInfo(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UpdateTopicSpacesConfigurationInfo(Optional.ToNullable(state), routeTopicResourceId.Value, routingEnrichments.Value, clientAuthentication.Value, Optional.ToNullable(maximumSessionExpiryInHours), Optional.ToNullable(maximumClientSessionsPerAuthenticationName), routingIdentityInfo.Value, rawData);
+        }
+
+        UpdateTopicSpacesConfigurationInfo IModelJsonSerializable<UpdateTopicSpacesConfigurationInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateTopicSpacesConfigurationInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UpdateTopicSpacesConfigurationInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UpdateTopicSpacesConfigurationInfo IModelSerializable<UpdateTopicSpacesConfigurationInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUpdateTopicSpacesConfigurationInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(UpdateTopicSpacesConfigurationInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator UpdateTopicSpacesConfigurationInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUpdateTopicSpacesConfigurationInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Encoder connection rejected event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventConnectionRejected event. </summary>
     public partial class MediaLiveEventConnectionRejectedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventConnectionRejectedEventData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventConnectionRejectedEventData"/>. </summary>
         internal MediaLiveEventConnectionRejectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventConnectionRejectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventConnectionRejectedEventData"/>. </summary>
         /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
         /// <param name="streamId"> Gets the stream Id. </param>
         /// <param name="encoderIp"> Gets the remote IP. </param>
         /// <param name="encoderPort"> Gets the remote port. </param>
         /// <param name="resultCode"> Gets the result code. </param>
-        internal MediaLiveEventConnectionRejectedEventData(string ingestUrl, string streamId, string encoderIp, string encoderPort, string resultCode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventConnectionRejectedEventData(string ingestUrl, string streamId, string encoderIp, string encoderPort, string resultCode, Dictionary<string, BinaryData> rawData)
         {
             IngestUrl = ingestUrl;
             StreamId = streamId;
             EncoderIp = encoderIp;
             EncoderPort = encoderPort;
             ResultCode = resultCode;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the ingest URL provided by the live event. </summary>

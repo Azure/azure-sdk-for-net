@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsMXRecordInfo : IUtf8JsonSerializable
+    public partial class DnsMXRecordInfo : IUtf8JsonSerializable, IModelJsonSerializable<DnsMXRecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DnsMXRecordInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DnsMXRecordInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Preference))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteStringValue(Exchange);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DnsMXRecordInfo DeserializeDnsMXRecordInfo(JsonElement element)
+        internal static DnsMXRecordInfo DeserializeDnsMXRecordInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> preference = default;
             Optional<string> exchange = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preference"u8))
@@ -52,8 +75,57 @@ namespace Azure.ResourceManager.Dns.Models
                     exchange = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DnsMXRecordInfo(Optional.ToNullable(preference), exchange.Value);
+            return new DnsMXRecordInfo(Optional.ToNullable(preference), exchange.Value, rawData);
+        }
+
+        DnsMXRecordInfo IModelJsonSerializable<DnsMXRecordInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsMXRecordInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DnsMXRecordInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DnsMXRecordInfo IModelSerializable<DnsMXRecordInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDnsMXRecordInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DnsMXRecordInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DnsMXRecordInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDnsMXRecordInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

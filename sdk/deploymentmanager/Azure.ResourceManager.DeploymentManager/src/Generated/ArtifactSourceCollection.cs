@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<ArtifactSourceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactSourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ArtifactSourceResource(Client, ArtifactSourceData.DeserializeArtifactSourceData(e)), _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ArtifactSourceResource(Client, ArtifactSourceData.DeserializeArtifactSourceData(e)), _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<ArtifactSourceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactSourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ArtifactSourceResource(Client, ArtifactSourceData.DeserializeArtifactSourceData(e)), _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ArtifactSourceResource(Client, ArtifactSourceData.DeserializeArtifactSourceData(e)), _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

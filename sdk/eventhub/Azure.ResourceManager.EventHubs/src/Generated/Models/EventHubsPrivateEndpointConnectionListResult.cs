@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Result of the list of all private endpoint connections operation. </summary>
     internal partial class EventHubsPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateEndpointConnectionListResult"/>. </summary>
         internal EventHubsPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> A collection of private endpoint connection resources. </param>
         /// <param name="nextLink"> A link for the next page of private endpoint connection resources. </param>
-        internal EventHubsPrivateEndpointConnectionListResult(IReadOnlyList<EventHubsPrivateEndpointConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsPrivateEndpointConnectionListResult(IReadOnlyList<EventHubsPrivateEndpointConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A collection of private endpoint connection resources. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> List of BackupVault resources. </summary>
     internal partial class BackupVaultResourceList
     {
-        /// <summary> Initializes a new instance of BackupVaultResourceList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupVaultResourceList"/>. </summary>
         internal BackupVaultResourceList()
         {
             Value = new ChangeTrackingList<DataProtectionBackupVaultData>();
         }
 
-        /// <summary> Initializes a new instance of BackupVaultResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        internal BackupVaultResourceList(IReadOnlyList<DataProtectionBackupVaultData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupVaultResourceList(IReadOnlyList<DataProtectionBackupVaultData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of resources. </summary>

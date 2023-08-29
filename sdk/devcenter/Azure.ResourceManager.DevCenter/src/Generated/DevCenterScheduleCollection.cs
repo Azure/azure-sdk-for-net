@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterScheduleSchedulesRestClient.CreateListByPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterScheduleSchedulesRestClient.CreateListByPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterScheduleResource(Client, DevCenterScheduleData.DeserializeDevCenterScheduleData(e)), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, "DevCenterScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterScheduleResource(Client, DevCenterScheduleData.DeserializeDevCenterScheduleData(e)), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, "DevCenterScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterScheduleSchedulesRestClient.CreateListByPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterScheduleSchedulesRestClient.CreateListByPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterScheduleResource(Client, DevCenterScheduleData.DeserializeDevCenterScheduleData(e)), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, "DevCenterScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterScheduleResource(Client, DevCenterScheduleData.DeserializeDevCenterScheduleData(e)), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, "DevCenterScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

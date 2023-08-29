@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class ServiceFabricList
     {
-        /// <summary> Initializes a new instance of ServiceFabricList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricList"/>. </summary>
         internal ServiceFabricList()
         {
             Value = new ChangeTrackingList<DevTestLabServiceFabricData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal ServiceFabricList(IReadOnlyList<DevTestLabServiceFabricData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricList(IReadOnlyList<DevTestLabServiceFabricData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Results of the list operation. </summary>

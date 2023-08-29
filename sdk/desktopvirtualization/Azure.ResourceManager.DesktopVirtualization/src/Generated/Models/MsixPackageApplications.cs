@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for MSIX Package Application properties. </summary>
     public partial class MsixPackageApplications
     {
-        /// <summary> Initializes a new instance of MsixPackageApplications. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MsixPackageApplications"/>. </summary>
         public MsixPackageApplications()
         {
         }
 
-        /// <summary> Initializes a new instance of MsixPackageApplications. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageApplications"/>. </summary>
         /// <param name="appId"> Package Application Id, found in appxmanifest.xml. </param>
         /// <param name="description"> Description of Package Application. </param>
         /// <param name="appUserModelId"> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </param>
@@ -25,7 +28,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="iconImageName"> User friendly name. </param>
         /// <param name="rawIcon"> the icon a 64 bit string as a byte array. </param>
         /// <param name="rawPng"> the icon a 64 bit string as a byte array. </param>
-        internal MsixPackageApplications(string appId, string description, string appUserModelId, string friendlyName, string iconImageName, BinaryData rawIcon, BinaryData rawPng)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MsixPackageApplications(string appId, string description, string appUserModelId, string friendlyName, string iconImageName, BinaryData rawIcon, BinaryData rawPng, Dictionary<string, BinaryData> rawData)
         {
             AppId = appId;
             Description = description;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IconImageName = iconImageName;
             RawIcon = rawIcon;
             RawPng = rawPng;
+            _rawData = rawData;
         }
 
         /// <summary> Package Application Id, found in appxmanifest.xml. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Schedule-based autoscale request parameters. </summary>
     public partial class HDInsightAutoScaleRecurrence
     {
-        /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleRecurrence"/>. </summary>
         public HDInsightAutoScaleRecurrence()
         {
             Schedule = new ChangeTrackingList<HDInsightAutoScaleSchedule>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleRecurrence"/>. </summary>
         /// <param name="timeZone"> The time zone for the autoscale schedule times. </param>
         /// <param name="schedule"> Array of schedule-based autoscale rules. </param>
-        internal HDInsightAutoScaleRecurrence(string timeZone, IList<HDInsightAutoScaleSchedule> schedule)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightAutoScaleRecurrence(string timeZone, IList<HDInsightAutoScaleSchedule> schedule, Dictionary<string, BinaryData> rawData)
         {
             TimeZone = timeZone;
             Schedule = schedule;
+            _rawData = rawData;
         }
 
         /// <summary> The time zone for the autoscale schedule times. </summary>

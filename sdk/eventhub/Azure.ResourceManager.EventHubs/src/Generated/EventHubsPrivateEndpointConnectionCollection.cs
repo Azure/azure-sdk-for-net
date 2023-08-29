@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsPrivateEndpointConnectionResource(Client, EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(e)), _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventHubsPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EventHubsPrivateEndpointConnectionResource(Client, EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(e)), _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventHubsPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsPrivateEndpointConnectionResource(Client, EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(e)), _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventHubsPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EventHubsPrivateEndpointConnectionResource(Client, EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(e)), _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventHubsPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

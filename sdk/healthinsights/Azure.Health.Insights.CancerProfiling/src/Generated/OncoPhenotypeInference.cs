@@ -14,6 +14,8 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> An inference made by the Onco Phenotype model regarding a patient. </summary>
     public partial class OncoPhenotypeInference
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of OncoPhenotypeInference. </summary>
         /// <param name="type"> The type of the Onco Phenotype inference. </param>
         /// <param name="value"> The value of the inference, as relevant for the given inference type. </param>
@@ -34,7 +36,8 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="confidenceScore"> Confidence score for this inference. </param>
         /// <param name="evidence"> The evidence corresponding to the inference value. </param>
         /// <param name="caseId"> An identifier for a clinical case, if there are multiple clinical cases regarding the same patient. </param>
-        internal OncoPhenotypeInference(OncoPhenotypeInferenceType type, string value, string description, float? confidenceScore, IReadOnlyList<InferenceEvidence> evidence, string caseId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OncoPhenotypeInference(OncoPhenotypeInferenceType type, string value, string description, float? confidenceScore, IReadOnlyList<InferenceEvidence> evidence, string caseId, Dictionary<string, BinaryData> rawData)
         {
             Type = type;
             Value = value;
@@ -42,6 +45,12 @@ namespace Azure.Health.Insights.CancerProfiling
             ConfidenceScore = confidenceScore;
             Evidence = evidence;
             CaseId = caseId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeInference"/> for deserialization. </summary>
+        internal OncoPhenotypeInference()
+        {
         }
 
         /// <summary> The type of the Onco Phenotype inference. </summary>

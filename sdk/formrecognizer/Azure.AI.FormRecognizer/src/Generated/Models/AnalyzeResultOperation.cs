@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -13,7 +14,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Status and result of the analyze operation. </summary>
     internal partial class AnalyzeResultOperation
     {
-        /// <summary> Initializes a new instance of AnalyzeResultOperation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeResultOperation"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
@@ -24,19 +27,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             LastUpdatedDateTime = lastUpdatedDateTime;
         }
 
-        /// <summary> Initializes a new instance of AnalyzeResultOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeResultOperation"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="error"> Encountered error during document analysis. </param>
         /// <param name="analyzeResult"> Document analysis result. </param>
-        internal AnalyzeResultOperation(AnalyzeResultOperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JsonElement error, AnalyzeResult analyzeResult)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeResultOperation(AnalyzeResultOperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JsonElement error, AnalyzeResult analyzeResult, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             _error = error;
             AnalyzeResult = analyzeResult;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeResultOperation"/> for deserialization. </summary>
+        internal AnalyzeResultOperation()
+        {
         }
 
         /// <summary> Operation status. </summary>

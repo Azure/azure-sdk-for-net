@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabCustomImagePlan : IUtf8JsonSerializable
+    public partial class DevTestLabCustomImagePlan : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabCustomImagePlan>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabCustomImagePlan>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabCustomImagePlan>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabCustomImagePlan DeserializeDevTestLabCustomImagePlan(JsonElement element)
+        internal static DevTestLabCustomImagePlan DeserializeDevTestLabCustomImagePlan(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> id = default;
             Optional<string> publisher = default;
             Optional<string> offer = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,8 +82,57 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     offer = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabCustomImagePlan(id.Value, publisher.Value, offer.Value);
+            return new DevTestLabCustomImagePlan(id.Value, publisher.Value, offer.Value, rawData);
+        }
+
+        DevTestLabCustomImagePlan IModelJsonSerializable<DevTestLabCustomImagePlan>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabCustomImagePlan(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabCustomImagePlan>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabCustomImagePlan IModelSerializable<DevTestLabCustomImagePlan>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabCustomImagePlan(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DevTestLabCustomImagePlan model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DevTestLabCustomImagePlan(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabCustomImagePlan(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

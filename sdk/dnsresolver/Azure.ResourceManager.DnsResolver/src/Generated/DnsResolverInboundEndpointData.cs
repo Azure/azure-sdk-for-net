@@ -21,7 +21,9 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsResolverInboundEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DnsResolverInboundEndpointData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolverInboundEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurations"/> is null. </exception>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver
             IPConfigurations = ipConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of DnsResolverInboundEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverInboundEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,12 +45,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the inbound endpoint resource. </param>
-        internal DnsResolverInboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<InboundEndpointIPConfiguration> ipConfigurations, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsResolverInboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<InboundEndpointIPConfiguration> ipConfigurations, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             IPConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolverInboundEndpointData"/> for deserialization. </summary>
+        internal DnsResolverInboundEndpointData()
+        {
         }
 
         /// <summary> ETag of the inbound endpoint. </summary>

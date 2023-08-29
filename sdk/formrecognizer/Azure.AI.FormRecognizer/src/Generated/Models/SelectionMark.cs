@@ -15,7 +15,9 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Information about the extracted selection mark. </summary>
     internal partial class SelectionMark
     {
-        /// <summary> Initializes a new instance of SelectionMark. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SelectionMark"/>. </summary>
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>
@@ -29,15 +31,22 @@ namespace Azure.AI.FormRecognizer.Models
             State = state;
         }
 
-        /// <summary> Initializes a new instance of SelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectionMark"/>. </summary>
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>
-        internal SelectionMark(IReadOnlyList<float> boundingBox, float confidence, SelectionMarkState state)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelectionMark(IReadOnlyList<float> boundingBox, float confidence, SelectionMarkState state, Dictionary<string, BinaryData> rawData)
         {
             BoundingBox = boundingBox;
             Confidence = confidence;
             State = state;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelectionMark"/> for deserialization. </summary>
+        internal SelectionMark()
+        {
         }
 
         /// <summary> Bounding box of the selection mark. </summary>

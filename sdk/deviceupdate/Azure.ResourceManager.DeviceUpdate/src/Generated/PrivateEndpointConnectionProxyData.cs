@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,14 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// </summary>
     public partial class PrivateEndpointConnectionProxyData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProxyData"/>. </summary>
         public PrivateEndpointConnectionProxyData()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProxyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +35,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="eTag"> ETag from NRP. </param>
         /// <param name="remotePrivateEndpoint"> Remote private endpoint details. </param>
         /// <param name="status"> Operation status. </param>
-        internal PrivateEndpointConnectionProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProxyProvisioningState? provisioningState, string eTag, RemotePrivateEndpoint remotePrivateEndpoint, string status) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointConnectionProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProxyProvisioningState? provisioningState, string eTag, RemotePrivateEndpoint remotePrivateEndpoint, string status, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ETag = eTag;
             RemotePrivateEndpoint = remotePrivateEndpoint;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> The provisioning state of the private endpoint connection proxy resource. </summary>

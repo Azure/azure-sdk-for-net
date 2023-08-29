@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Trino user plugin. </summary>
     public partial class TrinoUserPlugin
     {
-        /// <summary> Initializes a new instance of TrinoUserPlugin. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrinoUserPlugin"/>. </summary>
         public TrinoUserPlugin()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoUserPlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoUserPlugin"/>. </summary>
         /// <param name="isEnabled"> Denotes whether the plugin is active or not. </param>
         /// <param name="name"> This field maps to the sub-directory in trino plugins location, that will contain all the plugins under path. </param>
         /// <param name="path"> Fully qualified path to the folder containing the plugins. </param>
-        internal TrinoUserPlugin(bool? isEnabled, string name, string path)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrinoUserPlugin(bool? isEnabled, string name, string path, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             Name = name;
             Path = path;
+            _rawData = rawData;
         }
 
         /// <summary> Denotes whether the plugin is active or not. </summary>

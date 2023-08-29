@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,14 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class EventGridNamespaceClientGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventGridNamespaceClientGroupData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientGroupData"/>. </summary>
         public EventGridNamespaceClientGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridNamespaceClientGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,11 +37,13 @@ namespace Azure.ResourceManager.EventGrid
         /// Example : attributes.keyName IN ['a', 'b', 'c'].
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the ClientGroup resource. </param>
-        internal EventGridNamespaceClientGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string query, ClientGroupProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridNamespaceClientGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string query, ClientGroupProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Query = query;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> Description for the Client Group resource. </summary>

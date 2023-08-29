@@ -14,14 +14,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Guest configuration is an artifact that encapsulates DSC configuration and its dependencies. The artifact is a zip file containing DSC configuration (as MOF) and dependent resources and other dependencies like modules. </summary>
     public partial class GuestConfigurationNavigation
     {
-        /// <summary> Initializes a new instance of GuestConfigurationNavigation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
         public GuestConfigurationNavigation()
         {
             ConfigurationParameters = new ChangeTrackingList<GuestConfigurationParameter>();
             ConfigurationProtectedParameters = new ChangeTrackingList<GuestConfigurationParameter>();
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationNavigation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
         /// <param name="kind"> Kind of the guest configuration. For example:DSC. </param>
         /// <param name="name"> Name of the guest configuration. </param>
         /// <param name="version"> Version of the guest configuration. </param>
@@ -33,7 +35,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="configurationParameters"> The configuration parameters for the guest configuration. </param>
         /// <param name="configurationProtectedParameters"> The protected configuration parameters for the guest configuration. </param>
         /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
-        internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IList<GuestConfigurationParameter> configurationParameters, IList<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IList<GuestConfigurationParameter> configurationParameters, IList<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting, Dictionary<string, BinaryData> rawData)
         {
             Kind = kind;
             Name = name;
@@ -46,6 +49,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             ConfigurationParameters = configurationParameters;
             ConfigurationProtectedParameters = configurationProtectedParameters;
             ConfigurationSetting = configurationSetting;
+            _rawData = rawData;
         }
 
         /// <summary> Kind of the guest configuration. For example:DSC. </summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Dynatrace Account Information. </summary>
     public partial class DynatraceAccountInfo
     {
-        /// <summary> Initializes a new instance of DynatraceAccountInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceAccountInfo"/>. </summary>
         public DynatraceAccountInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceAccountInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceAccountInfo"/>. </summary>
         /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
         /// <param name="regionId"> Region in which the account is created. </param>
-        internal DynatraceAccountInfo(string accountId, string regionId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceAccountInfo(string accountId, string regionId, Dictionary<string, BinaryData> rawData)
         {
             AccountId = accountId;
             RegionId = regionId;
+            _rawData = rawData;
         }
 
         /// <summary> Account Id of the account this environment is linked to. </summary>

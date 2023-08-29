@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines modifiable attributes of an Experiment. </summary>
     public partial class FrontDoorExperimentPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorExperimentPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentPatch"/>. </summary>
         public FrontDoorExperimentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> The description of the intent or details of the Experiment. </param>
+        /// <param name="enabledState"> The state of the Experiment. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorExperimentPatch(IDictionary<string, string> tags, string description, FrontDoorExperimentState? enabledState, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            Description = description;
+            EnabledState = enabledState;
+            _rawData = rawData;
         }
 
         /// <summary> Resource tags. </summary>

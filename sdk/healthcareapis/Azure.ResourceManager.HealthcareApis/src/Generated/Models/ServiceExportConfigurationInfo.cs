@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Export operation configuration information. </summary>
     internal partial class ServiceExportConfigurationInfo
     {
-        /// <summary> Initializes a new instance of ServiceExportConfigurationInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceExportConfigurationInfo"/>. </summary>
         public ServiceExportConfigurationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceExportConfigurationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceExportConfigurationInfo"/>. </summary>
         /// <param name="storageAccountName"> The name of the default export storage account. </param>
-        internal ServiceExportConfigurationInfo(string storageAccountName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceExportConfigurationInfo(string storageAccountName, Dictionary<string, BinaryData> rawData)
         {
             StorageAccountName = storageAccountName;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the default export storage account. </summary>

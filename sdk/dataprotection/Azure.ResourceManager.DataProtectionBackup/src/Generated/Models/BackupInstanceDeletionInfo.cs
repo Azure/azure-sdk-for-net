@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Deletion Info. </summary>
     public partial class BackupInstanceDeletionInfo
     {
-        /// <summary> Initializes a new instance of BackupInstanceDeletionInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceDeletionInfo"/>. </summary>
         internal BackupInstanceDeletionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupInstanceDeletionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceDeletionInfo"/>. </summary>
         /// <param name="deleteOn"> Specifies time of deletion. </param>
         /// <param name="billingEndOn"> Specifies billing end date. </param>
         /// <param name="scheduledPurgeOn"> Specifies purge time. </param>
         /// <param name="deleteActivityId"> Delete activity ID for troubleshooting purpose. </param>
-        internal BackupInstanceDeletionInfo(DateTimeOffset? deleteOn, DateTimeOffset? billingEndOn, DateTimeOffset? scheduledPurgeOn, string deleteActivityId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupInstanceDeletionInfo(DateTimeOffset? deleteOn, DateTimeOffset? billingEndOn, DateTimeOffset? scheduledPurgeOn, string deleteActivityId, Dictionary<string, BinaryData> rawData)
         {
             DeleteOn = deleteOn;
             BillingEndOn = billingEndOn;
             ScheduledPurgeOn = scheduledPurgeOn;
             DeleteActivityId = deleteActivityId;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies time of deletion. </summary>

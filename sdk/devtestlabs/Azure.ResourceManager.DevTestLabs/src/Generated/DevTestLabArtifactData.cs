@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabArtifactData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabArtifactData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +41,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="targetOSType"> The artifact's target OS. </param>
         /// <param name="parameters"> The artifact's parameters. </param>
         /// <param name="createdOn"> The artifact's creation date. </param>
-        internal DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string title, string description, string publisher, string filePath, string icon, string targetOSType, BinaryData parameters, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string title, string description, string publisher, string filePath, string icon, string targetOSType, BinaryData parameters, DateTimeOffset? createdOn, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Title = title;
             Description = description;
@@ -49,6 +52,12 @@ namespace Azure.ResourceManager.DevTestLabs
             TargetOSType = targetOSType;
             Parameters = parameters;
             CreatedOn = createdOn;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/> for deserialization. </summary>
+        internal DevTestLabArtifactData()
+        {
         }
 
         /// <summary> The artifact's title. </summary>

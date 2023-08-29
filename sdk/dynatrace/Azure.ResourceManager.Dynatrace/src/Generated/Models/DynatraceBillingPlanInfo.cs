@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Billing plan information. </summary>
     public partial class DynatraceBillingPlanInfo
     {
-        /// <summary> Initializes a new instance of DynatraceBillingPlanInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceBillingPlanInfo"/>. </summary>
         public DynatraceBillingPlanInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceBillingPlanInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceBillingPlanInfo"/>. </summary>
         /// <param name="usageType"> different usage type like PAYG/COMMITTED. this could be enum. </param>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
         /// <param name="planDetails"> plan id as published by Dynatrace. </param>
         /// <param name="effectiveOn"> date when plan was applied. </param>
-        internal DynatraceBillingPlanInfo(string usageType, string billingCycle, string planDetails, DateTimeOffset? effectiveOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceBillingPlanInfo(string usageType, string billingCycle, string planDetails, DateTimeOffset? effectiveOn, Dictionary<string, BinaryData> rawData)
         {
             UsageType = usageType;
             BillingCycle = billingCycle;
             PlanDetails = planDetails;
             EffectiveOn = effectiveOn;
+            _rawData = rawData;
         }
 
         /// <summary> different usage type like PAYG/COMMITTED. this could be enum. </summary>

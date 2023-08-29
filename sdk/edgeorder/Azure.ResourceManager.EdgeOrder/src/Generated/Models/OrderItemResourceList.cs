@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EdgeOrder;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> List of orderItems. </summary>
     internal partial class OrderItemResourceList
     {
-        /// <summary> Initializes a new instance of OrderItemResourceList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrderItemResourceList"/>. </summary>
         internal OrderItemResourceList()
         {
             Value = new ChangeTrackingList<EdgeOrderItemData>();
         }
 
-        /// <summary> Initializes a new instance of OrderItemResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderItemResourceList"/>. </summary>
         /// <param name="value"> List of order item resources. </param>
         /// <param name="nextLink"> Link for the next set of order item resources. </param>
-        internal OrderItemResourceList(IReadOnlyList<EdgeOrderItemData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrderItemResourceList(IReadOnlyList<EdgeOrderItemData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of order item resources. </summary>

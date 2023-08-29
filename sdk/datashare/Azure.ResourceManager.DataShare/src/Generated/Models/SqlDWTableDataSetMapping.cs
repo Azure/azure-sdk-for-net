@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A SQL DW Table data set mapping. </summary>
     public partial class SqlDWTableDataSetMapping : ShareDataSetMappingData
     {
-        /// <summary> Initializes a new instance of SqlDWTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDWTableDataSetMapping"/>. </summary>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="dataWarehouseName"> DataWarehouse name of the source data set. </param>
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetMappingKind.SqlDWTable;
         }
 
-        /// <summary> Initializes a new instance of SqlDWTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDWTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +51,8 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
         /// <param name="sqlServerResourceId"> Resource id of SQL server. </param>
         /// <param name="tableName"> SQL DW table name. </param>
-        internal SqlDWTableDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, string dataWarehouseName, DataShareProvisioningState? provisioningState, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlDWTableDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, string dataWarehouseName, DataShareProvisioningState? provisioningState, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             DataSetId = dataSetId;
             DataSetMappingStatus = dataSetMappingStatus;
@@ -60,6 +62,11 @@ namespace Azure.ResourceManager.DataShare.Models
             SqlServerResourceId = sqlServerResourceId;
             TableName = tableName;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlDWTableDataSetMapping"/> for deserialization. </summary>
+        internal SqlDWTableDataSetMapping()
+        {
         }
 
         /// <summary> The id of the source data set. </summary>

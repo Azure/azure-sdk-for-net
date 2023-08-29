@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
@@ -13,7 +14,9 @@ namespace Azure.AI.FormRecognizer.Training
     /// <summary> Report for a custom model training field. </summary>
     public partial class CustomFormModelField
     {
-        /// <summary> Initializes a new instance of CustomFormModelField. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomFormModelField"/>. </summary>
         /// <param name="name"> Training field name. </param>
         /// <param name="accuracy"> Estimated extraction accuracy for this field. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +26,22 @@ namespace Azure.AI.FormRecognizer.Training
 
             Name = name;
             Accuracy = accuracy;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomFormModelField"/>. </summary>
+        /// <param name="name"> Training field name. </param>
+        /// <param name="accuracy"> Estimated extraction accuracy for this field. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomFormModelField(string name, float? accuracy, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Accuracy = accuracy;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomFormModelField"/> for deserialization. </summary>
+        internal CustomFormModelField()
+        {
         }
     }
 }

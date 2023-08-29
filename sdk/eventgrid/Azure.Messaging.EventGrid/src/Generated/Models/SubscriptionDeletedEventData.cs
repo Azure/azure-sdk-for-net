@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventGrid.SubscriptionDeletedEvent event. </summary>
     public partial class SubscriptionDeletedEventData
     {
-        /// <summary> Initializes a new instance of SubscriptionDeletedEventData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/>. </summary>
         internal SubscriptionDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/>. </summary>
         /// <param name="eventSubscriptionId"> The Azure resource ID of the deleted event subscription. </param>
-        internal SubscriptionDeletedEventData(string eventSubscriptionId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionDeletedEventData(string eventSubscriptionId, Dictionary<string, BinaryData> rawData)
         {
             EventSubscriptionId = eventSubscriptionId;
+            _rawData = rawData;
         }
 
         /// <summary> The Azure resource ID of the deleted event subscription. </summary>

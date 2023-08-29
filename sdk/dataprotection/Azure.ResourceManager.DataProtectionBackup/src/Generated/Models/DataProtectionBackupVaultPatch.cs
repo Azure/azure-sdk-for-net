@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Patch Request content for Microsoft.DataProtection resources. </summary>
     public partial class DataProtectionBackupVaultPatch
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultPatch"/>. </summary>
         public DataProtectionBackupVaultPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultPatch"/>. </summary>
+        /// <param name="identity"> Input Managed Identity Details. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupVaultPatch(ManagedServiceIdentity identity, DataProtectionBackupVaultPatchProperties properties, IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Identity = identity;
+            Properties = properties;
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Input Managed Identity Details. </summary>

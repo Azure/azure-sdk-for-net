@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class DeadLetterWithResourceIdentity : IUtf8JsonSerializable
+    public partial class DeadLetterWithResourceIdentity : IUtf8JsonSerializable, IModelJsonSerializable<DeadLetterWithResourceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeadLetterWithResourceIdentity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeadLetterWithResourceIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("deadLetterDestination"u8);
                 writer.WriteObjectValue(DeadLetterDestination);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeadLetterWithResourceIdentity DeserializeDeadLetterWithResourceIdentity(JsonElement element)
+        internal static DeadLetterWithResourceIdentity DeserializeDeadLetterWithResourceIdentity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<EventSubscriptionIdentity> identity = default;
             Optional<DeadLetterDestination> deadLetterDestination = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -56,8 +79,57 @@ namespace Azure.ResourceManager.EventGrid.Models
                     deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeadLetterWithResourceIdentity(identity.Value, deadLetterDestination.Value);
+            return new DeadLetterWithResourceIdentity(identity.Value, deadLetterDestination.Value, rawData);
+        }
+
+        DeadLetterWithResourceIdentity IModelJsonSerializable<DeadLetterWithResourceIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeadLetterWithResourceIdentity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeadLetterWithResourceIdentity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeadLetterWithResourceIdentity IModelSerializable<DeadLetterWithResourceIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeadLetterWithResourceIdentity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DeadLetterWithResourceIdentity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DeadLetterWithResourceIdentity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeadLetterWithResourceIdentity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

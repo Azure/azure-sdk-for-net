@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.SignalRService.ClientConnectionConnected event. </summary>
     public partial class SignalRServiceClientConnectionConnectedEventData
     {
-        /// <summary> Initializes a new instance of SignalRServiceClientConnectionConnectedEventData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionConnectedEventData"/>. </summary>
         internal SignalRServiceClientConnectionConnectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRServiceClientConnectionConnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionConnectedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="hubName"> The hub of connected client connection. </param>
         /// <param name="connectionId"> The connection Id of connected client connection. </param>
         /// <param name="userId"> The user Id of connected client connection. </param>
-        internal SignalRServiceClientConnectionConnectedEventData(DateTimeOffset? timestamp, string hubName, string connectionId, string userId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRServiceClientConnectionConnectedEventData(DateTimeOffset? timestamp, string hubName, string connectionId, string userId, Dictionary<string, BinaryData> rawData)
         {
             Timestamp = timestamp;
             HubName = hubName;
             ConnectionId = connectionId;
             UserId = userId;
+            _rawData = rawData;
         }
 
         /// <summary> The time at which the event occurred. </summary>

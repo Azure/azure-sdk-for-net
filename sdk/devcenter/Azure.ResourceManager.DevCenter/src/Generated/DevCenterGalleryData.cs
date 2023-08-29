@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,26 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterGalleryData : ResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterGalleryData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterGalleryData"/>. </summary>
         public DevCenterGalleryData()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterGalleryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterGalleryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="galleryResourceId"> The resource ID of the backing Azure Compute Gallery. </param>
-        internal DevCenterGalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterProvisioningState? provisioningState, ResourceIdentifier galleryResourceId) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterGalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterProvisioningState? provisioningState, ResourceIdentifier galleryResourceId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             GalleryResourceId = galleryResourceId;
+            _rawData = rawData;
         }
 
         /// <summary> The provisioning state of the resource. </summary>

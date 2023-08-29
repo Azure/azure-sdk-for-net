@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevBoxDefinitionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevBoxDefinitionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevBoxDefinitionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevBoxDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +42,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="imageValidationStatus"> Validation status of the configured image. </param>
         /// <param name="imageValidationErrorDetails"> Details for image validator error. Populated when the image validation is not successful. </param>
         /// <param name="activeImageReference"> Image reference information for the currently active image (only populated during updates). </param>
-        internal DevBoxDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, DevCenterProvisioningState? provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, DevCenterImageReference activeImageReference) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevBoxDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, DevCenterProvisioningState? provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, DevCenterImageReference activeImageReference, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ImageReference = imageReference;
             Sku = sku;
@@ -49,6 +53,12 @@ namespace Azure.ResourceManager.DevCenter
             ImageValidationStatus = imageValidationStatus;
             ImageValidationErrorDetails = imageValidationErrorDetails;
             ActiveImageReference = activeImageReference;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionData"/> for deserialization. </summary>
+        internal DevBoxDefinitionData()
+        {
         }
 
         /// <summary> Image reference information. </summary>

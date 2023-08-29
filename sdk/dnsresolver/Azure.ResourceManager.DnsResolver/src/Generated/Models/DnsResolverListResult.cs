@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> The response to an enumeration operation on DNS resolvers. </summary>
     internal partial class DnsResolverListResult
     {
-        /// <summary> Initializes a new instance of DnsResolverListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolverListResult"/>. </summary>
         internal DnsResolverListResult()
         {
             Value = new ChangeTrackingList<DnsResolverData>();
         }
 
-        /// <summary> Initializes a new instance of DnsResolverListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverListResult"/>. </summary>
         /// <param name="value"> Enumeration of the DNS resolvers. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal DnsResolverListResult(IReadOnlyList<DnsResolverData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsResolverListResult(IReadOnlyList<DnsResolverData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Enumeration of the DNS resolvers. </summary>

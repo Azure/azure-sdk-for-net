@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterUpdateGatewaySettingsContent : IUtf8JsonSerializable
+    public partial class HDInsightClusterUpdateGatewaySettingsContent : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightClusterUpdateGatewaySettingsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightClusterUpdateGatewaySettingsContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightClusterUpdateGatewaySettingsContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsCredentialEnabled))
             {
@@ -30,7 +38,105 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("restAuthCredential.password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HDInsightClusterUpdateGatewaySettingsContent DeserializeHDInsightClusterUpdateGatewaySettingsContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> restAuthCredentialIsEnabled = default;
+            Optional<string> restAuthCredentialUsername = default;
+            Optional<string> restAuthCredentialPassword = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("restAuthCredential.isEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restAuthCredentialIsEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("restAuthCredential.username"u8))
+                {
+                    restAuthCredentialUsername = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("restAuthCredential.password"u8))
+                {
+                    restAuthCredentialPassword = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HDInsightClusterUpdateGatewaySettingsContent(Optional.ToNullable(restAuthCredentialIsEnabled), restAuthCredentialUsername.Value, restAuthCredentialPassword.Value, rawData);
+        }
+
+        HDInsightClusterUpdateGatewaySettingsContent IModelJsonSerializable<HDInsightClusterUpdateGatewaySettingsContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightClusterUpdateGatewaySettingsContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightClusterUpdateGatewaySettingsContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightClusterUpdateGatewaySettingsContent IModelSerializable<HDInsightClusterUpdateGatewaySettingsContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightClusterUpdateGatewaySettingsContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HDInsightClusterUpdateGatewaySettingsContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HDInsightClusterUpdateGatewaySettingsContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightClusterUpdateGatewaySettingsContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

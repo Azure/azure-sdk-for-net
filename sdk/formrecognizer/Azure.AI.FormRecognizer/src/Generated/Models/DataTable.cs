@@ -15,7 +15,9 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Information about the extracted table contained in a page. </summary>
     internal partial class DataTable
     {
-        /// <summary> Initializes a new instance of DataTable. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataTable"/>. </summary>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
@@ -32,17 +34,24 @@ namespace Azure.AI.FormRecognizer.Models
             BoundingBox = boundingBox.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTable"/>. </summary>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
         /// <param name="boundingBox"> Bounding box of the table. </param>
-        internal DataTable(int rows, int columns, IReadOnlyList<DataTableCell> cells, IReadOnlyList<float> boundingBox)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataTable(int rows, int columns, IReadOnlyList<DataTableCell> cells, IReadOnlyList<float> boundingBox, Dictionary<string, BinaryData> rawData)
         {
             Rows = rows;
             Columns = columns;
             Cells = cells;
             BoundingBox = boundingBox;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataTable"/> for deserialization. </summary>
+        internal DataTable()
+        {
         }
 
         /// <summary> Number of rows. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Response for getting all the linkable environments. </summary>
     internal partial class LinkableEnvironmentListResponse
     {
-        /// <summary> Initializes a new instance of LinkableEnvironmentListResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentListResponse"/>. </summary>
         internal LinkableEnvironmentListResponse()
         {
             Value = new ChangeTrackingList<LinkableEnvironmentResult>();
         }
 
-        /// <summary> Initializes a new instance of LinkableEnvironmentListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentListResponse"/>. </summary>
         /// <param name="value"> List of environments for which user is an admin. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
-        internal LinkableEnvironmentListResponse(IReadOnlyList<LinkableEnvironmentResult> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkableEnvironmentListResponse(IReadOnlyList<LinkableEnvironmentResult> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of environments for which user is an admin. </summary>

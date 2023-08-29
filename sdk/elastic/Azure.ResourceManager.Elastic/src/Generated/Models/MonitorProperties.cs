@@ -5,24 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> Properties specific to the monitor resource. </summary>
     public partial class MonitorProperties
     {
-        /// <summary> Initializes a new instance of MonitorProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorProperties"/>. </summary>
         public MonitorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the monitor resource. </param>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="elasticProperties"> Elastic cloud properties. </param>
         /// <param name="userInfo"> User information. </param>
         /// <param name="liftrResourceCategory"></param>
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
-        internal MonitorProperties(ProvisioningState? provisioningState, MonitoringStatus? monitoringStatus, ElasticProperties elasticProperties, UserInfo userInfo, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorProperties(ProvisioningState? provisioningState, MonitoringStatus? monitoringStatus, ElasticProperties elasticProperties, UserInfo userInfo, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             MonitoringStatus = monitoringStatus;
@@ -30,6 +36,7 @@ namespace Azure.ResourceManager.Elastic.Models
             UserInfo = userInfo;
             LiftrResourceCategory = liftrResourceCategory;
             LiftrResourcePreference = liftrResourcePreference;
+            _rawData = rawData;
         }
 
         /// <summary> Provisioning state of the monitor resource. </summary>

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), HDInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusterPools", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), HDInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusterPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), HDInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusterPools", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), HDInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusterPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

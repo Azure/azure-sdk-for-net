@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -12,9 +14,22 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The request spec of checking name availability. </summary>
     public partial class HDInsightNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of HDInsightNameAvailabilityContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityContent"/>. </summary>
         public HDInsightNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightNameAvailabilityContent(string name, ResourceType? resourceType, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _rawData = rawData;
         }
 
         /// <summary> The resource name. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Results of the Attached Networks list operation. </summary>
     internal partial class AttachedNetworkListResult
     {
-        /// <summary> Initializes a new instance of AttachedNetworkListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkListResult"/>. </summary>
         internal AttachedNetworkListResult()
         {
             Value = new ChangeTrackingList<AttachedNetworkConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AttachedNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
-        internal AttachedNetworkListResult(IReadOnlyList<AttachedNetworkConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttachedNetworkListResult(IReadOnlyList<AttachedNetworkConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Current page of results. </summary>

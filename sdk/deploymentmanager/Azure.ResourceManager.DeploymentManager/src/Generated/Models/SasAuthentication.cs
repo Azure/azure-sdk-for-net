@@ -6,22 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     /// <summary> Defines the properties to access the artifacts using an Azure Storage SAS URI. </summary>
     public partial class SasAuthentication : Authentication
     {
-        /// <summary> Initializes a new instance of SasAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasAuthentication"/>. </summary>
         public SasAuthentication()
         {
             AuthenticationType = "Sas";
         }
 
-        /// <summary> Initializes a new instance of SasAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasAuthentication"/>. </summary>
         /// <param name="authenticationType"> The authentication type. </param>
         /// <param name="sasUri"> The SAS URI to the Azure Storage blob container. Any offset from the root of the container to where the artifacts are located can be defined in the artifactRoot. </param>
-        internal SasAuthentication(string authenticationType, Uri sasUri) : base(authenticationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SasAuthentication(string authenticationType, Uri sasUri, Dictionary<string, BinaryData> rawData) : base(authenticationType, rawData)
         {
             SasUri = sasUri;
             AuthenticationType = authenticationType ?? "Sas";

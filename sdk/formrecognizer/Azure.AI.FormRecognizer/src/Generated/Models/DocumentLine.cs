@@ -15,7 +15,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A content line object consisting of an adjacent sequence of content elements, such as words and selection marks. </summary>
     public partial class DocumentLine
     {
-        /// <summary> Initializes a new instance of DocumentLine. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
@@ -29,15 +31,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="polygon"> Bounding polygon of the line. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
-        internal DocumentLine(string content, IReadOnlyList<float> polygon, IReadOnlyList<DocumentSpan> spans)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentLine(string content, IReadOnlyList<float> polygon, IReadOnlyList<DocumentSpan> spans, Dictionary<string, BinaryData> rawData)
         {
             Content = content;
             Polygon = polygon;
             Spans = spans;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentLine"/> for deserialization. </summary>
+        internal DocumentLine()
+        {
         }
 
         /// <summary> Concatenated content of the contained elements in reading order. </summary>

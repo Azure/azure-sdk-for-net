@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Properties to configure Encryption. </summary>
     public partial class EventHubsEncryption
     {
-        /// <summary> Initializes a new instance of EventHubsEncryption. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsEncryption"/>. </summary>
         public EventHubsEncryption()
         {
             KeyVaultProperties = new ChangeTrackingList<EventHubsKeyVaultProperties>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsEncryption"/>. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
         /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
-        internal EventHubsEncryption(IList<EventHubsKeyVaultProperties> keyVaultProperties, EventHubsKeySource? keySource, bool? requireInfrastructureEncryption)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsEncryption(IList<EventHubsKeyVaultProperties> keyVaultProperties, EventHubsKeySource? keySource, bool? requireInfrastructureEncryption, Dictionary<string, BinaryData> rawData)
         {
             KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
             RequireInfrastructureEncryption = requireInfrastructureEncryption;
+            _rawData = rawData;
         }
 
         /// <summary> Properties of KeyVault. </summary>

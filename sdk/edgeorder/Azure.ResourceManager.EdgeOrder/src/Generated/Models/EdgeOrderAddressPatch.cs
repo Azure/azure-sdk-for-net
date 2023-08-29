@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,25 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> The Address update parameters. </summary>
     public partial class EdgeOrderAddressPatch
     {
-        /// <summary> Initializes a new instance of EdgeOrderAddressPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressPatch"/>. </summary>
         public EdgeOrderAddressPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressPatch"/>. </summary>
+        /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
+        /// <param name="shippingAddress"> Shipping details for the address. </param>
+        /// <param name="contactDetails"> Contact details for the address. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderAddressPatch(IDictionary<string, string> tags, EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            ShippingAddress = shippingAddress;
+            ContactDetails = contactDetails;
+            _rawData = rawData;
         }
 
         /// <summary> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The list of SSH public keys. </summary>
     internal partial class SshProfile
     {
-        /// <summary> Initializes a new instance of SshProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SshProfile"/>. </summary>
         public SshProfile()
         {
             PublicKeys = new ChangeTrackingList<HDInsightSshPublicKey>();
         }
 
-        /// <summary> Initializes a new instance of SshProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshProfile"/>. </summary>
         /// <param name="publicKeys"> The list of SSH public keys. </param>
-        internal SshProfile(IList<HDInsightSshPublicKey> publicKeys)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SshProfile(IList<HDInsightSshPublicKey> publicKeys, Dictionary<string, BinaryData> rawData)
         {
             PublicKeys = publicKeys;
+            _rawData = rawData;
         }
 
         /// <summary> The list of SSH public keys. </summary>

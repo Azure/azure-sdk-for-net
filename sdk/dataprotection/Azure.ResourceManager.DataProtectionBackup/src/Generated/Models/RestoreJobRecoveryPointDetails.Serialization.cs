@@ -6,21 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestoreJobRecoveryPointDetails
+    public partial class RestoreJobRecoveryPointDetails : IUtf8JsonSerializable, IModelJsonSerializable<RestoreJobRecoveryPointDetails>
     {
-        internal static RestoreJobRecoveryPointDetails DeserializeRestoreJobRecoveryPointDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestoreJobRecoveryPointDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestoreJobRecoveryPointDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecoveryPointId))
+            {
+                writer.WritePropertyName("recoveryPointID"u8);
+                writer.WriteStringValue(RecoveryPointId);
+            }
+            if (Optional.IsDefined(RecoverOn))
+            {
+                writer.WritePropertyName("recoveryPointTime"u8);
+                writer.WriteStringValue(RecoverOn.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RestoreJobRecoveryPointDetails DeserializeRestoreJobRecoveryPointDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> recoveryPointId = default;
             Optional<DateTimeOffset> recoveryPointTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointID"u8))
@@ -37,8 +75,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RestoreJobRecoveryPointDetails(recoveryPointId.Value, Optional.ToNullable(recoveryPointTime));
+            return new RestoreJobRecoveryPointDetails(recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), rawData);
+        }
+
+        RestoreJobRecoveryPointDetails IModelJsonSerializable<RestoreJobRecoveryPointDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreJobRecoveryPointDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestoreJobRecoveryPointDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestoreJobRecoveryPointDetails IModelSerializable<RestoreJobRecoveryPointDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestoreJobRecoveryPointDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RestoreJobRecoveryPointDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RestoreJobRecoveryPointDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestoreJobRecoveryPointDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

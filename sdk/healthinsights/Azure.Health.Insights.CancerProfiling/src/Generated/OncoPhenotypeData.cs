@@ -15,6 +15,8 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The body of the Onco Phenotype request. </summary>
     public partial class OncoPhenotypeData
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of OncoPhenotypeData. </summary>
         /// <param name="patients"> The list of patients, including their clinical information and data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
@@ -28,10 +30,17 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <summary> Initializes a new instance of OncoPhenotypeData. </summary>
         /// <param name="patients"> The list of patients, including their clinical information and data. </param>
         /// <param name="configuration"> Configuration affecting the Onco Phenotype model's inference. </param>
-        internal OncoPhenotypeData(IList<PatientRecord> patients, OncoPhenotypeModelConfiguration configuration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OncoPhenotypeData(IList<PatientRecord> patients, OncoPhenotypeModelConfiguration configuration, Dictionary<string, BinaryData> rawData)
         {
             Patients = patients;
             Configuration = configuration;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeData"/> for deserialization. </summary>
+        internal OncoPhenotypeData()
+        {
         }
 
         /// <summary> The list of patients, including their clinical information and data. </summary>

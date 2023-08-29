@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Response of payload to be passed while installing VM agent. </summary>
     public partial class DynatraceVmExtensionPayload
     {
-        /// <summary> Initializes a new instance of DynatraceVmExtensionPayload. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceVmExtensionPayload"/>. </summary>
         internal DynatraceVmExtensionPayload()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceVmExtensionPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceVmExtensionPayload"/>. </summary>
         /// <param name="ingestionKey"> Ingestion key of the environment. </param>
         /// <param name="environmentId"> Id of the environment created. </param>
-        internal DynatraceVmExtensionPayload(string ingestionKey, string environmentId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceVmExtensionPayload(string ingestionKey, string environmentId, Dictionary<string, BinaryData> rawData)
         {
             IngestionKey = ingestionKey;
             EnvironmentId = environmentId;
+            _rawData = rawData;
         }
 
         /// <summary> Ingestion key of the environment. </summary>

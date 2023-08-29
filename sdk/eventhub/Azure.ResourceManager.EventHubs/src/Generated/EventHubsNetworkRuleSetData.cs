@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
@@ -18,14 +19,16 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsNetworkRuleSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetData"/>. </summary>
         public EventHubsNetworkRuleSetData()
         {
             VirtualNetworkRules = new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>();
             IPRules = new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +39,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="ipRules"> List of IpRules. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile's access rules. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? trustedServiceAccessEnabled, EventHubsNetworkRuleSetDefaultAction? defaultAction, IList<EventHubsNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<EventHubsNetworkRuleSetIPRules> ipRules, EventHubsPublicNetworkAccessFlag? publicNetworkAccess, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? trustedServiceAccessEnabled, EventHubsNetworkRuleSetDefaultAction? defaultAction, IList<EventHubsNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<EventHubsNetworkRuleSetIPRules> ipRules, EventHubsPublicNetworkAccessFlag? publicNetworkAccess, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
             DefaultAction = defaultAction;
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.EventHubs
             IPRules = ipRules;
             PublicNetworkAccess = publicNetworkAccess;
             Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>

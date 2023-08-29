@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Table level sharing properties dto for kusto data set properties. </summary>
     public partial class TableLevelSharingProperties
     {
-        /// <summary> Initializes a new instance of TableLevelSharingProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableLevelSharingProperties"/>. </summary>
         public TableLevelSharingProperties()
         {
             ExternalTablesToExclude = new ChangeTrackingList<string>();
@@ -24,14 +27,15 @@ namespace Azure.ResourceManager.DataShare.Models
             TablesToInclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableLevelSharingProperties"/>. </summary>
         /// <param name="externalTablesToExclude"> External tables to be excluded in the data set. </param>
         /// <param name="externalTablesToInclude"> External tables to be included in the data set. </param>
         /// <param name="materializedViewsToExclude"> Materialized views to be excluded in the data set. </param>
         /// <param name="materializedViewsToInclude"> Materialized views to be included in the data set. </param>
         /// <param name="tablesToExclude"> Tables to be excluded in the data set. </param>
         /// <param name="tablesToInclude"> Tables to be included in the data set. </param>
-        internal TableLevelSharingProperties(IList<string> externalTablesToExclude, IList<string> externalTablesToInclude, IList<string> materializedViewsToExclude, IList<string> materializedViewsToInclude, IList<string> tablesToExclude, IList<string> tablesToInclude)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableLevelSharingProperties(IList<string> externalTablesToExclude, IList<string> externalTablesToInclude, IList<string> materializedViewsToExclude, IList<string> materializedViewsToInclude, IList<string> tablesToExclude, IList<string> tablesToInclude, Dictionary<string, BinaryData> rawData)
         {
             ExternalTablesToExclude = externalTablesToExclude;
             ExternalTablesToInclude = externalTablesToInclude;
@@ -39,6 +43,7 @@ namespace Azure.ResourceManager.DataShare.Models
             MaterializedViewsToInclude = materializedViewsToInclude;
             TablesToExclude = tablesToExclude;
             TablesToInclude = tablesToInclude;
+            _rawData = rawData;
         }
 
         /// <summary> External tables to be excluded in the data set. </summary>

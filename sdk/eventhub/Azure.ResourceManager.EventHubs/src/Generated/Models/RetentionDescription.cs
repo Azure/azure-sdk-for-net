@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Properties to configure retention settings for the  eventhub. </summary>
     public partial class RetentionDescription
     {
-        /// <summary> Initializes a new instance of RetentionDescription. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RetentionDescription"/>. </summary>
         public RetentionDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of RetentionDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetentionDescription"/>. </summary>
         /// <param name="cleanupPolicy"> Enumerates the possible values for cleanup policy. </param>
         /// <param name="retentionTimeInHours"> Number of hours to retain the events for this Event Hub. This value is only used when cleanupPolicy is Delete. If cleanupPolicy is Compaction the returned value of this property is Long.MaxValue. </param>
         /// <param name="tombstoneRetentionTimeInHours"> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is only used when cleanupPolicy is Compaction. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </param>
-        internal RetentionDescription(CleanupPolicyRetentionDescription? cleanupPolicy, long? retentionTimeInHours, int? tombstoneRetentionTimeInHours)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RetentionDescription(CleanupPolicyRetentionDescription? cleanupPolicy, long? retentionTimeInHours, int? tombstoneRetentionTimeInHours, Dictionary<string, BinaryData> rawData)
         {
             CleanupPolicy = cleanupPolicy;
             RetentionTimeInHours = retentionTimeInHours;
             TombstoneRetentionTimeInHours = tombstoneRetentionTimeInHours;
+            _rawData = rawData;
         }
 
         /// <summary> Enumerates the possible values for cleanup policy. </summary>

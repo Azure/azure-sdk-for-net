@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceMonitoredResourceDetails
+    public partial class DynatraceMonitoredResourceDetails : IUtf8JsonSerializable, IModelJsonSerializable<DynatraceMonitoredResourceDetails>
     {
-        internal static DynatraceMonitoredResourceDetails DeserializeDynatraceMonitoredResourceDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynatraceMonitoredResourceDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DynatraceMonitoredResourceDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(SendingMetricsStatus))
+            {
+                writer.WritePropertyName("sendingMetrics"u8);
+                writer.WriteStringValue(SendingMetricsStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(ReasonForMetricsStatus))
+            {
+                writer.WritePropertyName("reasonForMetricsStatus"u8);
+                writer.WriteStringValue(ReasonForMetricsStatus);
+            }
+            if (Optional.IsDefined(SendingLogsStatus))
+            {
+                writer.WritePropertyName("sendingLogs"u8);
+                writer.WriteStringValue(SendingLogsStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(ReasonForLogsStatus))
+            {
+                writer.WritePropertyName("reasonForLogsStatus"u8);
+                writer.WriteStringValue(ReasonForLogsStatus);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DynatraceMonitoredResourceDetails DeserializeDynatraceMonitoredResourceDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> reasonForMetricsStatus = default;
             Optional<LogsSendingStatus> sendingLogs = default;
             Optional<string> reasonForLogsStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -62,8 +116,57 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     reasonForLogsStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DynatraceMonitoredResourceDetails(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new DynatraceMonitoredResourceDetails(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value, rawData);
+        }
+
+        DynatraceMonitoredResourceDetails IModelJsonSerializable<DynatraceMonitoredResourceDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceMonitoredResourceDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DynatraceMonitoredResourceDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DynatraceMonitoredResourceDetails IModelSerializable<DynatraceMonitoredResourceDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDynatraceMonitoredResourceDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DynatraceMonitoredResourceDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DynatraceMonitoredResourceDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDynatraceMonitoredResourceDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> The response of a TagRule list operation. </summary>
     internal partial class TagRuleListResult
     {
-        /// <summary> Initializes a new instance of TagRuleListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TagRuleListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TagRuleListResult(IEnumerable<DynatraceTagRuleData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TagRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagRuleListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal TagRuleListResult(IReadOnlyList<DynatraceTagRuleData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TagRuleListResult(IReadOnlyList<DynatraceTagRuleData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TagRuleListResult"/> for deserialization. </summary>
+        internal TagRuleListResult()
+        {
         }
 
         /// <summary> The items on this page. </summary>

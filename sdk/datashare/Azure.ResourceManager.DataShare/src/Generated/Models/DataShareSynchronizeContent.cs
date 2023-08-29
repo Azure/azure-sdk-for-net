@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> Payload for the synchronizing the data. </summary>
     public partial class DataShareSynchronizeContent
     {
-        /// <summary> Initializes a new instance of DataShareSynchronizeContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataShareSynchronizeContent"/>. </summary>
         public DataShareSynchronizeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataShareSynchronizeContent"/>. </summary>
+        /// <param name="synchronizationMode"> Mode of synchronization used in triggers and snapshot sync. Incremental by default. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataShareSynchronizeContent(SynchronizationMode? synchronizationMode, Dictionary<string, BinaryData> rawData)
+        {
+            SynchronizationMode = synchronizationMode;
+            _rawData = rawData;
         }
 
         /// <summary> Mode of synchronization used in triggers and snapshot sync. Incremental by default. </summary>

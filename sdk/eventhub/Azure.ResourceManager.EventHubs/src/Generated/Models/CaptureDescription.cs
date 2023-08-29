@@ -5,24 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Properties to configure capture description for eventhub. </summary>
     public partial class CaptureDescription
     {
-        /// <summary> Initializes a new instance of CaptureDescription. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CaptureDescription"/>. </summary>
         public CaptureDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of CaptureDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="CaptureDescription"/>. </summary>
         /// <param name="enabled"> A value that indicates whether capture description is enabled. </param>
         /// <param name="encoding"> Enumerates the possible values for the encoding format of capture description. Note: 'AvroDeflate' will be deprecated in New API Version. </param>
         /// <param name="intervalInSeconds"> The time window allows you to set the frequency with which the capture to Azure Blobs will happen, value should between 60 to 900 seconds. </param>
         /// <param name="sizeLimitInBytes"> The size window defines the amount of data built up in your Event Hub before an capture operation, value should be between 10485760 to 524288000 bytes. </param>
         /// <param name="destination"> Properties of Destination where capture will be stored. (Storage Account, Blob Names). </param>
         /// <param name="skipEmptyArchives"> A value that indicates whether to Skip Empty Archives. </param>
-        internal CaptureDescription(bool? enabled, EncodingCaptureDescription? encoding, int? intervalInSeconds, int? sizeLimitInBytes, EventHubDestination destination, bool? skipEmptyArchives)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CaptureDescription(bool? enabled, EncodingCaptureDescription? encoding, int? intervalInSeconds, int? sizeLimitInBytes, EventHubDestination destination, bool? skipEmptyArchives, Dictionary<string, BinaryData> rawData)
         {
             Enabled = enabled;
             Encoding = encoding;
@@ -30,6 +36,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             SizeLimitInBytes = sizeLimitInBytes;
             Destination = destination;
             SkipEmptyArchives = skipEmptyArchives;
+            _rawData = rawData;
         }
 
         /// <summary> A value that indicates whether capture description is enabled. </summary>

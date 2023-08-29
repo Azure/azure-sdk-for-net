@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterNetworkConnectionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterNetworkConnectionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevCenterNetworkConnectionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterNetworkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +43,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="healthCheckStatus"> Overall health status of the network connection. Health checks are run on creation, update, and periodically to validate the network connection. </param>
         /// <param name="networkingResourceGroupName"> The name for resource group where NICs will be placed. </param>
         /// <param name="domainJoinType"> AAD Join type. </param>
-        internal DevCenterNetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string domainName, string organizationUnit, string domainUsername, string domainPassword, DevCenterProvisioningState? provisioningState, DevCenterHealthCheckStatus? healthCheckStatus, string networkingResourceGroupName, DomainJoinType? domainJoinType) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterNetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string domainName, string organizationUnit, string domainUsername, string domainPassword, DevCenterProvisioningState? provisioningState, DevCenterHealthCheckStatus? healthCheckStatus, string networkingResourceGroupName, DomainJoinType? domainJoinType, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             SubnetId = subnetId;
             DomainName = domainName;
@@ -51,6 +55,12 @@ namespace Azure.ResourceManager.DevCenter
             HealthCheckStatus = healthCheckStatus;
             NetworkingResourceGroupName = networkingResourceGroupName;
             DomainJoinType = domainJoinType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionData"/> for deserialization. </summary>
+        internal DevCenterNetworkConnectionData()
+        {
         }
 
         /// <summary> The subnet to attach Virtual Machines to. </summary>

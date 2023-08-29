@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Response for Volume request. </summary>
     public partial class ElasticSanVolumePatch
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumePatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
         public ElasticSanVolumePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
+        /// <param name="sizeGiB"> Volume size. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumePatch(long? sizeGiB, Dictionary<string, BinaryData> rawData)
+        {
+            SizeGiB = sizeGiB;
+            _rawData = rawData;
         }
 
         /// <summary> Volume size. </summary>

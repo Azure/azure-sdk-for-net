@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Configuration filters. </summary>
     public partial class ConfigurationFilters
     {
-        /// <summary> Initializes a new instance of ConfigurationFilters. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationFilters"/>. </summary>
         /// <param name="hierarchyInformation"> Product hierarchy information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hierarchyInformation"/> is null. </exception>
         public ConfigurationFilters(HierarchyInformation hierarchyInformation)
@@ -23,6 +25,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             HierarchyInformation = hierarchyInformation;
             FilterableProperty = new ChangeTrackingList<FilterableProperty>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationFilters"/>. </summary>
+        /// <param name="hierarchyInformation"> Product hierarchy information. </param>
+        /// <param name="filterableProperty"> Filters specific to product. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationFilters(HierarchyInformation hierarchyInformation, IList<FilterableProperty> filterableProperty, Dictionary<string, BinaryData> rawData)
+        {
+            HierarchyInformation = hierarchyInformation;
+            FilterableProperty = filterableProperty;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationFilters"/> for deserialization. </summary>
+        internal ConfigurationFilters()
+        {
         }
 
         /// <summary> Product hierarchy information. </summary>

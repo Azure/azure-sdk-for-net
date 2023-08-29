@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of node pool rolling events. </summary>
     public partial class ContainerServiceNodePoolRollingEventData
     {
-        /// <summary> Initializes a new instance of ContainerServiceNodePoolRollingEventData. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingEventData"/>. </summary>
         internal ContainerServiceNodePoolRollingEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceNodePoolRollingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
-        internal ContainerServiceNodePoolRollingEventData(string nodePoolName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceNodePoolRollingEventData(string nodePoolName, Dictionary<string, BinaryData> rawData)
         {
             NodePoolName = nodePoolName;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the node pool in the ManagedCluster resource. </summary>

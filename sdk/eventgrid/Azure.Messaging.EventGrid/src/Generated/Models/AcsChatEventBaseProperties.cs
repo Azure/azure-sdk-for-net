@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all chat events. </summary>
     public partial class AcsChatEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatEventBaseProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsChatEventBaseProperties"/>. </summary>
         internal AcsChatEventBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatEventBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatEventBaseProperties"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
-        internal AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, Dictionary<string, BinaryData> rawData)
         {
             RecipientCommunicationIdentifier = recipientCommunicationIdentifier;
             TransactionId = transactionId;
             ThreadId = threadId;
+            _rawData = rawData;
         }
 
         /// <summary> The communication identifier of the target user. </summary>

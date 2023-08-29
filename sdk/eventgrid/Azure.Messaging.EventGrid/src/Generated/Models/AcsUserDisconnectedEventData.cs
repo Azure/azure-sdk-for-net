@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.UserDisconnected event. </summary>
     public partial class AcsUserDisconnectedEventData
     {
-        /// <summary> Initializes a new instance of AcsUserDisconnectedEventData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsUserDisconnectedEventData"/>. </summary>
         internal AcsUserDisconnectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsUserDisconnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsUserDisconnectedEventData"/>. </summary>
         /// <param name="userCommunicationIdentifier"> The communication identifier of the user who was disconnected. </param>
-        internal AcsUserDisconnectedEventData(CommunicationIdentifierModel userCommunicationIdentifier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsUserDisconnectedEventData(CommunicationIdentifierModel userCommunicationIdentifier, Dictionary<string, BinaryData> rawData)
         {
             UserCommunicationIdentifier = userCommunicationIdentifier;
+            _rawData = rawData;
         }
 
         /// <summary> The communication identifier of the user who was disconnected. </summary>

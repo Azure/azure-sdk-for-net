@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> A collection of IoT Connector FHIR destinations. </summary>
     internal partial class IotFhirDestinationCollection
     {
-        /// <summary> Initializes a new instance of IotFhirDestinationCollection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotFhirDestinationCollection"/>. </summary>
         internal IotFhirDestinationCollection()
         {
             Value = new ChangeTrackingList<HealthcareApisIotFhirDestinationData>();
         }
 
-        /// <summary> Initializes a new instance of IotFhirDestinationCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotFhirDestinationCollection"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of IoT FHIR destinations. </param>
         /// <param name="value"> The list of IoT Connector FHIR destinations. </param>
-        internal IotFhirDestinationCollection(string nextLink, IReadOnlyList<HealthcareApisIotFhirDestinationData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotFhirDestinationCollection(string nextLink, IReadOnlyList<HealthcareApisIotFhirDestinationData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of IoT FHIR destinations. </summary>
