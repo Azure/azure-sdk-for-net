@@ -10,7 +10,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// </summary>
     public partial class AnalyzeResult
     {
-        private string ApiVersion { get; }
+        /// <summary>
+        /// Service version used to produce this result.
+        /// </summary>
+        [CodeGenMember("ApiVersion")]
+        public string ServiceVersion { get; }
 
         private StringIndexType StringIndexType { get; }
     }

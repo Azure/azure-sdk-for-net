@@ -215,7 +215,7 @@ namespace Azure.Storage.DataMovement
             _isSingleResource = true;
             _initialTransferSize = transferOptions?.InitialTransferSize;
             _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
-            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.ProgressHandlerOptions);
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.Storage.DataMovement
             _isSingleResource = false;
             _initialTransferSize = transferOptions?.InitialTransferSize;
             _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
-            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.ProgressHandlerOptions);
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
         }
 
         public void Dispose()
@@ -517,7 +517,7 @@ namespace Azure.Storage.DataMovement
 
         internal List<string> GetJobPartSourceResourcePaths()
         {
-            return _jobParts.Select( x => x._sourceResource.Path ).ToList();
+            return _jobParts.Select( x => x._sourceResource.Uri.GetPath() ).ToList();
         }
 
         internal void QueueJobPart()

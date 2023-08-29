@@ -166,7 +166,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotNull(model.ModelId);
             Assert.AreNotEqual(default(DateTimeOffset), model.CreatedOn);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 if (model.ExpiresOn.HasValue)
                 {

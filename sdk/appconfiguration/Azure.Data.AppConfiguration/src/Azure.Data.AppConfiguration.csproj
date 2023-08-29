@@ -8,7 +8,7 @@
     <ApiCompatVersion>1.2.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Application Configuration;Data;AppConfig;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);3021;AZC0007;</NoWarn>
+    <NoWarn>$(NoWarn);3021;</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
