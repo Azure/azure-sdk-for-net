@@ -177,7 +177,7 @@ namespace Azure.Core
             _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="System.TypeSpec.Result.ContentStream"/> or <see cref="System.TypeSpec.Result.Content"/> would result in exception.
+        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="System.ServiceModel.Rest.Result.ContentStream"/> or <see cref="System.ServiceModel.Rest.Result.Content"/> would result in exception.
         /// </summary>
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()

@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.ServiceModel.Rest;
 using System.Threading;
 using System.Threading.Tasks;
-using System.TypeSpec;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {

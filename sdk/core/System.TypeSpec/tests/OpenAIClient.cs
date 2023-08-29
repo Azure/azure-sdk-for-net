@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System;
 using System.ServiceModel.Rest;
 using System.Threading;
 

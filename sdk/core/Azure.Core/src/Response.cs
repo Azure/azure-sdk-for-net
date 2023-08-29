@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.TypeSpec;
+using System.ServiceModel.Rest;
 using Azure.Core;
 
 namespace Azure
