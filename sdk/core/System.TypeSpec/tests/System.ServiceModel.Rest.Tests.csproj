@@ -12,7 +12,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\src\System.TypeSpec.csproj" />
+    <ProjectReference Include="..\src\System.ServiceModel.Rest.csproj" />
     <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 

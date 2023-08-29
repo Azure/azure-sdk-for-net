@@ -3,9 +3,10 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System.ServiceModel.Rest;
 using System.Threading;
 
-namespace System.TypeSpec.Tests;
+namespace OpenAI;
 
 public class OpenAIClient
 {

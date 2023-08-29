@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.33808.371
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.TypeSpec", "System.TypeSpec.csproj", "{96EC934A-0A76-4A8B-AA0F-D56F7A960859}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.ServiceModel.Rest", "System.ServiceModel.Rest.csproj", "{96EC934A-0A76-4A8B-AA0F-D56F7A960859}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.TypeSpec.Tests", "..\tests\System.TypeSpec.Tests.csproj", "{55424CDB-3CA4-4C71-99A3-9F24C77D0D4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.ServiceModel.Rest.Tests", "..\tests\System.ServiceModel.Rest.Tests.csproj", "{55424CDB-3CA4-4C71-99A3-9F24C77D0D4B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\Azure.Core\src\Azure.Core.csproj", "{48A2D4D9-0F3C-4D6E-AF1E-D119A834720C}"
 EndProject

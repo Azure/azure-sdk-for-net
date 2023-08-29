@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace System.TypeSpec;
+namespace System.ServiceModel.Rest;
 
 /// <summary>
 /// TBD.

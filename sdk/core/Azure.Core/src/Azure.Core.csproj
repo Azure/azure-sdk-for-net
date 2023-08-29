@@ -85,7 +85,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\System.TypeSpec\src\System.TypeSpec.csproj" />
+    <ProjectReference Include="..\..\System.TypeSpec\src\System.ServiceModel.Rest.csproj" />
   </ItemGroup>
 
 </Project>
