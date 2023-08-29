@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             _resourceGroup = await CreateResourceGroup(
                _subscription,
                "Maintenance-RG-",
-               AzureLocation.CentralUS);
+               new AzureLocation("centraluseuap"));
 
             _configCollection = _resourceGroup.GetMaintenanceApplyUpdates();
         }
@@ -49,8 +49,9 @@ namespace Azure.ResourceManager.Maintenance.Tests
         [RecordedTest]
         public async Task MaintenanceConfigurationCancelTest()
         {
-            string resourceName = Recording.GenerateAssetName("maintenance-config-");
-            MaintenanceConfigurationResource config = await CreateMaintenanceConfiguration(resourceName);
+            string resourceName = Recording.GenerateAssetName("maintenance-config-adanapopescu-");
+            DateTime startOn = DateTime.UtcNow.AddMinutes(42);
+            MaintenanceConfigurationResource config = await CreateMaintenanceConfiguration(resourceName, startOn);
 
             Console.WriteLine("Got config: " + JsonConvert.SerializeObject(config.Data));
             Console.WriteLine("Here1 - " + DateTime.Now);
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             };
             string providerName = "Microsoft.Maintenance";
             string resourceType = "maintenanceConfigurations";
-            string applyUpdateName = "20230901121200";
+            string applyUpdateName = $"{startOn:yyyyMMddHHmmss}";
 
             //await Delay(15 * 60 * 1000);
             //await Delay(5 * 1000);
@@ -70,17 +71,18 @@ namespace Azure.ResourceManager.Maintenance.Tests
             //Assert.IsNotEmpty(retrieveConfig.Value.Data.Id);
             //Console.WriteLine("Got retrieved config: " + JsonConvert.SerializeObject(retrieveConfig.Value.Data));
 
-            await Delay(5 * 1000);
+            //await Delay(5 * 1000);
             var exists = await _configCollection.ExistsAsync(providerName, resourceType, resourceName, applyUpdateName);
             Console.WriteLine("Exists: " + exists.Value);
 
-           // await Delay(5 * 1000);
+            // await Delay(5 * 1000);
             //var retrieveUpdateConfig = await _configCollection.GetAsync(providerName, resourceType, resourceName, applyUpdateName);
             //Assert.IsNotEmpty(retrieveUpdateConfig.Value.Data.Id);
             //Console.WriteLine("Got retrieved update config: " + JsonConvert.SerializeObject(retrieveUpdateConfig.Value.Data));
 
             // wait 10 minutes
-            //await Delay(10 * 60 * 1000);
+            await Delay(10 * 60 * 1000);
+            Console.WriteLine("Here2 - " + DateTime.Now);
 
             ArmOperation<MaintenanceApplyUpdateResource> lro = await _configCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName, resourceType, resourceName, applyUpdateName, data);
             MaintenanceApplyUpdateResource result = lro.Value;
@@ -88,20 +90,30 @@ namespace Azure.ResourceManager.Maintenance.Tests
             Console.WriteLine("Got update: " + JsonConvert.SerializeObject(result.Data));
         }
 
-        private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration(string resourceName)
+        private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration(string resourceName, DateTime startOn)
         {
-            MaintenanceConfigurationData data = new MaintenanceConfigurationData(AzureLocation.CentralUS)
+            MaintenanceConfigurationData data = new MaintenanceConfigurationData(new AzureLocation("centraluseuap"))
             {
                 Namespace = "Microsoft.Maintenance",
-                MaintenanceScope = MaintenanceScope.Host,
+                MaintenanceScope = MaintenanceScope.InGuestPatch,
                 Visibility = MaintenanceConfigurationVisibility.Custom,
-                StartOn = DateTimeOffset.Parse("2023-12-31 00:00"),
+                StartOn = startOn,
                 ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
-                Duration = TimeSpan.Parse("05:00"),
+                Duration = TimeSpan.Parse("03:55"),
                 TimeZone = "Pacific Standard Time",
                 RecurEvery = "Day",
+                InstallPatches = new MaintenancePatchConfiguration()
+                {
+                    LinuxParameters = new MaintenanceLinuxPatchSettings (null, null, new List<string>() { "Critical", "Security" }),
+                    RebootSetting=MaintenanceRebootOption.IfRequired,
+                    WindowsParameters = new MaintenanceWindowsPatchSettings(),
+                },
             };
+            data.InstallPatches.WindowsParameters.ClassificationsToInclude.Add("CriticalUpdates");
+            data.ExtensionProperties.Add("InGuestPatchMode", "User");
+
             ArmOperation<MaintenanceConfigurationResource> lro = await _resourceGroup.GetMaintenanceConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
+
             return lro.Value;
         }
     }
