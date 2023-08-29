@@ -1,31 +1,33 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ComponentModel;
-
 namespace System.TypeSpec;
 
 /// <summary>
 /// TBD.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public abstract class Result<T> : NullableResult<T>
+public abstract class NullableResult<T>
 {
     /// <summary>
     /// TBD.
     /// </summary>
     /// <param result=""></param>
-    public Result(Result result) : base(result) {
+    public NullableResult(Result result) {
     }
 
     /// <summary>
     /// TBD.
     /// </summary>
-    public abstract override T Value { get; }
+    public abstract bool HasValue { get; }
 
     /// <summary>
     /// TBD.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override bool HasValue => true;
+    public abstract T? Value { get; }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public abstract Result GetRawResult();
 }

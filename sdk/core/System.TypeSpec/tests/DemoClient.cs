@@ -19,7 +19,7 @@ public class DemoClient
     {
         HttpMessage message = _pipeline.CreateMessage();
         _pipeline.Send(message, cancellationToken);
-        return new Result<FooModel>(message.Response);
+        return Result.FromValue(new FooModel(), message.Response);
     }
 }
 
