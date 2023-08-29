@@ -251,7 +251,6 @@ namespace Azure.Storage.DataMovement.Tests
             AssertTransferStatusCollection(
                 new DataTransferStatus[] {
                     InProgressStatus,
-                    InProgressFailedStatus,
                     StoppingFailedStatus,
                     FailedCompletedStatus },
                 StatusEvents.Select(e => e.TransferStatus).ToArray());
@@ -284,7 +283,6 @@ namespace Azure.Storage.DataMovement.Tests
                 new DataTransferStatus[] {
                     InProgressStatus,
                     InProgressFailedStatus,
-                    StoppingFailedStatus,
                     FailedCompletedStatus },
                 StatusEvents.Select(e => e.TransferStatus).ToArray());
         }
