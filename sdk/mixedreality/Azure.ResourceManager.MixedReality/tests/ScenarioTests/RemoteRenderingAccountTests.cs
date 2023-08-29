@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var remoteRenderingAccountResource = await CreateRemoteRenderingAccount(resourceName);
             RemoteRenderingAccountResource result = await remoteRenderingAccountResource.GetAsync();
             Assert.IsNotEmpty(result.Data.Id);
-            Assert.AreEqual(result.Data.Name, result.Data.Name);
+            Assert.AreEqual(result.Data.Name, remoteRenderingAccountResource.Data.Name);
         }
 
         [Test]
