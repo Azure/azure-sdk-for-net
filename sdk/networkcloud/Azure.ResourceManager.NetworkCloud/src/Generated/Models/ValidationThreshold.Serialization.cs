@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ValidationThreshold : IUtf8JsonSerializable
+    public partial class ValidationThreshold : IUtf8JsonSerializable, IModelJsonSerializable<ValidationThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ValidationThreshold>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ValidationThreshold>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("grouping"u8);
             writer.WriteStringValue(Grouping.ToString());
@@ -21,11 +29,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(ThresholdType.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ValidationThreshold DeserializeValidationThreshold(JsonElement element)
+        internal static ValidationThreshold DeserializeValidationThreshold(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ValidationThresholdGrouping grouping = default;
             ValidationThresholdType type = default;
             long value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("grouping"u8))
@@ -50,8 +73,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     value = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ValidationThreshold(grouping, type, value);
+            return new ValidationThreshold(grouping, type, value, rawData);
+        }
+
+        ValidationThreshold IModelJsonSerializable<ValidationThreshold>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeValidationThreshold(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ValidationThreshold>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ValidationThreshold IModelSerializable<ValidationThreshold>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeValidationThreshold(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ValidationThreshold model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ValidationThreshold(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeValidationThreshold(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

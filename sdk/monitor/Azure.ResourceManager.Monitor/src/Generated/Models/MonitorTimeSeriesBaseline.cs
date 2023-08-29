@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The baseline values for a single time series. </summary>
     public partial class MonitorTimeSeriesBaseline
     {
-        /// <summary> Initializes a new instance of MonitorTimeSeriesBaseline. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorTimeSeriesBaseline"/>. </summary>
         /// <param name="aggregation"> The aggregation type of the metric. </param>
         /// <param name="timestamps"> The list of timestamps of the baselines. </param>
         /// <param name="data"> The baseline values for each sensitivity. </param>
@@ -33,19 +35,26 @@ namespace Azure.ResourceManager.Monitor.Models
             MetadataValues = new ChangeTrackingList<MonitorBaselineMetadata>();
         }
 
-        /// <summary> Initializes a new instance of MonitorTimeSeriesBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorTimeSeriesBaseline"/>. </summary>
         /// <param name="aggregation"> The aggregation type of the metric. </param>
         /// <param name="dimensions"> The dimensions of this time series. </param>
         /// <param name="timestamps"> The list of timestamps of the baselines. </param>
         /// <param name="data"> The baseline values for each sensitivity. </param>
         /// <param name="metadataValues"> The baseline metadata values. </param>
-        internal MonitorTimeSeriesBaseline(string aggregation, IReadOnlyList<MonitorMetricSingleDimension> dimensions, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<MonitorSingleBaseline> data, IReadOnlyList<MonitorBaselineMetadata> metadataValues)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorTimeSeriesBaseline(string aggregation, IReadOnlyList<MonitorMetricSingleDimension> dimensions, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<MonitorSingleBaseline> data, IReadOnlyList<MonitorBaselineMetadata> metadataValues, Dictionary<string, BinaryData> rawData)
         {
             Aggregation = aggregation;
             Dimensions = dimensions;
             Timestamps = timestamps;
             Data = data;
             MetadataValues = metadataValues;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorTimeSeriesBaseline"/> for deserialization. </summary>
+        internal MonitorTimeSeriesBaseline()
+        {
         }
 
         /// <summary> The aggregation type of the metric. </summary>

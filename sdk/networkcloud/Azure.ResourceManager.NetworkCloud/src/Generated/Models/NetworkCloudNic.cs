@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> Type Deprecated. Will be removed in an upcoming version. Nic represents the network interface card details. </summary>
     public partial class NetworkCloudNic
     {
-        /// <summary> Initializes a new instance of NetworkCloudNic. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudNic"/>. </summary>
         internal NetworkCloudNic()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudNic. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudNic"/>. </summary>
         /// <param name="lldpNeighbor"> The information about the device connected to this NIC. </param>
         /// <param name="macAddress"> The MAC address associated with this NIC. </param>
         /// <param name="name"> The name of the NIC/interface. </param>
-        internal NetworkCloudNic(LldpNeighbor lldpNeighbor, string macAddress, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudNic(LldpNeighbor lldpNeighbor, string macAddress, string name, Dictionary<string, BinaryData> rawData)
         {
             LldpNeighbor = lldpNeighbor;
             MacAddress = macAddress;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> The information about the device connected to this NIC. </summary>

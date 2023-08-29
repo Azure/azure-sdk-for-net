@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class PrivateEndpointData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointData"/>. </summary>
         public PrivateEndpointData()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Network
             IPConfigurations = new ChangeTrackingList<PrivateEndpointIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -47,7 +48,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroups"> Application security groups in which the private endpoint IP configuration is included. </param>
         /// <param name="ipConfigurations"> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service's endpoints. </param>
         /// <param name="customNetworkInterfaceName"> The custom name of the network interface attached to the private endpoint. </param>
-        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigProperties> customDnsConfigs, IList<ApplicationSecurityGroupData> applicationSecurityGroups, IList<PrivateEndpointIPConfiguration> ipConfigurations, string customNetworkInterfaceName) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigProperties> customDnsConfigs, IList<ApplicationSecurityGroupData> applicationSecurityGroups, IList<PrivateEndpointIPConfiguration> ipConfigurations, string customNetworkInterfaceName, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;

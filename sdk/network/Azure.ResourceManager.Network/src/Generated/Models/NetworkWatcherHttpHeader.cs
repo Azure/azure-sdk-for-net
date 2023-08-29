@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The HTTP header. </summary>
     public partial class NetworkWatcherHttpHeader
     {
-        /// <summary> Initializes a new instance of NetworkWatcherHttpHeader. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkWatcherHttpHeader"/>. </summary>
         public NetworkWatcherHttpHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkWatcherHttpHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWatcherHttpHeader"/>. </summary>
         /// <param name="name"> The name in HTTP header. </param>
         /// <param name="value"> The value in HTTP header. </param>
-        internal NetworkWatcherHttpHeader(string name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkWatcherHttpHeader(string name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The name in HTTP header. </summary>

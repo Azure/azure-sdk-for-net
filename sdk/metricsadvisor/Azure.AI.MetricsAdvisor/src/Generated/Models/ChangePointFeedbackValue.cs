@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ChangePointFeedbackValue. </summary>
     internal partial class ChangePointFeedbackValue
     {
-        /// <summary> Initializes a new instance of ChangePointFeedbackValue. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChangePointFeedbackValue"/>. </summary>
         /// <param name="changePointValue"></param>
         public ChangePointFeedbackValue(ChangePointValue changePointValue)
         {
             ChangePointValue = changePointValue;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChangePointFeedbackValue"/>. </summary>
+        /// <param name="changePointValue"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChangePointFeedbackValue(ChangePointValue changePointValue, Dictionary<string, BinaryData> rawData)
+        {
+            ChangePointValue = changePointValue;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChangePointFeedbackValue"/> for deserialization. </summary>
+        internal ChangePointFeedbackValue()
+        {
         }
 
         /// <summary> Gets or sets the change point value. </summary>

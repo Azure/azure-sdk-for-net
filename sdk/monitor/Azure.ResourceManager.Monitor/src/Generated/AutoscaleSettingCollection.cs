@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _autoscaleSettingRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autoscaleSettingRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), _autoscaleSettingClientDiagnostics, Pipeline, "AutoscaleSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), _autoscaleSettingClientDiagnostics, Pipeline, "AutoscaleSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _autoscaleSettingRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autoscaleSettingRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), _autoscaleSettingClientDiagnostics, Pipeline, "AutoscaleSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), _autoscaleSettingClientDiagnostics, Pipeline, "AutoscaleSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class HardThresholdCondition : IUtf8JsonSerializable
+    public partial class HardThresholdCondition : IUtf8JsonSerializable, IModelJsonSerializable<HardThresholdCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HardThresholdCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HardThresholdCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LowerBound))
             {
@@ -29,11 +37,25 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
             writer.WritePropertyName("suppressCondition"u8);
             writer.WriteObjectValue(SuppressCondition);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HardThresholdCondition DeserializeHardThresholdCondition(JsonElement element)
+        internal static HardThresholdCondition DeserializeHardThresholdCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<double> upperBound = default;
             AnomalyDetectorDirection anomalyDetectorDirection = default;
             SuppressCondition suppressCondition = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lowerBound"u8))
@@ -72,8 +95,57 @@ namespace Azure.AI.MetricsAdvisor.Models
                     suppressCondition = Models.SuppressCondition.DeserializeSuppressCondition(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HardThresholdCondition(Optional.ToNullable(lowerBound), Optional.ToNullable(upperBound), anomalyDetectorDirection, suppressCondition);
+            return new HardThresholdCondition(Optional.ToNullable(lowerBound), Optional.ToNullable(upperBound), anomalyDetectorDirection, suppressCondition, rawData);
+        }
+
+        HardThresholdCondition IModelJsonSerializable<HardThresholdCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHardThresholdCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HardThresholdCondition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HardThresholdCondition IModelSerializable<HardThresholdCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHardThresholdCondition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HardThresholdCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HardThresholdCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHardThresholdCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

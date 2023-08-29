@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class ActionGroupData : IUtf8JsonSerializable
+    public partial class ActionGroupData : IUtf8JsonSerializable, IModelJsonSerializable<ActionGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ActionGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ActionGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -154,11 +161,25 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ActionGroupData DeserializeActionGroupData(JsonElement element)
+        internal static ActionGroupData DeserializeActionGroupData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -182,6 +203,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<IList<MonitorAzureFunctionReceiver>> azureFunctionReceivers = default;
             Optional<IList<MonitorArmRoleReceiver>> armRoleReceivers = default;
             Optional<IList<MonitorEventHubReceiver>> eventHubReceivers = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -407,8 +429,57 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers));
+            return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers), rawData);
+        }
+
+        ActionGroupData IModelJsonSerializable<ActionGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeActionGroupData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ActionGroupData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ActionGroupData IModelSerializable<ActionGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeActionGroupData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ActionGroupData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ActionGroupData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeActionGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

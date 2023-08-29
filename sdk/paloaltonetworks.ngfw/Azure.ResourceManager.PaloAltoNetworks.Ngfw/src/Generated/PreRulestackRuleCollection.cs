@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preRulestackRulePreRulesRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preRulestackRulePreRulesRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PreRulestackRuleResource(Client, PreRulestackRuleData.DeserializePreRulestackRuleData(e)), _preRulestackRulePreRulesClientDiagnostics, Pipeline, "PreRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PreRulestackRuleResource(Client, PreRulestackRuleData.DeserializePreRulestackRuleData(e)), _preRulestackRulePreRulesClientDiagnostics, Pipeline, "PreRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preRulestackRulePreRulesRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preRulestackRulePreRulesRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PreRulestackRuleResource(Client, PreRulestackRuleData.DeserializePreRulestackRuleData(e)), _preRulestackRulePreRulesClientDiagnostics, Pipeline, "PreRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PreRulestackRuleResource(Client, PreRulestackRuleData.DeserializePreRulestackRuleData(e)), _preRulestackRulePreRulesClientDiagnostics, Pipeline, "PreRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

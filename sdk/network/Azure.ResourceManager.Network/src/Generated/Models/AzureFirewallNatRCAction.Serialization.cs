@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class AzureFirewallNatRCAction : IUtf8JsonSerializable
+    internal partial class AzureFirewallNatRCAction : IUtf8JsonSerializable, IModelJsonSerializable<AzureFirewallNatRCAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureFirewallNatRCAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureFirewallNatRCAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureFirewallNatRCAction DeserializeAzureFirewallNatRCAction(JsonElement element)
+        internal static AzureFirewallNatRCAction DeserializeAzureFirewallNatRCAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AzureFirewallNatRCActionType> type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -41,8 +64,57 @@ namespace Azure.ResourceManager.Network.Models
                     type = new AzureFirewallNatRCActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureFirewallNatRCAction(Optional.ToNullable(type));
+            return new AzureFirewallNatRCAction(Optional.ToNullable(type), rawData);
+        }
+
+        AzureFirewallNatRCAction IModelJsonSerializable<AzureFirewallNatRCAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureFirewallNatRCAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureFirewallNatRCAction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureFirewallNatRCAction IModelSerializable<AzureFirewallNatRCAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureFirewallNatRCAction(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AzureFirewallNatRCAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AzureFirewallNatRCAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureFirewallNatRCAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

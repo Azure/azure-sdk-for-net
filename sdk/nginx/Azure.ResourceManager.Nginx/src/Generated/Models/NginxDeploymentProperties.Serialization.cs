@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxDeploymentProperties : IUtf8JsonSerializable
+    public partial class NginxDeploymentProperties : IUtf8JsonSerializable, IModelJsonSerializable<NginxDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NginxDeploymentProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NginxDeploymentProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedResourceGroup))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NginxDeploymentProperties DeserializeNginxDeploymentProperties(JsonElement element)
+        internal static NginxDeploymentProperties DeserializeNginxDeploymentProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +73,7 @@ namespace Azure.ResourceManager.Nginx.Models
             Optional<string> ipAddress = default;
             Optional<bool> enableDiagnosticsSupport = default;
             Optional<NginxLogging> logging = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -104,8 +127,57 @@ namespace Azure.ResourceManager.Nginx.Models
                     logging = NginxLogging.DeserializeNginxLogging(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value);
+            return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value, rawData);
+        }
+
+        NginxDeploymentProperties IModelJsonSerializable<NginxDeploymentProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNginxDeploymentProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NginxDeploymentProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NginxDeploymentProperties IModelSerializable<NginxDeploymentProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNginxDeploymentProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NginxDeploymentProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NginxDeploymentProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNginxDeploymentProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

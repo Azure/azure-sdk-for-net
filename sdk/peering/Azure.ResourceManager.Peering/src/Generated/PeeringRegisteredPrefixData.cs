@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Peering.Models;
@@ -17,12 +19,14 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeeringRegisteredPrefixData : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixData"/>. </summary>
         public PeeringRegisteredPrefixData()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +36,15 @@ namespace Azure.ResourceManager.Peering
         /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
         /// <param name="errorMessage"> The error message associated with the validation state, if any. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PeeringRegisteredPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, string peeringServicePrefixKey, string errorMessage, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringRegisteredPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, string peeringServicePrefixKey, string errorMessage, PeeringProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Prefix = prefix;
             PrefixValidationState = prefixValidationState;
             PeeringServicePrefixKey = peeringServicePrefixKey;
             ErrorMessage = errorMessage;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> The customer's prefix from which traffic originates. </summary>

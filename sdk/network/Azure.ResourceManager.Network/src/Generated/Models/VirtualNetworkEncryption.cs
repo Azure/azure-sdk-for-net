@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </summary>
     public partial class VirtualNetworkEncryption
     {
-        /// <summary> Initializes a new instance of VirtualNetworkEncryption. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/>. </summary>
         /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
         public VirtualNetworkEncryption(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/>. </summary>
         /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
         /// <param name="enforcement"> If the encrypted VNet allows VM that does not support encryption. </param>
-        internal VirtualNetworkEncryption(bool isEnabled, VirtualNetworkEncryptionEnforcement? enforcement)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkEncryption(bool isEnabled, VirtualNetworkEncryptionEnforcement? enforcement, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             Enforcement = enforcement;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/> for deserialization. </summary>
+        internal VirtualNetworkEncryption()
+        {
         }
 
         /// <summary> Indicates if encryption is enabled on the virtual network. </summary>

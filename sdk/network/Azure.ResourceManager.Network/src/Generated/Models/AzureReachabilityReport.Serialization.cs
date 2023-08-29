@@ -5,16 +5,54 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureReachabilityReport
+    public partial class AzureReachabilityReport : IUtf8JsonSerializable, IModelJsonSerializable<AzureReachabilityReport>
     {
-        internal static AzureReachabilityReport DeserializeAzureReachabilityReport(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureReachabilityReport>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureReachabilityReport>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("aggregationLevel"u8);
+            writer.WriteStringValue(AggregationLevel);
+            writer.WritePropertyName("providerLocation"u8);
+            writer.WriteObjectValue(ProviderLocation);
+            writer.WritePropertyName("reachabilityReport"u8);
+            writer.WriteStartArray();
+            foreach (var item in ReachabilityReport)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AzureReachabilityReport DeserializeAzureReachabilityReport(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
             string aggregationLevel = default;
             AzureReachabilityReportLocation providerLocation = default;
             IReadOnlyList<AzureReachabilityReportItem> reachabilityReport = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregationLevel"u8))
@@ -44,8 +83,57 @@ namespace Azure.ResourceManager.Network.Models
                     reachabilityReport = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureReachabilityReport(aggregationLevel, providerLocation, reachabilityReport);
+            return new AzureReachabilityReport(aggregationLevel, providerLocation, reachabilityReport, rawData);
+        }
+
+        AzureReachabilityReport IModelJsonSerializable<AzureReachabilityReport>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureReachabilityReport(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureReachabilityReport>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureReachabilityReport IModelSerializable<AzureReachabilityReport>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureReachabilityReport(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AzureReachabilityReport model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AzureReachabilityReport(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureReachabilityReport(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

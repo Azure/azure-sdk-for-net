@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Orbital;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Response for the AvailableGroundStations API service call. </summary>
     internal partial class AvailableGroundStationListResult
     {
-        /// <summary> Initializes a new instance of AvailableGroundStationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableGroundStationListResult"/>. </summary>
         internal AvailableGroundStationListResult()
         {
             Value = new ChangeTrackingList<AvailableGroundStationData>();
         }
 
-        /// <summary> Initializes a new instance of AvailableGroundStationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableGroundStationListResult"/>. </summary>
         /// <param name="value"> A list of ground station resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal AvailableGroundStationListResult(IReadOnlyList<AvailableGroundStationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableGroundStationListResult(IReadOnlyList<AvailableGroundStationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of ground station resources. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,12 +15,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Details of a single deployment created by the remediation. </summary>
     public partial class RemediationDeployment
     {
-        /// <summary> Initializes a new instance of RemediationDeployment. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemediationDeployment"/>. </summary>
         internal RemediationDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of RemediationDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationDeployment"/>. </summary>
         /// <param name="remediatedResourceId"> Resource ID of the resource that is being remediated by the deployment. </param>
         /// <param name="deploymentId"> Resource ID of the template deployment that will remediate the resource. </param>
         /// <param name="status"> Status of the remediation deployment. </param>
@@ -27,7 +30,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="error"> Error encountered while remediated the resource. </param>
         /// <param name="createdOn"> The time at which the remediation was created. </param>
         /// <param name="lastUpdatedOn"> The time at which the remediation deployment was last updated. </param>
-        internal RemediationDeployment(ResourceIdentifier remediatedResourceId, ResourceIdentifier deploymentId, string status, AzureLocation? resourceLocation, ResponseError error, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemediationDeployment(ResourceIdentifier remediatedResourceId, ResourceIdentifier deploymentId, string status, AzureLocation? resourceLocation, ResponseError error, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, Dictionary<string, BinaryData> rawData)
         {
             RemediatedResourceId = remediatedResourceId;
             DeploymentId = deploymentId;
@@ -36,6 +40,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Error = error;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
+            _rawData = rawData;
         }
 
         /// <summary> Resource ID of the resource that is being remediated by the deployment. </summary>

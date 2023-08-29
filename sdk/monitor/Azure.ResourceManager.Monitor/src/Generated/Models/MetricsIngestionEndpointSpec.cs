@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of the endpoint used for ingesting metrics. </summary>
     internal partial class MetricsIngestionEndpointSpec
     {
-        /// <summary> Initializes a new instance of MetricsIngestionEndpointSpec. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricsIngestionEndpointSpec"/>. </summary>
         public MetricsIngestionEndpointSpec()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricsIngestionEndpointSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsIngestionEndpointSpec"/>. </summary>
         /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
-        internal MetricsIngestionEndpointSpec(string endpoint)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricsIngestionEndpointSpec(string endpoint, Dictionary<string, BinaryData> rawData)
         {
             Endpoint = endpoint;
+            _rawData = rawData;
         }
 
         /// <summary> The endpoint. This property is READ-ONLY. </summary>

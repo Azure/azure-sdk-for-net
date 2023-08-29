@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class AlertRuleData : IUtf8JsonSerializable
+    public partial class AlertRuleData : IUtf8JsonSerializable, IModelJsonSerializable<AlertRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AlertRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AlertRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -66,11 +72,25 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlertRuleData DeserializeAlertRuleData(JsonElement element)
+        internal static AlertRuleData DeserializeAlertRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +109,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<AlertRuleAction> action = default;
             Optional<IList<AlertRuleAction>> actions = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -203,8 +224,57 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AlertRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0, description.Value, provisioningState.Value, isEnabled, condition, action.Value, Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime));
+            return new AlertRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0, description.Value, provisioningState.Value, isEnabled, condition, action.Value, Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), rawData);
+        }
+
+        AlertRuleData IModelJsonSerializable<AlertRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AlertRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AlertRuleData IModelSerializable<AlertRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAlertRuleData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AlertRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AlertRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAlertRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

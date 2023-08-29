@@ -5,16 +5,78 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyAssignmentSummary
+    public partial class PolicyAssignmentSummary : IUtf8JsonSerializable, IModelJsonSerializable<PolicyAssignmentSummary>
     {
-        internal static PolicyAssignmentSummary DeserializePolicyAssignmentSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyAssignmentSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyAssignmentSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PolicyAssignmentId))
+            {
+                writer.WritePropertyName("policyAssignmentId"u8);
+                writer.WriteStringValue(PolicyAssignmentId);
+            }
+            if (Optional.IsDefined(PolicySetDefinitionId))
+            {
+                writer.WritePropertyName("policySetDefinitionId"u8);
+                writer.WriteStringValue(PolicySetDefinitionId);
+            }
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                writer.WriteObjectValue(Results);
+            }
+            if (Optional.IsCollectionDefined(PolicyDefinitions))
+            {
+                writer.WritePropertyName("policyDefinitions"u8);
+                writer.WriteStartArray();
+                foreach (var item in PolicyDefinitions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PolicyGroups))
+            {
+                writer.WritePropertyName("policyGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in PolicyGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PolicyAssignmentSummary DeserializePolicyAssignmentSummary(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +86,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<PolicySummaryResults> results = default;
             Optional<IReadOnlyList<PolicyDefinitionSummary>> policyDefinitions = default;
             Optional<IReadOnlyList<PolicyGroupSummary>> policyGroups = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyAssignmentId"u8))
@@ -81,8 +144,57 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyGroups = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicyAssignmentSummary(policyAssignmentId.Value, policySetDefinitionId.Value, results.Value, Optional.ToList(policyDefinitions), Optional.ToList(policyGroups));
+            return new PolicyAssignmentSummary(policyAssignmentId.Value, policySetDefinitionId.Value, results.Value, Optional.ToList(policyDefinitions), Optional.ToList(policyGroups), rawData);
+        }
+
+        PolicyAssignmentSummary IModelJsonSerializable<PolicyAssignmentSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyAssignmentSummary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyAssignmentSummary>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyAssignmentSummary IModelSerializable<PolicyAssignmentSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyAssignmentSummary(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PolicyAssignmentSummary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PolicyAssignmentSummary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyAssignmentSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

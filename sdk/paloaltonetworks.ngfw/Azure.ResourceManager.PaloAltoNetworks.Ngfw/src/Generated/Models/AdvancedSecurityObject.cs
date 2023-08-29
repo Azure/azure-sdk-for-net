@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> List of custom and predefined url category. </summary>
     public partial class AdvancedSecurityObject
     {
-        /// <summary> Initializes a new instance of AdvancedSecurityObject. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObject"/>. </summary>
         /// <param name="entry"> URL entry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entry"/> is null. </exception>
         internal AdvancedSecurityObject(IEnumerable<NameDescriptionObject> entry)
@@ -25,13 +27,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Entry = entry.ToList();
         }
 
-        /// <summary> Initializes a new instance of AdvancedSecurityObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObject"/>. </summary>
         /// <param name="advSecurityObjectModelType"> type of object. </param>
         /// <param name="entry"> URL entry. </param>
-        internal AdvancedSecurityObject(string advSecurityObjectModelType, IReadOnlyList<NameDescriptionObject> entry)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdvancedSecurityObject(string advSecurityObjectModelType, IReadOnlyList<NameDescriptionObject> entry, Dictionary<string, BinaryData> rawData)
         {
             AdvSecurityObjectModelType = advSecurityObjectModelType;
             Entry = entry;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObject"/> for deserialization. </summary>
+        internal AdvancedSecurityObject()
+        {
         }
 
         /// <summary> type of object. </summary>

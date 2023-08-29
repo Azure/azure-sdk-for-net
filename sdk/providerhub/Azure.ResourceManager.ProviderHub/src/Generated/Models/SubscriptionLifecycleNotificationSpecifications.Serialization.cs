@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class SubscriptionLifecycleNotificationSpecifications : IUtf8JsonSerializable
+    public partial class SubscriptionLifecycleNotificationSpecifications : IUtf8JsonSerializable, IModelJsonSerializable<SubscriptionLifecycleNotificationSpecifications>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubscriptionLifecycleNotificationSpecifications>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubscriptionLifecycleNotificationSpecifications>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SubscriptionStateOverrideActions))
             {
@@ -32,17 +38,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("softDeleteTTL"u8);
                 writer.WriteStringValue(SoftDeleteTtl.Value, "P");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SubscriptionLifecycleNotificationSpecifications DeserializeSubscriptionLifecycleNotificationSpecifications(JsonElement element)
+        internal static SubscriptionLifecycleNotificationSpecifications DeserializeSubscriptionLifecycleNotificationSpecifications(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<SubscriptionStateOverrideAction>> subscriptionStateOverrideActions = default;
             Optional<TimeSpan> softDeleteTtl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionStateOverrideActions"u8))
@@ -68,8 +89,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     softDeleteTtl = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubscriptionLifecycleNotificationSpecifications(Optional.ToList(subscriptionStateOverrideActions), Optional.ToNullable(softDeleteTtl));
+            return new SubscriptionLifecycleNotificationSpecifications(Optional.ToList(subscriptionStateOverrideActions), Optional.ToNullable(softDeleteTtl), rawData);
+        }
+
+        SubscriptionLifecycleNotificationSpecifications IModelJsonSerializable<SubscriptionLifecycleNotificationSpecifications>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionLifecycleNotificationSpecifications(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubscriptionLifecycleNotificationSpecifications>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubscriptionLifecycleNotificationSpecifications IModelSerializable<SubscriptionLifecycleNotificationSpecifications>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubscriptionLifecycleNotificationSpecifications(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SubscriptionLifecycleNotificationSpecifications model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SubscriptionLifecycleNotificationSpecifications(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubscriptionLifecycleNotificationSpecifications(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

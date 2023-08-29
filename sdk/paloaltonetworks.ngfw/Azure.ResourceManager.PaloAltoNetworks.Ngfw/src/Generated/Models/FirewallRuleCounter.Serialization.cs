@@ -6,15 +6,86 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallRuleCounter
+    public partial class FirewallRuleCounter : IUtf8JsonSerializable, IModelJsonSerializable<FirewallRuleCounter>
     {
-        internal static FirewallRuleCounter DeserializeFirewallRuleCounter(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirewallRuleCounter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirewallRuleCounter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("priority"u8);
+            writer.WriteStringValue(Priority);
+            if (Optional.IsDefined(RuleStackName))
+            {
+                writer.WritePropertyName("ruleStackName"u8);
+                writer.WriteStringValue(RuleStackName);
+            }
+            if (Optional.IsDefined(RuleListName))
+            {
+                writer.WritePropertyName("ruleListName"u8);
+                writer.WriteStringValue(RuleListName);
+            }
+            if (Optional.IsDefined(FirewallName))
+            {
+                writer.WritePropertyName("firewallName"u8);
+                writer.WriteStringValue(FirewallName);
+            }
+            writer.WritePropertyName("ruleName"u8);
+            writer.WriteStringValue(RuleName);
+            if (Optional.IsDefined(HitCount))
+            {
+                writer.WritePropertyName("hitCount"u8);
+                writer.WriteNumberValue(HitCount.Value);
+            }
+            if (Optional.IsDefined(AppSeen))
+            {
+                writer.WritePropertyName("appSeen"u8);
+                writer.WriteObjectValue(AppSeen);
+            }
+            if (Optional.IsDefined(ResponseOn))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(ResponseOn.Value, "O");
+            }
+            if (Optional.IsDefined(RequestOn))
+            {
+                writer.WritePropertyName("requestTimestamp"u8);
+                writer.WriteStringValue(RequestOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdatedTimestamp"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FirewallRuleCounter DeserializeFirewallRuleCounter(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +100,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Optional<DateTimeOffset> timestamp = default;
             Optional<DateTimeOffset> requestTimestamp = default;
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))
@@ -101,8 +173,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirewallRuleCounter(priority, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName, Optional.ToNullable(hitCount), appSeen.Value, Optional.ToNullable(timestamp), Optional.ToNullable(requestTimestamp), Optional.ToNullable(lastUpdatedTimestamp));
+            return new FirewallRuleCounter(priority, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName, Optional.ToNullable(hitCount), appSeen.Value, Optional.ToNullable(timestamp), Optional.ToNullable(requestTimestamp), Optional.ToNullable(lastUpdatedTimestamp), rawData);
+        }
+
+        FirewallRuleCounter IModelJsonSerializable<FirewallRuleCounter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallRuleCounter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirewallRuleCounter>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirewallRuleCounter IModelSerializable<FirewallRuleCounter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirewallRuleCounter(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FirewallRuleCounter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FirewallRuleCounter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirewallRuleCounter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

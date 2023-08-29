@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor
     /// <summary> The AnomalyFeedback. </summary>
     public partial class MetricAnomalyFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of MetricAnomalyFeedback. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAnomalyFeedback"/>. </summary>
         /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
         /// <param name="createdOn"> feedback created time. </param>
@@ -26,7 +27,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="valueInternal"></param>
         /// <param name="detectionConfigurationId"> the corresponding anomaly detection configuration of this feedback. </param>
         /// <param name="detectionConfigurationSnapshot"></param>
-        internal MetricAnomalyFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startsOn, DateTimeOffset endsOn, AnomalyFeedbackValue valueInternal, string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfigurationSnapshot) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricAnomalyFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startsOn, DateTimeOffset endsOn, AnomalyFeedbackValue valueInternal, string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfigurationSnapshot, Dictionary<string, BinaryData> rawData) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter, rawData)
         {
             StartsOn = startsOn;
             EndsOn = endsOn;
@@ -34,6 +36,11 @@ namespace Azure.AI.MetricsAdvisor
             DetectionConfigurationId = detectionConfigurationId;
             DetectionConfigurationSnapshot = detectionConfigurationSnapshot;
             FeedbackKind = feedbackKind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricAnomalyFeedback"/> for deserialization. </summary>
+        internal MetricAnomalyFeedback()
+        {
         }
     }
 }

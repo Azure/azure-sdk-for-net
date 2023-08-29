@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -18,23 +19,27 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class PacketCoreControlPlaneVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneVersionData"/>. </summary>
         public PacketCoreControlPlaneVersionData()
         {
             Platforms = new ChangeTrackingList<MobileNetworkPlatform>();
         }
 
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the packet core control plane version resource. </param>
         /// <param name="platforms"> Platform specific packet core control plane version properties. </param>
-        internal PacketCoreControlPlaneVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, IList<MobileNetworkPlatform> platforms) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PacketCoreControlPlaneVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, IList<MobileNetworkPlatform> platforms, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Platforms = platforms;
+            _rawData = rawData;
         }
 
         /// <summary> The provisioning state of the packet core control plane version resource. </summary>

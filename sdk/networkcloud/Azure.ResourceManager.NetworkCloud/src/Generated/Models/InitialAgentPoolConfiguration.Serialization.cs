@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class InitialAgentPoolConfiguration : IUtf8JsonSerializable
+    public partial class InitialAgentPoolConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<InitialAgentPoolConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InitialAgentPoolConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InitialAgentPoolConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorConfiguration))
             {
@@ -74,11 +81,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("vmSkuName"u8);
             writer.WriteStringValue(VmSkuName);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InitialAgentPoolConfiguration DeserializeInitialAgentPoolConfiguration(JsonElement element)
+        internal static InitialAgentPoolConfiguration DeserializeInitialAgentPoolConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,6 +115,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<IList<KubernetesLabel>> taints = default;
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
             string vmSkuName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("administratorConfiguration"u8))
@@ -194,8 +216,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     vmSkuName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InitialAgentPoolConfiguration(administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToList(labels), mode, name, Optional.ToList(taints), upgradeSettings.Value, vmSkuName);
+            return new InitialAgentPoolConfiguration(administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToList(labels), mode, name, Optional.ToList(taints), upgradeSettings.Value, vmSkuName, rawData);
+        }
+
+        InitialAgentPoolConfiguration IModelJsonSerializable<InitialAgentPoolConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInitialAgentPoolConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InitialAgentPoolConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InitialAgentPoolConfiguration IModelSerializable<InitialAgentPoolConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInitialAgentPoolConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InitialAgentPoolConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InitialAgentPoolConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInitialAgentPoolConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

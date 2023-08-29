@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The trigger that results in a scaling action. </summary>
     public partial class MetricTrigger
     {
-        /// <summary> Initializes a new instance of MetricTrigger. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricTrigger"/>. </summary>
         /// <param name="metricName"> the name of the metric that defines what the rule monitors. </param>
         /// <param name="metricResourceId"> the resource identifier of the resource the rule monitors. </param>
         /// <param name="timeGrain"> the granularity of metrics the rule monitors. Must be one of the predefined values returned from metric definitions for the metric. Must be between 12 hours and 1 minute. </param>
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Dimensions = new ChangeTrackingList<AutoscaleRuleMetricDimension>();
         }
 
-        /// <summary> Initializes a new instance of MetricTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricTrigger"/>. </summary>
         /// <param name="metricName"> the name of the metric that defines what the rule monitors. </param>
         /// <param name="metricNamespace"> the namespace of the metric that defines what the rule monitors. </param>
         /// <param name="metricResourceId"> the resource identifier of the resource the rule monitors. </param>
@@ -53,7 +55,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
         /// <param name="dimensions"> List of dimension conditions. For example: [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}]. </param>
         /// <param name="isDividedPerInstance"> a value indicating whether metric should divide per instance. </param>
-        internal MetricTrigger(string metricName, string metricNamespace, ResourceIdentifier metricResourceId, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold, IList<AutoscaleRuleMetricDimension> dimensions, bool? isDividedPerInstance)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricTrigger(string metricName, string metricNamespace, ResourceIdentifier metricResourceId, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold, IList<AutoscaleRuleMetricDimension> dimensions, bool? isDividedPerInstance, Dictionary<string, BinaryData> rawData)
         {
             MetricName = metricName;
             MetricNamespace = metricNamespace;
@@ -67,6 +70,12 @@ namespace Azure.ResourceManager.Monitor.Models
             Threshold = threshold;
             Dimensions = dimensions;
             IsDividedPerInstance = isDividedPerInstance;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricTrigger"/> for deserialization. </summary>
+        internal MetricTrigger()
+        {
         }
 
         /// <summary> the name of the metric that defines what the rule monitors. </summary>

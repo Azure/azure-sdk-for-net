@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
     /// <summary> Inner error. </summary>
     internal partial class InnerError
     {
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         internal InnerError()
         {
         }
 
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         /// <param name="code"> A more specific error code than was provided by the containing error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal InnerError(string code, InnerError innererror)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InnerError(string code, InnerError innererror, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Innererror = innererror;
+            _rawData = rawData;
         }
 
         /// <summary> A more specific error code than was provided by the containing error. </summary>

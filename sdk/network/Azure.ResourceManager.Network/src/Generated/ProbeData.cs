@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ProbeData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ProbeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProbeData"/>. </summary>
         public ProbeData()
         {
             LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ProbeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProbeData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="probeThreshold"> The number of consecutive successful or failed probes in order to allow or deny traffic from being delivered to this endpoint. After failing the number of consecutive probes equal to this value, the endpoint will be taken out of rotation and require the same number of successful consecutive probes to be placed back in rotation. </param>
         /// <param name="requestPath"> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
-        internal ProbeData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IReadOnlyList<WritableSubResource> loadBalancingRules, ProbeProtocol? protocol, int? port, int? intervalInSeconds, int? numberOfProbes, int? probeThreshold, string requestPath, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProbeData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IReadOnlyList<WritableSubResource> loadBalancingRules, ProbeProtocol? protocol, int? port, int? intervalInSeconds, int? numberOfProbes, int? probeThreshold, string requestPath, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             LoadBalancingRules = loadBalancingRules;

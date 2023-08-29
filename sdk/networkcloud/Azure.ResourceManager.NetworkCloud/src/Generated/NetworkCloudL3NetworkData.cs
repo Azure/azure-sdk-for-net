@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudL3NetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudL3NetworkData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="l3IsolationDomainId"> The resource ID of the Network Fabric l3IsolationDomain. </param>
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Vlan = vlan;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudL3NetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +69,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="provisioningState"> The provisioning state of the L3 network. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this L3 network. </param>
         /// <param name="vlan"> The VLAN from the l3IsolationDomain that is used for this network. </param>
-        internal NetworkCloudL3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier l3IsolationDomainId, L3NetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, long vlan) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudL3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier l3IsolationDomainId, L3NetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, long vlan, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             AssociatedResourceIds = associatedResourceIds;
@@ -85,6 +88,12 @@ namespace Azure.ResourceManager.NetworkCloud
             ProvisioningState = provisioningState;
             VirtualMachinesAssociatedIds = virtualMachinesAssociatedIds;
             Vlan = vlan;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/> for deserialization. </summary>
+        internal NetworkCloudL3NetworkData()
+        {
         }
 
         /// <summary> The extended location of the cluster associated with the resource. </summary>

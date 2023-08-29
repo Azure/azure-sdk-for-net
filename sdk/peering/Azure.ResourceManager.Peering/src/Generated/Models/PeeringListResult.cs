@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Peering;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of peerings. </summary>
     internal partial class PeeringListResult
     {
-        /// <summary> Initializes a new instance of PeeringListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringListResult"/>. </summary>
         internal PeeringListResult()
         {
             Value = new ChangeTrackingList<PeeringData>();
         }
 
-        /// <summary> Initializes a new instance of PeeringListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringListResult"/>. </summary>
         /// <param name="value"> The list of peerings. </param>
         /// <param name="nextLink"> The link to fetch the next page of peerings. </param>
-        internal PeeringListResult(IReadOnlyList<PeeringData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringListResult(IReadOnlyList<PeeringData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of peerings. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ControlPlaneNodeConfiguration : IUtf8JsonSerializable
+    public partial class ControlPlaneNodeConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ControlPlaneNodeConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ControlPlaneNodeConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ControlPlaneNodeConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorConfiguration))
             {
@@ -35,11 +42,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteNumberValue(Count);
             writer.WritePropertyName("vmSkuName"u8);
             writer.WriteStringValue(VmSkuName);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ControlPlaneNodeConfiguration DeserializeControlPlaneNodeConfiguration(JsonElement element)
+        internal static ControlPlaneNodeConfiguration DeserializeControlPlaneNodeConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<IList<string>> availabilityZones = default;
             long count = default;
             string vmSkuName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("administratorConfiguration"u8))
@@ -83,8 +105,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     vmSkuName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ControlPlaneNodeConfiguration(administratorConfiguration.Value, Optional.ToList(availabilityZones), count, vmSkuName);
+            return new ControlPlaneNodeConfiguration(administratorConfiguration.Value, Optional.ToList(availabilityZones), count, vmSkuName, rawData);
+        }
+
+        ControlPlaneNodeConfiguration IModelJsonSerializable<ControlPlaneNodeConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeControlPlaneNodeConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ControlPlaneNodeConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ControlPlaneNodeConfiguration IModelSerializable<ControlPlaneNodeConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeControlPlaneNodeConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ControlPlaneNodeConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ControlPlaneNodeConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeControlPlaneNodeConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

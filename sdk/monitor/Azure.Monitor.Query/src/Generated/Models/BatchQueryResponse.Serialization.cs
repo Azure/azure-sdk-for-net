@@ -5,16 +5,69 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class BatchQueryResponse
+    internal partial class BatchQueryResponse : IUtf8JsonSerializable, IModelJsonSerializable<BatchQueryResponse>
     {
-        internal static BatchQueryResponse DeserializeBatchQueryResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchQueryResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchQueryResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteNumberValue(Status.Value);
+            }
+            if (Optional.IsDefined(Body))
+            {
+                writer.WritePropertyName("body"u8);
+                writer.WriteObjectValue(Body);
+            }
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                writer.WritePropertyName("headers"u8);
+                writer.WriteStartObject();
+                foreach (var item in Headers)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BatchQueryResponse DeserializeBatchQueryResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.Monitor.Query.Models
             Optional<int> status = default;
             Optional<LogsBatchQueryResult> body = default;
             Optional<IReadOnlyDictionary<string, string>> headers = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -62,8 +116,57 @@ namespace Azure.Monitor.Query.Models
                     headers = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchQueryResponse(id.Value, Optional.ToNullable(status), body.Value, Optional.ToDictionary(headers));
+            return new BatchQueryResponse(id.Value, Optional.ToNullable(status), body.Value, Optional.ToDictionary(headers), rawData);
+        }
+
+        BatchQueryResponse IModelJsonSerializable<BatchQueryResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchQueryResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchQueryResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchQueryResponse IModelSerializable<BatchQueryResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchQueryResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BatchQueryResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BatchQueryResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchQueryResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

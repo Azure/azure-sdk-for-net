@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,23 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The check policy restrictions parameters describing the resource that is being evaluated. </summary>
     public partial class CheckManagementGroupPolicyRestrictionsContent
     {
-        /// <summary> Initializes a new instance of CheckManagementGroupPolicyRestrictionsContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CheckManagementGroupPolicyRestrictionsContent"/>. </summary>
         public CheckManagementGroupPolicyRestrictionsContent()
         {
             PendingFields = new ChangeTrackingList<PendingField>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckManagementGroupPolicyRestrictionsContent"/>. </summary>
+        /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
+        /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CheckManagementGroupPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails, IList<PendingField> pendingFields, Dictionary<string, BinaryData> rawData)
+        {
+            ResourceDetails = resourceDetails;
+            PendingFields = pendingFields;
+            _rawData = rawData;
         }
 
         /// <summary> The information about the resource that will be evaluated. </summary>

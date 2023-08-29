@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkInterfaceTapConfigurationData : IUtf8JsonSerializable
+    public partial class NetworkInterfaceTapConfigurationData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkInterfaceTapConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkInterfaceTapConfigurationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkInterfaceTapConfigurationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<NetworkInterfaceTapConfigurationData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -35,11 +42,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteObjectValue(VirtualNetworkTap);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkInterfaceTapConfigurationData DeserializeNetworkInterfaceTapConfigurationData(JsonElement element)
+        internal static NetworkInterfaceTapConfigurationData DeserializeNetworkInterfaceTapConfigurationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +71,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<VirtualNetworkTapData> virtualNetworkTap = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -114,8 +136,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkInterfaceTapConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), virtualNetworkTap.Value, Optional.ToNullable(provisioningState));
+            return new NetworkInterfaceTapConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), virtualNetworkTap.Value, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        NetworkInterfaceTapConfigurationData IModelJsonSerializable<NetworkInterfaceTapConfigurationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NetworkInterfaceTapConfigurationData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkInterfaceTapConfigurationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkInterfaceTapConfigurationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NetworkInterfaceTapConfigurationData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkInterfaceTapConfigurationData IModelSerializable<NetworkInterfaceTapConfigurationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NetworkInterfaceTapConfigurationData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkInterfaceTapConfigurationData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetworkInterfaceTapConfigurationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetworkInterfaceTapConfigurationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkInterfaceTapConfigurationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

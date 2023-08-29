@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Restore payload for Single File Snapshot Restore. </summary>
     public partial class NetAppVolumeSnapshotRestoreFilesContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumeSnapshotRestoreFilesContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotRestoreFilesContent"/>. </summary>
         /// <param name="filePaths"> List of files to be restored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePaths"/> is null. </exception>
         public NetAppVolumeSnapshotRestoreFilesContent(IEnumerable<string> filePaths)
@@ -23,6 +25,22 @@ namespace Azure.ResourceManager.NetApp.Models
             Argument.AssertNotNull(filePaths, nameof(filePaths));
 
             FilePaths = filePaths.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotRestoreFilesContent"/>. </summary>
+        /// <param name="filePaths"> List of files to be restored. </param>
+        /// <param name="destinationPath"> Destination folder where the files will be restored. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeSnapshotRestoreFilesContent(IList<string> filePaths, string destinationPath, Dictionary<string, BinaryData> rawData)
+        {
+            FilePaths = filePaths;
+            DestinationPath = destinationPath;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotRestoreFilesContent"/> for deserialization. </summary>
+        internal NetAppVolumeSnapshotRestoreFilesContent()
+        {
         }
 
         /// <summary> List of files to be restored. </summary>

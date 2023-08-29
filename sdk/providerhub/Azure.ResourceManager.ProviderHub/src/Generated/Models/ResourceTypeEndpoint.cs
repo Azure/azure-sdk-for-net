@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeEndpoint. </summary>
     public partial class ResourceTypeEndpoint
     {
-        /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpoint"/>. </summary>
         public ResourceTypeEndpoint()
         {
             ApiVersions = new ChangeTrackingList<string>();
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Extensions = new ChangeTrackingList<ResourceTypeExtension>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpoint"/>. </summary>
         /// <param name="isEnabled"></param>
         /// <param name="apiVersions"></param>
         /// <param name="locations"></param>
@@ -31,7 +33,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="featuresRule"></param>
         /// <param name="extensions"></param>
         /// <param name="timeout"></param>
-        internal ResourceTypeEndpoint(bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, FeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeEndpoint(bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, FeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             ApiVersions = apiVersions;
@@ -40,6 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             FeaturesRule = featuresRule;
             Extensions = extensions;
             Timeout = timeout;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the is enabled. </summary>

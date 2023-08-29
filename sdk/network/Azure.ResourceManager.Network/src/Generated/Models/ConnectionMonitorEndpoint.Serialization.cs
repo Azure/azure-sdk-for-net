@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorEndpoint : IUtf8JsonSerializable
+    public partial class ConnectionMonitorEndpoint : IUtf8JsonSerializable, IModelJsonSerializable<ConnectionMonitorEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectionMonitorEndpoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectionMonitorEndpoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -47,11 +55,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("coverageLevel"u8);
                 writer.WriteStringValue(CoverageLevel.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectionMonitorEndpoint DeserializeConnectionMonitorEndpoint(JsonElement element)
+        internal static ConnectionMonitorEndpoint DeserializeConnectionMonitorEndpoint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +85,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ConnectionMonitorEndpointFilter> filter = default;
             Optional<ConnectionMonitorEndpointScope> scope = default;
             Optional<CoverageLevel> coverageLevel = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -120,8 +143,57 @@ namespace Azure.ResourceManager.Network.Models
                     coverageLevel = new CoverageLevel(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectionMonitorEndpoint(name, Optional.ToNullable(type), resourceId.Value, address.Value, filter.Value, scope.Value, Optional.ToNullable(coverageLevel));
+            return new ConnectionMonitorEndpoint(name, Optional.ToNullable(type), resourceId.Value, address.Value, filter.Value, scope.Value, Optional.ToNullable(coverageLevel), rawData);
+        }
+
+        ConnectionMonitorEndpoint IModelJsonSerializable<ConnectionMonitorEndpoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionMonitorEndpoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectionMonitorEndpoint>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectionMonitorEndpoint IModelSerializable<ConnectionMonitorEndpoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectionMonitorEndpoint(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConnectionMonitorEndpoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConnectionMonitorEndpoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectionMonitorEndpoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

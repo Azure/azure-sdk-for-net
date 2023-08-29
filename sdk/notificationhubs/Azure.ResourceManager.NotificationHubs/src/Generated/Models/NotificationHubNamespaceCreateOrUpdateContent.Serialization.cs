@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubNamespaceCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class NotificationHubNamespaceCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<NotificationHubNamespaceCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NotificationHubNamespaceCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NotificationHubNamespaceCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -104,11 +110,25 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WriteStringValue(NamespaceType.Value.ToSerialString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NotificationHubNamespaceCreateOrUpdateContent DeserializeNotificationHubNamespaceCreateOrUpdateContent(JsonElement element)
+        internal static NotificationHubNamespaceCreateOrUpdateContent DeserializeNotificationHubNamespaceCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,6 +154,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<bool> critical = default;
             Optional<string> dataCenter = default;
             Optional<NotificationHubNamespaceType> namespaceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -294,8 +315,57 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NotificationHubNamespaceCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, provisioningState.Value, region.Value, metricId.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, subscriptionId.Value, scaleUnit.Value, Optional.ToNullable(enabled), Optional.ToNullable(critical), dataCenter.Value, Optional.ToNullable(namespaceType), sku.Value);
+            return new NotificationHubNamespaceCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, provisioningState.Value, region.Value, metricId.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, subscriptionId.Value, scaleUnit.Value, Optional.ToNullable(enabled), Optional.ToNullable(critical), dataCenter.Value, Optional.ToNullable(namespaceType), sku.Value, rawData);
+        }
+
+        NotificationHubNamespaceCreateOrUpdateContent IModelJsonSerializable<NotificationHubNamespaceCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationHubNamespaceCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NotificationHubNamespaceCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NotificationHubNamespaceCreateOrUpdateContent IModelSerializable<NotificationHubNamespaceCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotificationHubNamespaceCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NotificationHubNamespaceCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NotificationHubNamespaceCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNotificationHubNamespaceCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

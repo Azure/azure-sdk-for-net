@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Will contain the filter name and values to operate on. </summary>
     public partial class IdpsQueryFilterItems
     {
-        /// <summary> Initializes a new instance of IdpsQueryFilterItems. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryFilterItems"/>. </summary>
         public IdpsQueryFilterItems()
         {
             Values = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryFilterItems"/>. </summary>
+        /// <param name="field"> The name of the field we would like to filter. </param>
+        /// <param name="values"> List of values to filter the current field by. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdpsQueryFilterItems(string field, IList<string> values, Dictionary<string, BinaryData> rawData)
+        {
+            Field = field;
+            Values = values;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the field we would like to filter. </summary>

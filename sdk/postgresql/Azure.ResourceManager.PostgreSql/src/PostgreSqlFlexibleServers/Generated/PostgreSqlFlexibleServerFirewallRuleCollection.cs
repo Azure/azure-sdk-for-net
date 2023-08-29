@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerFirewallRuleResource(Client, PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(e)), _postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PostgreSqlFlexibleServerFirewallRuleResource(Client, PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(e)), _postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerFirewallRuleResource(Client, PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(e)), _postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PostgreSqlFlexibleServerFirewallRuleResource(Client, PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(e)), _postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

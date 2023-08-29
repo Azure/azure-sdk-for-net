@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubTestSendResult : IUtf8JsonSerializable
+    public partial class NotificationHubTestSendResult : IUtf8JsonSerializable, IModelJsonSerializable<NotificationHubTestSendResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NotificationHubTestSendResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NotificationHubTestSendResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -58,11 +64,25 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 #endif
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NotificationHubTestSendResult DeserializeNotificationHubTestSendResult(JsonElement element)
+        internal static NotificationHubTestSendResult DeserializeNotificationHubTestSendResult(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +97,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<int> success = default;
             Optional<int> failure = default;
             Optional<BinaryData> results = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -170,8 +191,57 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NotificationHubTestSendResult(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(success), Optional.ToNullable(failure), results.Value, sku.Value);
+            return new NotificationHubTestSendResult(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(success), Optional.ToNullable(failure), results.Value, sku.Value, rawData);
+        }
+
+        NotificationHubTestSendResult IModelJsonSerializable<NotificationHubTestSendResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationHubTestSendResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NotificationHubTestSendResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NotificationHubTestSendResult IModelSerializable<NotificationHubTestSendResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotificationHubTestSendResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NotificationHubTestSendResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NotificationHubTestSendResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNotificationHubTestSendResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

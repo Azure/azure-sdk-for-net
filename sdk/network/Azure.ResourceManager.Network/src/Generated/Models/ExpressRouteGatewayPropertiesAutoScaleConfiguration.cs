@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Configuration for auto scaling. </summary>
     internal partial class ExpressRouteGatewayPropertiesAutoScaleConfiguration
     {
-        /// <summary> Initializes a new instance of ExpressRouteGatewayPropertiesAutoScaleConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayPropertiesAutoScaleConfiguration"/>. </summary>
         public ExpressRouteGatewayPropertiesAutoScaleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteGatewayPropertiesAutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayPropertiesAutoScaleConfiguration"/>. </summary>
         /// <param name="bounds"> Minimum and maximum number of scale units to deploy. </param>
-        internal ExpressRouteGatewayPropertiesAutoScaleConfiguration(ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds bounds)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteGatewayPropertiesAutoScaleConfiguration(ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds bounds, Dictionary<string, BinaryData> rawData)
         {
             Bounds = bounds;
+            _rawData = rawData;
         }
 
         /// <summary> Minimum and maximum number of scale units to deploy. </summary>

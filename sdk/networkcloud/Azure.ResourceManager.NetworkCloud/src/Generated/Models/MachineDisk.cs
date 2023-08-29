@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> Disk represents the properties of the disk. </summary>
     public partial class MachineDisk
     {
-        /// <summary> Initializes a new instance of MachineDisk. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineDisk"/>. </summary>
         internal MachineDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineDisk"/>. </summary>
         /// <param name="capacityGB"> The maximum amount of storage in GB. </param>
         /// <param name="connection"> The connection type of the rack SKU resource. </param>
         /// <param name="diskType"> The disk type of rack SKU resource. </param>
-        internal MachineDisk(long? capacityGB, MachineSkuDiskConnectionType? connection, DiskType? diskType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineDisk(long? capacityGB, MachineSkuDiskConnectionType? connection, DiskType? diskType, Dictionary<string, BinaryData> rawData)
         {
             CapacityGB = capacityGB;
             Connection = connection;
             DiskType = diskType;
+            _rawData = rawData;
         }
 
         /// <summary> The maximum amount of storage in GB. </summary>

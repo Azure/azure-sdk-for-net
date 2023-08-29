@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,20 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP Configuration of a VPN Gateway Resource. </summary>
     public partial class VpnGatewayIPConfiguration
     {
-        /// <summary> Initializes a new instance of VpnGatewayIPConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayIPConfiguration"/>. </summary>
         internal VpnGatewayIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnGatewayIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayIPConfiguration"/>. </summary>
         /// <param name="id"> The identifier of the IP configuration for a VPN Gateway. </param>
         /// <param name="publicIPAddress"> The public IP address of this IP configuration. </param>
         /// <param name="privateIPAddress"> The private IP address of this IP configuration. </param>
-        internal VpnGatewayIPConfiguration(ResourceIdentifier id, string publicIPAddress, string privateIPAddress)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnGatewayIPConfiguration(ResourceIdentifier id, string publicIPAddress, string privateIPAddress, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             PublicIPAddress = publicIPAddress;
             PrivateIPAddress = privateIPAddress;
+            _rawData = rawData;
         }
 
         /// <summary> The identifier of the IP configuration for a VPN Gateway. </summary>

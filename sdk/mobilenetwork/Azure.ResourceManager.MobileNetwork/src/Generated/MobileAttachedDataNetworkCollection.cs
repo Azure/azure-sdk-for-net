@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileAttachedDataNetworkAttachedDataNetworksRestClient.CreateListByPacketCoreDataPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileAttachedDataNetworkAttachedDataNetworksRestClient.CreateListByPacketCoreDataPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileAttachedDataNetworkResource(Client, MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(e)), _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics, Pipeline, "MobileAttachedDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileAttachedDataNetworkResource(Client, MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(e)), _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics, Pipeline, "MobileAttachedDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileAttachedDataNetworkAttachedDataNetworksRestClient.CreateListByPacketCoreDataPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileAttachedDataNetworkAttachedDataNetworksRestClient.CreateListByPacketCoreDataPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileAttachedDataNetworkResource(Client, MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(e)), _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics, Pipeline, "MobileAttachedDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileAttachedDataNetworkResource(Client, MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(e)), _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics, Pipeline, "MobileAttachedDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

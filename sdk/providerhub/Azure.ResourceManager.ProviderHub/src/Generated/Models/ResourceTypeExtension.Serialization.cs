@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeExtension : IUtf8JsonSerializable
+    public partial class ResourceTypeExtension : IUtf8JsonSerializable, IModelJsonSerializable<ResourceTypeExtension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeExtension>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceTypeExtension>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EndpointUri))
             {
@@ -37,11 +43,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceTypeExtension DeserializeResourceTypeExtension(JsonElement element)
+        internal static ResourceTypeExtension DeserializeResourceTypeExtension(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<Uri> endpointUri = default;
             Optional<IList<ResourceTypeExtensionCategory>> extensionCategories = default;
             Optional<TimeSpan> timeout = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointUri"u8))
@@ -83,8 +104,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceTypeExtension(endpointUri.Value, Optional.ToList(extensionCategories), Optional.ToNullable(timeout));
+            return new ResourceTypeExtension(endpointUri.Value, Optional.ToList(extensionCategories), Optional.ToNullable(timeout), rawData);
+        }
+
+        ResourceTypeExtension IModelJsonSerializable<ResourceTypeExtension>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeExtension(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceTypeExtension>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceTypeExtension IModelSerializable<ResourceTypeExtension>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceTypeExtension(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ResourceTypeExtension model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ResourceTypeExtension(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceTypeExtension(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

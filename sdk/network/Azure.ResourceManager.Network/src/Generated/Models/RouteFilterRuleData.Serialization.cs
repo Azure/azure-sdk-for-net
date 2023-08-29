@@ -5,18 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class RouteFilterRuleData : IUtf8JsonSerializable
+    public partial class RouteFilterRuleData : IUtf8JsonSerializable, IModelJsonSerializable<RouteFilterRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteFilterRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteFilterRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RouteFilterRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -56,11 +62,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RouteFilterRuleData DeserializeRouteFilterRuleData(JsonElement element)
+        internal static RouteFilterRuleData DeserializeRouteFilterRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +94,7 @@ namespace Azure.ResourceManager.Network
             Optional<RouteFilterRuleType> routeFilterRuleType = default;
             Optional<IList<string>> communities = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -170,8 +191,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToNullable(etag), Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
+            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToNullable(etag), Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        RouteFilterRuleData IModelJsonSerializable<RouteFilterRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RouteFilterRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteFilterRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteFilterRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RouteFilterRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteFilterRuleData IModelSerializable<RouteFilterRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RouteFilterRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteFilterRuleData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RouteFilterRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RouteFilterRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteFilterRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

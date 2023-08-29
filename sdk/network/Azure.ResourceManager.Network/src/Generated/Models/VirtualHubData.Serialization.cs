@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualHubData : IUtf8JsonSerializable
+    public partial class VirtualHubData : IUtf8JsonSerializable, IModelJsonSerializable<VirtualHubData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualHubData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualHubData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VirtualHubData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -138,11 +144,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteObjectValue(VirtualRouterAutoScaleConfiguration);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualHubData DeserializeVirtualHubData(JsonElement element)
+        internal static VirtualHubData DeserializeVirtualHubData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -176,6 +196,7 @@ namespace Azure.ResourceManager.Network
             Optional<PreferredRoutingGateway> preferredRoutingGateway = default;
             Optional<HubRoutingPreference> hubRoutingPreference = default;
             Optional<VirtualRouterAutoScaleConfiguration> virtualRouterAutoScaleConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -461,8 +482,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToList(routeMaps), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
+            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToList(routeMaps), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value, rawData);
+        }
+
+        VirtualHubData IModelJsonSerializable<VirtualHubData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualHubData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualHubData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualHubData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualHubData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualHubData IModelSerializable<VirtualHubData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualHubData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualHubData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VirtualHubData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VirtualHubData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualHubData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

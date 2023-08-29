@@ -5,16 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class TrackResponse
+    internal partial class TrackResponse : IUtf8JsonSerializable, IModelJsonSerializable<TrackResponse>
     {
-        internal static TrackResponse DeserializeTrackResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrackResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrackResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ItemsReceived))
+            {
+                writer.WritePropertyName("itemsReceived"u8);
+                writer.WriteNumberValue(ItemsReceived.Value);
+            }
+            if (Optional.IsDefined(ItemsAccepted))
+            {
+                writer.WritePropertyName("itemsAccepted"u8);
+                writer.WriteNumberValue(ItemsAccepted.Value);
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TrackResponse DeserializeTrackResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Optional<int> itemsReceived = default;
             Optional<int> itemsAccepted = default;
             Optional<IReadOnlyList<TelemetryErrorDetails>> errors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("itemsReceived"u8))
@@ -56,8 +104,57 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     errors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrackResponse(Optional.ToNullable(itemsReceived), Optional.ToNullable(itemsAccepted), Optional.ToList(errors));
+            return new TrackResponse(Optional.ToNullable(itemsReceived), Optional.ToNullable(itemsAccepted), Optional.ToList(errors), rawData);
+        }
+
+        TrackResponse IModelJsonSerializable<TrackResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrackResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrackResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrackResponse IModelSerializable<TrackResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrackResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TrackResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TrackResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrackResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     /// <summary> An object that represents SKU details for existing resources. </summary>
     public partial class SkuDetailsForExistingResource
     {
-        /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SkuDetailsForExistingResource"/>. </summary>
         internal SkuDetailsForExistingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuDetailsForExistingResource"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
-        internal SkuDetailsForExistingResource(string resourceType, CapacitySku sku)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SkuDetailsForExistingResource(string resourceType, CapacitySku sku, Dictionary<string, BinaryData> rawData)
         {
             ResourceType = resourceType;
             Sku = sku;
+            _rawData = rawData;
         }
 
         /// <summary> The resource type. </summary>

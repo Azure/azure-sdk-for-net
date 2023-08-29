@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PostgreSqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PostgreSqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

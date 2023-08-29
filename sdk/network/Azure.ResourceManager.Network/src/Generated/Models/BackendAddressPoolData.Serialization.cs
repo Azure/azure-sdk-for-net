@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class BackendAddressPoolData : IUtf8JsonSerializable
+    public partial class BackendAddressPoolData : IUtf8JsonSerializable, IModelJsonSerializable<BackendAddressPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackendAddressPoolData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackendAddressPoolData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<BackendAddressPoolData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -72,11 +78,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackendAddressPoolData DeserializeBackendAddressPoolData(JsonElement element)
+        internal static BackendAddressPoolData DeserializeBackendAddressPoolData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,6 +117,7 @@ namespace Azure.ResourceManager.Network
             Optional<int> drainPeriodInSeconds = default;
             Optional<WritableSubResource> virtualNetwork = default;
             Optional<BackendAddressSyncMode> syncMode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -281,8 +302,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToList(inboundNatRules), Optional.ToNullable(provisioningState), Optional.ToNullable(drainPeriodInSeconds), virtualNetwork, Optional.ToNullable(syncMode));
+            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToList(inboundNatRules), Optional.ToNullable(provisioningState), Optional.ToNullable(drainPeriodInSeconds), virtualNetwork, Optional.ToNullable(syncMode), rawData);
+        }
+
+        BackendAddressPoolData IModelJsonSerializable<BackendAddressPoolData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BackendAddressPoolData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackendAddressPoolData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackendAddressPoolData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BackendAddressPoolData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackendAddressPoolData IModelSerializable<BackendAddressPoolData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BackendAddressPoolData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackendAddressPoolData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BackendAddressPoolData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BackendAddressPoolData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackendAddressPoolData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

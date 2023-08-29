@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class LogAnalyticsQueryData : IUtf8JsonSerializable
+    public partial class LogAnalyticsQueryData : IUtf8JsonSerializable, IModelJsonSerializable<LogAnalyticsQueryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogAnalyticsQueryData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogAnalyticsQueryData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -72,11 +78,25 @@ namespace Azure.ResourceManager.OperationalInsights
 #endif
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogAnalyticsQueryData DeserializeLogAnalyticsQueryData(JsonElement element)
+        internal static LogAnalyticsQueryData DeserializeLogAnalyticsQueryData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +115,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<LogAnalyticsQueryRelatedMetadata> related = default;
             Optional<IDictionary<string, IList<string>>> tags = default;
             Optional<BinaryData> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -224,8 +245,57 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogAnalyticsQueryData(id, name, type, systemData.Value, Optional.ToNullable(id0), displayName.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), author.Value, description.Value, body.Value, related.Value, Optional.ToDictionary(tags), properties.Value);
+            return new LogAnalyticsQueryData(id, name, type, systemData.Value, Optional.ToNullable(id0), displayName.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), author.Value, description.Value, body.Value, related.Value, Optional.ToDictionary(tags), properties.Value, rawData);
+        }
+
+        LogAnalyticsQueryData IModelJsonSerializable<LogAnalyticsQueryData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogAnalyticsQueryData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogAnalyticsQueryData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogAnalyticsQueryData IModelSerializable<LogAnalyticsQueryData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogAnalyticsQueryData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LogAnalyticsQueryData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LogAnalyticsQueryData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogAnalyticsQueryData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

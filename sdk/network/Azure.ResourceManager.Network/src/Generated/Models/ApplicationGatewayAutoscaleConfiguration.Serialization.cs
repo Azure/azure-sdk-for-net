@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayAutoscaleConfiguration : IUtf8JsonSerializable
+    public partial class ApplicationGatewayAutoscaleConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayAutoscaleConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayAutoscaleConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayAutoscaleConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("minCapacity"u8);
             writer.WriteNumberValue(MinCapacity);
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayAutoscaleConfiguration DeserializeApplicationGatewayAutoscaleConfiguration(JsonElement element)
+        internal static ApplicationGatewayAutoscaleConfiguration DeserializeApplicationGatewayAutoscaleConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int minCapacity = default;
             Optional<int> maxCapacity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minCapacity"u8))
@@ -49,8 +72,57 @@ namespace Azure.ResourceManager.Network.Models
                     maxCapacity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayAutoscaleConfiguration(minCapacity, Optional.ToNullable(maxCapacity));
+            return new ApplicationGatewayAutoscaleConfiguration(minCapacity, Optional.ToNullable(maxCapacity), rawData);
+        }
+
+        ApplicationGatewayAutoscaleConfiguration IModelJsonSerializable<ApplicationGatewayAutoscaleConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayAutoscaleConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayAutoscaleConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayAutoscaleConfiguration IModelSerializable<ApplicationGatewayAutoscaleConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayAutoscaleConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ApplicationGatewayAutoscaleConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ApplicationGatewayAutoscaleConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayAutoscaleConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

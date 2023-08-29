@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileNetworkData : IUtf8JsonSerializable
+    public partial class MobileNetworkData : IUtf8JsonSerializable, IModelJsonSerializable<MobileNetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobileNetworkData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobileNetworkData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WritePropertyName("publicLandMobileNetworkIdentifier"u8);
             writer.WriteObjectValue(PublicLandMobileNetworkIdentifier);
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkData DeserializeMobileNetworkData(JsonElement element)
+        internal static MobileNetworkData DeserializeMobileNetworkData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<MobileNetworkProvisioningState> provisioningState = default;
             MobileNetworkPlmnId publicLandMobileNetworkIdentifier = default;
             Optional<string> serviceKey = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -130,8 +152,57 @@ namespace Azure.ResourceManager.MobileNetwork
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobileNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), publicLandMobileNetworkIdentifier, serviceKey.Value);
+            return new MobileNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), publicLandMobileNetworkIdentifier, serviceKey.Value, rawData);
+        }
+
+        MobileNetworkData IModelJsonSerializable<MobileNetworkData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobileNetworkData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobileNetworkData IModelSerializable<MobileNetworkData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MobileNetworkData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MobileNetworkData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobileNetworkData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

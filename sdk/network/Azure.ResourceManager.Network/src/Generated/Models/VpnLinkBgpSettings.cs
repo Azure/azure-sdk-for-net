@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> BGP settings details for a link. </summary>
     public partial class VpnLinkBgpSettings
     {
-        /// <summary> Initializes a new instance of VpnLinkBgpSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnLinkBgpSettings"/>. </summary>
         public VpnLinkBgpSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnLinkBgpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnLinkBgpSettings"/>. </summary>
         /// <param name="asn"> The BGP speaker's ASN. </param>
         /// <param name="bgpPeeringAddress"> The BGP peering address and BGP identifier of this BGP speaker. </param>
-        internal VpnLinkBgpSettings(long? asn, string bgpPeeringAddress)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnLinkBgpSettings(long? asn, string bgpPeeringAddress, Dictionary<string, BinaryData> rawData)
         {
             Asn = asn;
             BgpPeeringAddress = bgpPeeringAddress;
+            _rawData = rawData;
         }
 
         /// <summary> The BGP speaker's ASN. </summary>

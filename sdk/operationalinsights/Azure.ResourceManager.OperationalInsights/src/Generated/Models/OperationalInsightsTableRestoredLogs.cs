@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Restore parameters. </summary>
     public partial class OperationalInsightsTableRestoredLogs
     {
-        /// <summary> Initializes a new instance of OperationalInsightsTableRestoredLogs. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableRestoredLogs"/>. </summary>
         public OperationalInsightsTableRestoredLogs()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsTableRestoredLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableRestoredLogs"/>. </summary>
         /// <param name="startRestoreOn"> The timestamp to start the restore from (UTC). </param>
         /// <param name="endRestoreOn"> The timestamp to end the restore by (UTC). </param>
         /// <param name="sourceTable"> The table to restore data from. </param>
         /// <param name="azureAsyncOperationId"> Search results table async operation id. </param>
-        internal OperationalInsightsTableRestoredLogs(DateTimeOffset? startRestoreOn, DateTimeOffset? endRestoreOn, string sourceTable, Guid? azureAsyncOperationId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsTableRestoredLogs(DateTimeOffset? startRestoreOn, DateTimeOffset? endRestoreOn, string sourceTable, Guid? azureAsyncOperationId, Dictionary<string, BinaryData> rawData)
         {
             StartRestoreOn = startRestoreOn;
             EndRestoreOn = endRestoreOn;
             SourceTable = sourceTable;
             AzureAsyncOperationId = azureAsyncOperationId;
+            _rawData = rawData;
         }
 
         /// <summary> The timestamp to start the restore from (UTC). </summary>

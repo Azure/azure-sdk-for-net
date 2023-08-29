@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An SMS receiver. </summary>
     public partial class MonitorSmsReceiver
     {
-        /// <summary> Initializes a new instance of MonitorSmsReceiver. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorSmsReceiver"/>. </summary>
         /// <param name="name"> The name of the SMS receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="countryCode"> The country code of the SMS receiver. </param>
         /// <param name="phoneNumber"> The phone number of the SMS receiver. </param>
@@ -29,17 +32,24 @@ namespace Azure.ResourceManager.Monitor.Models
             PhoneNumber = phoneNumber;
         }
 
-        /// <summary> Initializes a new instance of MonitorSmsReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSmsReceiver"/>. </summary>
         /// <param name="name"> The name of the SMS receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="countryCode"> The country code of the SMS receiver. </param>
         /// <param name="phoneNumber"> The phone number of the SMS receiver. </param>
         /// <param name="status"> The status of the receiver. </param>
-        internal MonitorSmsReceiver(string name, string countryCode, string phoneNumber, MonitorReceiverStatus? status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorSmsReceiver(string name, string countryCode, string phoneNumber, MonitorReceiverStatus? status, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             CountryCode = countryCode;
             PhoneNumber = phoneNumber;
             Status = status;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorSmsReceiver"/> for deserialization. </summary>
+        internal MonitorSmsReceiver()
+        {
         }
 
         /// <summary> The name of the SMS receiver. Names must be unique across all receivers within an action group. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,27 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Information about an issue encountered in the process of checking for connectivity. </summary>
     public partial class ConnectivityIssueInfo
     {
-        /// <summary> Initializes a new instance of ConnectivityIssueInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityIssueInfo"/>. </summary>
         internal ConnectivityIssueInfo()
         {
             Contexts = new ChangeTrackingList<IDictionary<string, string>>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityIssueInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityIssueInfo"/>. </summary>
         /// <param name="origin"> The origin of the issue. </param>
         /// <param name="severity"> The severity of the issue. </param>
         /// <param name="connectivityIssueType"> The type of issue. </param>
         /// <param name="contexts"> Provides additional context on the issue. </param>
-        internal ConnectivityIssueInfo(IssueOrigin? origin, IssueSeverity? severity, ConnectivityIssueType? connectivityIssueType, IReadOnlyList<IDictionary<string, string>> contexts)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityIssueInfo(IssueOrigin? origin, IssueSeverity? severity, ConnectivityIssueType? connectivityIssueType, IReadOnlyList<IDictionary<string, string>> contexts, Dictionary<string, BinaryData> rawData)
         {
             Origin = origin;
             Severity = severity;
             ConnectivityIssueType = connectivityIssueType;
             Contexts = contexts;
+            _rawData = rawData;
         }
 
         /// <summary> The origin of the issue. </summary>

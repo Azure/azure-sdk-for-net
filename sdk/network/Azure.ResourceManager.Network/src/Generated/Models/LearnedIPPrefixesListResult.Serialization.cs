@@ -5,21 +5,59 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LearnedIPPrefixesListResult
+    public partial class LearnedIPPrefixesListResult : IUtf8JsonSerializable, IModelJsonSerializable<LearnedIPPrefixesListResult>
     {
-        internal static LearnedIPPrefixesListResult DeserializeLearnedIPPrefixesListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LearnedIPPrefixesListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LearnedIPPrefixesListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(IPPrefixes))
+            {
+                writer.WritePropertyName("ipPrefixes"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPPrefixes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LearnedIPPrefixesListResult DeserializeLearnedIPPrefixesListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<string>> ipPrefixes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipPrefixes"u8))
@@ -36,8 +74,57 @@ namespace Azure.ResourceManager.Network.Models
                     ipPrefixes = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LearnedIPPrefixesListResult(Optional.ToList(ipPrefixes));
+            return new LearnedIPPrefixesListResult(Optional.ToList(ipPrefixes), rawData);
+        }
+
+        LearnedIPPrefixesListResult IModelJsonSerializable<LearnedIPPrefixesListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLearnedIPPrefixesListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LearnedIPPrefixesListResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LearnedIPPrefixesListResult IModelSerializable<LearnedIPPrefixesListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLearnedIPPrefixesListResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LearnedIPPrefixesListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LearnedIPPrefixesListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLearnedIPPrefixesListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

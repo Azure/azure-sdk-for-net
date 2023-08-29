@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DataSourcesSpecDataImports : IUtf8JsonSerializable
+    internal partial class DataSourcesSpecDataImports : IUtf8JsonSerializable, IModelJsonSerializable<DataSourcesSpecDataImports>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataSourcesSpecDataImports>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataSourcesSpecDataImports>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DataSourcesSpecDataImports>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
                 writer.WriteObjectValue(EventHub);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataSourcesSpecDataImports DeserializeDataSourcesSpecDataImports(JsonElement element)
+        internal static DataSourcesSpecDataImports DeserializeDataSourcesSpecDataImports(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DataImportSourcesEventHub> eventHub = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHub"u8))
@@ -41,8 +64,57 @@ namespace Azure.ResourceManager.Monitor.Models
                     eventHub = DataImportSourcesEventHub.DeserializeDataImportSourcesEventHub(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataSourcesSpecDataImports(eventHub.Value);
+            return new DataSourcesSpecDataImports(eventHub.Value, rawData);
+        }
+
+        DataSourcesSpecDataImports IModelJsonSerializable<DataSourcesSpecDataImports>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DataSourcesSpecDataImports>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataSourcesSpecDataImports(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataSourcesSpecDataImports>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DataSourcesSpecDataImports>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataSourcesSpecDataImports IModelSerializable<DataSourcesSpecDataImports>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DataSourcesSpecDataImports>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataSourcesSpecDataImports(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataSourcesSpecDataImports model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataSourcesSpecDataImports(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataSourcesSpecDataImports(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

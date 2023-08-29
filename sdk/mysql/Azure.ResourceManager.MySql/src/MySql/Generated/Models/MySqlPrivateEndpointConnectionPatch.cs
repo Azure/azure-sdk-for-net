@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class MySqlPrivateEndpointConnectionPatch
     {
-        /// <summary> Initializes a new instance of MySqlPrivateEndpointConnectionPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateEndpointConnectionPatch"/>. </summary>
         public MySqlPrivateEndpointConnectionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateEndpointConnectionPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlPrivateEndpointConnectionPatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Resource tags. </summary>

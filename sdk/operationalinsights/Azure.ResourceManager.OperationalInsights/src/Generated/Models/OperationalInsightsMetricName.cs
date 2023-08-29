@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The name of a metric. </summary>
     public partial class OperationalInsightsMetricName
     {
-        /// <summary> Initializes a new instance of OperationalInsightsMetricName. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsMetricName"/>. </summary>
         internal OperationalInsightsMetricName()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsMetricName"/>. </summary>
         /// <param name="value"> The system name of the metric. </param>
         /// <param name="localizedValue"> The localized name of the metric. </param>
-        internal OperationalInsightsMetricName(string value, string localizedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsMetricName(string value, string localizedValue, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _rawData = rawData;
         }
 
         /// <summary> The system name of the metric. </summary>

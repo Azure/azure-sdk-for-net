@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network Virtual Appliance Sku Properties. </summary>
     internal partial class Office365PolicyProperties
     {
-        /// <summary> Initializes a new instance of Office365PolicyProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Office365PolicyProperties"/>. </summary>
         public Office365PolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of Office365PolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365PolicyProperties"/>. </summary>
         /// <param name="breakOutCategories"> Office 365 breakout categories. </param>
-        internal Office365PolicyProperties(BreakOutCategoryPolicies breakOutCategories)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Office365PolicyProperties(BreakOutCategoryPolicies breakOutCategories, Dictionary<string, BinaryData> rawData)
         {
             BreakOutCategories = breakOutCategories;
+            _rawData = rawData;
         }
 
         /// <summary> Office 365 breakout categories. </summary>

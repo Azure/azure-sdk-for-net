@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for mobile networks API service call. </summary>
     internal partial class MobileNetworkListResult
     {
-        /// <summary> Initializes a new instance of MobileNetworkListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkListResult"/>. </summary>
         internal MobileNetworkListResult()
         {
             Value = new ChangeTrackingList<MobileNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkListResult"/>. </summary>
         /// <param name="value"> A list of mobile networks in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal MobileNetworkListResult(IReadOnlyList<MobileNetworkData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkListResult(IReadOnlyList<MobileNetworkData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of mobile networks in a resource group. </summary>

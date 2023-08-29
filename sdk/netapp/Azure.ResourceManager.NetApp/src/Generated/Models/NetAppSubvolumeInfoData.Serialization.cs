@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppSubvolumeInfoData : IUtf8JsonSerializable
+    public partial class NetAppSubvolumeInfoData : IUtf8JsonSerializable, IModelJsonSerializable<NetAppSubvolumeInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetAppSubvolumeInfoData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetAppSubvolumeInfoData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -48,11 +56,25 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppSubvolumeInfoData DeserializeNetAppSubvolumeInfoData(JsonElement element)
+        internal static NetAppSubvolumeInfoData DeserializeNetAppSubvolumeInfoData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +87,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<long?> size = default;
             Optional<string> parentPath = default;
             Optional<string> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -133,8 +156,57 @@ namespace Azure.ResourceManager.NetApp
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetAppSubvolumeInfoData(id, name, type, systemData.Value, path.Value, Optional.ToNullable(size), parentPath.Value, provisioningState.Value);
+            return new NetAppSubvolumeInfoData(id, name, type, systemData.Value, path.Value, Optional.ToNullable(size), parentPath.Value, provisioningState.Value, rawData);
+        }
+
+        NetAppSubvolumeInfoData IModelJsonSerializable<NetAppSubvolumeInfoData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppSubvolumeInfoData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetAppSubvolumeInfoData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetAppSubvolumeInfoData IModelSerializable<NetAppSubvolumeInfoData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetAppSubvolumeInfoData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetAppSubvolumeInfoData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetAppSubvolumeInfoData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetAppSubvolumeInfoData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

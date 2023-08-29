@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsTableData : IUtf8JsonSerializable
+    public partial class OperationalInsightsTableData : IUtf8JsonSerializable, IModelJsonSerializable<OperationalInsightsTableData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalInsightsTableData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalInsightsTableData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -50,11 +58,25 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteObjectValue(Schema);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsTableData DeserializeOperationalInsightsTableData(JsonElement element)
+        internal static OperationalInsightsTableData DeserializeOperationalInsightsTableData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +97,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<OperationalInsightsTableProvisioningState> provisioningState = default;
             Optional<RetentionInDaysAsDefaultState> retentionInDaysAsDefault = default;
             Optional<TotalRetentionInDaysAsDefaultState> totalRetentionInDaysAsDefault = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -217,8 +240,57 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OperationalInsightsTableData(id, name, type, systemData.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(totalRetentionInDays), Optional.ToNullable(archiveRetentionInDays), searchResults.Value, restoredLogs.Value, resultStatistics.Value, Optional.ToNullable(plan), lastPlanModifiedDate.Value, schema.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(retentionInDaysAsDefault), Optional.ToNullable(totalRetentionInDaysAsDefault));
+            return new OperationalInsightsTableData(id, name, type, systemData.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(totalRetentionInDays), Optional.ToNullable(archiveRetentionInDays), searchResults.Value, restoredLogs.Value, resultStatistics.Value, Optional.ToNullable(plan), lastPlanModifiedDate.Value, schema.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(retentionInDaysAsDefault), Optional.ToNullable(totalRetentionInDaysAsDefault), rawData);
+        }
+
+        OperationalInsightsTableData IModelJsonSerializable<OperationalInsightsTableData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsTableData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalInsightsTableData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalInsightsTableData IModelSerializable<OperationalInsightsTableData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsTableData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(OperationalInsightsTableData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator OperationalInsightsTableData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalInsightsTableData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

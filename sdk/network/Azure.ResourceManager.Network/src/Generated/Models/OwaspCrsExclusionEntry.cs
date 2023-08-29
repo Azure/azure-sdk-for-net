@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Allow to exclude some variable satisfy the condition for the WAF check. </summary>
     public partial class OwaspCrsExclusionEntry
     {
-        /// <summary> Initializes a new instance of OwaspCrsExclusionEntry. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OwaspCrsExclusionEntry"/>. </summary>
         /// <param name="matchVariable"> The variable to be excluded. </param>
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </param>
         /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </param>
@@ -29,17 +31,24 @@ namespace Azure.ResourceManager.Network.Models
             ExclusionManagedRuleSets = new ChangeTrackingList<ExclusionManagedRuleSet>();
         }
 
-        /// <summary> Initializes a new instance of OwaspCrsExclusionEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="OwaspCrsExclusionEntry"/>. </summary>
         /// <param name="matchVariable"> The variable to be excluded. </param>
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </param>
         /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </param>
         /// <param name="exclusionManagedRuleSets"> The managed rule sets that are associated with the exclusion. </param>
-        internal OwaspCrsExclusionEntry(OwaspCrsExclusionEntryMatchVariable matchVariable, OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator, string selector, IList<ExclusionManagedRuleSet> exclusionManagedRuleSets)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OwaspCrsExclusionEntry(OwaspCrsExclusionEntryMatchVariable matchVariable, OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator, string selector, IList<ExclusionManagedRuleSet> exclusionManagedRuleSets, Dictionary<string, BinaryData> rawData)
         {
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
             Selector = selector;
             ExclusionManagedRuleSets = exclusionManagedRuleSets;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OwaspCrsExclusionEntry"/> for deserialization. </summary>
+        internal OwaspCrsExclusionEntry()
+        {
         }
 
         /// <summary> The variable to be excluded. </summary>

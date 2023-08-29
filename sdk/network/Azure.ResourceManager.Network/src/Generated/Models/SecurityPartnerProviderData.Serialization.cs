@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class SecurityPartnerProviderData : IUtf8JsonSerializable
+    public partial class SecurityPartnerProviderData : IUtf8JsonSerializable, IModelJsonSerializable<SecurityPartnerProviderData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityPartnerProviderData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityPartnerProviderData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SecurityPartnerProviderData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -53,11 +59,25 @@ namespace Azure.ResourceManager.Network
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityPartnerProviderData DeserializeSecurityPartnerProviderData(JsonElement element)
+        internal static SecurityPartnerProviderData DeserializeSecurityPartnerProviderData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +92,7 @@ namespace Azure.ResourceManager.Network
             Optional<SecurityProviderName> securityProviderName = default;
             Optional<SecurityPartnerProviderConnectionStatus> connectionStatus = default;
             Optional<WritableSubResource> virtualHub = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -177,8 +198,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityPartnerProviderData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(securityProviderName), Optional.ToNullable(connectionStatus), virtualHub);
+            return new SecurityPartnerProviderData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(securityProviderName), Optional.ToNullable(connectionStatus), virtualHub, rawData);
+        }
+
+        SecurityPartnerProviderData IModelJsonSerializable<SecurityPartnerProviderData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityPartnerProviderData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityPartnerProviderData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityPartnerProviderData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityPartnerProviderData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityPartnerProviderData IModelSerializable<SecurityPartnerProviderData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityPartnerProviderData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityPartnerProviderData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecurityPartnerProviderData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecurityPartnerProviderData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityPartnerProviderData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

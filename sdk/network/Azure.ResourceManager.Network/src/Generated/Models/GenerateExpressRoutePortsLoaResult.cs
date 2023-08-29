@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GenerateExpressRoutePortsLOA API service call. </summary>
     public partial class GenerateExpressRoutePortsLoaResult
     {
-        /// <summary> Initializes a new instance of GenerateExpressRoutePortsLoaResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaResult"/>. </summary>
         internal GenerateExpressRoutePortsLoaResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GenerateExpressRoutePortsLoaResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaResult"/>. </summary>
         /// <param name="encodedContent"> The content as a base64 encoded string. </param>
-        internal GenerateExpressRoutePortsLoaResult(string encodedContent)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GenerateExpressRoutePortsLoaResult(string encodedContent, Dictionary<string, BinaryData> rawData)
         {
             EncodedContent = encodedContent;
+            _rawData = rawData;
         }
 
         /// <summary> The content as a base64 encoded string. </summary>

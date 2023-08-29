@@ -5,16 +5,48 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerCapabilityProperties
+    public partial class PostgreSqlFlexibleServerCapabilityProperties : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlFlexibleServerCapabilityProperties>
     {
-        internal static PostgreSqlFlexibleServerCapabilityProperties DeserializePostgreSqlFlexibleServerCapabilityProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlFlexibleServerCapabilityProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlFlexibleServerCapabilityProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerCapabilityProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PostgreSqlFlexibleServerCapabilityProperties DeserializePostgreSqlFlexibleServerCapabilityProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +64,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<PostgreSqlFlexibleServerZoneRedundantRestricted> restricted = default;
             Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
             Optional<string> reason = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -158,8 +191,57 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerCapabilityProperties(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToList(supportedServerEditions), Optional.ToList(supportedServerVersions), Optional.ToNullable(fastProvisioningSupported), Optional.ToList(supportedFastProvisioningEditions), Optional.ToNullable(geoBackupSupported), Optional.ToNullable(zoneRedundantHaSupported), Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported), Optional.ToNullable(storageAutoGrowthSupported), Optional.ToNullable(onlineResizeSupported), Optional.ToNullable(restricted));
+            return new PostgreSqlFlexibleServerCapabilityProperties(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToList(supportedServerEditions), Optional.ToList(supportedServerVersions), Optional.ToNullable(fastProvisioningSupported), Optional.ToList(supportedFastProvisioningEditions), Optional.ToNullable(geoBackupSupported), Optional.ToNullable(zoneRedundantHaSupported), Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported), Optional.ToNullable(storageAutoGrowthSupported), Optional.ToNullable(onlineResizeSupported), Optional.ToNullable(restricted), rawData);
+        }
+
+        PostgreSqlFlexibleServerCapabilityProperties IModelJsonSerializable<PostgreSqlFlexibleServerCapabilityProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerCapabilityProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerCapabilityProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlFlexibleServerCapabilityProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerCapabilityProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlFlexibleServerCapabilityProperties IModelSerializable<PostgreSqlFlexibleServerCapabilityProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerCapabilityProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerCapabilityProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PostgreSqlFlexibleServerCapabilityProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PostgreSqlFlexibleServerCapabilityProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlFlexibleServerCapabilityProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

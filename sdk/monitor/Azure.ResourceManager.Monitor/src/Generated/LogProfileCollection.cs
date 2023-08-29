@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<LogProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logProfileRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<LogProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logProfileRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

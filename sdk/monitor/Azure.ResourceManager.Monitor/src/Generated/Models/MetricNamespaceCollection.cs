@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents collection of metric namespaces. </summary>
     internal partial class MetricNamespaceCollection
     {
-        /// <summary> Initializes a new instance of MetricNamespaceCollection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaceCollection"/>. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MetricNamespaceCollection(IEnumerable<MonitorMetricNamespace> value)
@@ -25,11 +27,18 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricNamespaceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaceCollection"/>. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
-        internal MetricNamespaceCollection(IReadOnlyList<MonitorMetricNamespace> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricNamespaceCollection(IReadOnlyList<MonitorMetricNamespace> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaceCollection"/> for deserialization. </summary>
+        internal MetricNamespaceCollection()
+        {
         }
 
         /// <summary> The values for the metric namespaces. </summary>

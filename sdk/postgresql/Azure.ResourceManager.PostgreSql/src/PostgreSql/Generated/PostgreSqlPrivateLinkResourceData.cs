@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.Models;
@@ -17,20 +19,24 @@ namespace Azure.ResourceManager.PostgreSql
     /// </summary>
     public partial class PostgreSqlPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkResourceData"/>. </summary>
         public PostgreSqlPrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private link resource group id. </param>
-        internal PostgreSqlPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlPrivateLinkResourceProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> The private link resource group id. </summary>

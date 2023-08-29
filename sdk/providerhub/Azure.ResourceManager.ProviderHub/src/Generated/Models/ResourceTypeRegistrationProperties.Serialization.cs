@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeRegistrationProperties : IUtf8JsonSerializable
+    public partial class ResourceTypeRegistrationProperties : IUtf8JsonSerializable, IModelJsonSerializable<ResourceTypeRegistrationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeRegistrationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceTypeRegistrationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RoutingType))
             {
@@ -221,11 +228,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceTypeRegistrationProperties DeserializeResourceTypeRegistrationProperties(JsonElement element)
+        internal static ResourceTypeRegistrationProperties DeserializeResourceTypeRegistrationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -259,6 +280,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<ProviderHubExtendedLocationOptions>> extendedLocations = default;
             Optional<ResourceMovePolicy> resourceMovePolicy = default;
             Optional<ResourceDeletionPolicy> resourceDeletionPolicy = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routingType"u8))
@@ -578,8 +600,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceDeletionPolicy = new ResourceDeletionPolicy(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceTypeRegistrationProperties(Optional.ToNullable(routingType), Optional.ToNullable(regionality), Optional.ToList(endpoints), extensionOptions.Value, Optional.ToNullable(marketplaceType), Optional.ToList(swaggerSpecifications), Optional.ToList(allowedUnauthorizedActions), Optional.ToList(authorizationActionMappings), Optional.ToList(linkedAccessChecks), defaultApiVersion.Value, Optional.ToList(loggingRules), Optional.ToList(throttlingRules), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToNullable(enableAsyncOperation), Optional.ToNullable(provisioningState), Optional.ToNullable(enableThirdPartyS2S), subscriptionLifecycleNotificationSpecifications.Value, Optional.ToNullable(isPureProxy), identityManagement.Value, checkNameAvailabilitySpecifications.Value, Optional.ToList(disallowedActionVerbs), Optional.ToList(serviceTreeInfos), requestHeaderOptions.Value, Optional.ToList(subscriptionStateRules), templateDeploymentOptions.Value, Optional.ToList(extendedLocations), resourceMovePolicy.Value, Optional.ToNullable(resourceDeletionPolicy));
+            return new ResourceTypeRegistrationProperties(Optional.ToNullable(routingType), Optional.ToNullable(regionality), Optional.ToList(endpoints), extensionOptions.Value, Optional.ToNullable(marketplaceType), Optional.ToList(swaggerSpecifications), Optional.ToList(allowedUnauthorizedActions), Optional.ToList(authorizationActionMappings), Optional.ToList(linkedAccessChecks), defaultApiVersion.Value, Optional.ToList(loggingRules), Optional.ToList(throttlingRules), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToNullable(enableAsyncOperation), Optional.ToNullable(provisioningState), Optional.ToNullable(enableThirdPartyS2S), subscriptionLifecycleNotificationSpecifications.Value, Optional.ToNullable(isPureProxy), identityManagement.Value, checkNameAvailabilitySpecifications.Value, Optional.ToList(disallowedActionVerbs), Optional.ToList(serviceTreeInfos), requestHeaderOptions.Value, Optional.ToList(subscriptionStateRules), templateDeploymentOptions.Value, Optional.ToList(extendedLocations), resourceMovePolicy.Value, Optional.ToNullable(resourceDeletionPolicy), rawData);
+        }
+
+        ResourceTypeRegistrationProperties IModelJsonSerializable<ResourceTypeRegistrationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeRegistrationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceTypeRegistrationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceTypeRegistrationProperties IModelSerializable<ResourceTypeRegistrationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceTypeRegistrationProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ResourceTypeRegistrationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ResourceTypeRegistrationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceTypeRegistrationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

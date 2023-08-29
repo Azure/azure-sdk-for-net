@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleDataSource : IUtf8JsonSerializable
+    public partial class RuleDataSource : IUtf8JsonSerializable, IModelJsonSerializable<RuleDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RuleDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RuleDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
@@ -37,11 +45,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuleDataSource DeserializeRuleDataSource(JsonElement element)
+        internal static RuleDataSource DeserializeRuleDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,7 +76,100 @@ namespace Azure.ResourceManager.Monitor.Models
                     case "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource": return RuleMetricDataSource.DeserializeRuleMetricDataSource(element);
                 }
             }
-            return UnknownRuleDataSource.DeserializeUnknownRuleDataSource(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string odataType = default;
+            Optional<ResourceIdentifier> resourceUri = default;
+            Optional<ResourceIdentifier> legacyResourceId = default;
+            Optional<string> resourceLocation = default;
+            Optional<string> metricNamespace = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resourceUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("legacyResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    legacyResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceLocation"u8))
+                {
+                    resourceLocation = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("metricNamespace"u8))
+                {
+                    metricNamespace = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownRuleDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, rawData);
+        }
+
+        RuleDataSource IModelJsonSerializable<RuleDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RuleDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RuleDataSource IModelSerializable<RuleDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRuleDataSource(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RuleDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RuleDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRuleDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Storage Profile properties of a server. </summary>
     public partial class MySqlStorageProfile
     {
-        /// <summary> Initializes a new instance of MySqlStorageProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlStorageProfile"/>. </summary>
         public MySqlStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlStorageProfile"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> Enable Geo-redundant or not for server backup. </param>
         /// <param name="storageInMB"> Max storage allowed for a server. </param>
         /// <param name="storageAutogrow"> Enable Storage Auto Grow. </param>
-        internal MySqlStorageProfile(int? backupRetentionDays, MySqlGeoRedundantBackup? geoRedundantBackup, int? storageInMB, MySqlStorageAutogrow? storageAutogrow)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlStorageProfile(int? backupRetentionDays, MySqlGeoRedundantBackup? geoRedundantBackup, int? storageInMB, MySqlStorageAutogrow? storageAutogrow, Dictionary<string, BinaryData> rawData)
         {
             BackupRetentionDays = backupRetentionDays;
             GeoRedundantBackup = geoRedundantBackup;
             StorageInMB = storageInMB;
             StorageAutogrow = storageAutogrow;
+            _rawData = rawData;
         }
 
         /// <summary> Backup retention days for the server. </summary>

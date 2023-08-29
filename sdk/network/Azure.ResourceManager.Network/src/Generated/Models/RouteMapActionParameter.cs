@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters for an Action. </summary>
     public partial class RouteMapActionParameter
     {
-        /// <summary> Initializes a new instance of RouteMapActionParameter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteMapActionParameter"/>. </summary>
         public RouteMapActionParameter()
         {
             RoutePrefix = new ChangeTrackingList<string>();
@@ -21,15 +24,17 @@ namespace Azure.ResourceManager.Network.Models
             AsPath = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RouteMapActionParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMapActionParameter"/>. </summary>
         /// <param name="routePrefix"> List of route prefixes. </param>
         /// <param name="community"> List of BGP communities. </param>
         /// <param name="asPath"> List of AS paths. </param>
-        internal RouteMapActionParameter(IList<string> routePrefix, IList<string> community, IList<string> asPath)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteMapActionParameter(IList<string> routePrefix, IList<string> community, IList<string> asPath, Dictionary<string, BinaryData> rawData)
         {
             RoutePrefix = routePrefix;
             Community = community;
             AsPath = asPath;
+            _rawData = rawData;
         }
 
         /// <summary> List of route prefixes. </summary>

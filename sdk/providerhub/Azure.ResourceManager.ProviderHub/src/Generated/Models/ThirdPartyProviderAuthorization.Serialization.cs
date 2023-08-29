@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ThirdPartyProviderAuthorization : IUtf8JsonSerializable
+    public partial class ThirdPartyProviderAuthorization : IUtf8JsonSerializable, IModelJsonSerializable<ThirdPartyProviderAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ThirdPartyProviderAuthorization>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ThirdPartyProviderAuthorization>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Authorizations))
             {
@@ -31,17 +38,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("managedByTenantId"u8);
                 writer.WriteStringValue(ManagedByTenantId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ThirdPartyProviderAuthorization DeserializeThirdPartyProviderAuthorization(JsonElement element)
+        internal static ThirdPartyProviderAuthorization DeserializeThirdPartyProviderAuthorization(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<LightHouseAuthorization>> authorizations = default;
             Optional<string> managedByTenantId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizations"u8))
@@ -63,8 +85,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     managedByTenantId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ThirdPartyProviderAuthorization(Optional.ToList(authorizations), managedByTenantId.Value);
+            return new ThirdPartyProviderAuthorization(Optional.ToList(authorizations), managedByTenantId.Value, rawData);
+        }
+
+        ThirdPartyProviderAuthorization IModelJsonSerializable<ThirdPartyProviderAuthorization>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeThirdPartyProviderAuthorization(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ThirdPartyProviderAuthorization>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ThirdPartyProviderAuthorization IModelSerializable<ThirdPartyProviderAuthorization>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeThirdPartyProviderAuthorization(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ThirdPartyProviderAuthorization model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ThirdPartyProviderAuthorization(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeThirdPartyProviderAuthorization(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

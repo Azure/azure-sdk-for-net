@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkVirtualApplianceConnectionData : IUtf8JsonSerializable
+    public partial class NetworkVirtualApplianceConnectionData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkVirtualApplianceConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkVirtualApplianceConnectionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkVirtualApplianceConnectionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<NetworkVirtualApplianceConnectionData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -65,11 +72,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteObjectValue(RoutingConfiguration);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkVirtualApplianceConnectionData DeserializeNetworkVirtualApplianceConnectionData(JsonElement element)
+        internal static NetworkVirtualApplianceConnectionData DeserializeNetworkVirtualApplianceConnectionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +105,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<string>> bgpPeerAddress = default;
             Optional<bool> enableInternetSecurity = default;
             Optional<RoutingConfigurationNfv> routingConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -185,8 +207,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkVirtualApplianceConnectionData(id.Value, name.Value, Optional.ToNullable(type), name0.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(asn), Optional.ToNullable(tunnelIdentifier), Optional.ToList(bgpPeerAddress), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value);
+            return new NetworkVirtualApplianceConnectionData(id.Value, name.Value, Optional.ToNullable(type), name0.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(asn), Optional.ToNullable(tunnelIdentifier), Optional.ToList(bgpPeerAddress), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value, rawData);
+        }
+
+        NetworkVirtualApplianceConnectionData IModelJsonSerializable<NetworkVirtualApplianceConnectionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NetworkVirtualApplianceConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkVirtualApplianceConnectionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkVirtualApplianceConnectionData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NetworkVirtualApplianceConnectionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkVirtualApplianceConnectionData IModelSerializable<NetworkVirtualApplianceConnectionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NetworkVirtualApplianceConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkVirtualApplianceConnectionData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetworkVirtualApplianceConnectionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetworkVirtualApplianceConnectionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkVirtualApplianceConnectionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

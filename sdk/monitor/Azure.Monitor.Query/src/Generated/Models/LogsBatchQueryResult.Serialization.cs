@@ -5,13 +5,152 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class LogsBatchQueryResult
+    public partial class LogsBatchQueryResult : IUtf8JsonSerializable, IModelJsonSerializable<LogsBatchQueryResult>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogsBatchQueryResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogsBatchQueryResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LogsBatchQueryResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("tables"u8);
+            writer.WriteStartArray();
+            foreach (var item in AllTables)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(_statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                _statistics.WriteTo(writer);
+            }
+            if (Optional.IsDefined(_visualization))
+            {
+                writer.WritePropertyName("render"u8);
+                _visualization.WriteTo(writer);
+            }
+            if (Optional.IsDefined(_error))
+            {
+                writer.WritePropertyName("error"u8);
+                _error.WriteTo(writer);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<LogsTable> tables = default;
+            Optional<JsonElement> statistics = default;
+            Optional<JsonElement> render = default;
+            Optional<JsonElement> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tables"u8))
+                {
+                    List<LogsTable> array = new List<LogsTable>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LogsTable.DeserializeLogsTable(item));
+                    }
+                    tables = array;
+                    continue;
+                }
+                if (property.NameEquals("statistics"u8))
+                {
+                    statistics = property.Value.Clone();
+                    continue;
+                }
+                if (property.NameEquals("render"u8))
+                {
+                    render = property.Value.Clone();
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    error = property.Value.Clone();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new LogsBatchQueryResult(tables, statistics, render, error, rawData);
+        }
+
+        LogsBatchQueryResult IModelJsonSerializable<LogsBatchQueryResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LogsBatchQueryResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogsBatchQueryResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogsBatchQueryResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LogsBatchQueryResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogsBatchQueryResult IModelSerializable<LogsBatchQueryResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LogsBatchQueryResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogsBatchQueryResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LogsBatchQueryResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LogsBatchQueryResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogsBatchQueryResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

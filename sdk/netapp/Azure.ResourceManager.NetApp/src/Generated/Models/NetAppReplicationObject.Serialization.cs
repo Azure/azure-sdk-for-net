@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppReplicationObject : IUtf8JsonSerializable
+    public partial class NetAppReplicationObject : IUtf8JsonSerializable, IModelJsonSerializable<NetAppReplicationObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetAppReplicationObject>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetAppReplicationObject>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplicationId))
             {
@@ -37,11 +45,25 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("remoteVolumeRegion"u8);
                 writer.WriteStringValue(RemoteVolumeRegion);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppReplicationObject DeserializeNetAppReplicationObject(JsonElement element)
+        internal static NetAppReplicationObject DeserializeNetAppReplicationObject(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +73,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<NetAppReplicationSchedule> replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
             Optional<string> remoteVolumeRegion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicationId"u8))
@@ -86,8 +109,57 @@ namespace Azure.ResourceManager.NetApp.Models
                     remoteVolumeRegion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetAppReplicationObject(replicationId.Value, Optional.ToNullable(endpointType), Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value);
+            return new NetAppReplicationObject(replicationId.Value, Optional.ToNullable(endpointType), Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value, rawData);
+        }
+
+        NetAppReplicationObject IModelJsonSerializable<NetAppReplicationObject>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppReplicationObject(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetAppReplicationObject>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetAppReplicationObject IModelSerializable<NetAppReplicationObject>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetAppReplicationObject(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetAppReplicationObject model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetAppReplicationObject(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetAppReplicationObject(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

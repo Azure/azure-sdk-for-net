@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureDataLakeStorageGen2Parameter : IUtf8JsonSerializable
+    internal partial class AzureDataLakeStorageGen2Parameter : IUtf8JsonSerializable, IModelJsonSerializable<AzureDataLakeStorageGen2Parameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureDataLakeStorageGen2Parameter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureDataLakeStorageGen2Parameter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountName))
             {
@@ -66,11 +74,25 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 writer.WriteNull("fileTemplate");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureDataLakeStorageGen2Parameter DeserializeAzureDataLakeStorageGen2Parameter(JsonElement element)
+        internal static AzureDataLakeStorageGen2Parameter DeserializeAzureDataLakeStorageGen2Parameter(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +102,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string fileSystemName = default;
             string directoryTemplate = default;
             string fileTemplate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -132,8 +155,57 @@ namespace Azure.AI.MetricsAdvisor.Models
                     fileTemplate = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureDataLakeStorageGen2Parameter(accountName.Value, accountKey.Value, fileSystemName, directoryTemplate, fileTemplate);
+            return new AzureDataLakeStorageGen2Parameter(accountName.Value, accountKey.Value, fileSystemName, directoryTemplate, fileTemplate, rawData);
+        }
+
+        AzureDataLakeStorageGen2Parameter IModelJsonSerializable<AzureDataLakeStorageGen2Parameter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataLakeStorageGen2Parameter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureDataLakeStorageGen2Parameter>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureDataLakeStorageGen2Parameter IModelSerializable<AzureDataLakeStorageGen2Parameter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureDataLakeStorageGen2Parameter(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AzureDataLakeStorageGen2Parameter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AzureDataLakeStorageGen2Parameter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureDataLakeStorageGen2Parameter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayData"/>. </summary>
         public ExpressRouteGatewayData()
         {
             ExpressRouteConnectionList = new ChangeTrackingList<ExpressRouteConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
         /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
         /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
-        internal ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnectionList, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub, bool? allowNonVirtualWanTraffic) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnectionList, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub, bool? allowNonVirtualWanTraffic, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             ETag = etag;
             AutoScaleConfiguration = autoScaleConfiguration;

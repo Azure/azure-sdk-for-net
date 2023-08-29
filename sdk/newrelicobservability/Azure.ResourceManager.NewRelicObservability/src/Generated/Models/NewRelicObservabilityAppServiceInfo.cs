@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -12,20 +14,24 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Details of VM Resource having NewRelic OneAgent installed. </summary>
     public partial class NewRelicObservabilityAppServiceInfo
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityAppServiceInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAppServiceInfo"/>. </summary>
         internal NewRelicObservabilityAppServiceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityAppServiceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAppServiceInfo"/>. </summary>
         /// <param name="azureResourceId"> Azure App service resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the App service. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the App service. </param>
-        internal NewRelicObservabilityAppServiceInfo(ResourceIdentifier azureResourceId, string agentVersion, string agentStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicObservabilityAppServiceInfo(ResourceIdentifier azureResourceId, string agentVersion, string agentStatus, Dictionary<string, BinaryData> rawData)
         {
             AzureResourceId = azureResourceId;
             AgentVersion = agentVersion;
             AgentStatus = agentStatus;
+            _rawData = rawData;
         }
 
         /// <summary> Azure App service resource ID. </summary>

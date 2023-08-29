@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Trusted Root certificates of an application gateway. </summary>
     public partial class ApplicationGatewayTrustedRootCertificate : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayTrustedRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTrustedRootCertificate"/>. </summary>
         public ApplicationGatewayTrustedRootCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayTrustedRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTrustedRootCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -27,7 +28,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="data"> Certificate public data. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted root certificate resource. </param>
-        internal ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, string keyVaultSecretId, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             Data = data;

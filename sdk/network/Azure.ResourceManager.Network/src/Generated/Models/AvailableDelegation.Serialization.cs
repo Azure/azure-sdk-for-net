@@ -5,17 +5,59 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AvailableDelegation
+    public partial class AvailableDelegation : IUtf8JsonSerializable, IModelJsonSerializable<AvailableDelegation>
     {
-        internal static AvailableDelegation DeserializeAvailableDelegation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailableDelegation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AvailableDelegation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ServiceName))
+            {
+                writer.WritePropertyName("serviceName"u8);
+                writer.WriteStringValue(ServiceName);
+            }
+            if (Optional.IsCollectionDefined(Actions))
+            {
+                writer.WritePropertyName("actions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Actions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AvailableDelegation DeserializeAvailableDelegation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +68,7 @@ namespace Azure.ResourceManager.Network.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"u8))
@@ -71,8 +114,57 @@ namespace Azure.ResourceManager.Network.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AvailableDelegation(id, name, type, systemData.Value, serviceName.Value, Optional.ToList(actions));
+            return new AvailableDelegation(id, name, type, systemData.Value, serviceName.Value, Optional.ToList(actions), rawData);
+        }
+
+        AvailableDelegation IModelJsonSerializable<AvailableDelegation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailableDelegation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AvailableDelegation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AvailableDelegation IModelSerializable<AvailableDelegation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvailableDelegation(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AvailableDelegation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AvailableDelegation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAvailableDelegation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

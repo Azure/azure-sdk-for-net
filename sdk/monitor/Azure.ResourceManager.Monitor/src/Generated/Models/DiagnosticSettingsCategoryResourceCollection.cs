@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Monitor;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a collection of diagnostic setting category resources. </summary>
     internal partial class DiagnosticSettingsCategoryResourceCollection
     {
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryResourceCollection"/>. </summary>
         internal DiagnosticSettingsCategoryResourceCollection()
         {
             Value = new ChangeTrackingList<DiagnosticSettingsCategoryData>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryResourceCollection"/>. </summary>
         /// <param name="value"> The collection of diagnostic settings category resources. </param>
-        internal DiagnosticSettingsCategoryResourceCollection(IReadOnlyList<DiagnosticSettingsCategoryData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticSettingsCategoryResourceCollection(IReadOnlyList<DiagnosticSettingsCategoryData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The collection of diagnostic settings category resources. </summary>

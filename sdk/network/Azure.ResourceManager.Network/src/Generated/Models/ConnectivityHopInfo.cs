@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Information about a hop between the source and the destination. </summary>
     public partial class ConnectivityHopInfo
     {
-        /// <summary> Initializes a new instance of ConnectivityHopInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityHopInfo"/>. </summary>
         internal ConnectivityHopInfo()
         {
             NextHopIds = new ChangeTrackingList<string>();
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             Issues = new ChangeTrackingList<ConnectivityIssueInfo>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityHopInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityHopInfo"/>. </summary>
         /// <param name="connectivityHopType"> The type of the hop. </param>
         /// <param name="id"> The ID of the hop. </param>
         /// <param name="address"> The IP address of the hop. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="links"> List of hop links. </param>
         /// <param name="previousLinks"> List of previous hop links. </param>
         /// <param name="issues"> List of issues. </param>
-        internal ConnectivityHopInfo(string connectivityHopType, string id, string address, ResourceIdentifier resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssueInfo> issues)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityHopInfo(string connectivityHopType, string id, string address, ResourceIdentifier resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssueInfo> issues, Dictionary<string, BinaryData> rawData)
         {
             ConnectivityHopType = connectivityHopType;
             Id = id;
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.Network.Models
             Links = links;
             PreviousLinks = previousLinks;
             Issues = issues;
+            _rawData = rawData;
         }
 
         /// <summary> The type of the hop. </summary>

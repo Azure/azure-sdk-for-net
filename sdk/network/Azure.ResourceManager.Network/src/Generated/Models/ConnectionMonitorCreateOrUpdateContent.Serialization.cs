@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ConnectionMonitorCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<ConnectionMonitorCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectionMonitorCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectionMonitorCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -99,7 +107,226 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(Notes);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ConnectionMonitorCreateOrUpdateContent DeserializeConnectionMonitorCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ConnectionMonitorSource> source = default;
+            Optional<ConnectionMonitorDestination> destination = default;
+            Optional<bool> autoStart = default;
+            Optional<int> monitoringIntervalInSeconds = default;
+            Optional<IList<ConnectionMonitorEndpoint>> endpoints = default;
+            Optional<IList<ConnectionMonitorTestConfiguration>> testConfigurations = default;
+            Optional<IList<ConnectionMonitorTestGroup>> testGroups = default;
+            Optional<IList<ConnectionMonitorOutput>> outputs = default;
+            Optional<string> notes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("source"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            source = ConnectionMonitorSource.DeserializeConnectionMonitorSource(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("destination"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            destination = ConnectionMonitorDestination.DeserializeConnectionMonitorDestination(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("autoStart"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoStart = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("monitoringIntervalInSeconds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            monitoringIntervalInSeconds = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("endpoints"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ConnectionMonitorEndpoint> array = new List<ConnectionMonitorEndpoint>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ConnectionMonitorEndpoint.DeserializeConnectionMonitorEndpoint(item));
+                            }
+                            endpoints = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("testConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ConnectionMonitorTestConfiguration> array = new List<ConnectionMonitorTestConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ConnectionMonitorTestConfiguration.DeserializeConnectionMonitorTestConfiguration(item));
+                            }
+                            testConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("testGroups"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ConnectionMonitorTestGroup> array = new List<ConnectionMonitorTestGroup>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ConnectionMonitorTestGroup.DeserializeConnectionMonitorTestGroup(item));
+                            }
+                            testGroups = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("outputs"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ConnectionMonitorOutput> array = new List<ConnectionMonitorOutput>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ConnectionMonitorOutput.DeserializeConnectionMonitorOutput(item));
+                            }
+                            outputs = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("notes"u8))
+                        {
+                            notes = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ConnectionMonitorCreateOrUpdateContent(Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, rawData);
+        }
+
+        ConnectionMonitorCreateOrUpdateContent IModelJsonSerializable<ConnectionMonitorCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionMonitorCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectionMonitorCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectionMonitorCreateOrUpdateContent IModelSerializable<ConnectionMonitorCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectionMonitorCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConnectionMonitorCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConnectionMonitorCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectionMonitorCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

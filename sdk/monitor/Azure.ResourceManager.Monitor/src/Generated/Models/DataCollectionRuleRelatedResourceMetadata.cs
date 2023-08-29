@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metadata about the resource. </summary>
     public partial class DataCollectionRuleRelatedResourceMetadata
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleRelatedResourceMetadata. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleRelatedResourceMetadata"/>. </summary>
         internal DataCollectionRuleRelatedResourceMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleRelatedResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleRelatedResourceMetadata"/>. </summary>
         /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
-        internal DataCollectionRuleRelatedResourceMetadata(string provisionedBy, string provisionedByResourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleRelatedResourceMetadata(string provisionedBy, string provisionedByResourceId, Dictionary<string, BinaryData> rawData)
         {
             ProvisionedBy = provisionedBy;
             ProvisionedByResourceId = provisionedByResourceId;
+            _rawData = rawData;
         }
 
         /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>

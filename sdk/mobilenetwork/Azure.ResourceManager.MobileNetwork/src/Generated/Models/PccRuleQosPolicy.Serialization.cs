@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class PccRuleQosPolicy : IUtf8JsonSerializable
+    public partial class PccRuleQosPolicy : IUtf8JsonSerializable, IModelJsonSerializable<PccRuleQosPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PccRuleQosPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PccRuleQosPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PccRuleQosPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(GuaranteedBitRate))
             {
@@ -42,11 +50,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             writer.WritePropertyName("maximumBitRate"u8);
             writer.WriteObjectValue(MaximumBitRate);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PccRuleQosPolicy DeserializePccRuleQosPolicy(JsonElement element)
+        internal static PccRuleQosPolicy DeserializePccRuleQosPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
             Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
             Ambr maximumBitRate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("guaranteedBitRate"u8))
@@ -109,8 +132,57 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     maximumBitRate = Ambr.DeserializeAmbr(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PccRuleQosPolicy(Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), maximumBitRate, guaranteedBitRate.Value);
+            return new PccRuleQosPolicy(Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), maximumBitRate, guaranteedBitRate.Value, rawData);
+        }
+
+        PccRuleQosPolicy IModelJsonSerializable<PccRuleQosPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PccRuleQosPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePccRuleQosPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PccRuleQosPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PccRuleQosPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PccRuleQosPolicy IModelSerializable<PccRuleQosPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PccRuleQosPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePccRuleQosPolicy(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PccRuleQosPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PccRuleQosPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePccRuleQosPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

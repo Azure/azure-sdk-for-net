@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,13 +16,15 @@ namespace Azure.ResourceManager.Nginx
     /// <summary> A class representing the NginxDeployment data model. </summary>
     public partial class NginxDeploymentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NginxDeploymentData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NginxDeploymentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,11 +34,18 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="identity"> Gets or sets the identity. </param>
         /// <param name="properties"></param>
         /// <param name="sku"></param>
-        internal NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NginxDeploymentProperties properties, ResourceSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NginxDeploymentProperties properties, ResourceSku sku, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Properties = properties;
             Sku = sku;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentData"/> for deserialization. </summary>
+        internal NginxDeploymentData()
+        {
         }
 
         /// <summary> Gets or sets the identity. </summary>

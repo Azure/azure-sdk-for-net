@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Describes the list of Azure Monitor PrivateLinkScope resources. </summary>
     internal partial class AzureMonitorPrivateLinkScopeListResult
     {
-        /// <summary> Initializes a new instance of AzureMonitorPrivateLinkScopeListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorPrivateLinkScopeListResult"/>. </summary>
         /// <param name="value"> List of Azure Monitor PrivateLinkScope definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AzureMonitorPrivateLinkScopeListResult(IEnumerable<MonitorPrivateLinkScopeData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AzureMonitorPrivateLinkScopeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorPrivateLinkScopeListResult"/>. </summary>
         /// <param name="value"> List of Azure Monitor PrivateLinkScope definitions. </param>
         /// <param name="nextLink"> The URI to get the next set of Azure Monitor PrivateLinkScope definitions if too many PrivateLinkScopes where returned in the result set. </param>
-        internal AzureMonitorPrivateLinkScopeListResult(IReadOnlyList<MonitorPrivateLinkScopeData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureMonitorPrivateLinkScopeListResult(IReadOnlyList<MonitorPrivateLinkScopeData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorPrivateLinkScopeListResult"/> for deserialization. </summary>
+        internal AzureMonitorPrivateLinkScopeListResult()
+        {
         }
 
         /// <summary> List of Azure Monitor PrivateLinkScope definitions. </summary>

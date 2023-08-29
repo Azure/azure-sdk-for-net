@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerPatch : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerPatch : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlFlexibleServerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlFlexibleServerPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlFlexibleServerPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -99,7 +107,246 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteObjectValue(Network);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PostgreSqlFlexibleServerPatch DeserializePostgreSqlFlexibleServerPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<PostgreSqlFlexibleServerSku> sku = default;
+            Optional<PostgreSqlFlexibleServerUserAssignedIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> administratorLoginPassword = default;
+            Optional<PostgreSqlFlexibleServerVersion> version = default;
+            Optional<PostgreSqlFlexibleServerStorage> storage = default;
+            Optional<PostgreSqlFlexibleServerBackupProperties> backup = default;
+            Optional<PostgreSqlFlexibleServerHighAvailability> highAvailability = default;
+            Optional<PostgreSqlFlexibleServerMaintenanceWindow> maintenanceWindow = default;
+            Optional<PostgreSqlFlexibleServerAuthConfig> authConfig = default;
+            Optional<PostgreSqlFlexibleServerDataEncryption> dataEncryption = default;
+            Optional<PostgreSqlFlexibleServerCreateModeForUpdate> createMode = default;
+            Optional<PostgreSqlFlexibleServerReplicationRole> replicationRole = default;
+            Optional<PostgreSqlFlexibleServerNetwork> network = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = PostgreSqlFlexibleServerSku.DeserializePostgreSqlFlexibleServerSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = PostgreSqlFlexibleServerUserAssignedIdentity.DeserializePostgreSqlFlexibleServerUserAssignedIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("administratorLoginPassword"u8))
+                        {
+                            administratorLoginPassword = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("version"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            version = new PostgreSqlFlexibleServerVersion(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("storage"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storage = PostgreSqlFlexibleServerStorage.DeserializePostgreSqlFlexibleServerStorage(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("backup"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backup = PostgreSqlFlexibleServerBackupProperties.DeserializePostgreSqlFlexibleServerBackupProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("highAvailability"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            highAvailability = PostgreSqlFlexibleServerHighAvailability.DeserializePostgreSqlFlexibleServerHighAvailability(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("maintenanceWindow"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maintenanceWindow = PostgreSqlFlexibleServerMaintenanceWindow.DeserializePostgreSqlFlexibleServerMaintenanceWindow(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("authConfig"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authConfig = PostgreSqlFlexibleServerAuthConfig.DeserializePostgreSqlFlexibleServerAuthConfig(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("dataEncryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dataEncryption = PostgreSqlFlexibleServerDataEncryption.DeserializePostgreSqlFlexibleServerDataEncryption(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("createMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createMode = new PostgreSqlFlexibleServerCreateModeForUpdate(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("replicationRole"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            replicationRole = new PostgreSqlFlexibleServerReplicationRole(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("network"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            network = PostgreSqlFlexibleServerNetwork.DeserializePostgreSqlFlexibleServerNetwork(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PostgreSqlFlexibleServerPatch(sku.Value, identity.Value, Optional.ToDictionary(tags), Optional.ToNullable(location), administratorLoginPassword.Value, Optional.ToNullable(version), storage.Value, backup.Value, highAvailability.Value, maintenanceWindow.Value, authConfig.Value, dataEncryption.Value, Optional.ToNullable(createMode), Optional.ToNullable(replicationRole), network.Value, rawData);
+        }
+
+        PostgreSqlFlexibleServerPatch IModelJsonSerializable<PostgreSqlFlexibleServerPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlFlexibleServerPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlFlexibleServerPatch IModelSerializable<PostgreSqlFlexibleServerPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerPatch(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PostgreSqlFlexibleServerPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PostgreSqlFlexibleServerPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlFlexibleServerPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

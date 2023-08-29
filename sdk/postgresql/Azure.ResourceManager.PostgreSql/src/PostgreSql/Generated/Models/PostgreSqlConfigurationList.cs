@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A list of server configurations. </summary>
     public partial class PostgreSqlConfigurationList
     {
-        /// <summary> Initializes a new instance of PostgreSqlConfigurationList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlConfigurationList"/>. </summary>
         public PostgreSqlConfigurationList()
         {
             Value = new ChangeTrackingList<PostgreSqlConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlConfigurationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlConfigurationList"/>. </summary>
         /// <param name="value"> The list of server configurations. </param>
-        internal PostgreSqlConfigurationList(IList<PostgreSqlConfigurationData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlConfigurationList(IList<PostgreSqlConfigurationData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of server configurations. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkWatcherData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkWatcherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWatcherData"/>. </summary>
         public NetworkWatcherData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkWatcherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWatcherData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the network watcher resource. </param>
-        internal NetworkWatcherData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkWatcherData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             ETag = etag;
             ProvisioningState = provisioningState;

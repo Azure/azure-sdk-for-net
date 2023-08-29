@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class PredictiveAutoscalePolicy : IUtf8JsonSerializable
+    public partial class PredictiveAutoscalePolicy : IUtf8JsonSerializable, IModelJsonSerializable<PredictiveAutoscalePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PredictiveAutoscalePolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PredictiveAutoscalePolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("scaleMode"u8);
             writer.WriteStringValue(ScaleMode.ToSerialString());
@@ -23,17 +30,32 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("scaleLookAheadTime"u8);
                 writer.WriteStringValue(ScaleLookAheadTime.Value, "P");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PredictiveAutoscalePolicy DeserializePredictiveAutoscalePolicy(JsonElement element)
+        internal static PredictiveAutoscalePolicy DeserializePredictiveAutoscalePolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             PredictiveAutoscalePolicyScaleMode scaleMode = default;
             Optional<TimeSpan> scaleLookAheadTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scaleMode"u8))
@@ -50,8 +72,57 @@ namespace Azure.ResourceManager.Monitor.Models
                     scaleLookAheadTime = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PredictiveAutoscalePolicy(scaleMode, Optional.ToNullable(scaleLookAheadTime));
+            return new PredictiveAutoscalePolicy(scaleMode, Optional.ToNullable(scaleLookAheadTime), rawData);
+        }
+
+        PredictiveAutoscalePolicy IModelJsonSerializable<PredictiveAutoscalePolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePredictiveAutoscalePolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PredictiveAutoscalePolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PredictiveAutoscalePolicy IModelSerializable<PredictiveAutoscalePolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePredictiveAutoscalePolicy(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PredictiveAutoscalePolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PredictiveAutoscalePolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePredictiveAutoscalePolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

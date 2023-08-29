@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Relocate volume request. </summary>
     public partial class RelocateVolumeContent
     {
-        /// <summary> Initializes a new instance of RelocateVolumeContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelocateVolumeContent"/>. </summary>
         public RelocateVolumeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RelocateVolumeContent"/>. </summary>
+        /// <param name="creationToken"> New creation token for the volume that controls the mount point name. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelocateVolumeContent(string creationToken, Dictionary<string, BinaryData> rawData)
+        {
+            CreationToken = creationToken;
+            _rawData = rawData;
         }
 
         /// <summary> New creation token for the volume that controls the mount point name. </summary>

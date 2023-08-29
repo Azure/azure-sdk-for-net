@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Qos Traffic Profiler IP Range properties. </summary>
     public partial class QosIPRange
     {
-        /// <summary> Initializes a new instance of QosIPRange. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QosIPRange"/>. </summary>
         public QosIPRange()
         {
         }
 
-        /// <summary> Initializes a new instance of QosIPRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="QosIPRange"/>. </summary>
         /// <param name="startIP"> Start IP Address. </param>
         /// <param name="endIP"> End IP Address. </param>
-        internal QosIPRange(string startIP, string endIP)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QosIPRange(string startIP, string endIP, Dictionary<string, BinaryData> rawData)
         {
             StartIP = startIP;
             EndIP = endIP;
+            _rawData = rawData;
         }
 
         /// <summary> Start IP Address. </summary>

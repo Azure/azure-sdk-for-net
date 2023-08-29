@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    public partial class NotificationHubData : IUtf8JsonSerializable
+    public partial class NotificationHubData : IUtf8JsonSerializable, IModelJsonSerializable<NotificationHubData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NotificationHubData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NotificationHubData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -90,11 +96,25 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WriteObjectValue(BaiduCredential);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NotificationHubData DeserializeNotificationHubData(JsonElement element)
+        internal static NotificationHubData DeserializeNotificationHubData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -115,6 +135,7 @@ namespace Azure.ResourceManager.NotificationHubs
             Optional<NotificationHubMpnsCredential> mpnsCredential = default;
             Optional<NotificationHubAdmCredential> admCredential = default;
             Optional<NotificationHubBaiduCredential> baiduCredential = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -263,8 +284,57 @@ namespace Azure.ResourceManager.NotificationHubs
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NotificationHubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToNullable(registrationTtl), Optional.ToList(authorizationRules), apnsCredential.Value, wnsCredential.Value, gcmCredential.Value, mpnsCredential.Value, admCredential.Value, baiduCredential.Value, sku.Value);
+            return new NotificationHubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToNullable(registrationTtl), Optional.ToList(authorizationRules), apnsCredential.Value, wnsCredential.Value, gcmCredential.Value, mpnsCredential.Value, admCredential.Value, baiduCredential.Value, sku.Value, rawData);
+        }
+
+        NotificationHubData IModelJsonSerializable<NotificationHubData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationHubData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NotificationHubData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NotificationHubData IModelSerializable<NotificationHubData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotificationHubData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NotificationHubData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NotificationHubData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNotificationHubData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

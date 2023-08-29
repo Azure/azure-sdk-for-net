@@ -5,16 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AvailableProvidersListState
+    public partial class AvailableProvidersListState : IUtf8JsonSerializable, IModelJsonSerializable<AvailableProvidersListState>
     {
-        internal static AvailableProvidersListState DeserializeAvailableProvidersListState(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailableProvidersListState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AvailableProvidersListState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(StateName))
+            {
+                writer.WritePropertyName("stateName"u8);
+                writer.WriteStringValue(StateName);
+            }
+            if (Optional.IsCollectionDefined(Providers))
+            {
+                writer.WritePropertyName("providers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Providers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Cities))
+            {
+                writer.WritePropertyName("cities"u8);
+                writer.WriteStartArray();
+                foreach (var item in Cities)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AvailableProvidersListState DeserializeAvailableProvidersListState(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> stateName = default;
             Optional<IReadOnlyList<string>> providers = default;
             Optional<IReadOnlyList<AvailableProvidersListCity>> cities = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stateName"u8))
@@ -57,8 +110,57 @@ namespace Azure.ResourceManager.Network.Models
                     cities = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AvailableProvidersListState(stateName.Value, Optional.ToList(providers), Optional.ToList(cities));
+            return new AvailableProvidersListState(stateName.Value, Optional.ToList(providers), Optional.ToList(cities), rawData);
+        }
+
+        AvailableProvidersListState IModelJsonSerializable<AvailableProvidersListState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailableProvidersListState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AvailableProvidersListState>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AvailableProvidersListState IModelSerializable<AvailableProvidersListState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvailableProvidersListState(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AvailableProvidersListState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AvailableProvidersListState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAvailableProvidersListState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,80 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class ExpressionEvaluationDetails
+    public partial class ExpressionEvaluationDetails : IUtf8JsonSerializable, IModelJsonSerializable<ExpressionEvaluationDetails>
     {
-        internal static ExpressionEvaluationDetails DeserializeExpressionEvaluationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressionEvaluationDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressionEvaluationDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Result))
+            {
+                writer.WritePropertyName("result"u8);
+                writer.WriteStringValue(Result);
+            }
+            if (Optional.IsDefined(Expression))
+            {
+                writer.WritePropertyName("expression"u8);
+                writer.WriteStringValue(Expression);
+            }
+            if (Optional.IsDefined(Path))
+            {
+                writer.WritePropertyName("path"u8);
+                writer.WriteStringValue(Path);
+            }
+            if (Optional.IsDefined(ExpressionValue))
+            {
+                writer.WritePropertyName("expressionValue"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ExpressionValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExpressionValue.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(TargetValue))
+            {
+                writer.WritePropertyName("targetValue"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TargetValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TargetValue.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(Operator))
+            {
+                writer.WritePropertyName("operator"u8);
+                writer.WriteStringValue(Operator);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ExpressionEvaluationDetails DeserializeExpressionEvaluationDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +91,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<BinaryData> expressionValue = default;
             Optional<BinaryData> targetValue = default;
             Optional<string> @operator = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -71,8 +137,57 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     @operator = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressionEvaluationDetails(result.Value, expression.Value, expressionKind.Value, path.Value, expressionValue.Value, targetValue.Value, @operator.Value);
+            return new ExpressionEvaluationDetails(result.Value, expression.Value, expressionKind.Value, path.Value, expressionValue.Value, targetValue.Value, @operator.Value, rawData);
+        }
+
+        ExpressionEvaluationDetails IModelJsonSerializable<ExpressionEvaluationDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressionEvaluationDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressionEvaluationDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressionEvaluationDetails IModelSerializable<ExpressionEvaluationDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressionEvaluationDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExpressionEvaluationDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExpressionEvaluationDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressionEvaluationDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

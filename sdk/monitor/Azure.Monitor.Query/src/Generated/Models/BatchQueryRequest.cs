@@ -14,7 +14,9 @@ namespace Azure.Monitor.Query.Models
     /// <summary> An single request in a batch. </summary>
     internal partial class BatchQueryRequest
     {
-        /// <summary> Initializes a new instance of BatchQueryRequest. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/>. </summary>
         /// <param name="id"> The error details. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="workspace"> Workspace Id to be included in the query. </param>
@@ -31,6 +33,30 @@ namespace Azure.Monitor.Query.Models
             Path = "/query";
             Method = "POST";
             Workspace = workspace;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/>. </summary>
+        /// <param name="id"> The error details. </param>
+        /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
+        /// <param name="path"></param>
+        /// <param name="method"></param>
+        /// <param name="workspace"> Workspace Id to be included in the query. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchQueryRequest(string id, IDictionary<string, string> headers, QueryBody body, string path, string method, string workspace, Dictionary<string, BinaryData> rawData)
+        {
+            Id = id;
+            Headers = headers;
+            Body = body;
+            Path = path;
+            Method = method;
+            Workspace = workspace;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/> for deserialization. </summary>
+        internal BatchQueryRequest()
+        {
         }
 
         /// <summary> The error details. </summary>

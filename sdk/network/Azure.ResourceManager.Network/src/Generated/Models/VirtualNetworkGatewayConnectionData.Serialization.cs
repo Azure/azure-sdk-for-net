@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualNetworkGatewayConnectionData : IUtf8JsonSerializable
+    public partial class VirtualNetworkGatewayConnectionData : IUtf8JsonSerializable, IModelJsonSerializable<VirtualNetworkGatewayConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualNetworkGatewayConnectionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualNetworkGatewayConnectionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VirtualNetworkGatewayConnectionData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -168,11 +173,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkGatewayConnectionData DeserializeVirtualNetworkGatewayConnectionData(JsonElement element)
+        internal static VirtualNetworkGatewayConnectionData DeserializeVirtualNetworkGatewayConnectionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -210,6 +229,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> expressRouteGatewayBypass = default;
             Optional<bool> enablePrivateLinkFastPath = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -536,8 +556,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualNetworkGatewayConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2.Value, localNetworkGateway2.Value, Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules), connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(dpdTimeoutSeconds), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer, Optional.ToNullable(enableBgp), Optional.ToList(gatewayCustomBgpIPAddresses), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath));
+            return new VirtualNetworkGatewayConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2.Value, localNetworkGateway2.Value, Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules), connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(dpdTimeoutSeconds), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer, Optional.ToNullable(enableBgp), Optional.ToList(gatewayCustomBgpIPAddresses), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath), rawData);
+        }
+
+        VirtualNetworkGatewayConnectionData IModelJsonSerializable<VirtualNetworkGatewayConnectionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualNetworkGatewayConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkGatewayConnectionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualNetworkGatewayConnectionData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualNetworkGatewayConnectionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualNetworkGatewayConnectionData IModelSerializable<VirtualNetworkGatewayConnectionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualNetworkGatewayConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworkGatewayConnectionData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VirtualNetworkGatewayConnectionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VirtualNetworkGatewayConnectionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualNetworkGatewayConnectionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

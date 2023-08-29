@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

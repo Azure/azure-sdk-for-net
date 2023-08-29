@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class PanFirewallMarketplaceDetails : IUtf8JsonSerializable
+    public partial class PanFirewallMarketplaceDetails : IUtf8JsonSerializable, IModelJsonSerializable<PanFirewallMarketplaceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PanFirewallMarketplaceDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PanFirewallMarketplaceDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("offerId"u8);
             writer.WriteStringValue(OfferId);
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PanFirewallMarketplaceDetails DeserializePanFirewallMarketplaceDetails(JsonElement element)
+        internal static PanFirewallMarketplaceDetails DeserializePanFirewallMarketplaceDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +59,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             string offerId = default;
             string publisherId = default;
             Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("marketplaceSubscriptionId"u8))
@@ -63,8 +86,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId.Value, offerId, publisherId, Optional.ToNullable(marketplaceSubscriptionStatus));
+            return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId.Value, offerId, publisherId, Optional.ToNullable(marketplaceSubscriptionStatus), rawData);
+        }
+
+        PanFirewallMarketplaceDetails IModelJsonSerializable<PanFirewallMarketplaceDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePanFirewallMarketplaceDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PanFirewallMarketplaceDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PanFirewallMarketplaceDetails IModelSerializable<PanFirewallMarketplaceDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePanFirewallMarketplaceDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PanFirewallMarketplaceDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PanFirewallMarketplaceDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePanFirewallMarketplaceDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

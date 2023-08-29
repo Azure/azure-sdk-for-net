@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,14 +19,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualNetworkGatewayNatRuleData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayNatRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayNatRuleData"/>. </summary>
         public VirtualNetworkGatewayNatRuleData()
         {
             InternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
             ExternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayNatRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayNatRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="internalMappings"> The private IP address internal mapping for NAT. </param>
         /// <param name="externalMappings"> The private IP address external mapping for NAT. </param>
         /// <param name="ipConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
-        internal VirtualNetworkGatewayNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, NetworkProvisioningState? provisioningState, VpnNatRuleType? vpnNatRuleType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkGatewayNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, NetworkProvisioningState? provisioningState, VpnNatRuleType? vpnNatRuleType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             ProvisioningState = provisioningState;

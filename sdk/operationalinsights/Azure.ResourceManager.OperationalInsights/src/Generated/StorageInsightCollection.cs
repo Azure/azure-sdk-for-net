@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageInsightStorageInsightConfigsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageInsightStorageInsightConfigsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageInsightResource(Client, StorageInsightData.DeserializeStorageInsightData(e)), _storageInsightStorageInsightConfigsClientDiagnostics, Pipeline, "StorageInsightCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageInsightResource(Client, StorageInsightData.DeserializeStorageInsightData(e)), _storageInsightStorageInsightConfigsClientDiagnostics, Pipeline, "StorageInsightCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageInsightStorageInsightConfigsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageInsightStorageInsightConfigsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageInsightResource(Client, StorageInsightData.DeserializeStorageInsightData(e)), _storageInsightStorageInsightConfigsClientDiagnostics, Pipeline, "StorageInsightCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageInsightResource(Client, StorageInsightData.DeserializeStorageInsightData(e)), _storageInsightStorageInsightConfigsClientDiagnostics, Pipeline, "StorageInsightCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

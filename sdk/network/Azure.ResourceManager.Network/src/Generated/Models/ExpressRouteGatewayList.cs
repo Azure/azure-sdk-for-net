@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of ExpressRoute gateways. </summary>
     internal partial class ExpressRouteGatewayList
     {
-        /// <summary> Initializes a new instance of ExpressRouteGatewayList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayList"/>. </summary>
         internal ExpressRouteGatewayList()
         {
             Value = new ChangeTrackingList<ExpressRouteGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteGatewayList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayList"/>. </summary>
         /// <param name="value"> List of ExpressRoute gateways. </param>
-        internal ExpressRouteGatewayList(IReadOnlyList<ExpressRouteGatewayData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteGatewayList(IReadOnlyList<ExpressRouteGatewayData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of ExpressRoute gateways. </summary>

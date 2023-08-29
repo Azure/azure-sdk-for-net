@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -12,22 +14,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Database server metadata. </summary>
     public partial class PostgreSqlServerMetadata
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerMetadata. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerMetadata"/>. </summary>
         internal PostgreSqlServerMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerMetadata"/>. </summary>
         /// <param name="location"> Location of database server. </param>
         /// <param name="version"> Version for database engine. </param>
         /// <param name="storageMb"> Storage size in MB for database server. </param>
         /// <param name="sku"> SKU for the database server. </param>
-        internal PostgreSqlServerMetadata(AzureLocation? location, string version, int? storageMb, ServerSku sku)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlServerMetadata(AzureLocation? location, string version, int? storageMb, ServerSku sku, Dictionary<string, BinaryData> rawData)
         {
             Location = location;
             Version = version;
             StorageMb = storageMb;
             Sku = sku;
+            _rawData = rawData;
         }
 
         /// <summary> Location of database server. </summary>

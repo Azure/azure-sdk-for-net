@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileDataNetworkDataNetworksRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileDataNetworkDataNetworksRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileDataNetworkResource(Client, MobileDataNetworkData.DeserializeMobileDataNetworkData(e)), _mobileDataNetworkDataNetworksClientDiagnostics, Pipeline, "MobileDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileDataNetworkResource(Client, MobileDataNetworkData.DeserializeMobileDataNetworkData(e)), _mobileDataNetworkDataNetworksClientDiagnostics, Pipeline, "MobileDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileDataNetworkDataNetworksRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileDataNetworkDataNetworksRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileDataNetworkResource(Client, MobileDataNetworkData.DeserializeMobileDataNetworkData(e)), _mobileDataNetworkDataNetworksClientDiagnostics, Pipeline, "MobileDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileDataNetworkResource(Client, MobileDataNetworkData.DeserializeMobileDataNetworkData(e)), _mobileDataNetworkDataNetworksClientDiagnostics, Pipeline, "MobileDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

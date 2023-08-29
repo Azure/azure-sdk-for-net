@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> PrivateDnsZoneConfig resource. </summary>
     public partial class PrivateDnsZoneConfig
     {
-        /// <summary> Initializes a new instance of PrivateDnsZoneConfig. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneConfig"/>. </summary>
         public PrivateDnsZoneConfig()
         {
             RecordSets = new ChangeTrackingList<RecordSet>();
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsZoneConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneConfig"/>. </summary>
         /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="privateDnsZoneId"> The resource id of the private dns zone. </param>
         /// <param name="recordSets"> A collection of information regarding a recordSet, holding information to identify private resources. </param>
-        internal PrivateDnsZoneConfig(string name, string privateDnsZoneId, IReadOnlyList<RecordSet> recordSets)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateDnsZoneConfig(string name, string privateDnsZoneId, IReadOnlyList<RecordSet> recordSets, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             PrivateDnsZoneId = privateDnsZoneId;
             RecordSets = recordSets;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>

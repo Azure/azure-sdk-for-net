@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a metric metadata value. </summary>
     public partial class MonitorMetadataValue
     {
-        /// <summary> Initializes a new instance of MonitorMetadataValue. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorMetadataValue"/>. </summary>
         internal MonitorMetadataValue()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorMetadataValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetadataValue"/>. </summary>
         /// <param name="name"> the name of the metadata. </param>
         /// <param name="value"> the value of the metadata. </param>
-        internal MonitorMetadataValue(MonitorLocalizableString name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorMetadataValue(MonitorLocalizableString name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> the name of the metadata. </summary>

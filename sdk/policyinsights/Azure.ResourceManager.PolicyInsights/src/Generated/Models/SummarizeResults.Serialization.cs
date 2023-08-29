@@ -5,16 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    internal partial class SummarizeResults
+    internal partial class SummarizeResults : IUtf8JsonSerializable, IModelJsonSerializable<SummarizeResults>
     {
-        internal static SummarizeResults DeserializeSummarizeResults(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SummarizeResults>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SummarizeResults>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ODataContext))
+            {
+                writer.WritePropertyName("@odata.context"u8);
+                writer.WriteStringValue(ODataContext);
+            }
+            if (Optional.IsDefined(ODataCount))
+            {
+                writer.WritePropertyName("@odata.count"u8);
+                writer.WriteNumberValue(ODataCount.Value);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SummarizeResults DeserializeSummarizeResults(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +69,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<string> odataContext = default;
             Optional<int> odataCount = default;
             Optional<IReadOnlyList<PolicySummary>> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.context"u8))
@@ -52,8 +100,57 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SummarizeResults(odataContext.Value, Optional.ToNullable(odataCount), Optional.ToList(value));
+            return new SummarizeResults(odataContext.Value, Optional.ToNullable(odataCount), Optional.ToList(value), rawData);
+        }
+
+        SummarizeResults IModelJsonSerializable<SummarizeResults>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSummarizeResults(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SummarizeResults>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SummarizeResults IModelSerializable<SummarizeResults>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSummarizeResults(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SummarizeResults model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SummarizeResults(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSummarizeResults(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

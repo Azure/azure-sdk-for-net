@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Reference to RouteTableV3 associated with the connection. </summary>
     public partial class RoutingConfigurationNfvSubResource
     {
-        /// <summary> Initializes a new instance of RoutingConfigurationNfvSubResource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationNfvSubResource"/>. </summary>
         public RoutingConfigurationNfvSubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of RoutingConfigurationNfvSubResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationNfvSubResource"/>. </summary>
         /// <param name="resourceUri"> Resource ID. </param>
-        internal RoutingConfigurationNfvSubResource(Uri resourceUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingConfigurationNfvSubResource(Uri resourceUri, Dictionary<string, BinaryData> rawData)
         {
             ResourceUri = resourceUri;
+            _rawData = rawData;
         }
 
         /// <summary> Resource ID. </summary>

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineKeySetResource(Client, NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(e)), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, "NetworkCloudBareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudBareMetalMachineKeySetResource(Client, NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(e)), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, "NetworkCloudBareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineKeySetResource(Client, NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(e)), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, "NetworkCloudBareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudBareMetalMachineKeySetResource(Client, NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(e)), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, "NetworkCloudBareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Region = region;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetMonitorMetricsOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetMonitorMetricsOptions()
+        {
+        }
+
         /// <summary> The region where the metrics you want reside. </summary>
         public string Region { get; }
         /// <summary> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </summary>

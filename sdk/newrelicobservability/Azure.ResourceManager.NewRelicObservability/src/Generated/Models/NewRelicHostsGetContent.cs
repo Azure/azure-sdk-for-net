@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of a Hosts get Operation. </summary>
     public partial class NewRelicHostsGetContent
     {
-        /// <summary> Initializes a new instance of NewRelicHostsGetContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicHostsGetContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicHostsGetContent(string userEmail)
@@ -23,6 +25,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
             VmIds = new ChangeTrackingList<ResourceIdentifier>();
             UserEmail = userEmail;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicHostsGetContent"/>. </summary>
+        /// <param name="vmIds"> VM resource IDs. </param>
+        /// <param name="userEmail"> User Email. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicHostsGetContent(IList<ResourceIdentifier> vmIds, string userEmail, Dictionary<string, BinaryData> rawData)
+        {
+            VmIds = vmIds;
+            UserEmail = userEmail;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicHostsGetContent"/> for deserialization. </summary>
+        internal NewRelicHostsGetContent()
+        {
         }
 
         /// <summary> VM resource IDs. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -13,7 +14,9 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Contains details when the response code indicates an error. </summary>
     internal partial class ErrorResponse
     {
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
         /// <param name="error"> The error details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal ErrorResponse(ErrorInfo error)
@@ -21,6 +24,20 @@ namespace Azure.Monitor.Query.Models
             Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <param name="error"> The error details. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorResponse(ErrorInfo error, Dictionary<string, BinaryData> rawData)
+        {
+            Error = error;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/> for deserialization. </summary>
+        internal ErrorResponse()
+        {
         }
 
         /// <summary> The error details. </summary>

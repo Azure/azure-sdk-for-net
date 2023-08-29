@@ -5,15 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
-    public partial class MixedRealityNameAvailabilityResult
+    public partial class MixedRealityNameAvailabilityResult : IUtf8JsonSerializable, IModelJsonSerializable<MixedRealityNameAvailabilityResult>
     {
-        internal static MixedRealityNameAvailabilityResult DeserializeMixedRealityNameAvailabilityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MixedRealityNameAvailabilityResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MixedRealityNameAvailabilityResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("nameAvailable"u8);
+            writer.WriteBooleanValue(IsNameAvailable);
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason.Value.ToString());
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MixedRealityNameAvailabilityResult DeserializeMixedRealityNameAvailabilityResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +61,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             bool nameAvailable = default;
             Optional<MixedRealityNameUnavailableReason> reason = default;
             Optional<string> message = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -42,8 +83,57 @@ namespace Azure.ResourceManager.MixedReality.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MixedRealityNameAvailabilityResult(nameAvailable, Optional.ToNullable(reason), message.Value);
+            return new MixedRealityNameAvailabilityResult(nameAvailable, Optional.ToNullable(reason), message.Value, rawData);
+        }
+
+        MixedRealityNameAvailabilityResult IModelJsonSerializable<MixedRealityNameAvailabilityResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMixedRealityNameAvailabilityResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MixedRealityNameAvailabilityResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MixedRealityNameAvailabilityResult IModelSerializable<MixedRealityNameAvailabilityResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMixedRealityNameAvailabilityResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MixedRealityNameAvailabilityResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MixedRealityNameAvailabilityResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMixedRealityNameAvailabilityResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

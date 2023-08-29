@@ -10,15 +10,124 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ConnectionMonitorData
+    public partial class ConnectionMonitorData : IUtf8JsonSerializable, IModelJsonSerializable<ConnectionMonitorData>
     {
-        internal static ConnectionMonitorData DeserializeConnectionMonitorData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectionMonitorData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectionMonitorData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source);
+            }
+            if (Optional.IsDefined(Destination))
+            {
+                writer.WritePropertyName("destination"u8);
+                writer.WriteObjectValue(Destination);
+            }
+            if (Optional.IsDefined(AutoStart))
+            {
+                writer.WritePropertyName("autoStart"u8);
+                writer.WriteBooleanValue(AutoStart.Value);
+            }
+            if (Optional.IsDefined(MonitoringIntervalInSeconds))
+            {
+                writer.WritePropertyName("monitoringIntervalInSeconds"u8);
+                writer.WriteNumberValue(MonitoringIntervalInSeconds.Value);
+            }
+            if (Optional.IsCollectionDefined(Endpoints))
+            {
+                writer.WritePropertyName("endpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in Endpoints)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TestConfigurations))
+            {
+                writer.WritePropertyName("testConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in TestConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TestGroups))
+            {
+                writer.WritePropertyName("testGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in TestGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Outputs))
+            {
+                writer.WritePropertyName("outputs"u8);
+                writer.WriteStartArray();
+                foreach (var item in Outputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Notes))
+            {
+                writer.WritePropertyName("notes"u8);
+                writer.WriteStringValue(Notes);
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConnectionMonitorData DeserializeConnectionMonitorData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +152,7 @@ namespace Azure.ResourceManager.Network
             Optional<DateTimeOffset> startTime = default;
             Optional<string> monitoringStatus = default;
             Optional<ConnectionMonitorType> connectionMonitorType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -242,8 +352,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectionMonitorData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType));
+            return new ConnectionMonitorData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType), rawData);
+        }
+
+        ConnectionMonitorData IModelJsonSerializable<ConnectionMonitorData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionMonitorData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectionMonitorData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectionMonitorData IModelSerializable<ConnectionMonitorData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectionMonitorData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConnectionMonitorData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConnectionMonitorData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectionMonitorData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

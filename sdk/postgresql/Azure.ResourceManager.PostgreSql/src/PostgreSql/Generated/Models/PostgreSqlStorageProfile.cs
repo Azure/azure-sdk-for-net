@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     /// <summary> Storage Profile properties of a server. </summary>
     public partial class PostgreSqlStorageProfile
     {
-        /// <summary> Initializes a new instance of PostgreSqlStorageProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlStorageProfile"/>. </summary>
         public PostgreSqlStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlStorageProfile"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> Enable Geo-redundant or not for server backup. </param>
         /// <param name="storageInMB"> Max storage allowed for a server. </param>
         /// <param name="storageAutogrow"> Enable Storage Auto Grow. </param>
-        internal PostgreSqlStorageProfile(int? backupRetentionDays, PostgreSqlGeoRedundantBackup? geoRedundantBackup, int? storageInMB, PostgreSqlStorageAutogrow? storageAutogrow)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlStorageProfile(int? backupRetentionDays, PostgreSqlGeoRedundantBackup? geoRedundantBackup, int? storageInMB, PostgreSqlStorageAutogrow? storageAutogrow, Dictionary<string, BinaryData> rawData)
         {
             BackupRetentionDays = backupRetentionDays;
             GeoRedundantBackup = geoRedundantBackup;
             StorageInMB = storageInMB;
             StorageAutogrow = storageAutogrow;
+            _rawData = rawData;
         }
 
         /// <summary> Backup retention days for the server. </summary>

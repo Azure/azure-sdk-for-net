@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicObservabilityTagRuleTagRulesRestClient.CreateListByNewRelicMonitorResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicObservabilityTagRuleTagRulesRestClient.CreateListByNewRelicMonitorResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NewRelicObservabilityTagRuleResource(Client, NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(e)), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, "NewRelicObservabilityTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NewRelicObservabilityTagRuleResource(Client, NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(e)), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, "NewRelicObservabilityTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicObservabilityTagRuleTagRulesRestClient.CreateListByNewRelicMonitorResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicObservabilityTagRuleTagRulesRestClient.CreateListByNewRelicMonitorResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NewRelicObservabilityTagRuleResource(Client, NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(e)), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, "NewRelicObservabilityTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NewRelicObservabilityTagRuleResource(Client, NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(e)), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, "NewRelicObservabilityTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

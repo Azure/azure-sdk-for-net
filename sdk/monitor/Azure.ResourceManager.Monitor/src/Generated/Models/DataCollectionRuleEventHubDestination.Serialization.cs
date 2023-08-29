@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionRuleEventHubDestination : IUtf8JsonSerializable
+    public partial class DataCollectionRuleEventHubDestination : IUtf8JsonSerializable, IModelJsonSerializable<DataCollectionRuleEventHubDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataCollectionRuleEventHubDestination>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataCollectionRuleEventHubDestination>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EventHubResourceId))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataCollectionRuleEventHubDestination DeserializeDataCollectionRuleEventHubDestination(JsonElement element)
+        internal static DataCollectionRuleEventHubDestination DeserializeDataCollectionRuleEventHubDestination(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> eventHubResourceId = default;
             Optional<string> name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHubResourceId"u8))
@@ -52,8 +75,57 @@ namespace Azure.ResourceManager.Monitor.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataCollectionRuleEventHubDestination(eventHubResourceId.Value, name.Value);
+            return new DataCollectionRuleEventHubDestination(eventHubResourceId.Value, name.Value, rawData);
+        }
+
+        DataCollectionRuleEventHubDestination IModelJsonSerializable<DataCollectionRuleEventHubDestination>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCollectionRuleEventHubDestination(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataCollectionRuleEventHubDestination>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataCollectionRuleEventHubDestination IModelSerializable<DataCollectionRuleEventHubDestination>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataCollectionRuleEventHubDestination(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataCollectionRuleEventHubDestination model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataCollectionRuleEventHubDestination(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataCollectionRuleEventHubDestination(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

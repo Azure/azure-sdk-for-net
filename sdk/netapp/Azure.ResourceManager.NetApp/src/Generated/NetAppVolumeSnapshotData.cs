@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,14 +18,16 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppVolumeSnapshotData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppVolumeSnapshotData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotData"/>. </summary>
         /// <param name="location"> Resource location. </param>
         public NetAppVolumeSnapshotData(AzureLocation location)
         {
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeSnapshotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +36,19 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="snapshotId"> UUID v4 used to identify the Snapshot. </param>
         /// <param name="created"> The creation date of the snapshot. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, string snapshotId, DateTimeOffset? created, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, string snapshotId, DateTimeOffset? created, string provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             SnapshotId = snapshotId;
             Created = created;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotData"/> for deserialization. </summary>
+        internal NetAppVolumeSnapshotData()
+        {
         }
 
         /// <summary> Resource location. </summary>

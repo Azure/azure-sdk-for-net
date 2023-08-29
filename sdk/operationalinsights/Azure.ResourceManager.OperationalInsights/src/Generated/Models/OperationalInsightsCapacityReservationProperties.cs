@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The Capacity Reservation properties. </summary>
     public partial class OperationalInsightsCapacityReservationProperties
     {
-        /// <summary> Initializes a new instance of OperationalInsightsCapacityReservationProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsCapacityReservationProperties"/>. </summary>
         public OperationalInsightsCapacityReservationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsCapacityReservationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsCapacityReservationProperties"/>. </summary>
         /// <param name="lastSkuUpdatedOn"> The last time Sku was updated. </param>
         /// <param name="minCapacity"> Minimum CapacityReservation value in GB. </param>
-        internal OperationalInsightsCapacityReservationProperties(DateTimeOffset? lastSkuUpdatedOn, long? minCapacity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsCapacityReservationProperties(DateTimeOffset? lastSkuUpdatedOn, long? minCapacity, Dictionary<string, BinaryData> rawData)
         {
             LastSkuUpdatedOn = lastSkuUpdatedOn;
             MinCapacity = minCapacity;
+            _rawData = rawData;
         }
 
         /// <summary> The last time Sku was updated. </summary>

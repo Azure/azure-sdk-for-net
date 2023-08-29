@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Response for the LTR pre-backup API call. </summary>
     public partial class PostgreSqlFlexibleServerLtrPreBackupResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrPreBackupResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupResult"/>. </summary>
         /// <param name="numberOfContainers"> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </param>
         internal PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers)
         {
             NumberOfContainers = numberOfContainers;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupResult"/>. </summary>
+        /// <param name="numberOfContainers"> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers, Dictionary<string, BinaryData> rawData)
+        {
+            NumberOfContainers = numberOfContainers;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupResult"/> for deserialization. </summary>
+        internal PostgreSqlFlexibleServerLtrPreBackupResult()
+        {
         }
 
         /// <summary> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </summary>

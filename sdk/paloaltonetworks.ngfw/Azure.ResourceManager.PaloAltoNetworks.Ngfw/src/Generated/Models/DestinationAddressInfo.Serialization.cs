@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class DestinationAddressInfo : IUtf8JsonSerializable
+    public partial class DestinationAddressInfo : IUtf8JsonSerializable, IModelJsonSerializable<DestinationAddressInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DestinationAddressInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DestinationAddressInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Cidrs))
             {
@@ -66,11 +73,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DestinationAddressInfo DeserializeDestinationAddressInfo(JsonElement element)
+        internal static DestinationAddressInfo DeserializeDestinationAddressInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +101,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Optional<IList<string>> feeds = default;
             Optional<IList<string>> prefixLists = default;
             Optional<IList<string>> fqdnLists = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cidrs"u8))
@@ -152,8 +174,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     fqdnLists = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DestinationAddressInfo(Optional.ToList(cidrs), Optional.ToList(countries), Optional.ToList(feeds), Optional.ToList(prefixLists), Optional.ToList(fqdnLists));
+            return new DestinationAddressInfo(Optional.ToList(cidrs), Optional.ToList(countries), Optional.ToList(feeds), Optional.ToList(prefixLists), Optional.ToList(fqdnLists), rawData);
+        }
+
+        DestinationAddressInfo IModelJsonSerializable<DestinationAddressInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDestinationAddressInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DestinationAddressInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DestinationAddressInfo IModelSerializable<DestinationAddressInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDestinationAddressInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DestinationAddressInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DestinationAddressInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDestinationAddressInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

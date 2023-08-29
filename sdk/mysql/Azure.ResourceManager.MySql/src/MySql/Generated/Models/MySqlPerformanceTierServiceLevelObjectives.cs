@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Service level objectives for performance tier. </summary>
     public partial class MySqlPerformanceTierServiceLevelObjectives
     {
-        /// <summary> Initializes a new instance of MySqlPerformanceTierServiceLevelObjectives. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlPerformanceTierServiceLevelObjectives"/>. </summary>
         internal MySqlPerformanceTierServiceLevelObjectives()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlPerformanceTierServiceLevelObjectives. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPerformanceTierServiceLevelObjectives"/>. </summary>
         /// <param name="id"> ID for the service level objective. </param>
         /// <param name="edition"> Edition of the performance tier. </param>
         /// <param name="vCores"> vCore associated with the service level objective. </param>
@@ -24,7 +29,8 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
         /// <param name="maxStorageInMB"> Max storage allowed for a server. </param>
         /// <param name="minStorageInMB"> Max storage allowed for a server. </param>
-        internal MySqlPerformanceTierServiceLevelObjectives(string id, string edition, int? vCores, string hardwareGeneration, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minStorageInMB)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlPerformanceTierServiceLevelObjectives(string id, string edition, int? vCores, string hardwareGeneration, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minStorageInMB, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Edition = edition;
@@ -34,6 +40,7 @@ namespace Azure.ResourceManager.MySql.Models
             MinBackupRetentionDays = minBackupRetentionDays;
             MaxStorageInMB = maxStorageInMB;
             MinStorageInMB = minStorageInMB;
+            _rawData = rawData;
         }
 
         /// <summary> ID for the service level objective. </summary>

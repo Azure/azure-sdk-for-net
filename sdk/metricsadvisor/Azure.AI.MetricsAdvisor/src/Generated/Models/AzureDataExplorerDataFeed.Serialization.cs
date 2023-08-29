@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureDataExplorerDataFeed : IUtf8JsonSerializable
+    internal partial class AzureDataExplorerDataFeed : IUtf8JsonSerializable, IModelJsonSerializable<AzureDataExplorerDataFeed>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureDataExplorerDataFeed>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureDataExplorerDataFeed>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AzureDataExplorerDataFeed>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceParameter"u8);
             writer.WriteObjectValue(DataSourceParameter);
@@ -161,11 +167,25 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("credentialId"u8);
                 writer.WriteStringValue(CredentialId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureDataExplorerDataFeed DeserializeAzureDataExplorerDataFeed(JsonElement element)
+        internal static AzureDataExplorerDataFeed DeserializeAzureDataExplorerDataFeed(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -201,6 +221,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> actionLinkTemplate = default;
             Optional<AuthenticationTypeEnum> authenticationType = default;
             Optional<string> credentialId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSourceParameter"u8))
@@ -456,8 +477,57 @@ namespace Azure.AI.MetricsAdvisor.Models
                     credentialId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureDataExplorerDataFeed(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, Optional.ToNullable(authenticationType), credentialId.Value, dataSourceParameter);
+            return new AzureDataExplorerDataFeed(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, Optional.ToNullable(authenticationType), credentialId.Value, dataSourceParameter, rawData);
+        }
+
+        AzureDataExplorerDataFeed IModelJsonSerializable<AzureDataExplorerDataFeed>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureDataExplorerDataFeed>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataExplorerDataFeed(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureDataExplorerDataFeed>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureDataExplorerDataFeed>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureDataExplorerDataFeed IModelSerializable<AzureDataExplorerDataFeed>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureDataExplorerDataFeed>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureDataExplorerDataFeed(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AzureDataExplorerDataFeed model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AzureDataExplorerDataFeed(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureDataExplorerDataFeed(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

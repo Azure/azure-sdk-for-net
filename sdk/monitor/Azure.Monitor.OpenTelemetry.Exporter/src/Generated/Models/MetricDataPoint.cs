@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -13,7 +14,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> Metric data single measurement. </summary>
     internal partial class MetricDataPoint
     {
-        /// <summary> Initializes a new instance of MetricDataPoint. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/>. </summary>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="value"> Single value for measurement. Sum of individual measurements for the aggregation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +26,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/>. </summary>
+        /// <param name="namespace"> Namespace of the metric. </param>
+        /// <param name="name"> Name of the metric. </param>
+        /// <param name="dataPointType"> Metric type. Single measurement or the aggregated value. </param>
+        /// <param name="value"> Single value for measurement. Sum of individual measurements for the aggregation. </param>
+        /// <param name="count"> Metric weight of the aggregated metric. Should not be set for a measurement. </param>
+        /// <param name="min"> Minimum value of the aggregated metric. Should not be set for a measurement. </param>
+        /// <param name="max"> Maximum value of the aggregated metric. Should not be set for a measurement. </param>
+        /// <param name="stdDev"> Standard deviation of the aggregated metric. Should not be set for a measurement. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDataPoint(string @namespace, string name, DataPointType? dataPointType, double value, int? count, double? min, double? max, double? stdDev, Dictionary<string, BinaryData> rawData)
+        {
+            Namespace = @namespace;
+            Name = name;
+            DataPointType = dataPointType;
+            Value = value;
+            Count = count;
+            Min = min;
+            Max = max;
+            StdDev = stdDev;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/> for deserialization. </summary>
+        internal MetricDataPoint()
+        {
         }
 
         /// <summary> Namespace of the metric. </summary>

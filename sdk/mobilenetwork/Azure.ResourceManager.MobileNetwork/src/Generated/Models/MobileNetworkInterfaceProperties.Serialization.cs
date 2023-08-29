@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkInterfaceProperties : IUtf8JsonSerializable
+    public partial class MobileNetworkInterfaceProperties : IUtf8JsonSerializable, IModelJsonSerializable<MobileNetworkInterfaceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobileNetworkInterfaceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobileNetworkInterfaceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("ipv4Gateway"u8);
                 writer.WriteStringValue(IPv4Gateway);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkInterfaceProperties DeserializeMobileNetworkInterfaceProperties(JsonElement element)
+        internal static MobileNetworkInterfaceProperties DeserializeMobileNetworkInterfaceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<string> ipv4Address = default;
             Optional<string> ipv4Subnet = default;
             Optional<string> ipv4Gateway = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -70,8 +93,57 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     ipv4Gateway = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobileNetworkInterfaceProperties(name.Value, ipv4Address.Value, ipv4Subnet.Value, ipv4Gateway.Value);
+            return new MobileNetworkInterfaceProperties(name.Value, ipv4Address.Value, ipv4Subnet.Value, ipv4Gateway.Value, rawData);
+        }
+
+        MobileNetworkInterfaceProperties IModelJsonSerializable<MobileNetworkInterfaceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkInterfaceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobileNetworkInterfaceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobileNetworkInterfaceProperties IModelSerializable<MobileNetworkInterfaceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkInterfaceProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MobileNetworkInterfaceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MobileNetworkInterfaceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobileNetworkInterfaceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,28 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
-    public partial struct TrajectoryPose : IUtf8JsonSerializable
+    public partial struct TrajectoryPose : IUtf8JsonSerializable, IModelJsonSerializable<TrajectoryPose>, IModelJsonSerializable<object>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrajectoryPose>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrajectoryPose>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TrajectoryPose>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("rotation"u8);
             writer.WriteObjectValue(RotationWrapper);
             writer.WritePropertyName("translation"u8);
             writer.WriteObjectValue(TranslationWrapper);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrajectoryPose DeserializeTrajectoryPose(JsonElement element)
+        void IModelJsonSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TrajectoryPose>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("rotation"u8);
+            writer.WriteObjectValue(RotationWrapper);
+            writer.WritePropertyName("translation"u8);
+            writer.WriteObjectValue(TranslationWrapper);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TrajectoryPose DeserializeTrajectoryPose(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             Quaternion rotation = default;
             Vector3 translation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rotation"u8))
@@ -39,8 +86,72 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     translation = Vector3.DeserializeVector3(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrajectoryPose(rotation, translation);
+            return new TrajectoryPose(rotation, translation, rawData);
+        }
+
+        TrajectoryPose IModelJsonSerializable<TrajectoryPose>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TrajectoryPose>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrajectoryPose(doc.RootElement, options);
+        }
+
+        object IModelJsonSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TrajectoryPose>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrajectoryPose(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrajectoryPose>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TrajectoryPose>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrajectoryPose IModelSerializable<TrajectoryPose>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TrajectoryPose>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrajectoryPose(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TrajectoryPose>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TrajectoryPose>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrajectoryPose(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TrajectoryPose model)
+        {
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TrajectoryPose(Response response)
+        {
+            Argument.AssertNotNull(response, nameof(response));
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrajectoryPose(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

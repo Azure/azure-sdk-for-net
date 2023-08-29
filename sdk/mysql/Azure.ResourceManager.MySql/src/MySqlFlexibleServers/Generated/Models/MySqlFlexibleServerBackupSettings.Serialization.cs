@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerBackupSettings : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerBackupSettings : IUtf8JsonSerializable, IModelJsonSerializable<MySqlFlexibleServerBackupSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlFlexibleServerBackupSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlFlexibleServerBackupSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("backupName"u8);
             writer.WriteStringValue(BackupName);
@@ -22,7 +30,99 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("backupFormat"u8);
                 writer.WriteStringValue(BackupFormat.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MySqlFlexibleServerBackupSettings DeserializeMySqlFlexibleServerBackupSettings(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string backupName = default;
+            Optional<MySqlFlexibleServerBackupFormat> backupFormat = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("backupName"u8))
+                {
+                    backupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("backupFormat"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupFormat = new MySqlFlexibleServerBackupFormat(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MySqlFlexibleServerBackupSettings(backupName, Optional.ToNullable(backupFormat), rawData);
+        }
+
+        MySqlFlexibleServerBackupSettings IModelJsonSerializable<MySqlFlexibleServerBackupSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerBackupSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlFlexibleServerBackupSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlFlexibleServerBackupSettings IModelSerializable<MySqlFlexibleServerBackupSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlFlexibleServerBackupSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MySqlFlexibleServerBackupSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MySqlFlexibleServerBackupSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlFlexibleServerBackupSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

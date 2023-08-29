@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL2NetworkResource(Client, NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(e)), _networkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, "NetworkCloudL2NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudL2NetworkResource(Client, NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(e)), _networkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, "NetworkCloudL2NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL2NetworkResource(Client, NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(e)), _networkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, "NetworkCloudL2NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudL2NetworkResource(Client, NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(e)), _networkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, "NetworkCloudL2NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

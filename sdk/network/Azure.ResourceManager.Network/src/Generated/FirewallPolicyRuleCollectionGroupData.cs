@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class FirewallPolicyRuleCollectionGroupData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupData"/>. </summary>
         public FirewallPolicyRuleCollectionGroupData()
         {
             RuleCollections = new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.Network
         /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
-        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             Priority = priority;

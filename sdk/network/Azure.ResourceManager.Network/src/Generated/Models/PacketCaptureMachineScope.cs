@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </summary>
     public partial class PacketCaptureMachineScope
     {
-        /// <summary> Initializes a new instance of PacketCaptureMachineScope. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureMachineScope"/>. </summary>
         public PacketCaptureMachineScope()
         {
             Include = new ChangeTrackingList<string>();
             Exclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PacketCaptureMachineScope. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureMachineScope"/>. </summary>
         /// <param name="include"> List of AzureVMSS instances to run packet capture on. </param>
         /// <param name="exclude"> List of AzureVMSS instances which has to be excluded from the AzureVMSS from running packet capture. </param>
-        internal PacketCaptureMachineScope(IList<string> include, IList<string> exclude)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PacketCaptureMachineScope(IList<string> include, IList<string> exclude, Dictionary<string, BinaryData> rawData)
         {
             Include = include;
             Exclude = exclude;
+            _rawData = rawData;
         }
 
         /// <summary> List of AzureVMSS instances to run packet capture on. </summary>

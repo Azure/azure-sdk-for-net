@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Request body of the CheckPrivateLinkServiceVisibility API service call. </summary>
     public partial class CheckPrivateLinkServiceVisibilityRequest
     {
-        /// <summary> Initializes a new instance of CheckPrivateLinkServiceVisibilityRequest. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CheckPrivateLinkServiceVisibilityRequest"/>. </summary>
         public CheckPrivateLinkServiceVisibilityRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckPrivateLinkServiceVisibilityRequest"/>. </summary>
+        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CheckPrivateLinkServiceVisibilityRequest(string privateLinkServiceAlias, Dictionary<string, BinaryData> rawData)
+        {
+            PrivateLinkServiceAlias = privateLinkServiceAlias;
+            _rawData = rawData;
         }
 
         /// <summary> The alias of the private link service. </summary>

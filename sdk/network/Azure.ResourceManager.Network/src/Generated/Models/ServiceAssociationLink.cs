@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> ServiceAssociationLink resource. </summary>
     public partial class ServiceAssociationLink : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
         public ServiceAssociationLink()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the service association link resource. </param>
         /// <param name="allowDelete"> If true, the resource can be deleted. </param>
         /// <param name="locations"> A list of locations. </param>
-        internal ServiceAssociationLink(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<AzureLocation> locations) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAssociationLink(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<AzureLocation> locations, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             LinkedResourceType = linkedResourceType;

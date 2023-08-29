@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ScheduledQueryRulePatch : IUtf8JsonSerializable
+    public partial class ScheduledQueryRulePatch : IUtf8JsonSerializable, IModelJsonSerializable<ScheduledQueryRulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScheduledQueryRulePatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScheduledQueryRulePatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -114,7 +122,288 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteBooleanValue(AutoMitigate.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ScheduledQueryRulePatch DeserializeScheduledQueryRulePatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> createdWithApiVersion = default;
+            Optional<bool> isLegacyLogAnalyticsRule = default;
+            Optional<string> description = default;
+            Optional<string> displayName = default;
+            Optional<AlertSeverity> severity = default;
+            Optional<bool> enabled = default;
+            Optional<IList<string>> scopes = default;
+            Optional<TimeSpan> evaluationFrequency = default;
+            Optional<TimeSpan> windowSize = default;
+            Optional<TimeSpan> overrideQueryTimeRange = default;
+            Optional<IList<string>> targetResourceTypes = default;
+            Optional<ScheduledQueryRuleCriteria> criteria = default;
+            Optional<TimeSpan> muteActionsDuration = default;
+            Optional<ScheduledQueryRuleActions> actions = default;
+            Optional<bool> isWorkspaceAlertsStorageConfigured = default;
+            Optional<bool> checkWorkspaceAlertsStorageConfigured = default;
+            Optional<bool> skipQueryValidation = default;
+            Optional<bool> autoMitigate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("createdWithApiVersion"u8))
+                        {
+                            createdWithApiVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isLegacyLogAnalyticsRule"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isLegacyLogAnalyticsRule = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("severity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            severity = new AlertSeverity(property0.Value.GetInt64());
+                            continue;
+                        }
+                        if (property0.NameEquals("enabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("scopes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            scopes = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("evaluationFrequency"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            evaluationFrequency = property0.Value.GetTimeSpan("P");
+                            continue;
+                        }
+                        if (property0.NameEquals("windowSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            windowSize = property0.Value.GetTimeSpan("P");
+                            continue;
+                        }
+                        if (property0.NameEquals("overrideQueryTimeRange"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            overrideQueryTimeRange = property0.Value.GetTimeSpan("P");
+                            continue;
+                        }
+                        if (property0.NameEquals("targetResourceTypes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            targetResourceTypes = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("criteria"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            criteria = ScheduledQueryRuleCriteria.DeserializeScheduledQueryRuleCriteria(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("muteActionsDuration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            muteActionsDuration = property0.Value.GetTimeSpan("P");
+                            continue;
+                        }
+                        if (property0.NameEquals("actions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            actions = ScheduledQueryRuleActions.DeserializeScheduledQueryRuleActions(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("isWorkspaceAlertsStorageConfigured"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isWorkspaceAlertsStorageConfigured = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("checkWorkspaceAlertsStorageConfigured"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            checkWorkspaceAlertsStorageConfigured = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("skipQueryValidation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            skipQueryValidation = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("autoMitigate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoMitigate = property0.Value.GetBoolean();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ScheduledQueryRulePatch(Optional.ToDictionary(tags), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), Optional.ToList(scopes), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(overrideQueryTimeRange), Optional.ToList(targetResourceTypes), criteria.Value, Optional.ToNullable(muteActionsDuration), actions.Value, Optional.ToNullable(isWorkspaceAlertsStorageConfigured), Optional.ToNullable(checkWorkspaceAlertsStorageConfigured), Optional.ToNullable(skipQueryValidation), Optional.ToNullable(autoMitigate), rawData);
+        }
+
+        ScheduledQueryRulePatch IModelJsonSerializable<ScheduledQueryRulePatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduledQueryRulePatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScheduledQueryRulePatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScheduledQueryRulePatch IModelSerializable<ScheduledQueryRulePatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScheduledQueryRulePatch(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ScheduledQueryRulePatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ScheduledQueryRulePatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScheduledQueryRulePatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

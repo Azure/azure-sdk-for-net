@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class EmailNotification : IUtf8JsonSerializable
+    public partial class EmailNotification : IUtf8JsonSerializable, IModelJsonSerializable<EmailNotification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EmailNotification>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EmailNotification>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SendToSubscriptionAdministrator))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EmailNotification DeserializeEmailNotification(JsonElement element)
+        internal static EmailNotification DeserializeEmailNotification(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<bool> sendToSubscriptionAdministrator = default;
             Optional<bool> sendToSubscriptionCoAdministrators = default;
             Optional<IList<string>> customEmails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendToSubscriptionAdministrator"u8))
@@ -82,8 +104,57 @@ namespace Azure.ResourceManager.Monitor.Models
                     customEmails = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EmailNotification(Optional.ToNullable(sendToSubscriptionAdministrator), Optional.ToNullable(sendToSubscriptionCoAdministrators), Optional.ToList(customEmails));
+            return new EmailNotification(Optional.ToNullable(sendToSubscriptionAdministrator), Optional.ToNullable(sendToSubscriptionCoAdministrators), Optional.ToList(customEmails), rawData);
+        }
+
+        EmailNotification IModelJsonSerializable<EmailNotification>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmailNotification(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EmailNotification>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EmailNotification IModelSerializable<EmailNotification>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEmailNotification(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EmailNotification model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EmailNotification(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEmailNotification(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

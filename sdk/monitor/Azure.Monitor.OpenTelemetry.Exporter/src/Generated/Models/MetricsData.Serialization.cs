@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class MetricsData : IUtf8JsonSerializable
+    internal partial class MetricsData : IUtf8JsonSerializable, IModelJsonSerializable<MetricsData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricsData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricsData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MetricsData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("metrics"u8);
             writer.WriteStartArray();
@@ -41,6 +49,100 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
+        }
+
+        internal static MetricsData DeserializeMetricsData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<MetricDataPoint> metrics = default;
+            Optional<IDictionary<string, string>> properties = default;
+            int ver = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("metrics"u8))
+                {
+                    List<MetricDataPoint> array = new List<MetricDataPoint>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MetricDataPoint.DeserializeMetricDataPoint(item));
+                    }
+                    metrics = array;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("ver"u8))
+                {
+                    ver = property.Value.GetInt32();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new MetricsData(ver, additionalProperties, metrics, Optional.ToDictionary(properties));
+        }
+
+        MetricsData IModelJsonSerializable<MetricsData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MetricsData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricsData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricsData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MetricsData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricsData IModelSerializable<MetricsData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MetricsData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricsData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MetricsData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MetricsData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricsData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

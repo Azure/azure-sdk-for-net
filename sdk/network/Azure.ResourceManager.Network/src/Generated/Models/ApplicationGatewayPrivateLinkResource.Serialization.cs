@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayPrivateLinkResource : IUtf8JsonSerializable
+    public partial class ApplicationGatewayPrivateLinkResource : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayPrivateLinkResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayPrivateLinkResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayPrivateLinkResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayPrivateLinkResource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -40,11 +46,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayPrivateLinkResource DeserializeApplicationGatewayPrivateLinkResource(JsonElement element)
+        internal static ApplicationGatewayPrivateLinkResource DeserializeApplicationGatewayPrivateLinkResource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,6 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IList<string>> requiredZoneNames = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -135,8 +156,57 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayPrivateLinkResource(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new ApplicationGatewayPrivateLinkResource(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), rawData);
+        }
+
+        ApplicationGatewayPrivateLinkResource IModelJsonSerializable<ApplicationGatewayPrivateLinkResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayPrivateLinkResource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayPrivateLinkResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayPrivateLinkResource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayPrivateLinkResource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayPrivateLinkResource IModelSerializable<ApplicationGatewayPrivateLinkResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayPrivateLinkResource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayPrivateLinkResource(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ApplicationGatewayPrivateLinkResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ApplicationGatewayPrivateLinkResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayPrivateLinkResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

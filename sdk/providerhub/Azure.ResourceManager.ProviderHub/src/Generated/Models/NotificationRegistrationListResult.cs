@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ProviderHub;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The NotificationRegistrationListResult. </summary>
     internal partial class NotificationRegistrationListResult
     {
-        /// <summary> Initializes a new instance of NotificationRegistrationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationRegistrationListResult"/>. </summary>
         internal NotificationRegistrationListResult()
         {
             Value = new ChangeTrackingList<NotificationRegistrationData>();
         }
 
-        /// <summary> Initializes a new instance of NotificationRegistrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRegistrationListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
-        internal NotificationRegistrationListResult(IReadOnlyList<NotificationRegistrationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationRegistrationListResult(IReadOnlyList<NotificationRegistrationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

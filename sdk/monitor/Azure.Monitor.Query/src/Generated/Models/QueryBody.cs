@@ -14,7 +14,9 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </summary>
     internal partial class QueryBody
     {
-        /// <summary> Initializes a new instance of QueryBody. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryBody"/>. </summary>
         /// <param name="query"> The query to execute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public QueryBody(string query)
@@ -23,6 +25,24 @@ namespace Azure.Monitor.Query.Models
 
             Query = query;
             Workspaces = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryBody"/>. </summary>
+        /// <param name="query"> The query to execute. </param>
+        /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
+        /// <param name="workspaces"> A list of workspaces that are included in the query. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryBody(string query, string timespan, IList<string> workspaces, Dictionary<string, BinaryData> rawData)
+        {
+            Query = query;
+            Timespan = timespan;
+            Workspaces = workspaces;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryBody"/> for deserialization. </summary>
+        internal QueryBody()
+        {
         }
 
         /// <summary> The query to execute. </summary>

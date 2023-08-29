@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class MessageData : IUtf8JsonSerializable
+    internal partial class MessageData : IUtf8JsonSerializable, IModelJsonSerializable<MessageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MessageData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MessageData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MessageData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
@@ -52,6 +60,120 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
+        }
+
+        internal static MessageData DeserializeMessageData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string message = default;
+            Optional<SeverityLevel> severityLevel = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, double>> measurements = default;
+            int ver = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("message"u8))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("severityLevel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    severityLevel = new SeverityLevel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("measurements"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetDouble());
+                    }
+                    measurements = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("ver"u8))
+                {
+                    ver = property.Value.GetInt32();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new MessageData(ver, additionalProperties, message, Optional.ToNullable(severityLevel), Optional.ToDictionary(properties), Optional.ToDictionary(measurements));
+        }
+
+        MessageData IModelJsonSerializable<MessageData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MessageData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMessageData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MessageData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MessageData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MessageData IModelSerializable<MessageData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MessageData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMessageData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MessageData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MessageData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMessageData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

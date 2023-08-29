@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListOutboundRule API service call. </summary>
     internal partial class LoadBalancerOutboundRuleListResult
     {
-        /// <summary> Initializes a new instance of LoadBalancerOutboundRuleListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerOutboundRuleListResult"/>. </summary>
         internal LoadBalancerOutboundRuleListResult()
         {
             Value = new ChangeTrackingList<OutboundRuleData>();
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerOutboundRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerOutboundRuleListResult"/>. </summary>
         /// <param name="value"> A list of outbound rules in a load balancer. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LoadBalancerOutboundRuleListResult(IReadOnlyList<OutboundRuleData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerOutboundRuleListResult(IReadOnlyList<OutboundRuleData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of outbound rules in a load balancer. </summary>

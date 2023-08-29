@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -17,20 +19,24 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class CloudServiceSwapData : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudServiceSwapData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceSwapData"/>. </summary>
         public CloudServiceSwapData()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceSwapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceSwapData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Swap resource properties. </param>
-        internal CloudServiceSwapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudServiceSwapProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceSwapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudServiceSwapProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Swap resource properties. </summary>

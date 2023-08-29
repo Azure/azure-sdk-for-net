@@ -15,7 +15,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AlertResultList. </summary>
     internal partial class AlertResultList
     {
-        /// <summary> Initializes a new instance of AlertResultList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertResultList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AlertResultList(IEnumerable<AnomalyAlert> value)
@@ -25,13 +27,20 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AlertResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertResultList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
-        internal AlertResultList(string nextLink, IReadOnlyList<AnomalyAlert> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertResultList(string nextLink, IReadOnlyList<AnomalyAlert> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlertResultList"/> for deserialization. </summary>
+        internal AlertResultList()
+        {
         }
 
         /// <summary> Gets the next link. </summary>

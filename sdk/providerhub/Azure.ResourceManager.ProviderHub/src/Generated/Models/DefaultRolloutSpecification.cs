@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ProviderHub;
@@ -14,13 +15,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The DefaultRolloutSpecification. </summary>
     public partial class DefaultRolloutSpecification
     {
-        /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefaultRolloutSpecification"/>. </summary>
         public DefaultRolloutSpecification()
         {
             ResourceTypeRegistrations = new ChangeTrackingList<ResourceTypeRegistrationData>();
         }
 
-        /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultRolloutSpecification"/>. </summary>
         /// <param name="canary"></param>
         /// <param name="lowTraffic"></param>
         /// <param name="mediumTraffic"></param>
@@ -29,7 +32,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="restOfTheWorldGroupTwo"></param>
         /// <param name="providerRegistration"></param>
         /// <param name="resourceTypeRegistrations"></param>
-        internal DefaultRolloutSpecification(CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefaultRolloutSpecification(CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, Dictionary<string, BinaryData> rawData)
         {
             Canary = canary;
             LowTraffic = lowTraffic;
@@ -39,6 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RestOfTheWorldGroupTwo = restOfTheWorldGroupTwo;
             ProviderRegistration = providerRegistration;
             ResourceTypeRegistrations = resourceTypeRegistrations;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the canary. </summary>

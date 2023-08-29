@@ -10,16 +10,21 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ApplicationGatewayData : IUtf8JsonSerializable
+    public partial class ApplicationGatewayData : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -325,11 +330,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteObjectValue(GlobalConfiguration);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayData DeserializeApplicationGatewayData(JsonElement element)
+        internal static ApplicationGatewayData DeserializeApplicationGatewayData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -378,6 +397,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<ApplicationGatewayLoadDistributionPolicy>> loadDistributionPolicies = default;
             Optional<ApplicationGatewayGlobalConfiguration> globalConfiguration = default;
             Optional<ApplicationGatewaySslPolicyName> defaultPredefinedSslPolicy = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -909,8 +929,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(backendSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(listeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(routingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation), Optional.ToList(loadDistributionPolicies), globalConfiguration.Value, Optional.ToNullable(defaultPredefinedSslPolicy));
+            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(backendSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(listeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(routingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation), Optional.ToList(loadDistributionPolicies), globalConfiguration.Value, Optional.ToNullable(defaultPredefinedSslPolicy), rawData);
+        }
+
+        ApplicationGatewayData IModelJsonSerializable<ApplicationGatewayData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayData IModelSerializable<ApplicationGatewayData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ApplicationGatewayData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ApplicationGatewayData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> A tag of a saved search. </summary>
     public partial class OperationalInsightsTag
     {
-        /// <summary> Initializes a new instance of OperationalInsightsTag. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTag"/>. </summary>
         /// <param name="name"> The tag name. </param>
         /// <param name="value"> The tag value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTag"/>. </summary>
+        /// <param name="name"> The tag name. </param>
+        /// <param name="value"> The tag value. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsTag(string name, string value, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTag"/> for deserialization. </summary>
+        internal OperationalInsightsTag()
+        {
         }
 
         /// <summary> The tag name. </summary>

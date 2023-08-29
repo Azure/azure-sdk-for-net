@@ -6,17 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRoutePortAuthorizationData : IUtf8JsonSerializable
+    public partial class ExpressRoutePortAuthorizationData : IUtf8JsonSerializable, IModelJsonSerializable<ExpressRoutePortAuthorizationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressRoutePortAuthorizationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressRoutePortAuthorizationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ExpressRoutePortAuthorizationData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -31,11 +37,25 @@ namespace Azure.ResourceManager.Network
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRoutePortAuthorizationData DeserializeExpressRoutePortAuthorizationData(JsonElement element)
+        internal static ExpressRoutePortAuthorizationData DeserializeExpressRoutePortAuthorizationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +68,7 @@ namespace Azure.ResourceManager.Network
             Optional<ExpressRoutePortAuthorizationUseStatus> authorizationUseStatus = default;
             Optional<Uri> circuitResourceUri = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -126,8 +147,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressRoutePortAuthorizationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), authorizationKey.Value, Optional.ToNullable(authorizationUseStatus), circuitResourceUri.Value, Optional.ToNullable(provisioningState));
+            return new ExpressRoutePortAuthorizationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), authorizationKey.Value, Optional.ToNullable(authorizationUseStatus), circuitResourceUri.Value, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        ExpressRoutePortAuthorizationData IModelJsonSerializable<ExpressRoutePortAuthorizationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExpressRoutePortAuthorizationData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRoutePortAuthorizationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressRoutePortAuthorizationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExpressRoutePortAuthorizationData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressRoutePortAuthorizationData IModelSerializable<ExpressRoutePortAuthorizationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExpressRoutePortAuthorizationData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressRoutePortAuthorizationData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExpressRoutePortAuthorizationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExpressRoutePortAuthorizationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressRoutePortAuthorizationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

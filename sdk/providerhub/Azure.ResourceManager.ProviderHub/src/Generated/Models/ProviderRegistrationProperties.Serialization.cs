@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ProviderRegistrationProperties : IUtf8JsonSerializable
+    public partial class ProviderRegistrationProperties : IUtf8JsonSerializable, IModelJsonSerializable<ProviderRegistrationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderRegistrationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProviderRegistrationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ProviderRegistrationProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProviderHubMetadata))
             {
@@ -111,11 +117,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("templateDeploymentOptions"u8);
                 writer.WriteObjectValue(TemplateDeploymentOptions);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProviderRegistrationProperties DeserializeProviderRegistrationProperties(JsonElement element)
+        internal static ProviderRegistrationProperties DeserializeProviderRegistrationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -135,6 +155,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<ResourceProviderCapabilities>> capabilities = default;
             Optional<BinaryData> metadata = default;
             Optional<TemplateDeploymentOptions> templateDeploymentOptions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerHubMetadata"u8))
@@ -279,8 +300,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProviderRegistrationProperties(providerAuthentication.Value, Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, management.Value, Optional.ToList(capabilities), metadata.Value, templateDeploymentOptions.Value, providerHubMetadata.Value, Optional.ToNullable(provisioningState), subscriptionLifecycleNotificationSpecifications.Value);
+            return new ProviderRegistrationProperties(providerAuthentication.Value, Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, management.Value, Optional.ToList(capabilities), metadata.Value, templateDeploymentOptions.Value, providerHubMetadata.Value, Optional.ToNullable(provisioningState), subscriptionLifecycleNotificationSpecifications.Value, rawData);
+        }
+
+        ProviderRegistrationProperties IModelJsonSerializable<ProviderRegistrationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ProviderRegistrationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderRegistrationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProviderRegistrationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ProviderRegistrationProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProviderRegistrationProperties IModelSerializable<ProviderRegistrationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ProviderRegistrationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProviderRegistrationProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ProviderRegistrationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ProviderRegistrationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProviderRegistrationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppLdapSearchScopeConfiguration : IUtf8JsonSerializable
+    public partial class NetAppLdapSearchScopeConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<NetAppLdapSearchScopeConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetAppLdapSearchScopeConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetAppLdapSearchScopeConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserDN))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("groupMembershipFilter"u8);
                 writer.WriteStringValue(GroupMembershipFilter);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppLdapSearchScopeConfiguration DeserializeNetAppLdapSearchScopeConfiguration(JsonElement element)
+        internal static NetAppLdapSearchScopeConfiguration DeserializeNetAppLdapSearchScopeConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> userDN = default;
             Optional<string> groupDN = default;
             Optional<string> groupMembershipFilter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userDN"u8))
@@ -59,8 +82,57 @@ namespace Azure.ResourceManager.NetApp.Models
                     groupMembershipFilter = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetAppLdapSearchScopeConfiguration(userDN.Value, groupDN.Value, groupMembershipFilter.Value);
+            return new NetAppLdapSearchScopeConfiguration(userDN.Value, groupDN.Value, groupMembershipFilter.Value, rawData);
+        }
+
+        NetAppLdapSearchScopeConfiguration IModelJsonSerializable<NetAppLdapSearchScopeConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppLdapSearchScopeConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetAppLdapSearchScopeConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetAppLdapSearchScopeConfiguration IModelSerializable<NetAppLdapSearchScopeConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetAppLdapSearchScopeConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetAppLdapSearchScopeConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetAppLdapSearchScopeConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetAppLdapSearchScopeConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

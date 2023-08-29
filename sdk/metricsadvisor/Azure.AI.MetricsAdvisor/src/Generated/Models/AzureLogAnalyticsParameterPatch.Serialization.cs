@@ -5,12 +5,154 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureLogAnalyticsParameterPatch : IUtf8JsonSerializable
+    internal partial class AzureLogAnalyticsParameterPatch : IUtf8JsonSerializable, IModelJsonSerializable<AzureLogAnalyticsParameterPatch>
     {
+        void IModelJsonSerializable<AzureLogAnalyticsParameterPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId);
+            }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId);
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret"u8);
+                writer.WriteStringValue(ClientSecret);
+            }
+            if (Optional.IsDefined(WorkspaceId))
+            {
+                writer.WritePropertyName("workspaceId"u8);
+                writer.WriteStringValue(WorkspaceId);
+            }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteStringValue(Query);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AzureLogAnalyticsParameterPatch DeserializeAzureLogAnalyticsParameterPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> tenantId = default;
+            Optional<string> clientId = default;
+            Optional<string> clientSecret = default;
+            Optional<string> workspaceId = default;
+            Optional<string> query = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tenantId"u8))
+                {
+                    tenantId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("clientId"u8))
+                {
+                    clientId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("clientSecret"u8))
+                {
+                    clientSecret = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("workspaceId"u8))
+                {
+                    workspaceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("query"u8))
+                {
+                    query = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AzureLogAnalyticsParameterPatch(tenantId.Value, clientId.Value, clientSecret.Value, workspaceId.Value, query.Value, rawData);
+        }
+
+        AzureLogAnalyticsParameterPatch IModelJsonSerializable<AzureLogAnalyticsParameterPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureLogAnalyticsParameterPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureLogAnalyticsParameterPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureLogAnalyticsParameterPatch IModelSerializable<AzureLogAnalyticsParameterPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureLogAnalyticsParameterPatch(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AzureLogAnalyticsParameterPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AzureLogAnalyticsParameterPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureLogAnalyticsParameterPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

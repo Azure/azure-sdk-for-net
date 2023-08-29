@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable
+    public partial class ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable, IModelJsonSerializable<ExpressRouteCircuitPeeringConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressRouteCircuitPeeringConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressRouteCircuitPeeringConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AdvertisedPublicPrefixes))
             {
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("routingRegistryName"u8);
                 writer.WriteStringValue(RoutingRegistryName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteCircuitPeeringConfig DeserializeExpressRouteCircuitPeeringConfig(JsonElement element)
+        internal static ExpressRouteCircuitPeeringConfig DeserializeExpressRouteCircuitPeeringConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> legacyMode = default;
             Optional<int> customerASN = default;
             Optional<string> routingRegistryName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("advertisedPublicPrefixes"u8))
@@ -128,8 +150,57 @@ namespace Azure.ResourceManager.Network.Models
                     routingRegistryName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressRouteCircuitPeeringConfig(Optional.ToList(advertisedPublicPrefixes), Optional.ToList(advertisedCommunities), Optional.ToNullable(advertisedPublicPrefixesState), Optional.ToNullable(legacyMode), Optional.ToNullable(customerASN), routingRegistryName.Value);
+            return new ExpressRouteCircuitPeeringConfig(Optional.ToList(advertisedPublicPrefixes), Optional.ToList(advertisedCommunities), Optional.ToNullable(advertisedPublicPrefixesState), Optional.ToNullable(legacyMode), Optional.ToNullable(customerASN), routingRegistryName.Value, rawData);
+        }
+
+        ExpressRouteCircuitPeeringConfig IModelJsonSerializable<ExpressRouteCircuitPeeringConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteCircuitPeeringConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressRouteCircuitPeeringConfig>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressRouteCircuitPeeringConfig IModelSerializable<ExpressRouteCircuitPeeringConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressRouteCircuitPeeringConfig(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExpressRouteCircuitPeeringConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExpressRouteCircuitPeeringConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressRouteCircuitPeeringConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

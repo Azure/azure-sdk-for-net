@@ -5,14 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureApplicationInsightsParameterPatch. </summary>
     internal partial class AzureApplicationInsightsParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureApplicationInsightsParameterPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureApplicationInsightsParameterPatch"/>. </summary>
         public AzureApplicationInsightsParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureApplicationInsightsParameterPatch"/>. </summary>
+        /// <param name="azureCloud"> The Azure cloud that this Azure Application Insights in. </param>
+        /// <param name="applicationId"> The application id of this Azure Application Insights. </param>
+        /// <param name="apiKey"> The API Key that can access this Azure Application Insights. </param>
+        /// <param name="query"> The statement to query this Azure Application Insights. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureApplicationInsightsParameterPatch(string azureCloud, string applicationId, string apiKey, string query, Dictionary<string, BinaryData> rawData)
+        {
+            AzureCloud = azureCloud;
+            ApplicationId = applicationId;
+            ApiKey = apiKey;
+            Query = query;
+            _rawData = rawData;
         }
 
         /// <summary> The Azure cloud that this Azure Application Insights in. </summary>

@@ -19,6 +19,8 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletionsOptions
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
         /// <param name="messages">
         /// The collection of context messages associated with this chat completions request.
@@ -89,7 +91,8 @@ namespace Azure.AI.OpenAI
         ///   The configuration entries for Azure OpenAI chat extensions that use them.
         ///   This additional specification is only compatible with Azure OpenAI.
         /// </param>
-        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, Dictionary<string, BinaryData> rawData)
         {
             Messages = messages;
             Functions = functions;
@@ -106,6 +109,7 @@ namespace Azure.AI.OpenAI
             InternalShouldStreamResponse = internalShouldStreamResponse;
             InternalNonAzureModelName = internalNonAzureModelName;
             InternalAzureExtensionsDataSources = internalAzureExtensionsDataSources;
+            _rawData = rawData;
         }
 
         /// <summary>

@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub AdmCredential. </summary>
     public partial class NotificationHubAdmCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubAdmCredential. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>
         public NotificationHubAdmCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubAdmCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>
         /// <param name="clientId"> The client identifier. </param>
         /// <param name="clientSecret"> The credential secret access key. </param>
         /// <param name="authTokenUri"> The URL of the authorization token. </param>
-        internal NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri, Dictionary<string, BinaryData> rawData)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
             AuthTokenUri = authTokenUri;
+            _rawData = rawData;
         }
 
         /// <summary> The client identifier. </summary>

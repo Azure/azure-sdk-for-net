@@ -5,16 +5,88 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlPerformanceTier
+    public partial class MySqlPerformanceTier : IUtf8JsonSerializable, IModelJsonSerializable<MySqlPerformanceTier>
     {
-        internal static MySqlPerformanceTier DeserializeMySqlPerformanceTier(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlPerformanceTier>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlPerformanceTier>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(MaxBackupRetentionDays))
+            {
+                writer.WritePropertyName("maxBackupRetentionDays"u8);
+                writer.WriteNumberValue(MaxBackupRetentionDays.Value);
+            }
+            if (Optional.IsDefined(MinBackupRetentionDays))
+            {
+                writer.WritePropertyName("minBackupRetentionDays"u8);
+                writer.WriteNumberValue(MinBackupRetentionDays.Value);
+            }
+            if (Optional.IsDefined(MaxStorageInMB))
+            {
+                writer.WritePropertyName("maxStorageMB"u8);
+                writer.WriteNumberValue(MaxStorageInMB.Value);
+            }
+            if (Optional.IsDefined(MinLargeStorageInMB))
+            {
+                writer.WritePropertyName("minLargeStorageMB"u8);
+                writer.WriteNumberValue(MinLargeStorageInMB.Value);
+            }
+            if (Optional.IsDefined(MaxLargeStorageInMB))
+            {
+                writer.WritePropertyName("maxLargeStorageMB"u8);
+                writer.WriteNumberValue(MaxLargeStorageInMB.Value);
+            }
+            if (Optional.IsDefined(MinStorageInMB))
+            {
+                writer.WritePropertyName("minStorageMB"u8);
+                writer.WriteNumberValue(MinStorageInMB.Value);
+            }
+            if (Optional.IsCollectionDefined(ServiceLevelObjectives))
+            {
+                writer.WritePropertyName("serviceLevelObjectives"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceLevelObjectives)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MySqlPerformanceTier DeserializeMySqlPerformanceTier(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +99,7 @@ namespace Azure.ResourceManager.MySql.Models
             Optional<int> maxLargeStorageMB = default;
             Optional<int> minStorageMB = default;
             Optional<IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives>> serviceLevelObjectives = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,8 +175,57 @@ namespace Azure.ResourceManager.MySql.Models
                     serviceLevelObjectives = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MySqlPerformanceTier(id.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minLargeStorageMB), Optional.ToNullable(maxLargeStorageMB), Optional.ToNullable(minStorageMB), Optional.ToList(serviceLevelObjectives));
+            return new MySqlPerformanceTier(id.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minLargeStorageMB), Optional.ToNullable(maxLargeStorageMB), Optional.ToNullable(minStorageMB), Optional.ToList(serviceLevelObjectives), rawData);
+        }
+
+        MySqlPerformanceTier IModelJsonSerializable<MySqlPerformanceTier>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlPerformanceTier(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlPerformanceTier>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlPerformanceTier IModelSerializable<MySqlPerformanceTier>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlPerformanceTier(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MySqlPerformanceTier model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MySqlPerformanceTier(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlPerformanceTier(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

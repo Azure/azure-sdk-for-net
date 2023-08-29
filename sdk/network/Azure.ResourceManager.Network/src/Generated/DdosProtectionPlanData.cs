@@ -21,7 +21,9 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class DdosProtectionPlanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DdosProtectionPlanData(AzureLocation location) : base(location)
         {
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Network
             VirtualNetworks = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,13 +43,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the DDoS protection plan resource. </param>
         /// <param name="publicIPAddresses"> The list of public IPs associated with the DDoS protection plan resource. This list is read-only. </param>
         /// <param name="virtualNetworks"> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </param>
-        internal DdosProtectionPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IReadOnlyList<WritableSubResource> virtualNetworks) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DdosProtectionPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IReadOnlyList<WritableSubResource> virtualNetworks, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             PublicIPAddresses = publicIPAddresses;
             VirtualNetworks = virtualNetworks;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/> for deserialization. </summary>
+        internal DdosProtectionPlanData()
+        {
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Usage strings container. </summary>
     public partial class VirtualNetworkUsageName
     {
-        /// <summary> Initializes a new instance of VirtualNetworkUsageName. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkUsageName"/>. </summary>
         internal VirtualNetworkUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkUsageName"/>. </summary>
         /// <param name="localizedValue"> Localized subnet size and usage string. </param>
         /// <param name="value"> Subnet size and usage string. </param>
-        internal VirtualNetworkUsageName(string localizedValue, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkUsageName(string localizedValue, string value, Dictionary<string, BinaryData> rawData)
         {
             LocalizedValue = localizedValue;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Localized subnet size and usage string. </summary>

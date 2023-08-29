@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Path rule of URL path map of an application gateway. </summary>
     public partial class ApplicationGatewayPathRule : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPathRule"/>. </summary>
         public ApplicationGatewayPathRule()
         {
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPathRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             Paths = paths;

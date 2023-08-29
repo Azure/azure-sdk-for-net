@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network admin rule. </summary>
     public partial class ActiveSecurityAdminRule : ActiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of ActiveSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveSecurityAdminRule"/>. </summary>
         internal ActiveSecurityAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = EffectiveAdminRuleKind.Custom;
         }
 
-        /// <summary> Initializes a new instance of ActiveSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveSecurityAdminRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="commitOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal ActiveSecurityAdminRule(string id, DateTimeOffset? commitOn, string region, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, string description, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, commitOn, region, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActiveSecurityAdminRule(string id, DateTimeOffset? commitOn, string region, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, string description, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid, Dictionary<string, BinaryData> rawData) : base(id, commitOn, region, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind, rawData)
         {
             Description = description;
             Protocol = protocol;

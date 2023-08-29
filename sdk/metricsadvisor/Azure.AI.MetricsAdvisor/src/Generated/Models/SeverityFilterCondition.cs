@@ -5,18 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SeverityFilterCondition. </summary>
     internal partial class SeverityFilterCondition
     {
-        /// <summary> Initializes a new instance of SeverityFilterCondition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SeverityFilterCondition"/>. </summary>
         /// <param name="min"> min severity. </param>
         /// <param name="max"> max severity. </param>
         public SeverityFilterCondition(AnomalySeverity min, AnomalySeverity max)
         {
             Min = min;
             Max = max;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SeverityFilterCondition"/>. </summary>
+        /// <param name="min"> min severity. </param>
+        /// <param name="max"> max severity. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SeverityFilterCondition(AnomalySeverity min, AnomalySeverity max, Dictionary<string, BinaryData> rawData)
+        {
+            Min = min;
+            Max = max;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SeverityFilterCondition"/> for deserialization. </summary>
+        internal SeverityFilterCondition()
+        {
         }
 
         /// <summary> min severity. </summary>

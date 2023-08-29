@@ -15,7 +15,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyDimensionList. </summary>
     internal partial class AnomalyDimensionList
     {
-        /// <summary> Initializes a new instance of AnomalyDimensionList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDimensionList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AnomalyDimensionList(IEnumerable<string> value)
@@ -25,13 +27,20 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AnomalyDimensionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDimensionList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
-        internal AnomalyDimensionList(string nextLink, IReadOnlyList<string> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyDimensionList(string nextLink, IReadOnlyList<string> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDimensionList"/> for deserialization. </summary>
+        internal AnomalyDimensionList()
+        {
         }
 
         /// <summary> Gets the next link. </summary>

@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.Administration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataRolesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataRolesNextPageRequest(nextLink, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataRolesClient.GetMetadataRoles", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataRolesClient.GetMetadataRoles", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.Administration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataRolesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataRolesNextPageRequest(nextLink, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataRolesClient.GetMetadataRoles", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataRolesClient.GetMetadataRoles", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetMetadataRolesRequest(RequestContext context)

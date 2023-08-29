@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class RuleManagementEventClaimsDataSource : IUtf8JsonSerializable
+    internal partial class RuleManagementEventClaimsDataSource : IUtf8JsonSerializable, IModelJsonSerializable<RuleManagementEventClaimsDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RuleManagementEventClaimsDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RuleManagementEventClaimsDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EmailAddress))
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuleManagementEventClaimsDataSource DeserializeRuleManagementEventClaimsDataSource(JsonElement element)
+        internal static RuleManagementEventClaimsDataSource DeserializeRuleManagementEventClaimsDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> emailAddress = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emailAddress"u8))
@@ -37,8 +60,57 @@ namespace Azure.ResourceManager.Monitor.Models
                     emailAddress = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RuleManagementEventClaimsDataSource(emailAddress.Value);
+            return new RuleManagementEventClaimsDataSource(emailAddress.Value, rawData);
+        }
+
+        RuleManagementEventClaimsDataSource IModelJsonSerializable<RuleManagementEventClaimsDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleManagementEventClaimsDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RuleManagementEventClaimsDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RuleManagementEventClaimsDataSource IModelSerializable<RuleManagementEventClaimsDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRuleManagementEventClaimsDataSource(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RuleManagementEventClaimsDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RuleManagementEventClaimsDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRuleManagementEventClaimsDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

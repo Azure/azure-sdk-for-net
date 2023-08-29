@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Server restart parameters. </summary>
     public partial class MySqlFlexibleServerRestartParameter
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerRestartParameter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerRestartParameter"/>. </summary>
         public MySqlFlexibleServerRestartParameter()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerRestartParameter"/>. </summary>
+        /// <param name="restartWithFailover"> Whether or not failover to standby server when restarting a server with high availability enabled. </param>
+        /// <param name="maxFailoverSeconds"> The maximum allowed failover time in seconds. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerRestartParameter(MySqlFlexibleServerEnableStatusEnum? restartWithFailover, int? maxFailoverSeconds, Dictionary<string, BinaryData> rawData)
+        {
+            RestartWithFailover = restartWithFailover;
+            MaxFailoverSeconds = maxFailoverSeconds;
+            _rawData = rawData;
         }
 
         /// <summary> Whether or not failover to standby server when restarting a server with high availability enabled. </summary>

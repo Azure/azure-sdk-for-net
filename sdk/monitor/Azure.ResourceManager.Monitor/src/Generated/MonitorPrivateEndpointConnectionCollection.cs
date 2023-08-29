@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MonitorPrivateEndpointConnectionResource(Client, MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(e)), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MonitorPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new MonitorPrivateEndpointConnectionResource(Client, MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(e)), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MonitorPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MonitorPrivateEndpointConnectionResource(Client, MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(e)), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MonitorPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new MonitorPrivateEndpointConnectionResource(Client, MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(e)), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MonitorPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class VirtualMachinePlacementHint : IUtf8JsonSerializable
+    public partial class VirtualMachinePlacementHint : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachinePlacementHint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachinePlacementHint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachinePlacementHint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("hintType"u8);
             writer.WriteStringValue(HintType.ToString());
@@ -23,11 +31,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(SchedulingExecution.ToString());
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachinePlacementHint DeserializeVirtualMachinePlacementHint(JsonElement element)
+        internal static VirtualMachinePlacementHint DeserializeVirtualMachinePlacementHint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ResourceIdentifier resourceId = default;
             VirtualMachineSchedulingExecution schedulingExecution = default;
             VirtualMachinePlacementHintPodAffinityScope scope = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hintType"u8))
@@ -58,8 +81,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     scope = new VirtualMachinePlacementHintPodAffinityScope(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachinePlacementHint(hintType, resourceId, schedulingExecution, scope);
+            return new VirtualMachinePlacementHint(hintType, resourceId, schedulingExecution, scope, rawData);
+        }
+
+        VirtualMachinePlacementHint IModelJsonSerializable<VirtualMachinePlacementHint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachinePlacementHint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachinePlacementHint>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachinePlacementHint IModelSerializable<VirtualMachinePlacementHint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachinePlacementHint(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VirtualMachinePlacementHint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VirtualMachinePlacementHint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachinePlacementHint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

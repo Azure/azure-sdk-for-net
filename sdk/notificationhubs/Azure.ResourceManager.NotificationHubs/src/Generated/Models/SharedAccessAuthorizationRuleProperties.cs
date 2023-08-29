@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> SharedAccessAuthorizationRule properties. </summary>
     public partial class SharedAccessAuthorizationRuleProperties
     {
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleProperties"/>. </summary>
         public SharedAccessAuthorizationRuleProperties()
         {
             Rights = new ChangeTrackingList<AuthorizationRuleAccessRight>();
         }
 
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleProperties"/>. </summary>
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
         /// <param name="secondaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="modifiedOn"> The last modified time for this rule. </param>
         /// <param name="createdOn"> The created time for this rule. </param>
         /// <param name="revision"> The revision number for the rule. </param>
-        internal SharedAccessAuthorizationRuleProperties(IList<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, int? revision)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharedAccessAuthorizationRuleProperties(IList<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, int? revision, Dictionary<string, BinaryData> rawData)
         {
             Rights = rights;
             PrimaryKey = primaryKey;
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             ModifiedOn = modifiedOn;
             CreatedOn = createdOn;
             Revision = revision;
+            _rawData = rawData;
         }
 
         /// <summary> The rights associated with the rule. </summary>

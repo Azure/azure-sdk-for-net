@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerPrivateDnsZoneSuffixResponse
+    public partial class MySqlFlexibleServerPrivateDnsZoneSuffixResponse : IUtf8JsonSerializable, IModelJsonSerializable<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>
     {
-        internal static MySqlFlexibleServerPrivateDnsZoneSuffixResponse DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrivateDnsZoneSuffix))
+            {
+                writer.WritePropertyName("privateDnsZoneSuffix"u8);
+                writer.WriteStringValue(PrivateDnsZoneSuffix);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MySqlFlexibleServerPrivateDnsZoneSuffixResponse DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> privateDnsZoneSuffix = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateDnsZoneSuffix"u8))
@@ -26,8 +60,57 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     privateDnsZoneSuffix = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MySqlFlexibleServerPrivateDnsZoneSuffixResponse(privateDnsZoneSuffix.Value);
+            return new MySqlFlexibleServerPrivateDnsZoneSuffixResponse(privateDnsZoneSuffix.Value, rawData);
+        }
+
+        MySqlFlexibleServerPrivateDnsZoneSuffixResponse IModelJsonSerializable<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlFlexibleServerPrivateDnsZoneSuffixResponse IModelSerializable<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MySqlFlexibleServerPrivateDnsZoneSuffixResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MySqlFlexibleServerPrivateDnsZoneSuffixResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

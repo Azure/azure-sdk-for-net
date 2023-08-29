@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </summary>
     public partial class MobileNetworkLocalDiagnosticsAccessConfiguration
     {
-        /// <summary> Initializes a new instance of MobileNetworkLocalDiagnosticsAccessConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkLocalDiagnosticsAccessConfiguration"/>. </summary>
         /// <param name="authenticationType"> How to authenticate users who access local diagnostics APIs. </param>
         public MobileNetworkLocalDiagnosticsAccessConfiguration(MobileNetworkAuthenticationType authenticationType)
         {
             AuthenticationType = authenticationType;
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkLocalDiagnosticsAccessConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkLocalDiagnosticsAccessConfiguration"/>. </summary>
         /// <param name="authenticationType"> How to authenticate users who access local diagnostics APIs. </param>
         /// <param name="httpsServerCertificate"> The HTTPS server TLS certificate used to secure local access to diagnostics. </param>
-        internal MobileNetworkLocalDiagnosticsAccessConfiguration(MobileNetworkAuthenticationType authenticationType, MobileNetworkHttpsServerCertificate httpsServerCertificate)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkLocalDiagnosticsAccessConfiguration(MobileNetworkAuthenticationType authenticationType, MobileNetworkHttpsServerCertificate httpsServerCertificate, Dictionary<string, BinaryData> rawData)
         {
             AuthenticationType = authenticationType;
             HttpsServerCertificate = httpsServerCertificate;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkLocalDiagnosticsAccessConfiguration"/> for deserialization. </summary>
+        internal MobileNetworkLocalDiagnosticsAccessConfiguration()
+        {
         }
 
         /// <summary> How to authenticate users who access local diagnostics APIs. </summary>

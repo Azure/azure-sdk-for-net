@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlPrivateLinkResource(Client, PostgreSqlPrivateLinkResourceData.DeserializePostgreSqlPrivateLinkResourceData(e)), _postgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PostgreSqlPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PostgreSqlPrivateLinkResource(Client, PostgreSqlPrivateLinkResourceData.DeserializePostgreSqlPrivateLinkResourceData(e)), _postgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PostgreSqlPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlPrivateLinkResource(Client, PostgreSqlPrivateLinkResourceData.DeserializePostgreSqlPrivateLinkResourceData(e)), _postgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PostgreSqlPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PostgreSqlPrivateLinkResource(Client, PostgreSqlPrivateLinkResourceData.DeserializePostgreSqlPrivateLinkResourceData(e)), _postgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PostgreSqlPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

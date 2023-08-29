@@ -5,14 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SmartDetectionConditionPatch. </summary>
     internal partial class SmartDetectionConditionPatch
     {
-        /// <summary> Initializes a new instance of SmartDetectionConditionPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmartDetectionConditionPatch"/>. </summary>
         public SmartDetectionConditionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SmartDetectionConditionPatch"/>. </summary>
+        /// <param name="sensitivity"> sensitivity, value range : (0, 100]. </param>
+        /// <param name="anomalyDetectorDirection"> detection direction. </param>
+        /// <param name="suppressCondition"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmartDetectionConditionPatch(double? sensitivity, AnomalyDetectorDirection? anomalyDetectorDirection, SuppressConditionPatch suppressCondition, Dictionary<string, BinaryData> rawData)
+        {
+            Sensitivity = sensitivity;
+            AnomalyDetectorDirection = anomalyDetectorDirection;
+            SuppressCondition = suppressCondition;
+            _rawData = rawData;
         }
 
         /// <summary> sensitivity, value range : (0, 100]. </summary>

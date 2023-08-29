@@ -15,7 +15,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyAlertingConfiguration. </summary>
     public partial class AnomalyAlertConfiguration
     {
-        /// <summary> Initializes a new instance of AnomalyAlertConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyAlertConfiguration"/>. </summary>
         /// <param name="id"> anomaly alerting configuration unique id. </param>
         /// <param name="name"> anomaly alerting configuration name. </param>
         /// <param name="description"> anomaly alerting configuration description. </param>
@@ -27,7 +29,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="dimensionsToSplitAlert"> dimensions used to split alert. </param>
         /// <param name="idsOfHooksToAlert"> hook unique ids. </param>
         /// <param name="metricAlertConfigurations"> Anomaly alerting configurations. </param>
-        internal AnomalyAlertConfiguration(string id, string name, string description, MetricAlertConfigurationsOperator? crossMetricsOperator, IList<string> dimensionsToSplitAlert, IList<string> idsOfHooksToAlert, IList<MetricAlertConfiguration> metricAlertConfigurations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyAlertConfiguration(string id, string name, string description, MetricAlertConfigurationsOperator? crossMetricsOperator, IList<string> dimensionsToSplitAlert, IList<string> idsOfHooksToAlert, IList<MetricAlertConfiguration> metricAlertConfigurations, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -36,6 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionsToSplitAlert = dimensionsToSplitAlert;
             IdsOfHooksToAlert = idsOfHooksToAlert;
             MetricAlertConfigurations = metricAlertConfigurations;
+            _rawData = rawData;
         }
     }
 }

@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class OutboundRuleData : IUtf8JsonSerializable
+    public partial class OutboundRuleData : IUtf8JsonSerializable, IModelJsonSerializable<OutboundRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OutboundRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OutboundRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<OutboundRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -67,11 +73,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OutboundRuleData DeserializeOutboundRuleData(JsonElement element)
+        internal static OutboundRuleData DeserializeOutboundRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +107,7 @@ namespace Azure.ResourceManager.Network
             Optional<LoadBalancerOutboundRuleProtocol> protocol = default;
             Optional<bool> enableTcpReset = default;
             Optional<int> idleTimeoutInMinutes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -201,8 +222,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OutboundRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(allocatedOutboundPorts), Optional.ToList(frontendIPConfigurations), backendAddressPool, Optional.ToNullable(provisioningState), Optional.ToNullable(protocol), Optional.ToNullable(enableTcpReset), Optional.ToNullable(idleTimeoutInMinutes));
+            return new OutboundRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(allocatedOutboundPorts), Optional.ToList(frontendIPConfigurations), backendAddressPool, Optional.ToNullable(provisioningState), Optional.ToNullable(protocol), Optional.ToNullable(enableTcpReset), Optional.ToNullable(idleTimeoutInMinutes), rawData);
+        }
+
+        OutboundRuleData IModelJsonSerializable<OutboundRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OutboundRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOutboundRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OutboundRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OutboundRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OutboundRuleData IModelSerializable<OutboundRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OutboundRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOutboundRuleData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(OutboundRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator OutboundRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOutboundRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

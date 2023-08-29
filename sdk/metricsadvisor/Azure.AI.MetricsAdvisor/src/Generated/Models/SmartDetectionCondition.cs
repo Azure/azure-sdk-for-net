@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,5 +14,24 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SmartDetectionCondition. </summary>
     public partial class SmartDetectionCondition
     {
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmartDetectionCondition"/>. </summary>
+        /// <param name="sensitivity"> sensitivity, value range : (0, 100]. </param>
+        /// <param name="anomalyDetectorDirection"> detection direction. </param>
+        /// <param name="suppressCondition"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmartDetectionCondition(double sensitivity, AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition, Dictionary<string, BinaryData> rawData)
+        {
+            Sensitivity = sensitivity;
+            AnomalyDetectorDirection = anomalyDetectorDirection;
+            SuppressCondition = suppressCondition;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SmartDetectionCondition"/> for deserialization. </summary>
+        internal SmartDetectionCondition()
+        {
+        }
     }
 }

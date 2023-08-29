@@ -5,17 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Represents capability of a fast provisioning edition. </summary>
     public partial class PostgreSqlFlexibleServerFastProvisioningEditionCapability : PostgreSqlBaseCapability
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerFastProvisioningEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>
         internal PostgreSqlFlexibleServerFastProvisioningEditionCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerFastProvisioningEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="supportedTier"> Fast provisioning supported tier name. </param>
@@ -23,7 +26,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedStorageGb"> Fast provisioning supported storage in Gb. </param>
         /// <param name="supportedServerVersions"> Fast provisioning supported version. </param>
         /// <param name="serverCount"> Count of servers in cache matching the spec. </param>
-        internal PostgreSqlFlexibleServerFastProvisioningEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string supportedTier, string supportedSku, long? supportedStorageGb, string supportedServerVersions, int? serverCount) : base(capabilityStatus, reason)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerFastProvisioningEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string supportedTier, string supportedSku, long? supportedStorageGb, string supportedServerVersions, int? serverCount, Dictionary<string, BinaryData> rawData) : base(capabilityStatus, reason, rawData)
         {
             SupportedTier = supportedTier;
             SupportedSku = supportedSku;
