@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ManagedClusterUpgradeProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedClusterUpgradeProfileData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeProfileData"/>. </summary>
         /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
         /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> or <paramref name="agentPoolProfiles"/> is null. </exception>
@@ -33,17 +35,24 @@ namespace Azure.ResourceManager.ContainerService
             AgentPoolProfiles = agentPoolProfiles.ToList();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterUpgradeProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
         /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
-        internal ManagedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedClusterPoolUpgradeProfile controlPlaneProfile, IReadOnlyList<ManagedClusterPoolUpgradeProfile> agentPoolProfiles) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedClusterPoolUpgradeProfile controlPlaneProfile, IReadOnlyList<ManagedClusterPoolUpgradeProfile> agentPoolProfiles, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ControlPlaneProfile = controlPlaneProfile;
             AgentPoolProfiles = agentPoolProfiles;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeProfileData"/> for deserialization. </summary>
+        internal ManagedClusterUpgradeProfileData()
+        {
         }
 
         /// <summary> The list of available upgrade versions for the control plane. </summary>

@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB client encryption key resource object. </summary>
     public partial class CosmosDBSqlClientEncryptionKeyResourceInfo
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyResourceInfo. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyResourceInfo"/>. </summary>
         public CosmosDBSqlClientEncryptionKeyResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyResourceInfo"/>. </summary>
         /// <param name="id"> Name of the ClientEncryptionKey. </param>
         /// <param name="encryptionAlgorithm"> Encryption algorithm that will be used along with this client encryption key to encrypt/decrypt data. </param>
         /// <param name="wrappedDataEncryptionKey"> Wrapped (encrypted) form of the key represented as a byte array. </param>
         /// <param name="keyWrapMetadata"> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </param>
-        internal CosmosDBSqlClientEncryptionKeyResourceInfo(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlClientEncryptionKeyResourceInfo(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             EncryptionAlgorithm = encryptionAlgorithm;
             WrappedDataEncryptionKey = wrappedDataEncryptionKey;
             KeyWrapMetadata = keyWrapMetadata;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the ClientEncryptionKey. </summary>

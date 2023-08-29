@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of dataset resources. </summary>
     internal partial class DataFactoryDatasetListResult
     {
-        /// <summary> Initializes a new instance of DataFactoryDatasetListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDatasetListResult"/>. </summary>
         /// <param name="value"> List of datasets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryDatasetListResult(IEnumerable<DataFactoryDatasetData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDatasetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDatasetListResult"/>. </summary>
         /// <param name="value"> List of datasets. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal DataFactoryDatasetListResult(IReadOnlyList<DataFactoryDatasetData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryDatasetListResult(IReadOnlyList<DataFactoryDatasetData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDatasetListResult"/> for deserialization. </summary>
+        internal DataFactoryDatasetListResult()
+        {
         }
 
         /// <summary> List of datasets. </summary>

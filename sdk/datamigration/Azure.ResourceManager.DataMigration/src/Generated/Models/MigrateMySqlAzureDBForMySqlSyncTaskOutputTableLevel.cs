@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel. </summary>
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel : MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/>. </summary>
         internal MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel()
         {
             ResultType = "TableLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="tableName"> Name of the table. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalChangesApplied"> Total number of applied changes. </param>
         /// <param name="dataErrorsCounter"> Number of data errors occurred. </param>
         /// <param name="lastModifiedOn"> Last modified time on target. </param>
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(string id, string resultType, string tableName, string databaseName, string cdcInsertCounter, string cdcUpdateCounter, string cdcDeleteCounter, DateTimeOffset? fullLoadEstFinishOn, DateTimeOffset? fullLoadStartedOn, DateTimeOffset? fullLoadEndedOn, long? fullLoadTotalRows, SyncTableMigrationState? state, long? totalChangesApplied, long? dataErrorsCounter, DateTimeOffset? lastModifiedOn) : base(id, resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(string id, string resultType, string tableName, string databaseName, string cdcInsertCounter, string cdcUpdateCounter, string cdcDeleteCounter, DateTimeOffset? fullLoadEstFinishOn, DateTimeOffset? fullLoadStartedOn, DateTimeOffset? fullLoadEndedOn, long? fullLoadTotalRows, SyncTableMigrationState? state, long? totalChangesApplied, long? dataErrorsCounter, DateTimeOffset? lastModifiedOn, Dictionary<string, BinaryData> rawData) : base(id, resultType, rawData)
         {
             TableName = tableName;
             DatabaseName = databaseName;

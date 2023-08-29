@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataExportDetails : IUtf8JsonSerializable
+    public partial class DataExportDetails : IUtf8JsonSerializable, IModelJsonSerializable<DataExportDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataExportDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataExportDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfiguration"u8);
             writer.WriteObjectValue(TransferConfiguration);
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("accountDetails"u8);
             writer.WriteObjectValue(AccountDetails);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataExportDetails DeserializeDataExportDetails(JsonElement element)
+        internal static DataExportDetails DeserializeDataExportDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.DataBox.Models
             TransferConfiguration transferConfiguration = default;
             Optional<LogCollectionLevel> logCollectionLevel = default;
             DataAccountDetails accountDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transferConfiguration"u8))
@@ -57,8 +80,57 @@ namespace Azure.ResourceManager.DataBox.Models
                     accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataExportDetails(transferConfiguration, Optional.ToNullable(logCollectionLevel), accountDetails);
+            return new DataExportDetails(transferConfiguration, Optional.ToNullable(logCollectionLevel), accountDetails, rawData);
+        }
+
+        DataExportDetails IModelJsonSerializable<DataExportDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataExportDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataExportDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataExportDetails IModelSerializable<DataExportDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataExportDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataExportDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataExportDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataExportDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

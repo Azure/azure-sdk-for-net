@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a database or collection within a MongoDB data source. </summary>
     public partial class MongoDBObjectInfo
     {
-        /// <summary> Initializes a new instance of MongoDBObjectInfo. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBObjectInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
@@ -30,6 +33,28 @@ namespace Azure.ResourceManager.DataMigration.Models
             DocumentCount = documentCount;
             Name = name;
             QualifiedName = qualifiedName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBObjectInfo"/>. </summary>
+        /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
+        /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
+        /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
+        /// <param name="name"> The unqualified name of the database or collection. </param>
+        /// <param name="qualifiedName"> The qualified name of the database or collection. For a collection, this is the database-qualified name. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBObjectInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, Dictionary<string, BinaryData> rawData)
+        {
+            AverageDocumentSize = averageDocumentSize;
+            DataSize = dataSize;
+            DocumentCount = documentCount;
+            Name = name;
+            QualifiedName = qualifiedName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBObjectInfo"/> for deserialization. </summary>
+        internal MongoDBObjectInfo()
+        {
         }
 
         /// <summary> The average document size, or -1 if the average size is unknown. </summary>

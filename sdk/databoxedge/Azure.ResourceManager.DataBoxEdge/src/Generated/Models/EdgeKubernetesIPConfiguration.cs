@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Kubernetes node IP configuration. </summary>
     public partial class EdgeKubernetesIPConfiguration
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesIPConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesIPConfiguration"/>. </summary>
         internal EdgeKubernetesIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesIPConfiguration"/>. </summary>
         /// <param name="port"> Port of the Kubernetes node. </param>
         /// <param name="ipAddress"> IP address of the Kubernetes node. </param>
-        internal EdgeKubernetesIPConfiguration(string port, string ipAddress)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeKubernetesIPConfiguration(string port, string ipAddress, Dictionary<string, BinaryData> rawData)
         {
             Port = port;
             IPAddress = ipAddress;
+            _rawData = rawData;
         }
 
         /// <summary> Port of the Kubernetes node. </summary>

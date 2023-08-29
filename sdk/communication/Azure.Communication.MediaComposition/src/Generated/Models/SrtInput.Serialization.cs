@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class SrtInput : IUtf8JsonSerializable
+    public partial class SrtInput : IUtf8JsonSerializable, IModelJsonSerializable<SrtInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SrtInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SrtInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SrtInput>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("resolution"u8);
             writer.WriteObjectValue(Resolution);
@@ -27,11 +35,25 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SrtInput DeserializeSrtInput(JsonElement element)
+        internal static SrtInput DeserializeSrtInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +62,7 @@ namespace Azure.Communication.MediaComposition
             string streamUrl = default;
             MediaInputType kind = default;
             Optional<string> placeholderImageUri = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resolution"u8))
@@ -62,8 +85,57 @@ namespace Azure.Communication.MediaComposition
                     placeholderImageUri = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SrtInput(kind, placeholderImageUri.Value, resolution, streamUrl);
+            return new SrtInput(kind, placeholderImageUri.Value, resolution, streamUrl, rawData);
+        }
+
+        SrtInput IModelJsonSerializable<SrtInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SrtInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSrtInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SrtInput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SrtInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SrtInput IModelSerializable<SrtInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SrtInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSrtInput(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SrtInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SrtInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSrtInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

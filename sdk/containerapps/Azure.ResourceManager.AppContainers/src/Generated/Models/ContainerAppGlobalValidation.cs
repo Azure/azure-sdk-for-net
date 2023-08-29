@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings that determines the validation flow of users using ContainerApp Service Authentication/Authorization. </summary>
     public partial class ContainerAppGlobalValidation
     {
-        /// <summary> Initializes a new instance of ContainerAppGlobalValidation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppGlobalValidation"/>. </summary>
         public ContainerAppGlobalValidation()
         {
             ExcludedPaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppGlobalValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppGlobalValidation"/>. </summary>
         /// <param name="unauthenticatedClientAction"> The action to take when an unauthenticated client attempts to access the app. </param>
         /// <param name="redirectToProvider">
         /// The default authentication provider to use when multiple providers are configured.
@@ -27,11 +30,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// action is set to "RedirectToLoginPage".
         /// </param>
         /// <param name="excludedPaths"> The paths for which unauthenticated flow would not be redirected to the login page. </param>
-        internal ContainerAppGlobalValidation(ContainerAppUnauthenticatedClientActionV2? unauthenticatedClientAction, string redirectToProvider, IList<string> excludedPaths)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppGlobalValidation(ContainerAppUnauthenticatedClientActionV2? unauthenticatedClientAction, string redirectToProvider, IList<string> excludedPaths, Dictionary<string, BinaryData> rawData)
         {
             UnauthenticatedClientAction = unauthenticatedClientAction;
             RedirectToProvider = redirectToProvider;
             ExcludedPaths = excludedPaths;
+            _rawData = rawData;
         }
 
         /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>

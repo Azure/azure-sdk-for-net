@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class MachineExtensionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineExtensionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MachineExtensionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +43,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine extension instance view. </param>
-        internal MachineExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string forceUpdateTag, string publisher, string machineExtensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string provisioningState, MachineExtensionPropertiesInstanceView instanceView) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string forceUpdateTag, string publisher, string machineExtensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string provisioningState, MachineExtensionPropertiesInstanceView instanceView, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
@@ -52,6 +55,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             ProtectedSettings = protectedSettings;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionData"/> for deserialization. </summary>
+        internal MachineExtensionData()
+        {
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the restorable MongoDB resources. </summary>
     internal partial class RestorableMongoDBResourcesListResult
     {
-        /// <summary> Initializes a new instance of RestorableMongoDBResourcesListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableMongoDBResourcesListResult"/>. </summary>
         internal RestorableMongoDBResourcesListResult()
         {
             Value = new ChangeTrackingList<RestorableMongoDBResourceData>();
         }
 
-        /// <summary> Initializes a new instance of RestorableMongoDBResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableMongoDBResourcesListResult"/>. </summary>
         /// <param name="value"> List of restorable MongoDB resources, including the database and collection names. </param>
-        internal RestorableMongoDBResourcesListResult(IReadOnlyList<RestorableMongoDBResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableMongoDBResourcesListResult(IReadOnlyList<RestorableMongoDBResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of restorable MongoDB resources, including the database and collection names. </summary>

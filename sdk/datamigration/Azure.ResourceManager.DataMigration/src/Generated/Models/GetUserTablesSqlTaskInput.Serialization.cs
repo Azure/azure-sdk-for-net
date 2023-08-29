@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesSqlTaskInput : IUtf8JsonSerializable
+    public partial class GetUserTablesSqlTaskInput : IUtf8JsonSerializable, IModelJsonSerializable<GetUserTablesSqlTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GetUserTablesSqlTaskInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GetUserTablesSqlTaskInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
             writer.WriteObjectValue(ConnectionInfo);
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GetUserTablesSqlTaskInput DeserializeGetUserTablesSqlTaskInput(JsonElement element)
+        internal static GetUserTablesSqlTaskInput DeserializeGetUserTablesSqlTaskInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
             Optional<string> encryptedKeyForSecureFields = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionInfo"u8))
@@ -64,8 +86,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     encryptedKeyForSecureFields = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases, encryptedKeyForSecureFields.Value);
+            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases, encryptedKeyForSecureFields.Value, rawData);
+        }
+
+        GetUserTablesSqlTaskInput IModelJsonSerializable<GetUserTablesSqlTaskInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetUserTablesSqlTaskInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetUserTablesSqlTaskInput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetUserTablesSqlTaskInput IModelSerializable<GetUserTablesSqlTaskInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetUserTablesSqlTaskInput(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GetUserTablesSqlTaskInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GetUserTablesSqlTaskInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetUserTablesSqlTaskInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

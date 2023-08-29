@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The container exec request. </summary>
     public partial class ContainerExecContent
     {
-        /// <summary> Initializes a new instance of ContainerExecContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerExecContent"/>. </summary>
         public ContainerExecContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerExecContent"/>. </summary>
+        /// <param name="command"> The command to be executed. </param>
+        /// <param name="terminalSize"> The size of the terminal. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerExecContent(string command, ContainerExecRequestTerminalSize terminalSize, Dictionary<string, BinaryData> rawData)
+        {
+            Command = command;
+            TerminalSize = terminalSize;
+            _rawData = rawData;
         }
 
         /// <summary> The command to be executed. </summary>

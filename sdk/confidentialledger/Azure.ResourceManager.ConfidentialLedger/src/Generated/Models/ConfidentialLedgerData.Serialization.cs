@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConfidentialLedger
 {
-    public partial class ConfidentialLedgerData : IUtf8JsonSerializable
+    public partial class ConfidentialLedgerData : IUtf8JsonSerializable, IModelJsonSerializable<ConfidentialLedgerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConfidentialLedgerData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConfidentialLedgerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfidentialLedgerData DeserializeConfidentialLedgerData(JsonElement element)
+        internal static ConfidentialLedgerData DeserializeConfidentialLedgerData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +73,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -106,8 +128,57 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConfidentialLedgerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
+            return new ConfidentialLedgerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, rawData);
+        }
+
+        ConfidentialLedgerData IModelJsonSerializable<ConfidentialLedgerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfidentialLedgerData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConfidentialLedgerData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConfidentialLedgerData IModelSerializable<ConfidentialLedgerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConfidentialLedgerData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConfidentialLedgerData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConfidentialLedgerData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConfidentialLedgerData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

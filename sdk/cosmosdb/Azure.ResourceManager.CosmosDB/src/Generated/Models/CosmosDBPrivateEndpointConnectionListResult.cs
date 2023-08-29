@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class CosmosDBPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateEndpointConnectionListResult"/>. </summary>
         internal CosmosDBPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal CosmosDBPrivateEndpointConnectionListResult(IReadOnlyList<CosmosDBPrivateEndpointConnectionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBPrivateEndpointConnectionListResult(IReadOnlyList<CosmosDBPrivateEndpointConnectionData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

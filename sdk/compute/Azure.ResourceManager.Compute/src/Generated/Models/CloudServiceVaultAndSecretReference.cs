@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,18 +15,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Protected settings for the extension, referenced using KeyVault which are encrypted before sent to the role instance. </summary>
     public partial class CloudServiceVaultAndSecretReference
     {
-        /// <summary> Initializes a new instance of CloudServiceVaultAndSecretReference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceVaultAndSecretReference"/>. </summary>
         public CloudServiceVaultAndSecretReference()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceVaultAndSecretReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceVaultAndSecretReference"/>. </summary>
         /// <param name="sourceVault"> The ARM Resource ID of the Key Vault. </param>
         /// <param name="secretUri"> Secret URL which contains the protected settings of the extension. </param>
-        internal CloudServiceVaultAndSecretReference(WritableSubResource sourceVault, Uri secretUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceVaultAndSecretReference(WritableSubResource sourceVault, Uri secretUri, Dictionary<string, BinaryData> rawData)
         {
             SourceVault = sourceVault;
             SecretUri = secretUri;
+            _rawData = rawData;
         }
 
         /// <summary> The ARM Resource ID of the Key Vault. </summary>

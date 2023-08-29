@@ -6,15 +6,52 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class DownloadURL
+    public partial class DownloadURL : IUtf8JsonSerializable, IModelJsonSerializable<DownloadURL>
     {
-        internal static DownloadURL DeserializeDownloadURL(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DownloadURL>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DownloadURL>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ValidTill))
+            {
+                writer.WritePropertyName("validTill"u8);
+                writer.WriteStringValue(ValidTill.Value, "O");
+            }
+            if (Optional.IsDefined(DownloadUri))
+            {
+                writer.WritePropertyName("downloadUrl"u8);
+                writer.WriteStringValue(DownloadUri.AbsoluteUri);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DownloadURL DeserializeDownloadURL(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +59,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<DateTimeOffset> expiryTime = default;
             Optional<DateTimeOffset> validTill = default;
             Optional<Uri> downloadUrl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiryTime"u8))
@@ -51,8 +89,57 @@ namespace Azure.ResourceManager.CostManagement.Models
                     downloadUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DownloadURL(Optional.ToNullable(expiryTime), Optional.ToNullable(validTill), downloadUrl.Value);
+            return new DownloadURL(Optional.ToNullable(expiryTime), Optional.ToNullable(validTill), downloadUrl.Value, rawData);
+        }
+
+        DownloadURL IModelJsonSerializable<DownloadURL>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDownloadURL(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DownloadURL>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DownloadURL IModelSerializable<DownloadURL>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDownloadURL(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DownloadURL model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DownloadURL(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDownloadURL(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

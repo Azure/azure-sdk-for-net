@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,23 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Result of the request to list tags of the image. </summary>
     internal partial class RepositoryTags
     {
-        /// <summary> Initializes a new instance of RepositoryTags. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RepositoryTags"/>. </summary>
         internal RepositoryTags()
         {
             Tags = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RepositoryTags"/>. </summary>
+        /// <param name="name"> Name of the image. </param>
+        /// <param name="tags"> List of tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RepositoryTags(string name, IReadOnlyList<string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the image. </summary>

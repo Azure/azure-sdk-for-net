@@ -5,21 +5,59 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class DatabaseAccountListConnectionStringsResult
+    internal partial class DatabaseAccountListConnectionStringsResult : IUtf8JsonSerializable, IModelJsonSerializable<DatabaseAccountListConnectionStringsResult>
     {
-        internal static DatabaseAccountListConnectionStringsResult DeserializeDatabaseAccountListConnectionStringsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatabaseAccountListConnectionStringsResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatabaseAccountListConnectionStringsResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ConnectionStrings))
+            {
+                writer.WritePropertyName("connectionStrings"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConnectionStrings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DatabaseAccountListConnectionStringsResult DeserializeDatabaseAccountListConnectionStringsResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<CosmosDBAccountConnectionString>> connectionStrings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionStrings"u8))
@@ -36,8 +74,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     connectionStrings = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DatabaseAccountListConnectionStringsResult(Optional.ToList(connectionStrings));
+            return new DatabaseAccountListConnectionStringsResult(Optional.ToList(connectionStrings), rawData);
+        }
+
+        DatabaseAccountListConnectionStringsResult IModelJsonSerializable<DatabaseAccountListConnectionStringsResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseAccountListConnectionStringsResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatabaseAccountListConnectionStringsResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatabaseAccountListConnectionStringsResult IModelSerializable<DatabaseAccountListConnectionStringsResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatabaseAccountListConnectionStringsResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DatabaseAccountListConnectionStringsResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DatabaseAccountListConnectionStringsResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatabaseAccountListConnectionStringsResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

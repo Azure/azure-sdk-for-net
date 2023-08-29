@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Instance view status. </summary>
     public partial class ResourceInstanceViewStatus
     {
-        /// <summary> Initializes a new instance of ResourceInstanceViewStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceInstanceViewStatus"/>. </summary>
         internal ResourceInstanceViewStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceInstanceViewStatus"/>. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
         /// <param name="level"> The level code. </param>
-        internal ResourceInstanceViewStatus(string code, string displayStatus, string message, DateTimeOffset? time, ComputeStatusLevelType? level)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceInstanceViewStatus(string code, string displayStatus, string message, DateTimeOffset? time, ComputeStatusLevelType? level, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             DisplayStatus = displayStatus;
             Message = message;
             Time = time;
             Level = level;
+            _rawData = rawData;
         }
 
         /// <summary> The status code. </summary>

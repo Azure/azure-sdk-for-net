@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of listing views. It contains a list of available views. </summary>
     internal partial class ViewListResult
     {
-        /// <summary> Initializes a new instance of ViewListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ViewListResult"/>. </summary>
         internal ViewListResult()
         {
             Value = new ChangeTrackingList<CostManagementViewData>();
         }
 
-        /// <summary> Initializes a new instance of ViewListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ViewListResult"/>. </summary>
         /// <param name="value"> The list of views. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ViewListResult(IReadOnlyList<CostManagementViewData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ViewListResult(IReadOnlyList<CostManagementViewData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of views. </summary>

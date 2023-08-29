@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The properties for confidential container group. </summary>
     internal partial class ConfidentialComputeProperties
     {
-        /// <summary> Initializes a new instance of ConfidentialComputeProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfidentialComputeProperties"/>. </summary>
         public ConfidentialComputeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialComputeProperties"/>. </summary>
         /// <param name="ccePolicy"> The base64 encoded confidential compute enforcement policy. </param>
-        internal ConfidentialComputeProperties(string ccePolicy)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfidentialComputeProperties(string ccePolicy, Dictionary<string, BinaryData> rawData)
         {
             CcePolicy = ccePolicy;
+            _rawData = rawData;
         }
 
         /// <summary> The base64 encoded confidential compute enforcement policy. </summary>

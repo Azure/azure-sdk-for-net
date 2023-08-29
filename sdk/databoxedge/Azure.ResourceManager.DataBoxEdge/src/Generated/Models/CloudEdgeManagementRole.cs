@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
@@ -18,13 +20,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// </summary>
     public partial class CloudEdgeManagementRole : DataBoxEdgeRoleData
     {
-        /// <summary> Initializes a new instance of CloudEdgeManagementRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEdgeManagementRole"/>. </summary>
         public CloudEdgeManagementRole()
         {
             Kind = DataBoxEdgeRoleType.CloudEdgeManagement;
         }
 
-        /// <summary> Initializes a new instance of CloudEdgeManagementRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEdgeManagementRole"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +35,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="localManagementStatus"> Local Edge Management Status. </param>
         /// <param name="edgeProfile"> Edge Profile of the resource. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus? roleStatus, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             LocalManagementStatus = localManagementStatus;
             EdgeProfile = edgeProfile;

@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class PeriodicTimerEventTrigger : IUtf8JsonSerializable
+    public partial class PeriodicTimerEventTrigger : IUtf8JsonSerializable, IModelJsonSerializable<PeriodicTimerEventTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PeriodicTimerEventTrigger>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PeriodicTimerEventTrigger>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PeriodicTimerEventTrigger>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStringValue(CustomContextTag);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeriodicTimerEventTrigger DeserializePeriodicTimerEventTrigger(JsonElement element)
+        internal static PeriodicTimerEventTrigger DeserializePeriodicTimerEventTrigger(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             PeriodicTimerSourceInfo sourceInfo = default;
             DataBoxEdgeRoleSinkInfo sinkInfo = default;
             Optional<string> customContextTag = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -105,8 +128,57 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PeriodicTimerEventTrigger(id, name, type, systemData.Value, kind, sourceInfo, sinkInfo, customContextTag.Value);
+            return new PeriodicTimerEventTrigger(id, name, type, systemData.Value, kind, sourceInfo, sinkInfo, customContextTag.Value, rawData);
+        }
+
+        PeriodicTimerEventTrigger IModelJsonSerializable<PeriodicTimerEventTrigger>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PeriodicTimerEventTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePeriodicTimerEventTrigger(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PeriodicTimerEventTrigger>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PeriodicTimerEventTrigger>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PeriodicTimerEventTrigger IModelSerializable<PeriodicTimerEventTrigger>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PeriodicTimerEventTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePeriodicTimerEventTrigger(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PeriodicTimerEventTrigger model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PeriodicTimerEventTrigger(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePeriodicTimerEventTrigger(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> PhysicalPartitionThroughputInfo object. </summary>
     public partial class PhysicalPartitionThroughputInfoResource
     {
-        /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoResource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResource"/>. </summary>
         /// <param name="id"> Id of a physical partition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public PhysicalPartitionThroughputInfoResource(string id)
@@ -23,13 +26,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResource"/>. </summary>
         /// <param name="id"> Id of a physical partition. </param>
         /// <param name="throughput"> Throughput of a physical partition. </param>
-        internal PhysicalPartitionThroughputInfoResource(string id, double? throughput)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhysicalPartitionThroughputInfoResource(string id, double? throughput, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Throughput = throughput;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResource"/> for deserialization. </summary>
+        internal PhysicalPartitionThroughputInfoResource()
+        {
         }
 
         /// <summary> Id of a physical partition. </summary>

@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> An authentication key to regenerate. </summary>
     public partial class RegenAuthKeys
     {
-        /// <summary> Initializes a new instance of RegenAuthKeys. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegenAuthKeys"/>. </summary>
         public RegenAuthKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of RegenAuthKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegenAuthKeys"/>. </summary>
         /// <param name="keyName"> The name of authentication key to generate. </param>
         /// <param name="authKey1"> The first authentication key. </param>
         /// <param name="authKey2"> The second authentication key. </param>
-        internal RegenAuthKeys(string keyName, string authKey1, string authKey2)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegenAuthKeys(string keyName, string authKey1, string authKey2, Dictionary<string, BinaryData> rawData)
         {
             KeyName = keyName;
             AuthKey1 = authKey1;
             AuthKey2 = authKey2;
+            _rawData = rawData;
         }
 
         /// <summary> The name of authentication key to generate. </summary>

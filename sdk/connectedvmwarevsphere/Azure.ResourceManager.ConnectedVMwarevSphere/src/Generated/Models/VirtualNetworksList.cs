@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of VirtualNetworks. </summary>
     internal partial class VirtualNetworksList
     {
-        /// <summary> Initializes a new instance of VirtualNetworksList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksList"/>. </summary>
         /// <param name="value"> Array of VirtualNetworks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualNetworksList(IEnumerable<VirtualNetworkData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of VirtualNetworks. </param>
         /// <param name="value"> Array of VirtualNetworks. </param>
-        internal VirtualNetworksList(string nextLink, IReadOnlyList<VirtualNetworkData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksList(string nextLink, IReadOnlyList<VirtualNetworkData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksList"/> for deserialization. </summary>
+        internal VirtualNetworksList()
+        {
         }
 
         /// <summary> Url to follow for getting next page of VirtualNetworks. </summary>

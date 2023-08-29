@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAzureActiveDirectoryRegistrationConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppAzureActiveDirectoryRegistrationConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppAzureActiveDirectoryRegistrationConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppAzureActiveDirectoryRegistrationConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppAzureActiveDirectoryRegistrationConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OpenIdIssuer))
             {
@@ -45,11 +53,25 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("clientSecretCertificateIssuer"u8);
                 writer.WriteStringValue(ClientSecretCertificateIssuer);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppAzureActiveDirectoryRegistrationConfiguration DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(JsonElement element)
+        internal static ContainerAppAzureActiveDirectoryRegistrationConfiguration DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> clientSecretCertificateThumbprint = default;
             Optional<string> clientSecretCertificateSubjectAlternativeName = default;
             Optional<string> clientSecretCertificateIssuer = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("openIdIssuer"u8))
@@ -92,8 +115,57 @@ namespace Azure.ResourceManager.AppContainers.Models
                     clientSecretCertificateIssuer = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppAzureActiveDirectoryRegistrationConfiguration(openIdIssuer.Value, clientId.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, clientSecretCertificateSubjectAlternativeName.Value, clientSecretCertificateIssuer.Value);
+            return new ContainerAppAzureActiveDirectoryRegistrationConfiguration(openIdIssuer.Value, clientId.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, clientSecretCertificateSubjectAlternativeName.Value, clientSecretCertificateIssuer.Value, rawData);
+        }
+
+        ContainerAppAzureActiveDirectoryRegistrationConfiguration IModelJsonSerializable<ContainerAppAzureActiveDirectoryRegistrationConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppAzureActiveDirectoryRegistrationConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppAzureActiveDirectoryRegistrationConfiguration IModelSerializable<ContainerAppAzureActiveDirectoryRegistrationConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerAppAzureActiveDirectoryRegistrationConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerAppAzureActiveDirectoryRegistrationConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,15 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class DataMigrationServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataMigrationServiceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataMigrationServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DataMigrationServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
         /// <param name="autoStopDelay"> The time delay before the service is auto-stopped when idle. </param>
         /// <param name="deleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
-        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, ServiceSku sku, ServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? deleteResourcesOnStop) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, ServiceSku sku, ServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? deleteResourcesOnStop, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Kind = kind;
@@ -52,6 +56,12 @@ namespace Azure.ResourceManager.DataMigration
             VirtualNicId = virtualNicId;
             AutoStopDelay = autoStopDelay;
             DeleteResourcesOnStop = deleteResourcesOnStop;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceData"/> for deserialization. </summary>
+        internal DataMigrationServiceData()
+        {
         }
 
         /// <summary> HTTP strong entity tag value. Ignored if submitted. </summary>

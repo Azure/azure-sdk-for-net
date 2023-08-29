@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,24 +14,28 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Parameters of a script block. </summary>
     public partial class ScriptActivityParameter
     {
-        /// <summary> Initializes a new instance of ScriptActivityParameter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityParameter"/>. </summary>
         public ScriptActivityParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptActivityParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityParameter"/>. </summary>
         /// <param name="name"> The name of the parameter. Type: string (or Expression with resultType string). </param>
         /// <param name="parameterType"> The type of the parameter. </param>
         /// <param name="value"> The value of the parameter. Type: string (or Expression with resultType string). </param>
         /// <param name="direction"> The direction of the parameter. </param>
         /// <param name="size"> The size of the output direction parameter. </param>
-        internal ScriptActivityParameter(DataFactoryElement<string> name, ScriptActivityParameterType? parameterType, DataFactoryElement<string> value, ScriptActivityParameterDirection? direction, int? size)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptActivityParameter(DataFactoryElement<string> name, ScriptActivityParameterType? parameterType, DataFactoryElement<string> value, ScriptActivityParameterDirection? direction, int? size, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ParameterType = parameterType;
             Value = value;
             Direction = direction;
             Size = size;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the parameter. Type: string (or Expression with resultType string). </summary>

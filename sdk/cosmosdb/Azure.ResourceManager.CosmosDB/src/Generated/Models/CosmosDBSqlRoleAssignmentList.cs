@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The relevant Role Assignments. </summary>
     internal partial class CosmosDBSqlRoleAssignmentList
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentList"/>. </summary>
         internal CosmosDBSqlRoleAssignmentList()
         {
             Value = new ChangeTrackingList<CosmosDBSqlRoleAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentList"/>. </summary>
         /// <param name="value"> List of Role Assignments and their properties. </param>
-        internal CosmosDBSqlRoleAssignmentList(IReadOnlyList<CosmosDBSqlRoleAssignmentData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlRoleAssignmentList(IReadOnlyList<CosmosDBSqlRoleAssignmentData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of Role Assignments and their properties. </summary>

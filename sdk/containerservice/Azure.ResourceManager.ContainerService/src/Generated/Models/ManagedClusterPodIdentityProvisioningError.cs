@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -12,16 +14,20 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> An error response from the pod identity provisioning. </summary>
     internal partial class ManagedClusterPodIdentityProvisioningError
     {
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityProvisioningError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningError"/>. </summary>
         internal ManagedClusterPodIdentityProvisioningError()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityProvisioningError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningError"/>. </summary>
         /// <param name="errorDetail"> Details about the error. </param>
-        internal ManagedClusterPodIdentityProvisioningError(ResponseError errorDetail)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterPodIdentityProvisioningError(ResponseError errorDetail, Dictionary<string, BinaryData> rawData)
         {
             ErrorDetail = errorDetail;
+            _rawData = rawData;
         }
 
         /// <summary> Details about the error. </summary>

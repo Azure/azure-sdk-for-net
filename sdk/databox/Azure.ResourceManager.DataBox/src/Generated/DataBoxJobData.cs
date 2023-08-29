@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.DataBox
     /// </summary>
     public partial class DataBoxJobData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxJobData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="transferType"> Type of the data transfer. </param>
         /// <param name="sku"> The sku type. </param>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.DataBox
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +63,8 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
-        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TransferType = transferType;
             IsCancellable = isCancellable;
@@ -80,6 +83,12 @@ namespace Azure.ResourceManager.DataBox
             IsCancellableWithoutFee = isCancellableWithoutFee;
             Sku = sku;
             Identity = identity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobData"/> for deserialization. </summary>
+        internal DataBoxJobData()
+        {
         }
 
         /// <summary> Type of the data transfer. </summary>

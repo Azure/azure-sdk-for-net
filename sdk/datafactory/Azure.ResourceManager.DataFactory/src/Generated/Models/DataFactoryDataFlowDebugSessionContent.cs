@@ -5,14 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Request body structure for creating data flow debug session. </summary>
     public partial class DataFactoryDataFlowDebugSessionContent
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowDebugSessionContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugSessionContent"/>. </summary>
         public DataFactoryDataFlowDebugSessionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugSessionContent"/>. </summary>
+        /// <param name="computeType"> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
+        /// <param name="coreCount"> Core count of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
+        /// <param name="timeToLiveInMinutes"> Time to live setting of the cluster in minutes. </param>
+        /// <param name="integrationRuntime"> Set to use integration runtime setting for data flow debug session. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryDataFlowDebugSessionContent(string computeType, int? coreCount, int? timeToLiveInMinutes, DataFactoryIntegrationRuntimeDebugInfo integrationRuntime, Dictionary<string, BinaryData> rawData)
+        {
+            ComputeType = computeType;
+            CoreCount = coreCount;
+            TimeToLiveInMinutes = timeToLiveInMinutes;
+            IntegrationRuntime = integrationRuntime;
+            _rawData = rawData;
         }
 
         /// <summary> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </summary>

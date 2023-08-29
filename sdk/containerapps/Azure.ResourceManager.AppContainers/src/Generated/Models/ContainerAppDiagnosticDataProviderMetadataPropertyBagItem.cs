@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Property details. </summary>
     public partial class ContainerAppDiagnosticDataProviderMetadataPropertyBagItem
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadataPropertyBagItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/>. </summary>
         public ContainerAppDiagnosticDataProviderMetadataPropertyBagItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadataPropertyBagItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/>. </summary>
         /// <param name="name"> Property name. </param>
         /// <param name="value"> Property value. </param>
-        internal ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(string name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(string name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Property name. </summary>

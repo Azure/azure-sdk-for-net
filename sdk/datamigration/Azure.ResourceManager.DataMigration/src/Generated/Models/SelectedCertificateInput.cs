@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Info for certificate to be exported for TDE enabled databases. </summary>
     public partial class SelectedCertificateInput
     {
-        /// <summary> Initializes a new instance of SelectedCertificateInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SelectedCertificateInput"/>. </summary>
         /// <param name="certificateName"> Name of certificate to be exported. </param>
         /// <param name="password"> Password to use for encrypting the exported certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="password"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             CertificateName = certificateName;
             Password = password;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelectedCertificateInput"/>. </summary>
+        /// <param name="certificateName"> Name of certificate to be exported. </param>
+        /// <param name="password"> Password to use for encrypting the exported certificate. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelectedCertificateInput(string certificateName, string password, Dictionary<string, BinaryData> rawData)
+        {
+            CertificateName = certificateName;
+            Password = password;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelectedCertificateInput"/> for deserialization. </summary>
+        internal SelectedCertificateInput()
+        {
         }
 
         /// <summary> Name of certificate to be exported. </summary>

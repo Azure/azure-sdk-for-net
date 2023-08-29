@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Alert details. </summary>
     public partial class AlertPropertiesDetails
     {
-        /// <summary> Initializes a new instance of AlertPropertiesDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertPropertiesDetails"/>. </summary>
         public AlertPropertiesDetails()
         {
             ResourceGroupFilter = new ChangeTrackingList<BinaryData>();
@@ -25,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             ContactRoles = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AlertPropertiesDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertPropertiesDetails"/>. </summary>
         /// <param name="timeGrainType"> Type of timegrain cadence. </param>
         /// <param name="periodStartDate"> datetime of periodStartDate. </param>
         /// <param name="triggeredBy"> notificationId that triggered this alert. </param>
@@ -48,7 +50,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="enrollmentStartDate"> datetime of enrollmentStartDate. </param>
         /// <param name="enrollmentEndDate"> datetime of enrollmentEndDate. </param>
         /// <param name="invoicingThreshold"> invoicing threshold. </param>
-        internal AlertPropertiesDetails(AlertTimeGrainType? timeGrainType, string periodStartDate, string triggeredBy, IList<BinaryData> resourceGroupFilter, IList<BinaryData> resourceFilter, IList<BinaryData> meterFilter, BinaryData tagFilter, decimal? threshold, CostManagementAlertOperator? @operator, decimal? amount, string unit, decimal? currentSpend, IList<string> contactEmails, IList<string> contactGroups, IList<string> contactRoles, string overridingAlert, string departmentName, string companyName, string enrollmentNumber, string enrollmentStartDate, string enrollmentEndDate, decimal? invoicingThreshold)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertPropertiesDetails(AlertTimeGrainType? timeGrainType, string periodStartDate, string triggeredBy, IList<BinaryData> resourceGroupFilter, IList<BinaryData> resourceFilter, IList<BinaryData> meterFilter, BinaryData tagFilter, decimal? threshold, CostManagementAlertOperator? @operator, decimal? amount, string unit, decimal? currentSpend, IList<string> contactEmails, IList<string> contactGroups, IList<string> contactRoles, string overridingAlert, string departmentName, string companyName, string enrollmentNumber, string enrollmentStartDate, string enrollmentEndDate, decimal? invoicingThreshold, Dictionary<string, BinaryData> rawData)
         {
             TimeGrainType = timeGrainType;
             PeriodStartDate = periodStartDate;
@@ -72,6 +75,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             EnrollmentStartDate = enrollmentStartDate;
             EnrollmentEndDate = enrollmentEndDate;
             InvoicingThreshold = invoicingThreshold;
+            _rawData = rawData;
         }
 
         /// <summary> Type of timegrain cadence. </summary>

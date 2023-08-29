@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureMLUpdateResourceActivity : IUtf8JsonSerializable
+    public partial class AzureMLUpdateResourceActivity : IUtf8JsonSerializable, IModelJsonSerializable<AzureMLUpdateResourceActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureMLUpdateResourceActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureMLUpdateResourceActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AzureMLUpdateResourceActivity>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -87,8 +93,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureMLUpdateResourceActivity DeserializeAzureMLUpdateResourceActivity(JsonElement element)
+        internal static AzureMLUpdateResourceActivity DeserializeAzureMLUpdateResourceActivity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -219,6 +227,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMLUpdateResourceActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, trainedModelName, trainedModelLinkedServiceName, trainedModelFilePath);
+        }
+
+        AzureMLUpdateResourceActivity IModelJsonSerializable<AzureMLUpdateResourceActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureMLUpdateResourceActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMLUpdateResourceActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureMLUpdateResourceActivity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureMLUpdateResourceActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureMLUpdateResourceActivity IModelSerializable<AzureMLUpdateResourceActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureMLUpdateResourceActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureMLUpdateResourceActivity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AzureMLUpdateResourceActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AzureMLUpdateResourceActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureMLUpdateResourceActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

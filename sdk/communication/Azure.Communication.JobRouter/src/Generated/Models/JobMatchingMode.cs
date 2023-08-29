@@ -5,22 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The JobMatchingMode. </summary>
     public partial class JobMatchingMode
     {
-        /// <summary> Initializes a new instance of JobMatchingMode. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobMatchingMode"/>. </summary>
         /// <param name="modeType"></param>
         /// <param name="queueAndMatchMode"> Any object. </param>
         /// <param name="scheduleAndSuspendMode"></param>
         /// <param name="suspendMode"> Any object. </param>
-        internal JobMatchingMode(JobMatchModeType? modeType, object queueAndMatchMode, ScheduleAndSuspendMode scheduleAndSuspendMode, object suspendMode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobMatchingMode(JobMatchModeType? modeType, object queueAndMatchMode, ScheduleAndSuspendMode scheduleAndSuspendMode, object suspendMode, Dictionary<string, BinaryData> rawData)
         {
             ModeType = modeType;
             _queueAndMatchMode = queueAndMatchMode;
             ScheduleAndSuspendMode = scheduleAndSuspendMode;
             _suspendMode = suspendMode;
+            _rawData = rawData;
         }
     }
 }

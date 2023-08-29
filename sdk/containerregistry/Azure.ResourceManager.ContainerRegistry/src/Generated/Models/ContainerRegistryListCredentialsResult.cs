@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The response from the ListCredentials operation. </summary>
     public partial class ContainerRegistryListCredentialsResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryListCredentialsResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryListCredentialsResult"/>. </summary>
         internal ContainerRegistryListCredentialsResult()
         {
             Passwords = new ChangeTrackingList<ContainerRegistryPassword>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryListCredentialsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryListCredentialsResult"/>. </summary>
         /// <param name="username"> The username for a container registry. </param>
         /// <param name="passwords"> The list of passwords for a container registry. </param>
-        internal ContainerRegistryListCredentialsResult(string username, IReadOnlyList<ContainerRegistryPassword> passwords)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryListCredentialsResult(string username, IReadOnlyList<ContainerRegistryPassword> passwords, Dictionary<string, BinaryData> rawData)
         {
             Username = username;
             Passwords = passwords;
+            _rawData = rawData;
         }
 
         /// <summary> The username for a container registry. </summary>

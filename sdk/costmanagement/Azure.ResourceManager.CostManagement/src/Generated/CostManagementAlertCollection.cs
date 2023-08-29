@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementAlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementAlertAlertsRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), _costManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementAlertCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), _costManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementAlertCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementAlertResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementAlertAlertsRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), _costManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementAlertCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), _costManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementAlertCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

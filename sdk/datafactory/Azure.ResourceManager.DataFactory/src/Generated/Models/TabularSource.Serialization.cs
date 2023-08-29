@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TabularSource : IUtf8JsonSerializable
+    public partial class TabularSource : IUtf8JsonSerializable, IModelJsonSerializable<TabularSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TabularSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TabularSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TabularSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -66,8 +72,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static TabularSource DeserializeTabularSource(JsonElement element)
+        internal static TabularSource DeserializeTabularSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -137,6 +145,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "ZohoSource": return ZohoSource.DeserializeZohoSource(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<DataFactoryElement<string>> queryTimeout = default;
             Optional<BinaryData> additionalColumns = default;
             string type = "TabularSource";
@@ -211,6 +221,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TabularSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value);
+        }
+
+        TabularSource IModelJsonSerializable<TabularSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TabularSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTabularSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TabularSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TabularSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TabularSource IModelSerializable<TabularSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TabularSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTabularSource(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TabularSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TabularSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTabularSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

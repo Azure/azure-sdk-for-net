@@ -6,121 +6,105 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownMongoDBProgress
+    internal partial class UnknownMongoDBProgress : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBProgress>
     {
-        internal static UnknownMongoDBProgress DeserializeUnknownMongoDBProgress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBProgress>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBProgress>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("bytesCopied"u8);
+            writer.WriteNumberValue(BytesCopied);
+            writer.WritePropertyName("documentsCopied"u8);
+            writer.WriteNumberValue(DocumentsCopied);
+            writer.WritePropertyName("elapsedTime"u8);
+            writer.WriteStringValue(ElapsedTime);
+            writer.WritePropertyName("errors"u8);
+            writer.WriteStartObject();
+            foreach (var item in Errors)
             {
-                return null;
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
             }
-            long bytesCopied = default;
-            long documentsCopied = default;
-            string elapsedTime = default;
-            IReadOnlyDictionary<string, MongoDBError> errors = default;
-            long eventsPending = default;
-            long eventsReplayed = default;
-            Optional<DateTimeOffset> lastEventTime = default;
-            Optional<DateTimeOffset> lastReplayTime = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
-            MongoDBProgressResultType resultType = "Unknown";
-            MongoDBMigrationState state = default;
-            long totalBytes = default;
-            long totalDocuments = default;
-            foreach (var property in element.EnumerateObject())
+            writer.WriteEndObject();
+            writer.WritePropertyName("eventsPending"u8);
+            writer.WriteNumberValue(EventsPending);
+            writer.WritePropertyName("eventsReplayed"u8);
+            writer.WriteNumberValue(EventsReplayed);
+            if (Optional.IsDefined(LastEventOn))
             {
-                if (property.NameEquals("bytesCopied"u8))
+                writer.WritePropertyName("lastEventTime"u8);
+                writer.WriteStringValue(LastEventOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastReplayOn))
+            {
+                writer.WritePropertyName("lastReplayTime"u8);
+                writer.WriteStringValue(LastReplayOn.Value, "O");
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(QualifiedName))
+            {
+                writer.WritePropertyName("qualifiedName"u8);
+                writer.WriteStringValue(QualifiedName);
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType.ToString());
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToString());
+            writer.WritePropertyName("totalBytes"u8);
+            writer.WriteNumberValue(TotalBytes);
+            writer.WritePropertyName("totalDocuments"u8);
+            writer.WriteNumberValue(TotalDocuments);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
                 {
-                    bytesCopied = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("documentsCopied"u8))
-                {
-                    documentsCopied = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("elapsedTime"u8))
-                {
-                    elapsedTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("errors"u8))
-                {
-                    Dictionary<string, MongoDBError> dictionary = new Dictionary<string, MongoDBError>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value));
-                    }
-                    errors = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("eventsPending"u8))
-                {
-                    eventsPending = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("eventsReplayed"u8))
-                {
-                    eventsReplayed = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("lastEventTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastEventTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("lastReplayTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastReplayTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("qualifiedName"u8))
-                {
-                    qualifiedName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"u8))
-                {
-                    resultType = new MongoDBProgressResultType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("state"u8))
-                {
-                    state = new MongoDBMigrationState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("totalBytes"u8))
-                {
-                    totalBytes = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("totalDocuments"u8))
-                {
-                    totalDocuments = property.Value.GetInt64();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownMongoDBProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments);
+            writer.WriteEndObject();
+        }
+
+        internal static MongoDBProgress DeserializeUnknownMongoDBProgress(JsonElement element, ModelSerializerOptions options = default) => DeserializeMongoDBProgress(element, options);
+
+        MongoDBProgress IModelJsonSerializable<MongoDBProgress>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMongoDBProgress(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBProgress>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBProgress IModelSerializable<MongoDBProgress>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBProgress(doc.RootElement, options);
         }
     }
 }

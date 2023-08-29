@@ -5,16 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Sms
 {
     /// <summary> Optional configuration for sending SMS messages. </summary>
     public partial class SmsSendOptions
     {
-        /// <summary> Initializes a new instance of SmsSendOptions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmsSendOptions"/>. </summary>
         /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
         public SmsSendOptions(bool enableDeliveryReport)
         {
             EnableDeliveryReport = enableDeliveryReport;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SmsSendOptions"/>. </summary>
+        /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
+        /// <param name="tag"> Use this field to provide metadata that will then be sent back in the corresponding Delivery Report. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmsSendOptions(bool enableDeliveryReport, string tag, Dictionary<string, BinaryData> rawData)
+        {
+            EnableDeliveryReport = enableDeliveryReport;
+            Tag = tag;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SmsSendOptions"/> for deserialization. </summary>
+        internal SmsSendOptions()
+        {
         }
 
         /// <summary> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </summary>

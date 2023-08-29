@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Resource to redistribute throughput for Azure Cosmos DB resource. </summary>
     public partial class RedistributeThroughputPropertiesResource
     {
-        /// <summary> Initializes a new instance of RedistributeThroughputPropertiesResource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedistributeThroughputPropertiesResource"/>. </summary>
         /// <param name="throughputPolicy"> ThroughputPolicy to apply for throughput redistribution. </param>
         /// <param name="targetPhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <param name="sourcePhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
@@ -30,15 +32,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             SourcePhysicalPartitionThroughputInfo = sourcePhysicalPartitionThroughputInfo.ToList();
         }
 
-        /// <summary> Initializes a new instance of RedistributeThroughputPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedistributeThroughputPropertiesResource"/>. </summary>
         /// <param name="throughputPolicy"> ThroughputPolicy to apply for throughput redistribution. </param>
         /// <param name="targetPhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <param name="sourcePhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
-        internal RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IList<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo, IList<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IList<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo, IList<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo, Dictionary<string, BinaryData> rawData)
         {
             ThroughputPolicy = throughputPolicy;
             TargetPhysicalPartitionThroughputInfo = targetPhysicalPartitionThroughputInfo;
             SourcePhysicalPartitionThroughputInfo = sourcePhysicalPartitionThroughputInfo;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedistributeThroughputPropertiesResource"/> for deserialization. </summary>
+        internal RedistributeThroughputPropertiesResource()
+        {
         }
 
         /// <summary> ThroughputPolicy to apply for throughput redistribution. </summary>

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlRoleDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateListSqlRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlRoleDefinitionResource(Client, CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(e)), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CosmosDBSqlRoleDefinitionResource(Client, CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(e)), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlRoleDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateListSqlRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlRoleDefinitionResource(Client, CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(e)), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CosmosDBSqlRoleDefinitionResource(Client, CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(e)), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

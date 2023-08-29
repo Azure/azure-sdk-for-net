@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the Allowed Audiences validation flow. </summary>
     internal partial class AllowedAudiencesValidation
     {
-        /// <summary> Initializes a new instance of AllowedAudiencesValidation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AllowedAudiencesValidation"/>. </summary>
         public AllowedAudiencesValidation()
         {
             AllowedAudiences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AllowedAudiencesValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllowedAudiencesValidation"/>. </summary>
         /// <param name="allowedAudiences"> The configuration settings of the allowed list of audiences from which to validate the JWT token. </param>
-        internal AllowedAudiencesValidation(IList<string> allowedAudiences)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AllowedAudiencesValidation(IList<string> allowedAudiences, Dictionary<string, BinaryData> rawData)
         {
             AllowedAudiences = allowedAudiences;
+            _rawData = rawData;
         }
 
         /// <summary> The configuration settings of the allowed list of audiences from which to validate the JWT token. </summary>

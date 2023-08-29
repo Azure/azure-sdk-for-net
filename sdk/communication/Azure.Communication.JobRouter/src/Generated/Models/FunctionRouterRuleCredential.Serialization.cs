@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class FunctionRouterRuleCredential : IUtf8JsonSerializable
+    public partial class FunctionRouterRuleCredential : IUtf8JsonSerializable, IModelJsonSerializable<FunctionRouterRuleCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FunctionRouterRuleCredential>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FunctionRouterRuleCredential>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FunctionKey))
             {
@@ -30,11 +38,25 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FunctionRouterRuleCredential DeserializeFunctionRouterRuleCredential(JsonElement element)
+        internal static FunctionRouterRuleCredential DeserializeFunctionRouterRuleCredential(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.Communication.JobRouter
             Optional<string> functionKey = default;
             Optional<string> appKey = default;
             Optional<string> clientId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("functionKey"u8))
@@ -59,8 +82,57 @@ namespace Azure.Communication.JobRouter
                     clientId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FunctionRouterRuleCredential(functionKey.Value, appKey.Value, clientId.Value);
+            return new FunctionRouterRuleCredential(functionKey.Value, appKey.Value, clientId.Value, rawData);
+        }
+
+        FunctionRouterRuleCredential IModelJsonSerializable<FunctionRouterRuleCredential>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFunctionRouterRuleCredential(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FunctionRouterRuleCredential>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FunctionRouterRuleCredential IModelSerializable<FunctionRouterRuleCredential>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFunctionRouterRuleCredential(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FunctionRouterRuleCredential model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FunctionRouterRuleCredential(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFunctionRouterRuleCredential(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

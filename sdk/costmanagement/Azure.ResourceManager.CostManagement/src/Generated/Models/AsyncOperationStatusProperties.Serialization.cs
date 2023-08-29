@@ -6,15 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class AsyncOperationStatusProperties
+    public partial class AsyncOperationStatusProperties : IUtf8JsonSerializable, IModelJsonSerializable<AsyncOperationStatusProperties>
     {
-        internal static AsyncOperationStatusProperties DeserializeAsyncOperationStatusProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AsyncOperationStatusProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AsyncOperationStatusProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ReportUri))
+            {
+                writer.WritePropertyName("reportUrl"u8);
+                writer.WriteStringValue(ReportUri.Value.ToString());
+            }
+            if (Optional.IsDefined(SecondaryReportUri))
+            {
+                writer.WritePropertyName("secondaryReportUrl"u8);
+                writer.WriteStringValue(SecondaryReportUri.Value.ToString());
+            }
+            if (Optional.IsDefined(ValidUntil))
+            {
+                writer.WritePropertyName("validUntil"u8);
+                writer.WriteStringValue(ValidUntil.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AsyncOperationStatusProperties DeserializeAsyncOperationStatusProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<BenefitUtilizationSummaryReportSchema> reportUrl = default;
             Optional<BenefitUtilizationSummaryReportSchema> secondaryReportUrl = default;
             Optional<DateTimeOffset> validUntil = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reportUrl"u8))
@@ -51,8 +94,57 @@ namespace Azure.ResourceManager.CostManagement.Models
                     validUntil = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AsyncOperationStatusProperties(Optional.ToNullable(reportUrl), Optional.ToNullable(secondaryReportUrl), Optional.ToNullable(validUntil));
+            return new AsyncOperationStatusProperties(Optional.ToNullable(reportUrl), Optional.ToNullable(secondaryReportUrl), Optional.ToNullable(validUntil), rawData);
+        }
+
+        AsyncOperationStatusProperties IModelJsonSerializable<AsyncOperationStatusProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAsyncOperationStatusProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AsyncOperationStatusProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AsyncOperationStatusProperties IModelSerializable<AsyncOperationStatusProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAsyncOperationStatusProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AsyncOperationStatusProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AsyncOperationStatusProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAsyncOperationStatusProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

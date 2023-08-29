@@ -5,15 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class AcceptJobOfferResult
+    public partial class AcceptJobOfferResult : IUtf8JsonSerializable, IModelJsonSerializable<AcceptJobOfferResult>
     {
-        internal static AcceptJobOfferResult DeserializeAcceptJobOfferResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcceptJobOfferResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcceptJobOfferResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("assignmentId"u8);
+            writer.WriteStringValue(AssignmentId);
+            writer.WritePropertyName("jobId"u8);
+            writer.WriteStringValue(JobId);
+            writer.WritePropertyName("workerId"u8);
+            writer.WriteStringValue(WorkerId);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcceptJobOfferResult DeserializeAcceptJobOfferResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +55,7 @@ namespace Azure.Communication.JobRouter.Models
             string assignmentId = default;
             string jobId = default;
             string workerId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assignmentId"u8))
@@ -38,8 +73,57 @@ namespace Azure.Communication.JobRouter.Models
                     workerId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcceptJobOfferResult(assignmentId, jobId, workerId);
+            return new AcceptJobOfferResult(assignmentId, jobId, workerId, rawData);
+        }
+
+        AcceptJobOfferResult IModelJsonSerializable<AcceptJobOfferResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcceptJobOfferResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcceptJobOfferResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcceptJobOfferResult IModelSerializable<AcceptJobOfferResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcceptJobOfferResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AcceptJobOfferResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AcceptJobOfferResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcceptJobOfferResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

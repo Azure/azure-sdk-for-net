@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppOpenIdConnectClientCredential : IUtf8JsonSerializable
+    public partial class ContainerAppOpenIdConnectClientCredential : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppOpenIdConnectClientCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppOpenIdConnectClientCredential>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppOpenIdConnectClientCredential>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Method))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppOpenIdConnectClientCredential DeserializeContainerAppOpenIdConnectClientCredential(JsonElement element)
+        internal static ContainerAppOpenIdConnectClientCredential DeserializeContainerAppOpenIdConnectClientCredential(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ContainerAppOpenIdConnectClientCredentialMethod> method = default;
             Optional<string> clientSecretSettingName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("method"u8))
@@ -52,8 +75,57 @@ namespace Azure.ResourceManager.AppContainers.Models
                     clientSecretSettingName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppOpenIdConnectClientCredential(Optional.ToNullable(method), clientSecretSettingName.Value);
+            return new ContainerAppOpenIdConnectClientCredential(Optional.ToNullable(method), clientSecretSettingName.Value, rawData);
+        }
+
+        ContainerAppOpenIdConnectClientCredential IModelJsonSerializable<ContainerAppOpenIdConnectClientCredential>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppOpenIdConnectClientCredential(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppOpenIdConnectClientCredential>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppOpenIdConnectClientCredential IModelSerializable<ContainerAppOpenIdConnectClientCredential>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppOpenIdConnectClientCredential(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerAppOpenIdConnectClientCredential model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerAppOpenIdConnectClientCredential(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppOpenIdConnectClientCredential(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

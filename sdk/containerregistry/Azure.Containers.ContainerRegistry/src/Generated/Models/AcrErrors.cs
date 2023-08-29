@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Acr error response describing why the operation failed. </summary>
     internal partial class AcrErrors
     {
-        /// <summary> Initializes a new instance of AcrErrors. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcrErrors"/>. </summary>
         internal AcrErrors()
         {
             Errors = new ChangeTrackingList<AcrErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of AcrErrors. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrErrors"/>. </summary>
         /// <param name="errors"> Array of detailed error. </param>
-        internal AcrErrors(IReadOnlyList<AcrErrorInfo> errors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcrErrors(IReadOnlyList<AcrErrorInfo> errors, Dictionary<string, BinaryData> rawData)
         {
             Errors = errors;
+            _rawData = rawData;
         }
 
         /// <summary> Array of detailed error. </summary>

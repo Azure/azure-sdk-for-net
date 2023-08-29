@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The UnknownQueueSelectorAttachment. </summary>
     internal partial class UnknownQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of UnknownQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing the type of queue selector attachment. </param>
-        internal UnknownQueueSelectorAttachment(string kind) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownQueueSelectorAttachment(string kind, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             Kind = kind ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownQueueSelectorAttachment"/> for deserialization. </summary>
+        internal UnknownQueueSelectorAttachment()
+        {
         }
     }
 }

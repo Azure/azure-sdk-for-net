@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> A balance resource. </summary>
     public partial class ConsumptionBalanceResult : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionBalanceResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceResult"/>. </summary>
         internal ConsumptionBalanceResult()
         {
             NewPurchasesDetails = new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>();
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBalanceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +48,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="adjustmentDetails"> List of Adjustments (Promo credit, SIE credit etc.). </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal ConsumptionBalanceResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string currency, decimal? beginningBalance, decimal? endingBalance, decimal? newPurchases, decimal? adjustments, decimal? utilized, decimal? serviceOverage, decimal? chargesBilledSeparately, decimal? totalOverage, decimal? totalUsage, decimal? azureMarketplaceServiceCharges, ConsumptionBillingFrequency? billingFrequency, bool? isPriceHidden, IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails, IReadOnlyList<ConsumptionBalanceAdjustmentDetail> adjustmentDetails, ETag? etag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionBalanceResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string currency, decimal? beginningBalance, decimal? endingBalance, decimal? newPurchases, decimal? adjustments, decimal? utilized, decimal? serviceOverage, decimal? chargesBilledSeparately, decimal? totalOverage, decimal? totalUsage, decimal? azureMarketplaceServiceCharges, ConsumptionBillingFrequency? billingFrequency, bool? isPriceHidden, IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails, IReadOnlyList<ConsumptionBalanceAdjustmentDetail> adjustmentDetails, ETag? etag, IReadOnlyDictionary<string, string> tags, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Currency = currency;
             BeginningBalance = beginningBalance;
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.Consumption.Models
             AdjustmentDetails = adjustmentDetails;
             ETag = etag;
             Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> The ISO currency in which the meter is charged, for example, USD. </summary>

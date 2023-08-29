@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The response to a list partition metrics request. </summary>
     internal partial class PartitionMetricListResult
     {
-        /// <summary> Initializes a new instance of PartitionMetricListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartitionMetricListResult"/>. </summary>
         internal PartitionMetricListResult()
         {
             Value = new ChangeTrackingList<PartitionMetric>();
         }
 
-        /// <summary> Initializes a new instance of PartitionMetricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionMetricListResult"/>. </summary>
         /// <param name="value"> The list of partition-level metrics for the account. </param>
-        internal PartitionMetricListResult(IReadOnlyList<PartitionMetric> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartitionMetricListResult(IReadOnlyList<PartitionMetric> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of partition-level metrics for the account. </summary>

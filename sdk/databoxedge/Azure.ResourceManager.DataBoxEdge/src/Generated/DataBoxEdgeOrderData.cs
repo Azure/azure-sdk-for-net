@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -18,7 +19,9 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeOrderData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeOrderData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderData"/>. </summary>
         public DataBoxEdgeOrderData()
         {
             OrderHistory = new ChangeTrackingList<DataBoxEdgeOrderStatus>();
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             ReturnTrackingInfo = new ChangeTrackingList<DataBoxEdgeTrackingInfo>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="deliveryTrackingInfo"> Tracking information for the package delivered to the customer whether it has an original or a replacement device. </param>
         /// <param name="returnTrackingInfo"> Tracking information for the package returned from the customer whether it has an original or a replacement device. </param>
         /// <param name="shipmentType"> ShipmentType of the order. </param>
-        internal DataBoxEdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string orderId, DataBoxEdgeContactDetails contactInformation, DataBoxEdgeShippingAddress shippingAddress, DataBoxEdgeOrderStatus currentStatus, IReadOnlyList<DataBoxEdgeOrderStatus> orderHistory, string serialNumber, IReadOnlyList<DataBoxEdgeTrackingInfo> deliveryTrackingInfo, IReadOnlyList<DataBoxEdgeTrackingInfo> returnTrackingInfo, DataBoxEdgeShipmentType? shipmentType) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string orderId, DataBoxEdgeContactDetails contactInformation, DataBoxEdgeShippingAddress shippingAddress, DataBoxEdgeOrderStatus currentStatus, IReadOnlyList<DataBoxEdgeOrderStatus> orderHistory, string serialNumber, IReadOnlyList<DataBoxEdgeTrackingInfo> deliveryTrackingInfo, IReadOnlyList<DataBoxEdgeTrackingInfo> returnTrackingInfo, DataBoxEdgeShipmentType? shipmentType, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             OrderId = orderId;
@@ -53,6 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             DeliveryTrackingInfo = deliveryTrackingInfo;
             ReturnTrackingInfo = returnTrackingInfo;
             ShipmentType = shipmentType;
+            _rawData = rawData;
         }
 
         /// <summary> It specify the order api version. </summary>

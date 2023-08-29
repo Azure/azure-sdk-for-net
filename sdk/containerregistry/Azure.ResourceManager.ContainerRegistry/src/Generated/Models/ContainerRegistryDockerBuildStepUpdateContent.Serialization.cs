@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryDockerBuildStepUpdateContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryDockerBuildStepUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryDockerBuildStepUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryDockerBuildStepUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryDockerBuildStepUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ContainerRegistryDockerBuildStepUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ImageNames))
             {
@@ -67,7 +75,163 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ContainerRegistryDockerBuildStepUpdateContent DeserializeContainerRegistryDockerBuildStepUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> imageNames = default;
+            Optional<bool> isPushEnabled = default;
+            Optional<bool> noCache = default;
+            Optional<string> dockerFilePath = default;
+            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
+            Optional<string> target = default;
+            ContainerRegistryTaskStepType type = default;
+            Optional<string> contextPath = default;
+            Optional<string> contextAccessToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("imageNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    imageNames = array;
+                    continue;
+                }
+                if (property.NameEquals("isPushEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isPushEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("noCache"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    noCache = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("dockerFilePath"u8))
+                {
+                    dockerFilePath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("arguments"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerRegistryRunArgument> array = new List<ContainerRegistryRunArgument>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item));
+                    }
+                    arguments = array;
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    target = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ContainerRegistryTaskStepType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("contextPath"u8))
+                {
+                    contextPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("contextAccessToken"u8))
+                {
+                    contextAccessToken = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ContainerRegistryDockerBuildStepUpdateContent(type, contextPath.Value, contextAccessToken.Value, Optional.ToList(imageNames), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath.Value, Optional.ToList(arguments), target.Value, rawData);
+        }
+
+        ContainerRegistryDockerBuildStepUpdateContent IModelJsonSerializable<ContainerRegistryDockerBuildStepUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContainerRegistryDockerBuildStepUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryDockerBuildStepUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryDockerBuildStepUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContainerRegistryDockerBuildStepUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryDockerBuildStepUpdateContent IModelSerializable<ContainerRegistryDockerBuildStepUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContainerRegistryDockerBuildStepUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryDockerBuildStepUpdateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerRegistryDockerBuildStepUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerRegistryDockerBuildStepUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryDockerBuildStepUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

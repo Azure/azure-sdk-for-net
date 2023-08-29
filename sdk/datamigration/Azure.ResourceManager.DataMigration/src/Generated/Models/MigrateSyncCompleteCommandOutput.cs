@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for command that completes sync migration for a database. </summary>
     public partial class MigrateSyncCompleteCommandOutput
     {
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandOutput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandOutput"/>. </summary>
         internal MigrateSyncCompleteCommandOutput()
         {
             Errors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="errors"> List of errors that happened during the command execution. </param>
-        internal MigrateSyncCompleteCommandOutput(string id, IReadOnlyList<ReportableException> errors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSyncCompleteCommandOutput(string id, IReadOnlyList<ReportableException> errors, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Errors = errors;
+            _rawData = rawData;
         }
 
         /// <summary> Result identifier. </summary>

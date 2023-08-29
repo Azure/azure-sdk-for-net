@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> The Sku property. </summary>
     public partial class ConsumptionSkuProperty
     {
-        /// <summary> Initializes a new instance of ConsumptionSkuProperty. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionSkuProperty"/>. </summary>
         internal ConsumptionSkuProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionSkuProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionSkuProperty"/>. </summary>
         /// <param name="name"> The name of sku property. </param>
         /// <param name="value"> The value of sku property. </param>
-        internal ConsumptionSkuProperty(string name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionSkuProperty(string name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The name of sku property. </summary>

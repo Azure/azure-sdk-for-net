@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDatabricksDeltaLakeExportCommand : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeExportCommand : IUtf8JsonSerializable, IModelJsonSerializable<AzureDatabricksDeltaLakeExportCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureDatabricksDeltaLakeExportCommand>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureDatabricksDeltaLakeExportCommand>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AzureDatabricksDeltaLakeExportCommand>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DateFormat))
             {
@@ -42,8 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDatabricksDeltaLakeExportCommand DeserializeAzureDatabricksDeltaLakeExportCommand(JsonElement element)
+        internal static AzureDatabricksDeltaLakeExportCommand DeserializeAzureDatabricksDeltaLakeExportCommand(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +90,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDatabricksDeltaLakeExportCommand(type, additionalProperties, dateFormat.Value, timestampFormat.Value);
+        }
+
+        AzureDatabricksDeltaLakeExportCommand IModelJsonSerializable<AzureDatabricksDeltaLakeExportCommand>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureDatabricksDeltaLakeExportCommand>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDatabricksDeltaLakeExportCommand(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureDatabricksDeltaLakeExportCommand>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureDatabricksDeltaLakeExportCommand>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureDatabricksDeltaLakeExportCommand IModelSerializable<AzureDatabricksDeltaLakeExportCommand>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureDatabricksDeltaLakeExportCommand>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureDatabricksDeltaLakeExportCommand(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AzureDatabricksDeltaLakeExportCommand model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AzureDatabricksDeltaLakeExportCommand(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureDatabricksDeltaLakeExportCommand(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

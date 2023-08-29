@@ -8,14 +8,42 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevel
+    public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevel : IUtf8JsonSerializable, IModelJsonSerializable<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>
     {
-        internal static MigrateSqlServerSqlDBTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MigrateSqlServerSqlDBTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> objectSummary = default;
             Optional<string> id = default;
             string resultType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -155,8 +184,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), Optional.ToNullable(stage), statusMessage.Value, message.Value, Optional.ToNullable(numberOfObjects), Optional.ToNullable(numberOfObjectsCompleted), Optional.ToNullable(errorCount), errorPrefix.Value, resultPrefix.Value, Optional.ToList(exceptionsAndWarnings), objectSummary.Value);
+            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), Optional.ToNullable(stage), statusMessage.Value, message.Value, Optional.ToNullable(numberOfObjects), Optional.ToNullable(numberOfObjectsCompleted), Optional.ToNullable(errorCount), errorPrefix.Value, resultPrefix.Value, Optional.ToList(exceptionsAndWarnings), objectSummary.Value, rawData);
+        }
+
+        MigrateSqlServerSqlDBTaskOutputDatabaseLevel IModelJsonSerializable<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrateSqlServerSqlDBTaskOutputDatabaseLevel IModelSerializable<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MigrateSqlServerSqlDBTaskOutputDatabaseLevel model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MigrateSqlServerSqlDBTaskOutputDatabaseLevel(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

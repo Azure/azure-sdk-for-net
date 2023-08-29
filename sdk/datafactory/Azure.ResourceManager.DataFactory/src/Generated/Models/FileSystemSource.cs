@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity file system source. </summary>
     public partial class FileSystemSource : CopyActivitySource
     {
-        /// <summary> Initializes a new instance of FileSystemSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemSource"/>. </summary>
         public FileSystemSource()
         {
             CopySourceType = "FileSystemSource";
         }
 
-        /// <summary> Initializes a new instance of FileSystemSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

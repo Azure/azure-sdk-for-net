@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Represents the dedicated host unutilized capacity in terms of a specific VM size. </summary>
     public partial class DedicatedHostAllocatableVm
     {
-        /// <summary> Initializes a new instance of DedicatedHostAllocatableVm. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostAllocatableVm"/>. </summary>
         internal DedicatedHostAllocatableVm()
         {
         }
 
-        /// <summary> Initializes a new instance of DedicatedHostAllocatableVm. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostAllocatableVm"/>. </summary>
         /// <param name="vmSize"> VM size in terms of which the unutilized capacity is represented. </param>
         /// <param name="count"> Maximum number of VMs of size vmSize that can fit in the dedicated host's remaining capacity. </param>
-        internal DedicatedHostAllocatableVm(string vmSize, double? count)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DedicatedHostAllocatableVm(string vmSize, double? count, Dictionary<string, BinaryData> rawData)
         {
             VmSize = vmSize;
             Count = count;
+            _rawData = rawData;
         }
 
         /// <summary> VM size in terms of which the unutilized capacity is represented. </summary>

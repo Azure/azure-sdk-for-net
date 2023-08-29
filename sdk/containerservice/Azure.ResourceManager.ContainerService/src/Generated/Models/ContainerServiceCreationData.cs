@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -12,16 +14,20 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Data used when creating a target resource from a source resource. </summary>
     internal partial class ContainerServiceCreationData
     {
-        /// <summary> Initializes a new instance of ContainerServiceCreationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceCreationData"/>. </summary>
         public ContainerServiceCreationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceCreationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceCreationData"/>. </summary>
         /// <param name="sourceResourceId"> This is the ARM ID of the source object to be used to create the target object. </param>
-        internal ContainerServiceCreationData(ResourceIdentifier sourceResourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceCreationData(ResourceIdentifier sourceResourceId, Dictionary<string, BinaryData> rawData)
         {
             SourceResourceId = sourceResourceId;
+            _rawData = rawData;
         }
 
         /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>

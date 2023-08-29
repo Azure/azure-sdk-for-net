@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The ContainerRegistryTimerTriggerDescriptor. </summary>
     public partial class ContainerRegistryTimerTriggerDescriptor
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTriggerDescriptor. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTriggerDescriptor"/>. </summary>
         public ContainerRegistryTimerTriggerDescriptor()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTriggerDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTriggerDescriptor"/>. </summary>
         /// <param name="timerTriggerName"> The timer trigger name that caused the run. </param>
         /// <param name="scheduleOccurrence"> The occurrence that triggered the run. </param>
-        internal ContainerRegistryTimerTriggerDescriptor(string timerTriggerName, string scheduleOccurrence)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTimerTriggerDescriptor(string timerTriggerName, string scheduleOccurrence, Dictionary<string, BinaryData> rawData)
         {
             TimerTriggerName = timerTriggerName;
             ScheduleOccurrence = scheduleOccurrence;
+            _rawData = rawData;
         }
 
         /// <summary> The timer trigger name that caused the run. </summary>

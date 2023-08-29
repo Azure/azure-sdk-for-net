@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBCancelCommand : IUtf8JsonSerializable
+    public partial class MongoDBCancelCommand : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBCancelCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBCancelCommand>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBCancelCommand>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MongoDBCancelCommand>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
@@ -23,11 +30,25 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MongoDBCancelCommand DeserializeMongoDBCancelCommand(JsonElement element)
+        internal static MongoDBCancelCommand DeserializeMongoDBCancelCommand(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             CommandType commandType = default;
             Optional<IReadOnlyList<ODataError>> errors = default;
             Optional<CommandState> state = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -75,8 +97,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     state = new CommandState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MongoDBCancelCommand(commandType, Optional.ToList(errors), Optional.ToNullable(state), input.Value);
+            return new MongoDBCancelCommand(commandType, Optional.ToList(errors), Optional.ToNullable(state), input.Value, rawData);
+        }
+
+        MongoDBCancelCommand IModelJsonSerializable<MongoDBCancelCommand>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDBCancelCommand>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBCancelCommand(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBCancelCommand>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDBCancelCommand>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBCancelCommand IModelSerializable<MongoDBCancelCommand>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDBCancelCommand>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBCancelCommand(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MongoDBCancelCommand model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MongoDBCancelCommand(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDBCancelCommand(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

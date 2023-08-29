@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> A feature for gallery image. </summary>
     public partial class GalleryImageFeature
     {
-        /// <summary> Initializes a new instance of GalleryImageFeature. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageFeature"/>. </summary>
         public GalleryImageFeature()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageFeature"/>. </summary>
         /// <param name="name"> The name of the gallery image feature. </param>
         /// <param name="value"> The value of the gallery image feature. </param>
-        internal GalleryImageFeature(string name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryImageFeature(string name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the gallery image feature. </summary>

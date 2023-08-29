@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The OSImageNotificationProfile. </summary>
     public partial class OSImageNotificationProfile
     {
-        /// <summary> Initializes a new instance of OSImageNotificationProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSImageNotificationProfile"/>. </summary>
         public OSImageNotificationProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of OSImageNotificationProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSImageNotificationProfile"/>. </summary>
         /// <param name="notBeforeTimeout"> Length of time a Virtual Machine being reimaged or having its OS upgraded will have to potentially approve the OS Image Scheduled Event before the event is auto approved (timed out). The configuration is specified in ISO 8601 format, and the value must be 15 minutes (PT15M). </param>
         /// <param name="enable"> Specifies whether the OS Image Scheduled event is enabled or disabled. </param>
-        internal OSImageNotificationProfile(string notBeforeTimeout, bool? enable)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSImageNotificationProfile(string notBeforeTimeout, bool? enable, Dictionary<string, BinaryData> rawData)
         {
             NotBeforeTimeout = notBeforeTimeout;
             Enable = enable;
+            _rawData = rawData;
         }
 
         /// <summary> Length of time a Virtual Machine being reimaged or having its OS upgraded will have to potentially approve the OS Image Scheduled Event before the event is auto approved (timed out). The configuration is specified in ISO 8601 format, and the value must be 15 minutes (PT15M). </summary>

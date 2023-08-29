@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> run command result. </summary>
     public partial class ManagedClusterRunCommandResult
     {
-        /// <summary> Initializes a new instance of ManagedClusterRunCommandResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandResult"/>. </summary>
         internal ManagedClusterRunCommandResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterRunCommandResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandResult"/>. </summary>
         /// <param name="id"> The command id. </param>
         /// <param name="provisioningState"> provisioning State. </param>
         /// <param name="exitCode"> The exit code of the command. </param>
@@ -25,7 +28,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="finishedOn"> The time when the command finished. </param>
         /// <param name="logs"> The command output. </param>
         /// <param name="reason"> An explanation of why provisioningState is set to failed (if so). </param>
-        internal ManagedClusterRunCommandResult(string id, string provisioningState, int? exitCode, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, string logs, string reason)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterRunCommandResult(string id, string provisioningState, int? exitCode, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, string logs, string reason, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             ProvisioningState = provisioningState;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             FinishedOn = finishedOn;
             Logs = logs;
             Reason = reason;
+            _rawData = rawData;
         }
 
         /// <summary> The command id. </summary>

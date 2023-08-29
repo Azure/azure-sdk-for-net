@@ -14,21 +14,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The image update trigger that caused a build. </summary>
     public partial class ContainerRegistryImageUpdateTrigger
     {
-        /// <summary> Initializes a new instance of ContainerRegistryImageUpdateTrigger. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImageUpdateTrigger"/>. </summary>
         public ContainerRegistryImageUpdateTrigger()
         {
             Images = new ChangeTrackingList<ContainerRegistryImageDescriptor>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryImageUpdateTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImageUpdateTrigger"/>. </summary>
         /// <param name="id"> The unique ID of the trigger. </param>
         /// <param name="timestamp"> The timestamp when the image update happened. </param>
         /// <param name="images"> The list of image updates that caused the build. </param>
-        internal ContainerRegistryImageUpdateTrigger(Guid? id, DateTimeOffset? timestamp, IList<ContainerRegistryImageDescriptor> images)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryImageUpdateTrigger(Guid? id, DateTimeOffset? timestamp, IList<ContainerRegistryImageDescriptor> images, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Timestamp = timestamp;
             Images = images;
+            _rawData = rawData;
         }
 
         /// <summary> The unique ID of the trigger. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the resource properties. </summary>
     internal partial class NetworkProfile
     {
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         public NetworkProfile()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         /// <param name="networkInterfaces"> Gets or sets the list of network interfaces associated with the virtual machine. </param>
-        internal NetworkProfile(IList<NetworkInterface> networkInterfaces)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkProfile(IList<NetworkInterface> networkInterfaces, Dictionary<string, BinaryData> rawData)
         {
             NetworkInterfaces = networkInterfaces;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the list of network interfaces associated with the virtual machine. </summary>

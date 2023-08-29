@@ -5,16 +5,58 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CapacityReservationInstanceViewWithName
+    public partial class CapacityReservationInstanceViewWithName : IUtf8JsonSerializable, IModelJsonSerializable<CapacityReservationInstanceViewWithName>
     {
-        internal static CapacityReservationInstanceViewWithName DeserializeCapacityReservationInstanceViewWithName(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CapacityReservationInstanceViewWithName>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CapacityReservationInstanceViewWithName>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CapacityReservationInstanceViewWithName>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UtilizationInfo))
+            {
+                writer.WritePropertyName("utilizationInfo"u8);
+                writer.WriteObjectValue(UtilizationInfo);
+            }
+            if (Optional.IsCollectionDefined(Statuses))
+            {
+                writer.WritePropertyName("statuses"u8);
+                writer.WriteStartArray();
+                foreach (var item in Statuses)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CapacityReservationInstanceViewWithName DeserializeCapacityReservationInstanceViewWithName(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> name = default;
             Optional<CapacityReservationUtilization> utilizationInfo = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,8 +95,57 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CapacityReservationInstanceViewWithName(utilizationInfo.Value, Optional.ToList(statuses), name.Value);
+            return new CapacityReservationInstanceViewWithName(utilizationInfo.Value, Optional.ToList(statuses), name.Value, rawData);
+        }
+
+        CapacityReservationInstanceViewWithName IModelJsonSerializable<CapacityReservationInstanceViewWithName>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CapacityReservationInstanceViewWithName>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCapacityReservationInstanceViewWithName(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CapacityReservationInstanceViewWithName>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CapacityReservationInstanceViewWithName>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CapacityReservationInstanceViewWithName IModelSerializable<CapacityReservationInstanceViewWithName>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CapacityReservationInstanceViewWithName>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCapacityReservationInstanceViewWithName(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CapacityReservationInstanceViewWithName model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CapacityReservationInstanceViewWithName(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCapacityReservationInstanceViewWithName(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

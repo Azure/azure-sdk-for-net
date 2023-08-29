@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class SingleScopeBenefitRecommendationProperties : IUtf8JsonSerializable
+    public partial class SingleScopeBenefitRecommendationProperties : IUtf8JsonSerializable, IModelJsonSerializable<SingleScopeBenefitRecommendationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SingleScopeBenefitRecommendationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SingleScopeBenefitRecommendationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SingleScopeBenefitRecommendationProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LookBackPeriod))
             {
@@ -43,11 +50,25 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SingleScopeBenefitRecommendationProperties DeserializeSingleScopeBenefitRecommendationProperties(JsonElement element)
+        internal static SingleScopeBenefitRecommendationProperties DeserializeSingleScopeBenefitRecommendationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +88,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<AllSavingsBenefitDetails> recommendationDetails = default;
             Optional<AllSavingsList> allRecommendationDetails = default;
             BenefitRecommendationScope scope = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -184,8 +206,57 @@ namespace Azure.ResourceManager.CostManagement.Models
                     scope = new BenefitRecommendationScope(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SingleScopeBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, subscriptionId.Value, resourceGroup.Value);
+            return new SingleScopeBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, subscriptionId.Value, resourceGroup.Value, rawData);
+        }
+
+        SingleScopeBenefitRecommendationProperties IModelJsonSerializable<SingleScopeBenefitRecommendationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SingleScopeBenefitRecommendationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSingleScopeBenefitRecommendationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SingleScopeBenefitRecommendationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SingleScopeBenefitRecommendationProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SingleScopeBenefitRecommendationProperties IModelSerializable<SingleScopeBenefitRecommendationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SingleScopeBenefitRecommendationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSingleScopeBenefitRecommendationProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SingleScopeBenefitRecommendationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SingleScopeBenefitRecommendationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSingleScopeBenefitRecommendationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

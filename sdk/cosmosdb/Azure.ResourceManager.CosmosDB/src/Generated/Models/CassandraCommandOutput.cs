@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Response of /command api. </summary>
     public partial class CassandraCommandOutput
     {
-        /// <summary> Initializes a new instance of CassandraCommandOutput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraCommandOutput"/>. </summary>
         internal CassandraCommandOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraCommandOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraCommandOutput"/>. </summary>
         /// <param name="commandOutput"> Output of the command. </param>
-        internal CassandraCommandOutput(string commandOutput)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraCommandOutput(string commandOutput, Dictionary<string, BinaryData> rawData)
         {
             CommandOutput = commandOutput;
+            _rawData = rawData;
         }
 
         /// <summary> Output of the command. </summary>

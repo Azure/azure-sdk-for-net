@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A list of mongo clusters. </summary>
     internal partial class MongoClusterListResult
     {
-        /// <summary> Initializes a new instance of MongoClusterListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoClusterListResult"/>. </summary>
         internal MongoClusterListResult()
         {
             Value = new ChangeTrackingList<MongoClusterData>();
         }
 
-        /// <summary> Initializes a new instance of MongoClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterListResult"/>. </summary>
         /// <param name="value"> The list of mongo clusters. </param>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
-        internal MongoClusterListResult(IReadOnlyList<MongoClusterData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoClusterListResult(IReadOnlyList<MongoClusterData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of mongo clusters. </summary>

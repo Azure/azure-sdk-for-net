@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryChangeDataCaptureResource(Client, DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(e)), _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics, Pipeline, "DataFactoryChangeDataCaptureCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataFactoryChangeDataCaptureResource(Client, DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(e)), _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics, Pipeline, "DataFactoryChangeDataCaptureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryChangeDataCaptureResource(Client, DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(e)), _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics, Pipeline, "DataFactoryChangeDataCaptureCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataFactoryChangeDataCaptureResource(Client, DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(e)), _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics, Pipeline, "DataFactoryChangeDataCaptureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

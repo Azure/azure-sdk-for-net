@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information of backup set. </summary>
     public partial class BackupSetInfo
     {
-        /// <summary> Initializes a new instance of BackupSetInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupSetInfo"/>. </summary>
         internal BackupSetInfo()
         {
             ListOfBackupFiles = new ChangeTrackingList<BackupFileInfo>();
         }
 
-        /// <summary> Initializes a new instance of BackupSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSetInfo"/>. </summary>
         /// <param name="backupSetId"> Id for the set of backup files. </param>
         /// <param name="firstLsn"> First log sequence number of the backup file. </param>
         /// <param name="lastLsn"> Last log sequence number of the backup file. </param>
@@ -31,7 +33,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupStartOn"> Date and time that the backup operation began. </param>
         /// <param name="backupFinishedOn"> Date and time that the backup operation finished. </param>
         /// <param name="isBackupRestored"> Whether the backup set is restored or not. </param>
-        internal BackupSetInfo(string backupSetId, string firstLsn, string lastLsn, DateTimeOffset? lastModifiedOn, BackupType? backupType, IReadOnlyList<BackupFileInfo> listOfBackupFiles, string databaseName, DateTimeOffset? backupStartOn, DateTimeOffset? backupFinishedOn, bool? isBackupRestored)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupSetInfo(string backupSetId, string firstLsn, string lastLsn, DateTimeOffset? lastModifiedOn, BackupType? backupType, IReadOnlyList<BackupFileInfo> listOfBackupFiles, string databaseName, DateTimeOffset? backupStartOn, DateTimeOffset? backupFinishedOn, bool? isBackupRestored, Dictionary<string, BinaryData> rawData)
         {
             BackupSetId = backupSetId;
             FirstLsn = firstLsn;
@@ -43,6 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             BackupStartOn = backupStartOn;
             BackupFinishedOn = backupFinishedOn;
             IsBackupRestored = isBackupRestored;
+            _rawData = rawData;
         }
 
         /// <summary> Id for the set of backup files. </summary>

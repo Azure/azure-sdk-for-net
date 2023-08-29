@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,13 +16,15 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> A resource listing all tags. </summary>
     public partial class ConsumptionTagsResult : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionTagsResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionTagsResult"/>. </summary>
         public ConsumptionTagsResult()
         {
             Tags = new ChangeTrackingList<ConsumptionTag>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionTagsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionTagsResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,12 +33,14 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="previousLink"> The link (url) to the previous page of results. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ConsumptionTagsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ConsumptionTag> tags, string nextLink, string previousLink, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionTagsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ConsumptionTag> tags, string nextLink, string previousLink, ETag? etag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             NextLink = nextLink;
             PreviousLink = previousLink;
             ETag = etag;
+            _rawData = rawData;
         }
 
         /// <summary> A list of Tag. </summary>

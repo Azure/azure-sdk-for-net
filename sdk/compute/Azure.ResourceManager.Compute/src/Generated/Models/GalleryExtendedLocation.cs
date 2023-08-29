@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The name of the extended location. </summary>
     public partial class GalleryExtendedLocation
     {
-        /// <summary> Initializes a new instance of GalleryExtendedLocation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryExtendedLocation"/>. </summary>
         public GalleryExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryExtendedLocation"/>. </summary>
         /// <param name="name"></param>
         /// <param name="extendedLocationType"> It is type of the extended location. </param>
-        internal GalleryExtendedLocation(string name, GalleryExtendedLocationType? extendedLocationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryExtendedLocation(string name, GalleryExtendedLocationType? extendedLocationType, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ExtendedLocationType = extendedLocationType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the name. </summary>

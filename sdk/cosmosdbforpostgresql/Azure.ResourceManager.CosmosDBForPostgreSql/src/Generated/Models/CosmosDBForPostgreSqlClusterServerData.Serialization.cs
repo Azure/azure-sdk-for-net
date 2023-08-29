@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class CosmosDBForPostgreSqlClusterServerData : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlClusterServerData : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBForPostgreSqlClusterServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBForPostgreSqlClusterServerData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBForPostgreSqlClusterServerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -60,11 +68,25 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WriteStringValue(CitusVersion);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBForPostgreSqlClusterServerData DeserializeCosmosDBForPostgreSqlClusterServerData(JsonElement element)
+        internal static CosmosDBForPostgreSqlClusterServerData DeserializeCosmosDBForPostgreSqlClusterServerData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +109,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<string> availabilityZone = default;
             Optional<string> postgresqlVersion = default;
             Optional<string> citusVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -219,8 +242,57 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CosmosDBForPostgreSqlClusterServerData(id, name, type, systemData.Value, serverEdition.Value, Optional.ToNullable(storageQuotaInMb), Optional.ToNullable(vCores), Optional.ToNullable(enableHa), Optional.ToNullable(enablePublicIPAccess), Optional.ToNullable(isReadOnly), administratorLogin.Value, fullyQualifiedDomainName.Value, Optional.ToNullable(role), state.Value, haState.Value, availabilityZone.Value, postgresqlVersion.Value, citusVersion.Value);
+            return new CosmosDBForPostgreSqlClusterServerData(id, name, type, systemData.Value, serverEdition.Value, Optional.ToNullable(storageQuotaInMb), Optional.ToNullable(vCores), Optional.ToNullable(enableHa), Optional.ToNullable(enablePublicIPAccess), Optional.ToNullable(isReadOnly), administratorLogin.Value, fullyQualifiedDomainName.Value, Optional.ToNullable(role), state.Value, haState.Value, availabilityZone.Value, postgresqlVersion.Value, citusVersion.Value, rawData);
+        }
+
+        CosmosDBForPostgreSqlClusterServerData IModelJsonSerializable<CosmosDBForPostgreSqlClusterServerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBForPostgreSqlClusterServerData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBForPostgreSqlClusterServerData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBForPostgreSqlClusterServerData IModelSerializable<CosmosDBForPostgreSqlClusterServerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBForPostgreSqlClusterServerData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CosmosDBForPostgreSqlClusterServerData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CosmosDBForPostgreSqlClusterServerData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBForPostgreSqlClusterServerData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

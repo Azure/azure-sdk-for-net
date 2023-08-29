@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The network rule set for a container registry. </summary>
     public partial class ContainerRegistryNetworkRuleSet
     {
-        /// <summary> Initializes a new instance of ContainerRegistryNetworkRuleSet. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryNetworkRuleSet"/>. </summary>
         /// <param name="defaultAction"> The default action of allow or deny when no other rules match. </param>
         public ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction)
         {
@@ -21,13 +24,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             IPRules = new ChangeTrackingList<ContainerRegistryIPRule>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryNetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryNetworkRuleSet"/>. </summary>
         /// <param name="defaultAction"> The default action of allow or deny when no other rules match. </param>
         /// <param name="ipRules"> The IP ACL rules. </param>
-        internal ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction, IList<ContainerRegistryIPRule> ipRules)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction, IList<ContainerRegistryIPRule> ipRules, Dictionary<string, BinaryData> rawData)
         {
             DefaultAction = defaultAction;
             IPRules = ipRules;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryNetworkRuleSet"/> for deserialization. </summary>
+        internal ContainerRegistryNetworkRuleSet()
+        {
         }
 
         /// <summary> The default action of allow or deny when no other rules match. </summary>

@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CassandraCertificate. </summary>
     public partial class CassandraCertificate
     {
-        /// <summary> Initializes a new instance of CassandraCertificate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraCertificate"/>. </summary>
         public CassandraCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraCertificate"/>. </summary>
         /// <param name="pem"> PEM formatted public key. </param>
-        internal CassandraCertificate(string pem)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraCertificate(string pem, Dictionary<string, BinaryData> rawData)
         {
             Pem = pem;
+            _rawData = rawData;
         }
 
         /// <summary> PEM formatted public key. </summary>

@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecutePipelineActivityPolicy : IUtf8JsonSerializable
+    public partial class ExecutePipelineActivityPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ExecutePipelineActivityPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExecutePipelineActivityPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExecutePipelineActivityPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsSecureInputEnabled))
             {
@@ -34,8 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ExecutePipelineActivityPolicy DeserializeExecutePipelineActivityPolicy(JsonElement element)
+        internal static ExecutePipelineActivityPolicy DeserializeExecutePipelineActivityPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +66,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ExecutePipelineActivityPolicy(Optional.ToNullable(secureInput), additionalProperties);
+        }
+
+        ExecutePipelineActivityPolicy IModelJsonSerializable<ExecutePipelineActivityPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecutePipelineActivityPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExecutePipelineActivityPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExecutePipelineActivityPolicy IModelSerializable<ExecutePipelineActivityPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExecutePipelineActivityPolicy(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExecutePipelineActivityPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExecutePipelineActivityPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExecutePipelineActivityPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

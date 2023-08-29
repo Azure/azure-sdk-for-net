@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication.JobRouter;
 using Azure.Core;
@@ -14,7 +15,9 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> An entity for jobs to be routed to. </summary>
     public partial class RouterWorker
     {
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
         /// <param name="id"></param>
         /// <param name="state"> The current state of the worker. </param>
         /// <param name="queueAssignments"> The queue(s) that this worker can receive work from. </param>
@@ -26,7 +29,8 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
         /// <param name="loadRatio"> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </param>
         /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
-        internal RouterWorker(string id, RouterWorkerState? state, IDictionary<string, object> queueAssignments, int? totalCapacity, IDictionary<string, object> labels, IDictionary<string, object> tags, IDictionary<string, ChannelConfiguration> channelConfigurations, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterWorker(string id, RouterWorkerState? state, IDictionary<string, object> queueAssignments, int? totalCapacity, IDictionary<string, object> labels, IDictionary<string, object> tags, IDictionary<string, ChannelConfiguration> channelConfigurations, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             State = state;
@@ -39,6 +43,7 @@ namespace Azure.Communication.JobRouter.Models
             AssignedJobs = assignedJobs;
             LoadRatio = loadRatio;
             AvailableForOffers = availableForOffers;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the id. </summary>

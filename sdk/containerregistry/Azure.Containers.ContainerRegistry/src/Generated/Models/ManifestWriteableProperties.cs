@@ -5,14 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Changeable attributes. </summary>
     internal partial class ManifestWriteableProperties
     {
-        /// <summary> Initializes a new instance of ManifestWriteableProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManifestWriteableProperties"/>. </summary>
         public ManifestWriteableProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManifestWriteableProperties"/>. </summary>
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManifestWriteableProperties(bool? canDelete, bool? canWrite, bool? canList, bool? canRead, Dictionary<string, BinaryData> rawData)
+        {
+            CanDelete = canDelete;
+            CanWrite = canWrite;
+            CanList = canList;
+            CanRead = canRead;
+            _rawData = rawData;
         }
 
         /// <summary> Delete enabled. </summary>

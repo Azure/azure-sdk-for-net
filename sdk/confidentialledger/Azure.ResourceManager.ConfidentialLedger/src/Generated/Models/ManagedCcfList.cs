@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConfidentialLedger;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> Object that includes an array of Managed CCF and a possible link for next set. </summary>
     internal partial class ManagedCcfList
     {
-        /// <summary> Initializes a new instance of ManagedCcfList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfList"/>. </summary>
         internal ManagedCcfList()
         {
             Value = new ChangeTrackingList<ManagedCcfData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedCcfList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfList"/>. </summary>
         /// <param name="value"> List of Managed CCF. </param>
         /// <param name="nextLink"> The URL the client should use to fetch the next page (per server side paging). </param>
-        internal ManagedCcfList(IReadOnlyList<ManagedCcfData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedCcfList(IReadOnlyList<ManagedCcfData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of Managed CCF. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to update a firewall rule while updating a Data Lake Store account. </summary>
     public partial class FirewallRuleForDataLakeStoreAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of FirewallRuleForDataLakeStoreAccountUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeStoreAccountUpdateContent"/>. </summary>
         /// <param name="name"> The unique name of the firewall rule to update. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FirewallRuleForDataLakeStoreAccountUpdateContent(string name)
@@ -22,6 +25,24 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeStoreAccountUpdateContent"/>. </summary>
+        /// <param name="name"> The unique name of the firewall rule to update. </param>
+        /// <param name="startIPAddress"> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        /// <param name="endIPAddress"> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallRuleForDataLakeStoreAccountUpdateContent(string name, IPAddress startIPAddress, IPAddress endIPAddress, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeStoreAccountUpdateContent"/> for deserialization. </summary>
+        internal FirewallRuleForDataLakeStoreAccountUpdateContent()
+        {
         }
 
         /// <summary> The unique name of the firewall rule to update. </summary>

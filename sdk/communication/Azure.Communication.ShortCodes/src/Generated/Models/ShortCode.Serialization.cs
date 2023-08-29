@@ -8,14 +8,70 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class ShortCode
+    public partial class ShortCode : IUtf8JsonSerializable, IModelJsonSerializable<ShortCode>
     {
-        internal static ShortCode DeserializeShortCode(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ShortCode>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ShortCode>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Number))
+            {
+                writer.WritePropertyName("number"u8);
+                writer.WriteStringValue(Number);
+            }
+            if (Optional.IsDefined(NumberType))
+            {
+                writer.WritePropertyName("numberType"u8);
+                writer.WriteStringValue(NumberType.Value.ToString());
+            }
+            if (Optional.IsDefined(CountryCode))
+            {
+                writer.WritePropertyName("countryCode"u8);
+                writer.WriteStringValue(CountryCode);
+            }
+            if (Optional.IsCollectionDefined(ProgramBriefIds))
+            {
+                writer.WritePropertyName("programBriefIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProgramBriefIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PurchaseDate))
+            {
+                writer.WritePropertyName("purchaseDate"u8);
+                writer.WriteStringValue(PurchaseDate.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ShortCode DeserializeShortCode(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +81,7 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<string> countryCode = default;
             Optional<IReadOnlyList<string>> programBriefIds = default;
             Optional<DateTimeOffset> purchaseDate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("number"u8))
@@ -69,8 +126,57 @@ namespace Azure.Communication.ShortCodes.Models
                     purchaseDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ShortCode(number.Value, Optional.ToNullable(numberType), countryCode.Value, Optional.ToList(programBriefIds), Optional.ToNullable(purchaseDate));
+            return new ShortCode(number.Value, Optional.ToNullable(numberType), countryCode.Value, Optional.ToList(programBriefIds), Optional.ToNullable(purchaseDate), rawData);
+        }
+
+        ShortCode IModelJsonSerializable<ShortCode>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeShortCode(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ShortCode>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ShortCode IModelSerializable<ShortCode>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeShortCode(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ShortCode model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ShortCode(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeShortCode(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

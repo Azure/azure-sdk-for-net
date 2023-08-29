@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Error information. </summary>
     internal partial class AcrErrorInfo
     {
-        /// <summary> Initializes a new instance of AcrErrorInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcrErrorInfo"/>. </summary>
         internal AcrErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AcrErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrErrorInfo"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="detail"> Error details. </param>
-        internal AcrErrorInfo(string code, string message, object detail)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcrErrorInfo(string code, string message, object detail, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Detail = detail;
+            _rawData = rawData;
         }
 
         /// <summary> Error code. </summary>

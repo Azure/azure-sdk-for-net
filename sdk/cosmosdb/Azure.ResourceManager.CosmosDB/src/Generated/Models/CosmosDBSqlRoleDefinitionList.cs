@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The relevant Role Definitions. </summary>
     internal partial class CosmosDBSqlRoleDefinitionList
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlRoleDefinitionList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleDefinitionList"/>. </summary>
         internal CosmosDBSqlRoleDefinitionList()
         {
             Value = new ChangeTrackingList<CosmosDBSqlRoleDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlRoleDefinitionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleDefinitionList"/>. </summary>
         /// <param name="value"> List of Role Definitions and their properties. </param>
-        internal CosmosDBSqlRoleDefinitionList(IReadOnlyList<CosmosDBSqlRoleDefinitionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlRoleDefinitionList(IReadOnlyList<CosmosDBSqlRoleDefinitionData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of Role Definitions and their properties. </summary>

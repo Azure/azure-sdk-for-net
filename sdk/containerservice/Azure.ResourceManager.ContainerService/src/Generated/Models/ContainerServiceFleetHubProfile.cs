@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The FleetHubProfile configures the fleet hub. </summary>
     public partial class ContainerServiceFleetHubProfile
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetHubProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetHubProfile"/>. </summary>
         public ContainerServiceFleetHubProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetHubProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetHubProfile"/>. </summary>
         /// <param name="dnsPrefix"> DNS prefix used to create the FQDN for the Fleet hub. </param>
         /// <param name="fqdn"> The FQDN of the Fleet hub. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version of the Fleet hub. </param>
-        internal ContainerServiceFleetHubProfile(string dnsPrefix, string fqdn, string kubernetesVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetHubProfile(string dnsPrefix, string fqdn, string kubernetesVersion, Dictionary<string, BinaryData> rawData)
         {
             DnsPrefix = dnsPrefix;
             Fqdn = fqdn;
             KubernetesVersion = kubernetesVersion;
+            _rawData = rawData;
         }
 
         /// <summary> DNS prefix used to create the FQDN for the Fleet hub. </summary>

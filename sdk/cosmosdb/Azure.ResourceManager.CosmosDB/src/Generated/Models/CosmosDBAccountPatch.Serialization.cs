@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBAccountPatch : IUtf8JsonSerializable
+    public partial class CosmosDBAccountPatch : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBAccountPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBAccountPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -221,7 +229,464 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CosmosDBAccountPatch DeserializeCosmosDBAccountPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<AzureLocation> location = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ConsistencyPolicy> consistencyPolicy = default;
+            Optional<IList<CosmosDBAccountLocation>> locations = default;
+            Optional<IList<CosmosDBIPAddressOrRange>> ipRules = default;
+            Optional<bool> isVirtualNetworkFilterEnabled = default;
+            Optional<bool> enableAutomaticFailover = default;
+            Optional<IList<CosmosDBAccountCapability>> capabilities = default;
+            Optional<IList<CosmosDBVirtualNetworkRule>> virtualNetworkRules = default;
+            Optional<bool> enableMultipleWriteLocations = default;
+            Optional<bool> enableCassandraConnector = default;
+            Optional<ConnectorOffer> connectorOffer = default;
+            Optional<bool> disableKeyBasedMetadataWriteAccess = default;
+            Optional<Uri> keyVaultKeyUri = default;
+            Optional<string> defaultIdentity = default;
+            Optional<CosmosDBPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<bool> enableFreeTier = default;
+            Optional<ApiProperties> apiProperties = default;
+            Optional<bool> enableAnalyticalStorage = default;
+            Optional<AnalyticalStorageConfiguration> analyticalStorageConfiguration = default;
+            Optional<CosmosDBAccountBackupPolicy> backupPolicy = default;
+            Optional<IList<CosmosDBAccountCorsPolicy>> cors = default;
+            Optional<NetworkAclBypass> networkAclBypass = default;
+            Optional<IList<ResourceIdentifier>> networkAclBypassResourceIds = default;
+            Optional<DiagnosticLogSettings> diagnosticLogSettings = default;
+            Optional<bool> disableLocalAuth = default;
+            Optional<CosmosDBAccountCapacity> capacity = default;
+            Optional<bool> enableMaterializedViews = default;
+            Optional<DatabaseAccountKeysMetadata> keysMetadata = default;
+            Optional<bool> enablePartitionMerge = default;
+            Optional<bool> enableBurstCapacity = default;
+            Optional<CosmosDBMinimalTlsVersion> minimalTlsVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("consistencyPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            consistencyPolicy = ConsistencyPolicy.DeserializeConsistencyPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("locations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<CosmosDBAccountLocation> array = new List<CosmosDBAccountLocation>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(CosmosDBAccountLocation.DeserializeCosmosDBAccountLocation(item));
+                            }
+                            locations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("ipRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<CosmosDBIPAddressOrRange> array = new List<CosmosDBIPAddressOrRange>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(CosmosDBIPAddressOrRange.DeserializeCosmosDBIPAddressOrRange(item));
+                            }
+                            ipRules = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("isVirtualNetworkFilterEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isVirtualNetworkFilterEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableAutomaticFailover"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableAutomaticFailover = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("capabilities"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<CosmosDBAccountCapability> array = new List<CosmosDBAccountCapability>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(CosmosDBAccountCapability.DeserializeCosmosDBAccountCapability(item));
+                            }
+                            capabilities = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualNetworkRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<CosmosDBVirtualNetworkRule> array = new List<CosmosDBVirtualNetworkRule>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(CosmosDBVirtualNetworkRule.DeserializeCosmosDBVirtualNetworkRule(item));
+                            }
+                            virtualNetworkRules = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("enableMultipleWriteLocations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableMultipleWriteLocations = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableCassandraConnector"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableCassandraConnector = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("connectorOffer"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectorOffer = new ConnectorOffer(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("disableKeyBasedMetadataWriteAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableKeyBasedMetadataWriteAccess = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("keyVaultKeyUri"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            keyVaultKeyUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultIdentity"u8))
+                        {
+                            defaultIdentity = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new CosmosDBPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("enableFreeTier"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableFreeTier = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("apiProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            apiProperties = ApiProperties.DeserializeApiProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("enableAnalyticalStorage"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableAnalyticalStorage = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("analyticalStorageConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            analyticalStorageConfiguration = AnalyticalStorageConfiguration.DeserializeAnalyticalStorageConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("backupPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupPolicy = CosmosDBAccountBackupPolicy.DeserializeCosmosDBAccountBackupPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("cors"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<CosmosDBAccountCorsPolicy> array = new List<CosmosDBAccountCorsPolicy>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(CosmosDBAccountCorsPolicy.DeserializeCosmosDBAccountCorsPolicy(item));
+                            }
+                            cors = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("networkAclBypass"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkAclBypass = property0.Value.GetString().ToNetworkAclBypass();
+                            continue;
+                        }
+                        if (property0.NameEquals("networkAclBypassResourceIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
+                            }
+                            networkAclBypassResourceIds = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("diagnosticLogSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            diagnosticLogSettings = DiagnosticLogSettings.DeserializeDiagnosticLogSettings(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("disableLocalAuth"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableLocalAuth = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("capacity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("enableMaterializedViews"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableMaterializedViews = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("keysMetadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            keysMetadata = DatabaseAccountKeysMetadata.DeserializeDatabaseAccountKeysMetadata(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("enablePartitionMerge"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enablePartitionMerge = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableBurstCapacity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableBurstCapacity = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("minimalTlsVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minimalTlsVersion = new CosmosDBMinimalTlsVersion(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CosmosDBAccountPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), identity, consistencyPolicy.Value, Optional.ToList(locations), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), Optional.ToList(capabilities), Optional.ToList(virtualNetworkRules), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), diagnosticLogSettings.Value, Optional.ToNullable(disableLocalAuth), capacity.Value, Optional.ToNullable(enableMaterializedViews), keysMetadata.Value, Optional.ToNullable(enablePartitionMerge), Optional.ToNullable(enableBurstCapacity), Optional.ToNullable(minimalTlsVersion), rawData);
+        }
+
+        CosmosDBAccountPatch IModelJsonSerializable<CosmosDBAccountPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBAccountPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBAccountPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBAccountPatch IModelSerializable<CosmosDBAccountPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBAccountPatch(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CosmosDBAccountPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CosmosDBAccountPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBAccountPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

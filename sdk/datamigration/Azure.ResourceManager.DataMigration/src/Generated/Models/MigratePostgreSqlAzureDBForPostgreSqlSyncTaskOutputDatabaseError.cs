@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,20 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError. </summary>
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError"/>. </summary>
         internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError()
         {
             Events = new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
             ResultType = "DatabaseLevelErrorOutput";
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="events"> List of error events. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(string id, string resultType, string errorMessage, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(string id, string resultType, string errorMessage, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events, Dictionary<string, BinaryData> rawData) : base(id, resultType, rawData)
         {
             ErrorMessage = errorMessage;
             Events = events;

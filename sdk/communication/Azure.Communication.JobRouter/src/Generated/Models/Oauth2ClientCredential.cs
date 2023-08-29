@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
@@ -13,18 +16,22 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public partial class Oauth2ClientCredential
     {
-        /// <summary> Initializes a new instance of Oauth2ClientCredential. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Oauth2ClientCredential"/>. </summary>
         public Oauth2ClientCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of Oauth2ClientCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="Oauth2ClientCredential"/>. </summary>
         /// <param name="clientId"> ClientId for Contoso Authorization server. </param>
         /// <param name="clientSecret"> Client secret for Contoso Authorization server. </param>
-        internal Oauth2ClientCredential(string clientId, string clientSecret)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Oauth2ClientCredential(string clientId, string clientSecret, Dictionary<string, BinaryData> rawData)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
+            _rawData = rawData;
         }
 
         /// <summary> ClientId for Contoso Authorization server. </summary>

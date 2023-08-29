@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    public partial class DataLakeStoreAccountCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class DataLakeStoreAccountCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<DataLakeStoreAccountCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataLakeStoreAccountCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataLakeStoreAccountCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
@@ -101,7 +110,237 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DataLakeStoreAccountCreateOrUpdateContent DeserializeDataLakeStoreAccountCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AzureLocation location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<string> defaultGroup = default;
+            Optional<DataLakeStoreAccountEncryptionConfig> encryptionConfig = default;
+            Optional<DataLakeStoreEncryptionState> encryptionState = default;
+            Optional<IList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>> firewallRules = default;
+            Optional<IList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>> virtualNetworkRules = default;
+            Optional<DataLakeStoreFirewallState> firewallState = default;
+            Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
+            Optional<IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>> trustedIdProviders = default;
+            Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
+            Optional<DataLakeStoreCommitmentTierType> newTier = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("defaultGroup"u8))
+                        {
+                            defaultGroup = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionConfig"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionConfig = DataLakeStoreAccountEncryptionConfig.DeserializeDataLakeStoreAccountEncryptionConfig(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionState = property0.Value.GetString().ToDataLakeStoreEncryptionState();
+                            continue;
+                        }
+                        if (property0.NameEquals("firewallRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> array = new List<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent.DeserializeFirewallRuleForDataLakeStoreAccountCreateOrUpdateContent(item));
+                            }
+                            firewallRules = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualNetworkRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> array = new List<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent.DeserializeVirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent(item));
+                            }
+                            virtualNetworkRules = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("firewallState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            firewallState = property0.Value.GetString().ToDataLakeStoreFirewallState();
+                            continue;
+                        }
+                        if (property0.NameEquals("firewallAllowAzureIps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            firewallAllowAzureIPs = property0.Value.GetString().ToDataLakeStoreFirewallAllowAzureIPsState();
+                            continue;
+                        }
+                        if (property0.NameEquals("trustedIdProviders"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> array = new List<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent.DeserializeTrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent(item));
+                            }
+                            trustedIdProviders = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("trustedIdProviderState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            trustedIdProviderState = property0.Value.GetString().ToDataLakeStoreTrustedIdProviderState();
+                            continue;
+                        }
+                        if (property0.NameEquals("newTier"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            newTier = property0.Value.GetString().ToDataLakeStoreCommitmentTierType();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DataLakeStoreAccountCreateOrUpdateContent(location, Optional.ToDictionary(tags), identity, defaultGroup.Value, encryptionConfig.Value, Optional.ToNullable(encryptionState), Optional.ToList(firewallRules), Optional.ToList(virtualNetworkRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToList(trustedIdProviders), Optional.ToNullable(trustedIdProviderState), Optional.ToNullable(newTier), rawData);
+        }
+
+        DataLakeStoreAccountCreateOrUpdateContent IModelJsonSerializable<DataLakeStoreAccountCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeStoreAccountCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataLakeStoreAccountCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataLakeStoreAccountCreateOrUpdateContent IModelSerializable<DataLakeStoreAccountCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataLakeStoreAccountCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataLakeStoreAccountCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataLakeStoreAccountCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataLakeStoreAccountCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

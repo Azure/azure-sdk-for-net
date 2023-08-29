@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Target Location details for optional copy of backups. </summary>
     public partial class TargetLocation
     {
-        /// <summary> Initializes a new instance of TargetLocation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetLocation"/>. </summary>
         public TargetLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetLocation"/>. </summary>
         /// <param name="storageAccountResourceId"> Resource Id of the storage account copying backups. </param>
         /// <param name="accountKey"> Storage Account Key. </param>
-        internal TargetLocation(string storageAccountResourceId, string accountKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetLocation(string storageAccountResourceId, string accountKey, Dictionary<string, BinaryData> rawData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             AccountKey = accountKey;
+            _rawData = rawData;
         }
 
         /// <summary> Resource Id of the storage account copying backups. </summary>

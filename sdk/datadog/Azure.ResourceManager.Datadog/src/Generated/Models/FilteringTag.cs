@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
     public partial class FilteringTag
     {
-        /// <summary> Initializes a new instance of FilteringTag. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilteringTag"/>. </summary>
         public FilteringTag()
         {
         }
 
-        /// <summary> Initializes a new instance of FilteringTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilteringTag"/>. </summary>
         /// <param name="name"> The name (also known as the key) of the tag. </param>
         /// <param name="value"> The value of the tag. </param>
         /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>
-        internal FilteringTag(string name, string value, TagAction? action)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilteringTag(string name, string value, TagAction? action, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
             Action = action;
+            _rawData = rawData;
         }
 
         /// <summary> The name (also known as the key) of the tag. </summary>

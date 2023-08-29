@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Dataworld. </summary>
     public partial class DataworldLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of DataworldLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataworldLinkedService"/>. </summary>
         /// <param name="apiToken"> The api token for the Dataworld source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         public DataworldLinkedService(DataFactorySecretBaseDefinition apiToken)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Dataworld";
         }
 
-        /// <summary> Initializes a new instance of DataworldLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataworldLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ApiToken = apiToken;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Dataworld";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataworldLinkedService"/> for deserialization. </summary>
+        internal DataworldLinkedService()
+        {
         }
 
         /// <summary> The api token for the Dataworld source. </summary>

@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class RestorePointData : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorePointData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorePointData"/>. </summary>
         public RestorePointData()
         {
             ExcludeDisks = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of RestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +40,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="timeCreated"> Gets the creation time of the restore point. </param>
         /// <param name="sourceRestorePoint"> Resource Id of the source restore point from which a copy needs to be created. </param>
         /// <param name="instanceView"> The restore point instance view. </param>
-        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, WritableSubResource sourceRestorePoint, RestorePointInstanceView instanceView) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, WritableSubResource sourceRestorePoint, RestorePointInstanceView instanceView, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ExcludeDisks = excludeDisks;
             SourceMetadata = sourceMetadata;
@@ -47,6 +50,7 @@ namespace Azure.ResourceManager.Compute
             TimeCreated = timeCreated;
             SourceRestorePoint = sourceRestorePoint;
             InstanceView = instanceView;
+            _rawData = rawData;
         }
 
         /// <summary> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </summary>

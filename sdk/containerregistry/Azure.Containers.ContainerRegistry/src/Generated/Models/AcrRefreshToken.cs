@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The AcrRefreshToken. </summary>
     internal partial class AcrRefreshToken
     {
-        /// <summary> Initializes a new instance of AcrRefreshToken. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcrRefreshToken"/>. </summary>
         internal AcrRefreshToken()
         {
         }
 
-        /// <summary> Initializes a new instance of AcrRefreshToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrRefreshToken"/>. </summary>
         /// <param name="refreshToken"> The refresh token to be used for generating access tokens. </param>
-        internal AcrRefreshToken(string refreshToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcrRefreshToken(string refreshToken, Dictionary<string, BinaryData> rawData)
         {
             RefreshToken = refreshToken;
+            _rawData = rawData;
         }
 
         /// <summary> The refresh token to be used for generating access tokens. </summary>

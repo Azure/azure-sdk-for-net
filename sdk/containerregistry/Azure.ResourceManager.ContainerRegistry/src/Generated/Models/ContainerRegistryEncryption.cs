@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The ContainerRegistryEncryption. </summary>
     public partial class ContainerRegistryEncryption
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEncryption. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncryption"/>. </summary>
         public ContainerRegistryEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncryption"/>. </summary>
         /// <param name="status"> Indicates whether or not the encryption is enabled for container registry. </param>
         /// <param name="keyVaultProperties"> Key vault properties. </param>
-        internal ContainerRegistryEncryption(ContainerRegistryEncryptionStatus? status, ContainerRegistryKeyVaultProperties keyVaultProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryEncryption(ContainerRegistryEncryptionStatus? status, ContainerRegistryKeyVaultProperties keyVaultProperties, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             KeyVaultProperties = keyVaultProperties;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates whether or not the encryption is enabled for container registry. </summary>

@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of Global parameters. </summary>
     internal partial class DataFactoryGlobalParameterListResult
     {
-        /// <summary> Initializes a new instance of DataFactoryGlobalParameterListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryGlobalParameterListResult"/>. </summary>
         /// <param name="value"> List of global parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryGlobalParameterListResult(IEnumerable<DataFactoryGlobalParameterData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryGlobalParameterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryGlobalParameterListResult"/>. </summary>
         /// <param name="value"> List of global parameters. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal DataFactoryGlobalParameterListResult(IReadOnlyList<DataFactoryGlobalParameterData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryGlobalParameterListResult(IReadOnlyList<DataFactoryGlobalParameterData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryGlobalParameterListResult"/> for deserialization. </summary>
+        internal DataFactoryGlobalParameterListResult()
+        {
         }
 
         /// <summary> List of global parameters. </summary>

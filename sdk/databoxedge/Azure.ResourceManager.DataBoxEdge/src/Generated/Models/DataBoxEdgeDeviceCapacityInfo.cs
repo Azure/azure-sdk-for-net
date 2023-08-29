@@ -15,13 +15,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Object for Capturing DeviceCapacityInfo. </summary>
     public partial class DataBoxEdgeDeviceCapacityInfo : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceCapacityInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceCapacityInfo"/>. </summary>
         public DataBoxEdgeDeviceCapacityInfo()
         {
             NodeCapacityInfos = new ChangeTrackingDictionary<string, HostCapacity>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceCapacityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceCapacityInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,12 +32,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="clusterStorageCapacityInfo"> Cluster capacity data for storage resources (CSV). </param>
         /// <param name="clusterComputeCapacityInfo"> Cluster capacity data for compute resources (Memory and GPU). </param>
         /// <param name="nodeCapacityInfos"> The dictionary of individual node names and node capacities in the cluster. </param>
-        internal DataBoxEdgeDeviceCapacityInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeStamp, EdgeClusterStorageViewInfo clusterStorageCapacityInfo, EdgeClusterCapacityViewInfo clusterComputeCapacityInfo, IDictionary<string, HostCapacity> nodeCapacityInfos) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDeviceCapacityInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeStamp, EdgeClusterStorageViewInfo clusterStorageCapacityInfo, EdgeClusterCapacityViewInfo clusterComputeCapacityInfo, IDictionary<string, HostCapacity> nodeCapacityInfos, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             TimeStamp = timeStamp;
             ClusterStorageCapacityInfo = clusterStorageCapacityInfo;
             ClusterComputeCapacityInfo = clusterComputeCapacityInfo;
             NodeCapacityInfos = nodeCapacityInfos;
+            _rawData = rawData;
         }
 
         /// <summary> Timestamp of request in UTC. </summary>

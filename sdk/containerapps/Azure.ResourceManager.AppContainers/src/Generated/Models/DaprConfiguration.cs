@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Configuration properties Dapr component. </summary>
     internal partial class DaprConfiguration
     {
-        /// <summary> Initializes a new instance of DaprConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DaprConfiguration"/>. </summary>
         public DaprConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DaprConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprConfiguration"/>. </summary>
         /// <param name="version"> The version of Dapr. </param>
-        internal DaprConfiguration(string version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DaprConfiguration(string version, Dictionary<string, BinaryData> rawData)
         {
             Version = version;
+            _rawData = rawData;
         }
 
         /// <summary> The version of Dapr. </summary>

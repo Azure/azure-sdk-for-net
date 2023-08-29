@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The instance view of the container group. Only valid in response. </summary>
     public partial class ContainerGroupInstanceView
     {
-        /// <summary> Initializes a new instance of ContainerGroupInstanceView. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceView"/>. </summary>
         internal ContainerGroupInstanceView()
         {
             Events = new ChangeTrackingList<ContainerEvent>();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceView"/>. </summary>
         /// <param name="events"> The events of this container group. </param>
         /// <param name="state"> The state of the container group. Only valid in response. </param>
-        internal ContainerGroupInstanceView(IReadOnlyList<ContainerEvent> events, string state)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupInstanceView(IReadOnlyList<ContainerEvent> events, string state, Dictionary<string, BinaryData> rawData)
         {
             Events = events;
             State = state;
+            _rawData = rawData;
         }
 
         /// <summary> The events of this container group. </summary>

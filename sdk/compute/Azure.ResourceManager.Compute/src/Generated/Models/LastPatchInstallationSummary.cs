@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of the last installed patch summary. </summary>
     public partial class LastPatchInstallationSummary
     {
-        /// <summary> Initializes a new instance of LastPatchInstallationSummary. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LastPatchInstallationSummary"/>. </summary>
         internal LastPatchInstallationSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of LastPatchInstallationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="LastPatchInstallationSummary"/>. </summary>
         /// <param name="status"> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Unknown", "Failed", "Succeeded", or "CompletedWithWarnings.". </param>
         /// <param name="installationActivityId"> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </param>
         /// <param name="maintenanceWindowExceeded"> Describes whether the operation ran out of time before it completed all its intended actions. </param>
@@ -29,7 +32,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="startOn"> The UTC timestamp when the operation began. </param>
         /// <param name="lastModifiedOn"> The UTC timestamp when the operation began. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        internal LastPatchInstallationSummary(PatchOperationStatus? status, string installationActivityId, bool? maintenanceWindowExceeded, int? notSelectedPatchCount, int? excludedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, ComputeApiError error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LastPatchInstallationSummary(PatchOperationStatus? status, string installationActivityId, bool? maintenanceWindowExceeded, int? notSelectedPatchCount, int? excludedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, ComputeApiError error, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
             StartOn = startOn;
             LastModifiedOn = lastModifiedOn;
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Unknown", "Failed", "Succeeded", or "CompletedWithWarnings.". </summary>

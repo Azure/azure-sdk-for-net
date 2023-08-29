@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information about migration eligibility of a server object. </summary>
     public partial class MigrationEligibilityInfo
     {
-        /// <summary> Initializes a new instance of MigrationEligibilityInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrationEligibilityInfo"/>. </summary>
         internal MigrationEligibilityInfo()
         {
             ValidationMessages = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MigrationEligibilityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationEligibilityInfo"/>. </summary>
         /// <param name="isEligibleForMigration"> Whether object is eligible for migration or not. </param>
         /// <param name="validationMessages"> Information about eligibility failure for the server object. </param>
-        internal MigrationEligibilityInfo(bool? isEligibleForMigration, IReadOnlyList<string> validationMessages)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationEligibilityInfo(bool? isEligibleForMigration, IReadOnlyList<string> validationMessages, Dictionary<string, BinaryData> rawData)
         {
             IsEligibleForMigration = isEligibleForMigration;
             ValidationMessages = validationMessages;
+            _rawData = rawData;
         }
 
         /// <summary> Whether object is eligible for migration or not. </summary>

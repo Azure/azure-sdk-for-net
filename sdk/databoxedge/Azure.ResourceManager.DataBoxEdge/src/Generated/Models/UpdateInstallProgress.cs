@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Progress details during installation of updates. </summary>
     public partial class UpdateInstallProgress
     {
-        /// <summary> Initializes a new instance of UpdateInstallProgress. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateInstallProgress"/>. </summary>
         internal UpdateInstallProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateInstallProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateInstallProgress"/>. </summary>
         /// <param name="percentComplete"> Percentage completed. </param>
         /// <param name="numberOfUpdatesToInstall"> Number of updates to install. </param>
         /// <param name="numberOfUpdatesInstalled"> Number of updates installed. </param>
-        internal UpdateInstallProgress(int? percentComplete, int? numberOfUpdatesToInstall, int? numberOfUpdatesInstalled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateInstallProgress(int? percentComplete, int? numberOfUpdatesToInstall, int? numberOfUpdatesInstalled, Dictionary<string, BinaryData> rawData)
         {
             PercentComplete = percentComplete;
             NumberOfUpdatesToInstall = numberOfUpdatesToInstall;
             NumberOfUpdatesInstalled = numberOfUpdatesInstalled;
+            _rawData = rawData;
         }
 
         /// <summary> Percentage completed. </summary>

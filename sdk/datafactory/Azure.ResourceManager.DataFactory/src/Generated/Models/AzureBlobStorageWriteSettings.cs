@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure blob write settings. </summary>
     public partial class AzureBlobStorageWriteSettings : StoreWriteSettings
     {
-        /// <summary> Initializes a new instance of AzureBlobStorageWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageWriteSettings"/>. </summary>
         public AzureBlobStorageWriteSettings()
         {
             StoreWriteSettingsType = "AzureBlobStorageWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobStorageWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageWriteSettings"/>. </summary>
         /// <param name="storeWriteSettingsType"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>

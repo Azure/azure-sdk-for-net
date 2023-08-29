@@ -10,14 +10,44 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionModernReservationRecommendation
+    public partial class ConsumptionModernReservationRecommendation : IUtf8JsonSerializable, IModelJsonSerializable<ConsumptionModernReservationRecommendation>
     {
-        internal static ConsumptionModernReservationRecommendation DeserializeConsumptionModernReservationRecommendation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConsumptionModernReservationRecommendation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConsumptionModernReservationRecommendation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ConsumptionModernReservationRecommendation>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConsumptionModernReservationRecommendation DeserializeConsumptionModernReservationRecommendation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +77,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> scope = default;
             Optional<IReadOnlyList<ConsumptionSkuProperty>> skuProperties = default;
             Optional<string> skuName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -252,8 +283,57 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConsumptionModernReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, location0.Value, Optional.ToNullable(lookBackPeriod), Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, costWithNoReservedInstances.Value, Optional.ToNullable(recommendedQuantity), totalCostWithReservedInstances.Value, netSavings.Value, Optional.ToNullable(firstUsageDate), scope.Value, Optional.ToList(skuProperties), skuName.Value);
+            return new ConsumptionModernReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, location0.Value, Optional.ToNullable(lookBackPeriod), Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, costWithNoReservedInstances.Value, Optional.ToNullable(recommendedQuantity), totalCostWithReservedInstances.Value, netSavings.Value, Optional.ToNullable(firstUsageDate), scope.Value, Optional.ToList(skuProperties), skuName.Value, rawData);
+        }
+
+        ConsumptionModernReservationRecommendation IModelJsonSerializable<ConsumptionModernReservationRecommendation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ConsumptionModernReservationRecommendation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionModernReservationRecommendation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConsumptionModernReservationRecommendation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ConsumptionModernReservationRecommendation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConsumptionModernReservationRecommendation IModelSerializable<ConsumptionModernReservationRecommendation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ConsumptionModernReservationRecommendation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConsumptionModernReservationRecommendation(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConsumptionModernReservationRecommendation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConsumptionModernReservationRecommendation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConsumptionModernReservationRecommendation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

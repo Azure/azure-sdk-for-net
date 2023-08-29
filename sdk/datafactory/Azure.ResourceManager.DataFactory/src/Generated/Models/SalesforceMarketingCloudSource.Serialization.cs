@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SalesforceMarketingCloudSource : IUtf8JsonSerializable
+    public partial class SalesforceMarketingCloudSource : IUtf8JsonSerializable, IModelJsonSerializable<SalesforceMarketingCloudSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SalesforceMarketingCloudSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SalesforceMarketingCloudSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SalesforceMarketingCloudSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -71,8 +77,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SalesforceMarketingCloudSource DeserializeSalesforceMarketingCloudSource(JsonElement element)
+        internal static SalesforceMarketingCloudSource DeserializeSalesforceMarketingCloudSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -161,6 +169,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SalesforceMarketingCloudSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
+        }
+
+        SalesforceMarketingCloudSource IModelJsonSerializable<SalesforceMarketingCloudSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SalesforceMarketingCloudSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSalesforceMarketingCloudSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SalesforceMarketingCloudSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SalesforceMarketingCloudSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SalesforceMarketingCloudSource IModelSerializable<SalesforceMarketingCloudSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SalesforceMarketingCloudSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSalesforceMarketingCloudSource(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SalesforceMarketingCloudSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SalesforceMarketingCloudSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSalesforceMarketingCloudSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraClusterDataCenterNodeItem. </summary>
     public partial class CassandraClusterDataCenterNodeItem
     {
-        /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterDataCenterNodeItem"/>. </summary>
         internal CassandraClusterDataCenterNodeItem()
         {
             Tokens = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterDataCenterNodeItem"/>. </summary>
         /// <param name="address"> The node's IP address. </param>
         /// <param name="state"> The state of the node in Cassandra ring. </param>
         /// <param name="status"></param>
@@ -38,7 +40,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
         /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
         /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
-        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage, Dictionary<string, BinaryData> rawData)
         {
             Address = address;
             State = state;
@@ -57,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             MemoryFreeKB = memoryFreeKB;
             MemoryTotalKB = memoryTotalKB;
             CpuUsage = cpuUsage;
+            _rawData = rawData;
         }
 
         /// <summary> The node's IP address. </summary>

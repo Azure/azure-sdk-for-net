@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class BenefitRecommendationProperties : IUtf8JsonSerializable
+    public partial class BenefitRecommendationProperties : IUtf8JsonSerializable, IModelJsonSerializable<BenefitRecommendationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BenefitRecommendationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BenefitRecommendationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LookBackPeriod))
             {
@@ -42,11 +50,25 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BenefitRecommendationProperties DeserializeBenefitRecommendationProperties(JsonElement element)
+        internal static BenefitRecommendationProperties DeserializeBenefitRecommendationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,7 +81,180 @@ namespace Azure.ResourceManager.CostManagement.Models
                     case "Single": return SingleScopeBenefitRecommendationProperties.DeserializeSingleScopeBenefitRecommendationProperties(element);
                 }
             }
-            return UnknownBenefitRecommendationProperties.DeserializeUnknownBenefitRecommendationProperties(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            Optional<DateTimeOffset> firstConsumptionDate = default;
+            Optional<DateTimeOffset> lastConsumptionDate = default;
+            Optional<LookBackPeriod> lookBackPeriod = default;
+            Optional<int> totalHours = default;
+            Optional<RecommendationUsageDetails> usage = default;
+            Optional<string> armSkuName = default;
+            Optional<BenefitRecommendationPeriodTerm> term = default;
+            Optional<BenefitRecommendationUsageGrain> commitmentGranularity = default;
+            Optional<string> currencyCode = default;
+            Optional<decimal> costWithoutBenefit = default;
+            Optional<AllSavingsBenefitDetails> recommendationDetails = default;
+            Optional<AllSavingsList> allRecommendationDetails = default;
+            BenefitRecommendationScope scope = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("firstConsumptionDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    firstConsumptionDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("lastConsumptionDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastConsumptionDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("lookBackPeriod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lookBackPeriod = new LookBackPeriod(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("totalHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    totalHours = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("usage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    usage = RecommendationUsageDetails.DeserializeRecommendationUsageDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("armSkuName"u8))
+                {
+                    armSkuName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("term"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    term = new BenefitRecommendationPeriodTerm(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("commitmentGranularity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    commitmentGranularity = new BenefitRecommendationUsageGrain(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("currencyCode"u8))
+                {
+                    currencyCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("costWithoutBenefit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    costWithoutBenefit = property.Value.GetDecimal();
+                    continue;
+                }
+                if (property.NameEquals("recommendationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recommendationDetails = AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("allRecommendationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allRecommendationDetails = AllSavingsList.DeserializeAllSavingsList(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("scope"u8))
+                {
+                    scope = new BenefitRecommendationScope(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, rawData);
+        }
+
+        BenefitRecommendationProperties IModelJsonSerializable<BenefitRecommendationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBenefitRecommendationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BenefitRecommendationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BenefitRecommendationProperties IModelSerializable<BenefitRecommendationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBenefitRecommendationProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BenefitRecommendationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BenefitRecommendationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBenefitRecommendationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

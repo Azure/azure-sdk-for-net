@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,23 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Information about a specific patch that was encountered during an installation action. </summary>
     public partial class PatchInstallationDetail
     {
-        /// <summary> Initializes a new instance of PatchInstallationDetail. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PatchInstallationDetail"/>. </summary>
         internal PatchInstallationDetail()
         {
             Classifications = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PatchInstallationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatchInstallationDetail"/>. </summary>
         /// <param name="patchId"> A unique identifier for the patch. </param>
         /// <param name="name"> The friendly name of the patch. </param>
         /// <param name="version"> The version string of the package. It may conform to Semantic Versioning. Only applies to Linux. </param>
         /// <param name="kbId"> The KBID of the patch. Only applies to Windows patches. </param>
         /// <param name="classifications"> The classification(s) of the patch as provided by the patch publisher. </param>
         /// <param name="installationState"> The state of the patch after the installation operation completed. </param>
-        internal PatchInstallationDetail(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, PatchInstallationState? installationState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PatchInstallationDetail(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, PatchInstallationState? installationState, Dictionary<string, BinaryData> rawData)
         {
             PatchId = patchId;
             Name = name;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
             KbId = kbId;
             Classifications = classifications;
             InstallationState = installationState;
+            _rawData = rawData;
         }
 
         /// <summary> A unique identifier for the patch. </summary>

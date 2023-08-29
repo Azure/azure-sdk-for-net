@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -12,20 +14,24 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Each KPI must contain a 'type' and 'enabled' key. </summary>
     public partial class ViewKpiProperties
     {
-        /// <summary> Initializes a new instance of ViewKpiProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ViewKpiProperties"/>. </summary>
         public ViewKpiProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ViewKpiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ViewKpiProperties"/>. </summary>
         /// <param name="kpiType"> KPI type (Forecast, Budget). </param>
         /// <param name="id"> ID of resource related to metric (budget). </param>
         /// <param name="isEnabled"> show the KPI in the UI?. </param>
-        internal ViewKpiProperties(ViewKpiType? kpiType, ResourceIdentifier id, bool? isEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ViewKpiProperties(ViewKpiType? kpiType, ResourceIdentifier id, bool? isEnabled, Dictionary<string, BinaryData> rawData)
         {
             KpiType = kpiType;
             Id = id;
             IsEnabled = isEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> KPI type (Forecast, Budget). </summary>

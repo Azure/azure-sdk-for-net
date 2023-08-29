@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class PatchSettings : IUtf8JsonSerializable
+    public partial class PatchSettings : IUtf8JsonSerializable, IModelJsonSerializable<PatchSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PatchSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PatchSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PatchMode))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("automaticByPlatformSettings"u8);
                 writer.WriteObjectValue(AutomaticByPlatformSettings);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PatchSettings DeserializePatchSettings(JsonElement element)
+        internal static PatchSettings DeserializePatchSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> enableHotpatching = default;
             Optional<WindowsPatchAssessmentMode> assessmentMode = default;
             Optional<WindowsVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchMode"u8))
@@ -86,8 +109,57 @@ namespace Azure.ResourceManager.Compute.Models
                     automaticByPlatformSettings = WindowsVmGuestPatchAutomaticByPlatformSettings.DeserializeWindowsVmGuestPatchAutomaticByPlatformSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(enableHotpatching), Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value);
+            return new PatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(enableHotpatching), Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value, rawData);
+        }
+
+        PatchSettings IModelJsonSerializable<PatchSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePatchSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PatchSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PatchSettings IModelSerializable<PatchSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePatchSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PatchSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PatchSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePatchSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

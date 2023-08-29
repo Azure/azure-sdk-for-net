@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> Input parameter for verification APIs. </summary>
     public partial class DomainsRecordVerificationContent
     {
-        /// <summary> Initializes a new instance of DomainsRecordVerificationContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DomainsRecordVerificationContent"/>. </summary>
         /// <param name="verificationType"> Type of verification. </param>
         public DomainsRecordVerificationContent(DomainRecordVerificationType verificationType)
         {
             VerificationType = verificationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DomainsRecordVerificationContent"/>. </summary>
+        /// <param name="verificationType"> Type of verification. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DomainsRecordVerificationContent(DomainRecordVerificationType verificationType, Dictionary<string, BinaryData> rawData)
+        {
+            VerificationType = verificationType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DomainsRecordVerificationContent"/> for deserialization. </summary>
+        internal DomainsRecordVerificationContent()
+        {
         }
 
         /// <summary> Type of verification. </summary>

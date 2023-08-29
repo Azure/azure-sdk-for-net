@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties of a response to source upload request. </summary>
     public partial class SourceUploadDefinition
     {
-        /// <summary> Initializes a new instance of SourceUploadDefinition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceUploadDefinition"/>. </summary>
         internal SourceUploadDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceUploadDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceUploadDefinition"/>. </summary>
         /// <param name="uploadUri"> The URL where the client can upload the source. </param>
         /// <param name="relativePath"> The relative path to the source. This is used to submit the subsequent queue build request. </param>
-        internal SourceUploadDefinition(Uri uploadUri, string relativePath)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceUploadDefinition(Uri uploadUri, string relativePath, Dictionary<string, BinaryData> rawData)
         {
             UploadUri = uploadUri;
             RelativePath = relativePath;
+            _rawData = rawData;
         }
 
         /// <summary> The URL where the client can upload the source. </summary>

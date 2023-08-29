@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Communication.JobRouter.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class BestWorkerMode : IUtf8JsonSerializable
+    public partial class BestWorkerMode : IUtf8JsonSerializable, IModelJsonSerializable<BestWorkerMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BestWorkerMode>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BestWorkerMode>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<BestWorkerMode>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ScoringRule))
             {
@@ -43,11 +51,25 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BestWorkerMode DeserializeBestWorkerMode(JsonElement element)
+        internal static BestWorkerMode DeserializeBestWorkerMode(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +80,7 @@ namespace Azure.Communication.JobRouter
             Optional<int> minConcurrentOffers = default;
             Optional<int> maxConcurrentOffers = default;
             Optional<bool> bypassSelectors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scoringRule"u8))
@@ -110,8 +133,57 @@ namespace Azure.Communication.JobRouter
                     bypassSelectors = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BestWorkerMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), scoringRule.Value, scoringRuleOptions.Value);
+            return new BestWorkerMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), scoringRule.Value, scoringRuleOptions.Value, rawData);
+        }
+
+        BestWorkerMode IModelJsonSerializable<BestWorkerMode>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BestWorkerMode>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBestWorkerMode(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BestWorkerMode>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BestWorkerMode>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BestWorkerMode IModelSerializable<BestWorkerMode>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BestWorkerMode>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBestWorkerMode(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BestWorkerMode model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BestWorkerMode(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBestWorkerMode(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

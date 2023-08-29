@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual AsyncPageable<ContainerAppManagedEnvironmentStorageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ContainerAppManagedEnvironmentStorageResource(Client, ContainerAppManagedEnvironmentStorageData.DeserializeContainerAppManagedEnvironmentStorageData(e)), _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentStorageCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ContainerAppManagedEnvironmentStorageResource(Client, ContainerAppManagedEnvironmentStorageData.DeserializeContainerAppManagedEnvironmentStorageData(e)), _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentStorageCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Pageable<ContainerAppManagedEnvironmentStorageResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ContainerAppManagedEnvironmentStorageResource(Client, ContainerAppManagedEnvironmentStorageData.DeserializeContainerAppManagedEnvironmentStorageData(e)), _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentStorageCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ContainerAppManagedEnvironmentStorageResource(Client, ContainerAppManagedEnvironmentStorageData.DeserializeContainerAppManagedEnvironmentStorageData(e)), _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentStorageCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

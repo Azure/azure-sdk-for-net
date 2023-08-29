@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Transport options availability details for given region. </summary>
     public partial class TransportAvailabilityDetails
     {
-        /// <summary> Initializes a new instance of TransportAvailabilityDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityDetails"/>. </summary>
         internal TransportAvailabilityDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TransportAvailabilityDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityDetails"/>. </summary>
         /// <param name="shipmentType"> Transport Shipment Type supported for given region. </param>
-        internal TransportAvailabilityDetails(TransportShipmentType? shipmentType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransportAvailabilityDetails(TransportShipmentType? shipmentType, Dictionary<string, BinaryData> rawData)
         {
             ShipmentType = shipmentType;
+            _rawData = rawData;
         }
 
         /// <summary> Transport Shipment Type supported for given region. </summary>

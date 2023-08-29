@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Ftp read settings. </summary>
     public partial class FtpReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of FtpReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FtpReadSettings"/>. </summary>
         public FtpReadSettings()
         {
             StoreReadSettingsType = "FtpReadSettings";
         }
 
-        /// <summary> Initializes a new instance of FtpReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FtpReadSettings"/>. </summary>
         /// <param name="storeReadSettingsType"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RedistributeThroughputPropertiesResource : IUtf8JsonSerializable
+    public partial class RedistributeThroughputPropertiesResource : IUtf8JsonSerializable, IModelJsonSerializable<RedistributeThroughputPropertiesResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedistributeThroughputPropertiesResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedistributeThroughputPropertiesResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("throughputPolicy"u8);
             writer.WriteStringValue(ThroughputPolicy.ToString());
@@ -32,11 +39,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RedistributeThroughputPropertiesResource DeserializeRedistributeThroughputPropertiesResource(JsonElement element)
+        internal static RedistributeThroughputPropertiesResource DeserializeRedistributeThroughputPropertiesResource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ThroughputPolicyType throughputPolicy = default;
             IList<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo = default;
             IList<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughputPolicy"u8))
@@ -71,8 +93,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     sourcePhysicalPartitionThroughputInfo = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RedistributeThroughputPropertiesResource(throughputPolicy, targetPhysicalPartitionThroughputInfo, sourcePhysicalPartitionThroughputInfo);
+            return new RedistributeThroughputPropertiesResource(throughputPolicy, targetPhysicalPartitionThroughputInfo, sourcePhysicalPartitionThroughputInfo, rawData);
+        }
+
+        RedistributeThroughputPropertiesResource IModelJsonSerializable<RedistributeThroughputPropertiesResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedistributeThroughputPropertiesResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedistributeThroughputPropertiesResource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedistributeThroughputPropertiesResource IModelSerializable<RedistributeThroughputPropertiesResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedistributeThroughputPropertiesResource(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RedistributeThroughputPropertiesResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RedistributeThroughputPropertiesResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedistributeThroughputPropertiesResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

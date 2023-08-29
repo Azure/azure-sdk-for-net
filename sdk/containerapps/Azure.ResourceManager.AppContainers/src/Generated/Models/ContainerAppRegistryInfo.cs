@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App registry information. </summary>
     public partial class ContainerAppRegistryInfo
     {
-        /// <summary> Initializes a new instance of ContainerAppRegistryInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRegistryInfo"/>. </summary>
         public ContainerAppRegistryInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppRegistryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRegistryInfo"/>. </summary>
         /// <param name="registryServer"> registry server Url. </param>
         /// <param name="registryUserName"> registry username. </param>
         /// <param name="registryPassword"> registry secret. </param>
-        internal ContainerAppRegistryInfo(string registryServer, string registryUserName, string registryPassword)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppRegistryInfo(string registryServer, string registryUserName, string registryPassword, Dictionary<string, BinaryData> rawData)
         {
             RegistryServer = registryServer;
             RegistryUserName = registryUserName;
             RegistryPassword = registryPassword;
+            _rawData = rawData;
         }
 
         /// <summary> registry server Url. </summary>

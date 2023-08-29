@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class QueryExecutionResult
+    public partial class QueryExecutionResult : IUtf8JsonSerializable, IModelJsonSerializable<QueryExecutionResult>
     {
-        internal static QueryExecutionResult DeserializeQueryExecutionResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QueryExecutionResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QueryExecutionResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(QueryText))
+            {
+                writer.WritePropertyName("queryText"u8);
+                writer.WriteStringValue(QueryText);
+            }
+            if (Optional.IsDefined(StatementsInBatch))
+            {
+                writer.WritePropertyName("statementsInBatch"u8);
+                writer.WriteNumberValue(StatementsInBatch.Value);
+            }
+            if (Optional.IsDefined(SourceResult))
+            {
+                writer.WritePropertyName("sourceResult"u8);
+                writer.WriteObjectValue(SourceResult);
+            }
+            if (Optional.IsDefined(TargetResult))
+            {
+                writer.WritePropertyName("targetResult"u8);
+                writer.WriteObjectValue(TargetResult);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static QueryExecutionResult DeserializeQueryExecutionResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<long> statementsInBatch = default;
             Optional<ExecutionStatistics> sourceResult = default;
             Optional<ExecutionStatistics> targetResult = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryText"u8))
@@ -56,8 +105,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QueryExecutionResult(queryText.Value, Optional.ToNullable(statementsInBatch), sourceResult.Value, targetResult.Value);
+            return new QueryExecutionResult(queryText.Value, Optional.ToNullable(statementsInBatch), sourceResult.Value, targetResult.Value, rawData);
+        }
+
+        QueryExecutionResult IModelJsonSerializable<QueryExecutionResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryExecutionResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QueryExecutionResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QueryExecutionResult IModelSerializable<QueryExecutionResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQueryExecutionResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(QueryExecutionResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator QueryExecutionResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQueryExecutionResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

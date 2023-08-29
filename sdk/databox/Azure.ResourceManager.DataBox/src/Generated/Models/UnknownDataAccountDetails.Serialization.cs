@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataAccountDetails : IUtf8JsonSerializable
+    internal partial class UnknownDataAccountDetails : IUtf8JsonSerializable, IModelJsonSerializable<DataAccountDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataAccountDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataAccountDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
@@ -22,31 +28,44 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownDataAccountDetails DeserializeUnknownDataAccountDetails(JsonElement element)
+        internal static DataAccountDetails DeserializeUnknownDataAccountDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeDataAccountDetails(element, options);
+
+        DataAccountDetails IModelJsonSerializable<DataAccountDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            DataAccountType dataAccountType = default;
-            Optional<string> sharePassword = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("dataAccountType"u8))
-                {
-                    dataAccountType = property.Value.GetString().ToDataAccountType();
-                    continue;
-                }
-                if (property.NameEquals("sharePassword"u8))
-                {
-                    sharePassword = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataAccountDetails(dataAccountType, sharePassword.Value);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDataAccountDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataAccountDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataAccountDetails IModelSerializable<DataAccountDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataAccountDetails(doc.RootElement, options);
         }
     }
 }

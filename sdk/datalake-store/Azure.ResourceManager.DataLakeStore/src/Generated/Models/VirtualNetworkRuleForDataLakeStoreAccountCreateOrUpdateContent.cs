@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to create a new virtual network rule while creating a new Data Lake Store account. </summary>
     public partial class VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> The unique name of the virtual network rule to create. </param>
         /// <param name="subnetId"> The resource identifier for the subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="subnetId"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
             Name = name;
             SubnetId = subnetId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> The unique name of the virtual network rule to create. </param>
+        /// <param name="subnetId"> The resource identifier for the subnet. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent(string name, ResourceIdentifier subnetId, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            SubnetId = subnetId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent"/> for deserialization. </summary>
+        internal VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent()
+        {
         }
 
         /// <summary> The unique name of the virtual network rule to create. </summary>

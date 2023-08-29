@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes The zonal capabilities of a SKU. </summary>
     public partial class ComputeResourceSkuZoneDetails
     {
-        /// <summary> Initializes a new instance of ComputeResourceSkuZoneDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuZoneDetails"/>. </summary>
         internal ComputeResourceSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<ComputeResourceSkuCapabilities>();
         }
 
-        /// <summary> Initializes a new instance of ComputeResourceSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuZoneDetails"/>. </summary>
         /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
-        internal ComputeResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ComputeResourceSkuCapabilities> capabilities)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ComputeResourceSkuCapabilities> capabilities, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Capabilities = capabilities;
+            _rawData = rawData;
         }
 
         /// <summary> The set of zones that the SKU is available in with the specified capabilities. </summary>

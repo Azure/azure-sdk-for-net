@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> IoT Addon. </summary>
     public partial class EdgeIotAddon : DataBoxEdgeRoleAddonData
     {
-        /// <summary> Initializes a new instance of EdgeIotAddon. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeIotAddon"/>. </summary>
         /// <param name="iotDeviceDetails"> IoT device metadata to which appliance needs to be connected. </param>
         /// <param name="iotEdgeDeviceDetails"> IoT edge device to which the IoT Addon needs to be configured. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iotDeviceDetails"/> or <paramref name="iotEdgeDeviceDetails"/> is null. </exception>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Kind = AddonType.IotEdge;
         }
 
-        /// <summary> Initializes a new instance of EdgeIotAddon. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeIotAddon"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +42,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="hostPlatform"> Host OS supported by the IoT addon. </param>
         /// <param name="hostPlatformType"> Platform where the runtime is hosted. </param>
         /// <param name="provisioningState"> Addon Provisioning State. </param>
-        internal EdgeIotAddon(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AddonType kind, EdgeIotDeviceInfo iotDeviceDetails, EdgeIotDeviceInfo iotEdgeDeviceDetails, string version, DataBoxEdgeOSPlatformType? hostPlatform, HostPlatformType? hostPlatformType, DataBoxEdgeRoleAddonProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeIotAddon(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AddonType kind, EdgeIotDeviceInfo iotDeviceDetails, EdgeIotDeviceInfo iotEdgeDeviceDetails, string version, DataBoxEdgeOSPlatformType? hostPlatform, HostPlatformType? hostPlatformType, DataBoxEdgeRoleAddonProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             IotDeviceDetails = iotDeviceDetails;
             IotEdgeDeviceDetails = iotEdgeDeviceDetails;
@@ -50,6 +52,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             HostPlatformType = hostPlatformType;
             ProvisioningState = provisioningState;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeIotAddon"/> for deserialization. </summary>
+        internal EdgeIotAddon()
+        {
         }
 
         /// <summary> IoT device metadata to which appliance needs to be connected. </summary>

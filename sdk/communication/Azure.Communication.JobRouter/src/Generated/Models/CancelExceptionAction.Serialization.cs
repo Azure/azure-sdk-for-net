@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class CancelExceptionAction : IUtf8JsonSerializable
+    public partial class CancelExceptionAction : IUtf8JsonSerializable, IModelJsonSerializable<CancelExceptionAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CancelExceptionAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CancelExceptionAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CancelExceptionAction>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Note))
             {
@@ -27,11 +35,25 @@ namespace Azure.Communication.JobRouter
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CancelExceptionAction DeserializeCancelExceptionAction(JsonElement element)
+        internal static CancelExceptionAction DeserializeCancelExceptionAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.Communication.JobRouter
             Optional<string> note = default;
             Optional<string> dispositionCode = default;
             string kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("note"u8))
@@ -56,8 +79,57 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CancelExceptionAction(kind, note.Value, dispositionCode.Value);
+            return new CancelExceptionAction(kind, note.Value, dispositionCode.Value, rawData);
+        }
+
+        CancelExceptionAction IModelJsonSerializable<CancelExceptionAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CancelExceptionAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCancelExceptionAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CancelExceptionAction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CancelExceptionAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CancelExceptionAction IModelSerializable<CancelExceptionAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CancelExceptionAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCancelExceptionAction(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CancelExceptionAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CancelExceptionAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCancelExceptionAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

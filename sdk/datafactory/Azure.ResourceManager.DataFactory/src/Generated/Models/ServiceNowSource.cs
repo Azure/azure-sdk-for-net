@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity ServiceNow server source. </summary>
     public partial class ServiceNowSource : TabularSource
     {
-        /// <summary> Initializes a new instance of ServiceNowSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNowSource"/>. </summary>
         public ServiceNowSource()
         {
             CopySourceType = "ServiceNowSource";
         }
 
-        /// <summary> Initializes a new instance of ServiceNowSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNowSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

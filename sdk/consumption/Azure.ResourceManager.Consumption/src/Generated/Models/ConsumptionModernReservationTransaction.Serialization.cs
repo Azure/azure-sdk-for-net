@@ -8,15 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionModernReservationTransaction
+    public partial class ConsumptionModernReservationTransaction : IUtf8JsonSerializable, IModelJsonSerializable<ConsumptionModernReservationTransaction>
     {
-        internal static ConsumptionModernReservationTransaction DeserializeConsumptionModernReservationTransaction(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConsumptionModernReservationTransaction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConsumptionModernReservationTransaction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConsumptionModernReservationTransaction DeserializeConsumptionModernReservationTransaction(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +75,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> reservationOrderId = default;
             Optional<string> reservationOrderName = default;
             Optional<string> term = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -226,8 +256,57 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConsumptionModernReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(amount), armSkuName.Value, billingFrequency.Value, billingProfileId.Value, billingProfileName.Value, currency.Value, description.Value, Optional.ToNullable(eventDate), eventType.Value, invoice.Value, invoiceId.Value, invoiceSectionId.Value, invoiceSectionName.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, Optional.ToNullable(quantity), region.Value, reservationOrderId.Value, reservationOrderName.Value, term.Value, Optional.ToList(tags));
+            return new ConsumptionModernReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(amount), armSkuName.Value, billingFrequency.Value, billingProfileId.Value, billingProfileName.Value, currency.Value, description.Value, Optional.ToNullable(eventDate), eventType.Value, invoice.Value, invoiceId.Value, invoiceSectionId.Value, invoiceSectionName.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, Optional.ToNullable(quantity), region.Value, reservationOrderId.Value, reservationOrderName.Value, term.Value, Optional.ToList(tags), rawData);
+        }
+
+        ConsumptionModernReservationTransaction IModelJsonSerializable<ConsumptionModernReservationTransaction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionModernReservationTransaction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConsumptionModernReservationTransaction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConsumptionModernReservationTransaction IModelSerializable<ConsumptionModernReservationTransaction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConsumptionModernReservationTransaction(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConsumptionModernReservationTransaction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConsumptionModernReservationTransaction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConsumptionModernReservationTransaction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

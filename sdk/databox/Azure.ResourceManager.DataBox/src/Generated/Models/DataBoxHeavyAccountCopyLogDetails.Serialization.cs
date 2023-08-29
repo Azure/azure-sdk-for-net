@@ -5,16 +5,45 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxHeavyAccountCopyLogDetails
+    public partial class DataBoxHeavyAccountCopyLogDetails : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxHeavyAccountCopyLogDetails>
     {
-        internal static DataBoxHeavyAccountCopyLogDetails DeserializeDataBoxHeavyAccountCopyLogDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxHeavyAccountCopyLogDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxHeavyAccountCopyLogDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DataBoxHeavyAccountCopyLogDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("copyLogDetailsType"u8);
+            writer.WriteStringValue(CopyLogDetailsType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxHeavyAccountCopyLogDetails DeserializeDataBoxHeavyAccountCopyLogDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +52,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IReadOnlyList<string>> copyLogLink = default;
             Optional<IReadOnlyList<string>> copyVerboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -63,8 +93,57 @@ namespace Azure.ResourceManager.DataBox.Models
                     copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxHeavyAccountCopyLogDetails(copyLogDetailsType, accountName.Value, Optional.ToList(copyLogLink), Optional.ToList(copyVerboseLogLink));
+            return new DataBoxHeavyAccountCopyLogDetails(copyLogDetailsType, accountName.Value, Optional.ToList(copyLogLink), Optional.ToList(copyVerboseLogLink), rawData);
+        }
+
+        DataBoxHeavyAccountCopyLogDetails IModelJsonSerializable<DataBoxHeavyAccountCopyLogDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DataBoxHeavyAccountCopyLogDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxHeavyAccountCopyLogDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxHeavyAccountCopyLogDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DataBoxHeavyAccountCopyLogDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxHeavyAccountCopyLogDetails IModelSerializable<DataBoxHeavyAccountCopyLogDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DataBoxHeavyAccountCopyLogDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxHeavyAccountCopyLogDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataBoxHeavyAccountCopyLogDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataBoxHeavyAccountCopyLogDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxHeavyAccountCopyLogDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

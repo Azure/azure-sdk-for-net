@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for a quick task run request. </summary>
     public partial class ContainerRegistryEncodedTaskRunContent : ContainerRegistryRunContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskRunContent"/>. </summary>
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
         /// <param name="platform"> The platform properties against which the run has to happen. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encodedTaskContent"/> or <paramref name="platform"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             RunRequestType = "EncodedTaskRunRequest";
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskRunContent"/>. </summary>
         /// <param name="runRequestType"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
         /// </param>
         /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
-        internal ContainerRegistryEncodedTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values, int? timeoutInSeconds, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceLocation, ContainerRegistryCredentials credentials) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryEncodedTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values, int? timeoutInSeconds, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceLocation, ContainerRegistryCredentials credentials, Dictionary<string, BinaryData> rawData) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate, rawData)
         {
             EncodedTaskContent = encodedTaskContent;
             EncodedValuesContent = encodedValuesContent;
@@ -56,6 +57,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             SourceLocation = sourceLocation;
             Credentials = credentials;
             RunRequestType = runRequestType ?? "EncodedTaskRunRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskRunContent"/> for deserialization. </summary>
+        internal ContainerRegistryEncodedTaskRunContent()
+        {
         }
 
         /// <summary> Base64 encoded value of the template/definition file content. </summary>

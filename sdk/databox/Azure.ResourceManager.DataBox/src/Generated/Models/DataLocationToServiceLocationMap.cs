@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -12,18 +14,22 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Map of data location to service location. </summary>
     public partial class DataLocationToServiceLocationMap
     {
-        /// <summary> Initializes a new instance of DataLocationToServiceLocationMap. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLocationToServiceLocationMap"/>. </summary>
         internal DataLocationToServiceLocationMap()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLocationToServiceLocationMap. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLocationToServiceLocationMap"/>. </summary>
         /// <param name="dataLocation"> Location of the data. </param>
         /// <param name="serviceLocation"> Location of the service. </param>
-        internal DataLocationToServiceLocationMap(AzureLocation? dataLocation, AzureLocation? serviceLocation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLocationToServiceLocationMap(AzureLocation? dataLocation, AzureLocation? serviceLocation, Dictionary<string, BinaryData> rawData)
         {
             DataLocation = dataLocation;
             ServiceLocation = serviceLocation;
+            _rawData = rawData;
         }
 
         /// <summary> Location of the data. </summary>

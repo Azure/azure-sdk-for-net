@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsAccountBasic : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountBasic. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountBasic"/>. </summary>
         internal DataLakeAnalyticsAccountBasic()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountBasic. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountBasic"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +63,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The resource tags.
         /// Serialized Name: Resource.tags
         /// </param>
-        internal DataLakeAnalyticsAccountBasic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsAccountBasic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, AzureLocation? location, IReadOnlyDictionary<string, string> tags, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             AccountId = accountId;
             ProvisioningState = provisioningState;
@@ -71,6 +74,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Endpoint = endpoint;
             Location = location;
             Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary>

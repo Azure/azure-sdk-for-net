@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The Salesforce Service Cloud object dataset. </summary>
     public partial class SalesforceServiceCloudObjectDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of SalesforceServiceCloudObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SalesforceServiceCloudObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "SalesforceServiceCloudObject";
         }
 
-        /// <summary> Initializes a new instance of SalesforceServiceCloudObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             ObjectApiName = objectApiName;
             DatasetType = datasetType ?? "SalesforceServiceCloudObject";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudObjectDataset"/> for deserialization. </summary>
+        internal SalesforceServiceCloudObjectDataset()
+        {
         }
 
         /// <summary> The Salesforce Service Cloud object API name. Type: string (or Expression with resultType string). </summary>

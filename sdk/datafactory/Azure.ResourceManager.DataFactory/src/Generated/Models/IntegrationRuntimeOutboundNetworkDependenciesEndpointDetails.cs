@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The details of Azure-SSIS integration runtime outbound network dependency endpoint. </summary>
     public partial class IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/>. </summary>
         internal IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/>. </summary>
         /// <param name="port"> The port of endpoint. </param>
-        internal IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(int? port)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(int? port, Dictionary<string, BinaryData> rawData)
         {
             Port = port;
+            _rawData = rawData;
         }
 
         /// <summary> The port of endpoint. </summary>

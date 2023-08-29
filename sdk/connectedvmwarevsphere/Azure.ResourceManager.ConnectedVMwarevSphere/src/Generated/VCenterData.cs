@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VCenterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VCenterData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VCenterData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="fqdn"> Gets or sets the FQDN/IPAddress of the vCenter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fqdn"/> is null. </exception>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VCenterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VCenterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +53,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="credentials"> Username / Password Credentials to connect to vcenter. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string fqdn, int? port, string version, string instanceUuid, string connectionStatus, string customResourceName, VICredential credentials, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string fqdn, int? port, string version, string instanceUuid, string connectionStatus, string customResourceName, VICredential credentials, IReadOnlyList<ResourceStatus> statuses, string provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -65,6 +68,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Credentials = credentials;
             Statuses = statuses;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VCenterData"/> for deserialization. </summary>
+        internal VCenterData()
+        {
         }
 
         /// <summary> Gets or sets the extended location. </summary>

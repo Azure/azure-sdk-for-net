@@ -5,50 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownJobSecrets
+    internal partial class UnknownJobSecrets : IUtf8JsonSerializable, IModelJsonSerializable<JobSecrets>
     {
-        internal static UnknownJobSecrets DeserializeUnknownJobSecrets(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobSecrets>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobSecrets>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("jobSecretsType"u8);
+            writer.WriteStringValue(JobSecretsType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("jobSecretsType"u8))
+                foreach (var property in _rawData)
                 {
-                    jobSecretsType = property.Value.GetString().ToDataBoxOrderType();
-                    continue;
-                }
-                if (property.NameEquals("dcAccessSecurityCode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("error"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value);
+            writer.WriteEndObject();
+        }
+
+        internal static JobSecrets DeserializeUnknownJobSecrets(JsonElement element, ModelSerializerOptions options = default) => DeserializeJobSecrets(element, options);
+
+        JobSecrets IModelJsonSerializable<JobSecrets>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownJobSecrets(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobSecrets>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobSecrets IModelSerializable<JobSecrets>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobSecrets(doc.RootElement, options);
         }
     }
 }

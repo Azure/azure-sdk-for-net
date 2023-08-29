@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobConfigurationManualTriggerConfig : IUtf8JsonSerializable
+    public partial class JobConfigurationManualTriggerConfig : IUtf8JsonSerializable, IModelJsonSerializable<JobConfigurationManualTriggerConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobConfigurationManualTriggerConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobConfigurationManualTriggerConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplicaCompletionCount))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("parallelism"u8);
                 writer.WriteNumberValue(Parallelism.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobConfigurationManualTriggerConfig DeserializeJobConfigurationManualTriggerConfig(JsonElement element)
+        internal static JobConfigurationManualTriggerConfig DeserializeJobConfigurationManualTriggerConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> replicaCompletionCount = default;
             Optional<int> parallelism = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicaCompletionCount"u8))
@@ -56,8 +79,57 @@ namespace Azure.ResourceManager.AppContainers.Models
                     parallelism = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JobConfigurationManualTriggerConfig(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism));
+            return new JobConfigurationManualTriggerConfig(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), rawData);
+        }
+
+        JobConfigurationManualTriggerConfig IModelJsonSerializable<JobConfigurationManualTriggerConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobConfigurationManualTriggerConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobConfigurationManualTriggerConfig>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobConfigurationManualTriggerConfig IModelSerializable<JobConfigurationManualTriggerConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobConfigurationManualTriggerConfig(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(JobConfigurationManualTriggerConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator JobConfigurationManualTriggerConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobConfigurationManualTriggerConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

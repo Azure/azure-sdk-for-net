@@ -14,17 +14,21 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Schedule availability for given sku in a region. </summary>
     internal partial class ScheduleAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of ScheduleAvailabilityResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityResponse"/>. </summary>
         internal ScheduleAvailabilityResponse()
         {
             AvailableDates = new ChangeTrackingList<DateTimeOffset>();
         }
 
-        /// <summary> Initializes a new instance of ScheduleAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityResponse"/>. </summary>
         /// <param name="availableDates"> List of dates available to schedule. </param>
-        internal ScheduleAvailabilityResponse(IReadOnlyList<DateTimeOffset> availableDates)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduleAvailabilityResponse(IReadOnlyList<DateTimeOffset> availableDates, Dictionary<string, BinaryData> rawData)
         {
             AvailableDates = availableDates;
+            _rawData = rawData;
         }
 
         /// <summary> List of dates available to schedule. </summary>

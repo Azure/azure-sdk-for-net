@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> The name object for a server. </summary>
     public partial class ServerNameItem
     {
-        /// <summary> Initializes a new instance of ServerNameItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerNameItem"/>. </summary>
         internal ServerNameItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerNameItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerNameItem"/>. </summary>
         /// <param name="name"> The name of a server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
-        internal ServerNameItem(string name, string fullyQualifiedDomainName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerNameItem(string name, string fullyQualifiedDomainName, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
+            _rawData = rawData;
         }
 
         /// <summary> The name of a server. </summary>

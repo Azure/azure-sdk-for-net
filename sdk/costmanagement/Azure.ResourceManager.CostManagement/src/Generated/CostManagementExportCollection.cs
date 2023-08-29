@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementExportResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateListRequest(Id, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementExportResource(Client, CostManagementExportData.DeserializeCostManagementExportData(e)), _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CostManagementExportResource(Client, CostManagementExportData.DeserializeCostManagementExportData(e)), _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementExportResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateListRequest(Id, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementExportResource(Client, CostManagementExportData.DeserializeCostManagementExportData(e)), _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CostManagementExportResource(Client, CostManagementExportData.DeserializeCostManagementExportData(e)), _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

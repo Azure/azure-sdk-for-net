@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for task that migrates SQL Server databases to Azure SQL Database Managed Instance. </summary>
     public partial class MigrateSqlServerSqlMITaskInput : SqlMigrationTaskInput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             BackupBlobShare = backupBlobShare;
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -46,12 +46,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupMode"> Backup Mode to specify whether to use existing backup or create new backup. If using existing backups, backup file paths are required to be provided in selectedDatabases. </param>
         /// <param name="aadDomainName"> Azure Active Directory domain name in the format of 'contoso.com' for federated Azure AD or 'contoso.onmicrosoft.com' for managed domain, required if and only if Windows logins are selected. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
-        internal MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string startedOn, IList<string> selectedLogins, IList<string> selectedAgentJobs, FileShare backupFileShare, BlobShare backupBlobShare, BackupMode? backupMode, string aadDomainName, string encryptedKeyForSecureFields) : base(sourceConnectionInfo, targetConnectionInfo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string startedOn, IList<string> selectedLogins, IList<string> selectedAgentJobs, FileShare backupFileShare, BlobShare backupBlobShare, BackupMode? backupMode, string aadDomainName, string encryptedKeyForSecureFields, Dictionary<string, BinaryData> rawData) : base(sourceConnectionInfo, targetConnectionInfo, rawData)
         {
-            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
-            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
-
             SelectedDatabases = selectedDatabases;
             StartedOn = startedOn;
             SelectedLogins = selectedLogins;
@@ -61,6 +58,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             BackupMode = backupMode;
             AadDomainName = aadDomainName;
             EncryptedKeyForSecureFields = encryptedKeyForSecureFields;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskInput"/> for deserialization. </summary>
+        internal MigrateSqlServerSqlMITaskInput()
+        {
         }
 
         /// <summary> Databases to migrate. </summary>

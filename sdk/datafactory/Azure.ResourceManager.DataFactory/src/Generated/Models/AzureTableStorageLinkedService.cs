@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The azure table storage linked service. </summary>
     public partial class AzureTableStorageLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureTableStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTableStorageLinkedService"/>. </summary>
         public AzureTableStorageLinkedService()
         {
             LinkedServiceType = "AzureTableStorage";
         }
 
-        /// <summary> Initializes a new instance of AzureTableStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTableStorageLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

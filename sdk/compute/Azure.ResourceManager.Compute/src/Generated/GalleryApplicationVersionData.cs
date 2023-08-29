@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class GalleryApplicationVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GalleryApplicationVersionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GalleryApplicationVersionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +38,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="safetyProfile"> The safety profile of the Gallery Application Version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        internal GalleryApplicationVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryApplicationVersionPublishingProfile publishingProfile, GalleryApplicationVersionSafetyProfile safetyProfile, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryApplicationVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryApplicationVersionPublishingProfile publishingProfile, GalleryApplicationVersionSafetyProfile safetyProfile, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PublishingProfile = publishingProfile;
             SafetyProfile = safetyProfile;
             ProvisioningState = provisioningState;
             ReplicationStatus = replicationStatus;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionData"/> for deserialization. </summary>
+        internal GalleryApplicationVersionData()
+        {
         }
 
         /// <summary> The publishing profile of a gallery image version. </summary>

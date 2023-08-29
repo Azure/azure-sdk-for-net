@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Additional delivery info. </summary>
     internal partial class JobDeliveryInfo
     {
-        /// <summary> Initializes a new instance of JobDeliveryInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobDeliveryInfo"/>. </summary>
         public JobDeliveryInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of JobDeliveryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDeliveryInfo"/>. </summary>
         /// <param name="scheduledOn"> Scheduled date time. </param>
-        internal JobDeliveryInfo(DateTimeOffset? scheduledOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobDeliveryInfo(DateTimeOffset? scheduledOn, Dictionary<string, BinaryData> rawData)
         {
             ScheduledOn = scheduledOn;
+            _rawData = rawData;
         }
 
         /// <summary> Scheduled date time. </summary>

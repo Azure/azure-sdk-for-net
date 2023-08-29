@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Custom activity type. </summary>
     public partial class CustomActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of CustomActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="command"> Command for custom activity Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="command"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Custom";
         }
 
-        /// <summary> Initializes a new instance of CustomActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             RetentionTimeInDays = retentionTimeInDays;
             AutoUserSpecification = autoUserSpecification;
             ActivityType = activityType ?? "Custom";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/> for deserialization. </summary>
+        internal CustomActivity()
+        {
         }
 
         /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>

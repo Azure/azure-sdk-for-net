@@ -19,14 +19,16 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class DiskAccessData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DiskAccessData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskAccessData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DiskAccessData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<ComputePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of DiskAccessData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskAccessData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,12 +39,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="privateEndpointConnections"> A readonly collection of private endpoint connections created on the disk. Currently only one endpoint connection is supported. </param>
         /// <param name="provisioningState"> The disk access resource provisioning state. </param>
         /// <param name="timeCreated"> The time when the disk access was created. </param>
-        internal DiskAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<ComputePrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, DateTimeOffset? timeCreated) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<ComputePrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, DateTimeOffset? timeCreated, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             TimeCreated = timeCreated;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskAccessData"/> for deserialization. </summary>
+        internal DiskAccessData()
+        {
         }
 
         /// <summary> The extended location where the disk access will be created. Extended location cannot be changed. </summary>

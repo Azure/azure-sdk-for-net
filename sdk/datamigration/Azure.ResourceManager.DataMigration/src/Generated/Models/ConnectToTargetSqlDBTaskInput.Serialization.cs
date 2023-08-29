@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetSqlDBTaskInput : IUtf8JsonSerializable
+    public partial class ConnectToTargetSqlDBTaskInput : IUtf8JsonSerializable, IModelJsonSerializable<ConnectToTargetSqlDBTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectToTargetSqlDBTaskInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectToTargetSqlDBTaskInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("queryObjectCounts"u8);
                 writer.WriteBooleanValue(QueryObjectCounts.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectToTargetSqlDBTaskInput DeserializeConnectToTargetSqlDBTaskInput(JsonElement element)
+        internal static ConnectToTargetSqlDBTaskInput DeserializeConnectToTargetSqlDBTaskInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SqlConnectionInfo targetConnectionInfo = default;
             Optional<bool> queryObjectCounts = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
@@ -49,8 +72,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     queryObjectCounts = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectToTargetSqlDBTaskInput(targetConnectionInfo, Optional.ToNullable(queryObjectCounts));
+            return new ConnectToTargetSqlDBTaskInput(targetConnectionInfo, Optional.ToNullable(queryObjectCounts), rawData);
+        }
+
+        ConnectToTargetSqlDBTaskInput IModelJsonSerializable<ConnectToTargetSqlDBTaskInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToTargetSqlDBTaskInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectToTargetSqlDBTaskInput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectToTargetSqlDBTaskInput IModelSerializable<ConnectToTargetSqlDBTaskInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectToTargetSqlDBTaskInput(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConnectToTargetSqlDBTaskInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConnectToTargetSqlDBTaskInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectToTargetSqlDBTaskInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

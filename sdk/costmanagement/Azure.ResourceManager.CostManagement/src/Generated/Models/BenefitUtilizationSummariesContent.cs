@@ -6,13 +6,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Properties of an async benefit utilization summaries request. </summary>
     public partial class BenefitUtilizationSummariesContent
     {
-        /// <summary> Initializes a new instance of BenefitUtilizationSummariesContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummariesContent"/>. </summary>
         /// <param name="grain"> The grain the summaries data is served at in the report. Accepted values are 'Daily' or 'Monthly'. </param>
         /// <param name="startOn"> The start date of the summaries data that will be served in the report. </param>
         /// <param name="endOn"> The end date of the summaries data that will be served in the report. </param>
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             EndOn = endOn;
         }
 
-        /// <summary> Initializes a new instance of BenefitUtilizationSummariesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummariesContent"/>. </summary>
         /// <param name="billingAccountId"> Billing account the benefit utilization summaries report is for. Required for billing account and billing profile scopes. Not supported for any benefit scopes. </param>
         /// <param name="billingProfileId"> Billing profile id the benefit utilization summaries report is for. Required for billing profile scope. Not supported for billing account or any benefit scopes. </param>
         /// <param name="benefitOrderId"> Benefit order id the benefit utilization summaries report is for. Required for benefit order and benefit id scopes. Not supported for any billing scopes. </param>
@@ -32,7 +35,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="startOn"> The start date of the summaries data that will be served in the report. </param>
         /// <param name="endOn"> The end date of the summaries data that will be served in the report. </param>
         /// <param name="kind"> The type of benefit data requested. Required for billing account and billing profile scopes. Implied and not to be passed at benefit scopes. Supported values are Reservation and SavingsPlan. </param>
-        internal BenefitUtilizationSummariesContent(string billingAccountId, string billingProfileId, string benefitOrderId, string benefitId, BenefitRecommendationUsageGrain grain, DateTimeOffset startOn, DateTimeOffset endOn, BillingAccountBenefitKind? kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BenefitUtilizationSummariesContent(string billingAccountId, string billingProfileId, string benefitOrderId, string benefitId, BenefitRecommendationUsageGrain grain, DateTimeOffset startOn, DateTimeOffset endOn, BillingAccountBenefitKind? kind, Dictionary<string, BinaryData> rawData)
         {
             BillingAccountId = billingAccountId;
             BillingProfileId = billingProfileId;
@@ -42,6 +46,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             StartOn = startOn;
             EndOn = endOn;
             Kind = kind;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummariesContent"/> for deserialization. </summary>
+        internal BenefitUtilizationSummariesContent()
+        {
         }
 
         /// <summary> Billing account the benefit utilization summaries report is for. Required for billing account and billing profile scopes. Not supported for any benefit scopes. </summary>

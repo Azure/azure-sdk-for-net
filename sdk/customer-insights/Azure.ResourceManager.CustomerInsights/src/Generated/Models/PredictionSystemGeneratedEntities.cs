@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> System generated entities. </summary>
     public partial class PredictionSystemGeneratedEntities
     {
-        /// <summary> Initializes a new instance of PredictionSystemGeneratedEntities. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredictionSystemGeneratedEntities"/>. </summary>
         internal PredictionSystemGeneratedEntities()
         {
             GeneratedInteractionTypes = new ChangeTrackingList<string>();
@@ -21,15 +24,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             GeneratedKpis = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of PredictionSystemGeneratedEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionSystemGeneratedEntities"/>. </summary>
         /// <param name="generatedInteractionTypes"> Generated interaction types. </param>
         /// <param name="generatedLinks"> Generated links. </param>
         /// <param name="generatedKpis"> Generated KPIs. </param>
-        internal PredictionSystemGeneratedEntities(IReadOnlyList<string> generatedInteractionTypes, IReadOnlyList<string> generatedLinks, IReadOnlyDictionary<string, string> generatedKpis)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredictionSystemGeneratedEntities(IReadOnlyList<string> generatedInteractionTypes, IReadOnlyList<string> generatedLinks, IReadOnlyDictionary<string, string> generatedKpis, Dictionary<string, BinaryData> rawData)
         {
             GeneratedInteractionTypes = generatedInteractionTypes;
             GeneratedLinks = generatedLinks;
             GeneratedKpis = generatedKpis;
+            _rawData = rawData;
         }
 
         /// <summary> Generated interaction types. </summary>

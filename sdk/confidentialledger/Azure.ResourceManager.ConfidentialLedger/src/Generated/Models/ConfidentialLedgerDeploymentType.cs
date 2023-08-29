@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Object representing DeploymentType for Managed CCF. </summary>
     public partial class ConfidentialLedgerDeploymentType
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerDeploymentType. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerDeploymentType"/>. </summary>
         public ConfidentialLedgerDeploymentType()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerDeploymentType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerDeploymentType"/>. </summary>
         /// <param name="languageRuntime"> Unique name for the Managed CCF. </param>
         /// <param name="appSourceUri"> Source Uri containing ManagedCCF code. </param>
-        internal ConfidentialLedgerDeploymentType(ConfidentialLedgerLanguageRuntime? languageRuntime, Uri appSourceUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfidentialLedgerDeploymentType(ConfidentialLedgerLanguageRuntime? languageRuntime, Uri appSourceUri, Dictionary<string, BinaryData> rawData)
         {
             LanguageRuntime = languageRuntime;
             AppSourceUri = appSourceUri;
+            _rawData = rawData;
         }
 
         /// <summary> Unique name for the Managed CCF. </summary>

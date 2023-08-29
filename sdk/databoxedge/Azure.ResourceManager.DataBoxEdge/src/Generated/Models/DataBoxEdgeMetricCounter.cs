@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The metric counter. </summary>
     public partial class DataBoxEdgeMetricCounter
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricCounter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounter"/>. </summary>
         /// <param name="name"> The counter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataBoxEdgeMetricCounter(string name)
@@ -26,17 +28,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             AdditionalDimensions = new ChangeTrackingList<DataBoxEdgeMetricDimension>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricCounter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounter"/>. </summary>
         /// <param name="name"> The counter name. </param>
         /// <param name="instance"> The instance from which counter should be collected. </param>
         /// <param name="dimensionFilter"> The dimension filter. </param>
         /// <param name="additionalDimensions"> The additional dimensions to be added to metric. </param>
-        internal DataBoxEdgeMetricCounter(string name, string instance, IList<DataBoxEdgeMetricDimension> dimensionFilter, IList<DataBoxEdgeMetricDimension> additionalDimensions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeMetricCounter(string name, string instance, IList<DataBoxEdgeMetricDimension> dimensionFilter, IList<DataBoxEdgeMetricDimension> additionalDimensions, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Instance = instance;
             DimensionFilter = dimensionFilter;
             AdditionalDimensions = additionalDimensions;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounter"/> for deserialization. </summary>
+        internal DataBoxEdgeMetricCounter()
+        {
         }
 
         /// <summary> The counter name. </summary>

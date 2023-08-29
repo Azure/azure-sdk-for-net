@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for task that validates migration input for SQL sync migrations. </summary>
     public partial class ValidateSyncMigrationInputSqlServerTaskInput
     {
-        /// <summary> Initializes a new instance of ValidateSyncMigrationInputSqlServerTaskInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source SQL server. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -31,15 +33,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedDatabases = selectedDatabases.ToList();
         }
 
-        /// <summary> Initializes a new instance of ValidateSyncMigrationInputSqlServerTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source SQL server. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
-        internal ValidateSyncMigrationInputSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateSyncMigrationInputSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases, Dictionary<string, BinaryData> rawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             SelectedDatabases = selectedDatabases;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskInput"/> for deserialization. </summary>
+        internal ValidateSyncMigrationInputSqlServerTaskInput()
+        {
         }
 
         /// <summary> Information for connecting to source SQL server. </summary>
