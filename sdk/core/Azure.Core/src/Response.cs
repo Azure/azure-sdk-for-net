@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.TypeSpec;
 using Azure.Core;
 
 namespace Azure
@@ -13,7 +14,7 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : IDisposable
+    public abstract class Response : Result, IDisposable
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>

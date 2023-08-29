@@ -84,4 +84,8 @@
     <Compile Include="Shared\GeoRedundantFallbackPolicy.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\System.TypeSpec\src\System.TypeSpec.csproj" />
+  </ItemGroup>
+
 </Project>
