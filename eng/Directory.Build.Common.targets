@@ -244,13 +244,16 @@
     <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
+    <!-- <PackageReference Include="Azure.Core" /> -->
     <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="System.Text.Json" />
 
-    <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared/Core" />
+    <!-- TODO: Review these file references-->
+
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared/Core" />
 
   </ItemGroup>
 

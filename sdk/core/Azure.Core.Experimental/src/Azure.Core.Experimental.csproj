@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Experimental types that might eventually move to Azure.Core</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline Experimental Extensions</AssemblyTitle>
@@ -11,16 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--<PackageReference Include="Azure.Core" />-->
+    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
   
 </Project>
