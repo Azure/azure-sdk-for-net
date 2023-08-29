@@ -2,7 +2,7 @@
 
 ## Background
 
-In a DPG library, protocol methods will be generated for a swagger input, and both of protocol methods and convenience methods will be generated for a typespec input. We expect to make convenience method an overload of protocol method, so that users could be very clear they are representing the same operation. For example,
+In a DPG library, protocol methods will be generated for a swagger input, and both of protocol methods and convenience methods will be generated for a TypeSpec input. We expect to make convenience method an overload of protocol method, so that users could be very clear they are representing the same operation. For example,
 
 ```C#
 public virtual async Task<Response<Model>> OperationAsync(string requiredId, string optionalId = null, CancellationToken cancellationToken = default) // Convenience method
