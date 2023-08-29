@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
@@ -14,13 +17,17 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class CognitiveServicesAccount
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccount. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccount"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the cognitive service resource attached to a skillset. </param>
         /// <param name="description"> Description of the cognitive service resource attached to a skillset. </param>
-        internal CognitiveServicesAccount(string oDataType, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesAccount(string oDataType, string description, Dictionary<string, BinaryData> rawData)
         {
             ODataType = oDataType;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Identifies the concrete type of the cognitive service resource attached to a skillset. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ProxyServerProperties : IUtf8JsonSerializable
+    public partial class ProxyServerProperties : IUtf8JsonSerializable, IModelJsonSerializable<ProxyServerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProxyServerProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProxyServerProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IP))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProxyServerProperties DeserializeProxyServerProperties(JsonElement element)
+        internal static ProxyServerProperties DeserializeProxyServerProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> ip = default;
             Optional<string> port = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ip"u8))
@@ -48,8 +71,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     port = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProxyServerProperties(ip.Value, port.Value);
+            return new ProxyServerProperties(ip.Value, port.Value, rawData);
+        }
+
+        ProxyServerProperties IModelJsonSerializable<ProxyServerProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProxyServerProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProxyServerProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProxyServerProperties IModelSerializable<ProxyServerProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProxyServerProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ProxyServerProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ProxyServerProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProxyServerProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

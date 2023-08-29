@@ -5,22 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedServerDnsAliasCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ManagedServerDnsAliasCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<ManagedServerDnsAliasCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedServerDnsAliasCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedServerDnsAliasCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CreateDnsRecord))
             {
                 writer.WritePropertyName("createDnsRecord"u8);
                 writer.WriteBooleanValue(CreateDnsRecord.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ManagedServerDnsAliasCreateOrUpdateContent DeserializeManagedServerDnsAliasCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> createDnsRecord = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("createDnsRecord"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createDnsRecord = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ManagedServerDnsAliasCreateOrUpdateContent(Optional.ToNullable(createDnsRecord), rawData);
+        }
+
+        ManagedServerDnsAliasCreateOrUpdateContent IModelJsonSerializable<ManagedServerDnsAliasCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServerDnsAliasCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedServerDnsAliasCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedServerDnsAliasCreateOrUpdateContent IModelSerializable<ManagedServerDnsAliasCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedServerDnsAliasCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedServerDnsAliasCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedServerDnsAliasCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedServerDnsAliasCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

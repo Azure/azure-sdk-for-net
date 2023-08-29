@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsPropertyConditionProperties : IUtf8JsonSerializable
+    public partial class SecurityInsightsPropertyConditionProperties : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsPropertyConditionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsPropertyConditionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsPropertyConditionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SecurityInsightsPropertyConditionProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConditionProperties))
             {
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("conditionType"u8);
             writer.WriteStringValue(ConditionType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsPropertyConditionProperties DeserializeSecurityInsightsPropertyConditionProperties(JsonElement element)
+        internal static SecurityInsightsPropertyConditionProperties DeserializeSecurityInsightsPropertyConditionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AutomationRulePropertyValuesCondition> conditionProperties = default;
             ConditionType conditionType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionProperties"u8))
@@ -49,8 +72,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     conditionType = new ConditionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsPropertyConditionProperties(conditionType, conditionProperties.Value);
+            return new SecurityInsightsPropertyConditionProperties(conditionType, conditionProperties.Value, rawData);
+        }
+
+        SecurityInsightsPropertyConditionProperties IModelJsonSerializable<SecurityInsightsPropertyConditionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityInsightsPropertyConditionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsPropertyConditionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsPropertyConditionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityInsightsPropertyConditionProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsPropertyConditionProperties IModelSerializable<SecurityInsightsPropertyConditionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityInsightsPropertyConditionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsPropertyConditionProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecurityInsightsPropertyConditionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecurityInsightsPropertyConditionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsPropertyConditionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

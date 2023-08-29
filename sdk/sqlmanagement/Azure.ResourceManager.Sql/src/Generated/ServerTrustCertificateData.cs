@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ServerTrustCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerTrustCertificateData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerTrustCertificateData"/>. </summary>
         public ServerTrustCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerTrustCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerTrustCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,11 +33,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="publicBlob"> The certificate public blob. </param>
         /// <param name="thumbprint"> The certificate thumbprint. </param>
         /// <param name="certificateName"> The certificate name. </param>
-        internal ServerTrustCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publicBlob, string thumbprint, string certificateName) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerTrustCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publicBlob, string thumbprint, string certificateName, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PublicBlob = publicBlob;
             Thumbprint = thumbprint;
             CertificateName = certificateName;
+            _rawData = rawData;
         }
 
         /// <summary> The certificate public blob. </summary>

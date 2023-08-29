@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Represents the user assigned identity that is contained within the UserAssignedIdentities dictionary on ResourceIdentity. </summary>
     public partial class ArmApplicationUserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of ArmApplicationUserAssignedIdentity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationUserAssignedIdentity"/>. </summary>
         public ArmApplicationUserAssignedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationUserAssignedIdentity"/>. </summary>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="tenantId"> The tenant id of user assigned identity. </param>
-        internal ArmApplicationUserAssignedIdentity(Guid? principalId, Guid? tenantId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationUserAssignedIdentity(Guid? principalId, Guid? tenantId, Dictionary<string, BinaryData> rawData)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
+            _rawData = rawData;
         }
 
         /// <summary> The principal id of user assigned identity. </summary>

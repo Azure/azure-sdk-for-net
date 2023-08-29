@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedApplicationData : IUtf8JsonSerializable
+    public partial class ServiceFabricManagedApplicationData : IUtf8JsonSerializable, IModelJsonSerializable<ServiceFabricManagedApplicationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceFabricManagedApplicationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceFabricManagedApplicationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -70,11 +77,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceFabricManagedApplicationData DeserializeServiceFabricManagedApplicationData(JsonElement element)
+        internal static ServiceFabricManagedApplicationData DeserializeServiceFabricManagedApplicationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +112,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<IDictionary<string, string>> parameters = default;
             Optional<ApplicationUpgradePolicy> upgradePolicy = default;
             Optional<IList<ApplicationUserAssignedIdentityInfo>> managedIdentities = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -204,8 +226,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceFabricManagedApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, version.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToList(managedIdentities));
+            return new ServiceFabricManagedApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, version.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToList(managedIdentities), rawData);
+        }
+
+        ServiceFabricManagedApplicationData IModelJsonSerializable<ServiceFabricManagedApplicationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceFabricManagedApplicationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceFabricManagedApplicationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceFabricManagedApplicationData IModelSerializable<ServiceFabricManagedApplicationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceFabricManagedApplicationData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServiceFabricManagedApplicationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServiceFabricManagedApplicationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceFabricManagedApplicationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

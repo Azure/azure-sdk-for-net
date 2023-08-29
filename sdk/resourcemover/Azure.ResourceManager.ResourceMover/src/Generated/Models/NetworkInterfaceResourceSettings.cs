@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the network interface resource settings. </summary>
     public partial class NetworkInterfaceResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceResourceSettings"/>. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public NetworkInterfaceResourceSettings(string targetResourceName) : base(targetResourceName)
@@ -26,18 +26,24 @@ namespace Azure.ResourceManager.ResourceMover.Models
             ResourceType = "Microsoft.Network/networkInterfaces";
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="ipConfigurations"> Gets or sets the IP configurations of the NIC. </param>
         /// <param name="enableAcceleratedNetworking"> Gets or sets a value indicating whether accelerated networking is enabled. </param>
-        internal NetworkInterfaceResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, IList<NicIPConfigurationResourceSettings> ipConfigurations, bool? enableAcceleratedNetworking) : base(resourceType, targetResourceName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkInterfaceResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, IList<NicIPConfigurationResourceSettings> ipConfigurations, bool? enableAcceleratedNetworking, Dictionary<string, BinaryData> rawData) : base(resourceType, targetResourceName, rawData)
         {
             Tags = tags;
             IPConfigurations = ipConfigurations;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
             ResourceType = resourceType ?? "Microsoft.Network/networkInterfaces";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceResourceSettings"/> for deserialization. </summary>
+        internal NetworkInterfaceResourceSettings()
+        {
         }
 
         /// <summary> Gets or sets the Resource tags. </summary>

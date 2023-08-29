@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,28 @@ namespace Azure.Search.Documents.Models
     /// <summary> The SemanticDebugInfo. </summary>
     public partial class SemanticDebugInfo
     {
-        /// <summary> Initializes a new instance of SemanticDebugInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SemanticDebugInfo"/>. </summary>
         internal SemanticDebugInfo()
         {
             ContentFields = new ChangeTrackingList<QueryResultDocumentSemanticField>();
             KeywordFields = new ChangeTrackingList<QueryResultDocumentSemanticField>();
         }
 
-        /// <summary> Initializes a new instance of SemanticDebugInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticDebugInfo"/>. </summary>
         /// <param name="titleField"> The title field that was sent to the semantic enrichment process, as well as how it was used. </param>
         /// <param name="contentFields"> The content fields that were sent to the semantic enrichment process, as well as how they were used. </param>
         /// <param name="keywordFields"> The keyword fields that were sent to the semantic enrichment process, as well as how they were used. </param>
         /// <param name="rerankerInput"> The raw concatenated strings that were sent to the semantic enrichment process. </param>
-        internal SemanticDebugInfo(QueryResultDocumentSemanticField titleField, IReadOnlyList<QueryResultDocumentSemanticField> contentFields, IReadOnlyList<QueryResultDocumentSemanticField> keywordFields, QueryResultDocumentRerankerInput rerankerInput)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SemanticDebugInfo(QueryResultDocumentSemanticField titleField, IReadOnlyList<QueryResultDocumentSemanticField> contentFields, IReadOnlyList<QueryResultDocumentSemanticField> keywordFields, QueryResultDocumentRerankerInput rerankerInput, Dictionary<string, BinaryData> rawData)
         {
             TitleField = titleField;
             ContentFields = contentFields;
             KeywordFields = keywordFields;
             RerankerInput = rerankerInput;
+            _rawData = rawData;
         }
 
         /// <summary> The title field that was sent to the semantic enrichment process, as well as how it was used. </summary>

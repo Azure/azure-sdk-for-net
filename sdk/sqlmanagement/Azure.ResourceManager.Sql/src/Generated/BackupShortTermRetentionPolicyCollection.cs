@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupShortTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupShortTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupShortTermRetentionPolicyResource(Client, BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(e)), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, "BackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupShortTermRetentionPolicyResource(Client, BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(e)), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, "BackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupShortTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupShortTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupShortTermRetentionPolicyResource(Client, BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(e)), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, "BackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupShortTermRetentionPolicyResource(Client, BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(e)), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, "BackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

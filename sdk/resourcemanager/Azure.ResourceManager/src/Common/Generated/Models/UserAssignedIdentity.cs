@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
@@ -14,20 +15,23 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class UserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of UserAssignedIdentity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
         [InitializationConstructor]
         public UserAssignedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of UserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of the assigned identity. </param>
         /// <param name="clientId"> The client ID of the assigned identity. </param>
-        [SerializationConstructor]
-        internal UserAssignedIdentity(Guid? principalId, Guid? clientId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserAssignedIdentity(Guid? principalId, Guid? clientId, Dictionary<string, BinaryData> rawData)
         {
             PrincipalId = principalId;
             ClientId = clientId;
+            _rawData = rawData;
         }
 
         /// <summary> The principal ID of the assigned identity. </summary>

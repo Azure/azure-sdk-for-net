@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class FacetResult
+    public partial class FacetResult : IUtf8JsonSerializable, IModelJsonSerializable<FacetResult>
     {
-        internal static FacetResult DeserializeFacetResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FacetResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FacetResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FacetResult DeserializeFacetResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +57,50 @@ namespace Azure.Search.Documents.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new FacetResult(Optional.ToNullable(count), additionalProperties);
+        }
+
+        FacetResult IModelJsonSerializable<FacetResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFacetResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FacetResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FacetResult IModelSerializable<FacetResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFacetResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FacetResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FacetResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFacetResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlConnectivityUpdateSettings : IUtf8JsonSerializable
+    public partial class SqlConnectivityUpdateSettings : IUtf8JsonSerializable, IModelJsonSerializable<SqlConnectivityUpdateSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlConnectivityUpdateSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlConnectivityUpdateSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectivityType))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("sqlAuthUpdatePassword"u8);
                 writer.WriteStringValue(SqlAuthUpdatePassword);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlConnectivityUpdateSettings DeserializeSqlConnectivityUpdateSettings(JsonElement element)
+        internal static SqlConnectivityUpdateSettings DeserializeSqlConnectivityUpdateSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<int> port = default;
             Optional<string> sqlAuthUpdateUserName = default;
             Optional<string> sqlAuthUpdatePassword = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectivityType"u8))
@@ -78,8 +101,57 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlAuthUpdatePassword = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlConnectivityUpdateSettings(Optional.ToNullable(connectivityType), Optional.ToNullable(port), sqlAuthUpdateUserName.Value, sqlAuthUpdatePassword.Value);
+            return new SqlConnectivityUpdateSettings(Optional.ToNullable(connectivityType), Optional.ToNullable(port), sqlAuthUpdateUserName.Value, sqlAuthUpdatePassword.Value, rawData);
+        }
+
+        SqlConnectivityUpdateSettings IModelJsonSerializable<SqlConnectivityUpdateSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlConnectivityUpdateSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlConnectivityUpdateSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlConnectivityUpdateSettings IModelSerializable<SqlConnectivityUpdateSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlConnectivityUpdateSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SqlConnectivityUpdateSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SqlConnectivityUpdateSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlConnectivityUpdateSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

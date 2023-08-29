@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanInMageRcmFailbackFailoverContent : IUtf8JsonSerializable
+    public partial class RecoveryPlanInMageRcmFailbackFailoverContent : IUtf8JsonSerializable, IModelJsonSerializable<RecoveryPlanInMageRcmFailbackFailoverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecoveryPlanInMageRcmFailbackFailoverContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecoveryPlanInMageRcmFailbackFailoverContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanInMageRcmFailbackFailoverContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
@@ -24,7 +32,101 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RecoveryPlanInMageRcmFailbackFailoverContent DeserializeRecoveryPlanInMageRcmFailbackFailoverContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            InMageRcmFailbackRecoveryPointType recoveryPointType = default;
+            Optional<string> useMultiVmSyncPoint = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recoveryPointType"u8))
+                {
+                    recoveryPointType = new InMageRcmFailbackRecoveryPointType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("useMultiVmSyncPoint"u8))
+                {
+                    useMultiVmSyncPoint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RecoveryPlanInMageRcmFailbackFailoverContent(instanceType, recoveryPointType, useMultiVmSyncPoint.Value, rawData);
+        }
+
+        RecoveryPlanInMageRcmFailbackFailoverContent IModelJsonSerializable<RecoveryPlanInMageRcmFailbackFailoverContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanInMageRcmFailbackFailoverContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanInMageRcmFailbackFailoverContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecoveryPlanInMageRcmFailbackFailoverContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanInMageRcmFailbackFailoverContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecoveryPlanInMageRcmFailbackFailoverContent IModelSerializable<RecoveryPlanInMageRcmFailbackFailoverContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanInMageRcmFailbackFailoverContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecoveryPlanInMageRcmFailbackFailoverContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RecoveryPlanInMageRcmFailbackFailoverContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RecoveryPlanInMageRcmFailbackFailoverContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecoveryPlanInMageRcmFailbackFailoverContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

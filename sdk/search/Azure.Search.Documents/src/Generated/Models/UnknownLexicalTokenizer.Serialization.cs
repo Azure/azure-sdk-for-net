@@ -5,45 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownLexicalTokenizer : IUtf8JsonSerializable
+    internal partial class UnknownLexicalTokenizer : IUtf8JsonSerializable, IModelJsonSerializable<LexicalTokenizer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LexicalTokenizer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LexicalTokenizer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownLexicalTokenizer DeserializeUnknownLexicalTokenizer(JsonElement element)
+        internal static LexicalTokenizer DeserializeUnknownLexicalTokenizer(JsonElement element, ModelSerializerOptions options = default) => DeserializeLexicalTokenizer(element, options);
+
+        LexicalTokenizer IModelJsonSerializable<LexicalTokenizer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string odataType = "Unknown";
-            string name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownLexicalTokenizer(odataType, name);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownLexicalTokenizer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LexicalTokenizer>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LexicalTokenizer IModelSerializable<LexicalTokenizer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLexicalTokenizer(doc.RootElement, options);
         }
     }
 }

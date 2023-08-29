@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.Search.Documents.Models
     /// <summary> The SkillNames. </summary>
     public partial class ResetSkillsOptions
     {
-        /// <summary> Initializes a new instance of ResetSkillsOptions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResetSkillsOptions"/>. </summary>
         public ResetSkillsOptions()
         {
             SkillNames = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResetSkillsOptions"/>. </summary>
+        /// <param name="skillNames"> the names of skills to be reset. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResetSkillsOptions(IList<string> skillNames, Dictionary<string, BinaryData> rawData)
+        {
+            SkillNames = skillNames;
+            _rawData = rawData;
         }
 
         /// <summary> the names of skills to be reset. </summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Describes threat kill chain phase entity. </summary>
     public partial class ThreatIntelligenceKillChainPhase
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceKillChainPhase. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceKillChainPhase"/>. </summary>
         public ThreatIntelligenceKillChainPhase()
         {
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceKillChainPhase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceKillChainPhase"/>. </summary>
         /// <param name="killChainName"> Kill chainName name. </param>
         /// <param name="phaseName"> Phase name. </param>
-        internal ThreatIntelligenceKillChainPhase(string killChainName, string phaseName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceKillChainPhase(string killChainName, string phaseName, Dictionary<string, BinaryData> rawData)
         {
             KillChainName = killChainName;
             PhaseName = phaseName;
+            _rawData = rawData;
         }
 
         /// <summary> Kill chainName name. </summary>

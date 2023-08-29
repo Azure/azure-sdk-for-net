@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRPrivateEndpointAcl : IUtf8JsonSerializable
+    public partial class SignalRPrivateEndpointAcl : IUtf8JsonSerializable, IModelJsonSerializable<SignalRPrivateEndpointAcl>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SignalRPrivateEndpointAcl>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SignalRPrivateEndpointAcl>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SignalRPrivateEndpointAcl>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -38,11 +45,25 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SignalRPrivateEndpointAcl DeserializeSignalRPrivateEndpointAcl(JsonElement element)
+        internal static SignalRPrivateEndpointAcl DeserializeSignalRPrivateEndpointAcl(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +71,7 @@ namespace Azure.ResourceManager.SignalR.Models
             string name = default;
             Optional<IList<SignalRRequestType>> allow = default;
             Optional<IList<SignalRRequestType>> deny = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -85,8 +107,57 @@ namespace Azure.ResourceManager.SignalR.Models
                     deny = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SignalRPrivateEndpointAcl(Optional.ToList(allow), Optional.ToList(deny), name);
+            return new SignalRPrivateEndpointAcl(Optional.ToList(allow), Optional.ToList(deny), name, rawData);
+        }
+
+        SignalRPrivateEndpointAcl IModelJsonSerializable<SignalRPrivateEndpointAcl>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SignalRPrivateEndpointAcl>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignalRPrivateEndpointAcl(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SignalRPrivateEndpointAcl>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SignalRPrivateEndpointAcl>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SignalRPrivateEndpointAcl IModelSerializable<SignalRPrivateEndpointAcl>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SignalRPrivateEndpointAcl>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSignalRPrivateEndpointAcl(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SignalRPrivateEndpointAcl model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SignalRPrivateEndpointAcl(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSignalRPrivateEndpointAcl(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

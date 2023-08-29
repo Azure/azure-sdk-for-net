@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.Search.Documents.Models
     /// <summary> The query parameters for vector and hybrid search queries. </summary>
     public partial class SearchQueryVector
     {
-        /// <summary> Initializes a new instance of SearchQueryVector. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchQueryVector"/>. </summary>
         public SearchQueryVector()
         {
             Value = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of SearchQueryVector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchQueryVector"/>. </summary>
         /// <param name="value"> The vector representation of a search query. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
-        internal SearchQueryVector(IReadOnlyList<float> value, int? kNearestNeighborsCount, string fieldsRaw)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchQueryVector(IReadOnlyList<float> value, int? kNearestNeighborsCount, string fieldsRaw, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             KNearestNeighborsCount = kNearestNeighborsCount;
             FieldsRaw = fieldsRaw;
+            _rawData = rawData;
         }
         /// <summary> Number of nearest neighbors to return as top hits. </summary>
         public int? KNearestNeighborsCount { get; set; }

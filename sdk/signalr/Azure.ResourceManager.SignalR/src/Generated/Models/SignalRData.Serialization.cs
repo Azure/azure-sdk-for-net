@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    public partial class SignalRData : IUtf8JsonSerializable
+    public partial class SignalRData : IUtf8JsonSerializable, IModelJsonSerializable<SignalRData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SignalRData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SignalRData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -104,11 +111,25 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteBooleanValue(DisableAadAuth.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SignalRData DeserializeSignalRData(JsonElement element)
+        internal static SignalRData DeserializeSignalRData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -141,6 +162,7 @@ namespace Azure.ResourceManager.SignalR
             Optional<string> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> disableAadAuth = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -391,8 +413,57 @@ namespace Azure.ResourceManager.SignalR
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SignalRData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(kind), identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, Optional.ToList(features), liveTraceConfiguration.Value, resourceLogConfiguration.Value, cors.Value, upstream.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
+            return new SignalRData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(kind), identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, Optional.ToList(features), liveTraceConfiguration.Value, resourceLogConfiguration.Value, cors.Value, upstream.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth), rawData);
+        }
+
+        SignalRData IModelJsonSerializable<SignalRData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignalRData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SignalRData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SignalRData IModelSerializable<SignalRData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSignalRData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SignalRData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SignalRData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSignalRData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

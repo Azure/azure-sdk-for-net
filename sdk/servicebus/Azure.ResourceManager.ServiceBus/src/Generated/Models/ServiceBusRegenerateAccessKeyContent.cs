@@ -5,16 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Parameters supplied to the Regenerate Authorization Rule operation, specifies which key needs to be reset. </summary>
     public partial class ServiceBusRegenerateAccessKeyContent
     {
-        /// <summary> Initializes a new instance of ServiceBusRegenerateAccessKeyContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusRegenerateAccessKeyContent"/>. </summary>
         /// <param name="keyType"> The access key to regenerate. </param>
         public ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType keyType)
         {
             KeyType = keyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusRegenerateAccessKeyContent"/>. </summary>
+        /// <param name="keyType"> The access key to regenerate. </param>
+        /// <param name="key"> Optional, if the key value provided, is reset for KeyType value or autogenerate Key value set for keyType. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType keyType, string key, Dictionary<string, BinaryData> rawData)
+        {
+            KeyType = keyType;
+            Key = key;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusRegenerateAccessKeyContent"/> for deserialization. </summary>
+        internal ServiceBusRegenerateAccessKeyContent()
+        {
         }
 
         /// <summary> The access key to regenerate. </summary>

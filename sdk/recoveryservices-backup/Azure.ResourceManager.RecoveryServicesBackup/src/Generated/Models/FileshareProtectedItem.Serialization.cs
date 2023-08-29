@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class FileshareProtectedItem : IUtf8JsonSerializable
+    public partial class FileshareProtectedItem : IUtf8JsonSerializable, IModelJsonSerializable<FileshareProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FileshareProtectedItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FileshareProtectedItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<FileshareProtectedItem>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
@@ -140,11 +146,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("softDeleteRetentionPeriod"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FileshareProtectedItem DeserializeFileshareProtectedItem(JsonElement element)
+        internal static FileshareProtectedItem DeserializeFileshareProtectedItem(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -174,6 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> isArchiveEnabled = default;
             Optional<string> policyName = default;
             Optional<int> softDeleteRetentionPeriod = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -379,8 +400,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     softDeleteRetentionPeriod = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FileshareProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriod), friendlyName.Value, protectionStatus.Value, Optional.ToNullable(protectionState), lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), Optional.ToDictionary(kpisHealths), extendedInfo.Value);
+            return new FileshareProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriod), friendlyName.Value, protectionStatus.Value, Optional.ToNullable(protectionState), lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), Optional.ToDictionary(kpisHealths), extendedInfo.Value, rawData);
+        }
+
+        FileshareProtectedItem IModelJsonSerializable<FileshareProtectedItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FileshareProtectedItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFileshareProtectedItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FileshareProtectedItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FileshareProtectedItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FileshareProtectedItem IModelSerializable<FileshareProtectedItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FileshareProtectedItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFileshareProtectedItem(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FileshareProtectedItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FileshareProtectedItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFileshareProtectedItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Sql;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of subscription usage metrics in a location. </summary>
     internal partial class SubscriptionUsageListResult
     {
-        /// <summary> Initializes a new instance of SubscriptionUsageListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionUsageListResult"/>. </summary>
         internal SubscriptionUsageListResult()
         {
             Value = new ChangeTrackingList<SubscriptionUsageData>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionUsageListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SubscriptionUsageListResult(IReadOnlyList<SubscriptionUsageData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionUsageListResult(IReadOnlyList<SubscriptionUsageData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of results. </summary>

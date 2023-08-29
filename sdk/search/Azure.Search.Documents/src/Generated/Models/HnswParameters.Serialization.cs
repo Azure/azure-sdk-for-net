@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class HnswParameters : IUtf8JsonSerializable
+    public partial class HnswParameters : IUtf8JsonSerializable, IModelJsonSerializable<HnswParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HnswParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HnswParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(M))
             {
@@ -63,11 +71,25 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("metric");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HnswParameters DeserializeHnswParameters(JsonElement element)
+        internal static HnswParameters DeserializeHnswParameters(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<int?> efConstruction = default;
             Optional<int?> efSearch = default;
             Optional<VectorSearchAlgorithmMetric?> metric = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("m"u8))
@@ -118,8 +141,57 @@ namespace Azure.Search.Documents.Indexes.Models
                     metric = new VectorSearchAlgorithmMetric(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HnswParameters(Optional.ToNullable(m), Optional.ToNullable(efConstruction), Optional.ToNullable(efSearch), Optional.ToNullable(metric));
+            return new HnswParameters(Optional.ToNullable(m), Optional.ToNullable(efConstruction), Optional.ToNullable(efSearch), Optional.ToNullable(metric), rawData);
+        }
+
+        HnswParameters IModelJsonSerializable<HnswParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHnswParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HnswParameters>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HnswParameters IModelSerializable<HnswParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHnswParameters(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HnswParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HnswParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHnswParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -13,12 +14,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Operation status REST resource. </summary>
     public partial class MoverOperationStatus
     {
-        /// <summary> Initializes a new instance of MoverOperationStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverOperationStatus"/>. </summary>
         internal MoverOperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationStatus"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="status"> Status of the operation. ARM expects the terminal status to be one of Succeeded/ Failed/ Canceled. All other values imply that the operation is still running. </param>
@@ -26,7 +29,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="endOn"> End time. </param>
         /// <param name="error"> Error stating all error details for the operation. </param>
         /// <param name="properties"> Custom data. </param>
-        internal MoverOperationStatus(ResourceIdentifier id, string name, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, MoverOperationStatusError error, BinaryData properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverOperationStatus(ResourceIdentifier id, string name, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, MoverOperationStatusError error, BinaryData properties, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             EndOn = endOn;
             Error = error;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Resource Id. </summary>

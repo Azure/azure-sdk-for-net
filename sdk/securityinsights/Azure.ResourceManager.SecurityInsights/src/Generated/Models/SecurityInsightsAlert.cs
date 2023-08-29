@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a security alert entity. </summary>
     public partial class SecurityInsightsAlert : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlert. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlert"/>. </summary>
         public SecurityInsightsAlert()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.SecurityAlert;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlert. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlert"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="vendorName"> The name of the vendor that raise the alert. </param>
         /// <param name="alertLink"> The uri link of the alert. </param>
         /// <param name="resourceIdentifiers"> The list of resource identifiers of the alert. </param>
-        internal SecurityInsightsAlert(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string alertDisplayName, string alertType, string compromisedEntity, SecurityInsightsAlertConfidenceLevel? confidenceLevel, IReadOnlyList<SecurityInsightsAlertConfidenceReason> confidenceReasons, double? confidenceScore, SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus, string description, DateTimeOffset? endOn, SecurityInsightsKillChainIntent? intent, string providerAlertId, DateTimeOffset? processingEndOn, string productComponentName, string productName, string productVersion, IReadOnlyList<string> remediationSteps, SecurityInsightsAlertSeverity? severity, DateTimeOffset? startOn, SecurityInsightsAlertStatus? status, string systemAlertId, IReadOnlyList<SecurityInsightsAttackTactic> tactics, DateTimeOffset? alertGeneratedOn, string vendorName, string alertLink, IReadOnlyList<BinaryData> resourceIdentifiers) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAlert(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string alertDisplayName, string alertType, string compromisedEntity, SecurityInsightsAlertConfidenceLevel? confidenceLevel, IReadOnlyList<SecurityInsightsAlertConfidenceReason> confidenceReasons, double? confidenceScore, SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus, string description, DateTimeOffset? endOn, SecurityInsightsKillChainIntent? intent, string providerAlertId, DateTimeOffset? processingEndOn, string productComponentName, string productName, string productVersion, IReadOnlyList<string> remediationSteps, SecurityInsightsAlertSeverity? severity, DateTimeOffset? startOn, SecurityInsightsAlertStatus? status, string systemAlertId, IReadOnlyList<SecurityInsightsAttackTactic> tactics, DateTimeOffset? alertGeneratedOn, string vendorName, string alertLink, IReadOnlyList<BinaryData> resourceIdentifiers, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

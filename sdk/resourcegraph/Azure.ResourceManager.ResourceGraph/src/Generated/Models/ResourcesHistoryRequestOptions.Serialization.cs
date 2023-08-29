@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class ResourcesHistoryRequestOptions : IUtf8JsonSerializable
+    public partial class ResourcesHistoryRequestOptions : IUtf8JsonSerializable, IModelJsonSerializable<ResourcesHistoryRequestOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourcesHistoryRequestOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourcesHistoryRequestOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Interval))
             {
@@ -40,7 +48,129 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WritePropertyName("resultFormat"u8);
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ResourcesHistoryRequestOptions DeserializeResourcesHistoryRequestOptions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DateTimeInterval> interval = default;
+            Optional<int> top = default;
+            Optional<int> skip = default;
+            Optional<string> skipToken = default;
+            Optional<ResultFormat> resultFormat = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("interval"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interval = DateTimeInterval.DeserializeDateTimeInterval(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("$top"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    top = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("$skip"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    skip = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("$skipToken"u8))
+                {
+                    skipToken = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resultFormat"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultFormat = property.Value.GetString().ToResultFormat();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ResourcesHistoryRequestOptions(interval.Value, Optional.ToNullable(top), Optional.ToNullable(skip), skipToken.Value, Optional.ToNullable(resultFormat), rawData);
+        }
+
+        ResourcesHistoryRequestOptions IModelJsonSerializable<ResourcesHistoryRequestOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourcesHistoryRequestOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourcesHistoryRequestOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourcesHistoryRequestOptions IModelSerializable<ResourcesHistoryRequestOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourcesHistoryRequestOptions(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ResourcesHistoryRequestOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ResourcesHistoryRequestOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourcesHistoryRequestOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

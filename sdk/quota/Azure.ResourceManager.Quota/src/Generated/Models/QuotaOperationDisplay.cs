@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> The QuotaOperationDisplay. </summary>
     public partial class QuotaOperationDisplay
     {
-        /// <summary> Initializes a new instance of QuotaOperationDisplay. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaOperationDisplay"/>. </summary>
         internal QuotaOperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaOperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaOperationDisplay"/>. </summary>
         /// <param name="provider"> Provider name. </param>
         /// <param name="resource"> Resource name. </param>
         /// <param name="operation"> Operation name. </param>
         /// <param name="description"> Operation description. </param>
-        internal QuotaOperationDisplay(string provider, string resource, string operation, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaOperationDisplay(string provider, string resource, string operation, string description, Dictionary<string, BinaryData> rawData)
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Provider name. </summary>

@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SharedSearchServicePrivateLinkResource(Client, SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(e)), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "SharedSearchServicePrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SharedSearchServicePrivateLinkResource(Client, SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(e)), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "SharedSearchServicePrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SharedSearchServicePrivateLinkResource(Client, SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(e)), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "SharedSearchServicePrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SharedSearchServicePrivateLinkResource(Client, SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(e)), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "SharedSearchServicePrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

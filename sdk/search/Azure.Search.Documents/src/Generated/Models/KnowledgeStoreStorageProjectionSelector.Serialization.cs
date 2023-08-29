@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KnowledgeStoreStorageProjectionSelector : IUtf8JsonSerializable
+    public partial class KnowledgeStoreStorageProjectionSelector : IUtf8JsonSerializable, IModelJsonSerializable<KnowledgeStoreStorageProjectionSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KnowledgeStoreStorageProjectionSelector>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KnowledgeStoreStorageProjectionSelector>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<KnowledgeStoreStorageProjectionSelector>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("storageContainer"u8);
             writer.WriteStringValue(StorageContainer);
@@ -48,7 +55,128 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static KnowledgeStoreStorageProjectionSelector DeserializeKnowledgeStoreStorageProjectionSelector(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string storageContainer = default;
+            Optional<string> referenceKeyName = default;
+            Optional<string> generatedKeyName = default;
+            Optional<string> source = default;
+            Optional<string> sourceContext = default;
+            Optional<IList<InputFieldMappingEntry>> inputs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("storageContainer"u8))
+                {
+                    storageContainer = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("referenceKeyName"u8))
+                {
+                    referenceKeyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("generatedKeyName"u8))
+                {
+                    generatedKeyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("source"u8))
+                {
+                    source = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceContext"u8))
+                {
+                    sourceContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("inputs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                    }
+                    inputs = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new Models.KnowledgeStoreStorageProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), storageContainer, rawData);
+        }
+
+        KnowledgeStoreStorageProjectionSelector IModelJsonSerializable<KnowledgeStoreStorageProjectionSelector>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KnowledgeStoreStorageProjectionSelector>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKnowledgeStoreStorageProjectionSelector(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KnowledgeStoreStorageProjectionSelector>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KnowledgeStoreStorageProjectionSelector>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KnowledgeStoreStorageProjectionSelector IModelSerializable<KnowledgeStoreStorageProjectionSelector>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KnowledgeStoreStorageProjectionSelector>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKnowledgeStoreStorageProjectionSelector(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(KnowledgeStoreStorageProjectionSelector model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator KnowledgeStoreStorageProjectionSelector(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKnowledgeStoreStorageProjectionSelector(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -10,14 +10,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsThreatIntelligenceIndicatorData : IUtf8JsonSerializable
+    public partial class SecurityInsightsThreatIntelligenceIndicatorData : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsThreatIntelligenceIndicatorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsThreatIntelligenceIndicatorData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsThreatIntelligenceIndicatorData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SecurityInsightsThreatIntelligenceIndicatorData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -229,11 +234,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsThreatIntelligenceIndicatorData DeserializeSecurityInsightsThreatIntelligenceIndicatorData(JsonElement element)
+        internal static SecurityInsightsThreatIntelligenceIndicatorData DeserializeSecurityInsightsThreatIntelligenceIndicatorData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -274,6 +293,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<DateTimeOffset> created = default;
             Optional<string> modified = default;
             Optional<IDictionary<string, BinaryData>> extensions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -621,8 +641,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsThreatIntelligenceIndicatorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(threatIntelligenceTags), Optional.ToNullable(lastUpdatedTimeUtc), source.Value, displayName.Value, description.Value, Optional.ToList(indicatorTypes), pattern.Value, patternType.Value, patternVersion.Value, Optional.ToList(killChainPhases), Optional.ToList(parsedPattern), externalId.Value, createdByRef.Value, Optional.ToNullable(defanged), Optional.ToNullable(externalLastUpdatedTimeUtc), Optional.ToList(externalReferences), Optional.ToList(granularMarkings), Optional.ToList(labels), Optional.ToNullable(revoked), Optional.ToNullable(confidence), Optional.ToList(objectMarkingRefs), language.Value, Optional.ToList(threatTypes), Optional.ToNullable(validFrom), Optional.ToNullable(validUntil), Optional.ToNullable(created), modified.Value, Optional.ToDictionary(extensions));
+            return new SecurityInsightsThreatIntelligenceIndicatorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(threatIntelligenceTags), Optional.ToNullable(lastUpdatedTimeUtc), source.Value, displayName.Value, description.Value, Optional.ToList(indicatorTypes), pattern.Value, patternType.Value, patternVersion.Value, Optional.ToList(killChainPhases), Optional.ToList(parsedPattern), externalId.Value, createdByRef.Value, Optional.ToNullable(defanged), Optional.ToNullable(externalLastUpdatedTimeUtc), Optional.ToList(externalReferences), Optional.ToList(granularMarkings), Optional.ToList(labels), Optional.ToNullable(revoked), Optional.ToNullable(confidence), Optional.ToList(objectMarkingRefs), language.Value, Optional.ToList(threatTypes), Optional.ToNullable(validFrom), Optional.ToNullable(validUntil), Optional.ToNullable(created), modified.Value, Optional.ToDictionary(extensions), rawData);
+        }
+
+        SecurityInsightsThreatIntelligenceIndicatorData IModelJsonSerializable<SecurityInsightsThreatIntelligenceIndicatorData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityInsightsThreatIntelligenceIndicatorData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsThreatIntelligenceIndicatorData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsThreatIntelligenceIndicatorData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityInsightsThreatIntelligenceIndicatorData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsThreatIntelligenceIndicatorData IModelSerializable<SecurityInsightsThreatIntelligenceIndicatorData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityInsightsThreatIntelligenceIndicatorData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsThreatIntelligenceIndicatorData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecurityInsightsThreatIntelligenceIndicatorData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecurityInsightsThreatIntelligenceIndicatorData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsThreatIntelligenceIndicatorData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -9,16 +9,22 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Qumulo.Models;
 
 namespace Azure.ResourceManager.Qumulo
 {
-    public partial class QumuloFileSystemResourceData : IUtf8JsonSerializable
+    public partial class QumuloFileSystemResourceData : IUtf8JsonSerializable, IModelJsonSerializable<QumuloFileSystemResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QumuloFileSystemResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QumuloFileSystemResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -78,11 +84,25 @@ namespace Azure.ResourceManager.Qumulo
                 writer.WriteStringValue(AvailabilityZone);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static QumuloFileSystemResourceData DeserializeQumuloFileSystemResourceData(JsonElement element)
+        internal static QumuloFileSystemResourceData DeserializeQumuloFileSystemResourceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,6 +124,7 @@ namespace Azure.ResourceManager.Qumulo
             string adminPassword = default;
             int initialCapacity = default;
             Optional<string> availabilityZone = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -244,8 +265,57 @@ namespace Azure.ResourceManager.Qumulo
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QumuloFileSystemResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, marketplaceDetails, Optional.ToNullable(provisioningState), storageSku, userDetails, delegatedSubnetId, clusterLoginUrl.Value, Optional.ToList(privateIPs), adminPassword, initialCapacity, availabilityZone.Value);
+            return new QumuloFileSystemResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, marketplaceDetails, Optional.ToNullable(provisioningState), storageSku, userDetails, delegatedSubnetId, clusterLoginUrl.Value, Optional.ToList(privateIPs), adminPassword, initialCapacity, availabilityZone.Value, rawData);
+        }
+
+        QumuloFileSystemResourceData IModelJsonSerializable<QumuloFileSystemResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQumuloFileSystemResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QumuloFileSystemResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QumuloFileSystemResourceData IModelSerializable<QumuloFileSystemResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQumuloFileSystemResourceData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(QumuloFileSystemResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator QumuloFileSystemResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQumuloFileSystemResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryVaultSettingResource(Client, SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(e)), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "SiteRecoveryVaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteRecoveryVaultSettingResource(Client, SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(e)), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "SiteRecoveryVaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryVaultSettingResource(Client, SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(e)), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "SiteRecoveryVaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteRecoveryVaultSettingResource(Client, SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(e)), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "SiteRecoveryVaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The resource type aliases definition. </summary>
     public partial class ResourceTypeAliases
     {
-        /// <summary> Initializes a new instance of ResourceTypeAliases. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliases"/>. </summary>
         internal ResourceTypeAliases()
         {
             Aliases = new ChangeTrackingList<ResourceTypeAlias>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAliases. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliases"/>. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="aliases"> The aliases for property names. </param>
-        internal ResourceTypeAliases(string resourceType, IReadOnlyList<ResourceTypeAlias> aliases)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeAliases(string resourceType, IReadOnlyList<ResourceTypeAlias> aliases, Dictionary<string, BinaryData> rawData)
         {
             ResourceType = resourceType;
             Aliases = aliases;
+            _rawData = rawData;
         }
 
         /// <summary> The resource type name. </summary>

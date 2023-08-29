@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A server dns alias acquisition request. </summary>
     public partial class ServerDnsAliasAcquisition
     {
-        /// <summary> Initializes a new instance of ServerDnsAliasAcquisition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerDnsAliasAcquisition"/>. </summary>
         /// <param name="oldServerDnsAliasId"> The id of the server alias that will be acquired to point to this server instead. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oldServerDnsAliasId"/> is null. </exception>
         public ServerDnsAliasAcquisition(ResourceIdentifier oldServerDnsAliasId)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.Sql.Models
             Argument.AssertNotNull(oldServerDnsAliasId, nameof(oldServerDnsAliasId));
 
             OldServerDnsAliasId = oldServerDnsAliasId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServerDnsAliasAcquisition"/>. </summary>
+        /// <param name="oldServerDnsAliasId"> The id of the server alias that will be acquired to point to this server instead. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerDnsAliasAcquisition(ResourceIdentifier oldServerDnsAliasId, Dictionary<string, BinaryData> rawData)
+        {
+            OldServerDnsAliasId = oldServerDnsAliasId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServerDnsAliasAcquisition"/> for deserialization. </summary>
+        internal ServerDnsAliasAcquisition()
+        {
         }
 
         /// <summary> The id of the server alias that will be acquired to point to this server instead. </summary>

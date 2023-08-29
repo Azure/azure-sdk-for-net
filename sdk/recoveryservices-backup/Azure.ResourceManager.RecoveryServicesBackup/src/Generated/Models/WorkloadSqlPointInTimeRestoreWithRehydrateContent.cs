@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> AzureWorkload SQL-specific restore with integrated rehydration of recovery point. </summary>
     public partial class WorkloadSqlPointInTimeRestoreWithRehydrateContent : WorkloadSqlPointInTimeRestoreContent
     {
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRestoreWithRehydrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>. </summary>
         public WorkloadSqlPointInTimeRestoreWithRehydrateContent()
         {
             ObjectType = "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRestoreWithRehydrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="alternateDirectoryPaths"> Data directory details. </param>
         /// <param name="pointInTime"> PointInTime value. </param>
         /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
-        internal WorkloadSqlPointInTimeRestoreWithRehydrateContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, DateTimeOffset? pointInTime, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths, pointInTime)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadSqlPointInTimeRestoreWithRehydrateContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, DateTimeOffset? pointInTime, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo, Dictionary<string, BinaryData> rawData) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths, pointInTime, rawData)
         {
             RecoveryPointRehydrationInfo = recoveryPointRehydrationInfo;
             ObjectType = objectType ?? "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest";

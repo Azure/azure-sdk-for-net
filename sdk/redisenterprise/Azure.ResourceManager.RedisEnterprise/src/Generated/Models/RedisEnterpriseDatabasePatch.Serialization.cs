@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseDatabasePatch : IUtf8JsonSerializable
+    public partial class RedisEnterpriseDatabasePatch : IUtf8JsonSerializable, IModelJsonSerializable<RedisEnterpriseDatabasePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedisEnterpriseDatabasePatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedisEnterpriseDatabasePatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -58,7 +66,190 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteObjectValue(GeoReplication);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RedisEnterpriseDatabasePatch DeserializeRedisEnterpriseDatabasePatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<RedisEnterpriseClientProtocol> clientProtocol = default;
+            Optional<int> port = default;
+            Optional<RedisEnterpriseProvisioningStatus> provisioningState = default;
+            Optional<RedisEnterpriseClusterResourceState> resourceState = default;
+            Optional<RedisEnterpriseClusteringPolicy> clusteringPolicy = default;
+            Optional<RedisEnterpriseEvictionPolicy> evictionPolicy = default;
+            Optional<RedisPersistenceSettings> persistence = default;
+            Optional<IList<RedisEnterpriseModule>> modules = default;
+            Optional<RedisEnterpriseDatabaseGeoReplication> geoReplication = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("clientProtocol"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clientProtocol = new RedisEnterpriseClientProtocol(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("port"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            port = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new RedisEnterpriseProvisioningStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceState = new RedisEnterpriseClusterResourceState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("clusteringPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clusteringPolicy = new RedisEnterpriseClusteringPolicy(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("evictionPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            evictionPolicy = new RedisEnterpriseEvictionPolicy(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("persistence"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            persistence = RedisPersistenceSettings.DeserializeRedisPersistenceSettings(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("modules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<RedisEnterpriseModule> array = new List<RedisEnterpriseModule>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(RedisEnterpriseModule.DeserializeRedisEnterpriseModule(item));
+                            }
+                            modules = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("geoReplication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RedisEnterpriseDatabasePatch(Optional.ToNullable(clientProtocol), Optional.ToNullable(port), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), Optional.ToNullable(clusteringPolicy), Optional.ToNullable(evictionPolicy), persistence.Value, Optional.ToList(modules), geoReplication.Value, rawData);
+        }
+
+        RedisEnterpriseDatabasePatch IModelJsonSerializable<RedisEnterpriseDatabasePatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisEnterpriseDatabasePatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedisEnterpriseDatabasePatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedisEnterpriseDatabasePatch IModelSerializable<RedisEnterpriseDatabasePatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedisEnterpriseDatabasePatch(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RedisEnterpriseDatabasePatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RedisEnterpriseDatabasePatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedisEnterpriseDatabasePatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,15 +8,72 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class SubscriptionData
+    public partial class SubscriptionData : IUtf8JsonSerializable, IModelJsonSerializable<SubscriptionData>
     {
-        internal static SubscriptionData DeserializeSubscriptionData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubscriptionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubscriptionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SubscriptionPolicies))
+            {
+                writer.WritePropertyName("subscriptionPolicies"u8);
+                writer.WriteObjectValue(SubscriptionPolicies);
+            }
+            if (Optional.IsDefined(AuthorizationSource))
+            {
+                writer.WritePropertyName("authorizationSource"u8);
+                writer.WriteStringValue(AuthorizationSource);
+            }
+            if (Optional.IsCollectionDefined(ManagedByTenants))
+            {
+                writer.WritePropertyName("managedByTenants"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagedByTenants)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SubscriptionData DeserializeSubscriptionData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +87,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> authorizationSource = default;
             Optional<IReadOnlyList<ManagedByTenant>> managedByTenants = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -111,8 +169,57 @@ namespace Azure.ResourceManager.Resources
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, Optional.ToList(managedByTenants), Optional.ToDictionary(tags));
+            return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, Optional.ToList(managedByTenants), Optional.ToDictionary(tags), rawData);
+        }
+
+        SubscriptionData IModelJsonSerializable<SubscriptionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubscriptionData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubscriptionData IModelSerializable<SubscriptionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubscriptionData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SubscriptionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SubscriptionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubscriptionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

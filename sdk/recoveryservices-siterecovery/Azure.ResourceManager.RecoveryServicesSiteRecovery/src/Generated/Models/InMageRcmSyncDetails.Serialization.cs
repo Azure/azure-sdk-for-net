@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmSyncDetails
+    public partial class InMageRcmSyncDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageRcmSyncDetails>
     {
-        internal static InMageRcmSyncDetails DeserializeInMageRcmSyncDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageRcmSyncDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageRcmSyncDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageRcmSyncDetails DeserializeInMageRcmSyncDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> lastRefreshTime = default;
             Optional<int> progressPercentage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("progressHealth"u8))
@@ -97,8 +125,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     progressPercentage = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageRcmSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), lastDataTransferTimeUtc.Value, Optional.ToNullable(processedBytes), Optional.ToNullable(startTime), Optional.ToNullable(lastRefreshTime), Optional.ToNullable(progressPercentage));
+            return new InMageRcmSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), lastDataTransferTimeUtc.Value, Optional.ToNullable(processedBytes), Optional.ToNullable(startTime), Optional.ToNullable(lastRefreshTime), Optional.ToNullable(progressPercentage), rawData);
+        }
+
+        InMageRcmSyncDetails IModelJsonSerializable<InMageRcmSyncDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmSyncDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageRcmSyncDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageRcmSyncDetails IModelSerializable<InMageRcmSyncDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageRcmSyncDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InMageRcmSyncDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InMageRcmSyncDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageRcmSyncDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

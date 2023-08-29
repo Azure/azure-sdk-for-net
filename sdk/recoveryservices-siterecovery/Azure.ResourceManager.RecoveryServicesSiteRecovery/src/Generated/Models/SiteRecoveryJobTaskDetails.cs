@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -14,16 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public partial class SiteRecoveryJobTaskDetails : SiteRecoveryTaskTypeDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobTaskDetails"/>. </summary>
         internal SiteRecoveryJobTaskDetails()
         {
             InstanceType = "JobTaskDetails";
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="jobTask"> The job entity. </param>
-        internal SiteRecoveryJobTaskDetails(string instanceType, SiteRecoveryJobEntity jobTask) : base(instanceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryJobTaskDetails(string instanceType, SiteRecoveryJobEntity jobTask, Dictionary<string, BinaryData> rawData) : base(instanceType, rawData)
         {
             JobTask = jobTask;
             InstanceType = instanceType ?? "JobTaskDetails";

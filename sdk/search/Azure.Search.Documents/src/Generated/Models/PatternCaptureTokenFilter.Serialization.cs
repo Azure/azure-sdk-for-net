@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PatternCaptureTokenFilter : IUtf8JsonSerializable
+    public partial class PatternCaptureTokenFilter : IUtf8JsonSerializable, IModelJsonSerializable<PatternCaptureTokenFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PatternCaptureTokenFilter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PatternCaptureTokenFilter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PatternCaptureTokenFilter>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("patterns"u8);
             writer.WriteStartArray();
@@ -32,11 +39,25 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(ODataType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PatternCaptureTokenFilter DeserializePatternCaptureTokenFilter(JsonElement element)
+        internal static PatternCaptureTokenFilter DeserializePatternCaptureTokenFilter(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<bool> preserveOriginal = default;
             string odataType = default;
             string name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patterns"u8))
@@ -76,8 +98,57 @@ namespace Azure.Search.Documents.Indexes.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PatternCaptureTokenFilter(odataType, name, patterns, Optional.ToNullable(preserveOriginal));
+            return new PatternCaptureTokenFilter(odataType, name, patterns, Optional.ToNullable(preserveOriginal), rawData);
+        }
+
+        PatternCaptureTokenFilter IModelJsonSerializable<PatternCaptureTokenFilter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PatternCaptureTokenFilter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePatternCaptureTokenFilter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PatternCaptureTokenFilter>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PatternCaptureTokenFilter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PatternCaptureTokenFilter IModelSerializable<PatternCaptureTokenFilter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PatternCaptureTokenFilter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePatternCaptureTokenFilter(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PatternCaptureTokenFilter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PatternCaptureTokenFilter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePatternCaptureTokenFilter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

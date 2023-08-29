@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Object of impacted region. </summary>
     public partial class EmergingIssueImpactedRegion
     {
-        /// <summary> Initializes a new instance of EmergingIssueImpactedRegion. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueImpactedRegion"/>. </summary>
         internal EmergingIssueImpactedRegion()
         {
         }
 
-        /// <summary> Initializes a new instance of EmergingIssueImpactedRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueImpactedRegion"/>. </summary>
         /// <param name="id"> The impacted region id. </param>
         /// <param name="name"> The impacted region name. </param>
-        internal EmergingIssueImpactedRegion(string id, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmergingIssueImpactedRegion(string id, string name, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> The impacted region id. </summary>

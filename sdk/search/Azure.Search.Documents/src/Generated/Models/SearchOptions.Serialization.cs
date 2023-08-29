@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
-    public partial class SearchOptions : IUtf8JsonSerializable
+    public partial class SearchOptions : IUtf8JsonSerializable, IModelJsonSerializable<SearchOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SearchOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SearchOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IncludeTotalCount))
             {
@@ -184,11 +191,25 @@ namespace Azure.Search.Documents
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SearchOptions DeserializeSearchOptions(JsonElement element)
+        internal static SearchOptions DeserializeSearchOptions(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -222,6 +243,7 @@ namespace Azure.Search.Documents
             Optional<string> captions = default;
             Optional<string> semanticFields = default;
             Optional<IList<SearchQueryVector>> vectors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -445,8 +467,57 @@ namespace Azure.Search.Documents
                     vectors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, semanticConfiguration.Value, Optional.ToNullable(semanticErrorHandling), Optional.ToNullable(semanticMaxWaitInMilliseconds), Optional.ToNullable(debug), search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top), captions.Value, semanticFields.Value, Optional.ToList(vectors));
+            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, semanticConfiguration.Value, Optional.ToNullable(semanticErrorHandling), Optional.ToNullable(semanticMaxWaitInMilliseconds), Optional.ToNullable(debug), search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top), captions.Value, semanticFields.Value, Optional.ToList(vectors), rawData);
+        }
+
+        SearchOptions IModelJsonSerializable<SearchOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SearchOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SearchOptions IModelSerializable<SearchOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSearchOptions(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SearchOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SearchOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSearchOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    internal partial class UnknownLimitJsonObject : IUtf8JsonSerializable
+    internal partial class UnknownLimitJsonObject : IUtf8JsonSerializable, IModelJsonSerializable<QuotaLimitJsonObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QuotaLimitJsonObject>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QuotaLimitJsonObject>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("limitObjectType"u8);
             writer.WriteStringValue(LimitObjectType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownLimitJsonObject DeserializeUnknownLimitJsonObject(JsonElement element)
+        internal static QuotaLimitJsonObject DeserializeUnknownLimitJsonObject(JsonElement element, ModelSerializerOptions options = default) => DeserializeQuotaLimitJsonObject(element, options);
+
+        QuotaLimitJsonObject IModelJsonSerializable<QuotaLimitJsonObject>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            LimitType limitObjectType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("limitObjectType"u8))
-                {
-                    limitObjectType = new LimitType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownLimitJsonObject(limitObjectType);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownLimitJsonObject(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QuotaLimitJsonObject>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QuotaLimitJsonObject IModelSerializable<QuotaLimitJsonObject>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQuotaLimitJsonObject(doc.RootElement, options);
         }
     }
 }

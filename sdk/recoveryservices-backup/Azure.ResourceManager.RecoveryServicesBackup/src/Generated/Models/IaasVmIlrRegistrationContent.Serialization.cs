@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmIlrRegistrationContent : IUtf8JsonSerializable
+    public partial class IaasVmIlrRegistrationContent : IUtf8JsonSerializable, IModelJsonSerializable<IaasVmIlrRegistrationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IaasVmIlrRegistrationContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IaasVmIlrRegistrationContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<IaasVmIlrRegistrationContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointId))
             {
@@ -37,11 +45,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IaasVmIlrRegistrationContent DeserializeIaasVmIlrRegistrationContent(JsonElement element)
+        internal static IaasVmIlrRegistrationContent DeserializeIaasVmIlrRegistrationContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> initiatorName = default;
             Optional<bool> renewExistingRegistration = default;
             string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointId"u8))
@@ -86,8 +109,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IaasVmIlrRegistrationContent(objectType, recoveryPointId.Value, virtualMachineId.Value, initiatorName.Value, Optional.ToNullable(renewExistingRegistration));
+            return new IaasVmIlrRegistrationContent(objectType, recoveryPointId.Value, virtualMachineId.Value, initiatorName.Value, Optional.ToNullable(renewExistingRegistration), rawData);
+        }
+
+        IaasVmIlrRegistrationContent IModelJsonSerializable<IaasVmIlrRegistrationContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<IaasVmIlrRegistrationContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmIlrRegistrationContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IaasVmIlrRegistrationContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<IaasVmIlrRegistrationContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IaasVmIlrRegistrationContent IModelSerializable<IaasVmIlrRegistrationContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<IaasVmIlrRegistrationContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIaasVmIlrRegistrationContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IaasVmIlrRegistrationContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IaasVmIlrRegistrationContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIaasVmIlrRegistrationContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,17 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    public partial class ReplicationEligibilityResultData
+    public partial class ReplicationEligibilityResultData : IUtf8JsonSerializable, IModelJsonSerializable<ReplicationEligibilityResultData>
     {
-        internal static ReplicationEligibilityResultData DeserializeReplicationEligibilityResultData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReplicationEligibilityResultData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReplicationEligibilityResultData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReplicationEligibilityResultData DeserializeReplicationEligibilityResultData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -60,8 +89,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReplicationEligibilityResultData(id, name, type, systemData.Value, properties.Value);
+            return new ReplicationEligibilityResultData(id, name, type, systemData.Value, properties.Value, rawData);
+        }
+
+        ReplicationEligibilityResultData IModelJsonSerializable<ReplicationEligibilityResultData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReplicationEligibilityResultData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReplicationEligibilityResultData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReplicationEligibilityResultData IModelSerializable<ReplicationEligibilityResultData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReplicationEligibilityResultData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ReplicationEligibilityResultData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ReplicationEligibilityResultData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReplicationEligibilityResultData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

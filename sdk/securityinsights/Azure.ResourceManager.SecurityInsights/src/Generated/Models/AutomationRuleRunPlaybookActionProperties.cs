@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The AutomationRuleRunPlaybookActionProperties. </summary>
     public partial class AutomationRuleRunPlaybookActionProperties
     {
-        /// <summary> Initializes a new instance of AutomationRuleRunPlaybookActionProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookActionProperties"/>. </summary>
         /// <param name="logicAppResourceId"> The resource id of the playbook resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logicAppResourceId"/> is null. </exception>
         public AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId)
@@ -23,13 +26,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             LogicAppResourceId = logicAppResourceId;
         }
 
-        /// <summary> Initializes a new instance of AutomationRuleRunPlaybookActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookActionProperties"/>. </summary>
         /// <param name="logicAppResourceId"> The resource id of the playbook resource. </param>
         /// <param name="tenantId"> The tenant id of the playbook resource. </param>
-        internal AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId, Guid? tenantId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId, Guid? tenantId, Dictionary<string, BinaryData> rawData)
         {
             LogicAppResourceId = logicAppResourceId;
             TenantId = tenantId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookActionProperties"/> for deserialization. </summary>
+        internal AutomationRuleRunPlaybookActionProperties()
+        {
         }
 
         /// <summary> The resource id of the playbook resource. </summary>

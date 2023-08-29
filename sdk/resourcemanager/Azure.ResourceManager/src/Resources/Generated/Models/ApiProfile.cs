@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The ApiProfile. </summary>
     public partial class ApiProfile
     {
-        /// <summary> Initializes a new instance of ApiProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiProfile"/>. </summary>
         internal ApiProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiProfile"/>. </summary>
         /// <param name="profileVersion"> The profile version. </param>
         /// <param name="apiVersion"> The API version. </param>
-        internal ApiProfile(string profileVersion, string apiVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiProfile(string profileVersion, string apiVersion, Dictionary<string, BinaryData> rawData)
         {
             ProfileVersion = profileVersion;
             ApiVersion = apiVersion;
+            _rawData = rawData;
         }
 
         /// <summary> The profile version. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmAssessmentSchedule : IUtf8JsonSerializable
+    public partial class SqlVmAssessmentSchedule : IUtf8JsonSerializable, IModelJsonSerializable<SqlVmAssessmentSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlVmAssessmentSchedule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlVmAssessmentSchedule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -40,11 +48,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmAssessmentSchedule DeserializeSqlVmAssessmentSchedule(JsonElement element)
+        internal static SqlVmAssessmentSchedule DeserializeSqlVmAssessmentSchedule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +76,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<int> monthlyOccurrence = default;
             Optional<SqlVmAssessmentDayOfWeek> dayOfWeek = default;
             Optional<string> startTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -97,8 +120,57 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     startTime = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlVmAssessmentSchedule(Optional.ToNullable(enable), Optional.ToNullable(weeklyInterval), Optional.ToNullable(monthlyOccurrence), Optional.ToNullable(dayOfWeek), startTime.Value);
+            return new SqlVmAssessmentSchedule(Optional.ToNullable(enable), Optional.ToNullable(weeklyInterval), Optional.ToNullable(monthlyOccurrence), Optional.ToNullable(dayOfWeek), startTime.Value, rawData);
+        }
+
+        SqlVmAssessmentSchedule IModelJsonSerializable<SqlVmAssessmentSchedule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmAssessmentSchedule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlVmAssessmentSchedule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlVmAssessmentSchedule IModelSerializable<SqlVmAssessmentSchedule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlVmAssessmentSchedule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SqlVmAssessmentSchedule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SqlVmAssessmentSchedule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlVmAssessmentSchedule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

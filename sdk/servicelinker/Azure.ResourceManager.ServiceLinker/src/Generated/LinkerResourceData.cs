@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceLinker.Models;
@@ -17,12 +19,14 @@ namespace Azure.ResourceManager.ServiceLinker
     /// </summary>
     public partial class LinkerResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of LinkerResourceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkerResourceData"/>. </summary>
         public LinkerResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +46,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="vnetSolution"> The VNet solution. </param>
         /// <param name="secretStore"> An option to store secret value in secure place. </param>
         /// <param name="scope"> connection scope in source service. </param>
-        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             TargetService = targetService;
             AuthInfo = authInfo;
@@ -51,6 +56,7 @@ namespace Azure.ResourceManager.ServiceLinker
             VnetSolution = vnetSolution;
             SecretStore = secretStore;
             Scope = scope;
+            _rawData = rawData;
         }
 
         /// <summary>

@@ -6,21 +6,49 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class ProviderPropertiesAad
+    public partial class ProviderPropertiesAad : IUtf8JsonSerializable, IModelJsonSerializable<ProviderPropertiesAad>
     {
-        internal static ProviderPropertiesAad DeserializeProviderPropertiesAad(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderPropertiesAad>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProviderPropertiesAad>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ProviderPropertiesAad DeserializeProviderPropertiesAad(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> applicationId = default;
             Optional<Guid> tenantId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -37,8 +65,57 @@ namespace Azure.ResourceManager.Quantum.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProviderPropertiesAad(applicationId.Value, Optional.ToNullable(tenantId));
+            return new ProviderPropertiesAad(applicationId.Value, Optional.ToNullable(tenantId), rawData);
+        }
+
+        ProviderPropertiesAad IModelJsonSerializable<ProviderPropertiesAad>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderPropertiesAad(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProviderPropertiesAad>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProviderPropertiesAad IModelSerializable<ProviderPropertiesAad>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProviderPropertiesAad(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ProviderPropertiesAad model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ProviderPropertiesAad(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProviderPropertiesAad(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class TimeWindowCustomAlertRule : IUtf8JsonSerializable
+    public partial class TimeWindowCustomAlertRule : IUtf8JsonSerializable, IModelJsonSerializable<TimeWindowCustomAlertRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TimeWindowCustomAlertRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TimeWindowCustomAlertRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TimeWindowCustomAlertRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("timeWindowSize"u8);
             writer.WriteStringValue(TimeWindowSize, "P");
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TimeWindowCustomAlertRule DeserializeTimeWindowCustomAlertRule(JsonElement element)
+        internal static TimeWindowCustomAlertRule DeserializeTimeWindowCustomAlertRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +78,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "UnauthorizedOperationsNotInAllowedRange": return UnauthorizedOperationsNotInAllowedRange.DeserializeUnauthorizedOperationsNotInAllowedRange(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;
@@ -64,6 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = "TimeWindowCustomAlertRule";
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeWindowSize"u8))
@@ -101,8 +125,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TimeWindowCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize);
+            return new TimeWindowCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize, rawData);
+        }
+
+        TimeWindowCustomAlertRule IModelJsonSerializable<TimeWindowCustomAlertRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TimeWindowCustomAlertRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTimeWindowCustomAlertRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TimeWindowCustomAlertRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TimeWindowCustomAlertRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TimeWindowCustomAlertRule IModelSerializable<TimeWindowCustomAlertRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TimeWindowCustomAlertRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTimeWindowCustomAlertRule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TimeWindowCustomAlertRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TimeWindowCustomAlertRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTimeWindowCustomAlertRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

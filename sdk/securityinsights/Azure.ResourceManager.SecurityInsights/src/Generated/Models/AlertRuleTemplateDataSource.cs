@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> alert rule template data sources. </summary>
     public partial class AlertRuleTemplateDataSource
     {
-        /// <summary> Initializes a new instance of AlertRuleTemplateDataSource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertRuleTemplateDataSource"/>. </summary>
         public AlertRuleTemplateDataSource()
         {
             DataTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AlertRuleTemplateDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleTemplateDataSource"/>. </summary>
         /// <param name="connectorId"> The connector id that provides the following data types. </param>
         /// <param name="dataTypes"> The data types used by the alert rule template. </param>
-        internal AlertRuleTemplateDataSource(string connectorId, IList<string> dataTypes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertRuleTemplateDataSource(string connectorId, IList<string> dataTypes, Dictionary<string, BinaryData> rawData)
         {
             ConnectorId = connectorId;
             DataTypes = dataTypes;
+            _rawData = rawData;
         }
 
         /// <summary> The connector id that provides the following data types. </summary>

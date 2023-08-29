@@ -5,63 +5,62 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownAuthenticationDetailsProperties : IUtf8JsonSerializable
+    internal partial class UnknownAuthenticationDetailsProperties : IUtf8JsonSerializable, IModelJsonSerializable<AuthenticationDetailsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AuthenticationDetailsProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AuthenticationDetailsProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAuthenticationDetailsProperties DeserializeUnknownAuthenticationDetailsProperties(JsonElement element)
+        internal static AuthenticationDetailsProperties DeserializeUnknownAuthenticationDetailsProperties(JsonElement element, ModelSerializerOptions options = default) => DeserializeAuthenticationDetailsProperties(element, options);
+
+        AuthenticationDetailsProperties IModelJsonSerializable<AuthenticationDetailsProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
-            AuthenticationType authenticationType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authenticationProvisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authenticationProvisioningState = new AuthenticationProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("grantedPermissions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<SecurityCenterCloudPermission> array = new List<SecurityCenterCloudPermission>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new SecurityCenterCloudPermission(item.GetString()));
-                    }
-                    grantedPermissions = array;
-                    continue;
-                }
-                if (property.NameEquals("authenticationType"u8))
-                {
-                    authenticationType = new AuthenticationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAuthenticationDetailsProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AuthenticationDetailsProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AuthenticationDetailsProperties IModelSerializable<AuthenticationDetailsProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAuthenticationDetailsProperties(doc.RootElement, options);
         }
     }
 }

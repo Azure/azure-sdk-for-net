@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,12 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Failover details for a replication protected item. </summary>
     public partial class FailoverReplicationProtectedItemDetails
     {
-        /// <summary> Initializes a new instance of FailoverReplicationProtectedItemDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FailoverReplicationProtectedItemDetails"/>. </summary>
         internal FailoverReplicationProtectedItemDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of FailoverReplicationProtectedItemDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverReplicationProtectedItemDetails"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="friendlyName"> The friendly name. </param>
         /// <param name="testVmName"> The test Vm name. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="subnet"> The network subnet. </param>
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
-        internal FailoverReplicationProtectedItemDetails(string name, string friendlyName, string testVmName, string testVmFriendlyName, string networkConnectionStatus, string networkFriendlyName, string subnet, ResourceIdentifier recoveryPointId, DateTimeOffset? recoveryPointOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverReplicationProtectedItemDetails(string name, string friendlyName, string testVmName, string testVmFriendlyName, string networkConnectionStatus, string networkFriendlyName, string subnet, ResourceIdentifier recoveryPointId, DateTimeOffset? recoveryPointOn, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             FriendlyName = friendlyName;
@@ -39,6 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Subnet = subnet;
             RecoveryPointId = recoveryPointId;
             RecoveryPointOn = recoveryPointOn;
+            _rawData = rawData;
         }
 
         /// <summary> The name. </summary>

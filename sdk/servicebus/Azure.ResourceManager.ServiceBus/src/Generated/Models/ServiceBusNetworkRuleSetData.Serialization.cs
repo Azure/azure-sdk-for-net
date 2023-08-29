@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ServiceBusNetworkRuleSetData : IUtf8JsonSerializable
+    public partial class ServiceBusNetworkRuleSetData : IUtf8JsonSerializable, IModelJsonSerializable<ServiceBusNetworkRuleSetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceBusNetworkRuleSetData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceBusNetworkRuleSetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -56,11 +63,25 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceBusNetworkRuleSetData DeserializeServiceBusNetworkRuleSetData(JsonElement element)
+        internal static ServiceBusNetworkRuleSetData DeserializeServiceBusNetworkRuleSetData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +96,7 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<IList<ServiceBusNetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
             Optional<IList<ServiceBusNetworkRuleSetIPRules>> ipRules = default;
             Optional<ServiceBusPublicNetworkAccessFlag> publicNetworkAccess = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -177,8 +199,57 @@ namespace Azure.ResourceManager.ServiceBus
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceBusNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location));
+            return new ServiceBusNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location), rawData);
+        }
+
+        ServiceBusNetworkRuleSetData IModelJsonSerializable<ServiceBusNetworkRuleSetData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceBusNetworkRuleSetData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceBusNetworkRuleSetData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceBusNetworkRuleSetData IModelSerializable<ServiceBusNetworkRuleSetData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceBusNetworkRuleSetData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServiceBusNetworkRuleSetData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServiceBusNetworkRuleSetData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceBusNetworkRuleSetData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

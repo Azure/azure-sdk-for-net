@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class SubnetResourceSettings : IUtf8JsonSerializable
+    public partial class SubnetResourceSettings : IUtf8JsonSerializable, IModelJsonSerializable<SubnetResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubnetResourceSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubnetResourceSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -37,11 +45,25 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("networkSecurityGroup");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SubnetResourceSettings DeserializeSubnetResourceSettings(JsonElement element)
+        internal static SubnetResourceSettings DeserializeSubnetResourceSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +71,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<string> name = default;
             Optional<string> addressPrefix = default;
             Optional<NetworkSecurityGroupResourceReferenceInfo> networkSecurityGroup = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -71,8 +94,57 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubnetResourceSettings(name.Value, addressPrefix.Value, networkSecurityGroup.Value);
+            return new SubnetResourceSettings(name.Value, addressPrefix.Value, networkSecurityGroup.Value, rawData);
+        }
+
+        SubnetResourceSettings IModelJsonSerializable<SubnetResourceSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubnetResourceSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubnetResourceSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubnetResourceSettings IModelSerializable<SubnetResourceSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubnetResourceSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SubnetResourceSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SubnetResourceSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubnetResourceSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

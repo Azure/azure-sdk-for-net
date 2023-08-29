@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupJobRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupJobResource(Client, BackupJobData.DeserializeBackupJobData(e)), _backupJobClientDiagnostics, Pipeline, "BackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupJobResource(Client, BackupJobData.DeserializeBackupJobData(e)), _backupJobClientDiagnostics, Pipeline, "BackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupJobRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupJobResource(Client, BackupJobData.DeserializeBackupJobData(e)), _backupJobClientDiagnostics, Pipeline, "BackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupJobResource(Client, BackupJobData.DeserializeBackupJobData(e)), _backupJobClientDiagnostics, Pipeline, "BackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

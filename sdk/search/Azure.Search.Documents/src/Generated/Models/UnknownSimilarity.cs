@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
@@ -12,11 +14,17 @@ namespace Azure.Search.Documents.Models
     /// <summary> The UnknownSimilarity. </summary>
     internal partial class UnknownSimilarity : SimilarityAlgorithm
     {
-        /// <summary> Initializes a new instance of UnknownSimilarity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSimilarity"/>. </summary>
         /// <param name="oDataType"></param>
-        internal UnknownSimilarity(string oDataType) : base(oDataType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSimilarity(string oDataType, Dictionary<string, BinaryData> rawData) : base(oDataType, rawData)
         {
             ODataType = oDataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSimilarity"/> for deserialization. </summary>
+        internal UnknownSimilarity()
+        {
         }
     }
 }

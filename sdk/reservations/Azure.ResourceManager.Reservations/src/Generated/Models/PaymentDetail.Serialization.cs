@@ -6,15 +6,77 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class PaymentDetail
+    public partial class PaymentDetail : IUtf8JsonSerializable, IModelJsonSerializable<PaymentDetail>
     {
-        internal static PaymentDetail DeserializePaymentDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PaymentDetail>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PaymentDetail>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DueOn))
+            {
+                writer.WritePropertyName("dueDate"u8);
+                writer.WriteStringValue(DueOn.Value, "D");
+            }
+            if (Optional.IsDefined(PayOn))
+            {
+                writer.WritePropertyName("paymentDate"u8);
+                writer.WriteStringValue(PayOn.Value, "D");
+            }
+            if (Optional.IsDefined(PricingCurrencyTotal))
+            {
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
+                writer.WriteObjectValue(PricingCurrencyTotal);
+            }
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                writer.WritePropertyName("billingCurrencyTotal"u8);
+                writer.WriteObjectValue(BillingCurrencyTotal);
+            }
+            if (Optional.IsDefined(BillingAccount))
+            {
+                writer.WritePropertyName("billingAccount"u8);
+                writer.WriteStringValue(BillingAccount);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(ExtendedStatusInfo))
+            {
+                writer.WritePropertyName("extendedStatusInfo"u8);
+                writer.WriteObjectValue(ExtendedStatusInfo);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PaymentDetail DeserializePaymentDetail(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +88,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<string> billingAccount = default;
             Optional<PaymentStatus> status = default;
             Optional<ExtendedStatusInfo> extendedStatusInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dueDate"u8))
@@ -87,8 +150,57 @@ namespace Azure.ResourceManager.Reservations.Models
                     extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, billingAccount.Value, Optional.ToNullable(status), extendedStatusInfo.Value);
+            return new PaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, billingAccount.Value, Optional.ToNullable(status), extendedStatusInfo.Value, rawData);
+        }
+
+        PaymentDetail IModelJsonSerializable<PaymentDetail>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePaymentDetail(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PaymentDetail>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PaymentDetail IModelSerializable<PaymentDetail>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePaymentDetail(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PaymentDetail model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PaymentDetail(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePaymentDetail(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

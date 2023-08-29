@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class WorkloadClassifierData : IUtf8JsonSerializable
+    public partial class WorkloadClassifierData : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadClassifierData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadClassifierData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadClassifierData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -49,11 +57,25 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStringValue(Importance);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadClassifierData DeserializeWorkloadClassifierData(JsonElement element)
+        internal static WorkloadClassifierData DeserializeWorkloadClassifierData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +90,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> startTime = default;
             Optional<string> endTime = default;
             Optional<string> importance = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,8 +159,57 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadClassifierData(id, name, type, systemData.Value, memberName.Value, label.Value, context.Value, startTime.Value, endTime.Value, importance.Value);
+            return new WorkloadClassifierData(id, name, type, systemData.Value, memberName.Value, label.Value, context.Value, startTime.Value, endTime.Value, importance.Value, rawData);
+        }
+
+        WorkloadClassifierData IModelJsonSerializable<WorkloadClassifierData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadClassifierData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadClassifierData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadClassifierData IModelSerializable<WorkloadClassifierData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadClassifierData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadClassifierData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadClassifierData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadClassifierData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

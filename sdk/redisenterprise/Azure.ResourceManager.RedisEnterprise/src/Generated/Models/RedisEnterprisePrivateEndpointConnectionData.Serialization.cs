@@ -5,18 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    public partial class RedisEnterprisePrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class RedisEnterprisePrivateEndpointConnectionData : IUtf8JsonSerializable, IModelJsonSerializable<RedisEnterprisePrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedisEnterprisePrivateEndpointConnectionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedisEnterprisePrivateEndpointConnectionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -31,11 +39,25 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WriteObjectValue(ConnectionState);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RedisEnterprisePrivateEndpointConnectionData DeserializeRedisEnterprisePrivateEndpointConnectionData(JsonElement element)
+        internal static RedisEnterprisePrivateEndpointConnectionData DeserializeRedisEnterprisePrivateEndpointConnectionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +69,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             Optional<SubResource> privateEndpoint = default;
             Optional<RedisEnterprisePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<RedisEnterprisePrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,8 +135,57 @@ namespace Azure.ResourceManager.RedisEnterprise
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RedisEnterprisePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new RedisEnterprisePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        RedisEnterprisePrivateEndpointConnectionData IModelJsonSerializable<RedisEnterprisePrivateEndpointConnectionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisEnterprisePrivateEndpointConnectionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedisEnterprisePrivateEndpointConnectionData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedisEnterprisePrivateEndpointConnectionData IModelSerializable<RedisEnterprisePrivateEndpointConnectionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedisEnterprisePrivateEndpointConnectionData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RedisEnterprisePrivateEndpointConnectionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RedisEnterprisePrivateEndpointConnectionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedisEnterprisePrivateEndpointConnectionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

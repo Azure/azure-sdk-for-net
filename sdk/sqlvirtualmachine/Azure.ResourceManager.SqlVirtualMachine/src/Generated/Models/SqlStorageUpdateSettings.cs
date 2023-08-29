@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Set disk storage settings for SQL Server. </summary>
     public partial class SqlStorageUpdateSettings
     {
-        /// <summary> Initializes a new instance of SqlStorageUpdateSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlStorageUpdateSettings"/>. </summary>
         public SqlStorageUpdateSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlStorageUpdateSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlStorageUpdateSettings"/>. </summary>
         /// <param name="diskCount"> Virtual machine disk count. </param>
         /// <param name="startingDeviceId"> Device id of the first disk to be updated. </param>
         /// <param name="diskConfigurationType"> Disk configuration to apply to SQL Server. </param>
-        internal SqlStorageUpdateSettings(int? diskCount, int? startingDeviceId, SqlVmDiskConfigurationType? diskConfigurationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlStorageUpdateSettings(int? diskCount, int? startingDeviceId, SqlVmDiskConfigurationType? diskConfigurationType, Dictionary<string, BinaryData> rawData)
         {
             DiskCount = diskCount;
             StartingDeviceId = startingDeviceId;
             DiskConfigurationType = diskConfigurationType;
+            _rawData = rawData;
         }
 
         /// <summary> Virtual machine disk count. </summary>

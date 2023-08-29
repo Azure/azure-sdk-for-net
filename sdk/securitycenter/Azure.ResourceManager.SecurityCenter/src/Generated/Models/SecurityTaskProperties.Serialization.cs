@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityTaskProperties : IUtf8JsonSerializable
+    public partial class SecurityTaskProperties : IUtf8JsonSerializable, IModelJsonSerializable<SecurityTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityTaskProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityTaskProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             foreach (var item in AdditionalProperties)
             {
@@ -29,8 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityTaskProperties DeserializeSecurityTaskProperties(JsonElement element)
+        internal static SecurityTaskProperties DeserializeSecurityTaskProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +57,50 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SecurityTaskProperties(name.Value, additionalProperties);
+        }
+
+        SecurityTaskProperties IModelJsonSerializable<SecurityTaskProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityTaskProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityTaskProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityTaskProperties IModelSerializable<SecurityTaskProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityTaskProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecurityTaskProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecurityTaskProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityTaskProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

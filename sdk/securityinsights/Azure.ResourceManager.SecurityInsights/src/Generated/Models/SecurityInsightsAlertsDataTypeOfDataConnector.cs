@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Alerts data type for data connectors. </summary>
     public partial class SecurityInsightsAlertsDataTypeOfDataConnector
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertsDataTypeOfDataConnector. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
         public SecurityInsightsAlertsDataTypeOfDataConnector()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertsDataTypeOfDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
         /// <param name="alerts"> Alerts data type connection. </param>
-        internal SecurityInsightsAlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts, Dictionary<string, BinaryData> rawData)
         {
             Alerts = alerts;
+            _rawData = rawData;
         }
 
         /// <summary> Alerts data type connection. </summary>

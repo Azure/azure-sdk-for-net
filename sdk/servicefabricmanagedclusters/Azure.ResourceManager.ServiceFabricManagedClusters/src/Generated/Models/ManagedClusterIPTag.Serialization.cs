@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedClusterIPTag : IUtf8JsonSerializable
+    public partial class ManagedClusterIPTag : IUtf8JsonSerializable, IModelJsonSerializable<ManagedClusterIPTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedClusterIPTag>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedClusterIPTag>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("ipTagType"u8);
             writer.WriteStringValue(IPTagType);
             writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterIPTag DeserializeManagedClusterIPTag(JsonElement element)
+        internal static ManagedClusterIPTag DeserializeManagedClusterIPTag(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string ipTagType = default;
             string tag = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipTagType"u8))
@@ -42,8 +65,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     tag = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedClusterIPTag(ipTagType, tag);
+            return new ManagedClusterIPTag(ipTagType, tag, rawData);
+        }
+
+        ManagedClusterIPTag IModelJsonSerializable<ManagedClusterIPTag>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterIPTag(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedClusterIPTag>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedClusterIPTag IModelSerializable<ManagedClusterIPTag>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedClusterIPTag(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedClusterIPTag model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedClusterIPTag(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedClusterIPTag(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

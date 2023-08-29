@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSqlRestoreContent : IUtf8JsonSerializable
+    public partial class WorkloadSqlRestoreContent : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadSqlRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadSqlRestoreContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadSqlRestoreContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlRestoreContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ShouldUseAlternateTargetLocation))
             {
@@ -74,11 +81,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadSqlRestoreContent DeserializeWorkloadSqlRestoreContent(JsonElement element)
+        internal static WorkloadSqlRestoreContent DeserializeWorkloadSqlRestoreContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +113,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadSQLRestoreWithRehydrateRequest": return WorkloadSqlRestoreWithRehydrateContent.DeserializeWorkloadSqlRestoreWithRehydrateContent(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<bool> shouldUseAlternateTargetLocation = default;
             Optional<bool> isNonRecoverable = default;
             Optional<IList<SqlDataDirectoryMapping>> alternateDirectoryPaths = default;
@@ -102,6 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RecoveryMode> recoveryMode = default;
             Optional<ResourceIdentifier> targetVirtualMachineId = default;
             string objectType = "AzureWorkloadSQLRestoreRequest";
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shouldUseAlternateTargetLocation"u8))
@@ -200,8 +224,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadSqlRestoreContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Optional.ToNullable(shouldUseAlternateTargetLocation), Optional.ToNullable(isNonRecoverable), Optional.ToList(alternateDirectoryPaths));
+            return new WorkloadSqlRestoreContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Optional.ToNullable(shouldUseAlternateTargetLocation), Optional.ToNullable(isNonRecoverable), Optional.ToList(alternateDirectoryPaths), rawData);
+        }
+
+        WorkloadSqlRestoreContent IModelJsonSerializable<WorkloadSqlRestoreContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadSqlRestoreContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadSqlRestoreContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlRestoreContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadSqlRestoreContent IModelSerializable<WorkloadSqlRestoreContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadSqlRestoreContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadSqlRestoreContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadSqlRestoreContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadSqlRestoreContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

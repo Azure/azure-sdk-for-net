@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByTableNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseColumnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseColumnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByTableNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseColumnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseColumnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

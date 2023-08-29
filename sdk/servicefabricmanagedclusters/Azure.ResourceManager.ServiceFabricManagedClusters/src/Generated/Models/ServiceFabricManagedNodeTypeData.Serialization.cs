@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedNodeTypeData : IUtf8JsonSerializable
+    public partial class ServiceFabricManagedNodeTypeData : IUtf8JsonSerializable, IModelJsonSerializable<ServiceFabricManagedNodeTypeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceFabricManagedNodeTypeData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceFabricManagedNodeTypeData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -294,11 +301,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteObjectValue(VmImagePlan);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceFabricManagedNodeTypeData DeserializeServiceFabricManagedNodeTypeData(JsonElement element)
+        internal static ServiceFabricManagedNodeTypeData DeserializeServiceFabricManagedNodeTypeData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -352,6 +373,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<ResourceIdentifier> vmSharedGalleryImageId = default;
             Optional<ResourceIdentifier> natGatewayId = default;
             Optional<VmImagePlan> vmImagePlan = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -813,8 +835,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, Optional.ToDictionary(tags));
+            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, Optional.ToDictionary(tags), rawData);
+        }
+
+        ServiceFabricManagedNodeTypeData IModelJsonSerializable<ServiceFabricManagedNodeTypeData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceFabricManagedNodeTypeData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceFabricManagedNodeTypeData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceFabricManagedNodeTypeData IModelSerializable<ServiceFabricManagedNodeTypeData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceFabricManagedNodeTypeData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServiceFabricManagedNodeTypeData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServiceFabricManagedNodeTypeData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceFabricManagedNodeTypeData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

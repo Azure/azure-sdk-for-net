@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt disk input. </summary>
     public partial class VMwareCbtDiskContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtDiskContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
@@ -30,6 +33,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IsOSDisk = isOSDisk;
             LogStorageAccountId = logStorageAccountId;
             LogStorageAccountSasSecretName = logStorageAccountSasSecretName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtDiskContent"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareCbtDiskContent(string diskId, SiteRecoveryDiskAccountType? diskType, string isOSDisk, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, Dictionary<string, BinaryData> rawData)
+        {
+            DiskId = diskId;
+            DiskType = diskType;
+            IsOSDisk = isOSDisk;
+            LogStorageAccountId = logStorageAccountId;
+            LogStorageAccountSasSecretName = logStorageAccountSasSecretName;
+            DiskEncryptionSetId = diskEncryptionSetId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtDiskContent"/> for deserialization. </summary>
+        internal VMwareCbtDiskContent()
+        {
         }
 
         /// <summary> The disk Id. </summary>

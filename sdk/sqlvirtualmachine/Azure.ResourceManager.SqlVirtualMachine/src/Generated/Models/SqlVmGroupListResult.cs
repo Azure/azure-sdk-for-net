@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SqlVirtualMachine;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> A list of SQL virtual machine groups. </summary>
     internal partial class SqlVmGroupListResult
     {
-        /// <summary> Initializes a new instance of SqlVmGroupListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlVmGroupListResult"/>. </summary>
         internal SqlVmGroupListResult()
         {
             Value = new ChangeTrackingList<SqlVmGroupData>();
         }
 
-        /// <summary> Initializes a new instance of SqlVmGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmGroupListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SqlVmGroupListResult(IReadOnlyList<SqlVmGroupData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlVmGroupListResult(IReadOnlyList<SqlVmGroupData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of results. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -12,20 +14,24 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the private endpoint connection requests status. </summary>
     public partial class PrivateEndpointConnectionRequestStatus
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionRequestStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionRequestStatus"/>. </summary>
         internal PrivateEndpointConnectionRequestStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionRequestStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionRequestStatus"/>. </summary>
         /// <param name="privateLinkServiceId"> Resource id for which the private endpoint is created. </param>
         /// <param name="privateEndpointConnectionName"> The connection name for the private endpoint. </param>
         /// <param name="status"> Status of this private endpoint connection. </param>
-        internal PrivateEndpointConnectionRequestStatus(ResourceIdentifier privateLinkServiceId, string privateEndpointConnectionName, string status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointConnectionRequestStatus(ResourceIdentifier privateLinkServiceId, string privateEndpointConnectionName, string status, Dictionary<string, BinaryData> rawData)
         {
             PrivateLinkServiceId = privateLinkServiceId;
             PrivateEndpointConnectionName = privateEndpointConnectionName;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Resource id for which the private endpoint is created. </summary>

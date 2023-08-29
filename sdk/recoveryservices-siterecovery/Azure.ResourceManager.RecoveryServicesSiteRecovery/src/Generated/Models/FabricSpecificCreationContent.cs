@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -14,9 +17,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class FabricSpecificCreationContent
     {
-        /// <summary> Initializes a new instance of FabricSpecificCreationContent. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificCreationContent"/>. </summary>
         protected FabricSpecificCreationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificCreationContent"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FabricSpecificCreationContent(string instanceType, Dictionary<string, BinaryData> rawData)
+        {
+            InstanceType = instanceType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the class type. </summary>

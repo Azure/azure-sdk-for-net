@@ -5,27 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> SKU of the namespace. </summary>
     public partial class ServiceBusSku
     {
-        /// <summary> Initializes a new instance of ServiceBusSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         public ServiceBusSku(ServiceBusSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ServiceBusSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The billing tier of this particular SKU. </param>
         /// <param name="capacity"> Messaging units for your service bus premium namespace. Valid capacities are {1, 2, 4, 8, 16} multiples of your properties.premiumMessagingPartitions setting. For example, If properties.premiumMessagingPartitions is 1 then possible capacity values are 1, 2, 4, 8, and 16. If properties.premiumMessagingPartitions is 4 then possible capacity values are 4, 8, 16, 32 and 64. </param>
-        internal ServiceBusSku(ServiceBusSkuName name, ServiceBusSkuTier? tier, int? capacity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusSku(ServiceBusSkuName name, ServiceBusSkuTier? tier, int? capacity, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
             Capacity = capacity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSku"/> for deserialization. </summary>
+        internal ServiceBusSku()
+        {
         }
 
         /// <summary> Name of this SKU. </summary>

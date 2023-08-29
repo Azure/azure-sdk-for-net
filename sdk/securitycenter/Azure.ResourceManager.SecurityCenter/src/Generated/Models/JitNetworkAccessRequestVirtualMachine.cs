@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The JitNetworkAccessRequestVirtualMachine. </summary>
     public partial class JitNetworkAccessRequestVirtualMachine
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessRequestVirtualMachine. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestVirtualMachine"/>. </summary>
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> The ports that were opened for the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ports"/> is null. </exception>
@@ -28,13 +30,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Ports = ports.ToList();
         }
 
-        /// <summary> Initializes a new instance of JitNetworkAccessRequestVirtualMachine. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestVirtualMachine"/>. </summary>
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> The ports that were opened for the virtual machine. </param>
-        internal JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessRequestPort> ports)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessRequestPort> ports, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Ports = ports;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestVirtualMachine"/> for deserialization. </summary>
+        internal JitNetworkAccessRequestVirtualMachine()
+        {
         }
 
         /// <summary> Resource ID of the virtual machine that is linked to this policy. </summary>

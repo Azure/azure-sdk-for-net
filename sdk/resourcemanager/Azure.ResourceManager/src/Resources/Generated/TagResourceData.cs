@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class TagResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of TagResourceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TagResourceData"/>. </summary>
         /// <param name="properties"> The set of tags. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TagResourceData(Tag properties)
@@ -29,15 +31,22 @@ namespace Azure.ResourceManager.Resources
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of TagResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The set of tags. </param>
-        internal TagResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Tag properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TagResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Tag properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TagResourceData"/> for deserialization. </summary>
+        internal TagResourceData()
+        {
         }
 
         /// <summary> The set of tags. </summary>

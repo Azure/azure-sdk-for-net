@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The token information details. </summary>
     public partial class TokenInformation
     {
-        /// <summary> Initializes a new instance of TokenInformation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TokenInformation"/>. </summary>
         internal TokenInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of TokenInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="TokenInformation"/>. </summary>
         /// <param name="token"> Token value. </param>
         /// <param name="expiryTimeInUtcTicks"> Expiry time of token. </param>
         /// <param name="securityPin"> Security PIN. </param>
-        internal TokenInformation(string token, long? expiryTimeInUtcTicks, string securityPin)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TokenInformation(string token, long? expiryTimeInUtcTicks, string securityPin, Dictionary<string, BinaryData> rawData)
         {
             Token = token;
             ExpiryTimeInUtcTicks = expiryTimeInUtcTicks;
             SecurityPin = securityPin;
+            _rawData = rawData;
         }
 
         /// <summary> Token value. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ArmDeploymentData : ResourceData
     {
-        /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentData"/>. </summary>
         internal ArmDeploymentData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,11 +35,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="location"> the location of the deployment. </param>
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="tags"> Deployment tags. </param>
-        internal ArmDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ArmDeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ArmDeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
             Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> the location of the deployment. </summary>

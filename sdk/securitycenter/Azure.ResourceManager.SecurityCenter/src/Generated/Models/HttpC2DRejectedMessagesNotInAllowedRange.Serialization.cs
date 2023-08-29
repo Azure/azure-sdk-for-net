@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class HttpC2DRejectedMessagesNotInAllowedRange : IUtf8JsonSerializable
+    public partial class HttpC2DRejectedMessagesNotInAllowedRange : IUtf8JsonSerializable, IModelJsonSerializable<HttpC2DRejectedMessagesNotInAllowedRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HttpC2DRejectedMessagesNotInAllowedRange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HttpC2DRejectedMessagesNotInAllowedRange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<HttpC2DRejectedMessagesNotInAllowedRange>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("timeWindowSize"u8);
             writer.WriteStringValue(TimeWindowSize, "P");
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HttpC2DRejectedMessagesNotInAllowedRange DeserializeHttpC2DRejectedMessagesNotInAllowedRange(JsonElement element)
+        internal static HttpC2DRejectedMessagesNotInAllowedRange DeserializeHttpC2DRejectedMessagesNotInAllowedRange(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeWindowSize"u8))
@@ -79,8 +101,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HttpC2DRejectedMessagesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize);
+            return new HttpC2DRejectedMessagesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize, rawData);
+        }
+
+        HttpC2DRejectedMessagesNotInAllowedRange IModelJsonSerializable<HttpC2DRejectedMessagesNotInAllowedRange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HttpC2DRejectedMessagesNotInAllowedRange>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHttpC2DRejectedMessagesNotInAllowedRange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HttpC2DRejectedMessagesNotInAllowedRange>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HttpC2DRejectedMessagesNotInAllowedRange>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HttpC2DRejectedMessagesNotInAllowedRange IModelSerializable<HttpC2DRejectedMessagesNotInAllowedRange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HttpC2DRejectedMessagesNotInAllowedRange>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHttpC2DRejectedMessagesNotInAllowedRange(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HttpC2DRejectedMessagesNotInAllowedRange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HttpC2DRejectedMessagesNotInAllowedRange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHttpC2DRejectedMessagesNotInAllowedRange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

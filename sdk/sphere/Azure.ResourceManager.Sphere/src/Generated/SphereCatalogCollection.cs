@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

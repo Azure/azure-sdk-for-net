@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     /// <summary> AzureDevOps Project properties. </summary>
     public partial class AzureDevOpsProjectProperties
     {
-        /// <summary> Initializes a new instance of AzureDevOpsProjectProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectProperties"/>. </summary>
         public AzureDevOpsProjectProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsProjectProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="projectId"> Gets or sets AzureDevOps Project Id. </param>
         /// <param name="orgName"> Gets or sets AzureDevOps Org Name. </param>
         /// <param name="autoDiscovery"></param>
-        internal AzureDevOpsProjectProperties(ProvisioningState? provisioningState, string projectId, string orgName, AutoDiscovery? autoDiscovery)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsProjectProperties(ProvisioningState? provisioningState, string projectId, string orgName, AutoDiscovery? autoDiscovery, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             ProjectId = projectId;
             OrgName = orgName;
             AutoDiscovery = autoDiscovery;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the provisioning state. </summary>

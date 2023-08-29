@@ -5,16 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class AppliedReservationData
+    public partial class AppliedReservationData : IUtf8JsonSerializable, IModelJsonSerializable<AppliedReservationData>
     {
-        internal static AppliedReservationData DeserializeAppliedReservationData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppliedReservationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppliedReservationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ReservationOrderIds))
+            {
+                writer.WritePropertyName("reservationOrderIds"u8);
+                writer.WriteObjectValue(ReservationOrderIds);
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AppliedReservationData DeserializeAppliedReservationData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +60,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<AppliedReservationList> reservationOrderIds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -71,8 +108,57 @@ namespace Azure.ResourceManager.Reservations.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppliedReservationData(id, name, type, systemData.Value, reservationOrderIds.Value);
+            return new AppliedReservationData(id, name, type, systemData.Value, reservationOrderIds.Value, rawData);
+        }
+
+        AppliedReservationData IModelJsonSerializable<AppliedReservationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppliedReservationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppliedReservationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppliedReservationData IModelSerializable<AppliedReservationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppliedReservationData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AppliedReservationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AppliedReservationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppliedReservationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

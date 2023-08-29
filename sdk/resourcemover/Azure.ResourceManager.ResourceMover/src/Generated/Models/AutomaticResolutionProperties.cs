@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -12,19 +14,23 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the properties for automatic resolution. </summary>
     internal partial class AutomaticResolutionProperties
     {
-        /// <summary> Initializes a new instance of AutomaticResolutionProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomaticResolutionProperties"/>. </summary>
         internal AutomaticResolutionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomaticResolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomaticResolutionProperties"/>. </summary>
         /// <param name="resourceId">
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
         /// </param>
-        internal AutomaticResolutionProperties(ResourceIdentifier resourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomaticResolutionProperties(ResourceIdentifier resourceId, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
+            _rawData = rawData;
         }
 
         /// <summary>

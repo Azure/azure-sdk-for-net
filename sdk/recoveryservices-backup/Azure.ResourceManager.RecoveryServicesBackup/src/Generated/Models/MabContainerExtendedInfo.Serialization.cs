@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabContainerExtendedInfo : IUtf8JsonSerializable
+    public partial class MabContainerExtendedInfo : IUtf8JsonSerializable, IModelJsonSerializable<MabContainerExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MabContainerExtendedInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MabContainerExtendedInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LastRefreshedOn))
             {
@@ -47,11 +53,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MabContainerExtendedInfo DeserializeMabContainerExtendedInfo(JsonElement element)
+        internal static MabContainerExtendedInfo DeserializeMabContainerExtendedInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> backupItems = default;
             Optional<string> policyName = default;
             Optional<string> lastBackupStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastRefreshedAt"u8))
@@ -105,8 +126,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     lastBackupStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MabContainerExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(backupItemType), Optional.ToList(backupItems), policyName.Value, lastBackupStatus.Value);
+            return new MabContainerExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(backupItemType), Optional.ToList(backupItems), policyName.Value, lastBackupStatus.Value, rawData);
+        }
+
+        MabContainerExtendedInfo IModelJsonSerializable<MabContainerExtendedInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMabContainerExtendedInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MabContainerExtendedInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MabContainerExtendedInfo IModelSerializable<MabContainerExtendedInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMabContainerExtendedInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MabContainerExtendedInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MabContainerExtendedInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMabContainerExtendedInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

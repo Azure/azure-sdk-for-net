@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Certificate details representing the Vault credentials for AAD. </summary>
     public partial class ResourceCertificateAndAadDetails : ResourceCertificateDetails
     {
-        /// <summary> Initializes a new instance of ResourceCertificateAndAadDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAadDetails"/>. </summary>
         /// <param name="aadAuthority"> AAD tenant authority. </param>
         /// <param name="aadTenantId"> AAD tenant Id. </param>
         /// <param name="servicePrincipalClientId"> AAD service principal clientId. </param>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             AuthType = "AzureActiveDirectory";
         }
 
-        /// <summary> Initializes a new instance of ResourceCertificateAndAadDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAadDetails"/>. </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
@@ -52,7 +53,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="azureManagementEndpointAudience"> Azure Management Endpoint Audience. </param>
         /// <param name="serviceResourceId"> Service Resource Id. </param>
         /// <param name="aadAudience"> AAD audience for the resource. </param>
-        internal ResourceCertificateAndAadDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, string aadAuthority, Guid aadTenantId, string servicePrincipalClientId, string servicePrincipalObjectId, string azureManagementEndpointAudience, ResourceIdentifier serviceResourceId, string aadAudience) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceCertificateAndAadDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, string aadAuthority, Guid aadTenantId, string servicePrincipalClientId, string servicePrincipalObjectId, string azureManagementEndpointAudience, ResourceIdentifier serviceResourceId, string aadAudience, Dictionary<string, BinaryData> rawData) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, rawData)
         {
             AadAuthority = aadAuthority;
             AadTenantId = aadTenantId;
@@ -62,6 +64,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             ServiceResourceId = serviceResourceId;
             AadAudience = aadAudience;
             AuthType = authType ?? "AzureActiveDirectory";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAadDetails"/> for deserialization. </summary>
+        internal ResourceCertificateAndAadDetails()
+        {
         }
 
         /// <summary> AAD tenant authority. </summary>

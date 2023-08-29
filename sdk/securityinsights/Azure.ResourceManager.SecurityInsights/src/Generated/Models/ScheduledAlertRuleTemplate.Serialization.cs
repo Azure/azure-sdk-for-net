@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ScheduledAlertRuleTemplate : IUtf8JsonSerializable
+    public partial class ScheduledAlertRuleTemplate : IUtf8JsonSerializable, IModelJsonSerializable<ScheduledAlertRuleTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScheduledAlertRuleTemplate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScheduledAlertRuleTemplate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ScheduledAlertRuleTemplate>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -139,11 +145,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteObjectValue(AlertDetailsOverride);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScheduledAlertRuleTemplate DeserializeScheduledAlertRuleTemplate(JsonElement element)
+        internal static ScheduledAlertRuleTemplate DeserializeScheduledAlertRuleTemplate(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -173,6 +193,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IDictionary<string, string>> customDetails = default;
             Optional<IList<SecurityInsightsAlertRuleEntityMapping>> entityMappings = default;
             Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -405,8 +426,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), Optional.ToList(tactics), Optional.ToList(techniques), version.Value, eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value);
+            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), Optional.ToList(tactics), Optional.ToList(techniques), version.Value, eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value, rawData);
+        }
+
+        ScheduledAlertRuleTemplate IModelJsonSerializable<ScheduledAlertRuleTemplate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ScheduledAlertRuleTemplate>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduledAlertRuleTemplate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScheduledAlertRuleTemplate>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ScheduledAlertRuleTemplate>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScheduledAlertRuleTemplate IModelSerializable<ScheduledAlertRuleTemplate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ScheduledAlertRuleTemplate>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScheduledAlertRuleTemplate(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ScheduledAlertRuleTemplate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ScheduledAlertRuleTemplate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScheduledAlertRuleTemplate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

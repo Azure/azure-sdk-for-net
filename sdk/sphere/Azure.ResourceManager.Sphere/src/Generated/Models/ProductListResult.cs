@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     internal partial class ProductListResult
     {
-        /// <summary> Initializes a new instance of ProductListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductListResult"/>. </summary>
         /// <param name="value">
         /// The Product items on this page
         /// Serialized Name: ProductListResult.value
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ProductListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductListResult"/>. </summary>
         /// <param name="value">
         /// The Product items on this page
         /// Serialized Name: ProductListResult.value
@@ -41,10 +43,17 @@ namespace Azure.ResourceManager.Sphere.Models
         /// The link to the next page of items
         /// Serialized Name: ProductListResult.nextLink
         /// </param>
-        internal ProductListResult(IReadOnlyList<SphereProductData> value, Uri nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductListResult(IReadOnlyList<SphereProductData> value, Uri nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProductListResult"/> for deserialization. </summary>
+        internal ProductListResult()
+        {
         }
 
         /// <summary>

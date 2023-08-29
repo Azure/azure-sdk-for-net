@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,9 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> BackupStatus request. </summary>
     public partial class BackupStatusContent
     {
-        /// <summary> Initializes a new instance of BackupStatusContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupStatusContent"/>. </summary>
         public BackupStatusContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupStatusContent"/>. </summary>
+        /// <param name="resourceType"> Container Type - VM, SQLPaaS, DPM, AzureFileShare... </param>
+        /// <param name="resourceId"> Entire ARM resource id of the resource. </param>
+        /// <param name="poLogicalName"> Protectable Item Logical Name. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupStatusContent(BackupDataSourceType? resourceType, ResourceIdentifier resourceId, string poLogicalName, Dictionary<string, BinaryData> rawData)
+        {
+            ResourceType = resourceType;
+            ResourceId = resourceId;
+            PoLogicalName = poLogicalName;
+            _rawData = rawData;
         }
 
         /// <summary> Container Type - VM, SQLPaaS, DPM, AzureFileShare... </summary>

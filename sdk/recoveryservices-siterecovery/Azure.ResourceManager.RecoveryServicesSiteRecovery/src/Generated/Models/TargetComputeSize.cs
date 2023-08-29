@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Represents applicable recovery vm sizes. </summary>
     public partial class TargetComputeSize : ResourceData
     {
-        /// <summary> Initializes a new instance of TargetComputeSize. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetComputeSize"/>. </summary>
         internal TargetComputeSize()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetComputeSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetComputeSize"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The custom data. </param>
-        internal TargetComputeSize(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetComputeSizeProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetComputeSize(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetComputeSizeProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> The custom data. </summary>

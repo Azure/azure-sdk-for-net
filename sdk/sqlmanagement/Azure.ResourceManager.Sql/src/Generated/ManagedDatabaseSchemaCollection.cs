@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSchemaRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSchemaRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSchemaResource(Client, DatabaseSchemaData.DeserializeDatabaseSchemaData(e)), _managedDatabaseSchemaClientDiagnostics, Pipeline, "ManagedDatabaseSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedDatabaseSchemaResource(Client, DatabaseSchemaData.DeserializeDatabaseSchemaData(e)), _managedDatabaseSchemaClientDiagnostics, Pipeline, "ManagedDatabaseSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSchemaRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSchemaRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSchemaResource(Client, DatabaseSchemaData.DeserializeDatabaseSchemaData(e)), _managedDatabaseSchemaClientDiagnostics, Pipeline, "ManagedDatabaseSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedDatabaseSchemaResource(Client, DatabaseSchemaData.DeserializeDatabaseSchemaData(e)), _managedDatabaseSchemaClientDiagnostics, Pipeline, "ManagedDatabaseSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureReprotectContent : IUtf8JsonSerializable
+    public partial class HyperVReplicaAzureReprotectContent : IUtf8JsonSerializable, IModelJsonSerializable<HyperVReplicaAzureReprotectContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HyperVReplicaAzureReprotectContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HyperVReplicaAzureReprotectContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureReprotectContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(HyperVHostVmId))
             {
@@ -47,7 +55,133 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HyperVReplicaAzureReprotectContent DeserializeHyperVReplicaAzureReprotectContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> hvHostVmId = default;
+            Optional<string> vmName = default;
+            Optional<string> osType = default;
+            Optional<string> vhdId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<ResourceIdentifier> logStorageAccountId = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("hvHostVmId"u8))
+                {
+                    hvHostVmId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vmName"u8))
+                {
+                    vmName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("osType"u8))
+                {
+                    osType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vHDId"u8))
+                {
+                    vhdId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("storageAccountId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("logStorageAccountId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HyperVReplicaAzureReprotectContent(instanceType, hvHostVmId.Value, vmName.Value, osType.Value, vhdId.Value, storageAccountId.Value, logStorageAccountId.Value, rawData);
+        }
+
+        HyperVReplicaAzureReprotectContent IModelJsonSerializable<HyperVReplicaAzureReprotectContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureReprotectContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaAzureReprotectContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HyperVReplicaAzureReprotectContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureReprotectContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HyperVReplicaAzureReprotectContent IModelSerializable<HyperVReplicaAzureReprotectContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureReprotectContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHyperVReplicaAzureReprotectContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HyperVReplicaAzureReprotectContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HyperVReplicaAzureReprotectContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHyperVReplicaAzureReprotectContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

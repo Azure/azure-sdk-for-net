@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The resource properties when type is Azure Key Vault. </summary>
     public partial class AzureKeyVaultProperties : AzureResourceBaseProperties
     {
-        /// <summary> Initializes a new instance of AzureKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultProperties"/>. </summary>
         public AzureKeyVaultProperties()
         {
             AzureResourceType = AzureResourceType.KeyVault;
         }
 
-        /// <summary> Initializes a new instance of AzureKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultProperties"/>. </summary>
         /// <param name="azureResourceType"> The azure resource type. </param>
         /// <param name="doesConnectAsKubernetesCsiDriver"> True if connect via Kubernetes CSI Driver. </param>
-        internal AzureKeyVaultProperties(AzureResourceType azureResourceType, bool? doesConnectAsKubernetesCsiDriver) : base(azureResourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureKeyVaultProperties(AzureResourceType azureResourceType, bool? doesConnectAsKubernetesCsiDriver, Dictionary<string, BinaryData> rawData) : base(azureResourceType, rawData)
         {
             DoesConnectAsKubernetesCsiDriver = doesConnectAsKubernetesCsiDriver;
             AzureResourceType = azureResourceType;

@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List of incident comments. </summary>
     internal partial class IncidentCommentList
     {
-        /// <summary> Initializes a new instance of IncidentCommentList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IncidentCommentList"/>. </summary>
         /// <param name="value"> Array of comments. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentCommentList(IEnumerable<SecurityInsightsIncidentCommentData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IncidentCommentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentCommentList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of comments. </param>
         /// <param name="value"> Array of comments. </param>
-        internal IncidentCommentList(string nextLink, IReadOnlyList<SecurityInsightsIncidentCommentData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncidentCommentList(string nextLink, IReadOnlyList<SecurityInsightsIncidentCommentData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IncidentCommentList"/> for deserialization. </summary>
+        internal IncidentCommentList()
+        {
         }
 
         /// <summary> URL to fetch the next set of comments. </summary>

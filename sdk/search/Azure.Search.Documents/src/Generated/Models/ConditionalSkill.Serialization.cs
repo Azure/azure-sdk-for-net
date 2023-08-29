@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ConditionalSkill : IUtf8JsonSerializable
+    public partial class ConditionalSkill : IUtf8JsonSerializable, IModelJsonSerializable<ConditionalSkill>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConditionalSkill>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConditionalSkill>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ConditionalSkill>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
@@ -47,11 +54,25 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConditionalSkill DeserializeConditionalSkill(JsonElement element)
+        internal static ConditionalSkill DeserializeConditionalSkill(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +83,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -104,8 +126,57 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputs = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConditionalSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs);
+            return new ConditionalSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, rawData);
+        }
+
+        ConditionalSkill IModelJsonSerializable<ConditionalSkill>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ConditionalSkill>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConditionalSkill(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConditionalSkill>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ConditionalSkill>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConditionalSkill IModelSerializable<ConditionalSkill>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ConditionalSkill>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConditionalSkill(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConditionalSkill model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConditionalSkill(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConditionalSkill(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

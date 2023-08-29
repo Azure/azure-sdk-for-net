@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The target that a job execution is executed on. </summary>
     public partial class JobExecutionTarget
     {
-        /// <summary> Initializes a new instance of JobExecutionTarget. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobExecutionTarget"/>. </summary>
         internal JobExecutionTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of JobExecutionTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobExecutionTarget"/>. </summary>
         /// <param name="targetType"> The type of the target. </param>
         /// <param name="serverName"> The server name. </param>
         /// <param name="databaseName"> The database name. </param>
-        internal JobExecutionTarget(JobTargetType? targetType, string serverName, string databaseName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobExecutionTarget(JobTargetType? targetType, string serverName, string databaseName, Dictionary<string, BinaryData> rawData)
         {
             TargetType = targetType;
             ServerName = serverName;
             DatabaseName = databaseName;
+            _rawData = rawData;
         }
 
         /// <summary> The type of the target. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -20,22 +22,26 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsThreatIntelligenceIndicatorBaseData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligenceIndicatorBaseData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/>. </summary>
         public SecurityInsightsThreatIntelligenceIndicatorBaseData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligenceIndicatorBaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsThreatIntelligenceIndicatorBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsThreatIntelligenceIndicatorBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ETag = etag;
+            _rawData = rawData;
         }
 
         /// <summary> The kind of the entity. </summary>

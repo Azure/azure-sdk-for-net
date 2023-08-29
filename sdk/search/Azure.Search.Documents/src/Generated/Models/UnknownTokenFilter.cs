@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
@@ -12,12 +14,18 @@ namespace Azure.Search.Documents.Models
     /// <summary> The UnknownTokenFilter. </summary>
     internal partial class UnknownTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of UnknownTokenFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTokenFilter"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal UnknownTokenFilter(string oDataType, string name) : base(oDataType, name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownTokenFilter(string oDataType, string name, Dictionary<string, BinaryData> rawData) : base(oDataType, name, rawData)
         {
             ODataType = oDataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTokenFilter"/> for deserialization. </summary>
+        internal UnknownTokenFilter()
+        {
         }
     }
 }

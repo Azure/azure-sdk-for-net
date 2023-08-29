@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Parameters for Redis import operation. </summary>
     public partial class ImportRdbContent
     {
-        /// <summary> Initializes a new instance of ImportRdbContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImportRdbContent"/>. </summary>
         /// <param name="files"> files to import. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="files"/> is null. </exception>
         public ImportRdbContent(IEnumerable<string> files)
@@ -23,6 +25,26 @@ namespace Azure.ResourceManager.Redis.Models
             Argument.AssertNotNull(files, nameof(files));
 
             Files = files.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportRdbContent"/>. </summary>
+        /// <param name="format"> File format. </param>
+        /// <param name="files"> files to import. </param>
+        /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="storageSubscriptionId"> Subscription id of the storage container containing files to import using Managed Identity. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImportRdbContent(string format, IList<string> files, string preferredDataArchiveAuthMethod, string storageSubscriptionId, Dictionary<string, BinaryData> rawData)
+        {
+            Format = format;
+            Files = files;
+            PreferredDataArchiveAuthMethod = preferredDataArchiveAuthMethod;
+            StorageSubscriptionId = storageSubscriptionId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportRdbContent"/> for deserialization. </summary>
+        internal ImportRdbContent()
+        {
         }
 
         /// <summary> File format. </summary>

@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class OfficeDataConnectorDataTypesTeams : IUtf8JsonSerializable
+    internal partial class OfficeDataConnectorDataTypesTeams : IUtf8JsonSerializable, IModelJsonSerializable<OfficeDataConnectorDataTypesTeams>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OfficeDataConnectorDataTypesTeams>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OfficeDataConnectorDataTypesTeams>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<OfficeDataConnectorDataTypesTeams>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OfficeDataConnectorDataTypesTeams DeserializeOfficeDataConnectorDataTypesTeams(JsonElement element)
+        internal static OfficeDataConnectorDataTypesTeams DeserializeOfficeDataConnectorDataTypesTeams(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SecurityInsightsDataTypeConnectionState> state = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -41,8 +64,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     state = new SecurityInsightsDataTypeConnectionState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OfficeDataConnectorDataTypesTeams(Optional.ToNullable(state));
+            return new OfficeDataConnectorDataTypesTeams(Optional.ToNullable(state), rawData);
+        }
+
+        OfficeDataConnectorDataTypesTeams IModelJsonSerializable<OfficeDataConnectorDataTypesTeams>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OfficeDataConnectorDataTypesTeams>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOfficeDataConnectorDataTypesTeams(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OfficeDataConnectorDataTypesTeams>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OfficeDataConnectorDataTypesTeams>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OfficeDataConnectorDataTypesTeams IModelSerializable<OfficeDataConnectorDataTypesTeams>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OfficeDataConnectorDataTypesTeams>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOfficeDataConnectorDataTypesTeams(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(OfficeDataConnectorDataTypesTeams model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator OfficeDataConnectorDataTypesTeams(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOfficeDataConnectorDataTypesTeams(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

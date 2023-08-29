@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryFabricReplicationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryFabricReplicationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryFabricResource(Client, SiteRecoveryFabricData.DeserializeSiteRecoveryFabricData(e)), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, "SiteRecoveryFabricCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteRecoveryFabricResource(Client, SiteRecoveryFabricData.DeserializeSiteRecoveryFabricData(e)), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, "SiteRecoveryFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryFabricReplicationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryFabricReplicationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryFabricResource(Client, SiteRecoveryFabricData.DeserializeSiteRecoveryFabricData(e)), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, "SiteRecoveryFabricCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteRecoveryFabricResource(Client, SiteRecoveryFabricData.DeserializeSiteRecoveryFabricData(e)), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, "SiteRecoveryFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

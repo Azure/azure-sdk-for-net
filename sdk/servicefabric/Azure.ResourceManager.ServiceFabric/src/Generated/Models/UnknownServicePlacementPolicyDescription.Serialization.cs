@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    internal partial class UnknownServicePlacementPolicyDescription : IUtf8JsonSerializable
+    internal partial class UnknownServicePlacementPolicyDescription : IUtf8JsonSerializable, IModelJsonSerializable<ServicePlacementPolicyDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServicePlacementPolicyDescription>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServicePlacementPolicyDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownServicePlacementPolicyDescription DeserializeUnknownServicePlacementPolicyDescription(JsonElement element)
+        internal static ServicePlacementPolicyDescription DeserializeUnknownServicePlacementPolicyDescription(JsonElement element, ModelSerializerOptions options = default) => DeserializeServicePlacementPolicyDescription(element, options);
+
+        ServicePlacementPolicyDescription IModelJsonSerializable<ServicePlacementPolicyDescription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ServicePlacementPolicyType type = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ServicePlacementPolicyType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownServicePlacementPolicyDescription(type);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownServicePlacementPolicyDescription(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServicePlacementPolicyDescription>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServicePlacementPolicyDescription IModelSerializable<ServicePlacementPolicyDescription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServicePlacementPolicyDescription(doc.RootElement, options);
         }
     }
 }

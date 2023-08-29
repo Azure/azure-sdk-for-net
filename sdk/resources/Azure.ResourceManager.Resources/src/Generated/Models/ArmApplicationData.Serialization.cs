@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class ArmApplicationData : IUtf8JsonSerializable
+    public partial class ArmApplicationData : IUtf8JsonSerializable, IModelJsonSerializable<ArmApplicationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmApplicationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArmApplicationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ArmApplicationData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Plan))
             {
@@ -81,11 +87,25 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteObjectValue(JitAccessPolicy);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmApplicationData DeserializeArmApplicationData(JsonElement element)
+        internal static ArmApplicationData DeserializeArmApplicationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,6 +136,7 @@ namespace Azure.ResourceManager.Resources
             Optional<IReadOnlyList<ArmApplicationArtifact>> artifacts = default;
             Optional<ArmApplicationDetails> createdBy = default;
             Optional<ArmApplicationDetails> updatedBy = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"u8))
@@ -355,8 +376,57 @@ namespace Azure.ResourceManager.Resources
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArmApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, plan, kind, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, plan, kind, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value, rawData);
+        }
+
+        ArmApplicationData IModelJsonSerializable<ArmApplicationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ArmApplicationData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmApplicationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArmApplicationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ArmApplicationData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArmApplicationData IModelSerializable<ArmApplicationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ArmApplicationData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArmApplicationData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ArmApplicationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ArmApplicationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArmApplicationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

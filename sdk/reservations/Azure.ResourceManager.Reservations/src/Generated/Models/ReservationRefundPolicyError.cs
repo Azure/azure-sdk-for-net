@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> error details. </summary>
     public partial class ReservationRefundPolicyError
     {
-        /// <summary> Initializes a new instance of ReservationRefundPolicyError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundPolicyError"/>. </summary>
         internal ReservationRefundPolicyError()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundPolicyError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundPolicyError"/>. </summary>
         /// <param name="code"> Error code describing the reason that service is not able to process the incoming request. </param>
         /// <param name="message"></param>
-        internal ReservationRefundPolicyError(ReservationErrorResponseCode? code, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationRefundPolicyError(ReservationErrorResponseCode? code, string message, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Error code describing the reason that service is not able to process the incoming request. </summary>

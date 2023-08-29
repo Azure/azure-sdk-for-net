@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
@@ -17,22 +19,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class SiteRecoveryVaultSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingData"/>. </summary>
         internal SiteRecoveryVaultSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The vault setting properties. </param>
         /// <param name="location"> Resource Location. </param>
-        internal SiteRecoveryVaultSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryVaultSettingProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryVaultSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryVaultSettingProperties properties, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> The vault setting properties. </summary>

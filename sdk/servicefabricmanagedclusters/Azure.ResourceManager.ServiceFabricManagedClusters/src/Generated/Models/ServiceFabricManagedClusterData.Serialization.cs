@@ -11,15 +11,20 @@ using System.Net;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedClusterData : IUtf8JsonSerializable
+    public partial class ServiceFabricManagedClusterData : IUtf8JsonSerializable, IModelJsonSerializable<ServiceFabricManagedClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceFabricManagedClusterData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceFabricManagedClusterData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
@@ -214,11 +219,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStringValue(PublicIPPrefixId);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceFabricManagedClusterData DeserializeServiceFabricManagedClusterData(JsonElement element)
+        internal static ServiceFabricManagedClusterData DeserializeServiceFabricManagedClusterData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -265,6 +284,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<ZonalUpdateMode> zonalUpdateMode = default;
             Optional<bool> useCustomVnet = default;
             Optional<ResourceIdentifier> publicIPPrefixId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -670,8 +690,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceFabricManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, dnsName.Value, fqdn.Value, ipv4Address.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), Optional.ToList(clusterCertificateThumbprints), Optional.ToNullable(clientConnectionPort), Optional.ToNullable(httpGatewayConnectionPort), adminUserName.Value, adminPassword.Value, Optional.ToList(loadBalancingRules), Optional.ToNullable(allowRdpAccess), Optional.ToList(networkSecurityRules), Optional.ToList(clients), azureActiveDirectory.Value, Optional.ToList(fabricSettings), Optional.ToNullable(provisioningState), clusterCodeVersion.Value, Optional.ToNullable(clusterUpgradeMode), Optional.ToNullable(clusterUpgradeCadence), Optional.ToList(addonFeatures), Optional.ToNullable(enableAutoOSUpgrade), Optional.ToNullable(zonalResiliency), applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(enableIPv6), subnetId.Value, Optional.ToList(ipTags), ipv6Address.Value, Optional.ToNullable(enableServicePublicIP), Optional.ToList(auxiliarySubnets), Optional.ToList(serviceEndpoints), Optional.ToNullable(zonalUpdateMode), Optional.ToNullable(useCustomVnet), publicIPPrefixId.Value, Optional.ToNullable(etag));
+            return new ServiceFabricManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, dnsName.Value, fqdn.Value, ipv4Address.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), Optional.ToList(clusterCertificateThumbprints), Optional.ToNullable(clientConnectionPort), Optional.ToNullable(httpGatewayConnectionPort), adminUserName.Value, adminPassword.Value, Optional.ToList(loadBalancingRules), Optional.ToNullable(allowRdpAccess), Optional.ToList(networkSecurityRules), Optional.ToList(clients), azureActiveDirectory.Value, Optional.ToList(fabricSettings), Optional.ToNullable(provisioningState), clusterCodeVersion.Value, Optional.ToNullable(clusterUpgradeMode), Optional.ToNullable(clusterUpgradeCadence), Optional.ToList(addonFeatures), Optional.ToNullable(enableAutoOSUpgrade), Optional.ToNullable(zonalResiliency), applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(enableIPv6), subnetId.Value, Optional.ToList(ipTags), ipv6Address.Value, Optional.ToNullable(enableServicePublicIP), Optional.ToList(auxiliarySubnets), Optional.ToList(serviceEndpoints), Optional.ToNullable(zonalUpdateMode), Optional.ToNullable(useCustomVnet), publicIPPrefixId.Value, Optional.ToNullable(etag), rawData);
+        }
+
+        ServiceFabricManagedClusterData IModelJsonSerializable<ServiceFabricManagedClusterData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceFabricManagedClusterData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceFabricManagedClusterData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceFabricManagedClusterData IModelSerializable<ServiceFabricManagedClusterData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceFabricManagedClusterData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServiceFabricManagedClusterData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServiceFabricManagedClusterData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceFabricManagedClusterData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

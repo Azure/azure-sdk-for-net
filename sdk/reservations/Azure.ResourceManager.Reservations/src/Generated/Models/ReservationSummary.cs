@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The roll up count summary of reservations in each state. </summary>
     internal partial class ReservationSummary
     {
-        /// <summary> Initializes a new instance of ReservationSummary. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationSummary"/>. </summary>
         internal ReservationSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationSummary"/>. </summary>
         /// <param name="succeededCount"> The number of reservation in Succeeded state. </param>
         /// <param name="failedCount"> The number of reservation in Failed state. </param>
         /// <param name="expiringCount"> The number of reservation in Expiring state. </param>
@@ -25,7 +30,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="processingCount"> The number of reservation in Processing state. </param>
         /// <param name="warningCount"> The number of reservation in Warning state. </param>
         /// <param name="noBenefitCount"> The number of reservation in NoBenefit state. </param>
-        internal ReservationSummary(float? succeededCount, float? failedCount, float? expiringCount, float? expiredCount, float? pendingCount, float? cancelledCount, float? processingCount, float? warningCount, float? noBenefitCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationSummary(float? succeededCount, float? failedCount, float? expiringCount, float? expiredCount, float? pendingCount, float? cancelledCount, float? processingCount, float? warningCount, float? noBenefitCount, Dictionary<string, BinaryData> rawData)
         {
             SucceededCount = succeededCount;
             FailedCount = failedCount;
@@ -36,6 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ProcessingCount = processingCount;
             WarningCount = warningCount;
             NoBenefitCount = noBenefitCount;
+            _rawData = rawData;
         }
 
         /// <summary> The number of reservation in Succeeded state. </summary>

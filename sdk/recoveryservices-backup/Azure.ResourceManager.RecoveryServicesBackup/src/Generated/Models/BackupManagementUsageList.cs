@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Backup management usage for vault. </summary>
     internal partial class BackupManagementUsageList
     {
-        /// <summary> Initializes a new instance of BackupManagementUsageList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupManagementUsageList"/>. </summary>
         internal BackupManagementUsageList()
         {
             Value = new ChangeTrackingList<BackupManagementUsage>();
         }
 
-        /// <summary> Initializes a new instance of BackupManagementUsageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupManagementUsageList"/>. </summary>
         /// <param name="value"> The list of backup management usages for the given vault. </param>
-        internal BackupManagementUsageList(IReadOnlyList<BackupManagementUsage> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupManagementUsageList(IReadOnlyList<BackupManagementUsage> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of backup management usages for the given vault. </summary>

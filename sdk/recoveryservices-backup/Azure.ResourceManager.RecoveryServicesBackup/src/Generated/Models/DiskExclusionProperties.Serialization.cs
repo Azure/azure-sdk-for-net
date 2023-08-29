@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DiskExclusionProperties : IUtf8JsonSerializable
+    public partial class DiskExclusionProperties : IUtf8JsonSerializable, IModelJsonSerializable<DiskExclusionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiskExclusionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DiskExclusionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DiskLunList))
             {
@@ -31,17 +38,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isInclusionList"u8);
                 writer.WriteBooleanValue(IsInclusionList.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DiskExclusionProperties DeserializeDiskExclusionProperties(JsonElement element)
+        internal static DiskExclusionProperties DeserializeDiskExclusionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<int>> diskLunList = default;
             Optional<bool> isInclusionList = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskLunList"u8))
@@ -67,8 +89,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isInclusionList = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DiskExclusionProperties(Optional.ToList(diskLunList), Optional.ToNullable(isInclusionList));
+            return new DiskExclusionProperties(Optional.ToList(diskLunList), Optional.ToNullable(isInclusionList), rawData);
+        }
+
+        DiskExclusionProperties IModelJsonSerializable<DiskExclusionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskExclusionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DiskExclusionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DiskExclusionProperties IModelSerializable<DiskExclusionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDiskExclusionProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DiskExclusionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DiskExclusionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDiskExclusionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

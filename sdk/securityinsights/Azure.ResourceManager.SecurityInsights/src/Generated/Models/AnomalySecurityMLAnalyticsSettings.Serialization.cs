@@ -10,14 +10,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AnomalySecurityMLAnalyticsSettings : IUtf8JsonSerializable
+    public partial class AnomalySecurityMLAnalyticsSettings : IUtf8JsonSerializable, IModelJsonSerializable<AnomalySecurityMLAnalyticsSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnomalySecurityMLAnalyticsSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnomalySecurityMLAnalyticsSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AnomalySecurityMLAnalyticsSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -113,11 +118,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStringValue(SettingsDefinitionId.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AnomalySecurityMLAnalyticsSettings DeserializeAnomalySecurityMLAnalyticsSettings(JsonElement element)
+        internal static AnomalySecurityMLAnalyticsSettings DeserializeAnomalySecurityMLAnalyticsSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -142,6 +161,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<bool> isDefaultSettings = default;
             Optional<int> anomalySettingsVersion = default;
             Optional<Guid> settingsDefinitionId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -323,8 +343,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnomalySecurityMLAnalyticsSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToList(requiredDataConnectors), Optional.ToList(tactics), Optional.ToList(techniques), anomalyVersion.Value, customizableObservations.Value, Optional.ToNullable(frequency), Optional.ToNullable(settingsStatus), Optional.ToNullable(isDefaultSettings), Optional.ToNullable(anomalySettingsVersion), Optional.ToNullable(settingsDefinitionId));
+            return new AnomalySecurityMLAnalyticsSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToList(requiredDataConnectors), Optional.ToList(tactics), Optional.ToList(techniques), anomalyVersion.Value, customizableObservations.Value, Optional.ToNullable(frequency), Optional.ToNullable(settingsStatus), Optional.ToNullable(isDefaultSettings), Optional.ToNullable(anomalySettingsVersion), Optional.ToNullable(settingsDefinitionId), rawData);
+        }
+
+        AnomalySecurityMLAnalyticsSettings IModelJsonSerializable<AnomalySecurityMLAnalyticsSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnomalySecurityMLAnalyticsSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnomalySecurityMLAnalyticsSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnomalySecurityMLAnalyticsSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnomalySecurityMLAnalyticsSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnomalySecurityMLAnalyticsSettings IModelSerializable<AnomalySecurityMLAnalyticsSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnomalySecurityMLAnalyticsSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnomalySecurityMLAnalyticsSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AnomalySecurityMLAnalyticsSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AnomalySecurityMLAnalyticsSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnomalySecurityMLAnalyticsSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

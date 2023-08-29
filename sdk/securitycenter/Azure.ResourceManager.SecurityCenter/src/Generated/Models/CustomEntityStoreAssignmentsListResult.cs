@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A list of custom entity store assignments. </summary>
     internal partial class CustomEntityStoreAssignmentsListResult
     {
-        /// <summary> Initializes a new instance of CustomEntityStoreAssignmentsListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomEntityStoreAssignmentsListResult"/>. </summary>
         internal CustomEntityStoreAssignmentsListResult()
         {
             Value = new ChangeTrackingList<CustomEntityStoreAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of CustomEntityStoreAssignmentsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntityStoreAssignmentsListResult"/>. </summary>
         /// <param name="value"> Collection of custom entity store assignments. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal CustomEntityStoreAssignmentsListResult(IReadOnlyList<CustomEntityStoreAssignmentData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomEntityStoreAssignmentsListResult(IReadOnlyList<CustomEntityStoreAssignmentData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Collection of custom entity store assignments. </summary>

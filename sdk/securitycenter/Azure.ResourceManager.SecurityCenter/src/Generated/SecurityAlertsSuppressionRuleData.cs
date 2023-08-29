@@ -19,12 +19,14 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityAlertsSuppressionRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAlertsSuppressionRuleData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertsSuppressionRuleData"/>. </summary>
         public SecurityAlertsSuppressionRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertsSuppressionRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertsSuppressionRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +38,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="state"> Possible states of the rule. </param>
         /// <param name="comment"> Any comment regarding the rule. </param>
         /// <param name="suppressionAlertsScope"> The suppression conditions. </param>
-        internal SecurityAlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, DateTimeOffset? lastModifiedOn, DateTimeOffset? expireOn, string reason, SecurityAlertsSuppressionRuleState? state, string comment, SuppressionAlertsScope suppressionAlertsScope) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, DateTimeOffset? lastModifiedOn, DateTimeOffset? expireOn, string reason, SecurityAlertsSuppressionRuleState? state, string comment, SuppressionAlertsScope suppressionAlertsScope, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             AlertType = alertType;
             LastModifiedOn = lastModifiedOn;
@@ -45,6 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter
             State = state;
             Comment = comment;
             SuppressionAlertsScope = suppressionAlertsScope;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the alert to automatically suppress. For all alert types, use '*'. </summary>

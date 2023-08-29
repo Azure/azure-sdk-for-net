@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Quota properties for the specified resource. </summary>
     public partial class QuotaProperties
     {
-        /// <summary> Initializes a new instance of QuotaProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaProperties"/>. </summary>
         public QuotaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaProperties"/>. </summary>
         /// <param name="limit">
         /// Resource quota limit properties.
         /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -35,7 +38,8 @@ namespace Azure.ResourceManager.Quota.Models
         /// </param>
         /// <param name="isQuotaApplicable"> States if quota can be requested for this resource. </param>
         /// <param name="properties"> Additional properties for the specific resource provider. </param>
-        internal QuotaProperties(QuotaLimitJsonObject limit, string unit, QuotaRequestResourceName name, string resourceTypeName, TimeSpan? quotaPeriod, bool? isQuotaApplicable, BinaryData properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaProperties(QuotaLimitJsonObject limit, string unit, QuotaRequestResourceName name, string resourceTypeName, TimeSpan? quotaPeriod, bool? isQuotaApplicable, BinaryData properties, Dictionary<string, BinaryData> rawData)
         {
             Limit = limit;
             Unit = unit;
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.Quota.Models
             QuotaPeriod = quotaPeriod;
             IsQuotaApplicable = isQuotaApplicable;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary>

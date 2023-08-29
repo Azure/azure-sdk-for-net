@@ -5,15 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryJobTaskDetails
+    public partial class SiteRecoveryJobTaskDetails : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryJobTaskDetails>
     {
-        internal static SiteRecoveryJobTaskDetails DeserializeSiteRecoveryJobTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryJobTaskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryJobTaskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SiteRecoveryJobTaskDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(JobTask))
+            {
+                writer.WritePropertyName("jobTask"u8);
+                writer.WriteObjectValue(JobTask);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryJobTaskDetails DeserializeSiteRecoveryJobTaskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,8 +61,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<SiteRecoveryJobEntity> jobTask = default;
             string instanceType = "JobTaskDetails";
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobTask"u8))
@@ -44,8 +82,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryJobTaskDetails(instanceType, jobTask.Value);
+            return new SiteRecoveryJobTaskDetails(instanceType, jobTask.Value, rawData);
+        }
+
+        SiteRecoveryJobTaskDetails IModelJsonSerializable<SiteRecoveryJobTaskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SiteRecoveryJobTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryJobTaskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryJobTaskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SiteRecoveryJobTaskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryJobTaskDetails IModelSerializable<SiteRecoveryJobTaskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SiteRecoveryJobTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryJobTaskDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SiteRecoveryJobTaskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SiteRecoveryJobTaskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryJobTaskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

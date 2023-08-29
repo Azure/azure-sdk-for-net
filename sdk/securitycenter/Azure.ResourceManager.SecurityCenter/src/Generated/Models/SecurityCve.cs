@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> CVE details. </summary>
     public partial class SecurityCve
     {
-        /// <summary> Initializes a new instance of SecurityCve. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCve"/>. </summary>
         internal SecurityCve()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCve. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCve"/>. </summary>
         /// <param name="title"> CVE title. </param>
         /// <param name="link"> Link url. </param>
-        internal SecurityCve(string title, string link)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityCve(string title, string link, Dictionary<string, BinaryData> rawData)
         {
             Title = title;
             Link = link;
+            _rawData = rawData;
         }
 
         /// <summary> CVE title. </summary>

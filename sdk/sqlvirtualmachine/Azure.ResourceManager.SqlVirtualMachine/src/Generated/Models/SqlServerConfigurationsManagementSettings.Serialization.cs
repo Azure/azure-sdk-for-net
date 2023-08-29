@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlServerConfigurationsManagementSettings : IUtf8JsonSerializable
+    public partial class SqlServerConfigurationsManagementSettings : IUtf8JsonSerializable, IModelJsonSerializable<SqlServerConfigurationsManagementSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlServerConfigurationsManagementSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlServerConfigurationsManagementSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlConnectivityUpdateSettings))
             {
@@ -40,11 +48,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("sqlInstanceSettings"u8);
                 writer.WriteObjectValue(SqlInstanceSettings);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlServerConfigurationsManagementSettings DeserializeSqlServerConfigurationsManagementSettings(JsonElement element)
+        internal static SqlServerConfigurationsManagementSettings DeserializeSqlServerConfigurationsManagementSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +76,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<SqlStorageUpdateSettings> sqlStorageUpdateSettings = default;
             Optional<AdditionalFeaturesServerConfigurations> additionalFeaturesServerConfigurations = default;
             Optional<SqlInstanceSettings> sqlInstanceSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlConnectivityUpdateSettings"u8))
@@ -101,8 +124,57 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlInstanceSettings = SqlInstanceSettings.DeserializeSqlInstanceSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlServerConfigurationsManagementSettings(sqlConnectivityUpdateSettings.Value, sqlWorkloadTypeUpdateSettings.Value, sqlStorageUpdateSettings.Value, additionalFeaturesServerConfigurations.Value, sqlInstanceSettings.Value);
+            return new SqlServerConfigurationsManagementSettings(sqlConnectivityUpdateSettings.Value, sqlWorkloadTypeUpdateSettings.Value, sqlStorageUpdateSettings.Value, additionalFeaturesServerConfigurations.Value, sqlInstanceSettings.Value, rawData);
+        }
+
+        SqlServerConfigurationsManagementSettings IModelJsonSerializable<SqlServerConfigurationsManagementSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlServerConfigurationsManagementSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlServerConfigurationsManagementSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlServerConfigurationsManagementSettings IModelSerializable<SqlServerConfigurationsManagementSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlServerConfigurationsManagementSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SqlServerConfigurationsManagementSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SqlServerConfigurationsManagementSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlServerConfigurationsManagementSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AdaptiveNetworkHardeningResource(Client, AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(e)), _adaptiveNetworkHardeningClientDiagnostics, Pipeline, "AdaptiveNetworkHardeningCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AdaptiveNetworkHardeningResource(Client, AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(e)), _adaptiveNetworkHardeningClientDiagnostics, Pipeline, "AdaptiveNetworkHardeningCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AdaptiveNetworkHardeningResource(Client, AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(e)), _adaptiveNetworkHardeningClientDiagnostics, Pipeline, "AdaptiveNetworkHardeningCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AdaptiveNetworkHardeningResource(Client, AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(e)), _adaptiveNetworkHardeningClientDiagnostics, Pipeline, "AdaptiveNetworkHardeningCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

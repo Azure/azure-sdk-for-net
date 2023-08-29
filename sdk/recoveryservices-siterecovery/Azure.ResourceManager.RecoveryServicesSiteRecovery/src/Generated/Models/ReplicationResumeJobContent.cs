@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Resume job params. </summary>
     public partial class ReplicationResumeJobContent
     {
-        /// <summary> Initializes a new instance of ReplicationResumeJobContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationResumeJobContent"/>. </summary>
         public ReplicationResumeJobContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationResumeJobContent"/>. </summary>
+        /// <param name="properties"> Resume job properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationResumeJobContent(ReplicationResumeJobProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Resume job properties. </summary>

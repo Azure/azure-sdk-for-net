@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,18 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload specific restore details for restores using managed identity. </summary>
     public partial class IdentityBasedRestoreDetails
     {
-        /// <summary> Initializes a new instance of IdentityBasedRestoreDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdentityBasedRestoreDetails"/>. </summary>
         public IdentityBasedRestoreDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentityBasedRestoreDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityBasedRestoreDetails"/>. </summary>
         /// <param name="objectType"> Gets the class type. </param>
         /// <param name="targetStorageAccountId"> Fully qualified ARM ID of the target storage account. </param>
-        internal IdentityBasedRestoreDetails(string objectType, ResourceIdentifier targetStorageAccountId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdentityBasedRestoreDetails(string objectType, ResourceIdentifier targetStorageAccountId, Dictionary<string, BinaryData> rawData)
         {
             ObjectType = objectType;
             TargetStorageAccountId = targetStorageAccountId;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the class type. </summary>

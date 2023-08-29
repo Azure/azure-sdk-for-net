@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -15,23 +17,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="AuthenticationDetailsProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AwsAssumeRoleAuthenticationDetailsProperties"/>, <see cref="AwsCredsAuthenticationDetailsProperties"/> and <see cref="GcpCredentialsDetailsProperties"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownAuthenticationDetailsProperties))]
     public abstract partial class AuthenticationDetailsProperties
     {
-        /// <summary> Initializes a new instance of AuthenticationDetailsProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthenticationDetailsProperties"/>. </summary>
         protected AuthenticationDetailsProperties()
         {
             GrantedPermissions = new ChangeTrackingList<SecurityCenterCloudPermission>();
         }
 
-        /// <summary> Initializes a new instance of AuthenticationDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationDetailsProperties"/>. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
-        internal AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, Dictionary<string, BinaryData> rawData)
         {
             AuthenticationProvisioningState = authenticationProvisioningState;
             GrantedPermissions = grantedPermissions;
             AuthenticationType = authenticationType;
+            _rawData = rawData;
         }
 
         /// <summary> State of the multi-cloud connector. </summary>

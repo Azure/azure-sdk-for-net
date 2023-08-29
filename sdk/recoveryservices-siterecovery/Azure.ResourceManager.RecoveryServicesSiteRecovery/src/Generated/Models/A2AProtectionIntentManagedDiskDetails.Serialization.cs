@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AProtectionIntentManagedDiskDetails : IUtf8JsonSerializable
+    public partial class A2AProtectionIntentManagedDiskDetails : IUtf8JsonSerializable, IModelJsonSerializable<A2AProtectionIntentManagedDiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<A2AProtectionIntentManagedDiskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<A2AProtectionIntentManagedDiskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
@@ -47,11 +55,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static A2AProtectionIntentManagedDiskDetails DeserializeA2AProtectionIntentManagedDiskDetails(JsonElement element)
+        internal static A2AProtectionIntentManagedDiskDetails DeserializeA2AProtectionIntentManagedDiskDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoveryTargetDiskAccountType = default;
             Optional<ResourceIdentifier> recoveryDiskEncryptionSetId = default;
             Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -116,8 +139,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new A2AProtectionIntentManagedDiskDetails(diskId, primaryStagingStorageAccountCustomContent.Value, recoveryResourceGroupCustomContent.Value, recoveryReplicaDiskAccountType.Value, recoveryTargetDiskAccountType.Value, recoveryDiskEncryptionSetId.Value, diskEncryptionInfo.Value);
+            return new A2AProtectionIntentManagedDiskDetails(diskId, primaryStagingStorageAccountCustomContent.Value, recoveryResourceGroupCustomContent.Value, recoveryReplicaDiskAccountType.Value, recoveryTargetDiskAccountType.Value, recoveryDiskEncryptionSetId.Value, diskEncryptionInfo.Value, rawData);
+        }
+
+        A2AProtectionIntentManagedDiskDetails IModelJsonSerializable<A2AProtectionIntentManagedDiskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AProtectionIntentManagedDiskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<A2AProtectionIntentManagedDiskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        A2AProtectionIntentManagedDiskDetails IModelSerializable<A2AProtectionIntentManagedDiskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeA2AProtectionIntentManagedDiskDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(A2AProtectionIntentManagedDiskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator A2AProtectionIntentManagedDiskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeA2AProtectionIntentManagedDiskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

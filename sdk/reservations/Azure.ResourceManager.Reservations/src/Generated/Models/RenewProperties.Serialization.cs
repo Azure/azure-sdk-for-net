@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class RenewProperties
+    public partial class RenewProperties : IUtf8JsonSerializable, IModelJsonSerializable<RenewProperties>
     {
-        internal static RenewProperties DeserializeRenewProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RenewProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RenewProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PurchaseProperties))
+            {
+                writer.WritePropertyName("purchaseProperties"u8);
+                writer.WriteObjectValue(PurchaseProperties);
+            }
+            if (Optional.IsDefined(PricingCurrencyTotal))
+            {
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
+                writer.WriteObjectValue(PricingCurrencyTotal);
+            }
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                writer.WritePropertyName("billingCurrencyTotal"u8);
+                writer.WriteObjectValue(BillingCurrencyTotal);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RenewProperties DeserializeRenewProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<ReservationPurchaseContent> purchaseProperties = default;
             Optional<RenewPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
             Optional<RenewPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purchaseProperties"u8))
@@ -50,8 +94,57 @@ namespace Azure.ResourceManager.Reservations.Models
                     billingCurrencyTotal = RenewPropertiesBillingCurrencyTotal.DeserializeRenewPropertiesBillingCurrencyTotal(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RenewProperties(purchaseProperties.Value, pricingCurrencyTotal.Value, billingCurrencyTotal.Value);
+            return new RenewProperties(purchaseProperties.Value, pricingCurrencyTotal.Value, billingCurrencyTotal.Value, rawData);
+        }
+
+        RenewProperties IModelJsonSerializable<RenewProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRenewProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RenewProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RenewProperties IModelSerializable<RenewProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRenewProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RenewProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RenewProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRenewProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

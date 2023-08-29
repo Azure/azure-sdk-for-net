@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary>
@@ -13,21 +16,25 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ServiceTypeDeltaHealthPolicy
     {
-        /// <summary> Initializes a new instance of ServiceTypeDeltaHealthPolicy. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceTypeDeltaHealthPolicy"/>. </summary>
         public ServiceTypeDeltaHealthPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceTypeDeltaHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTypeDeltaHealthPolicy"/>. </summary>
         /// <param name="maxPercentDeltaUnhealthyServices">
         /// The maximum allowed percentage of services health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the services at the beginning of upgrade and the state of the services at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits.
         ///
         /// </param>
-        internal ServiceTypeDeltaHealthPolicy(int? maxPercentDeltaUnhealthyServices)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceTypeDeltaHealthPolicy(int? maxPercentDeltaUnhealthyServices, Dictionary<string, BinaryData> rawData)
         {
             MaxPercentDeltaUnhealthyServices = maxPercentDeltaUnhealthyServices;
+            _rawData = rawData;
         }
 
         /// <summary>

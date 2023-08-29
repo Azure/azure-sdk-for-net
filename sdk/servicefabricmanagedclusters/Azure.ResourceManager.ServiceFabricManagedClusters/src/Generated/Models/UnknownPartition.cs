@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The UnknownPartition. </summary>
     internal partial class UnknownPartition : ManagedServicePartitionScheme
     {
-        /// <summary> Initializes a new instance of UnknownPartition. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownPartition"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        internal UnknownPartition(PartitionScheme partitionScheme) : base(partitionScheme)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownPartition(PartitionScheme partitionScheme, Dictionary<string, BinaryData> rawData) : base(partitionScheme, rawData)
         {
             PartitionScheme = partitionScheme;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownPartition"/> for deserialization. </summary>
+        internal UnknownPartition()
+        {
         }
     }
 }

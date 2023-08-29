@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityAlertAlertsRestClient.CreateListResourceGroupLevelByRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGroupSecurityAlertAlertsRestClient.CreateListResourceGroupLevelByRegionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGroupSecurityAlertResource(Client, SecurityAlertData.DeserializeSecurityAlertData(e)), _resourceGroupSecurityAlertAlertsClientDiagnostics, Pipeline, "ResourceGroupSecurityAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceGroupSecurityAlertResource(Client, SecurityAlertData.DeserializeSecurityAlertData(e)), _resourceGroupSecurityAlertAlertsClientDiagnostics, Pipeline, "ResourceGroupSecurityAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityAlertAlertsRestClient.CreateListResourceGroupLevelByRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGroupSecurityAlertAlertsRestClient.CreateListResourceGroupLevelByRegionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGroupSecurityAlertResource(Client, SecurityAlertData.DeserializeSecurityAlertData(e)), _resourceGroupSecurityAlertAlertsClientDiagnostics, Pipeline, "ResourceGroupSecurityAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceGroupSecurityAlertResource(Client, SecurityAlertData.DeserializeSecurityAlertData(e)), _resourceGroupSecurityAlertAlertsClientDiagnostics, Pipeline, "ResourceGroupSecurityAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

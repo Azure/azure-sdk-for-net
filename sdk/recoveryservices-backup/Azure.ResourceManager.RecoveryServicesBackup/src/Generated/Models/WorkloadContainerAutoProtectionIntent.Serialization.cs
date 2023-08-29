@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadContainerAutoProtectionIntent : IUtf8JsonSerializable
+    public partial class WorkloadContainerAutoProtectionIntent : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadContainerAutoProtectionIntent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadContainerAutoProtectionIntent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadContainerAutoProtectionIntent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WorkloadContainerAutoProtectionIntent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("protectionIntentItemType"u8);
             writer.WriteStringValue(ProtectionIntentItemType.ToString());
@@ -42,11 +50,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadContainerAutoProtectionIntent DeserializeWorkloadContainerAutoProtectionIntent(JsonElement element)
+        internal static WorkloadContainerAutoProtectionIntent DeserializeWorkloadContainerAutoProtectionIntent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<ResourceIdentifier> itemId = default;
             Optional<ResourceIdentifier> policyId = default;
             Optional<BackupProtectionStatus> protectionState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionIntentItemType"u8))
@@ -109,8 +132,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadContainerAutoProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState));
+            return new WorkloadContainerAutoProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState), rawData);
+        }
+
+        WorkloadContainerAutoProtectionIntent IModelJsonSerializable<WorkloadContainerAutoProtectionIntent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadContainerAutoProtectionIntent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadContainerAutoProtectionIntent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadContainerAutoProtectionIntent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadContainerAutoProtectionIntent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadContainerAutoProtectionIntent IModelSerializable<WorkloadContainerAutoProtectionIntent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadContainerAutoProtectionIntent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadContainerAutoProtectionIntent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadContainerAutoProtectionIntent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadContainerAutoProtectionIntent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadContainerAutoProtectionIntent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

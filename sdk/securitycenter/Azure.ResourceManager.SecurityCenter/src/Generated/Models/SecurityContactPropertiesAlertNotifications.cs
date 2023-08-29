@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Defines whether to send email notifications about new security alerts. </summary>
     public partial class SecurityContactPropertiesAlertNotifications
     {
-        /// <summary> Initializes a new instance of SecurityContactPropertiesAlertNotifications. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityContactPropertiesAlertNotifications"/>. </summary>
         public SecurityContactPropertiesAlertNotifications()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityContactPropertiesAlertNotifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityContactPropertiesAlertNotifications"/>. </summary>
         /// <param name="state"> Defines if email notifications will be sent about new security alerts. </param>
         /// <param name="minimalSeverity"> Defines the minimal alert severity which will be sent as email notifications. </param>
-        internal SecurityContactPropertiesAlertNotifications(SecurityAlertNotificationState? state, SecurityAlertMinimalSeverity? minimalSeverity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityContactPropertiesAlertNotifications(SecurityAlertNotificationState? state, SecurityAlertMinimalSeverity? minimalSeverity, Dictionary<string, BinaryData> rawData)
         {
             State = state;
             MinimalSeverity = minimalSeverity;
+            _rawData = rawData;
         }
 
         /// <summary> Defines if email notifications will be sent about new security alerts. </summary>

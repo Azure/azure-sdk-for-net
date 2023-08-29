@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     internal partial class CertificateListResult
     {
-        /// <summary> Initializes a new instance of CertificateListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CertificateListResult"/>. </summary>
         /// <param name="value">
         /// The Certificate items on this page
         /// Serialized Name: CertificateListResult.value
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateListResult"/>. </summary>
         /// <param name="value">
         /// The Certificate items on this page
         /// Serialized Name: CertificateListResult.value
@@ -41,10 +43,17 @@ namespace Azure.ResourceManager.Sphere.Models
         /// The link to the next page of items
         /// Serialized Name: CertificateListResult.nextLink
         /// </param>
-        internal CertificateListResult(IReadOnlyList<SphereCertificateData> value, Uri nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateListResult(IReadOnlyList<SphereCertificateData> value, Uri nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CertificateListResult"/> for deserialization. </summary>
+        internal CertificateListResult()
+        {
         }
 
         /// <summary>

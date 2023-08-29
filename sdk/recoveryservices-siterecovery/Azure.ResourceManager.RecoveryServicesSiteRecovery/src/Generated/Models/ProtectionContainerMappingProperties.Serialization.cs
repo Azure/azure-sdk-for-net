@@ -5,16 +5,103 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ProtectionContainerMappingProperties
+    public partial class ProtectionContainerMappingProperties : IUtf8JsonSerializable, IModelJsonSerializable<ProtectionContainerMappingProperties>
     {
-        internal static ProtectionContainerMappingProperties DeserializeProtectionContainerMappingProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProtectionContainerMappingProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProtectionContainerMappingProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TargetProtectionContainerId))
+            {
+                writer.WritePropertyName("targetProtectionContainerId"u8);
+                writer.WriteStringValue(TargetProtectionContainerId);
+            }
+            if (Optional.IsDefined(TargetProtectionContainerFriendlyName))
+            {
+                writer.WritePropertyName("targetProtectionContainerFriendlyName"u8);
+                writer.WriteStringValue(TargetProtectionContainerFriendlyName);
+            }
+            if (Optional.IsDefined(ProviderSpecificDetails))
+            {
+                writer.WritePropertyName("providerSpecificDetails"u8);
+                writer.WriteObjectValue(ProviderSpecificDetails);
+            }
+            if (Optional.IsDefined(Health))
+            {
+                writer.WritePropertyName("health"u8);
+                writer.WriteStringValue(Health);
+            }
+            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            {
+                writer.WritePropertyName("healthErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrorDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PolicyId))
+            {
+                writer.WritePropertyName("policyId"u8);
+                writer.WriteStringValue(PolicyId);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State);
+            }
+            if (Optional.IsDefined(SourceProtectionContainerFriendlyName))
+            {
+                writer.WritePropertyName("sourceProtectionContainerFriendlyName"u8);
+                writer.WriteStringValue(SourceProtectionContainerFriendlyName);
+            }
+            if (Optional.IsDefined(SourceFabricFriendlyName))
+            {
+                writer.WritePropertyName("sourceFabricFriendlyName"u8);
+                writer.WriteStringValue(SourceFabricFriendlyName);
+            }
+            if (Optional.IsDefined(TargetFabricFriendlyName))
+            {
+                writer.WritePropertyName("targetFabricFriendlyName"u8);
+                writer.WriteStringValue(TargetFabricFriendlyName);
+            }
+            if (Optional.IsDefined(PolicyFriendlyName))
+            {
+                writer.WritePropertyName("policyFriendlyName"u8);
+                writer.WriteStringValue(PolicyFriendlyName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ProtectionContainerMappingProperties DeserializeProtectionContainerMappingProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> sourceFabricFriendlyName = default;
             Optional<string> targetFabricFriendlyName = default;
             Optional<string> policyFriendlyName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetProtectionContainerId"u8))
@@ -108,8 +196,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     policyFriendlyName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProtectionContainerMappingProperties(targetProtectionContainerId.Value, targetProtectionContainerFriendlyName.Value, providerSpecificDetails.Value, health.Value, Optional.ToList(healthErrorDetails), policyId.Value, state.Value, sourceProtectionContainerFriendlyName.Value, sourceFabricFriendlyName.Value, targetFabricFriendlyName.Value, policyFriendlyName.Value);
+            return new ProtectionContainerMappingProperties(targetProtectionContainerId.Value, targetProtectionContainerFriendlyName.Value, providerSpecificDetails.Value, health.Value, Optional.ToList(healthErrorDetails), policyId.Value, state.Value, sourceProtectionContainerFriendlyName.Value, sourceFabricFriendlyName.Value, targetFabricFriendlyName.Value, policyFriendlyName.Value, rawData);
+        }
+
+        ProtectionContainerMappingProperties IModelJsonSerializable<ProtectionContainerMappingProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProtectionContainerMappingProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProtectionContainerMappingProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProtectionContainerMappingProperties IModelSerializable<ProtectionContainerMappingProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProtectionContainerMappingProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ProtectionContainerMappingProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ProtectionContainerMappingProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProtectionContainerMappingProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

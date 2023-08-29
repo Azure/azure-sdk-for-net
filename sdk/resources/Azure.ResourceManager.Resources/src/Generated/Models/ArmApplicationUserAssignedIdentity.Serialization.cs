@@ -6,27 +6,49 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationUserAssignedIdentity : IUtf8JsonSerializable
+    public partial class ArmApplicationUserAssignedIdentity : IUtf8JsonSerializable, IModelJsonSerializable<ArmApplicationUserAssignedIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmApplicationUserAssignedIdentity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArmApplicationUserAssignedIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmApplicationUserAssignedIdentity DeserializeArmApplicationUserAssignedIdentity(JsonElement element)
+        internal static ArmApplicationUserAssignedIdentity DeserializeArmApplicationUserAssignedIdentity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -47,8 +69,57 @@ namespace Azure.ResourceManager.Resources.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArmApplicationUserAssignedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId));
+            return new ArmApplicationUserAssignedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), rawData);
+        }
+
+        ArmApplicationUserAssignedIdentity IModelJsonSerializable<ArmApplicationUserAssignedIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmApplicationUserAssignedIdentity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArmApplicationUserAssignedIdentity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArmApplicationUserAssignedIdentity IModelSerializable<ArmApplicationUserAssignedIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArmApplicationUserAssignedIdentity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ArmApplicationUserAssignedIdentity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ArmApplicationUserAssignedIdentity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArmApplicationUserAssignedIdentity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,162 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AReplicationIntentDetails
+    public partial class A2AReplicationIntentDetails : IUtf8JsonSerializable, IModelJsonSerializable<A2AReplicationIntentDetails>
     {
-        internal static A2AReplicationIntentDetails DeserializeA2AReplicationIntentDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<A2AReplicationIntentDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<A2AReplicationIntentDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<A2AReplicationIntentDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FabricObjectId))
+            {
+                writer.WritePropertyName("fabricObjectId"u8);
+                writer.WriteStringValue(FabricObjectId);
+            }
+            if (Optional.IsDefined(PrimaryLocation))
+            {
+                writer.WritePropertyName("primaryLocation"u8);
+                writer.WriteStringValue(PrimaryLocation.Value);
+            }
+            if (Optional.IsDefined(RecoveryLocation))
+            {
+                writer.WritePropertyName("recoveryLocation"u8);
+                writer.WriteStringValue(RecoveryLocation.Value);
+            }
+            if (Optional.IsDefined(RecoverySubscriptionId))
+            {
+                writer.WritePropertyName("recoverySubscriptionId"u8);
+                writer.WriteStringValue(RecoverySubscriptionId);
+            }
+            if (Optional.IsCollectionDefined(VmDisks))
+            {
+                writer.WritePropertyName("vmDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmDisks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(VmManagedDisks))
+            {
+                writer.WritePropertyName("vmManagedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmManagedDisks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RecoveryResourceGroupId))
+            {
+                writer.WritePropertyName("recoveryResourceGroupId"u8);
+                writer.WriteStringValue(RecoveryResourceGroupId);
+            }
+            if (Optional.IsDefined(ProtectionProfile))
+            {
+                writer.WritePropertyName("protectionProfile"u8);
+                writer.WriteObjectValue(ProtectionProfile);
+            }
+            if (Optional.IsDefined(PrimaryStagingStorageAccount))
+            {
+                writer.WritePropertyName("primaryStagingStorageAccount"u8);
+                writer.WriteObjectValue(PrimaryStagingStorageAccount);
+            }
+            if (Optional.IsDefined(RecoveryAvailabilitySet))
+            {
+                writer.WritePropertyName("recoveryAvailabilitySet"u8);
+                writer.WriteObjectValue(RecoveryAvailabilitySet);
+            }
+            if (Optional.IsDefined(RecoveryVirtualNetwork))
+            {
+                writer.WritePropertyName("recoveryVirtualNetwork"u8);
+                writer.WriteObjectValue(RecoveryVirtualNetwork);
+            }
+            if (Optional.IsDefined(RecoveryProximityPlacementGroup))
+            {
+                writer.WritePropertyName("recoveryProximityPlacementGroup"u8);
+                writer.WriteObjectValue(RecoveryProximityPlacementGroup);
+            }
+            if (Optional.IsDefined(AutoProtectionOfDataDisk))
+            {
+                writer.WritePropertyName("autoProtectionOfDataDisk"u8);
+                writer.WriteStringValue(AutoProtectionOfDataDisk.Value.ToString());
+            }
+            if (Optional.IsDefined(MultiVmGroupName))
+            {
+                writer.WritePropertyName("multiVmGroupName"u8);
+                writer.WriteStringValue(MultiVmGroupName);
+            }
+            if (Optional.IsDefined(MultiVmGroupId))
+            {
+                writer.WritePropertyName("multiVmGroupId"u8);
+                writer.WriteStringValue(MultiVmGroupId);
+            }
+            if (Optional.IsDefined(RecoveryBootDiagStorageAccount))
+            {
+                writer.WritePropertyName("recoveryBootDiagStorageAccount"u8);
+                writer.WriteObjectValue(RecoveryBootDiagStorageAccount);
+            }
+            if (Optional.IsDefined(DiskEncryptionInfo))
+            {
+                writer.WritePropertyName("diskEncryptionInfo"u8);
+                writer.WriteObjectValue(DiskEncryptionInfo);
+            }
+            if (Optional.IsDefined(RecoveryAvailabilityZone))
+            {
+                writer.WritePropertyName("recoveryAvailabilityZone"u8);
+                writer.WriteStringValue(RecoveryAvailabilityZone);
+            }
+            writer.WritePropertyName("recoveryAvailabilityType"u8);
+            writer.WriteStringValue(RecoveryAvailabilityType);
+            if (Optional.IsDefined(AgentAutoUpdateStatus))
+            {
+                writer.WritePropertyName("agentAutoUpdateStatus"u8);
+                writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(AutomationAccountArmId))
+            {
+                writer.WritePropertyName("automationAccountArmId"u8);
+                writer.WriteStringValue(AutomationAccountArmId);
+            }
+            if (Optional.IsDefined(AutomationAccountAuthenticationType))
+            {
+                writer.WritePropertyName("automationAccountAuthenticationType"u8);
+                writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToString());
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static A2AReplicationIntentDetails DeserializeA2AReplicationIntentDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> automationAccountArmId = default;
             Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricObjectId"u8))
@@ -237,8 +384,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new A2AReplicationIntentDetails(instanceType, fabricObjectId.Value, Optional.ToNullable(primaryLocation), Optional.ToNullable(recoveryLocation), recoverySubscriptionId.Value, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), recoveryResourceGroupId.Value, protectionProfile.Value, primaryStagingStorageAccount.Value, recoveryAvailabilitySet.Value, recoveryVirtualNetwork.Value, recoveryProximityPlacementGroup.Value, Optional.ToNullable(autoProtectionOfDataDisk), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccount.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, recoveryAvailabilityType, Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Optional.ToNullable(automationAccountAuthenticationType));
+            return new A2AReplicationIntentDetails(instanceType, fabricObjectId.Value, Optional.ToNullable(primaryLocation), Optional.ToNullable(recoveryLocation), recoverySubscriptionId.Value, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), recoveryResourceGroupId.Value, protectionProfile.Value, primaryStagingStorageAccount.Value, recoveryAvailabilitySet.Value, recoveryVirtualNetwork.Value, recoveryProximityPlacementGroup.Value, Optional.ToNullable(autoProtectionOfDataDisk), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccount.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, recoveryAvailabilityType, Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Optional.ToNullable(automationAccountAuthenticationType), rawData);
+        }
+
+        A2AReplicationIntentDetails IModelJsonSerializable<A2AReplicationIntentDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<A2AReplicationIntentDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AReplicationIntentDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<A2AReplicationIntentDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<A2AReplicationIntentDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        A2AReplicationIntentDetails IModelSerializable<A2AReplicationIntentDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<A2AReplicationIntentDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeA2AReplicationIntentDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(A2AReplicationIntentDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator A2AReplicationIntentDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeA2AReplicationIntentDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

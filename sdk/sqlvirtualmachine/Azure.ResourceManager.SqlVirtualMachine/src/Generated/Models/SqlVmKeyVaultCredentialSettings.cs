@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Configure your SQL virtual machine to be able to connect to the Azure Key Vault service. </summary>
     public partial class SqlVmKeyVaultCredentialSettings
     {
-        /// <summary> Initializes a new instance of SqlVmKeyVaultCredentialSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlVmKeyVaultCredentialSettings"/>. </summary>
         public SqlVmKeyVaultCredentialSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlVmKeyVaultCredentialSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmKeyVaultCredentialSettings"/>. </summary>
         /// <param name="isEnabled"> Enable or disable key vault credential setting. </param>
         /// <param name="credentialName"> Credential name. </param>
         /// <param name="azureKeyVaultUri"> Azure Key Vault url. </param>
         /// <param name="servicePrincipalName"> Service principal name to access key vault. </param>
         /// <param name="servicePrincipalSecret"> Service principal name secret to access key vault. </param>
-        internal SqlVmKeyVaultCredentialSettings(bool? isEnabled, string credentialName, Uri azureKeyVaultUri, string servicePrincipalName, string servicePrincipalSecret)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlVmKeyVaultCredentialSettings(bool? isEnabled, string credentialName, Uri azureKeyVaultUri, string servicePrincipalName, string servicePrincipalSecret, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             CredentialName = credentialName;
             AzureKeyVaultUri = azureKeyVaultUri;
             ServicePrincipalName = servicePrincipalName;
             ServicePrincipalSecret = servicePrincipalSecret;
+            _rawData = rawData;
         }
 
         /// <summary> Enable or disable key vault credential setting. </summary>

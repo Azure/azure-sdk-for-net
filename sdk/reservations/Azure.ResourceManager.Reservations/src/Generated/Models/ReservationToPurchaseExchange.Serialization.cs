@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationToPurchaseExchange
+    public partial class ReservationToPurchaseExchange : IUtf8JsonSerializable, IModelJsonSerializable<ReservationToPurchaseExchange>
     {
-        internal static ReservationToPurchaseExchange DeserializeReservationToPurchaseExchange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationToPurchaseExchange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationToPurchaseExchange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ReservationOrderId))
+            {
+                writer.WritePropertyName("reservationOrderId"u8);
+                writer.WriteStringValue(ReservationOrderId);
+            }
+            if (Optional.IsDefined(ReservationId))
+            {
+                writer.WritePropertyName("reservationId"u8);
+                writer.WriteStringValue(ReservationId);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
+            }
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                writer.WritePropertyName("billingCurrencyTotal"u8);
+                writer.WriteObjectValue(BillingCurrencyTotal);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReservationToPurchaseExchange DeserializeReservationToPurchaseExchange(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<ReservationPurchaseContent> properties = default;
             Optional<PurchasePrice> billingCurrencyTotal = default;
             Optional<ReservationOperationStatus> status = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservationOrderId"u8))
@@ -70,8 +124,57 @@ namespace Azure.ResourceManager.Reservations.Models
                     status = new ReservationOperationStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReservationToPurchaseExchange(reservationOrderId.Value, reservationId.Value, properties.Value, billingCurrencyTotal.Value, Optional.ToNullable(status));
+            return new ReservationToPurchaseExchange(reservationOrderId.Value, reservationId.Value, properties.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), rawData);
+        }
+
+        ReservationToPurchaseExchange IModelJsonSerializable<ReservationToPurchaseExchange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationToPurchaseExchange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationToPurchaseExchange>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationToPurchaseExchange IModelSerializable<ReservationToPurchaseExchange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationToPurchaseExchange(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ReservationToPurchaseExchange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ReservationToPurchaseExchange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationToPurchaseExchange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

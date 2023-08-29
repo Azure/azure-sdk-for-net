@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class UpsertManagedServerOperationParameters
+    public partial class UpsertManagedServerOperationParameters : IUtf8JsonSerializable, IModelJsonSerializable<UpsertManagedServerOperationParameters>
     {
-        internal static UpsertManagedServerOperationParameters DeserializeUpsertManagedServerOperationParameters(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UpsertManagedServerOperationParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UpsertManagedServerOperationParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Family))
+            {
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family);
+            }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier"u8);
+                writer.WriteStringValue(Tier);
+            }
+            if (Optional.IsDefined(VCores))
+            {
+                writer.WritePropertyName("vCores"u8);
+                writer.WriteNumberValue(VCores.Value);
+            }
+            if (Optional.IsDefined(StorageSizeInGB))
+            {
+                writer.WritePropertyName("storageSizeInGB"u8);
+                writer.WriteNumberValue(StorageSizeInGB.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static UpsertManagedServerOperationParameters DeserializeUpsertManagedServerOperationParameters(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> tier = default;
             Optional<int> vCores = default;
             Optional<int> storageSizeInGB = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("family"u8))
@@ -52,8 +101,57 @@ namespace Azure.ResourceManager.Sql.Models
                     storageSizeInGB = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UpsertManagedServerOperationParameters(family.Value, tier.Value, Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB));
+            return new UpsertManagedServerOperationParameters(family.Value, tier.Value, Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB), rawData);
+        }
+
+        UpsertManagedServerOperationParameters IModelJsonSerializable<UpsertManagedServerOperationParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpsertManagedServerOperationParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UpsertManagedServerOperationParameters>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UpsertManagedServerOperationParameters IModelSerializable<UpsertManagedServerOperationParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUpsertManagedServerOperationParameters(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(UpsertManagedServerOperationParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator UpsertManagedServerOperationParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUpsertManagedServerOperationParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

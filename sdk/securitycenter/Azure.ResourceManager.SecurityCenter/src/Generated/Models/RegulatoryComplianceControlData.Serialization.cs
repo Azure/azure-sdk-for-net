@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class RegulatoryComplianceControlData : IUtf8JsonSerializable
+    public partial class RegulatoryComplianceControlData : IUtf8JsonSerializable, IModelJsonSerializable<RegulatoryComplianceControlData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RegulatoryComplianceControlData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RegulatoryComplianceControlData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RegulatoryComplianceControlData DeserializeRegulatoryComplianceControlData(JsonElement element)
+        internal static RegulatoryComplianceControlData DeserializeRegulatoryComplianceControlData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<int> passedAssessments = default;
             Optional<int> failedAssessments = default;
             Optional<int> skippedAssessments = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,8 +145,57 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RegulatoryComplianceControlData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(state), Optional.ToNullable(passedAssessments), Optional.ToNullable(failedAssessments), Optional.ToNullable(skippedAssessments));
+            return new RegulatoryComplianceControlData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(state), Optional.ToNullable(passedAssessments), Optional.ToNullable(failedAssessments), Optional.ToNullable(skippedAssessments), rawData);
+        }
+
+        RegulatoryComplianceControlData IModelJsonSerializable<RegulatoryComplianceControlData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegulatoryComplianceControlData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RegulatoryComplianceControlData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RegulatoryComplianceControlData IModelSerializable<RegulatoryComplianceControlData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRegulatoryComplianceControlData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RegulatoryComplianceControlData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RegulatoryComplianceControlData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRegulatoryComplianceControlData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityDevOps.Models;
@@ -17,20 +19,24 @@ namespace Azure.ResourceManager.SecurityDevOps
     /// </summary>
     public partial class AzureDevOpsOrgData : ResourceData
     {
-        /// <summary> Initializes a new instance of AzureDevOpsOrgData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgData"/>. </summary>
         public AzureDevOpsOrgData()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsOrgData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> AzureDevOps Org properties. </param>
-        internal AzureDevOpsOrgData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureDevOpsOrgProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsOrgData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureDevOpsOrgProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> AzureDevOps Org properties. </summary>

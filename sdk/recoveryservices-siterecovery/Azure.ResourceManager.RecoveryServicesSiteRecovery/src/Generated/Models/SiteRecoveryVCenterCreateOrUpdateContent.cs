@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Input required to add vCenter. </summary>
     public partial class SiteRecoveryVCenterCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterCreateOrUpdateContent"/>. </summary>
         public SiteRecoveryVCenterCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> The properties of an add vCenter request. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryVCenterCreateOrUpdateContent(SiteRecoveryAddVCenterProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> The properties of an add vCenter request. </summary>

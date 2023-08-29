@@ -5,21 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class IotSecurityDeviceAlert : IUtf8JsonSerializable
+    public partial class IotSecurityDeviceAlert : IUtf8JsonSerializable, IModelJsonSerializable<IotSecurityDeviceAlert>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotSecurityDeviceAlert>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotSecurityDeviceAlert>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotSecurityDeviceAlert DeserializeIotSecurityDeviceAlert(JsonElement element)
+        internal static IotSecurityDeviceAlert DeserializeIotSecurityDeviceAlert(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> alertDisplayName = default;
             Optional<ReportedSeverity> reportedSeverity = default;
             Optional<long> alertsCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertDisplayName"u8))
@@ -52,8 +75,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     alertsCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotSecurityDeviceAlert(alertDisplayName.Value, Optional.ToNullable(reportedSeverity), Optional.ToNullable(alertsCount));
+            return new IotSecurityDeviceAlert(alertDisplayName.Value, Optional.ToNullable(reportedSeverity), Optional.ToNullable(alertsCount), rawData);
+        }
+
+        IotSecurityDeviceAlert IModelJsonSerializable<IotSecurityDeviceAlert>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotSecurityDeviceAlert(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotSecurityDeviceAlert>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotSecurityDeviceAlert IModelSerializable<IotSecurityDeviceAlert>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotSecurityDeviceAlert(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IotSecurityDeviceAlert model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IotSecurityDeviceAlert(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotSecurityDeviceAlert(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

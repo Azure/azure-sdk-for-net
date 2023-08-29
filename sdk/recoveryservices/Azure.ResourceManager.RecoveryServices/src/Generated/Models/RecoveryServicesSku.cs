@@ -5,31 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Identifies the unique system identifier for each Azure resource. </summary>
     public partial class RecoveryServicesSku
     {
-        /// <summary> Initializes a new instance of RecoveryServicesSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSku"/>. </summary>
         /// <param name="name"> Name of SKU is RS0 (Recovery Services 0th version) and the tier is standard tier. They do not have affect on backend storage redundancy or any other vault settings. To manage storage redundancy, use the backupstorageconfig. </param>
         public RecoveryServicesSku(RecoveryServicesSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSku"/>. </summary>
         /// <param name="name"> Name of SKU is RS0 (Recovery Services 0th version) and the tier is standard tier. They do not have affect on backend storage redundancy or any other vault settings. To manage storage redundancy, use the backupstorageconfig. </param>
         /// <param name="tier"> The Sku tier. </param>
         /// <param name="family"> The sku family. </param>
         /// <param name="size"> The sku size. </param>
         /// <param name="capacity"> The sku capacity. </param>
-        internal RecoveryServicesSku(RecoveryServicesSkuName name, string tier, string family, string size, string capacity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesSku(RecoveryServicesSkuName name, string tier, string family, string size, string capacity, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
             Family = family;
             Size = size;
             Capacity = capacity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSku"/> for deserialization. </summary>
+        internal RecoveryServicesSku()
+        {
         }
 
         /// <summary> Name of SKU is RS0 (Recovery Services 0th version) and the tier is standard tier. They do not have affect on backend storage redundancy or any other vault settings. To manage storage redundancy, use the backupstorageconfig. </summary>

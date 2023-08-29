@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedClusterLoadBalancingRule : IUtf8JsonSerializable
+    public partial class ManagedClusterLoadBalancingRule : IUtf8JsonSerializable, IModelJsonSerializable<ManagedClusterLoadBalancingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedClusterLoadBalancingRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedClusterLoadBalancingRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("frontendPort"u8);
             writer.WriteNumberValue(FrontendPort);
@@ -38,11 +46,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("loadDistribution"u8);
                 writer.WriteStringValue(LoadDistribution);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterLoadBalancingRule DeserializeManagedClusterLoadBalancingRule(JsonElement element)
+        internal static ManagedClusterLoadBalancingRule DeserializeManagedClusterLoadBalancingRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +76,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ManagedClusterLoadBalanceProbeProtocol probeProtocol = default;
             Optional<string> probeRequestPath = default;
             Optional<string> loadDistribution = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frontendPort"u8))
@@ -95,8 +118,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     loadDistribution = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedClusterLoadBalancingRule(frontendPort, backendPort, protocol, Optional.ToNullable(probePort), probeProtocol, probeRequestPath.Value, loadDistribution.Value);
+            return new ManagedClusterLoadBalancingRule(frontendPort, backendPort, protocol, Optional.ToNullable(probePort), probeProtocol, probeRequestPath.Value, loadDistribution.Value, rawData);
+        }
+
+        ManagedClusterLoadBalancingRule IModelJsonSerializable<ManagedClusterLoadBalancingRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterLoadBalancingRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedClusterLoadBalancingRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedClusterLoadBalancingRule IModelSerializable<ManagedClusterLoadBalancingRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedClusterLoadBalancingRule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedClusterLoadBalancingRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedClusterLoadBalancingRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedClusterLoadBalancingRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,14 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Policy update properties. </summary>
     internal partial class UpdatePolicyContentProperties
     {
-        /// <summary> Initializes a new instance of UpdatePolicyContentProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdatePolicyContentProperties"/>. </summary>
         public UpdatePolicyContentProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdatePolicyContentProperties"/>. </summary>
+        /// <param name="replicationProviderSettings">
+        /// The ReplicationProviderSettings.
+        /// Please note <see cref="PolicyProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2APolicyCreationContent"/>, <see cref="A2ACrossClusterMigrationPolicyCreationContent"/>, <see cref="HyperVReplicaPolicyContent"/>, <see cref="HyperVReplicaBluePolicyContent"/>, <see cref="HyperVReplicaAzurePolicyContent"/>, <see cref="InMagePolicyContent"/>, <see cref="InMageAzureV2PolicyContent"/>, <see cref="InMageRcmPolicyCreationContent"/>, <see cref="InMageRcmFailbackPolicyCreationContent"/> and <see cref="VMwareCbtPolicyCreationContent"/>.
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdatePolicyContentProperties(PolicyProviderSpecificContent replicationProviderSettings, Dictionary<string, BinaryData> rawData)
+        {
+            ReplicationProviderSettings = replicationProviderSettings;
+            _rawData = rawData;
         }
 
         /// <summary>

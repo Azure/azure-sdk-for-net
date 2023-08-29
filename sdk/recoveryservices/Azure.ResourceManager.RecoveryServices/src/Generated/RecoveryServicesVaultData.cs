@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,15 @@ namespace Azure.ResourceManager.RecoveryServices
     /// </summary>
     public partial class RecoveryServicesVaultData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RecoveryServicesVaultData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultData"/>. </summary>
         /// <param name="location"> The location. </param>
         public RecoveryServicesVaultData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,12 +39,19 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="properties"> Properties of the vault. </param>
         /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
         /// <param name="etag"> Optional ETag. </param>
-        internal RecoveryServicesVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, RecoveryServicesVaultProperties properties, RecoveryServicesSku sku, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, RecoveryServicesVaultProperties properties, RecoveryServicesSku sku, ETag? etag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Properties = properties;
             Sku = sku;
             ETag = etag;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultData"/> for deserialization. </summary>
+        internal RecoveryServicesVaultData()
+        {
         }
 
         /// <summary> Identity for the resource. </summary>

@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AdaptiveApplicationControlIssueSummary
+    public partial class AdaptiveApplicationControlIssueSummary : IUtf8JsonSerializable, IModelJsonSerializable<AdaptiveApplicationControlIssueSummary>
     {
-        internal static AdaptiveApplicationControlIssueSummary DeserializeAdaptiveApplicationControlIssueSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdaptiveApplicationControlIssueSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AdaptiveApplicationControlIssueSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Issue))
+            {
+                writer.WritePropertyName("issue"u8);
+                writer.WriteStringValue(Issue.Value.ToString());
+            }
+            if (Optional.IsDefined(NumberOfVms))
+            {
+                writer.WritePropertyName("numberOfVms"u8);
+                writer.WriteNumberValue(NumberOfVms.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AdaptiveApplicationControlIssueSummary DeserializeAdaptiveApplicationControlIssueSummary(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AdaptiveApplicationControlIssue> issue = default;
             Optional<float> numberOfVms = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("issue"u8))
@@ -40,8 +79,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     numberOfVms = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AdaptiveApplicationControlIssueSummary(Optional.ToNullable(issue), Optional.ToNullable(numberOfVms));
+            return new AdaptiveApplicationControlIssueSummary(Optional.ToNullable(issue), Optional.ToNullable(numberOfVms), rawData);
+        }
+
+        AdaptiveApplicationControlIssueSummary IModelJsonSerializable<AdaptiveApplicationControlIssueSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdaptiveApplicationControlIssueSummary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AdaptiveApplicationControlIssueSummary>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AdaptiveApplicationControlIssueSummary IModelSerializable<AdaptiveApplicationControlIssueSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAdaptiveApplicationControlIssueSummary(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AdaptiveApplicationControlIssueSummary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AdaptiveApplicationControlIssueSummary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAdaptiveApplicationControlIssueSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

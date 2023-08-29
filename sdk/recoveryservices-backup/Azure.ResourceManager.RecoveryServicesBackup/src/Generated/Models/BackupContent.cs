@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -12,18 +16,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="BackupContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FileShareBackupContent"/>, <see cref="WorkloadBackupContent"/> and <see cref="IaasVmBackupContent"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownBackupRequest))]
     public abstract partial class BackupContent
     {
-        /// <summary> Initializes a new instance of BackupContent. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupContent"/>. </summary>
         protected BackupContent()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal BackupContent(string objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupContent(string objectType, Dictionary<string, BinaryData> rawData)
         {
             ObjectType = objectType;
+            _rawData = rawData;
         }
 
         /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>

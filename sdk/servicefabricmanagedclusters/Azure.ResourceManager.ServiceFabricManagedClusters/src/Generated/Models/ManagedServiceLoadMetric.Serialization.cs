@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedServiceLoadMetric : IUtf8JsonSerializable
+    public partial class ManagedServiceLoadMetric : IUtf8JsonSerializable, IModelJsonSerializable<ManagedServiceLoadMetric>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedServiceLoadMetric>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedServiceLoadMetric>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -37,11 +45,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("defaultLoad"u8);
                 writer.WriteNumberValue(DefaultLoad.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedServiceLoadMetric DeserializeManagedServiceLoadMetric(JsonElement element)
+        internal static ManagedServiceLoadMetric DeserializeManagedServiceLoadMetric(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +73,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<int> primaryDefaultLoad = default;
             Optional<int> secondaryDefaultLoad = default;
             Optional<int> defaultLoad = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -94,8 +117,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     defaultLoad = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedServiceLoadMetric(name, Optional.ToNullable(weight), Optional.ToNullable(primaryDefaultLoad), Optional.ToNullable(secondaryDefaultLoad), Optional.ToNullable(defaultLoad));
+            return new ManagedServiceLoadMetric(name, Optional.ToNullable(weight), Optional.ToNullable(primaryDefaultLoad), Optional.ToNullable(secondaryDefaultLoad), Optional.ToNullable(defaultLoad), rawData);
+        }
+
+        ManagedServiceLoadMetric IModelJsonSerializable<ManagedServiceLoadMetric>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServiceLoadMetric(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedServiceLoadMetric>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedServiceLoadMetric IModelSerializable<ManagedServiceLoadMetric>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedServiceLoadMetric(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedServiceLoadMetric model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedServiceLoadMetric(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedServiceLoadMetric(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

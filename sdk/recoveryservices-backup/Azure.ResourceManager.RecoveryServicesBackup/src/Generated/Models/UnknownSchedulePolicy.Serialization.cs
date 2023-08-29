@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class UnknownSchedulePolicy : IUtf8JsonSerializable
+    internal partial class UnknownSchedulePolicy : IUtf8JsonSerializable, IModelJsonSerializable<BackupSchedulePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupSchedulePolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupSchedulePolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("schedulePolicyType"u8);
             writer.WriteStringValue(SchedulePolicyType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownSchedulePolicy DeserializeUnknownSchedulePolicy(JsonElement element)
+        internal static BackupSchedulePolicy DeserializeUnknownSchedulePolicy(JsonElement element, ModelSerializerOptions options = default) => DeserializeBackupSchedulePolicy(element, options);
+
+        BackupSchedulePolicy IModelJsonSerializable<BackupSchedulePolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string schedulePolicyType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("schedulePolicyType"u8))
-                {
-                    schedulePolicyType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownSchedulePolicy(schedulePolicyType);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownSchedulePolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupSchedulePolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupSchedulePolicy IModelSerializable<BackupSchedulePolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupSchedulePolicy(doc.RootElement, options);
         }
     }
 }

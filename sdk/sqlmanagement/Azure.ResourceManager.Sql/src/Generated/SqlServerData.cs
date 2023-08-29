@@ -19,14 +19,16 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SqlServerData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<SqlServerPrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of SqlServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +52,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
         /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        internal SqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, string minimalTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ExternalGovernanceStatus? externalGovernanceStatus) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, string minimalTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ExternalGovernanceStatus? externalGovernanceStatus, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
@@ -69,6 +72,12 @@ namespace Azure.ResourceManager.Sql
             Administrators = administrators;
             RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
             ExternalGovernanceStatus = externalGovernanceStatus;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerData"/> for deserialization. </summary>
+        internal SqlServerData()
+        {
         }
 
         /// <summary> The Azure Active Directory identity of the server. </summary>

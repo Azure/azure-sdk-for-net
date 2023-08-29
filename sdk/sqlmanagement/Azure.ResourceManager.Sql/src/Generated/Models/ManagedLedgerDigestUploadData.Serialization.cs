@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedLedgerDigestUploadData : IUtf8JsonSerializable
+    public partial class ManagedLedgerDigestUploadData : IUtf8JsonSerializable, IModelJsonSerializable<ManagedLedgerDigestUploadData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedLedgerDigestUploadData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedLedgerDigestUploadData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStringValue(DigestStorageEndpoint);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedLedgerDigestUploadData DeserializeManagedLedgerDigestUploadData(JsonElement element)
+        internal static ManagedLedgerDigestUploadData DeserializeManagedLedgerDigestUploadData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +62,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<string> digestStorageEndpoint = default;
             Optional<ManagedLedgerDigestUploadsState> state = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -92,8 +115,57 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedLedgerDigestUploadData(id, name, type, systemData.Value, digestStorageEndpoint.Value, Optional.ToNullable(state));
+            return new ManagedLedgerDigestUploadData(id, name, type, systemData.Value, digestStorageEndpoint.Value, Optional.ToNullable(state), rawData);
+        }
+
+        ManagedLedgerDigestUploadData IModelJsonSerializable<ManagedLedgerDigestUploadData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedLedgerDigestUploadData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedLedgerDigestUploadData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedLedgerDigestUploadData IModelSerializable<ManagedLedgerDigestUploadData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedLedgerDigestUploadData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedLedgerDigestUploadData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedLedgerDigestUploadData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedLedgerDigestUploadData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

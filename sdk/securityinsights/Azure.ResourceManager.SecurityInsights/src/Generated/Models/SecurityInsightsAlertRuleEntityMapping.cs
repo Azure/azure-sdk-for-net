@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Single entity mapping for the alert rule. </summary>
     public partial class SecurityInsightsAlertRuleEntityMapping
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleEntityMapping. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleEntityMapping"/>. </summary>
         public SecurityInsightsAlertRuleEntityMapping()
         {
             FieldMappings = new ChangeTrackingList<SecurityInsightsFieldMapping>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleEntityMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleEntityMapping"/>. </summary>
         /// <param name="entityType"> The V3 type of the mapped entity. </param>
         /// <param name="fieldMappings"> array of field mappings for the given entity mapping. </param>
-        internal SecurityInsightsAlertRuleEntityMapping(SecurityInsightsAlertRuleEntityMappingType? entityType, IList<SecurityInsightsFieldMapping> fieldMappings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAlertRuleEntityMapping(SecurityInsightsAlertRuleEntityMappingType? entityType, IList<SecurityInsightsFieldMapping> fieldMappings, Dictionary<string, BinaryData> rawData)
         {
             EntityType = entityType;
             FieldMappings = fieldMappings;
+            _rawData = rawData;
         }
 
         /// <summary> The V3 type of the mapped entity. </summary>

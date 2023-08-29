@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryNetworkMappingResource(Client, SiteRecoveryNetworkMappingData.DeserializeSiteRecoveryNetworkMappingData(e)), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "SiteRecoveryNetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteRecoveryNetworkMappingResource(Client, SiteRecoveryNetworkMappingData.DeserializeSiteRecoveryNetworkMappingData(e)), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "SiteRecoveryNetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryNetworkMappingResource(Client, SiteRecoveryNetworkMappingData.DeserializeSiteRecoveryNetworkMappingData(e)), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "SiteRecoveryNetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteRecoveryNetworkMappingResource(Client, SiteRecoveryNetworkMappingData.DeserializeSiteRecoveryNetworkMappingData(e)), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "SiteRecoveryNetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

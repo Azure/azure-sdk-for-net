@@ -5,20 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class TopologySingleResourceParent
+    public partial class TopologySingleResourceParent : IUtf8JsonSerializable, IModelJsonSerializable<TopologySingleResourceParent>
     {
-        internal static TopologySingleResourceParent DeserializeTopologySingleResourceParent(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TopologySingleResourceParent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TopologySingleResourceParent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TopologySingleResourceParent DeserializeTopologySingleResourceParent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> resourceId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -30,8 +59,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TopologySingleResourceParent(resourceId.Value);
+            return new TopologySingleResourceParent(resourceId.Value, rawData);
+        }
+
+        TopologySingleResourceParent IModelJsonSerializable<TopologySingleResourceParent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTopologySingleResourceParent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TopologySingleResourceParent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TopologySingleResourceParent IModelSerializable<TopologySingleResourceParent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTopologySingleResourceParent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TopologySingleResourceParent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TopologySingleResourceParent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTopologySingleResourceParent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

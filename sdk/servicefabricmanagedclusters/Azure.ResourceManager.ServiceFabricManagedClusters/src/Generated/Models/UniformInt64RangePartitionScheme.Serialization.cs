@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class UniformInt64RangePartitionScheme : IUtf8JsonSerializable
+    public partial class UniformInt64RangePartitionScheme : IUtf8JsonSerializable, IModelJsonSerializable<UniformInt64RangePartitionScheme>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UniformInt64RangePartitionScheme>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UniformInt64RangePartitionScheme>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<UniformInt64RangePartitionScheme>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
@@ -23,11 +31,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteNumberValue(HighKey);
             writer.WritePropertyName("partitionScheme"u8);
             writer.WriteStringValue(PartitionScheme.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UniformInt64RangePartitionScheme DeserializeUniformInt64RangePartitionScheme(JsonElement element)
+        internal static UniformInt64RangePartitionScheme DeserializeUniformInt64RangePartitionScheme(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             long lowKey = default;
             long highKey = default;
             PartitionScheme partitionScheme = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -58,8 +81,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     partitionScheme = new PartitionScheme(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UniformInt64RangePartitionScheme(partitionScheme, count, lowKey, highKey);
+            return new UniformInt64RangePartitionScheme(partitionScheme, count, lowKey, highKey, rawData);
+        }
+
+        UniformInt64RangePartitionScheme IModelJsonSerializable<UniformInt64RangePartitionScheme>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UniformInt64RangePartitionScheme>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUniformInt64RangePartitionScheme(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UniformInt64RangePartitionScheme>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UniformInt64RangePartitionScheme>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UniformInt64RangePartitionScheme IModelSerializable<UniformInt64RangePartitionScheme>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UniformInt64RangePartitionScheme>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUniformInt64RangePartitionScheme(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(UniformInt64RangePartitionScheme model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator UniformInt64RangePartitionScheme(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUniformInt64RangePartitionScheme(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

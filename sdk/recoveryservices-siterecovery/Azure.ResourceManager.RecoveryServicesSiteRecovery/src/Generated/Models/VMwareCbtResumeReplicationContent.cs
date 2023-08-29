@@ -5,15 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> VMwareCbt specific resume replication input. </summary>
     public partial class VMwareCbtResumeReplicationContent : ResumeReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtResumeReplicationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtResumeReplicationContent"/>. </summary>
         public VMwareCbtResumeReplicationContent()
         {
             InstanceType = "VMwareCbt";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtResumeReplicationContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="deleteMigrationResources"> A value indicating whether Migration resources to be deleted. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareCbtResumeReplicationContent(string instanceType, string deleteMigrationResources, Dictionary<string, BinaryData> rawData) : base(instanceType, rawData)
+        {
+            DeleteMigrationResources = deleteMigrationResources;
+            InstanceType = instanceType ?? "VMwareCbt";
         }
 
         /// <summary> A value indicating whether Migration resources to be deleted. </summary>

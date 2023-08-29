@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> Project onboarding info. </summary>
     public partial class AzureDevOpsProjectMetadata
     {
-        /// <summary> Initializes a new instance of AzureDevOpsProjectMetadata. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectMetadata"/>. </summary>
         public AzureDevOpsProjectMetadata()
         {
             Repos = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsProjectMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectMetadata"/>. </summary>
         /// <param name="name"> Gets or sets name of the AzureDevOps Project. </param>
         /// <param name="autoDiscovery"></param>
         /// <param name="repos"> Gets or sets repositories. </param>
-        internal AzureDevOpsProjectMetadata(string name, AutoDiscovery? autoDiscovery, IList<string> repos)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsProjectMetadata(string name, AutoDiscovery? autoDiscovery, IList<string> repos, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             AutoDiscovery = autoDiscovery;
             Repos = repos;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets name of the AzureDevOps Project. </summary>

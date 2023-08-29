@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(ArmSkuConverter))]
-    public partial class ArmSku : IUtf8JsonSerializable
+    public partial class ArmSku : IUtf8JsonSerializable, IModelJsonSerializable<ArmSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArmSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -40,11 +47,25 @@ namespace Azure.ResourceManager.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmSku DeserializeArmSku(JsonElement element)
+        internal static ArmSku DeserializeArmSku(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.Models
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<int> capacity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -89,8 +111,57 @@ namespace Azure.ResourceManager.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArmSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity));
+            return new ArmSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), rawData);
+        }
+
+        ArmSku IModelJsonSerializable<ArmSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArmSku>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArmSku IModelSerializable<ArmSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArmSku(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ArmSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ArmSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArmSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ArmSkuConverter : JsonConverter<ArmSku>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public partial class ApplicationHealthPolicy
     {
-        /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationHealthPolicy"/>. </summary>
         /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
         /// <param name="maxPercentUnhealthyDeployedApplications">
         /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServiceTypeHealthPolicyMap = new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationHealthPolicy"/>. </summary>
         /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
         /// <param name="maxPercentUnhealthyDeployedApplications">
         /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.
@@ -43,12 +46,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="defaultServiceTypeHealthPolicy"> The health policy used by default to evaluate the health of a service type. </param>
         /// <param name="serviceTypeHealthPolicyMap"> The map with service type health policy per service type name. The map is empty by default. </param>
-        internal ApplicationHealthPolicy(bool considerWarningAsError, int maxPercentUnhealthyDeployedApplications, ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy, IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicyMap)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationHealthPolicy(bool considerWarningAsError, int maxPercentUnhealthyDeployedApplications, ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy, IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicyMap, Dictionary<string, BinaryData> rawData)
         {
             ConsiderWarningAsError = considerWarningAsError;
             MaxPercentUnhealthyDeployedApplications = maxPercentUnhealthyDeployedApplications;
             DefaultServiceTypeHealthPolicy = defaultServiceTypeHealthPolicy;
             ServiceTypeHealthPolicyMap = serviceTypeHealthPolicyMap;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationHealthPolicy"/> for deserialization. </summary>
+        internal ApplicationHealthPolicy()
+        {
         }
 
         /// <summary> Indicates whether warnings are treated with the same severity as errors. </summary>

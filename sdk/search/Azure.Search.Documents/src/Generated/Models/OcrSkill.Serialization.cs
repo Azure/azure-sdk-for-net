@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class OcrSkill : IUtf8JsonSerializable
+    public partial class OcrSkill : IUtf8JsonSerializable, IModelJsonSerializable<OcrSkill>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OcrSkill>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OcrSkill>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<OcrSkill>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultLanguageCode))
             {
@@ -76,11 +83,25 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OcrSkill DeserializeOcrSkill(JsonElement element)
+        internal static OcrSkill DeserializeOcrSkill(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,6 +115,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultLanguageCode"u8))
@@ -165,8 +187,57 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputs = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OcrSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(detectOrientation), Optional.ToNullable(lineEnding));
+            return new OcrSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(detectOrientation), Optional.ToNullable(lineEnding), rawData);
+        }
+
+        OcrSkill IModelJsonSerializable<OcrSkill>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OcrSkill>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOcrSkill(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OcrSkill>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OcrSkill>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OcrSkill IModelSerializable<OcrSkill>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OcrSkill>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOcrSkill(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(OcrSkill model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator OcrSkill(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOcrSkill(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

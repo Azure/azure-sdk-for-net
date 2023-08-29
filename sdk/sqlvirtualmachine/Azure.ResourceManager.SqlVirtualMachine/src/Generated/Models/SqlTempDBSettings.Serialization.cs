@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlTempDBSettings : IUtf8JsonSerializable
+    public partial class SqlTempDBSettings : IUtf8JsonSerializable, IModelJsonSerializable<SqlTempDBSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlTempDBSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlTempDBSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DataFileSize))
             {
@@ -66,11 +73,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlTempDBSettings DeserializeSqlTempDBSettings(JsonElement element)
+        internal static SqlTempDBSettings DeserializeSqlTempDBSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +105,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<string> persistFolderPath = default;
             Optional<IList<int>> luns = default;
             Optional<string> defaultFilePath = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataFileSize"u8))
@@ -164,8 +186,57 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     defaultFilePath = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlTempDBSettings(Optional.ToNullable(dataFileSize), Optional.ToNullable(dataGrowth), Optional.ToNullable(logFileSize), Optional.ToNullable(logGrowth), Optional.ToNullable(dataFileCount), Optional.ToNullable(persistFolder), persistFolderPath.Value, Optional.ToList(luns), defaultFilePath.Value);
+            return new SqlTempDBSettings(Optional.ToNullable(dataFileSize), Optional.ToNullable(dataGrowth), Optional.ToNullable(logFileSize), Optional.ToNullable(logGrowth), Optional.ToNullable(dataFileCount), Optional.ToNullable(persistFolder), persistFolderPath.Value, Optional.ToList(luns), defaultFilePath.Value, rawData);
+        }
+
+        SqlTempDBSettings IModelJsonSerializable<SqlTempDBSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlTempDBSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlTempDBSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlTempDBSettings IModelSerializable<SqlTempDBSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlTempDBSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SqlTempDBSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SqlTempDBSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlTempDBSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

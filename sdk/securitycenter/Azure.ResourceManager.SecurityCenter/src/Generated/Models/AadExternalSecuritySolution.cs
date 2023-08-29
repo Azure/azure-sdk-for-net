@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,13 +15,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents an AAD identity protection solution which sends logs to an OMS workspace. </summary>
     public partial class AadExternalSecuritySolution : ExternalSecuritySolution
     {
-        /// <summary> Initializes a new instance of AadExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadExternalSecuritySolution"/>. </summary>
         public AadExternalSecuritySolution()
         {
             Kind = ExternalSecuritySolutionKind.Aad;
         }
 
-        /// <summary> Initializes a new instance of AadExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,7 +29,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="properties"> The external security solution properties for AAD solutions. </param>
-        internal AadExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, AadSolutionProperties properties) : base(id, name, resourceType, systemData, kind, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AadExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, AadSolutionProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, location, rawData)
         {
             Properties = properties;
             Kind = kind;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceStartStopScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceStartStopScheduleData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceStartStopScheduleData"/>. </summary>
         public ManagedInstanceStartStopScheduleData()
         {
             ScheduleList = new ChangeTrackingList<SqlScheduleItem>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceStartStopScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceStartStopScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,13 +37,15 @@ namespace Azure.ResourceManager.Sql
         /// <param name="scheduleList"> Schedule list. </param>
         /// <param name="nextRunAction"> Next action to be executed (Start or Stop). </param>
         /// <param name="nextExecutionTime"> Timestamp when the next action will be executed in the corresponding schedule time zone. </param>
-        internal ManagedInstanceStartStopScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string timeZoneId, IList<SqlScheduleItem> scheduleList, string nextRunAction, string nextExecutionTime) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceStartStopScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string timeZoneId, IList<SqlScheduleItem> scheduleList, string nextRunAction, string nextExecutionTime, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             TimeZoneId = timeZoneId;
             ScheduleList = scheduleList;
             NextRunAction = nextRunAction;
             NextExecutionTime = nextExecutionTime;
+            _rawData = rawData;
         }
 
         /// <summary> The description of the schedule. </summary>

@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class IotSecuritySolutionAnalyticsModelData : IUtf8JsonSerializable
+    public partial class IotSecuritySolutionAnalyticsModelData : IUtf8JsonSerializable, IModelJsonSerializable<IotSecuritySolutionAnalyticsModelData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotSecuritySolutionAnalyticsModelData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotSecuritySolutionAnalyticsModelData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotSecuritySolutionAnalyticsModelData DeserializeIotSecuritySolutionAnalyticsModelData(JsonElement element)
+        internal static IotSecuritySolutionAnalyticsModelData DeserializeIotSecuritySolutionAnalyticsModelData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<IList<IotSecurityAlertedDevice>> topAlertedDevices = default;
             Optional<IList<IotSecurityDeviceAlert>> mostPrevalentDeviceAlerts = default;
             Optional<IList<IotSecurityDeviceRecommendation>> mostPrevalentDeviceRecommendations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -182,8 +204,57 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotSecuritySolutionAnalyticsModelData(id, name, type, systemData.Value, metrics.Value, Optional.ToNullable(unhealthyDeviceCount), Optional.ToList(devicesMetrics), Optional.ToList(topAlertedDevices), Optional.ToList(mostPrevalentDeviceAlerts), Optional.ToList(mostPrevalentDeviceRecommendations));
+            return new IotSecuritySolutionAnalyticsModelData(id, name, type, systemData.Value, metrics.Value, Optional.ToNullable(unhealthyDeviceCount), Optional.ToList(devicesMetrics), Optional.ToList(topAlertedDevices), Optional.ToList(mostPrevalentDeviceAlerts), Optional.ToList(mostPrevalentDeviceRecommendations), rawData);
+        }
+
+        IotSecuritySolutionAnalyticsModelData IModelJsonSerializable<IotSecuritySolutionAnalyticsModelData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotSecuritySolutionAnalyticsModelData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotSecuritySolutionAnalyticsModelData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotSecuritySolutionAnalyticsModelData IModelSerializable<IotSecuritySolutionAnalyticsModelData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotSecuritySolutionAnalyticsModelData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IotSecuritySolutionAnalyticsModelData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IotSecuritySolutionAnalyticsModelData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotSecuritySolutionAnalyticsModelData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

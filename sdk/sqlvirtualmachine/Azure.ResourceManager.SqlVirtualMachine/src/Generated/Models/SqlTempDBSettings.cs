@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> The SqlTempDBSettings. </summary>
     public partial class SqlTempDBSettings
     {
-        /// <summary> Initializes a new instance of SqlTempDBSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlTempDBSettings"/>. </summary>
         public SqlTempDBSettings()
         {
             LogicalUnitNumbers = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of SqlTempDBSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlTempDBSettings"/>. </summary>
         /// <param name="dataFileSize"> SQL Server tempdb data file size. </param>
         /// <param name="dataGrowth"> SQL Server tempdb data file autoGrowth size. </param>
         /// <param name="logFileSize"> SQL Server tempdb log file size. </param>
@@ -29,7 +32,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="persistFolderPath"> SQL Server tempdb persist folder location. </param>
         /// <param name="logicalUnitNumbers"> Logical Unit Numbers for the disks. </param>
         /// <param name="defaultFilePath"> SQL Server default file path. </param>
-        internal SqlTempDBSettings(int? dataFileSize, int? dataGrowth, int? logFileSize, int? logGrowth, int? dataFileCount, bool? persistFolder, string persistFolderPath, IList<int> logicalUnitNumbers, string defaultFilePath)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlTempDBSettings(int? dataFileSize, int? dataGrowth, int? logFileSize, int? logGrowth, int? dataFileCount, bool? persistFolder, string persistFolderPath, IList<int> logicalUnitNumbers, string defaultFilePath, Dictionary<string, BinaryData> rawData)
         {
             DataFileSize = dataFileSize;
             DataGrowth = dataGrowth;
@@ -40,6 +44,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             PersistFolderPath = persistFolderPath;
             LogicalUnitNumbers = logicalUnitNumbers;
             DefaultFilePath = defaultFilePath;
+            _rawData = rawData;
         }
 
         /// <summary> SQL Server tempdb data file size. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmStorageConfigurationSettings : IUtf8JsonSerializable
+    public partial class SqlVmStorageConfigurationSettings : IUtf8JsonSerializable, IModelJsonSerializable<SqlVmStorageConfigurationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlVmStorageConfigurationSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlVmStorageConfigurationSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlDataSettings))
             {
@@ -45,11 +53,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("storageWorkloadType"u8);
                 writer.WriteStringValue(StorageWorkloadType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmStorageConfigurationSettings DeserializeSqlVmStorageConfigurationSettings(JsonElement element)
+        internal static SqlVmStorageConfigurationSettings DeserializeSqlVmStorageConfigurationSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +82,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<bool> sqlSystemDBOnDataDisk = default;
             Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
             Optional<SqlVmStorageWorkloadType> storageWorkloadType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlDataSettings"u8))
@@ -116,8 +139,57 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     storageWorkloadType = new SqlVmStorageWorkloadType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlVmStorageConfigurationSettings(sqlDataSettings.Value, sqlLogSettings.Value, sqlTempDBSettings.Value, Optional.ToNullable(sqlSystemDBOnDataDisk), Optional.ToNullable(diskConfigurationType), Optional.ToNullable(storageWorkloadType));
+            return new SqlVmStorageConfigurationSettings(sqlDataSettings.Value, sqlLogSettings.Value, sqlTempDBSettings.Value, Optional.ToNullable(sqlSystemDBOnDataDisk), Optional.ToNullable(diskConfigurationType), Optional.ToNullable(storageWorkloadType), rawData);
+        }
+
+        SqlVmStorageConfigurationSettings IModelJsonSerializable<SqlVmStorageConfigurationSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmStorageConfigurationSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlVmStorageConfigurationSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlVmStorageConfigurationSettings IModelSerializable<SqlVmStorageConfigurationSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlVmStorageConfigurationSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SqlVmStorageConfigurationSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SqlVmStorageConfigurationSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlVmStorageConfigurationSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSqlRestoreWithRehydrateContent : IUtf8JsonSerializable
+    public partial class WorkloadSqlRestoreWithRehydrateContent : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadSqlRestoreWithRehydrateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadSqlRestoreWithRehydrateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadSqlRestoreWithRehydrateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlRestoreWithRehydrateContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointRehydrationInfo))
             {
@@ -79,11 +86,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadSqlRestoreWithRehydrateContent DeserializeWorkloadSqlRestoreWithRehydrateContent(JsonElement element)
+        internal static WorkloadSqlRestoreWithRehydrateContent DeserializeWorkloadSqlRestoreWithRehydrateContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,6 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RecoveryMode> recoveryMode = default;
             Optional<ResourceIdentifier> targetVirtualMachineId = default;
             string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointRehydrationInfo"u8))
@@ -206,8 +228,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadSqlRestoreWithRehydrateContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Optional.ToNullable(shouldUseAlternateTargetLocation), Optional.ToNullable(isNonRecoverable), Optional.ToList(alternateDirectoryPaths), recoveryPointRehydrationInfo.Value);
+            return new WorkloadSqlRestoreWithRehydrateContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Optional.ToNullable(shouldUseAlternateTargetLocation), Optional.ToNullable(isNonRecoverable), Optional.ToList(alternateDirectoryPaths), recoveryPointRehydrationInfo.Value, rawData);
+        }
+
+        WorkloadSqlRestoreWithRehydrateContent IModelJsonSerializable<WorkloadSqlRestoreWithRehydrateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlRestoreWithRehydrateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadSqlRestoreWithRehydrateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadSqlRestoreWithRehydrateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlRestoreWithRehydrateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadSqlRestoreWithRehydrateContent IModelSerializable<WorkloadSqlRestoreWithRehydrateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlRestoreWithRehydrateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadSqlRestoreWithRehydrateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadSqlRestoreWithRehydrateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadSqlRestoreWithRehydrateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadSqlRestoreWithRehydrateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

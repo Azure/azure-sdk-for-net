@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. </summary>
     public partial class CalculatePriceResultPropertiesPricingCurrencyTotal
     {
-        /// <summary> Initializes a new instance of CalculatePriceResultPropertiesPricingCurrencyTotal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResultPropertiesPricingCurrencyTotal"/>. </summary>
         internal CalculatePriceResultPropertiesPricingCurrencyTotal()
         {
         }
 
-        /// <summary> Initializes a new instance of CalculatePriceResultPropertiesPricingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResultPropertiesPricingCurrencyTotal"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
-        internal CalculatePriceResultPropertiesPricingCurrencyTotal(string currencyCode, float? amount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CalculatePriceResultPropertiesPricingCurrencyTotal(string currencyCode, float? amount, Dictionary<string, BinaryData> rawData)
         {
             CurrencyCode = currencyCode;
             Amount = amount;
+            _rawData = rawData;
         }
 
         /// <summary> The ISO 4217 3-letter currency code for the currency used by this purchase record. </summary>

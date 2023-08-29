@@ -9,14 +9,40 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryProcessServerDetails
+    public partial class SiteRecoveryProcessServerDetails : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryProcessServerDetails>
     {
-        internal static SiteRecoveryProcessServerDetails DeserializeSiteRecoveryProcessServerDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryProcessServerDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryProcessServerDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryProcessServerDetails DeserializeSiteRecoveryProcessServerDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             Optional<int> protectedItemCount = default;
             Optional<SiteRecoveryProtectionHealth> historicHealth = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -310,8 +337,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     historicHealth = new SiteRecoveryProtectionHealth(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryProcessServerDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, Optional.ToList(ipAddresses), version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), Optional.ToNullable(usedMemoryInBytes), Optional.ToNullable(memoryUsagePercentage), Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), Optional.ToNullable(usedSpaceInBytes), Optional.ToNullable(freeSpacePercentage), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInBytes), Optional.ToNullable(processorUsagePercentage), Optional.ToNullable(throughputStatus), Optional.ToNullable(systemLoad), Optional.ToNullable(systemLoadStatus), Optional.ToNullable(diskUsageStatus), Optional.ToNullable(memoryUsageStatus), Optional.ToNullable(processorUsageStatus), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToNullable(historicHealth));
+            return new SiteRecoveryProcessServerDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, Optional.ToList(ipAddresses), version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), Optional.ToNullable(usedMemoryInBytes), Optional.ToNullable(memoryUsagePercentage), Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), Optional.ToNullable(usedSpaceInBytes), Optional.ToNullable(freeSpacePercentage), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInBytes), Optional.ToNullable(processorUsagePercentage), Optional.ToNullable(throughputStatus), Optional.ToNullable(systemLoad), Optional.ToNullable(systemLoadStatus), Optional.ToNullable(diskUsageStatus), Optional.ToNullable(memoryUsageStatus), Optional.ToNullable(processorUsageStatus), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToNullable(historicHealth), rawData);
+        }
+
+        SiteRecoveryProcessServerDetails IModelJsonSerializable<SiteRecoveryProcessServerDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryProcessServerDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryProcessServerDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryProcessServerDetails IModelSerializable<SiteRecoveryProcessServerDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryProcessServerDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SiteRecoveryProcessServerDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SiteRecoveryProcessServerDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryProcessServerDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

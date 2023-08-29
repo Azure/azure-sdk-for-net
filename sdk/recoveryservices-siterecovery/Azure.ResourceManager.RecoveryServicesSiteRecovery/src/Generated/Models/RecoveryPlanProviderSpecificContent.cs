@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -14,9 +17,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class RecoveryPlanProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of RecoveryPlanProviderSpecificContent. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanProviderSpecificContent"/>. </summary>
         protected RecoveryPlanProviderSpecificContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPlanProviderSpecificContent(string instanceType, Dictionary<string, BinaryData> rawData)
+        {
+            InstanceType = instanceType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the Instance type. </summary>

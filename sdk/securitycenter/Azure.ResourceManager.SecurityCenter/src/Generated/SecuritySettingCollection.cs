@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySettingSettingsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securitySettingSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecuritySettingResource(Client, SecuritySettingData.DeserializeSecuritySettingData(e)), _securitySettingSettingsClientDiagnostics, Pipeline, "SecuritySettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecuritySettingResource(Client, SecuritySettingData.DeserializeSecuritySettingData(e)), _securitySettingSettingsClientDiagnostics, Pipeline, "SecuritySettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySettingSettingsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securitySettingSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecuritySettingResource(Client, SecuritySettingData.DeserializeSecuritySettingData(e)), _securitySettingSettingsClientDiagnostics, Pipeline, "SecuritySettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecuritySettingResource(Client, SecuritySettingData.DeserializeSecuritySettingData(e)), _securitySettingSettingsClientDiagnostics, Pipeline, "SecuritySettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

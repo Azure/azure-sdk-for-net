@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Read-write endpoint of the failover group instance. </summary>
     public partial class InstanceFailoverGroupReadWriteEndpoint
     {
-        /// <summary> Initializes a new instance of InstanceFailoverGroupReadWriteEndpoint. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupReadWriteEndpoint"/>. </summary>
         /// <param name="failoverPolicy"> Failover policy of the read-write endpoint for the failover group. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </param>
         public InstanceFailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy failoverPolicy)
         {
             FailoverPolicy = failoverPolicy;
         }
 
-        /// <summary> Initializes a new instance of InstanceFailoverGroupReadWriteEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupReadWriteEndpoint"/>. </summary>
         /// <param name="failoverPolicy"> Failover policy of the read-write endpoint for the failover group. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </param>
         /// <param name="failoverWithDataLossGracePeriodMinutes"> Grace period before failover with data loss is attempted for the read-write endpoint. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </param>
-        internal InstanceFailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy failoverPolicy, int? failoverWithDataLossGracePeriodMinutes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstanceFailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy failoverPolicy, int? failoverWithDataLossGracePeriodMinutes, Dictionary<string, BinaryData> rawData)
         {
             FailoverPolicy = failoverPolicy;
             FailoverWithDataLossGracePeriodMinutes = failoverWithDataLossGracePeriodMinutes;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupReadWriteEndpoint"/> for deserialization. </summary>
+        internal InstanceFailoverGroupReadWriteEndpoint()
+        {
         }
 
         /// <summary> Failover policy of the read-write endpoint for the failover group. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </summary>

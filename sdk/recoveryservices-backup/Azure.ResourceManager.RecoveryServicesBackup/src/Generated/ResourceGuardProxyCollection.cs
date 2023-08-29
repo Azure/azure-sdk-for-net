@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardProxyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardProxyResource(Client, ResourceGuardProxyData.DeserializeResourceGuardProxyData(e)), _resourceGuardProxyClientDiagnostics, Pipeline, "ResourceGuardProxyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceGuardProxyResource(Client, ResourceGuardProxyData.DeserializeResourceGuardProxyData(e)), _resourceGuardProxyClientDiagnostics, Pipeline, "ResourceGuardProxyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardProxyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardProxyResource(Client, ResourceGuardProxyData.DeserializeResourceGuardProxyData(e)), _resourceGuardProxyClientDiagnostics, Pipeline, "ResourceGuardProxyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceGuardProxyResource(Client, ResourceGuardProxyData.DeserializeResourceGuardProxyData(e)), _resourceGuardProxyClientDiagnostics, Pipeline, "ResourceGuardProxyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
@@ -17,22 +19,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class SiteRecoveryMigrationItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemData"/>. </summary>
         internal SiteRecoveryMigrationItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The migration item properties. </param>
         /// <param name="location"> Resource Location. </param>
-        internal SiteRecoveryMigrationItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryMigrationItemProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryMigrationItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryMigrationItemProperties properties, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> The migration item properties. </summary>

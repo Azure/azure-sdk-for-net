@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
@@ -12,24 +14,28 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Exchange operation result. </summary>
     public partial class ExchangeResult
     {
-        /// <summary> Initializes a new instance of ExchangeResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExchangeResult"/>. </summary>
         internal ExchangeResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ExchangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangeResult"/>. </summary>
         /// <param name="id"> It should match what is used to GET the operation result. </param>
         /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
         /// <param name="status"> Status of the operation. </param>
         /// <param name="properties"> Exchange response properties. </param>
         /// <param name="error"> Required if status == failed or status == canceled. </param>
-        internal ExchangeResult(ResourceIdentifier id, string name, ExchangeOperationResultStatus? status, ExchangeResultProperties properties, OperationResultError error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExchangeResult(ResourceIdentifier id, string name, ExchangeOperationResultStatus? status, ExchangeResultProperties properties, OperationResultError error, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             Status = status;
             Properties = properties;
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> It should match what is used to GET the operation result. </summary>

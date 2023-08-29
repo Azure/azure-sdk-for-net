@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Redis;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> The response of list patch schedules Redis operation. </summary>
     internal partial class RedisPatchScheduleListResult
     {
-        /// <summary> Initializes a new instance of RedisPatchScheduleListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleListResult"/>. </summary>
         internal RedisPatchScheduleListResult()
         {
             Value = new ChangeTrackingList<RedisPatchScheduleData>();
         }
 
-        /// <summary> Initializes a new instance of RedisPatchScheduleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleListResult"/>. </summary>
         /// <param name="value"> Results of the list patch schedules operation. </param>
         /// <param name="nextLink"> Link for next page of results. </param>
-        internal RedisPatchScheduleListResult(IReadOnlyList<RedisPatchScheduleData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisPatchScheduleListResult(IReadOnlyList<RedisPatchScheduleData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Results of the list patch schedules operation. </summary>

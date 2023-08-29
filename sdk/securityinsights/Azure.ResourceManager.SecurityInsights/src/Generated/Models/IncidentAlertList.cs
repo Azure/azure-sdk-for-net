@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List of incident alerts. </summary>
     internal partial class IncidentAlertList
     {
-        /// <summary> Initializes a new instance of IncidentAlertList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IncidentAlertList"/>. </summary>
         /// <param name="value"> Array of incident alerts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentAlertList(IEnumerable<SecurityInsightsAlert> value)
@@ -25,11 +27,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IncidentAlertList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentAlertList"/>. </summary>
         /// <param name="value"> Array of incident alerts. </param>
-        internal IncidentAlertList(IReadOnlyList<SecurityInsightsAlert> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncidentAlertList(IReadOnlyList<SecurityInsightsAlert> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IncidentAlertList"/> for deserialization. </summary>
+        internal IncidentAlertList()
+        {
         }
 
         /// <summary> Array of incident alerts. </summary>

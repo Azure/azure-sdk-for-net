@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class InstanceFailoverGroupReadOnlyEndpoint : IUtf8JsonSerializable
+    internal partial class InstanceFailoverGroupReadOnlyEndpoint : IUtf8JsonSerializable, IModelJsonSerializable<InstanceFailoverGroupReadOnlyEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstanceFailoverGroupReadOnlyEndpoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InstanceFailoverGroupReadOnlyEndpoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FailoverPolicy))
             {
                 writer.WritePropertyName("failoverPolicy"u8);
                 writer.WriteStringValue(FailoverPolicy.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InstanceFailoverGroupReadOnlyEndpoint DeserializeInstanceFailoverGroupReadOnlyEndpoint(JsonElement element)
+        internal static InstanceFailoverGroupReadOnlyEndpoint DeserializeInstanceFailoverGroupReadOnlyEndpoint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ReadOnlyEndpointFailoverPolicy> failoverPolicy = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failoverPolicy"u8))
@@ -41,8 +64,57 @@ namespace Azure.ResourceManager.Sql.Models
                     failoverPolicy = new ReadOnlyEndpointFailoverPolicy(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InstanceFailoverGroupReadOnlyEndpoint(Optional.ToNullable(failoverPolicy));
+            return new InstanceFailoverGroupReadOnlyEndpoint(Optional.ToNullable(failoverPolicy), rawData);
+        }
+
+        InstanceFailoverGroupReadOnlyEndpoint IModelJsonSerializable<InstanceFailoverGroupReadOnlyEndpoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceFailoverGroupReadOnlyEndpoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InstanceFailoverGroupReadOnlyEndpoint>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InstanceFailoverGroupReadOnlyEndpoint IModelSerializable<InstanceFailoverGroupReadOnlyEndpoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInstanceFailoverGroupReadOnlyEndpoint(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InstanceFailoverGroupReadOnlyEndpoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InstanceFailoverGroupReadOnlyEndpoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInstanceFailoverGroupReadOnlyEndpoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

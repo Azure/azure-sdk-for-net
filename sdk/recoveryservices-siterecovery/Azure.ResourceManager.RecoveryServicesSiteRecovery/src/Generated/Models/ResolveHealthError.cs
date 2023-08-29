@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Resolve health errors input properties. </summary>
     public partial class ResolveHealthError
     {
-        /// <summary> Initializes a new instance of ResolveHealthError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResolveHealthError"/>. </summary>
         public ResolveHealthError()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResolveHealthError"/>. </summary>
+        /// <param name="healthErrorId"> Health error id. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResolveHealthError(string healthErrorId, Dictionary<string, BinaryData> rawData)
+        {
+            HealthErrorId = healthErrorId;
+            _rawData = rawData;
         }
 
         /// <summary> Health error id. </summary>

@@ -6,25 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The managed database's restore details backup set properties. </summary>
     public partial class ManagedDatabaseRestoreDetailBackupSetProperties
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailBackupSetProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailBackupSetProperties"/>. </summary>
         internal ManagedDatabaseRestoreDetailBackupSetProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailBackupSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailBackupSetProperties"/>. </summary>
         /// <param name="status"> Backup set status. </param>
         /// <param name="firstStripeName"> First stripe name. </param>
         /// <param name="numberOfStripes"> Number of stripes. </param>
         /// <param name="backupSizeInMB"> Backup size. </param>
         /// <param name="restoreStartedOn"> Last restored file time. </param>
         /// <param name="restoreFinishedOn"> Last restored file time. </param>
-        internal ManagedDatabaseRestoreDetailBackupSetProperties(string status, string firstStripeName, int? numberOfStripes, int? backupSizeInMB, DateTimeOffset? restoreStartedOn, DateTimeOffset? restoreFinishedOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedDatabaseRestoreDetailBackupSetProperties(string status, string firstStripeName, int? numberOfStripes, int? backupSizeInMB, DateTimeOffset? restoreStartedOn, DateTimeOffset? restoreFinishedOn, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             FirstStripeName = firstStripeName;
@@ -32,6 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
             BackupSizeInMB = backupSizeInMB;
             RestoreStartedOn = restoreStartedOn;
             RestoreFinishedOn = restoreFinishedOn;
+            _rawData = rawData;
         }
 
         /// <summary> Backup set status. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of recommended sensitivity label update operations. </summary>
     public partial class RecommendedSensitivityLabelUpdateList
     {
-        /// <summary> Initializes a new instance of RecommendedSensitivityLabelUpdateList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecommendedSensitivityLabelUpdateList"/>. </summary>
         public RecommendedSensitivityLabelUpdateList()
         {
             Operations = new ChangeTrackingList<RecommendedSensitivityLabelUpdate>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecommendedSensitivityLabelUpdateList"/>. </summary>
+        /// <param name="operations"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedSensitivityLabelUpdateList(IList<RecommendedSensitivityLabelUpdate> operations, Dictionary<string, BinaryData> rawData)
+        {
+            Operations = operations;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the operations. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Azure VM unmanaged disk input details. </summary>
     public partial class A2AProtectionIntentDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AProtectionIntentDiskDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionIntentDiskDetails"/>. </summary>
         /// <param name="diskUri"> The disk Uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskUri"/> is null. </exception>
         public A2AProtectionIntentDiskDetails(Uri diskUri)
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskUri = diskUri;
         }
 
-        /// <summary> Initializes a new instance of A2AProtectionIntentDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionIntentDiskDetails"/>. </summary>
         /// <param name="diskUri"> The disk Uri. </param>
         /// <param name="recoveryAzureStorageAccountCustomContent">
         /// The recovery VHD storage account input.
@@ -35,11 +38,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
-        internal A2AProtectionIntentDiskDetails(Uri diskUri, StorageAccountCustomDetails recoveryAzureStorageAccountCustomContent, StorageAccountCustomDetails primaryStagingStorageAccountCustomContent)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AProtectionIntentDiskDetails(Uri diskUri, StorageAccountCustomDetails recoveryAzureStorageAccountCustomContent, StorageAccountCustomDetails primaryStagingStorageAccountCustomContent, Dictionary<string, BinaryData> rawData)
         {
             DiskUri = diskUri;
             RecoveryAzureStorageAccountCustomContent = recoveryAzureStorageAccountCustomContent;
             PrimaryStagingStorageAccountCustomContent = primaryStagingStorageAccountCustomContent;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionIntentDiskDetails"/> for deserialization. </summary>
+        internal A2AProtectionIntentDiskDetails()
+        {
         }
 
         /// <summary> The disk Uri. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRNetworkAcls : IUtf8JsonSerializable
+    public partial class SignalRNetworkAcls : IUtf8JsonSerializable, IModelJsonSerializable<SignalRNetworkAcls>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SignalRNetworkAcls>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SignalRNetworkAcls>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultAction))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SignalRNetworkAcls DeserializeSignalRNetworkAcls(JsonElement element)
+        internal static SignalRNetworkAcls DeserializeSignalRNetworkAcls(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Optional<SignalRNetworkAclAction> defaultAction = default;
             Optional<SignalRNetworkAcl> publicNetwork = default;
             Optional<IList<SignalRPrivateEndpointAcl>> privateEndpoints = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -82,8 +104,57 @@ namespace Azure.ResourceManager.SignalR.Models
                     privateEndpoints = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SignalRNetworkAcls(Optional.ToNullable(defaultAction), publicNetwork.Value, Optional.ToList(privateEndpoints));
+            return new SignalRNetworkAcls(Optional.ToNullable(defaultAction), publicNetwork.Value, Optional.ToList(privateEndpoints), rawData);
+        }
+
+        SignalRNetworkAcls IModelJsonSerializable<SignalRNetworkAcls>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignalRNetworkAcls(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SignalRNetworkAcls>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SignalRNetworkAcls IModelSerializable<SignalRNetworkAcls>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSignalRNetworkAcls(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SignalRNetworkAcls model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SignalRNetworkAcls(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSignalRNetworkAcls(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

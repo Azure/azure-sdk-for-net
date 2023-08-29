@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessPolicyVirtualMachine : IUtf8JsonSerializable
+    public partial class JitNetworkAccessPolicyVirtualMachine : IUtf8JsonSerializable, IModelJsonSerializable<JitNetworkAccessPolicyVirtualMachine>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JitNetworkAccessPolicyVirtualMachine>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JitNetworkAccessPolicyVirtualMachine>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JitNetworkAccessPolicyVirtualMachine DeserializeJitNetworkAccessPolicyVirtualMachine(JsonElement element)
+        internal static JitNetworkAccessPolicyVirtualMachine DeserializeJitNetworkAccessPolicyVirtualMachine(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             IList<JitNetworkAccessPortRule> ports = default;
             Optional<string> publicIPAddress = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -64,8 +86,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     publicIPAddress = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JitNetworkAccessPolicyVirtualMachine(id, ports, publicIPAddress.Value);
+            return new JitNetworkAccessPolicyVirtualMachine(id, ports, publicIPAddress.Value, rawData);
+        }
+
+        JitNetworkAccessPolicyVirtualMachine IModelJsonSerializable<JitNetworkAccessPolicyVirtualMachine>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitNetworkAccessPolicyVirtualMachine(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JitNetworkAccessPolicyVirtualMachine>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JitNetworkAccessPolicyVirtualMachine IModelSerializable<JitNetworkAccessPolicyVirtualMachine>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJitNetworkAccessPolicyVirtualMachine(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(JitNetworkAccessPolicyVirtualMachine model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator JitNetworkAccessPolicyVirtualMachine(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJitNetworkAccessPolicyVirtualMachine(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

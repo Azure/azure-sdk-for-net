@@ -5,16 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DataManifestCustomResourceFunctionDefinition
+    public partial class DataManifestCustomResourceFunctionDefinition : IUtf8JsonSerializable, IModelJsonSerializable<DataManifestCustomResourceFunctionDefinition>
     {
-        internal static DataManifestCustomResourceFunctionDefinition DeserializeDataManifestCustomResourceFunctionDefinition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataManifestCustomResourceFunctionDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataManifestCustomResourceFunctionDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(FullyQualifiedResourceType))
+            {
+                writer.WritePropertyName("fullyQualifiedResourceType"u8);
+                writer.WriteStringValue(FullyQualifiedResourceType.Value);
+            }
+            if (Optional.IsCollectionDefined(DefaultProperties))
+            {
+                writer.WritePropertyName("defaultProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in DefaultProperties)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AllowCustomProperties))
+            {
+                writer.WritePropertyName("allowCustomProperties"u8);
+                writer.WriteBooleanValue(AllowCustomProperties.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataManifestCustomResourceFunctionDefinition DeserializeDataManifestCustomResourceFunctionDefinition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ResourceType> fullyQualifiedResourceType = default;
             Optional<IReadOnlyList<string>> defaultProperties = default;
             Optional<bool> allowCustomProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -62,8 +115,57 @@ namespace Azure.ResourceManager.Resources.Models
                     allowCustomProperties = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataManifestCustomResourceFunctionDefinition(name.Value, Optional.ToNullable(fullyQualifiedResourceType), Optional.ToList(defaultProperties), Optional.ToNullable(allowCustomProperties));
+            return new DataManifestCustomResourceFunctionDefinition(name.Value, Optional.ToNullable(fullyQualifiedResourceType), Optional.ToList(defaultProperties), Optional.ToNullable(allowCustomProperties), rawData);
+        }
+
+        DataManifestCustomResourceFunctionDefinition IModelJsonSerializable<DataManifestCustomResourceFunctionDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataManifestCustomResourceFunctionDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataManifestCustomResourceFunctionDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataManifestCustomResourceFunctionDefinition IModelSerializable<DataManifestCustomResourceFunctionDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataManifestCustomResourceFunctionDefinition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataManifestCustomResourceFunctionDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataManifestCustomResourceFunctionDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataManifestCustomResourceFunctionDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

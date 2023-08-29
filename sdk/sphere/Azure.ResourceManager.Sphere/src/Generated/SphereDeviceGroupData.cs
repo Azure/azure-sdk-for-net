@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sphere.Models;
@@ -18,12 +20,14 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereDeviceGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereDeviceGroupData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceGroupData"/>. </summary>
         public SphereDeviceGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereDeviceGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,7 +60,8 @@ namespace Azure.ResourceManager.Sphere
         /// The status of the last operation.
         /// Serialized Name: DeviceGroup.properties.provisioningState
         /// </param>
-        internal SphereDeviceGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, SphereOSFeedType? osFeedType, SphereUpdatePolicy? updatePolicy, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection, RegionalDataBoundary? regionalDataBoundary, bool? hasDeployment, SphereProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereDeviceGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, SphereOSFeedType? osFeedType, SphereUpdatePolicy? updatePolicy, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection, RegionalDataBoundary? regionalDataBoundary, bool? hasDeployment, SphereProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             OSFeedType = osFeedType;
@@ -65,6 +70,7 @@ namespace Azure.ResourceManager.Sphere
             RegionalDataBoundary = regionalDataBoundary;
             HasDeployment = hasDeployment;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary>

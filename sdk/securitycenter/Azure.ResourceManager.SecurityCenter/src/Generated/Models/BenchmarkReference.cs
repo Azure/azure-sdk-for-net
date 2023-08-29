@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The benchmark references. </summary>
     public partial class BenchmarkReference
     {
-        /// <summary> Initializes a new instance of BenchmarkReference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BenchmarkReference"/>. </summary>
         public BenchmarkReference()
         {
         }
 
-        /// <summary> Initializes a new instance of BenchmarkReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenchmarkReference"/>. </summary>
         /// <param name="benchmark"> The benchmark name. </param>
         /// <param name="reference"> The benchmark reference. </param>
-        internal BenchmarkReference(string benchmark, string reference)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BenchmarkReference(string benchmark, string reference, Dictionary<string, BinaryData> rawData)
         {
             Benchmark = benchmark;
             Reference = reference;
+            _rawData = rawData;
         }
 
         /// <summary> The benchmark name. </summary>

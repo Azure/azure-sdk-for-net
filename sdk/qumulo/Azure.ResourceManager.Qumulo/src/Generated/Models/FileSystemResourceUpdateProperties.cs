@@ -14,10 +14,29 @@ namespace Azure.ResourceManager.Qumulo.Models
     /// <summary> The updatable properties of the FileSystemResource. </summary>
     public partial class FileSystemResourceUpdateProperties
     {
-        /// <summary> Initializes a new instance of FileSystemResourceUpdateProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileSystemResourceUpdateProperties"/>. </summary>
         public FileSystemResourceUpdateProperties()
         {
             PrivateIPs = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FileSystemResourceUpdateProperties"/>. </summary>
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        /// <param name="userDetails"> User Details. </param>
+        /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
+        /// <param name="clusterLoginUri"> File system Id of the resource. </param>
+        /// <param name="privateIPs"> Private IPs of the resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, ResourceIdentifier delegatedSubnetId, Uri clusterLoginUri, IList<string> privateIPs, Dictionary<string, BinaryData> rawData)
+        {
+            MarketplaceDetails = marketplaceDetails;
+            UserDetails = userDetails;
+            DelegatedSubnetId = delegatedSubnetId;
+            ClusterLoginUri = clusterLoginUri;
+            PrivateIPs = privateIPs;
+            _rawData = rawData;
         }
 
         /// <summary> Marketplace details. </summary>

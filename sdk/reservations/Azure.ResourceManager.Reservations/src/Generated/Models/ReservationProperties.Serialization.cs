@@ -8,14 +8,190 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationProperties
+    public partial class ReservationProperties : IUtf8JsonSerializable, IModelJsonSerializable<ReservationProperties>
     {
-        internal static ReservationProperties DeserializeReservationProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ReservedResourceType))
+            {
+                writer.WritePropertyName("reservedResourceType"u8);
+                writer.WriteStringValue(ReservedResourceType.Value.ToString());
+            }
+            if (Optional.IsDefined(InstanceFlexibility))
+            {
+                writer.WritePropertyName("instanceFlexibility"u8);
+                writer.WriteStringValue(InstanceFlexibility.Value.ToString());
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsCollectionDefined(AppliedScopes))
+            {
+                writer.WritePropertyName("appliedScopes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AppliedScopes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AppliedScopeType))
+            {
+                writer.WritePropertyName("appliedScopeType"u8);
+                writer.WriteStringValue(AppliedScopeType.Value.ToString());
+            }
+            if (Optional.IsDefined(IsArchived))
+            {
+                writer.WritePropertyName("archived"u8);
+                writer.WriteBooleanValue(IsArchived.Value);
+            }
+            if (Optional.IsDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStringValue(Capabilities);
+            }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(EffectOn))
+            {
+                writer.WritePropertyName("effectiveDateTime"u8);
+                writer.WriteStringValue(EffectOn.Value, "O");
+            }
+            if (Optional.IsDefined(BenefitStartOn))
+            {
+                writer.WritePropertyName("benefitStartTime"u8);
+                writer.WriteStringValue(BenefitStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expiryDate"u8);
+                writer.WriteStringValue(ExpireOn.Value, "D");
+            }
+            if (Optional.IsDefined(ReservationExpireOn))
+            {
+                writer.WritePropertyName("expiryDateTime"u8);
+                writer.WriteStringValue(ReservationExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(ReviewOn))
+            {
+                writer.WritePropertyName("reviewDateTime"u8);
+                writer.WriteStringValue(ReviewOn.Value, "O");
+            }
+            if (Optional.IsDefined(SkuDescription))
+            {
+                writer.WritePropertyName("skuDescription"u8);
+                writer.WriteStringValue(SkuDescription);
+            }
+            if (Optional.IsDefined(ExtendedStatusInfo))
+            {
+                writer.WritePropertyName("extendedStatusInfo"u8);
+                writer.WriteObjectValue(ExtendedStatusInfo);
+            }
+            if (Optional.IsDefined(BillingPlan))
+            {
+                writer.WritePropertyName("billingPlan"u8);
+                writer.WriteStringValue(BillingPlan.Value.ToString());
+            }
+            if (Optional.IsDefined(PurchaseOn))
+            {
+                writer.WritePropertyName("purchaseDate"u8);
+                writer.WriteStringValue(PurchaseOn.Value, "D");
+            }
+            if (Optional.IsDefined(ReservationPurchaseOn))
+            {
+                writer.WritePropertyName("purchaseDateTime"u8);
+                writer.WriteStringValue(ReservationPurchaseOn.Value, "O");
+            }
+            if (Optional.IsDefined(SplitProperties))
+            {
+                writer.WritePropertyName("splitProperties"u8);
+                writer.WriteObjectValue(SplitProperties);
+            }
+            if (Optional.IsDefined(MergeProperties))
+            {
+                writer.WritePropertyName("mergeProperties"u8);
+                writer.WriteObjectValue(MergeProperties);
+            }
+            if (Optional.IsDefined(SwapProperties))
+            {
+                writer.WritePropertyName("swapProperties"u8);
+                writer.WriteObjectValue(SwapProperties);
+            }
+            if (Optional.IsDefined(AppliedScopeProperties))
+            {
+                writer.WritePropertyName("appliedScopeProperties"u8);
+                writer.WriteObjectValue(AppliedScopeProperties);
+            }
+            if (Optional.IsDefined(BillingScopeId))
+            {
+                writer.WritePropertyName("billingScopeId"u8);
+                writer.WriteStringValue(BillingScopeId);
+            }
+            if (Optional.IsDefined(IsRenewEnabled))
+            {
+                writer.WritePropertyName("renew"u8);
+                writer.WriteBooleanValue(IsRenewEnabled.Value);
+            }
+            if (Optional.IsDefined(RenewSource))
+            {
+                writer.WritePropertyName("renewSource"u8);
+                writer.WriteStringValue(RenewSource);
+            }
+            if (Optional.IsDefined(RenewDestination))
+            {
+                writer.WritePropertyName("renewDestination"u8);
+                writer.WriteStringValue(RenewDestination);
+            }
+            if (Optional.IsDefined(RenewProperties))
+            {
+                writer.WritePropertyName("renewProperties"u8);
+                writer.WriteObjectValue(RenewProperties);
+            }
+            if (Optional.IsDefined(Term))
+            {
+                writer.WritePropertyName("term"u8);
+                writer.WriteStringValue(Term.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReservationProperties DeserializeReservationProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +231,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<string> userFriendlyAppliedScopeType = default;
             Optional<string> userFriendlyRenewState = default;
             Optional<ReservationPropertiesUtilization> utilization = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservedResourceType"u8))
@@ -341,8 +518,57 @@ namespace Azure.ResourceManager.Reservations.Models
                     utilization = ReservationPropertiesUtilization.DeserializeReservationPropertiesUtilization(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReservationProperties(Optional.ToNullable(reservedResourceType), Optional.ToNullable(instanceFlexibility), displayName.Value, Optional.ToList(appliedScopes), Optional.ToNullable(appliedScopeType), Optional.ToNullable(archived), capabilities.Value, Optional.ToNullable(quantity), Optional.ToNullable(provisioningState), Optional.ToNullable(effectiveDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(lastUpdatedDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(reviewDateTime), skuDescription.Value, extendedStatusInfo.Value, Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(purchaseDateTime), splitProperties.Value, mergeProperties.Value, swapProperties.Value, appliedScopeProperties.Value, billingScopeId.Value, Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value);
+            return new ReservationProperties(Optional.ToNullable(reservedResourceType), Optional.ToNullable(instanceFlexibility), displayName.Value, Optional.ToList(appliedScopes), Optional.ToNullable(appliedScopeType), Optional.ToNullable(archived), capabilities.Value, Optional.ToNullable(quantity), Optional.ToNullable(provisioningState), Optional.ToNullable(effectiveDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(lastUpdatedDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(reviewDateTime), skuDescription.Value, extendedStatusInfo.Value, Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(purchaseDateTime), splitProperties.Value, mergeProperties.Value, swapProperties.Value, appliedScopeProperties.Value, billingScopeId.Value, Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value, rawData);
+        }
+
+        ReservationProperties IModelJsonSerializable<ReservationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationProperties IModelSerializable<ReservationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ReservationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ReservationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

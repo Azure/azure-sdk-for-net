@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -17,12 +19,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerConnectionPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerConnectionPolicyData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerConnectionPolicyData"/>. </summary>
         public SqlServerConnectionPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerConnectionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerConnectionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +34,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Metadata used for the Azure portal experience. </param>
         /// <param name="connectionType"> The server connection type. </param>
-        internal SqlServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, ServerConnectionType? connectionType) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, ServerConnectionType? connectionType, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
             ConnectionType = connectionType;
+            _rawData = rawData;
         }
 
         /// <summary> Resource location. </summary>

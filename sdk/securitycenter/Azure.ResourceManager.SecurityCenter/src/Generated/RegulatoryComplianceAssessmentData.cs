@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -17,12 +19,14 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class RegulatoryComplianceAssessmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of RegulatoryComplianceAssessmentData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceAssessmentData"/>. </summary>
         public RegulatoryComplianceAssessmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="failedResources"> The given assessment's related resources count with failed state. </param>
         /// <param name="skippedResources"> The given assessment's related resources count with skipped state. </param>
         /// <param name="unsupportedResources"> The given assessment's related resources count with unsupported state. </param>
-        internal RegulatoryComplianceAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string assessmentType, string assessmentDetailsLink, RegulatoryComplianceState? state, int? passedResources, int? failedResources, int? skippedResources, int? unsupportedResources) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegulatoryComplianceAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string assessmentType, string assessmentDetailsLink, RegulatoryComplianceState? state, int? passedResources, int? failedResources, int? skippedResources, int? unsupportedResources, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AssessmentType = assessmentType;
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
             FailedResources = failedResources;
             SkippedResources = skippedResources;
             UnsupportedResources = unsupportedResources;
+            _rawData = rawData;
         }
 
         /// <summary> The description of the regulatory compliance assessment. </summary>

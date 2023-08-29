@@ -16,14 +16,16 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> Description of a namespace resource. </summary>
     public partial class RelayNamespacePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of RelayNamespacePatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelayNamespacePatch"/>. </summary>
         public RelayNamespacePatch()
         {
             PrivateEndpointConnections = new ChangeTrackingList<RelayPrivateEndpointConnectionData>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RelayNamespacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNamespacePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +40,8 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
@@ -50,6 +53,7 @@ namespace Azure.ResourceManager.Relay.Models
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
             Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> SKU of the namespace. </summary>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the public IP address resource settings. </summary>
     public partial class PublicIPAddressResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of PublicIPAddressResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressResourceSettings"/>. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public PublicIPAddressResourceSettings(string targetResourceName) : base(targetResourceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             ResourceType = "Microsoft.Network/publicIPAddresses";
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="publicIPAllocationMethod"> Gets or sets public IP allocation method. </param>
         /// <param name="sku"> Gets or sets public IP sku. </param>
         /// <param name="zones"> Gets or sets public IP zones. </param>
-        internal PublicIPAddressResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, string domainNameLabel, string fqdn, string publicIPAllocationMethod, string sku, string zones) : base(resourceType, targetResourceName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublicIPAddressResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, string domainNameLabel, string fqdn, string publicIPAllocationMethod, string sku, string zones, Dictionary<string, BinaryData> rawData) : base(resourceType, targetResourceName, rawData)
         {
             Tags = tags;
             DomainNameLabel = domainNameLabel;
@@ -43,6 +44,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Sku = sku;
             Zones = zones;
             ResourceType = resourceType ?? "Microsoft.Network/publicIPAddresses";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressResourceSettings"/> for deserialization. </summary>
+        internal PublicIPAddressResourceSettings()
+        {
         }
 
         /// <summary> Gets or sets the Resource tags. </summary>

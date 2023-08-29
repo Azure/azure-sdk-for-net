@@ -5,21 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    internal partial class ExchangePolicyErrors
+    internal partial class ExchangePolicyErrors : IUtf8JsonSerializable, IModelJsonSerializable<ExchangePolicyErrors>
     {
-        internal static ExchangePolicyErrors DeserializeExchangePolicyErrors(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExchangePolicyErrors>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExchangePolicyErrors>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(PolicyErrors))
+            {
+                if (PolicyErrors != null)
+                {
+                    writer.WritePropertyName("policyErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PolicyErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("policyErrors");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ExchangePolicyErrors DeserializeExchangePolicyErrors(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ExchangePolicyError>> policyErrors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyErrors"u8))
@@ -37,8 +82,57 @@ namespace Azure.ResourceManager.Reservations.Models
                     policyErrors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExchangePolicyErrors(Optional.ToList(policyErrors));
+            return new ExchangePolicyErrors(Optional.ToList(policyErrors), rawData);
+        }
+
+        ExchangePolicyErrors IModelJsonSerializable<ExchangePolicyErrors>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExchangePolicyErrors(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExchangePolicyErrors>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExchangePolicyErrors IModelSerializable<ExchangePolicyErrors>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExchangePolicyErrors(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExchangePolicyErrors model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExchangePolicyErrors(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExchangePolicyErrors(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -12,14 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="BackupGenericEngine"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownBackupEngineBase))]
     public abstract partial class BackupGenericEngine
     {
-        /// <summary> Initializes a new instance of BackupGenericEngine. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupGenericEngine"/>. </summary>
         protected BackupGenericEngine()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupGenericEngine. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericEngine"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the backup engine. </param>
         /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
         /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>
@@ -33,7 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
         /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
         /// <param name="extendedInfo"> Extended info of the backupengine. </param>
-        internal BackupGenericEngine(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string backupEngineState, string healthStatus, BackupEngineType backupEngineType, bool? canReRegister, string backupEngineId, string dpmVersion, string azureBackupAgentVersion, bool? isAzureBackupAgentUpgradeAvailable, bool? isDpmUpgradeAvailable, BackupEngineExtendedInfo extendedInfo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericEngine(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string backupEngineState, string healthStatus, BackupEngineType backupEngineType, bool? canReRegister, string backupEngineId, string dpmVersion, string azureBackupAgentVersion, bool? isAzureBackupAgentUpgradeAvailable, bool? isDpmUpgradeAvailable, BackupEngineExtendedInfo extendedInfo, Dictionary<string, BinaryData> rawData)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -48,6 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IsAzureBackupAgentUpgradeAvailable = isAzureBackupAgentUpgradeAvailable;
             IsDpmUpgradeAvailable = isDpmUpgradeAvailable;
             ExtendedInfo = extendedInfo;
+            _rawData = rawData;
         }
 
         /// <summary> Friendly name of the backup engine. </summary>

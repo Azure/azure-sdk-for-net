@@ -14,7 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines parameters for a search index that influence scoring in search queries. </summary>
     public partial class ScoringProfile
     {
-        /// <summary> Initializes a new instance of ScoringProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScoringProfile"/>. </summary>
         /// <param name="name"> The name of the scoring profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScoringProfile(string name)
@@ -25,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Functions = new ChangeTrackingList<ScoringFunction>();
         }
 
-        /// <summary> Initializes a new instance of ScoringProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScoringProfile"/>. </summary>
         /// <param name="name"> The name of the scoring profile. </param>
         /// <param name="textWeights"> Parameters that boost scoring based on text matches in certain index fields. </param>
         /// <param name="functions">
@@ -34,12 +36,19 @@ namespace Azure.Search.Documents.Indexes.Models
         /// The available derived classes include <see cref="DistanceScoringFunction"/>, <see cref="FreshnessScoringFunction"/>, <see cref="MagnitudeScoringFunction"/> and <see cref="TagScoringFunction"/>.
         /// </param>
         /// <param name="functionAggregation"> A value indicating how the results of individual scoring functions should be combined. Defaults to "Sum". Ignored if there are no scoring functions. </param>
-        internal ScoringProfile(string name, TextWeights textWeights, IList<ScoringFunction> functions, ScoringFunctionAggregation? functionAggregation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScoringProfile(string name, TextWeights textWeights, IList<ScoringFunction> functions, ScoringFunctionAggregation? functionAggregation, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             TextWeights = textWeights;
             Functions = functions;
             FunctionAggregation = functionAggregation;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScoringProfile"/> for deserialization. </summary>
+        internal ScoringProfile()
+        {
         }
 
         /// <summary> The name of the scoring profile. </summary>

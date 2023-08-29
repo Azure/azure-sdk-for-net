@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AExtendedLocationDetails
+    public partial class A2AExtendedLocationDetails : IUtf8JsonSerializable, IModelJsonSerializable<A2AExtendedLocationDetails>
     {
-        internal static A2AExtendedLocationDetails DeserializeA2AExtendedLocationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<A2AExtendedLocationDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<A2AExtendedLocationDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrimaryExtendedLocation))
+            {
+                writer.WritePropertyName("primaryExtendedLocation"u8);
+                writer.WriteObjectValue(PrimaryExtendedLocation);
+            }
+            if (Optional.IsDefined(RecoveryExtendedLocation))
+            {
+                writer.WritePropertyName("recoveryExtendedLocation"u8);
+                writer.WriteObjectValue(RecoveryExtendedLocation);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static A2AExtendedLocationDetails DeserializeA2AExtendedLocationDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
             Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryExtendedLocation"u8))
@@ -40,8 +79,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new A2AExtendedLocationDetails(primaryExtendedLocation.Value, recoveryExtendedLocation.Value);
+            return new A2AExtendedLocationDetails(primaryExtendedLocation.Value, recoveryExtendedLocation.Value, rawData);
+        }
+
+        A2AExtendedLocationDetails IModelJsonSerializable<A2AExtendedLocationDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AExtendedLocationDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<A2AExtendedLocationDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        A2AExtendedLocationDetails IModelSerializable<A2AExtendedLocationDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeA2AExtendedLocationDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(A2AExtendedLocationDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator A2AExtendedLocationDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeA2AExtendedLocationDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

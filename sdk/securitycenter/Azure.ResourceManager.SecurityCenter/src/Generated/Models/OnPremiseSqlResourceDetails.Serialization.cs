@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class OnPremiseSqlResourceDetails : IUtf8JsonSerializable
+    public partial class OnPremiseSqlResourceDetails : IUtf8JsonSerializable, IModelJsonSerializable<OnPremiseSqlResourceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OnPremiseSqlResourceDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OnPremiseSqlResourceDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<OnPremiseSqlResourceDetails>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(MachineName);
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OnPremiseSqlResourceDetails DeserializeOnPremiseSqlResourceDetails(JsonElement element)
+        internal static OnPremiseSqlResourceDetails DeserializeOnPremiseSqlResourceDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string sourceComputerId = default;
             string machineName = default;
             Source source = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverName"u8))
@@ -83,8 +105,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     source = new Source(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OnPremiseSqlResourceDetails(source, workspaceId, vmuuid, sourceComputerId, machineName, serverName, databaseName);
+            return new OnPremiseSqlResourceDetails(source, workspaceId, vmuuid, sourceComputerId, machineName, serverName, databaseName, rawData);
+        }
+
+        OnPremiseSqlResourceDetails IModelJsonSerializable<OnPremiseSqlResourceDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OnPremiseSqlResourceDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOnPremiseSqlResourceDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OnPremiseSqlResourceDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OnPremiseSqlResourceDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OnPremiseSqlResourceDetails IModelSerializable<OnPremiseSqlResourceDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OnPremiseSqlResourceDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOnPremiseSqlResourceDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(OnPremiseSqlResourceDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator OnPremiseSqlResourceDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOnPremiseSqlResourceDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

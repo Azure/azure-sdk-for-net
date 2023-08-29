@@ -5,15 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultMonitoringSummary
+    public partial class VaultMonitoringSummary : IUtf8JsonSerializable, IModelJsonSerializable<VaultMonitoringSummary>
     {
-        internal static VaultMonitoringSummary DeserializeVaultMonitoringSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VaultMonitoringSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VaultMonitoringSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UnHealthyVmCount))
+            {
+                writer.WritePropertyName("unHealthyVmCount"u8);
+                writer.WriteNumberValue(UnHealthyVmCount.Value);
+            }
+            if (Optional.IsDefined(UnHealthyProviderCount))
+            {
+                writer.WritePropertyName("unHealthyProviderCount"u8);
+                writer.WriteNumberValue(UnHealthyProviderCount.Value);
+            }
+            if (Optional.IsDefined(EventsCount))
+            {
+                writer.WritePropertyName("eventsCount"u8);
+                writer.WriteNumberValue(EventsCount.Value);
+            }
+            if (Optional.IsDefined(DeprecatedProviderCount))
+            {
+                writer.WritePropertyName("deprecatedProviderCount"u8);
+                writer.WriteNumberValue(DeprecatedProviderCount.Value);
+            }
+            if (Optional.IsDefined(SupportedProviderCount))
+            {
+                writer.WritePropertyName("supportedProviderCount"u8);
+                writer.WriteNumberValue(SupportedProviderCount.Value);
+            }
+            if (Optional.IsDefined(UnsupportedProviderCount))
+            {
+                writer.WritePropertyName("unsupportedProviderCount"u8);
+                writer.WriteNumberValue(UnsupportedProviderCount.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VaultMonitoringSummary DeserializeVaultMonitoringSummary(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +82,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<int> deprecatedProviderCount = default;
             Optional<int> supportedProviderCount = default;
             Optional<int> unsupportedProviderCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unHealthyVmCount"u8))
@@ -80,8 +139,57 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     unsupportedProviderCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VaultMonitoringSummary(Optional.ToNullable(unHealthyVmCount), Optional.ToNullable(unHealthyProviderCount), Optional.ToNullable(eventsCount), Optional.ToNullable(deprecatedProviderCount), Optional.ToNullable(supportedProviderCount), Optional.ToNullable(unsupportedProviderCount));
+            return new VaultMonitoringSummary(Optional.ToNullable(unHealthyVmCount), Optional.ToNullable(unHealthyProviderCount), Optional.ToNullable(eventsCount), Optional.ToNullable(deprecatedProviderCount), Optional.ToNullable(supportedProviderCount), Optional.ToNullable(unsupportedProviderCount), rawData);
+        }
+
+        VaultMonitoringSummary IModelJsonSerializable<VaultMonitoringSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVaultMonitoringSummary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VaultMonitoringSummary>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VaultMonitoringSummary IModelSerializable<VaultMonitoringSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVaultMonitoringSummary(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VaultMonitoringSummary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VaultMonitoringSummary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVaultMonitoringSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

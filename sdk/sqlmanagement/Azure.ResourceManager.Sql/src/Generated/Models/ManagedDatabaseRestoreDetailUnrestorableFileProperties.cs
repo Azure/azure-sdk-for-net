@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The managed database's restore details unrestorable file properties. </summary>
     public partial class ManagedDatabaseRestoreDetailUnrestorableFileProperties
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailUnrestorableFileProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailUnrestorableFileProperties"/>. </summary>
         internal ManagedDatabaseRestoreDetailUnrestorableFileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailUnrestorableFileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailUnrestorableFileProperties"/>. </summary>
         /// <param name="name"> File name. </param>
-        internal ManagedDatabaseRestoreDetailUnrestorableFileProperties(string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedDatabaseRestoreDetailUnrestorableFileProperties(string name, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> File name. </summary>

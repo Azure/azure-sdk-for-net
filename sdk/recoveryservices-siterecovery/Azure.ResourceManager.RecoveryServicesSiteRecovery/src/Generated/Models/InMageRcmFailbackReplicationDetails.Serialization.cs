@@ -8,14 +8,72 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackReplicationDetails
+    public partial class InMageRcmFailbackReplicationDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageRcmFailbackReplicationDetails>
     {
-        internal static InMageRcmFailbackReplicationDetails DeserializeInMageRcmFailbackReplicationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageRcmFailbackReplicationDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageRcmFailbackReplicationDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<InMageRcmFailbackReplicationDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ProtectedDisks))
+            {
+                writer.WritePropertyName("protectedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedDisks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MobilityAgentDetails))
+            {
+                writer.WritePropertyName("mobilityAgentDetails"u8);
+                writer.WriteObjectValue(MobilityAgentDetails);
+            }
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                writer.WritePropertyName("vmNics"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmNics)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DiscoveredVmDetails))
+            {
+                writer.WritePropertyName("discoveredVmDetails"u8);
+                writer.WriteObjectValue(DiscoveredVmDetails);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageRcmFailbackReplicationDetails DeserializeInMageRcmFailbackReplicationDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> lastUsedPolicyFriendlyName = default;
             Optional<bool> isAgentRegistrationSuccessfulAfterFailover = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("internalIdentifier"u8))
@@ -288,8 +347,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageRcmFailbackReplicationDetails(instanceType, internalIdentifier.Value, azureVirtualMachineId.Value, multiVmGroupName.Value, reprotectAgentId.Value, reprotectAgentName.Value, osType.Value, logStorageAccountId.Value, targetvCenterId.Value, targetDataStoreName.Value, targetVmName.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToList(protectedDisks), mobilityAgentDetails.Value, Optional.ToList(vmNics), Optional.ToNullable(lastPlannedFailoverStartTime), Optional.ToNullable(lastPlannedFailoverStatus), discoveredVmDetails.Value, lastUsedPolicyId.Value, lastUsedPolicyFriendlyName.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover));
+            return new InMageRcmFailbackReplicationDetails(instanceType, internalIdentifier.Value, azureVirtualMachineId.Value, multiVmGroupName.Value, reprotectAgentId.Value, reprotectAgentName.Value, osType.Value, logStorageAccountId.Value, targetvCenterId.Value, targetDataStoreName.Value, targetVmName.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToList(protectedDisks), mobilityAgentDetails.Value, Optional.ToList(vmNics), Optional.ToNullable(lastPlannedFailoverStartTime), Optional.ToNullable(lastPlannedFailoverStatus), discoveredVmDetails.Value, lastUsedPolicyId.Value, lastUsedPolicyFriendlyName.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover), rawData);
+        }
+
+        InMageRcmFailbackReplicationDetails IModelJsonSerializable<InMageRcmFailbackReplicationDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageRcmFailbackReplicationDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmFailbackReplicationDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageRcmFailbackReplicationDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageRcmFailbackReplicationDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageRcmFailbackReplicationDetails IModelSerializable<InMageRcmFailbackReplicationDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageRcmFailbackReplicationDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageRcmFailbackReplicationDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InMageRcmFailbackReplicationDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InMageRcmFailbackReplicationDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageRcmFailbackReplicationDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

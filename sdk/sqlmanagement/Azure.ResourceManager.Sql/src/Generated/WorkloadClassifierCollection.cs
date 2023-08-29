@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadClassifierRestClient.CreateListByWorkloadGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadClassifierRestClient.CreateListByWorkloadGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadClassifierResource(Client, WorkloadClassifierData.DeserializeWorkloadClassifierData(e)), _workloadClassifierClientDiagnostics, Pipeline, "WorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadClassifierResource(Client, WorkloadClassifierData.DeserializeWorkloadClassifierData(e)), _workloadClassifierClientDiagnostics, Pipeline, "WorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadClassifierRestClient.CreateListByWorkloadGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadClassifierRestClient.CreateListByWorkloadGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadClassifierResource(Client, WorkloadClassifierData.DeserializeWorkloadClassifierData(e)), _workloadClassifierClientDiagnostics, Pipeline, "WorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadClassifierResource(Client, WorkloadClassifierData.DeserializeWorkloadClassifierData(e)), _workloadClassifierClientDiagnostics, Pipeline, "WorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

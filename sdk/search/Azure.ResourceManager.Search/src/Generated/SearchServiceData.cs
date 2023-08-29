@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,9 @@ namespace Azure.ResourceManager.Search
     /// </summary>
     public partial class SearchServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SearchServiceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SearchServiceData(AzureLocation location) : base(location)
         {
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.Search
             SharedPrivateLinkResources = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SearchServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +51,8 @@ namespace Azure.ResourceManager.Search
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure Cognitive Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure Cognitive Search service. </param>
-        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku sku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku sku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -65,6 +69,12 @@ namespace Azure.ResourceManager.Search
             AuthOptions = authOptions;
             PrivateEndpointConnections = privateEndpointConnections;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceData"/> for deserialization. </summary>
+        internal SearchServiceData()
+        {
         }
 
         /// <summary> The SKU of the Search Service, which determines price tier and capacity limits. This property is required when creating a new Search Service. </summary>

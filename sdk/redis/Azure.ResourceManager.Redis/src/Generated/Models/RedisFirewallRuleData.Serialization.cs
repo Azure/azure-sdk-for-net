@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    public partial class RedisFirewallRuleData : IUtf8JsonSerializable
+    public partial class RedisFirewallRuleData : IUtf8JsonSerializable, IModelJsonSerializable<RedisFirewallRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedisFirewallRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedisFirewallRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.Redis
             writer.WritePropertyName("endIP"u8);
             writer.WriteStringValue(EndIP.ToString());
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RedisFirewallRuleData DeserializeRedisFirewallRuleData(JsonElement element)
+        internal static RedisFirewallRuleData DeserializeRedisFirewallRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.Redis
             Optional<SystemData> systemData = default;
             IPAddress startIP = default;
             IPAddress endIP = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,8 +110,57 @@ namespace Azure.ResourceManager.Redis
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RedisFirewallRuleData(id, name, type, systemData.Value, startIP, endIP);
+            return new RedisFirewallRuleData(id, name, type, systemData.Value, startIP, endIP, rawData);
+        }
+
+        RedisFirewallRuleData IModelJsonSerializable<RedisFirewallRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisFirewallRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedisFirewallRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedisFirewallRuleData IModelSerializable<RedisFirewallRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedisFirewallRuleData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RedisFirewallRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RedisFirewallRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedisFirewallRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

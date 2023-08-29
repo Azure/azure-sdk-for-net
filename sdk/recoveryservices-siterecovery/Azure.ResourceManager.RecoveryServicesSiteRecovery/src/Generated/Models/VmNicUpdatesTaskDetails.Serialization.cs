@@ -5,15 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VmNicUpdatesTaskDetails
+    public partial class VmNicUpdatesTaskDetails : IUtf8JsonSerializable, IModelJsonSerializable<VmNicUpdatesTaskDetails>
     {
-        internal static VmNicUpdatesTaskDetails DeserializeVmNicUpdatesTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmNicUpdatesTaskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmNicUpdatesTaskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VmNicUpdatesTaskDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VmId))
+            {
+                writer.WritePropertyName("vmId"u8);
+                writer.WriteStringValue(VmId);
+            }
+            if (Optional.IsDefined(NicId))
+            {
+                writer.WritePropertyName("nicId"u8);
+                writer.WriteStringValue(NicId);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VmNicUpdatesTaskDetails DeserializeVmNicUpdatesTaskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> nicId = default;
             Optional<string> name = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmId"u8))
@@ -44,8 +90,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmNicUpdatesTaskDetails(instanceType, vmId.Value, nicId.Value, name.Value);
+            return new VmNicUpdatesTaskDetails(instanceType, vmId.Value, nicId.Value, name.Value, rawData);
+        }
+
+        VmNicUpdatesTaskDetails IModelJsonSerializable<VmNicUpdatesTaskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VmNicUpdatesTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmNicUpdatesTaskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmNicUpdatesTaskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VmNicUpdatesTaskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmNicUpdatesTaskDetails IModelSerializable<VmNicUpdatesTaskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VmNicUpdatesTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmNicUpdatesTaskDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VmNicUpdatesTaskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VmNicUpdatesTaskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmNicUpdatesTaskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

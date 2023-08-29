@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> describes the custom entity store assignment request. </summary>
     public partial class CustomEntityStoreAssignmentCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of CustomEntityStoreAssignmentCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomEntityStoreAssignmentCreateOrUpdateContent"/>. </summary>
         public CustomEntityStoreAssignmentCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomEntityStoreAssignmentCreateOrUpdateContent"/>. </summary>
+        /// <param name="principal"> The principal assigned with entity store. If not provided, will use caller principal. Format of principal is: [AAD type]=[PrincipalObjectId];[TenantId]. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomEntityStoreAssignmentCreateOrUpdateContent(string principal, Dictionary<string, BinaryData> rawData)
+        {
+            Principal = principal;
+            _rawData = rawData;
         }
 
         /// <summary> The principal assigned with entity store. If not provided, will use caller principal. Format of principal is: [AAD type]=[PrincipalObjectId];[TenantId]. </summary>

@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedInstanceKeyData : IUtf8JsonSerializable
+    public partial class ManagedInstanceKeyData : IUtf8JsonSerializable, IModelJsonSerializable<ManagedInstanceKeyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedInstanceKeyData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedInstanceKeyData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedInstanceKeyData DeserializeManagedInstanceKeyData(JsonElement element)
+        internal static ManagedInstanceKeyData DeserializeManagedInstanceKeyData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +71,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> thumbprint = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<bool> autoRotationEnabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -134,8 +156,57 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedInstanceKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled));
+            return new ManagedInstanceKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled), rawData);
+        }
+
+        ManagedInstanceKeyData IModelJsonSerializable<ManagedInstanceKeyData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceKeyData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedInstanceKeyData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedInstanceKeyData IModelSerializable<ManagedInstanceKeyData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedInstanceKeyData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedInstanceKeyData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedInstanceKeyData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedInstanceKeyData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanShutdownGroupTaskDetails
+    public partial class RecoveryPlanShutdownGroupTaskDetails : IUtf8JsonSerializable, IModelJsonSerializable<RecoveryPlanShutdownGroupTaskDetails>
     {
-        internal static RecoveryPlanShutdownGroupTaskDetails DeserializeRecoveryPlanShutdownGroupTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecoveryPlanShutdownGroupTaskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecoveryPlanShutdownGroupTaskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanShutdownGroupTaskDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(GroupId))
+            {
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteStringValue(GroupId);
+            }
+            if (Optional.IsDefined(RpGroupType))
+            {
+                writer.WritePropertyName("rpGroupType"u8);
+                writer.WriteStringValue(RpGroupType);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (Optional.IsCollectionDefined(ChildTasks))
+            {
+                writer.WritePropertyName("childTasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChildTasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RecoveryPlanShutdownGroupTaskDetails DeserializeRecoveryPlanShutdownGroupTaskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> rpGroupType = default;
             string instanceType = default;
             Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -60,8 +115,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     childTasks = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RecoveryPlanShutdownGroupTaskDetails(instanceType, Optional.ToList(childTasks), name.Value, groupId.Value, rpGroupType.Value);
+            return new RecoveryPlanShutdownGroupTaskDetails(instanceType, Optional.ToList(childTasks), name.Value, groupId.Value, rpGroupType.Value, rawData);
+        }
+
+        RecoveryPlanShutdownGroupTaskDetails IModelJsonSerializable<RecoveryPlanShutdownGroupTaskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanShutdownGroupTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanShutdownGroupTaskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecoveryPlanShutdownGroupTaskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanShutdownGroupTaskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecoveryPlanShutdownGroupTaskDetails IModelSerializable<RecoveryPlanShutdownGroupTaskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanShutdownGroupTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecoveryPlanShutdownGroupTaskDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RecoveryPlanShutdownGroupTaskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RecoveryPlanShutdownGroupTaskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecoveryPlanShutdownGroupTaskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

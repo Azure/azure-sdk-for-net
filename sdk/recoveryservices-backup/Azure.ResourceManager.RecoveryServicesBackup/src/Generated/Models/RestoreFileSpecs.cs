@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Restore file specs like file path, type and target folder path info. </summary>
     public partial class RestoreFileSpecs
     {
-        /// <summary> Initializes a new instance of RestoreFileSpecs. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestoreFileSpecs"/>. </summary>
         public RestoreFileSpecs()
         {
         }
 
-        /// <summary> Initializes a new instance of RestoreFileSpecs. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreFileSpecs"/>. </summary>
         /// <param name="path"> Source File/Folder path. </param>
         /// <param name="fileSpecType"> Indicates what the Path variable stands for. </param>
         /// <param name="targetFolderPath"> Destination folder path in target FileShare. </param>
-        internal RestoreFileSpecs(string path, string fileSpecType, string targetFolderPath)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreFileSpecs(string path, string fileSpecType, string targetFolderPath, Dictionary<string, BinaryData> rawData)
         {
             Path = path;
             FileSpecType = fileSpecType;
             TargetFolderPath = targetFolderPath;
+            _rawData = rawData;
         }
 
         /// <summary> Source File/Folder path. </summary>

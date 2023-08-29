@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class UnknownWorkloadProtectableItem : IUtf8JsonSerializable
+    internal partial class UnknownWorkloadProtectableItem : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadProtectableItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadProtectableItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadProtectableItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupManagementType))
             {
@@ -37,53 +43,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownWorkloadProtectableItem DeserializeUnknownWorkloadProtectableItem(JsonElement element)
+        internal static WorkloadProtectableItem DeserializeUnknownWorkloadProtectableItem(JsonElement element, ModelSerializerOptions options = default) => DeserializeWorkloadProtectableItem(element, options);
+
+        WorkloadProtectableItem IModelJsonSerializable<WorkloadProtectableItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
-            string protectableItemType = "Unknown";
-            Optional<string> friendlyName = default;
-            Optional<BackupProtectionStatus> protectionState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("backupManagementType"u8))
-                {
-                    backupManagementType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("workloadType"u8))
-                {
-                    workloadType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectableItemType"u8))
-                {
-                    protectableItemType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("friendlyName"u8))
-                {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectionState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    protectionState = new BackupProtectionStatus(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownWorkloadProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState));
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownWorkloadProtectableItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadProtectableItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadProtectableItem IModelSerializable<WorkloadProtectableItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadProtectableItem(doc.RootElement, options);
         }
     }
 }

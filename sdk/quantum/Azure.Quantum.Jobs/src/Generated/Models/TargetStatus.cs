@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> Target status. </summary>
     public partial class TargetStatus
     {
-        /// <summary> Initializes a new instance of TargetStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetStatus"/>. </summary>
         internal TargetStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetStatus"/>. </summary>
         /// <param name="id"> Target id. </param>
         /// <param name="currentAvailability"> Target availability. </param>
         /// <param name="averageQueueTime"> Average queue time in seconds. </param>
         /// <param name="statusPage"> A page with detailed status of the provider. </param>
-        internal TargetStatus(string id, TargetAvailability? currentAvailability, long? averageQueueTime, string statusPage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetStatus(string id, TargetAvailability? currentAvailability, long? averageQueueTime, string statusPage, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             CurrentAvailability = currentAvailability;
             AverageQueueTime = averageQueueTime;
             StatusPage = statusPage;
+            _rawData = rawData;
         }
 
         /// <summary> Target id. </summary>

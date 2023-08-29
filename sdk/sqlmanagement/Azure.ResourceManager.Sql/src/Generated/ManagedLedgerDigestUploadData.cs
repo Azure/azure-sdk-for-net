@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -17,22 +19,26 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedLedgerDigestUploadData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedLedgerDigestUploadData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedLedgerDigestUploadData"/>. </summary>
         public ManagedLedgerDigestUploadData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedLedgerDigestUploadData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedLedgerDigestUploadData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="digestStorageEndpoint"> The digest storage endpoint, which must be either an Azure blob storage endpoint or an URI for Azure Confidential Ledger. </param>
         /// <param name="state"> Specifies the state of ledger digest upload. </param>
-        internal ManagedLedgerDigestUploadData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string digestStorageEndpoint, ManagedLedgerDigestUploadsState? state) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedLedgerDigestUploadData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string digestStorageEndpoint, ManagedLedgerDigestUploadsState? state, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DigestStorageEndpoint = digestStorageEndpoint;
             State = state;
+            _rawData = rawData;
         }
 
         /// <summary> The digest storage endpoint, which must be either an Azure blob storage endpoint or an URI for Azure Confidential Ledger. </summary>

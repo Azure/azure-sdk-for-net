@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,22 +15,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Supported operating systems. </summary>
     public partial class SiteRecoverySupportedOperatingSystems : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOperatingSystems. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOperatingSystems"/>. </summary>
         internal SiteRecoverySupportedOperatingSystems()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOperatingSystems. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOperatingSystems"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The supported operating systems properties. </param>
         /// <param name="location"> Resource Location. </param>
-        internal SiteRecoverySupportedOperatingSystems(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoverySupportedOSProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoverySupportedOperatingSystems(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoverySupportedOSProperties properties, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> The supported operating systems properties. </summary>

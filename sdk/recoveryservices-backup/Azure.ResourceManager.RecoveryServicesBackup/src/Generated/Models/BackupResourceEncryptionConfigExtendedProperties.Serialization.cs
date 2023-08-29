@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupResourceEncryptionConfigExtendedProperties : IUtf8JsonSerializable
+    public partial class BackupResourceEncryptionConfigExtendedProperties : IUtf8JsonSerializable, IModelJsonSerializable<BackupResourceEncryptionConfigExtendedProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupResourceEncryptionConfigExtendedProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupResourceEncryptionConfigExtendedProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<BackupResourceEncryptionConfigExtendedProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("infrastructureEncryptionState"u8);
                 writer.WriteStringValue(InfrastructureEncryptionState.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupResourceEncryptionConfigExtendedProperties DeserializeBackupResourceEncryptionConfigExtendedProperties(JsonElement element)
+        internal static BackupResourceEncryptionConfigExtendedProperties DeserializeBackupResourceEncryptionConfigExtendedProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> subscriptionId = default;
             Optional<LastUpdateStatus> lastUpdateStatus = default;
             Optional<InfrastructureEncryptionState> infrastructureEncryptionState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"u8))
@@ -128,8 +150,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     infrastructureEncryptionState = new InfrastructureEncryptionState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupResourceEncryptionConfigExtendedProperties(Optional.ToNullable(encryptionAtRestType), keyUri.Value, subscriptionId.Value, Optional.ToNullable(lastUpdateStatus), Optional.ToNullable(infrastructureEncryptionState), userAssignedIdentity.Value, Optional.ToNullable(useSystemAssignedIdentity));
+            return new BackupResourceEncryptionConfigExtendedProperties(Optional.ToNullable(encryptionAtRestType), keyUri.Value, subscriptionId.Value, Optional.ToNullable(lastUpdateStatus), Optional.ToNullable(infrastructureEncryptionState), userAssignedIdentity.Value, Optional.ToNullable(useSystemAssignedIdentity), rawData);
+        }
+
+        BackupResourceEncryptionConfigExtendedProperties IModelJsonSerializable<BackupResourceEncryptionConfigExtendedProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BackupResourceEncryptionConfigExtendedProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupResourceEncryptionConfigExtendedProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupResourceEncryptionConfigExtendedProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BackupResourceEncryptionConfigExtendedProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupResourceEncryptionConfigExtendedProperties IModelSerializable<BackupResourceEncryptionConfigExtendedProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BackupResourceEncryptionConfigExtendedProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupResourceEncryptionConfigExtendedProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BackupResourceEncryptionConfigExtendedProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BackupResourceEncryptionConfigExtendedProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupResourceEncryptionConfigExtendedProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

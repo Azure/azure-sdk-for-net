@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The AzureDevOpsConnectorProperties. </summary>
     public partial class AzureDevOpsConnectorProperties
     {
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorProperties"/>. </summary>
         public AzureDevOpsConnectorProperties()
         {
             Orgs = new ChangeTrackingList<AzureDevOpsOrgMetadata>();
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="authorization"></param>
         /// <param name="orgs"> Gets or sets org onboarding information. </param>
-        internal AzureDevOpsConnectorProperties(ProvisioningState? provisioningState, AuthorizationInfo authorization, IList<AzureDevOpsOrgMetadata> orgs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsConnectorProperties(ProvisioningState? provisioningState, AuthorizationInfo authorization, IList<AzureDevOpsOrgMetadata> orgs, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             Authorization = authorization;
             Orgs = orgs;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the provisioning state. </summary>

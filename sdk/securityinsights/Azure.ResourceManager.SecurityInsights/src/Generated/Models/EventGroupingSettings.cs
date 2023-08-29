@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Event grouping settings property bag. </summary>
     internal partial class EventGroupingSettings
     {
-        /// <summary> Initializes a new instance of EventGroupingSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGroupingSettings"/>. </summary>
         public EventGroupingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGroupingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGroupingSettings"/>. </summary>
         /// <param name="aggregationKind"> The event grouping aggregation kinds. </param>
-        internal EventGroupingSettings(EventGroupingAggregationKind? aggregationKind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGroupingSettings(EventGroupingAggregationKind? aggregationKind, Dictionary<string, BinaryData> rawData)
         {
             AggregationKind = aggregationKind;
+            _rawData = rawData;
         }
 
         /// <summary> The event grouping aggregation kinds. </summary>

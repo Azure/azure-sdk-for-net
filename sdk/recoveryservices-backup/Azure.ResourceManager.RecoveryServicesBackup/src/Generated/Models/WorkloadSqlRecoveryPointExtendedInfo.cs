@@ -14,19 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Extended info class details. </summary>
     public partial class WorkloadSqlRecoveryPointExtendedInfo
     {
-        /// <summary> Initializes a new instance of WorkloadSqlRecoveryPointExtendedInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPointExtendedInfo"/>. </summary>
         public WorkloadSqlRecoveryPointExtendedInfo()
         {
             DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlRecoveryPointExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPointExtendedInfo"/>. </summary>
         /// <param name="dataDirectoryInfoCapturedOn"> UTC time at which data directory info was captured. </param>
         /// <param name="dataDirectoryPaths"> List of data directory paths during restore operation. </param>
-        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn, IList<SqlDataDirectory> dataDirectoryPaths)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn, IList<SqlDataDirectory> dataDirectoryPaths, Dictionary<string, BinaryData> rawData)
         {
             DataDirectoryInfoCapturedOn = dataDirectoryInfoCapturedOn;
             DataDirectoryPaths = dataDirectoryPaths;
+            _rawData = rawData;
         }
 
         /// <summary> UTC time at which data directory info was captured. </summary>

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthEventImpactedResource(Client, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e)), _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceHealthEventImpactedResource(Client, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e)), _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthEventImpactedResource(Client, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e)), _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceHealthEventImpactedResource(Client, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e)), _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

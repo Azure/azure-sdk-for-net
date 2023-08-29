@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadRestoreContent : IUtf8JsonSerializable
+    public partial class WorkloadRestoreContent : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadRestoreContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadRestoreContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WorkloadRestoreContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryType))
             {
@@ -54,11 +61,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadRestoreContent DeserializeWorkloadRestoreContent(JsonElement element)
+        internal static WorkloadRestoreContent DeserializeWorkloadRestoreContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +99,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadSQLRestoreWithRehydrateRequest": return WorkloadSqlRestoreWithRehydrateContent.DeserializeWorkloadSqlRestoreWithRehydrateContent(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<FileShareRecoveryType> recoveryType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<IDictionary<string, string>> propertyBag = default;
@@ -85,6 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RecoveryMode> recoveryMode = default;
             Optional<ResourceIdentifier> targetVirtualMachineId = default;
             string objectType = "AzureWorkloadRestoreRequest";
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryType"u8))
@@ -151,8 +175,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadRestoreContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value);
+            return new WorkloadRestoreContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, rawData);
+        }
+
+        WorkloadRestoreContent IModelJsonSerializable<WorkloadRestoreContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadRestoreContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadRestoreContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadRestoreContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadRestoreContent IModelSerializable<WorkloadRestoreContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadRestoreContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadRestoreContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadRestoreContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadRestoreContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

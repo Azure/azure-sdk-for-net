@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Security Settings of the vault. </summary>
     internal partial class SecuritySettings
     {
-        /// <summary> Initializes a new instance of SecuritySettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecuritySettings"/>. </summary>
         public SecuritySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySettings"/>. </summary>
         /// <param name="immutabilitySettings"> Immutability Settings of a vault. </param>
-        internal SecuritySettings(ImmutabilitySettings immutabilitySettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySettings(ImmutabilitySettings immutabilitySettings, Dictionary<string, BinaryData> rawData)
         {
             ImmutabilitySettings = immutabilitySettings;
+            _rawData = rawData;
         }
 
         /// <summary> Immutability Settings of a vault. </summary>

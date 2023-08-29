@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,30 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Information about a Target. A target is the component that can process a specific type of Job. </summary>
     public partial class TargetDescription
     {
-        /// <summary> Initializes a new instance of TargetDescription. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetDescription"/>. </summary>
         internal TargetDescription()
         {
             AcceptedDataFormats = new ChangeTrackingList<string>();
             AcceptedContentEncodings = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TargetDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetDescription"/>. </summary>
         /// <param name="id"> Unique target id. </param>
         /// <param name="name"> Display name of this target. </param>
         /// <param name="description"> A description about this target. </param>
         /// <param name="acceptedDataFormats"> List of data formats accepted by this target. </param>
         /// <param name="acceptedContentEncodings"> List of content encodings accepted by this target. </param>
-        internal TargetDescription(string id, string name, string description, IReadOnlyList<string> acceptedDataFormats, IReadOnlyList<string> acceptedContentEncodings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetDescription(string id, string name, string description, IReadOnlyList<string> acceptedDataFormats, IReadOnlyList<string> acceptedContentEncodings, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             Description = description;
             AcceptedDataFormats = acceptedDataFormats;
             AcceptedContentEncodings = acceptedContentEncodings;
+            _rawData = rawData;
         }
 
         /// <summary> Unique target id. </summary>

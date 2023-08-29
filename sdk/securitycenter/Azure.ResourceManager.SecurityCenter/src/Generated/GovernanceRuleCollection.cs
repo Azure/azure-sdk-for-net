@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceRuleRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceRuleRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _governanceRuleClientDiagnostics, Pipeline, "GovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new GovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _governanceRuleClientDiagnostics, Pipeline, "GovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceRuleRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceRuleRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _governanceRuleClientDiagnostics, Pipeline, "GovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new GovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _governanceRuleClientDiagnostics, Pipeline, "GovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

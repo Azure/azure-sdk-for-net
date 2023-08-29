@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure VM workload-specific protected item representing SAP HANA Database. </summary>
     public partial class VmWorkloadSapHanaDatabaseProtectedItem : VmWorkloadProtectedItem
     {
-        /// <summary> Initializes a new instance of VmWorkloadSapHanaDatabaseProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>. </summary>
         public VmWorkloadSapHanaDatabaseProtectedItem()
         {
             ProtectedItemType = "AzureVmWorkloadSAPHanaDatabase";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadSapHanaDatabaseProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
@@ -52,7 +52,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectedItemHealthStatus"> Health status of the backup item, evaluated based on last heartbeat received. </param>
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
-        internal VmWorkloadSapHanaDatabaseProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, BackupProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, BackupErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus, VmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KpiResourceHealthDetails> kpisHealths) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmWorkloadSapHanaDatabaseProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, BackupProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, BackupErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus, VmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KpiResourceHealthDetails> kpisHealths, Dictionary<string, BinaryData> rawData) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, rawData)
         {
             ProtectedItemType = protectedItemType ?? "AzureVmWorkloadSAPHanaDatabase";
         }

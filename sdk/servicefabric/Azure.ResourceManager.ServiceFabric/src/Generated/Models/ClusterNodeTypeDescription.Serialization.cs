@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterNodeTypeDescription : IUtf8JsonSerializable
+    public partial class ClusterNodeTypeDescription : IUtf8JsonSerializable, IModelJsonSerializable<ClusterNodeTypeDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterNodeTypeDescription>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterNodeTypeDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -78,11 +85,25 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("multipleAvailabilityZones"u8);
                 writer.WriteBooleanValue(IsMultipleAvailabilityZonesSupported.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterNodeTypeDescription DeserializeClusterNodeTypeDescription(JsonElement element)
+        internal static ClusterNodeTypeDescription DeserializeClusterNodeTypeDescription(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,6 +121,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<int> reverseProxyEndpointPort = default;
             Optional<bool> isStateless = default;
             Optional<bool> multipleAvailabilityZones = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -209,8 +231,57 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     multipleAvailabilityZones = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterNodeTypeDescription(name, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), clientConnectionEndpointPort, httpGatewayEndpointPort, Optional.ToNullable(durabilityLevel), applicationPorts.Value, ephemeralPorts.Value, isPrimary, vmInstanceCount, Optional.ToNullable(reverseProxyEndpointPort), Optional.ToNullable(isStateless), Optional.ToNullable(multipleAvailabilityZones));
+            return new ClusterNodeTypeDescription(name, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), clientConnectionEndpointPort, httpGatewayEndpointPort, Optional.ToNullable(durabilityLevel), applicationPorts.Value, ephemeralPorts.Value, isPrimary, vmInstanceCount, Optional.ToNullable(reverseProxyEndpointPort), Optional.ToNullable(isStateless), Optional.ToNullable(multipleAvailabilityZones), rawData);
+        }
+
+        ClusterNodeTypeDescription IModelJsonSerializable<ClusterNodeTypeDescription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterNodeTypeDescription(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterNodeTypeDescription>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterNodeTypeDescription IModelSerializable<ClusterNodeTypeDescription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterNodeTypeDescription(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ClusterNodeTypeDescription model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ClusterNodeTypeDescription(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterNodeTypeDescription(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

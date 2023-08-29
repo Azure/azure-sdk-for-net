@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Multi subnet ip configuration for an availability group listener. </summary>
     public partial class MultiSubnetIPConfiguration
     {
-        /// <summary> Initializes a new instance of MultiSubnetIPConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MultiSubnetIPConfiguration"/>. </summary>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="sqlVmInstance"> SQL virtual machine instance resource id that are enrolled into the availability group listener. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateIPAddress"/> or <paramref name="sqlVmInstance"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
             PrivateIPAddress = privateIPAddress;
             SqlVmInstance = sqlVmInstance;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiSubnetIPConfiguration"/>. </summary>
+        /// <param name="privateIPAddress"> Private IP address. </param>
+        /// <param name="sqlVmInstance"> SQL virtual machine instance resource id that are enrolled into the availability group listener. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultiSubnetIPConfiguration(AvailabilityGroupListenerPrivateIPAddress privateIPAddress, string sqlVmInstance, Dictionary<string, BinaryData> rawData)
+        {
+            PrivateIPAddress = privateIPAddress;
+            SqlVmInstance = sqlVmInstance;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiSubnetIPConfiguration"/> for deserialization. </summary>
+        internal MultiSubnetIPConfiguration()
+        {
         }
 
         /// <summary> Private IP address. </summary>

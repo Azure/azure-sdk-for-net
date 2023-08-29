@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereImageImagesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereImageImagesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereImageResource(Client, SphereImageData.DeserializeSphereImageData(e)), _sphereImageImagesClientDiagnostics, Pipeline, "SphereImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereImageResource(Client, SphereImageData.DeserializeSphereImageData(e)), _sphereImageImagesClientDiagnostics, Pipeline, "SphereImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereImageImagesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereImageImagesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereImageResource(Client, SphereImageData.DeserializeSphereImageData(e)), _sphereImageImagesClientDiagnostics, Pipeline, "SphereImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereImageResource(Client, SphereImageData.DeserializeSphereImageData(e)), _sphereImageImagesClientDiagnostics, Pipeline, "SphereImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
