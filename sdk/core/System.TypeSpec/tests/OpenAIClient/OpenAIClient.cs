@@ -20,7 +20,7 @@ public class OpenAIClient
         _pipeline = new HttpPipeline(new HttpClientTransport());
     }
 
-    public Result<Completions> GetCompletions(CancellationToken cancellationToken = default)
+    public Result<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
     {
         HttpMessage message = _pipeline.CreateMessage();
         Request request = message.Request;
@@ -31,7 +31,7 @@ public class OpenAIClient
 
         var body = new {
             model = "text-davinci-003",
-            prompt = "Say this is a test",
+            prompt = prompt,
             max_tokens = 7,
             temperature = 0
         };
@@ -45,16 +45,4 @@ public class OpenAIClient
 
         return Result.FromValue(completions, message.Response);
     }
-}
-
-public class Completions
-{
-    internal static Completions Deserialize(BinaryData data)
-    {
-        return new Completions();
-    }
-}
-
-public class OpenAIClientOptions
-{
 }
