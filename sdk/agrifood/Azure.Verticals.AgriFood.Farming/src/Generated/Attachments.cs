@@ -143,7 +143,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string attachmentId, RequestContent content, RequestContext context)
+        public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string attachmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
@@ -181,7 +181,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string partyId, string attachmentId, RequestContent content, RequestContext context)
+        public virtual Response CreateOrUpdate(string partyId, string attachmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));

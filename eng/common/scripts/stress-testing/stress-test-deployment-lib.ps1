@@ -271,6 +271,9 @@ function DeployStressPackage(
             Write-Host "Building and pushing stress test docker image '$imageTag'"
             $dockerFile = Get-ChildItem $dockerFilePath
 
+            Write-Host "Setting DOCKER_BUILDKIT=1"
+            $env:DOCKER_BUILDKIT = 1
+
             $dockerBuildCmd = "docker", "build", "-t", $imageTag, "-f", $dockerFile
             foreach ($buildArg in $dockerBuildConfig.scenario.GetEnumerator()) {
                 $dockerBuildCmd += "--build-arg"

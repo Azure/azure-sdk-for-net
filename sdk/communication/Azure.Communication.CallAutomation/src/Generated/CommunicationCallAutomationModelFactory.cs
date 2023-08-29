@@ -22,20 +22,20 @@ namespace Azure.Communication.CallAutomation
             return new TransferCallToParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of MuteParticipantsResponse. </summary>
+        /// <summary> Initializes a new instance of MuteParticipantsResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.MuteParticipantsResponse"/> instance for mocking. </returns>
-        public static MuteParticipantsResponse MuteParticipantsResponse(string operationContext = null)
+        /// <returns> A new <see cref="CallAutomation.MuteParticipantsResult"/> instance for mocking. </returns>
+        public static MuteParticipantsResult MuteParticipantsResult(string operationContext = null)
         {
-            return new MuteParticipantsResponse(operationContext);
+            return new MuteParticipantsResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of UnmuteParticipantsResponse. </summary>
+        /// <summary> Initializes a new instance of UnmuteParticipantsResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.UnmuteParticipantsResponse"/> instance for mocking. </returns>
-        public static UnmuteParticipantsResponse UnmuteParticipantsResponse(string operationContext = null)
+        /// <returns> A new <see cref="CallAutomation.UnmuteParticipantsResult"/> instance for mocking. </returns>
+        public static UnmuteParticipantsResult UnmuteParticipantsResult(string operationContext = null)
         {
-            return new UnmuteParticipantsResponse(operationContext);
+            return new UnmuteParticipantsResult(operationContext);
         }
 
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
@@ -77,18 +77,6 @@ namespace Azure.Communication.CallAutomation
         public static CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
             return new CallDisconnected(callConnectionId, serverCallId, correlationId, operationContext);
-        }
-
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.CallTransferAccepted"/> instance for mocking. </returns>
-        public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new CallTransferAccepted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Initializes a new instance of CallTransferFailed. </summary>
@@ -220,14 +208,6 @@ namespace Azure.Communication.CallAutomation
         public static UserConsent UserConsent(int? recording = null)
         {
             return new UserConsent(recording);
-        }
-
-        /// <summary> Initializes a new instance of SensitiveFlag. </summary>
-        /// <param name="recording"></param>
-        /// <returns> A new <see cref="CallAutomation.SensitiveFlag"/> instance for mocking. </returns>
-        public static SensitiveFlag SensitiveFlag(int? recording = null)
-        {
-            return new SensitiveFlag(recording);
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>

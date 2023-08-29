@@ -139,6 +139,29 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         {
                             key = new { },
                         },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         customAttributes = new
@@ -150,6 +173,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         isIncomplete = true,
                         labels = new[] {
                 "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
             },
                         provenanceType = 123.45f,
                         proxy = true,
@@ -373,6 +410,29 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         {
                             key = new { },
                         },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         customAttributes = new
@@ -384,6 +444,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         isIncomplete = true,
                         labels = new[] {
                 "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
             },
                         provenanceType = 123.45f,
                         proxy = true,
@@ -828,6 +902,29 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         {
                             key = new { },
                         },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         customAttributes = new
@@ -839,6 +936,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         isIncomplete = true,
                         labels = new[] {
                 "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
             },
                         provenanceType = 123.45f,
                         proxy = true,
@@ -1057,6 +1168,29 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         {
                             key = new { },
                         },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         customAttributes = new
@@ -1068,6 +1202,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         isIncomplete = true,
                         labels = new[] {
                 "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
             },
                         provenanceType = 123.45f,
                         proxy = true,
@@ -2803,6 +2951,29 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         {
                             key = new { },
                         },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         customAttributes = new
@@ -2814,6 +2985,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         isIncomplete = true,
                         labels = new[] {
                 "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
             },
                         provenanceType = 123.45f,
                         proxy = true,
@@ -3037,6 +3222,29 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         {
                             key = new { },
                         },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         customAttributes = new
@@ -3048,6 +3256,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         isIncomplete = true,
                         labels = new[] {
                 "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
             },
                         provenanceType = 123.45f,
                         proxy = true,
@@ -4134,7 +4356,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.DeleteBusinessMetadata("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DeleteBusinessMetadata("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4151,7 +4373,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.DeleteBusinessMetadata("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DeleteBusinessMetadata("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4168,7 +4390,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.DeleteBusinessMetadataAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DeleteBusinessMetadataAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4185,7 +4407,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.DeleteBusinessMetadataAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DeleteBusinessMetadataAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4202,7 +4424,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.AddOrUpdateBusinessMetadata("<guid>", RequestContent.Create(data), true, new RequestContext());
+            Response response = client.AddOrUpdateBusinessMetadata("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4219,7 +4441,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.AddOrUpdateBusinessMetadata("<guid>", RequestContent.Create(data), true, new RequestContext());
+            Response response = client.AddOrUpdateBusinessMetadata("<guid>", RequestContent.Create(data), true);
             Console.WriteLine(response.Status);
         }
 
@@ -4236,7 +4458,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", RequestContent.Create(data), true, new RequestContext());
+            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4253,7 +4475,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", RequestContent.Create(data), true, new RequestContext());
+            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", RequestContent.Create(data), true);
             Console.WriteLine(response.Status);
         }
 
@@ -4270,7 +4492,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4287,7 +4509,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4304,7 +4526,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4321,7 +4543,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4338,7 +4560,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4355,7 +4577,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4372,7 +4594,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4389,7 +4611,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4475,7 +4697,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = client.ImportBusinessMetadata(RequestContent.Create(data), new RequestContext());
+            Response response = client.ImportBusinessMetadata(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -4491,7 +4713,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = client.ImportBusinessMetadata(RequestContent.Create(data), new RequestContext());
+            Response response = client.ImportBusinessMetadata(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -4514,7 +4736,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = await client.ImportBusinessMetadataAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.ImportBusinessMetadataAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -4530,7 +4752,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = await client.ImportBusinessMetadataAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.ImportBusinessMetadataAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -4555,7 +4777,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.DeleteLabels("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DeleteLabels("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4571,7 +4793,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.DeleteLabels("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DeleteLabels("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4587,7 +4809,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.DeleteLabelsAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DeleteLabelsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4603,7 +4825,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.DeleteLabelsAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DeleteLabelsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4619,7 +4841,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.SetLabels("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.SetLabels("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4635,7 +4857,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.SetLabels("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.SetLabels("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4651,7 +4873,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.SetLabelsAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.SetLabelsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4667,7 +4889,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.SetLabelsAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.SetLabelsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4683,7 +4905,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.AddLabel("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.AddLabel("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4699,7 +4921,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.AddLabel("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.AddLabel("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4715,7 +4937,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.AddLabelAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddLabelAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4731,7 +4953,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.AddLabelAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddLabelAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4747,7 +4969,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4763,7 +4985,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4779,7 +5001,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4795,7 +5017,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4811,7 +5033,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.SetLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.SetLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4827,7 +5049,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.SetLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.SetLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4843,7 +5065,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4859,7 +5081,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4875,7 +5097,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.AddLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.AddLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4891,7 +5113,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.AddLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.AddLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4907,7 +5129,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4923,7 +5145,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
     }

@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Microsoft Azure CosmosDB (SQL API) Collection dataset. </summary>
-    public partial class CosmosDBSqlApiCollectionDataset : DataFactoryDatasetDefinition
+    public partial class CosmosDBSqlApiCollectionDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of CosmosDBSqlApiCollectionDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

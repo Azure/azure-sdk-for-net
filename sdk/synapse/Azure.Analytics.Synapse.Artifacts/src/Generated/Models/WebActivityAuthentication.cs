@@ -36,14 +36,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
-        /// <param name="resource"> Resource for which Azure Auth token will be requested when using MSI Authentication. </param>
-        internal WebActivityAuthentication(string type, SecretBase pfx, string username, SecretBase password, string resource)
+        /// <param name="resource"> Resource for which Azure Auth token will be requested when using MSI Authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="userTenant"> TenantId for which Azure Auth token will be requested when using ServicePrincipal Authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal WebActivityAuthentication(string type, SecretBase pfx, string username, SecretBase password, object resource, object userTenant, CredentialReference credential)
         {
             Type = type;
             Pfx = pfx;
             Username = username;
             Password = password;
             Resource = resource;
+            UserTenant = userTenant;
+            Credential = credential;
         }
 
         /// <summary> Web activity authentication (Basic/ClientCertificate/MSI). </summary>
@@ -62,7 +66,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase Password { get; set; }
-        /// <summary> Resource for which Azure Auth token will be requested when using MSI Authentication. </summary>
-        public string Resource { get; set; }
+        /// <summary> Resource for which Azure Auth token will be requested when using MSI Authentication. Type: string (or Expression with resultType string). </summary>
+        public object Resource { get; set; }
+        /// <summary> TenantId for which Azure Auth token will be requested when using ServicePrincipal Authentication. Type: string (or Expression with resultType string). </summary>
+        public object UserTenant { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

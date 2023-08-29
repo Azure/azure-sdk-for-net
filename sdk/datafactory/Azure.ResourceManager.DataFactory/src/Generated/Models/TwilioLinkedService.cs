@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for Twilio. </summary>
-    public partial class TwilioLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class TwilioLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of TwilioLinkedService. </summary>
         /// <param name="userName"> The Account SID of Twilio service. Type: string (or Expression with resultType string). </param>

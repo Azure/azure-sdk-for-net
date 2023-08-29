@@ -115,7 +115,7 @@ namespace Azure.Identity.Tests
             {
                 Transport = mockTransport,
                 TenantId = TenantId,
-                IsSupportLoggingEnabled = isSupportLoggingEnabled
+                IsUnsafeSupportLoggingEnabled = isSupportLoggingEnabled
             };
             var credential = GetTokenCredential(config);
             if (!CredentialTestHelpers.IsMsalCredential(credential))
@@ -505,7 +505,7 @@ namespace Azure.Identity.Tests
                 // Assert.AreEqual(tenantId, tId);
                 return publicResult;
             };
-            mockPublicMsalClient.InteractiveAuthFactory = (_, _, _, _, tenant, _, _) =>
+            mockPublicMsalClient.InteractiveAuthFactory = (_, _, _, _, tenant, _, _, _) =>
             {
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;

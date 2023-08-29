@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 {
                     AvailableForOffers = true, // if a worker is not registered, no offer will be issued
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(100), },
-                    QueueIds = { [jobQueue.Value.Id] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [jobQueue.Value.Id] = new RouterQueueAssignment(), },
                 });
 
             // now that we have a registered worker, we can expect offer to be sent to the worker

@@ -13,6 +13,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 override-operation-name:
   Endpoints_PurgeContent: PurgeContent

@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 try
                 {
                     var activityTagsProcessor = EnumerateActivityTags(activity);
-                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey);
+                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
 
                     // Check for Exceptions events
                     if (activity.Events.Any())
@@ -403,6 +403,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 .Append('\"');
             linksJson
                 .Append("},");
+        }
+
+        internal static string GetAzureSDKDependencyType(ActivityKind kind, string azureNamespace)
+        {
+            // TODO: see if the values can be cached to avoid allocation.
+            if (kind == ActivityKind.Internal)
+            {
+                return $"InProc | {azureNamespace}";
+            }
+            else if (kind == ActivityKind.Producer)
+            {
+                return $"Queue Message | {azureNamespace}";
+            }
+            else
+            {
+                // The Azure SDK sets az.namespace with its resource provider information.
+                // When ActivityKind is not internal and az.namespace is present, set the value of Type to az.namespace.
+                return azureNamespace;
+            }
         }
     }
 }

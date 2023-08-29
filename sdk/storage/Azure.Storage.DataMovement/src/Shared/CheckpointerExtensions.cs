@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.DataMovement.Models;
-
 namespace Azure.Storage.DataMovement
 {
-    internal static class CheckpointerExtensions
+    internal static partial class CheckpointerExtensions
     {
-        public static TransferCheckpointer GetCheckpointer(this TransferCheckpointerOptions options)
+        public static TransferCheckpointer GetCheckpointer(this TransferCheckpointStoreOptions options)
         {
             if (!string.IsNullOrEmpty(options?.CheckpointerPath))
             {

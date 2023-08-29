@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Amazon Redshift table dataset. </summary>
-    public partial class AmazonRedshiftTableDataset : DataFactoryDatasetDefinition
+    public partial class AmazonRedshiftTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AmazonRedshiftTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

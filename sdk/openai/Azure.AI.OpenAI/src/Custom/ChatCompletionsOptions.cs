@@ -5,8 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -43,7 +41,7 @@ namespace Azure.AI.OpenAI
         /// <inheritdoc cref="CompletionsOptions.User"/>
         public string User { get; set; }
 
-         /// <summary> A list of functions the model may generate JSON inputs for. </summary>
+        /// <summary> A list of functions the model may generate JSON inputs for. </summary>
         public IList<FunctionDefinition> Functions { get; set; }
 
         /// <summary>
@@ -57,7 +55,7 @@ namespace Azure.AI.OpenAI
         ///     </item>
         ///     <item>
         ///         <see cref="FunctionDefinition.Auto"/> represents the default behavior and will allow the model
-        ///         to freely select between issuing a stanard completions response or a call to any provided
+        ///         to freely select between issuing a standard completions response or a call to any provided
         ///         function.
         ///     </item>
         ///     <item>
@@ -69,11 +67,20 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         public FunctionDefinition FunctionCall { get; set; }
 
-        internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
+        /// <summary>
+        /// Gets or sets the additional configuration details to use for Azure OpenAI chat completions extensions.
+        /// </summary>
+        /// <remarks>
+        /// These extensions are specific to Azure OpenAI and require use of the Azure OpenAI service.
+        /// </remarks>
+        public AzureChatExtensionsOptions AzureExtensionsOptions { get; set; }
 
+        // CUSTOM CODE NOTE: the following properties are forward declared here as internal as their behavior is
+        //                      otherwise handled in the custom implementation.
+        internal IList<AzureChatExtensionConfiguration> InternalAzureExtensionsDataSources { get; set; }
         internal string InternalNonAzureModelName { get; set; }
-
         internal bool? InternalShouldStreamResponse { get; set; }
+        internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
 
         /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
         /// <param name="messages">
@@ -83,22 +90,28 @@ namespace Azure.AI.OpenAI
         /// Assistant roles.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        public ChatCompletionsOptions(IEnumerable<ChatMessage> messages)
+        public ChatCompletionsOptions(IEnumerable<ChatMessage> messages) : this()
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
-            Messages = messages.ToList();
-            TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
-            StopSequences = new ChangeTrackingList<string>();
-            Functions = new ChangeTrackingList<FunctionDefinition>();
+            foreach (ChatMessage chatMessage in messages)
+            {
+                Messages.Add(chatMessage);
+            }
         }
 
         /// <inheritdoc cref="ChatCompletionsOptions(IEnumerable{ChatMessage})"/>
         public ChatCompletionsOptions()
-            : this(new ChangeTrackingList<ChatMessage>())
         {
             // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
             //                      may be reconsidered for required payload constituents in the future.
+            Messages = new ChangeTrackingList<ChatMessage>();
+            TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
+            InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
+            StopSequences = new ChangeTrackingList<string>();
+            Functions = new ChangeTrackingList<FunctionDefinition>();
+            InternalAzureExtensionsDataSources = new ChangeTrackingList<AzureChatExtensionConfiguration>();
+            AzureExtensionsOptions = null;
         }
     }
 }

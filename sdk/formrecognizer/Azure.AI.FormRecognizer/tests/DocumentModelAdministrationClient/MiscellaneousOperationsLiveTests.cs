@@ -17,7 +17,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class MiscellaneousOperationsLiveTests : DocumentAnalysisLiveTestBase
     {
         private readonly IReadOnlyDictionary<string, string> _testingTags = new Dictionary<string, string>()
@@ -167,7 +166,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotNull(model.ModelId);
             Assert.AreNotEqual(default(DateTimeOffset), model.CreatedOn);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 if (model.ExpiresOn.HasValue)
                 {

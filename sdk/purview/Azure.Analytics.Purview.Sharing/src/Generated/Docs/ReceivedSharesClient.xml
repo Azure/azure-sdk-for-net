@@ -35,9 +35,9 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="ActivateTenantEmailRegistrationAsync(RequestContent,string,RequestContext)">
+    <member name="ActivateTenantEmailRegistrationAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call ActivateTenantEmailRegistrationAsync with required parameters and parse the result.
+This sample shows how to call ActivateTenantEmailRegistrationAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -50,7 +50,7 @@ Response response = await client.ActivateTenantEmailRegistrationAsync(RequestCon
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ActivateTenantEmailRegistrationAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call ActivateTenantEmailRegistrationAsync with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -62,7 +62,7 @@ var data = new {
     },
 };
 
-Response response = await client.ActivateTenantEmailRegistrationAsync(RequestContent.Create(data), "<repeatabilityRequestId>");
+Response response = await client.ActivateTenantEmailRegistrationAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -76,9 +76,9 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="ActivateTenantEmailRegistration(RequestContent,string,RequestContext)">
+    <member name="ActivateTenantEmailRegistration(RequestContent,RequestContext)">
 <example>
-This sample shows how to call ActivateTenantEmailRegistration with required parameters and parse the result.
+This sample shows how to call ActivateTenantEmailRegistration and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -91,7 +91,7 @@ Response response = client.ActivateTenantEmailRegistration(RequestContent.Create
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ActivateTenantEmailRegistration with all parameters and request content, and how to parse the result.
+This sample shows how to call ActivateTenantEmailRegistration with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -103,7 +103,7 @@ var data = new {
     },
 };
 
-Response response = client.ActivateTenantEmailRegistration(RequestContent.Create(data), "<repeatabilityRequestId>");
+Response response = client.ActivateTenantEmailRegistration(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -117,7 +117,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="RegisterTenantEmailRegistrationAsync(string,RequestContext)">
+    <member name="RegisterTenantEmailRegistrationAsync(RequestContext)">
 <example>
 This sample shows how to call RegisterTenantEmailRegistrationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -125,7 +125,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ReceivedSharesClient(endpoint, credential);
 
-Response response = await client.RegisterTenantEmailRegistrationAsync("<repeatabilityRequestId>", new RequestContext());
+Response response = await client.RegisterTenantEmailRegistrationAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -139,7 +139,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="RegisterTenantEmailRegistration(string,RequestContext)">
+    <member name="RegisterTenantEmailRegistration(RequestContext)">
 <example>
 This sample shows how to call RegisterTenantEmailRegistration with required parameters and parse the result.
 <code><![CDATA[
@@ -147,7 +147,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ReceivedSharesClient(endpoint, credential);
 
-Response response = client.RegisterTenantEmailRegistration("<repeatabilityRequestId>", new RequestContext());
+Response response = client.RegisterTenantEmailRegistration(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());

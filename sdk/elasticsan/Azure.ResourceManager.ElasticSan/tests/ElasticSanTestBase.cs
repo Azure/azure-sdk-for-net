@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests
 
         protected readonly string ResourceGroupName = "testelasticsan";
         protected readonly string ElasticSanName = "testsan1";
-        protected AzureLocation TestLocation = new("southcentralusstg");
+        protected AzureLocation TestLocation = new("eastus2euap");
 
         [SetUp]
         public async Task CreateCommonClient()
@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests
 
         public static ElasticSanVolumeData GetDefaultElasticSanVolumeData()
         {
-            ElasticSanVolumeData parameters = new ElasticSanVolumeData()
-            {
-                SizeGiB = 100
-            };
+            ElasticSanVolumeData parameters = new ElasticSanVolumeData(100);
             return parameters;
         }
 

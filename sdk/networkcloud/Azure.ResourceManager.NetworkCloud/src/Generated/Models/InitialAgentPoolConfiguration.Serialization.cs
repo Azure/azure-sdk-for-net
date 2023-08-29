@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Optional<AgentOptions> agentOptions = default;
+            Optional<NetworkCloudAgentConfiguration> agentOptions = default;
             Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
             Optional<IList<string>> availabilityZones = default;
             long count = default;
             Optional<IList<KubernetesLabel>> labels = default;
-            AgentPoolMode mode = default;
+            NetworkCloudAgentPoolMode mode = default;
             string name = default;
             Optional<IList<KubernetesLabel>> taints = default;
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    agentOptions = AgentOptions.DeserializeAgentOptions(property.Value);
+                    agentOptions = NetworkCloudAgentConfiguration.DeserializeNetworkCloudAgentConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("attachedNetworkConfiguration"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("mode"u8))
                 {
-                    mode = new AgentPoolMode(property.Value.GetString());
+                    mode = new NetworkCloudAgentPoolMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

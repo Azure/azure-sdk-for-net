@@ -197,7 +197,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
                 },
             };
 
-            var operation = client.MatchTrials(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+            var operation = client.MatchTrials(WaitUntil.Completed, RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -427,7 +427,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
                 },
             };
 
-            var operation = await client.MatchTrialsAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+            var operation = await client.MatchTrialsAsync(WaitUntil.Completed, RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -561,6 +561,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
                     AcceptedAgeRange = new AcceptedAgeRange()
 {
                         MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                        MaximumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
                     },
                 },
             }
@@ -628,7 +629,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
                     IncludeEvidence = true,
                 },
             };
-            var operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+            var operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
         }
     }
 }

@@ -16,8 +16,9 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
-# mgmt-debug: 
+# mgmt-debug:
 #  show-serialized-names: true
 
 list-exception:
@@ -362,6 +363,8 @@ rename-mapping:
   BillingMeter.properties.billingLocation: -|azure-location
   AddressResponse.properties.vipMappings: VirtualIPMappings
   CloningInfo.sourceWebAppLocation: -|azure-location
+  AzureTableStorageApplicationLogsConfig.sasUrl: SasUriString
+
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties
   AppServiceCertificateResource: AppServiceCertificate
@@ -547,7 +550,7 @@ rename-mapping:
   WebJobCollection: WebJobCListResult
   WorkerPoolCollection: AppServiceWorkerPoolListResult
   HybridConnection.properties.relayArmUri: relayArmId|arm-id
-  AzureActiveDirectoryRegistration.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString 
+  AzureActiveDirectoryRegistration.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString
   Certificate.properties.thumbprint: ThumbprintString
   CertificateDetails.thumbprint: ThumbprintString
   CertificatePatchResource.properties.thumbprint: ThumbprintString
