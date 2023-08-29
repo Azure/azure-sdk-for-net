@@ -157,24 +157,6 @@ resource azfunc 'Microsoft.Web/sites@2021-03-01' = {
   }
 }
 
-// resource func 'Microsoft.Web/sites/functions@2022-09-01' = {
-//   parent: azfunc
-//   name: 'Function1'
-//   properties:{
-//     config:{
-//       bindings:[
-//         {
-//           type: 'httpTrigger'
-//           methods: ['get']
-//           authLevel: 'anonymous'
-//           name: 'req'
-//         }
-//       ]
-//       disabled: false
-//     }
-//   }
-// }
-
 resource web 'Microsoft.Web/sites@2021-03-01' = {
   name: '${baseName}webapp'
   location: location

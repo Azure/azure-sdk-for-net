@@ -21,7 +21,7 @@ Remove-Item -Force -Recurse "$workingFolder/Pub"
 # Deploy the function app
 dotnet publish "$webappRoot/Integration.Identity.Func/Integration.Identity.Func.csproj" -o "$workingFolder/Pub" /p:EnableSourceLink=false
 Compress-Archive -Path "$workingFolder/Pub/*" -DestinationPath "$workingFolder/Pub/package.zip" -Force
-az functionapp deployment source config-zip -g $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] -n $DeploymentOutputs['IDENTITY_WEBAPP_NAME'] --src "$workingFolder/Pub/package.zip"
+az functionapp deployment source config-zip -g $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] -n $DeploymentOutputs['IDENTITY_FUNCTION_NAME'] --src "$workingFolder/Pub/package.zip"
 
 # clean up
 Remove-Item -Force -Recurse "$workingFolder/Pub"
