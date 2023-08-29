@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesDataReplication
 namespace: Azure.ResourceManager.RecoveryServicesDataReplication
-require: D:/forked-repos/openapihub/azure-rest-api-specs/specification/recoveryservicesdatareplication/resource-manager/readme.md
+require: D:\forked-repos\openapihub\azure-rest-api-specs\specification\recoveryservicesdatareplication\resource-manager\readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
