@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{draName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="data"> Dra model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="draName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DraModelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string draName, DraModelData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DraModelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fabricAgentName, DraModelData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _draModelDraClientDiagnostics.CreateScope("DraModelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _draModelDraRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, draName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesDataReplicationArmOperation<DraModelResource>(new DraModelOperationSource(Client), _draModelDraClientDiagnostics, Pipeline, _draModelDraRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, draName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _draModelDraRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fabricAgentName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesDataReplicationArmOperation<DraModelResource>(new DraModelOperationSource(Client), _draModelDraClientDiagnostics, Pipeline, _draModelDraRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fabricAgentName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{draName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="data"> Dra model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="draName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DraModelResource> CreateOrUpdate(WaitUntil waitUntil, string draName, DraModelData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DraModelResource> CreateOrUpdate(WaitUntil waitUntil, string fabricAgentName, DraModelData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _draModelDraClientDiagnostics.CreateScope("DraModelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _draModelDraRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, draName, data, cancellationToken);
-                var operation = new RecoveryServicesDataReplicationArmOperation<DraModelResource>(new DraModelOperationSource(Client), _draModelDraClientDiagnostics, Pipeline, _draModelDraRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, draName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _draModelDraRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fabricAgentName, data, cancellationToken);
+                var operation = new RecoveryServicesDataReplicationArmOperation<DraModelResource>(new DraModelOperationSource(Client), _draModelDraClientDiagnostics, Pipeline, _draModelDraRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fabricAgentName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{draName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -147,19 +147,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="draName"/> is null. </exception>
-        public virtual async Task<Response<DraModelResource>> GetAsync(string draName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
+        public virtual async Task<Response<DraModelResource>> GetAsync(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
             using var scope = _draModelDraClientDiagnostics.CreateScope("DraModelCollection.Get");
             scope.Start();
             try
             {
-                var response = await _draModelDraRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, draName, cancellationToken).ConfigureAwait(false);
+                var response = await _draModelDraRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fabricAgentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DraModelResource(Client, response.Value), response.GetRawResponse());
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{draName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -184,19 +184,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="draName"/> is null. </exception>
-        public virtual Response<DraModelResource> Get(string draName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
+        public virtual Response<DraModelResource> Get(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
             using var scope = _draModelDraClientDiagnostics.CreateScope("DraModelCollection.Get");
             scope.Start();
             try
             {
-                var response = _draModelDraRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, draName, cancellationToken);
+                var response = _draModelDraRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fabricAgentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DraModelResource(Client, response.Value), response.GetRawResponse());
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{draName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -265,19 +265,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="draName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string draName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
             using var scope = _draModelDraClientDiagnostics.CreateScope("DraModelCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _draModelDraRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, draName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _draModelDraRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fabricAgentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{draName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -300,19 +300,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="draName"/> is null. </exception>
-        public virtual Response<bool> Exists(string draName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
+        public virtual Response<bool> Exists(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
             using var scope = _draModelDraClientDiagnostics.CreateScope("DraModelCollection.Exists");
             scope.Start();
             try
             {
-                var response = _draModelDraRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, draName, cancellationToken: cancellationToken);
+                var response = _draModelDraRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fabricAgentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

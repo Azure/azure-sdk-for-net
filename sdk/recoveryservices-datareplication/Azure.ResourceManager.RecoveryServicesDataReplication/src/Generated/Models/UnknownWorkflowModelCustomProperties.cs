@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of UnknownWorkflowModelCustomProperties. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
-        internal UnknownWorkflowModelCustomProperties(WorkflowDetailsType instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails) : base(instanceType, affectedObjectDetails)
+        internal UnknownWorkflowModelCustomProperties(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails) : base(instanceType, affectedObjectDetails)
         {
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "Unknown";
         }
     }
 }

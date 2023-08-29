@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vaultName, string workflowName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vaultName, string jobName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath("/providers/Microsoft.DataReplication/replicationVaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/jobs/", false);
-            uri.AppendPath(workflowName, true);
+            uri.AppendPath(jobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the details of the job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowModelData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<WorkflowModelData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, workflowName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, jobName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the details of the job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowModelData> Get(string subscriptionId, string resourceGroupName, string vaultName, string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<WorkflowModelData> Get(string subscriptionId, string resourceGroupName, string vaultName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, workflowName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, jobName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the list of jobs in the given vault. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
+        /// <param name="vaultName"> The vault name. </param>
         /// <param name="filter"> Filter string. </param>
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the list of jobs in the given vault. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
+        /// <param name="vaultName"> The vault name. </param>
         /// <param name="filter"> Filter string. </param>
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
+        /// <param name="vaultName"> The vault name. </param>
         /// <param name="filter"> Filter string. </param>
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
+        /// <param name="vaultName"> The vault name. </param>
         /// <param name="filter"> Filter string. </param>
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

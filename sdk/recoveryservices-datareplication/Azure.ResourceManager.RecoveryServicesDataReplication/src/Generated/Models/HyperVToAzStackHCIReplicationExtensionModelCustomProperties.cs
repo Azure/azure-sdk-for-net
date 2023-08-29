@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             HyperVFabricArmId = hyperVFabricArmId;
             AzStackHciFabricArmId = azStackHciFabricArmId;
-            InstanceType = ReplicationType.HyperVToAzStackHCI;
+            InstanceType = "HyperVToAzStackHCI";
         }
 
         /// <summary> Initializes a new instance of HyperVToAzStackHCIReplicationExtensionModelCustomProperties. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceLocation"> Gets or sets the resource location. </param>
         /// <param name="subscriptionId"> Gets or sets the subscription. </param>
         /// <param name="resourceGroup"> Gets or sets the resource group. </param>
-        internal HyperVToAzStackHCIReplicationExtensionModelCustomProperties(ReplicationType instanceType, string hyperVFabricArmId, string hyperVSiteId, string azStackHciFabricArmId, string azStackHciSiteId, string storageAccountId, string storageAccountSasSecretName, Uri asrServiceUri, Uri rcmServiceUri, Uri gatewayServiceUri, string sourceGatewayServiceId, string targetGatewayServiceId, string sourceStorageContainerName, string targetStorageContainerName, string resourceLocation, string subscriptionId, string resourceGroup) : base(instanceType)
+        internal HyperVToAzStackHCIReplicationExtensionModelCustomProperties(string instanceType, string hyperVFabricArmId, string hyperVSiteId, string azStackHciFabricArmId, string azStackHciSiteId, string storageAccountId, string storageAccountSasSecretName, Uri asrServiceUri, Uri rcmServiceUri, Uri gatewayServiceUri, string sourceGatewayServiceId, string targetGatewayServiceId, string sourceStorageContainerName, string targetStorageContainerName, string resourceLocation, string subscriptionId, string resourceGroup) : base(instanceType)
         {
             HyperVFabricArmId = hyperVFabricArmId;
             HyperVSiteId = hyperVSiteId;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ResourceLocation = resourceLocation;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "HyperVToAzStackHCI";
         }
 
         /// <summary> Gets or sets the ARM Id of the source HyperV fabric. </summary>

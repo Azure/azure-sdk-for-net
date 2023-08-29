@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary>
     /// Dra model custom properties.
     /// Please note <see cref="DraModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzStackHCIDraModelCustomProperties"/>, <see cref="HyperVMigrateDraModelCustomProperties"/> and <see cref="VMwareDraModelCustomProperties"/>.
+    /// The available derived classes include <see cref="VMwareDraModelCustomProperties"/>.
     /// </summary>
     public abstract partial class DraModelCustomProperties
     {
@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of DraModelCustomProperties. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal DraModelCustomProperties(FabricType instanceType)
+        internal DraModelCustomProperties(string instanceType)
         {
             InstanceType = instanceType;
         }
 
         /// <summary> Gets or sets the instance type. </summary>
-        internal FabricType InstanceType { get; set; }
+        internal string InstanceType { get; set; }
     }
 }

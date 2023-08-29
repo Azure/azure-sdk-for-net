@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         internal HyperVToAzStackHCIRecoveryPointModelCustomProperties()
         {
             DiskIds = new ChangeTrackingList<string>();
-            InstanceType = ReplicationType.HyperVToAzStackHCI;
+            InstanceType = "HyperVToAzStackHCI";
         }
 
         /// <summary> Initializes a new instance of HyperVToAzStackHCIRecoveryPointModelCustomProperties. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="diskIds"> Gets or sets the list of the disk Ids. </param>
-        internal HyperVToAzStackHCIRecoveryPointModelCustomProperties(ReplicationType instanceType, IReadOnlyList<string> diskIds) : base(instanceType)
+        internal HyperVToAzStackHCIRecoveryPointModelCustomProperties(string instanceType, IReadOnlyList<string> diskIds) : base(instanceType)
         {
             DiskIds = diskIds;
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "HyperVToAzStackHCI";
         }
 
         /// <summary> Gets or sets the list of the disk Ids. </summary>

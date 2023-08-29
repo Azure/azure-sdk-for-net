@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            ReplicationType instanceType = "Unknown";
+            string instanceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
                 {
-                    instanceType = new ReplicationType(property.Value.GetString());
+                    instanceType = property.Value.GetString();
                     continue;
                 }
             }

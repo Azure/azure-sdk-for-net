@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Dra model custom properties.
         /// Please note <see cref="DraModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzStackHCIDraModelCustomProperties"/>, <see cref="HyperVMigrateDraModelCustomProperties"/> and <see cref="VMwareDraModelCustomProperties"/>.
+        /// The available derived classes include <see cref="VMwareDraModelCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineId"/>, <paramref name="machineName"/>, <paramref name="authenticationIdentity"/>, <paramref name="resourceAccessIdentity"/> or <paramref name="customProperties"/> is null. </exception>
         public DraModelProperties(string machineId, string machineName, IdentityModel authenticationIdentity, IdentityModel resourceAccessIdentity, DraModelCustomProperties customProperties)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Dra model custom properties.
         /// Please note <see cref="DraModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzStackHCIDraModelCustomProperties"/>, <see cref="HyperVMigrateDraModelCustomProperties"/> and <see cref="VMwareDraModelCustomProperties"/>.
+        /// The available derived classes include <see cref="VMwareDraModelCustomProperties"/>.
         /// </param>
         internal DraModelProperties(string correlationId, string machineId, string machineName, IdentityModel authenticationIdentity, IdentityModel resourceAccessIdentity, bool? isResponsive, DateTimeOffset? lastHeartbeat, string versionNumber, ProvisioningState? provisioningState, IReadOnlyList<HealthErrorModel> healthErrors, DraModelCustomProperties customProperties)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary>
         /// Dra model custom properties.
         /// Please note <see cref="DraModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzStackHCIDraModelCustomProperties"/>, <see cref="HyperVMigrateDraModelCustomProperties"/> and <see cref="VMwareDraModelCustomProperties"/>.
+        /// The available derived classes include <see cref="VMwareDraModelCustomProperties"/>.
         /// </summary>
         public DraModelCustomProperties CustomProperties { get; set; }
     }

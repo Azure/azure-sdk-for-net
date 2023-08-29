@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
             writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType.ToString());
+            writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> resourceLocation = default;
             Optional<string> subscriptionId = default;
             Optional<string> resourceGroup = default;
-            ReplicationType instanceType = default;
+            string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmwareFabricArmId"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("instanceType"u8))
                 {
-                    instanceType = new ReplicationType(property.Value.GetString());
+                    instanceType = property.Value.GetString();
                     continue;
                 }
             }

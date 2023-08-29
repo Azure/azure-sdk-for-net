@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ApplianceName = new ChangeTrackingList<string>();
             Cluster = cluster;
             MigrationSolutionId = migrationSolutionId;
-            InstanceType = FabricType.AzStackHCI;
+            InstanceType = "AzStackHCI";
         }
 
         /// <summary> Initializes a new instance of AzStackHCIFabricModelCustomProperties. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="fabricContainerId"> Gets or sets the fabric container Id. </param>
         /// <param name="migrationSolutionId"> Gets or sets the Migration solution ARM Id. </param>
         /// <param name="migrationHubUri"> Gets or sets the migration hub Uri. </param>
-        internal AzStackHCIFabricModelCustomProperties(FabricType instanceType, string azStackHciSiteId, IReadOnlyList<string> applianceName, AzStackHCIClusterProperties cluster, string fabricResourceId, string fabricContainerId, string migrationSolutionId, Uri migrationHubUri) : base(instanceType)
+        internal AzStackHCIFabricModelCustomProperties(string instanceType, string azStackHciSiteId, IReadOnlyList<string> applianceName, AzStackHCIClusterProperties cluster, string fabricResourceId, string fabricContainerId, string migrationSolutionId, Uri migrationHubUri) : base(instanceType)
         {
             AzStackHciSiteId = azStackHciSiteId;
             ApplianceName = applianceName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             FabricContainerId = fabricContainerId;
             MigrationSolutionId = migrationSolutionId;
             MigrationHubUri = migrationHubUri;
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "AzStackHCI";
         }
 
         /// <summary> Gets or sets the ARM Id of the AzStackHCI site. </summary>

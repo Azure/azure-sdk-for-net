@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Tracks the results of an asynchronous operation on the protected item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="protectedItemName"> Protected Item name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="operationId"/> is null. </exception>
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Tracks the results of an asynchronous operation on the protected item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="protectedItemName"> Protected Item name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="operationId"/> is null. </exception>

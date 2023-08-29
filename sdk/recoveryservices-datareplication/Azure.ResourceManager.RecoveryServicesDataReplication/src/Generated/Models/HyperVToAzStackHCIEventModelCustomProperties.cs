@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of HyperVToAzStackHCIEventModelCustomProperties. </summary>
         internal HyperVToAzStackHCIEventModelCustomProperties()
         {
-            InstanceType = ReplicationType.HyperVToAzStackHCI;
+            InstanceType = "HyperVToAzStackHCI";
         }
 
         /// <summary> Initializes a new instance of HyperVToAzStackHCIEventModelCustomProperties. </summary>
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="sourceApplianceName"> Gets or sets the source appliance name. </param>
         /// <param name="targetApplianceName"> Gets or sets the source target name. </param>
         /// <param name="serverType"> Gets or sets the server type. </param>
-        internal HyperVToAzStackHCIEventModelCustomProperties(ReplicationType instanceType, string eventSourceFriendlyName, string protectedItemFriendlyName, string sourceApplianceName, string targetApplianceName, string serverType) : base(instanceType)
+        internal HyperVToAzStackHCIEventModelCustomProperties(string instanceType, string eventSourceFriendlyName, string protectedItemFriendlyName, string sourceApplianceName, string targetApplianceName, string serverType) : base(instanceType)
         {
             EventSourceFriendlyName = eventSourceFriendlyName;
             ProtectedItemFriendlyName = protectedItemFriendlyName;
             SourceApplianceName = sourceApplianceName;
             TargetApplianceName = targetApplianceName;
             ServerType = serverType;
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "HyperVToAzStackHCI";
         }
 
         /// <summary> Gets or sets the friendly name of the source which has raised this health event. </summary>

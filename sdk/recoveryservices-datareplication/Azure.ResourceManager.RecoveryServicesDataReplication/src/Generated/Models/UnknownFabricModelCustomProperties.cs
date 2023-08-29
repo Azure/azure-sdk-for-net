@@ -12,9 +12,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     {
         /// <summary> Initializes a new instance of UnknownFabricModelCustomProperties. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal UnknownFabricModelCustomProperties(FabricType instanceType) : base(instanceType)
+        internal UnknownFabricModelCustomProperties(string instanceType) : base(instanceType)
         {
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "Unknown";
         }
     }
 }

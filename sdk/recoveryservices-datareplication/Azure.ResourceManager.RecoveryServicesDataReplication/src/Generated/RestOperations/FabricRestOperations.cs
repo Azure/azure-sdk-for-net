@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the details of the fabric. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the details of the fabric. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Creates the fabric. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric Name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="data"> Fabric properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="data"/> is null. </exception>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Creates the fabric. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric Name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="data"> Fabric properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="data"/> is null. </exception>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Performs update on the fabric. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric Name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="patch"> Fabric properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="patch"/> is null. </exception>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Performs update on the fabric. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric Name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="patch"> Fabric properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="patch"/> is null. </exception>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Removes the fabric. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric Name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Removes the fabric. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric Name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("migrationSolutionId"u8);
             writer.WriteStringValue(MigrationSolutionId);
             writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType.ToString());
+            writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> fabricContainerId = default;
             string migrationSolutionId = default;
             Optional<Uri> migrationHubUri = default;
-            FabricType instanceType = default;
+            string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azStackHciSiteId"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("instanceType"u8))
                 {
-                    instanceType = new FabricType(property.Value.GetString());
+                    instanceType = property.Value.GetString();
                     continue;
                 }
             }

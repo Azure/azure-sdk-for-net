@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             VmwareSiteId = vmwareSiteId;
             MigrationSolutionId = migrationSolutionId;
-            InstanceType = FabricType.VMwareMigrate;
+            InstanceType = "VMwareMigrate";
         }
 
         /// <summary> Initializes a new instance of VMwareMigrateFabricModelCustomProperties. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="vmwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
         /// <param name="migrationSolutionId"> Gets or sets the ARM Id of the migration solution. </param>
-        internal VMwareMigrateFabricModelCustomProperties(FabricType instanceType, string vmwareSiteId, string migrationSolutionId) : base(instanceType)
+        internal VMwareMigrateFabricModelCustomProperties(string instanceType, string vmwareSiteId, string migrationSolutionId) : base(instanceType)
         {
             VmwareSiteId = vmwareSiteId;
             MigrationSolutionId = migrationSolutionId;
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "VMwareMigrate";
         }
 
         /// <summary> Gets or sets the ARM Id of the VMware site. </summary>

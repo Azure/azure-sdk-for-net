@@ -12,9 +12,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     {
         /// <summary> Initializes a new instance of UnknownEventModelCustomProperties. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal UnknownEventModelCustomProperties(ReplicationType instanceType) : base(instanceType)
+        internal UnknownEventModelCustomProperties(string instanceType) : base(instanceType)
         {
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "Unknown";
         }
     }
 }

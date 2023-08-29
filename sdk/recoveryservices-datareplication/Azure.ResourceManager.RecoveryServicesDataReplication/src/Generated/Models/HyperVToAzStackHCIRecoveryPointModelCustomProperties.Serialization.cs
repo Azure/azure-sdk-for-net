@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             Optional<IReadOnlyList<string>> diskIds = default;
-            ReplicationType instanceType = default;
+            string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskIds"u8))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("instanceType"u8))
                 {
-                    instanceType = new ReplicationType(property.Value.GetString());
+                    instanceType = property.Value.GetString();
                     continue;
                 }
             }

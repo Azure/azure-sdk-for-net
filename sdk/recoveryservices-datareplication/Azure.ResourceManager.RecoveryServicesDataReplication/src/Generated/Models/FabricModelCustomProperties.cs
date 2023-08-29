@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of FabricModelCustomProperties. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal FabricModelCustomProperties(FabricType instanceType)
+        internal FabricModelCustomProperties(string instanceType)
         {
             InstanceType = instanceType;
         }
 
         /// <summary> Gets or sets the instance type. </summary>
-        internal FabricType InstanceType { get; set; }
+        internal string InstanceType { get; set; }
     }
 }

@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Tracks the results of an asynchronous operation on the replication extension. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="replicationExtensionName"> Replication extension name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="replicationExtensionName"/> or <paramref name="operationId"/> is null. </exception>
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Tracks the results of an asynchronous operation on the replication extension. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="replicationExtensionName"> Replication extension name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="replicationExtensionName"/> or <paramref name="operationId"/> is null. </exception>

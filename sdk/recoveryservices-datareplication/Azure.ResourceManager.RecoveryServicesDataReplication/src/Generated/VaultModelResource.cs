@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="emailConfigurationName"> Email configuration name. </param>
+        /// <param name="emailConfigurationName"> The email configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="emailConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="emailConfigurationName"> Email configuration name. </param>
+        /// <param name="emailConfigurationName"> The email configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="emailConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventName"> Event name. </param>
+        /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventName"> Event name. </param>
+        /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyName"> Policy name. </param>
+        /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyName"> Policy name. </param>
+        /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="protectedItemName"> Protected item name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="protectedItemName"> Protected item name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="replicationExtensionName"> Replication extension name. </param>
+        /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="replicationExtensionName"> Replication extension name. </param>
+        /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{workflowName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -378,14 +378,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkflowModelResource>> GetWorkflowModelAsync(string workflowName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkflowModelResource>> GetWorkflowModelAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            return await GetWorkflowModels().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+            return await GetWorkflowModels().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{workflowName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -401,14 +401,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkflowModelResource> GetWorkflowModel(string workflowName, CancellationToken cancellationToken = default)
+        public virtual Response<WorkflowModelResource> GetWorkflowModel(string jobName, CancellationToken cancellationToken = default)
         {
-            return GetWorkflowModels().Get(workflowName, cancellationToken);
+            return GetWorkflowModels().Get(jobName, cancellationToken);
         }
 
         /// <summary>

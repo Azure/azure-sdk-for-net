@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of WorkflowModelCustomProperties. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
-        internal WorkflowModelCustomProperties(WorkflowDetailsType instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails)
+        internal WorkflowModelCustomProperties(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails)
         {
             InstanceType = instanceType;
             AffectedObjectDetails = affectedObjectDetails;
         }
 
         /// <summary> Gets or sets the instance type. </summary>
-        internal WorkflowDetailsType InstanceType { get; set; }
+        internal string InstanceType { get; set; }
         /// <summary> Gets or sets any custom properties of the affected object. </summary>
         public IReadOnlyDictionary<string, string> AffectedObjectDetails { get; }
     }

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            WorkflowDetailsType instanceType = "Unknown";
+            string instanceType = "Unknown";
             Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
                 {
-                    instanceType = new WorkflowDetailsType(property.Value.GetString());
+                    instanceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("affectedObjectDetails"u8))

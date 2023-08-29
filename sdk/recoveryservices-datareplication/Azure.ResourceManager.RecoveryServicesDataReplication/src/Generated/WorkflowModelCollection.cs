@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{workflowName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        public virtual async Task<Response<WorkflowModelResource>> GetAsync(string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        public virtual async Task<Response<WorkflowModelResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _workflowModelWorkflowClientDiagnostics.CreateScope("WorkflowModelCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workflowModelWorkflowRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken).ConfigureAwait(false);
+                var response = await _workflowModelWorkflowRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WorkflowModelResource(Client, response.Value), response.GetRawResponse());
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{workflowName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -102,19 +102,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        public virtual Response<WorkflowModelResource> Get(string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        public virtual Response<WorkflowModelResource> Get(string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _workflowModelWorkflowClientDiagnostics.CreateScope("WorkflowModelCollection.Get");
             scope.Start();
             try
             {
-                var response = _workflowModelWorkflowRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken);
+                var response = _workflowModelWorkflowRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WorkflowModelResource(Client, response.Value), response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{workflowName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -187,19 +187,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _workflowModelWorkflowClientDiagnostics.CreateScope("WorkflowModelCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workflowModelWorkflowRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _workflowModelWorkflowRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{workflowName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        public virtual Response<bool> Exists(string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        public virtual Response<bool> Exists(string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _workflowModelWorkflowClientDiagnostics.CreateScope("WorkflowModelCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workflowModelWorkflowRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken: cancellationToken);
+                var response = _workflowModelWorkflowRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

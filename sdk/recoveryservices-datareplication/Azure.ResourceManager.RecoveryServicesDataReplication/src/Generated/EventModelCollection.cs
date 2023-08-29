@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventName"> Event name. </param>
+        /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventName"> Event name. </param>
+        /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventName"> Event name. </param>
+        /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventName"> Event name. </param>
+        /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>

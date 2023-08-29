@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
             AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
-            InstanceType = ReplicationType.HyperVToAzStackHCI;
+            InstanceType = "HyperVToAzStackHCI";
         }
 
         /// <summary> Initializes a new instance of HyperVToAzStackHCIPolicyModelCustomProperties. </summary>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// </param>
         /// <param name="crashConsistentFrequencyInMinutes"> Gets or sets the crash consistent snapshot frequency (in minutes). </param>
         /// <param name="appConsistentFrequencyInMinutes"> Gets or sets the app consistent snapshot frequency (in minutes). </param>
-        internal HyperVToAzStackHCIPolicyModelCustomProperties(ReplicationType instanceType, int recoveryPointHistoryInMinutes, int crashConsistentFrequencyInMinutes, int appConsistentFrequencyInMinutes) : base(instanceType)
+        internal HyperVToAzStackHCIPolicyModelCustomProperties(string instanceType, int recoveryPointHistoryInMinutes, int crashConsistentFrequencyInMinutes, int appConsistentFrequencyInMinutes) : base(instanceType)
         {
             RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
             AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "HyperVToAzStackHCI";
         }
 
         /// <summary>

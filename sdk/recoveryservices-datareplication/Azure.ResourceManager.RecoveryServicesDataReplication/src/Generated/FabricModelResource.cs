@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{draName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="draName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DraModelResource>> GetDraModelAsync(string draName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DraModelResource>> GetDraModelAsync(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            return await GetDraModels().GetAsync(draName, cancellationToken).ConfigureAwait(false);
+            return await GetDraModels().GetAsync(fabricAgentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{draName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="draName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DraModelResource> GetDraModel(string draName, CancellationToken cancellationToken = default)
+        public virtual Response<DraModelResource> GetDraModel(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            return GetDraModels().Get(draName, cancellationToken);
+            return GetDraModels().Get(fabricAgentName, cancellationToken);
         }
 
         /// <summary>

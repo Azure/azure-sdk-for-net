@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the details of the protected item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="protectedItemName"> Protected item name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the details of the protected item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="protectedItemName"> Protected item name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Creates the protected item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="protectedItemName"> Protected item name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="data"> Protected item model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Creates the protected item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="protectedItemName"> Protected item name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="data"> Protected item model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Removes the protected item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="protectedItemName"> Protected item name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="forceDelete"> A flag indicating whether to do force delete or not. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
@@ -266,8 +266,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Removes the protected item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="protectedItemName"> Protected item name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="forceDelete"> A flag indicating whether to do force delete or not. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the list of protected items in the given vault. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
+        /// <param name="vaultName"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the list of protected items in the given vault. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
+        /// <param name="vaultName"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -403,8 +403,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Performs the planned failover on the protected item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="protectedItemName"> Protected item name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="body"> Planned failover model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
@@ -431,8 +431,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Performs the planned failover on the protected item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="protectedItemName"> Protected item name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="body"> Planned failover model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
+        /// <param name="vaultName"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
+        /// <param name="vaultName"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>

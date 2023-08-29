@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string fabricName, string draName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath("/providers/Microsoft.DataReplication/replicationFabrics/", false);
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/fabricAgents/", false);
-            uri.AppendPath(draName, true);
+            uri.AppendPath(fabricAgentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the details of the fabric agent. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="draName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DraModelData>> GetAsync(string subscriptionId, string resourceGroupName, string fabricName, string draName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DraModelData>> GetAsync(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, fabricName, draName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the details of the fabric agent. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="draName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DraModelData> Get(string subscriptionId, string resourceGroupName, string fabricName, string draName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DraModelData> Get(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, fabricName, draName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string fabricName, string draName, DraModelData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, DraModelData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath("/providers/Microsoft.DataReplication/replicationFabrics/", false);
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/fabricAgents/", false);
-            uri.AppendPath(draName, true);
+            uri.AppendPath(fabricAgentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -154,21 +154,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Creates the fabric agent. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="data"> Dra model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/>, <paramref name="draName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string fabricName, string draName, DraModelData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/>, <paramref name="fabricAgentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, DraModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, fabricName, draName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -183,21 +183,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Creates the fabric agent. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="draName"> Dra name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="data"> Dra model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/>, <paramref name="draName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string fabricName, string draName, DraModelData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/>, <paramref name="fabricAgentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, DraModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, fabricName, draName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string fabricName, string draName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath("/providers/Microsoft.DataReplication/replicationFabrics/", false);
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/fabricAgents/", false);
-            uri.AppendPath(draName, true);
+            uri.AppendPath(fabricAgentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -234,19 +234,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Deletes the fabric agent. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric Name. </param>
-        /// <param name="draName"> Dra Name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="draName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string fabricName, string draName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, fabricName, draName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -261,19 +261,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Deletes the fabric agent. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric Name. </param>
-        /// <param name="draName"> Dra Name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="draName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="draName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string fabricName, string draName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(draName, nameof(draName));
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, fabricName, draName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the list of fabric agents in the given fabric. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the list of fabric agents in the given fabric. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="fabricName"> The fabric name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>

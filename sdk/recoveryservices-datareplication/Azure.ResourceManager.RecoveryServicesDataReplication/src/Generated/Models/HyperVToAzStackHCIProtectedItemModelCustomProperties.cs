@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CustomLocationRegion = customLocationRegion;
             ProtectedDisks = new ChangeTrackingList<HyperVToAzStackHCIProtectedDiskProperties>();
             ProtectedNics = new ChangeTrackingList<HyperVToAzStackHCIProtectedNicProperties>();
-            InstanceType = ReplicationType.HyperVToAzStackHCI;
+            InstanceType = "HyperVToAzStackHCI";
         }
 
         /// <summary> Initializes a new instance of HyperVToAzStackHCIProtectedItemModelCustomProperties. </summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="protectedNics"> Gets or sets the VM NIC details. </param>
         /// <param name="targetVmBiosId"> Gets or sets the BIOS Id of the target AzStackHCI VM. </param>
         /// <param name="lastReplicationUpdateOn"> Gets or sets the latest timestamp that replication status is updated. </param>
-        internal HyperVToAzStackHCIProtectedItemModelCustomProperties(ReplicationType instanceType, ProtectedItemActiveLocation? activeLocation, string targetHciClusterId, string targetArcClusterCustomLocationId, string targetAzStackHciClusterName, string fabricDiscoveryMachineId, IList<HyperVToAzStackHCIDiskInput> disksToInclude, IList<HyperVToAzStackHCINicInput> nicsToInclude, string sourceVmName, int? sourceCpuCores, double? sourceMemoryInMegaBytes, string targetVmName, string targetResourceGroupId, string storageContainerId, string hyperVGeneration, string targetNetworkId, string testNetworkId, int? targetCpuCores, bool? isDynamicRam, ProtectedItemDynamicMemoryConfig dynamicMemoryConfig, int? targetMemoryInMegaBytes, string runAsAccountId, string sourceDraName, string targetDraName, string sourceApplianceName, string targetApplianceName, string osType, string osName, string firmwareType, string targetLocation, string customLocationRegion, string failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialReplicationProgressPercentage, int? resyncProgressPercentage, IReadOnlyList<HyperVToAzStackHCIProtectedDiskProperties> protectedDisks, IReadOnlyList<HyperVToAzStackHCIProtectedNicProperties> protectedNics, string targetVmBiosId, DateTimeOffset? lastReplicationUpdateOn) : base(instanceType)
+        internal HyperVToAzStackHCIProtectedItemModelCustomProperties(string instanceType, ProtectedItemActiveLocation? activeLocation, string targetHciClusterId, string targetArcClusterCustomLocationId, string targetAzStackHciClusterName, string fabricDiscoveryMachineId, IList<HyperVToAzStackHCIDiskInput> disksToInclude, IList<HyperVToAzStackHCINicInput> nicsToInclude, string sourceVmName, int? sourceCpuCores, double? sourceMemoryInMegaBytes, string targetVmName, string targetResourceGroupId, string storageContainerId, string hyperVGeneration, string targetNetworkId, string testNetworkId, int? targetCpuCores, bool? isDynamicRam, ProtectedItemDynamicMemoryConfig dynamicMemoryConfig, int? targetMemoryInMegaBytes, string runAsAccountId, string sourceDraName, string targetDraName, string sourceApplianceName, string targetApplianceName, string osType, string osName, string firmwareType, string targetLocation, string customLocationRegion, string failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialReplicationProgressPercentage, int? resyncProgressPercentage, IReadOnlyList<HyperVToAzStackHCIProtectedDiskProperties> protectedDisks, IReadOnlyList<HyperVToAzStackHCIProtectedNicProperties> protectedNics, string targetVmBiosId, DateTimeOffset? lastReplicationUpdateOn) : base(instanceType)
         {
             ActiveLocation = activeLocation;
             TargetHciClusterId = targetHciClusterId;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ProtectedNics = protectedNics;
             TargetVmBiosId = targetVmBiosId;
             LastReplicationUpdateOn = lastReplicationUpdateOn;
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "HyperVToAzStackHCI";
         }
 
         /// <summary> Gets or sets the location of the protected item. </summary>

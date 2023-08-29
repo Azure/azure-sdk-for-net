@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> sourceApplianceName = default;
             Optional<string> targetApplianceName = default;
             Optional<string> serverType = default;
-            ReplicationType instanceType = default;
+            string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSourceFriendlyName"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("instanceType"u8))
                 {
-                    instanceType = new ReplicationType(property.Value.GetString());
+                    instanceType = property.Value.GetString();
                     continue;
                 }
             }

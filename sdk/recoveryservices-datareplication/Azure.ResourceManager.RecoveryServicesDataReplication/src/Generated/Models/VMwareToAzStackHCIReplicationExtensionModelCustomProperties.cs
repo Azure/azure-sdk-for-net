@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             VmwareFabricArmId = vmwareFabricArmId;
             AzStackHciFabricArmId = azStackHciFabricArmId;
-            InstanceType = ReplicationType.VMwareToAzStackHCI;
+            InstanceType = "VMwareToAzStackHCI";
         }
 
         /// <summary> Initializes a new instance of VMwareToAzStackHCIReplicationExtensionModelCustomProperties. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceLocation"> Gets or sets the resource location. </param>
         /// <param name="subscriptionId"> Gets or sets the subscription. </param>
         /// <param name="resourceGroup"> Gets or sets the resource group. </param>
-        internal VMwareToAzStackHCIReplicationExtensionModelCustomProperties(ReplicationType instanceType, string vmwareFabricArmId, string vmwareSiteId, string azStackHciFabricArmId, string azStackHciSiteId, string storageAccountId, string storageAccountSasSecretName, Uri asrServiceUri, Uri rcmServiceUri, Uri gatewayServiceUri, string sourceGatewayServiceId, string targetGatewayServiceId, string sourceStorageContainerName, string targetStorageContainerName, string resourceLocation, string subscriptionId, string resourceGroup) : base(instanceType)
+        internal VMwareToAzStackHCIReplicationExtensionModelCustomProperties(string instanceType, string vmwareFabricArmId, string vmwareSiteId, string azStackHciFabricArmId, string azStackHciSiteId, string storageAccountId, string storageAccountSasSecretName, Uri asrServiceUri, Uri rcmServiceUri, Uri gatewayServiceUri, string sourceGatewayServiceId, string targetGatewayServiceId, string sourceStorageContainerName, string targetStorageContainerName, string resourceLocation, string subscriptionId, string resourceGroup) : base(instanceType)
         {
             VmwareFabricArmId = vmwareFabricArmId;
             VmwareSiteId = vmwareSiteId;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ResourceLocation = resourceLocation;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "VMwareToAzStackHCI";
         }
 
         /// <summary> Gets or sets the ARM Id of the source VMware fabric. </summary>

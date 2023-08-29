@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType.ToString());
+            writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }
 
@@ -30,8 +30,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzStackHCI": return AzStackHCIDraModelCustomProperties.DeserializeAzStackHCIDraModelCustomProperties(element);
-                    case "HyperVMigrate": return HyperVMigrateDraModelCustomProperties.DeserializeHyperVMigrateDraModelCustomProperties(element);
                     case "VMware": return VMwareDraModelCustomProperties.DeserializeVMwareDraModelCustomProperties(element);
                 }
             }

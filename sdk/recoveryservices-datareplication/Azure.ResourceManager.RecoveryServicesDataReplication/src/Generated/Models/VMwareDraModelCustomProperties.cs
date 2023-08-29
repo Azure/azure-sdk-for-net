@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             BiosId = biosId;
             MarsAuthenticationIdentity = marsAuthenticationIdentity;
-            InstanceType = FabricType.VMware;
+            InstanceType = "VMware";
         }
 
         /// <summary> Initializes a new instance of VMwareDraModelCustomProperties. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="biosId"> Gets or sets the BIOS Id of the DRA machine. </param>
         /// <param name="marsAuthenticationIdentity"> Identity model. </param>
-        internal VMwareDraModelCustomProperties(FabricType instanceType, string biosId, IdentityModel marsAuthenticationIdentity) : base(instanceType)
+        internal VMwareDraModelCustomProperties(string instanceType, string biosId, IdentityModel marsAuthenticationIdentity) : base(instanceType)
         {
             BiosId = biosId;
             MarsAuthenticationIdentity = marsAuthenticationIdentity;
-            InstanceType = instanceType;
+            InstanceType = instanceType ?? "VMware";
         }
 
         /// <summary> Gets or sets the BIOS Id of the DRA machine. </summary>

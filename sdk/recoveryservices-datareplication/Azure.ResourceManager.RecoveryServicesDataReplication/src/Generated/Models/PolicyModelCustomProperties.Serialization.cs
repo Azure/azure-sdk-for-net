@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType.ToString());
+            writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }
 

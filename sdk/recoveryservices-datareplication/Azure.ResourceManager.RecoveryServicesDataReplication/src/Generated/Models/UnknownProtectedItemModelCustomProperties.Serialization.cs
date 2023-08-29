@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType.ToString());
+            writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }
 
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            ReplicationType instanceType = "Unknown";
+            string instanceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
                 {
-                    instanceType = new ReplicationType(property.Value.GetString());
+                    instanceType = property.Value.GetString();
                     continue;
                 }
             }

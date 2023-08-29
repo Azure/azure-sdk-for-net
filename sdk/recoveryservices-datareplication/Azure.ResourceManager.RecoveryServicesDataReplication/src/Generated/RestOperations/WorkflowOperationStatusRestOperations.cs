@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vaultName, string workflowName, string operationId)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vaultName, string jobName, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath("/providers/Microsoft.DataReplication/replicationVaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/jobs/", false);
-            uri.AppendPath(workflowName, true);
+            uri.AppendPath(jobName, true);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -64,21 +64,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Tracks the results of an asynchronous operation on the job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="workflowName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="workflowName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OperationStatus>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string workflowName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="jobName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="jobName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<OperationStatus>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string jobName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, workflowName, operationId);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, jobName, operationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,21 +97,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Tracks the results of an asynchronous operation on the job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> Vault name. </param>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="workflowName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="workflowName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OperationStatus> Get(string subscriptionId, string resourceGroupName, string vaultName, string workflowName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="jobName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="jobName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<OperationStatus> Get(string subscriptionId, string resourceGroupName, string vaultName, string jobName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, workflowName, operationId);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, jobName, operationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

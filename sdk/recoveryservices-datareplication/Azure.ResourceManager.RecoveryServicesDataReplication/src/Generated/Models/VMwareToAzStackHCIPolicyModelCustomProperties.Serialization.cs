@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
             writer.WriteNumberValue(AppConsistentFrequencyInMinutes);
             writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType.ToString());
+            writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             int recoveryPointHistoryInMinutes = default;
             int crashConsistentFrequencyInMinutes = default;
             int appConsistentFrequencyInMinutes = default;
-            ReplicationType instanceType = default;
+            string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointHistoryInMinutes"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("instanceType"u8))
                 {
-                    instanceType = new ReplicationType(property.Value.GetString());
+                    instanceType = property.Value.GetString();
                     continue;
                 }
             }

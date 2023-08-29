@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("marsAuthenticationIdentity"u8);
             writer.WriteObjectValue(MarsAuthenticationIdentity);
             writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType.ToString());
+            writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             string biosId = default;
             IdentityModel marsAuthenticationIdentity = default;
-            FabricType instanceType = default;
+            string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("biosId"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("instanceType"u8))
                 {
-                    instanceType = new FabricType(property.Value.GetString());
+                    instanceType = property.Value.GetString();
                     continue;
                 }
             }

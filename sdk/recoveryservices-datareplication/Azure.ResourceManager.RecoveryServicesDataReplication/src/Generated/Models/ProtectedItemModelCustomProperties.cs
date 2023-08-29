@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of ProtectedItemModelCustomProperties. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal ProtectedItemModelCustomProperties(ReplicationType instanceType)
+        internal ProtectedItemModelCustomProperties(string instanceType)
         {
             InstanceType = instanceType;
         }
 
         /// <summary> Gets or sets the instance type. </summary>
-        internal ReplicationType InstanceType { get; set; }
+        internal string InstanceType { get; set; }
     }
 }
