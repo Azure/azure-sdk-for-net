@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -18,6 +19,8 @@ namespace Azure.Core
     {
         private static readonly byte[] DefaultItemPropertyName = Encoding.UTF8.GetBytes("value");
         private static readonly byte[] DefaultNextLinkPropertyName = Encoding.UTF8.GetBytes("nextLink");
+
+        public delegate T ValueFactory<T>(JsonElement element, ModelSerializerOptions? options = default);
 
         public static AsyncPageable<T> CreateAsyncPageable<T>(Func<int?, HttpMessage>? createFirstPageRequest, Func<int?, string, HttpMessage>? createNextPageRequest, Func<Response, (List<T>? Values, string? NextLink)> responseParser, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string scopeName, RequestContext? requestContext = null) where T : notnull
         {
