@@ -72,7 +72,6 @@ rename-mapping:
   NameAvailability.nameAvailable: IsNameAvailable
   NameAvailability.type: -|resource-type
   NameAvailabilityRequest: CosmosDBForPostgreSqlClusterNameAvailabilityContent
-  ProvisioningState: ClusterProvisioningState
   ServerConfiguration.properties.requiresRestart: IsRestartRequired
 
 prepend-rp-prefix:
@@ -95,6 +94,7 @@ prepend-rp-prefix:
 - ServerConfiguration
 - ServerNameItem
 - ServerConfigurationListResult
+- ProvisioningState
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}

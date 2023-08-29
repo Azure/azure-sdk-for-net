@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="startIPAddress"> The start IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="provisioningState"> Provisioning state of the firewall rule. </param>
-        internal CosmosDBForPostgreSqlFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIPAddress, IPAddress endIPAddress, ClusterProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIPAddress, IPAddress endIPAddress, CosmosDBForPostgreSqlProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> The end IP address of the cluster firewall rule. Must be IPv4 format. </summary>
         public IPAddress EndIPAddress { get; set; }
         /// <summary> Provisioning state of the firewall rule. </summary>
-        public ClusterProvisioningState? ProvisioningState { get; }
+        public CosmosDBForPostgreSqlProvisioningState? ProvisioningState { get; }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<CosmosDBForPostgreSqlConfigurationDataType> dataType = default;
             Optional<string> allowedValues = default;
             Optional<bool> requiresRestart = default;
-            Optional<ClusterProvisioningState> provisioningState = default;
+            Optional<CosmosDBForPostgreSqlProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            provisioningState = new ClusterProvisioningState(property0.Value.GetString());
+                            provisioningState = new CosmosDBForPostgreSqlProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

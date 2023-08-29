@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<SystemData> systemData = default;
             IPAddress startIPAddress = default;
             IPAddress endIPAddress = default;
-            Optional<ClusterProvisioningState> provisioningState = default;
+            Optional<CosmosDBForPostgreSqlProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            provisioningState = new ClusterProvisioningState(property0.Value.GetString());
+                            provisioningState = new CosmosDBForPostgreSqlProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

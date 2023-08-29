@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="isRestartRequired"> If configuration change requires restart. </param>
         /// <param name="provisioningState"> Provisioning state of the configuration. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlServerConfigurationData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlServerConfigurationData CosmosDBForPostgreSqlServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string source = null, string description = null, string defaultValue = null, CosmosDBForPostgreSqlConfigurationDataType? dataType = null, string allowedValues = null, bool? isRestartRequired = null, ClusterProvisioningState? provisioningState = null)
+        public static CosmosDBForPostgreSqlServerConfigurationData CosmosDBForPostgreSqlServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string source = null, string description = null, string defaultValue = null, CosmosDBForPostgreSqlConfigurationDataType? dataType = null, string allowedValues = null, bool? isRestartRequired = null, CosmosDBForPostgreSqlProvisioningState? provisioningState = null)
         {
             return new CosmosDBForPostgreSqlServerConfigurationData(id, name, resourceType, systemData, value, source, description, defaultValue, dataType, allowedValues, isRestartRequired, provisioningState);
         }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="serverRoleGroupConfigurations"> The list of server role group configuration values. </param>
         /// <param name="provisioningState"> Provisioning state of the configuration. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlConfigurationData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlConfigurationData CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, CosmosDBForPostgreSqlConfigurationDataType? dataType = null, string allowedValues = null, bool? isRestartRequired = null, IEnumerable<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations = null, ClusterProvisioningState? provisioningState = null)
+        public static CosmosDBForPostgreSqlConfigurationData CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, CosmosDBForPostgreSqlConfigurationDataType? dataType = null, string allowedValues = null, bool? isRestartRequired = null, IEnumerable<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations = null, CosmosDBForPostgreSqlProvisioningState? provisioningState = null)
         {
             serverRoleGroupConfigurations ??= new List<CosmosDBForPostgreSqlServerRoleGroupConfiguration>();
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="endIPAddress"> The end IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="provisioningState"> Provisioning state of the firewall rule. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlFirewallRuleData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlFirewallRuleData CosmosDBForPostgreSqlFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null, ClusterProvisioningState? provisioningState = null)
+        public static CosmosDBForPostgreSqlFirewallRuleData CosmosDBForPostgreSqlFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null, CosmosDBForPostgreSqlProvisioningState? provisioningState = null)
         {
             return new CosmosDBForPostgreSqlFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress, provisioningState);
         }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="password"> The password of the cluster role. </param>
         /// <param name="provisioningState"> Provisioning state of the role. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlRoleData CosmosDBForPostgreSqlRoleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string password = null, ClusterProvisioningState? provisioningState = null)
+        public static CosmosDBForPostgreSqlRoleData CosmosDBForPostgreSqlRoleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string password = null, CosmosDBForPostgreSqlProvisioningState? provisioningState = null)
         {
             return new CosmosDBForPostgreSqlRoleData(id, name, resourceType, systemData, password, provisioningState);
         }
