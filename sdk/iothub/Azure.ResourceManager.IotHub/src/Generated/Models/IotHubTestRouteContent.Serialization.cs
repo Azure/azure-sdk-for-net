@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubTestRouteContent : IUtf8JsonSerializable
+    public partial class IotHubTestRouteContent : IUtf8JsonSerializable, IModelJsonSerializable<IotHubTestRouteContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotHubTestRouteContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotHubTestRouteContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Message))
             {
@@ -27,7 +35,109 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("twin"u8);
                 writer.WriteObjectValue(Twin);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static IotHubTestRouteContent DeserializeIotHubTestRouteContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<RoutingMessage> message = default;
+            RoutingRuleProperties route = default;
+            Optional<RoutingTwin> twin = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("message"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    message = RoutingMessage.DeserializeRoutingMessage(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("route"u8))
+                {
+                    route = RoutingRuleProperties.DeserializeRoutingRuleProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("twin"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    twin = RoutingTwin.DeserializeRoutingTwin(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new IotHubTestRouteContent(message.Value, route, twin.Value, rawData);
+        }
+
+        IotHubTestRouteContent IModelJsonSerializable<IotHubTestRouteContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubTestRouteContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotHubTestRouteContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotHubTestRouteContent IModelSerializable<IotHubTestRouteContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotHubTestRouteContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IotHubTestRouteContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IotHubTestRouteContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotHubTestRouteContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

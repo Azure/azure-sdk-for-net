@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Object reference to a Kubernetes object on a cluster. </summary>
     public partial class KubernetesObjectReference
     {
-        /// <summary> Initializes a new instance of KubernetesObjectReference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesObjectReference"/>. </summary>
         internal KubernetesObjectReference()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesObjectReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesObjectReference"/>. </summary>
         /// <param name="name"> Name of the object. </param>
         /// <param name="namespace"> Namespace of the object. </param>
-        internal KubernetesObjectReference(string name, string @namespace)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesObjectReference(string name, string @namespace, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Namespace = @namespace;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the object. </summary>

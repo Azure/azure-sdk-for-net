@@ -5,15 +5,143 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class BinaryHardening
+    public partial class BinaryHardening : IUtf8JsonSerializable, IModelJsonSerializable<BinaryHardening>
     {
-        internal static BinaryHardening DeserializeBinaryHardening(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BinaryHardening>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BinaryHardening>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(BinaryHardeningId))
+            {
+                if (BinaryHardeningId != null)
+                {
+                    writer.WritePropertyName("binaryHardeningId"u8);
+                    writer.WriteStringValue(BinaryHardeningId);
+                }
+                else
+                {
+                    writer.WriteNull("binaryHardeningId");
+                }
+            }
+            if (Optional.IsDefined(Architecture))
+            {
+                if (Architecture != null)
+                {
+                    writer.WritePropertyName("architecture"u8);
+                    writer.WriteStringValue(Architecture);
+                }
+                else
+                {
+                    writer.WriteNull("architecture");
+                }
+            }
+            if (Optional.IsDefined(Path))
+            {
+                if (Path != null)
+                {
+                    writer.WritePropertyName("path"u8);
+                    writer.WriteStringValue(Path);
+                }
+                else
+                {
+                    writer.WriteNull("path");
+                }
+            }
+            if (Optional.IsDefined(Class))
+            {
+                if (Class != null)
+                {
+                    writer.WritePropertyName("class"u8);
+                    writer.WriteStringValue(Class);
+                }
+                else
+                {
+                    writer.WriteNull("class");
+                }
+            }
+            if (Optional.IsDefined(Runpath))
+            {
+                if (Runpath != null)
+                {
+                    writer.WritePropertyName("runpath"u8);
+                    writer.WriteStringValue(Runpath);
+                }
+                else
+                {
+                    writer.WriteNull("runpath");
+                }
+            }
+            if (Optional.IsDefined(Rpath))
+            {
+                if (Rpath != null)
+                {
+                    writer.WritePropertyName("rpath"u8);
+                    writer.WriteStringValue(Rpath);
+                }
+                else
+                {
+                    writer.WriteNull("rpath");
+                }
+            }
+            writer.WritePropertyName("features"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Nx))
+            {
+                writer.WritePropertyName("nx"u8);
+                writer.WriteStringValue(Nx.Value.ToString());
+            }
+            if (Optional.IsDefined(Pie))
+            {
+                writer.WritePropertyName("pie"u8);
+                writer.WriteStringValue(Pie.Value.ToString());
+            }
+            if (Optional.IsDefined(Relro))
+            {
+                writer.WritePropertyName("relro"u8);
+                writer.WriteStringValue(Relro.Value.ToString());
+            }
+            if (Optional.IsDefined(Canary))
+            {
+                writer.WritePropertyName("canary"u8);
+                writer.WriteStringValue(Canary.Value.ToString());
+            }
+            if (Optional.IsDefined(Stripped))
+            {
+                writer.WritePropertyName("stripped"u8);
+                writer.WriteStringValue(Stripped.Value.ToString());
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BinaryHardening DeserializeBinaryHardening(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +157,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<RelroFlag> relro = default;
             Optional<CanaryFlag> canary = default;
             Optional<StrippedFlag> stripped = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("binaryHardeningId"u8))
@@ -148,8 +277,57 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BinaryHardening(binaryHardeningId.Value, architecture.Value, path.Value, @class.Value, runpath.Value, rpath.Value, Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped));
+            return new BinaryHardening(binaryHardeningId.Value, architecture.Value, path.Value, @class.Value, runpath.Value, rpath.Value, Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped), rawData);
+        }
+
+        BinaryHardening IModelJsonSerializable<BinaryHardening>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBinaryHardening(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BinaryHardening>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BinaryHardening IModelSerializable<BinaryHardening>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBinaryHardening(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BinaryHardening model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BinaryHardening(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBinaryHardening(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

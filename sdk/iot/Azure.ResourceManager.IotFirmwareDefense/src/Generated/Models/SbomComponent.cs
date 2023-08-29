@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Component of a firmware. </summary>
     public partial class SbomComponent
     {
-        /// <summary> Initializes a new instance of SbomComponent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SbomComponent"/>. </summary>
         internal SbomComponent()
         {
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SbomComponent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SbomComponent"/>. </summary>
         /// <param name="componentId"> ID for the component. </param>
         /// <param name="componentName"> Name for the component. </param>
         /// <param name="version"> Version for the component. </param>
@@ -28,7 +30,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="releaseOn"> Release date for the component. </param>
         /// <param name="paths"> Paths of the component. </param>
         /// <param name="isUpdateAvailable"> Flag if new update is available for the component. </param>
-        internal SbomComponent(string componentId, string componentName, string version, string license, DateTimeOffset? releaseOn, IReadOnlyList<string> paths, IsUpdateAvailable? isUpdateAvailable)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SbomComponent(string componentId, string componentName, string version, string license, DateTimeOffset? releaseOn, IReadOnlyList<string> paths, IsUpdateAvailable? isUpdateAvailable, Dictionary<string, BinaryData> rawData)
         {
             ComponentId = componentId;
             ComponentName = componentName;
@@ -37,6 +40,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ReleaseOn = releaseOn;
             Paths = paths;
             IsUpdateAvailable = isUpdateAvailable;
+            _rawData = rawData;
         }
 
         /// <summary> ID for the component. </summary>

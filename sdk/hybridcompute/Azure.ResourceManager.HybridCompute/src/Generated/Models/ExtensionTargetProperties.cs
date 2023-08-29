@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the Machine Extension Target Version Properties. </summary>
     public partial class ExtensionTargetProperties
     {
-        /// <summary> Initializes a new instance of ExtensionTargetProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtensionTargetProperties"/>. </summary>
         public ExtensionTargetProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtensionTargetProperties"/>. </summary>
+        /// <param name="targetVersion"> Properties for the specified Extension to Upgrade. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtensionTargetProperties(string targetVersion, Dictionary<string, BinaryData> rawData)
+        {
+            TargetVersion = targetVersion;
+            _rawData = rawData;
         }
 
         /// <summary> Properties for the specified Extension to Upgrade. </summary>

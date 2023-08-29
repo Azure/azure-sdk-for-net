@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of EnvironmentContainer entities. </summary>
     internal partial class EnvironmentContainerResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of EnvironmentContainerResourceArmPaginatedResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EnvironmentContainerResourceArmPaginatedResult"/>. </summary>
         internal EnvironmentContainerResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningEnvironmentContainerData>();
         }
 
-        /// <summary> Initializes a new instance of EnvironmentContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentContainerResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of EnvironmentContainer objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type EnvironmentContainer. </param>
-        internal EnvironmentContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningEnvironmentContainerData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EnvironmentContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningEnvironmentContainerData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link to the next page of EnvironmentContainer objects. If null, there are no additional pages. </summary>

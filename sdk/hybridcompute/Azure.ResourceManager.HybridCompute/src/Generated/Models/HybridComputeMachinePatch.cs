@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -12,9 +14,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes a hybrid machine Update. </summary>
     public partial class HybridComputeMachinePatch : HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of HybridComputeMachinePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachinePatch"/>. </summary>
         public HybridComputeMachinePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachinePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="properties"> Hybrid Compute Machine properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeMachinePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, MachineUpdateProperties properties, Dictionary<string, BinaryData> rawData) : base(tags, rawData)
+        {
+            Identity = identity;
+            Properties = properties;
         }
 
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>

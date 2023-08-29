@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageObjectDetection : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of ImageObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageObjectDetection"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> or <paramref name="limitSettings"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.ImageObjectDetection;
         }
 
-        /// <summary> Initializes a new instance of ImageObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageObjectDetection"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </param>
-        internal ImageObjectDetection(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ObjectDetectionPrimaryMetric? primaryMetric, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageObjectDetection(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ObjectDetectionPrimaryMetric? primaryMetric, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize, Dictionary<string, BinaryData> rawData) : base(logVerbosity, targetColumnName, taskType, trainingData, rawData)
         {
             PrimaryMetric = primaryMetric;
             ModelSettings = modelSettings;
@@ -60,6 +61,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ValidationData = validationData;
             ValidationDataSize = validationDataSize;
             TaskType = taskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImageObjectDetection"/> for deserialization. </summary>
+        internal ImageObjectDetection()
+        {
         }
 
         /// <summary> Primary metric to optimize for this task. </summary>

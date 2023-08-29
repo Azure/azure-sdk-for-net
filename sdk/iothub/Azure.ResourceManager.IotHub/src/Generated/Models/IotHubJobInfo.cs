@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The properties of the Job Response object. </summary>
     public partial class IotHubJobInfo
     {
-        /// <summary> Initializes a new instance of IotHubJobInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubJobInfo"/>. </summary>
         internal IotHubJobInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubJobInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubJobInfo"/>. </summary>
         /// <param name="jobId"> The job identifier. </param>
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="endOn"> The time the job stopped processing. </param>
@@ -26,7 +29,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="failureReason"> If status == failed, this string containing the reason for the failure. </param>
         /// <param name="statusMessage"> The status message for the job. </param>
         /// <param name="parentJobId"> The job identifier of the parent job, if any. </param>
-        internal IotHubJobInfo(string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, IotHubJobType? jobType, IotHubJobStatus? status, string failureReason, string statusMessage, string parentJobId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubJobInfo(string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, IotHubJobType? jobType, IotHubJobStatus? status, string failureReason, string statusMessage, string parentJobId, Dictionary<string, BinaryData> rawData)
         {
             JobId = jobId;
             StartOn = startOn;
@@ -36,6 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
             FailureReason = failureReason;
             StatusMessage = statusMessage;
             ParentJobId = parentJobId;
+            _rawData = rawData;
         }
 
         /// <summary> The job identifier. </summary>

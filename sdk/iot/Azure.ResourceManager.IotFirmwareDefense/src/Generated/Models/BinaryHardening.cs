@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Binary hardening of a firmware. </summary>
     public partial class BinaryHardening
     {
-        /// <summary> Initializes a new instance of BinaryHardening. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BinaryHardening"/>. </summary>
         internal BinaryHardening()
         {
         }
 
-        /// <summary> Initializes a new instance of BinaryHardening. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryHardening"/>. </summary>
         /// <param name="binaryHardeningId"> ID for the binary hardening result. </param>
         /// <param name="architecture"> The architecture of the uploaded firmware. </param>
         /// <param name="path"> path for binary hardening. </param>
@@ -27,7 +32,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="relro"> RELRO flag. </param>
         /// <param name="canary"> Canary flag. </param>
         /// <param name="stripped"> Stripped flag. </param>
-        internal BinaryHardening(string binaryHardeningId, string architecture, string path, string @class, string runpath, string rpath, NxFlag? nx, PieFlag? pie, RelroFlag? relro, CanaryFlag? canary, StrippedFlag? stripped)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BinaryHardening(string binaryHardeningId, string architecture, string path, string @class, string runpath, string rpath, NxFlag? nx, PieFlag? pie, RelroFlag? relro, CanaryFlag? canary, StrippedFlag? stripped, Dictionary<string, BinaryData> rawData)
         {
             BinaryHardeningId = binaryHardeningId;
             Architecture = architecture;
@@ -40,6 +46,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Relro = relro;
             Canary = canary;
             Stripped = stripped;
+            _rawData = rawData;
         }
 
         /// <summary> ID for the binary hardening result. </summary>

@@ -73,8 +73,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, trialMatcherData.ToRequestContent(), context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
+            Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, trialMatcherData, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, response => (TrialMatcherResult)response, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
         /// <summary> Create Trial Matcher job. </summary>
@@ -89,8 +89,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = MatchTrials(waitUntil, trialMatcherData.ToRequestContent(), context);
-            return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
+            Operation<BinaryData> response = MatchTrials(waitUntil, trialMatcherData, context);
+            return ProtocolOperationHelpers.Convert(response, response => (TrialMatcherResult)response, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
         /// <summary>

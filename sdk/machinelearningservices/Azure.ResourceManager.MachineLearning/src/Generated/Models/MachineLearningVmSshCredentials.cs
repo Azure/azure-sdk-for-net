@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Admin credentials for virtual machine. </summary>
     public partial class MachineLearningVmSshCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningVmSshCredentials. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVmSshCredentials"/>. </summary>
         public MachineLearningVmSshCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningVmSshCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVmSshCredentials"/>. </summary>
         /// <param name="username"> Username of admin account. </param>
         /// <param name="password"> Password of admin account. </param>
         /// <param name="publicKeyData"> Public key data. </param>
         /// <param name="privateKeyData"> Private key data. </param>
-        internal MachineLearningVmSshCredentials(string username, string password, string publicKeyData, string privateKeyData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningVmSshCredentials(string username, string password, string publicKeyData, string privateKeyData, Dictionary<string, BinaryData> rawData)
         {
             Username = username;
             Password = password;
             PublicKeyData = publicKeyData;
             PrivateKeyData = privateKeyData;
+            _rawData = rawData;
         }
 
         /// <summary> Username of admin account. </summary>

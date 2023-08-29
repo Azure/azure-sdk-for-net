@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralAppAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotCentralAppAppsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralAppAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotCentralAppAppsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

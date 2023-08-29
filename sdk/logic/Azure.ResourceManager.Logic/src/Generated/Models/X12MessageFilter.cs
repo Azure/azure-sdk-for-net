@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The X12 message filter for odata query. </summary>
     public partial class X12MessageFilter
     {
-        /// <summary> Initializes a new instance of X12MessageFilter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12MessageFilter"/>. </summary>
         /// <param name="messageFilterType"> The message filter type. </param>
         public X12MessageFilter(MessageFilterType messageFilterType)
         {
             MessageFilterType = messageFilterType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12MessageFilter"/>. </summary>
+        /// <param name="messageFilterType"> The message filter type. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12MessageFilter(MessageFilterType messageFilterType, Dictionary<string, BinaryData> rawData)
+        {
+            MessageFilterType = messageFilterType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12MessageFilter"/> for deserialization. </summary>
+        internal X12MessageFilter()
+        {
         }
 
         /// <summary> The message filter type. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Internal Networks. </summary>
     internal partial class InternalNetworksList
     {
-        /// <summary> Initializes a new instance of InternalNetworksList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InternalNetworksList"/>. </summary>
         internal InternalNetworksList()
         {
             Value = new ChangeTrackingList<NetworkFabricInternalNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of InternalNetworksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworksList"/>. </summary>
         /// <param name="value"> List of Internal Network resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal InternalNetworksList(IReadOnlyList<NetworkFabricInternalNetworkData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InternalNetworksList(IReadOnlyList<NetworkFabricInternalNetworkData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of Internal Network resources. </summary>

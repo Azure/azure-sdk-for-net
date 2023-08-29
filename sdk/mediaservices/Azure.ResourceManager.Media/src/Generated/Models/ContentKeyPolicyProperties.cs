@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The properties of the Content Key Policy. </summary>
     public partial class ContentKeyPolicyProperties
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyProperties"/>. </summary>
         /// <param name="options"> The Key Policy options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         internal ContentKeyPolicyProperties(IEnumerable<ContentKeyPolicyOption> options)
@@ -25,19 +27,26 @@ namespace Azure.ResourceManager.Media.Models
             Options = options.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyProperties"/>. </summary>
         /// <param name="policyId"> The legacy Policy ID. </param>
         /// <param name="createdOn"> The creation date of the Policy. </param>
         /// <param name="lastModifiedOn"> The last modified date of the Policy. </param>
         /// <param name="description"> A description for the Policy. </param>
         /// <param name="options"> The Key Policy options. </param>
-        internal ContentKeyPolicyProperties(Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IReadOnlyList<ContentKeyPolicyOption> options)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyProperties(Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IReadOnlyList<ContentKeyPolicyOption> options, Dictionary<string, BinaryData> rawData)
         {
             PolicyId = policyId;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
             Options = options;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyProperties"/> for deserialization. </summary>
+        internal ContentKeyPolicyProperties()
+        {
         }
 
         /// <summary> The legacy Policy ID. </summary>

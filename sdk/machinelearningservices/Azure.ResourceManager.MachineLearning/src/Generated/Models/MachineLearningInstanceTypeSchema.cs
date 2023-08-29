@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Instance type schema. </summary>
     public partial class MachineLearningInstanceTypeSchema
     {
-        /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchema. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningInstanceTypeSchema"/>. </summary>
         public MachineLearningInstanceTypeSchema()
         {
             NodeSelector = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningInstanceTypeSchema"/>. </summary>
         /// <param name="nodeSelector"> Node Selector. </param>
         /// <param name="resources"> Resource requests/limits for this instance type. </param>
-        internal MachineLearningInstanceTypeSchema(IDictionary<string, string> nodeSelector, MachineLearningInstanceTypeSchemaResources resources)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningInstanceTypeSchema(IDictionary<string, string> nodeSelector, MachineLearningInstanceTypeSchemaResources resources, Dictionary<string, BinaryData> rawData)
         {
             NodeSelector = nodeSelector;
             Resources = resources;
+            _rawData = rawData;
         }
 
         /// <summary> Node Selector. </summary>

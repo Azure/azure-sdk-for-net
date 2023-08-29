@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> Lab services virtual machine image for updates. </summary>
     public partial class LabVirtualMachineImagePatch
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineImagePatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImagePatch"/>. </summary>
         public LabVirtualMachineImagePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImagePatch"/>. </summary>
+        /// <param name="enabledState"> Is the image enabled. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVirtualMachineImagePatch(LabServicesEnableState? enabledState, Dictionary<string, BinaryData> rawData)
+        {
+            EnabledState = enabledState;
+            _rawData = rawData;
         }
 
         /// <summary> Is the image enabled. </summary>

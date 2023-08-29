@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Switch configuration entries require a description to discern between configuration groups. </summary>
     public partial class AnnotationResourceProperties
     {
-        /// <summary> Initializes a new instance of AnnotationResourceProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnnotationResourceProperties"/>. </summary>
         public AnnotationResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AnnotationResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnnotationResourceProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
-        internal AnnotationResourceProperties(string annotation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnnotationResourceProperties(string annotation, Dictionary<string, BinaryData> rawData)
         {
             Annotation = annotation;
+            _rawData = rawData;
         }
 
         /// <summary> Switch configuration description. </summary>

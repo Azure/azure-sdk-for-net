@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> user request details. </summary>
     public partial class PlanRequesterInfo
     {
-        /// <summary> Initializes a new instance of PlanRequesterInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlanRequesterInfo"/>. </summary>
         internal PlanRequesterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PlanRequesterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlanRequesterInfo"/>. </summary>
         /// <param name="user"> Gets user id. </param>
         /// <param name="date"> Gets request date. </param>
         /// <param name="justification"> Gets justification. </param>
         /// <param name="subscriptionId"> Gets the subscription id that the user is requesting to add the plan to. </param>
         /// <param name="subscriptionName"> Gets the subscription name that the user is requesting to add the plan to. </param>
-        internal PlanRequesterInfo(string user, string date, string justification, string subscriptionId, string subscriptionName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlanRequesterInfo(string user, string date, string justification, string subscriptionId, string subscriptionName, Dictionary<string, BinaryData> rawData)
         {
             User = user;
             Date = date;
             Justification = justification;
             SubscriptionId = subscriptionId;
             SubscriptionName = subscriptionName;
+            _rawData = rawData;
         }
 
         /// <summary> Gets user id. </summary>

@@ -5,15 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubSkuDescription
+    public partial class IotHubSkuDescription : IUtf8JsonSerializable, IModelJsonSerializable<IotHubSkuDescription>
     {
-        internal static IotHubSkuDescription DeserializeIotHubSkuDescription(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotHubSkuDescription>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotHubSkuDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("sku"u8);
+            writer.WriteObjectValue(Sku);
+            writer.WritePropertyName("capacity"u8);
+            writer.WriteObjectValue(Capacity);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IotHubSkuDescription DeserializeIotHubSkuDescription(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +53,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<ResourceType> resourceType = default;
             IotHubSkuInfo sku = default;
             IotHubCapacity capacity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -42,8 +75,57 @@ namespace Azure.ResourceManager.IotHub.Models
                     capacity = IotHubCapacity.DeserializeIotHubCapacity(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotHubSkuDescription(Optional.ToNullable(resourceType), sku, capacity);
+            return new IotHubSkuDescription(Optional.ToNullable(resourceType), sku, capacity, rawData);
+        }
+
+        IotHubSkuDescription IModelJsonSerializable<IotHubSkuDescription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubSkuDescription(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotHubSkuDescription>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotHubSkuDescription IModelSerializable<IotHubSkuDescription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotHubSkuDescription(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IotHubSkuDescription model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IotHubSkuDescription(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotHubSkuDescription(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

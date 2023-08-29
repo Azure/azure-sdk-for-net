@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,25 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The details to get the request plans statuses. </summary>
     public partial class QueryApprovalRequestContent
     {
-        /// <summary> Initializes a new instance of QueryApprovalRequestContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryApprovalRequestContent"/>. </summary>
         public QueryApprovalRequestContent()
         {
             PlanIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryApprovalRequestContent"/>. </summary>
+        /// <param name="publisherId"> The offer's publisher id. </param>
+        /// <param name="planIds"> Current plans list. </param>
+        /// <param name="subscriptionId"> Gets or sets the subscription id. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryApprovalRequestContent(string publisherId, IList<string> planIds, string subscriptionId, Dictionary<string, BinaryData> rawData)
+        {
+            PublisherId = publisherId;
+            PlanIds = planIds;
+            SubscriptionId = subscriptionId;
+            _rawData = rawData;
         }
 
         /// <summary> The offer's publisher id. </summary>

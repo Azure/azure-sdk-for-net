@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Route Target Configuration. </summary>
     public partial class RouteTargetInformation
     {
-        /// <summary> Initializes a new instance of RouteTargetInformation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteTargetInformation"/>. </summary>
         public RouteTargetInformation()
         {
             ImportIPv4RouteTargets = new ChangeTrackingList<string>();
@@ -22,17 +25,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ExportIPv6RouteTargets = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RouteTargetInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTargetInformation"/>. </summary>
         /// <param name="importIPv4RouteTargets"> Route Targets to be applied for incoming routes into CE. </param>
         /// <param name="importIPv6RouteTargets"> Route Targets to be applied for incoming routes from CE. </param>
         /// <param name="exportIPv4RouteTargets"> Route Targets to be applied for outgoing routes into CE. </param>
         /// <param name="exportIPv6RouteTargets"> Route Targets to be applied for outgoing routes from CE. </param>
-        internal RouteTargetInformation(IList<string> importIPv4RouteTargets, IList<string> importIPv6RouteTargets, IList<string> exportIPv4RouteTargets, IList<string> exportIPv6RouteTargets)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteTargetInformation(IList<string> importIPv4RouteTargets, IList<string> importIPv6RouteTargets, IList<string> exportIPv4RouteTargets, IList<string> exportIPv6RouteTargets, Dictionary<string, BinaryData> rawData)
         {
             ImportIPv4RouteTargets = importIPv4RouteTargets;
             ImportIPv6RouteTargets = importIPv6RouteTargets;
             ExportIPv4RouteTargets = exportIPv4RouteTargets;
             ExportIPv6RouteTargets = exportIPv6RouteTargets;
+            _rawData = rawData;
         }
 
         /// <summary> Route Targets to be applied for incoming routes into CE. </summary>

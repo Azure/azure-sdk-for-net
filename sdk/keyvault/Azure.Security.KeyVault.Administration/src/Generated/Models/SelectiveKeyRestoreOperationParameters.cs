@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
@@ -13,7 +14,9 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> The SelectiveKeyRestoreOperationParameters. </summary>
     internal partial class SelectiveKeyRestoreOperationParameters
     {
-        /// <summary> Initializes a new instance of SelectiveKeyRestoreOperationParameters. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperationParameters"/>. </summary>
         /// <param name="sasTokenParameters"></param>
         /// <param name="folder"> The Folder name of the blob where the previous successful full backup was stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasTokenParameters"/> or <paramref name="folder"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.Security.KeyVault.Administration.Models
 
             SasTokenParameters = sasTokenParameters;
             Folder = folder;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperationParameters"/>. </summary>
+        /// <param name="sasTokenParameters"></param>
+        /// <param name="folder"> The Folder name of the blob where the previous successful full backup was stored. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelectiveKeyRestoreOperationParameters(SASTokenParameter sasTokenParameters, string folder, Dictionary<string, BinaryData> rawData)
+        {
+            SasTokenParameters = sasTokenParameters;
+            Folder = folder;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperationParameters"/> for deserialization. </summary>
+        internal SelectiveKeyRestoreOperationParameters()
+        {
         }
 
         /// <summary> Gets the sas token parameters. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
@@ -12,19 +14,22 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Image reference information. Used in the virtual machine profile. </summary>
     public partial class LabVirtualMachineImageReference
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineImageReference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageReference"/>. </summary>
         public LabVirtualMachineImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageReference"/>. </summary>
         /// <param name="id"> Image resource ID. </param>
         /// <param name="offer"> The image offer if applicable. </param>
         /// <param name="publisher"> The image publisher. </param>
         /// <param name="sku"> The image SKU. </param>
         /// <param name="version"> The image version specified on creation. </param>
         /// <param name="exactVersion"> The actual version of the image after use. </param>
-        internal LabVirtualMachineImageReference(ResourceIdentifier id, string offer, string publisher, string sku, string version, string exactVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVirtualMachineImageReference(ResourceIdentifier id, string offer, string publisher, string sku, string version, string exactVersion, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Offer = offer;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Sku = sku;
             Version = version;
             ExactVersion = exactVersion;
+            _rawData = rawData;
         }
 
         /// <summary> Image resource ID. </summary>

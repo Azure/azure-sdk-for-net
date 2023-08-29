@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Isolation Domain Properties. </summary>
     public partial class IsolationDomainProperties
     {
-        /// <summary> Initializes a new instance of IsolationDomainProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IsolationDomainProperties"/>. </summary>
         public IsolationDomainProperties()
         {
             NeighborGroupIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of IsolationDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IsolationDomainProperties"/>. </summary>
         /// <param name="encapsulation"> Type of encapsulation. </param>
         /// <param name="neighborGroupIds"> List of Neighbor Group IDs. </param>
-        internal IsolationDomainProperties(IsolationDomainEncapsulationType? encapsulation, IList<ResourceIdentifier> neighborGroupIds)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IsolationDomainProperties(IsolationDomainEncapsulationType? encapsulation, IList<ResourceIdentifier> neighborGroupIds, Dictionary<string, BinaryData> rawData)
         {
             Encapsulation = encapsulation;
             NeighborGroupIds = neighborGroupIds;
+            _rawData = rawData;
         }
 
         /// <summary> Type of encapsulation. </summary>

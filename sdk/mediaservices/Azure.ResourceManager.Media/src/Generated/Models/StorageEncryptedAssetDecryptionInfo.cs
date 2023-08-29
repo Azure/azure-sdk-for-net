@@ -14,19 +14,23 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Data needed to decrypt asset files encrypted with legacy storage encryption. </summary>
     public partial class StorageEncryptedAssetDecryptionInfo
     {
-        /// <summary> Initializes a new instance of StorageEncryptedAssetDecryptionInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageEncryptedAssetDecryptionInfo"/>. </summary>
         internal StorageEncryptedAssetDecryptionInfo()
         {
             AssetFileEncryptionMetadata = new ChangeTrackingList<MediaAssetFileEncryptionMetadata>();
         }
 
-        /// <summary> Initializes a new instance of StorageEncryptedAssetDecryptionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageEncryptedAssetDecryptionInfo"/>. </summary>
         /// <param name="key"> The Asset File storage encryption key. </param>
         /// <param name="assetFileEncryptionMetadata"> Asset File encryption metadata. </param>
-        internal StorageEncryptedAssetDecryptionInfo(byte[] key, IReadOnlyList<MediaAssetFileEncryptionMetadata> assetFileEncryptionMetadata)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageEncryptedAssetDecryptionInfo(byte[] key, IReadOnlyList<MediaAssetFileEncryptionMetadata> assetFileEncryptionMetadata, Dictionary<string, BinaryData> rawData)
         {
             Key = key;
             AssetFileEncryptionMetadata = assetFileEncryptionMetadata;
+            _rawData = rawData;
         }
 
         /// <summary> The Asset File storage encryption key. </summary>

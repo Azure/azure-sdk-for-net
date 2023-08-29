@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Private plans subscriptions. </summary>
     public partial class StopSellSubscriptions
     {
-        /// <summary> Initializes a new instance of StopSellSubscriptions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StopSellSubscriptions"/>. </summary>
         public StopSellSubscriptions()
         {
             Subscriptions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StopSellSubscriptions"/>. </summary>
+        /// <param name="subscriptions"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StopSellSubscriptions(IList<string> subscriptions, Dictionary<string, BinaryData> rawData)
+        {
+            Subscriptions = subscriptions;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the subscriptions. </summary>

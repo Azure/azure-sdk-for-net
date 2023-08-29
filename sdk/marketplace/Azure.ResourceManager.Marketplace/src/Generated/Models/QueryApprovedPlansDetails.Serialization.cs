@@ -5,16 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class QueryApprovedPlansDetails
+    public partial class QueryApprovedPlansDetails : IUtf8JsonSerializable, IModelJsonSerializable<QueryApprovedPlansDetails>
     {
-        internal static QueryApprovedPlansDetails DeserializeQueryApprovedPlansDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QueryApprovedPlansDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QueryApprovedPlansDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PlanId))
+            {
+                writer.WritePropertyName("planId"u8);
+                writer.WriteStringValue(PlanId);
+            }
+            if (Optional.IsCollectionDefined(SubscriptionIds))
+            {
+                writer.WritePropertyName("subscriptionIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubscriptionIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AllSubscriptions))
+            {
+                writer.WritePropertyName("allSubscriptions"u8);
+                writer.WriteBooleanValue(AllSubscriptions.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static QueryApprovedPlansDetails DeserializeQueryApprovedPlansDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +69,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<string> planId = default;
             Optional<IReadOnlyList<string>> subscriptionIds = default;
             Optional<bool> allSubscriptions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("planId"u8))
@@ -52,8 +100,57 @@ namespace Azure.ResourceManager.Marketplace.Models
                     allSubscriptions = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QueryApprovedPlansDetails(planId.Value, Optional.ToList(subscriptionIds), Optional.ToNullable(allSubscriptions));
+            return new QueryApprovedPlansDetails(planId.Value, Optional.ToList(subscriptionIds), Optional.ToNullable(allSubscriptions), rawData);
+        }
+
+        QueryApprovedPlansDetails IModelJsonSerializable<QueryApprovedPlansDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryApprovedPlansDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QueryApprovedPlansDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QueryApprovedPlansDetails IModelSerializable<QueryApprovedPlansDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQueryApprovedPlansDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(QueryApprovedPlansDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator QueryApprovedPlansDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQueryApprovedPlansDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

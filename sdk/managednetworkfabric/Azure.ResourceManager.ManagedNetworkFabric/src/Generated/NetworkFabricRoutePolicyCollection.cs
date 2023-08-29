@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricRoutePolicyRoutePoliciesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricRoutePolicyRoutePoliciesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricRoutePolicyResource(Client, NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(e)), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, "NetworkFabricRoutePolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricRoutePolicyResource(Client, NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(e)), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, "NetworkFabricRoutePolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricRoutePolicyRoutePoliciesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricRoutePolicyRoutePoliciesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricRoutePolicyResource(Client, NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(e)), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, "NetworkFabricRoutePolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricRoutePolicyResource(Client, NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(e)), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, "NetworkFabricRoutePolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

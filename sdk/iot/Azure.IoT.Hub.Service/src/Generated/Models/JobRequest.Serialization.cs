@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class JobRequest : IUtf8JsonSerializable
+    public partial class JobRequest : IUtf8JsonSerializable, IModelJsonSerializable<JobRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(JobId))
             {
@@ -50,7 +58,145 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WritePropertyName("maxExecutionTimeInSeconds"u8);
                 writer.WriteNumberValue(MaxExecutionTimeInSeconds.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static JobRequest DeserializeJobRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> jobId = default;
+            Optional<JobRequestType> type = default;
+            Optional<CloudToDeviceMethodRequest> cloudToDeviceMethod = default;
+            Optional<TwinData> updateTwin = default;
+            Optional<string> queryCondition = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<long> maxExecutionTimeInSeconds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("jobId"u8))
+                {
+                    jobId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new JobRequestType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("cloudToDeviceMethod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudToDeviceMethod = CloudToDeviceMethodRequest.DeserializeCloudToDeviceMethodRequest(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("updateTwin"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updateTwin = TwinData.DeserializeTwinData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("queryCondition"u8))
+                {
+                    queryCondition = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("startTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("maxExecutionTimeInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxExecutionTimeInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new JobRequest(jobId.Value, Optional.ToNullable(type), cloudToDeviceMethod.Value, updateTwin.Value, queryCondition.Value, Optional.ToNullable(startTime), Optional.ToNullable(maxExecutionTimeInSeconds), rawData);
+        }
+
+        JobRequest IModelJsonSerializable<JobRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobRequest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobRequest IModelSerializable<JobRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobRequest(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(JobRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator JobRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

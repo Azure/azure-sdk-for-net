@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class to specify DRM configurations of CommonEncryptionCenc scheme in Streaming Policy. </summary>
     public partial class CencDrmConfiguration
     {
-        /// <summary> Initializes a new instance of CencDrmConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CencDrmConfiguration"/>. </summary>
         public CencDrmConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of CencDrmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CencDrmConfiguration"/>. </summary>
         /// <param name="playReady"> PlayReady configurations. </param>
         /// <param name="widevine"> Widevine configurations. </param>
-        internal CencDrmConfiguration(StreamingPolicyPlayReadyConfiguration playReady, StreamingPolicyWidevineConfiguration widevine)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CencDrmConfiguration(StreamingPolicyPlayReadyConfiguration playReady, StreamingPolicyWidevineConfiguration widevine, Dictionary<string, BinaryData> rawData)
         {
             PlayReady = playReady;
             Widevine = widevine;
+            _rawData = rawData;
         }
 
         /// <summary> PlayReady configurations. </summary>

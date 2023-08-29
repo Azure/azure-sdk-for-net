@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagementPartner.Models
 {
     /// <summary> this is the management partner operation. </summary>
     public partial class OperationDisplay
     {
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
         internal OperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
         /// <param name="provider"> the is management partner provider. </param>
         /// <param name="resource"> the is management partner resource. </param>
         /// <param name="operation"> the is management partner operation. </param>
         /// <param name="description"> the is management partner operation description. </param>
-        internal OperationDisplay(string provider, string resource, string operation, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationDisplay(string provider, string resource, string operation, string description, Dictionary<string, BinaryData> rawData)
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> the is management partner provider. </summary>

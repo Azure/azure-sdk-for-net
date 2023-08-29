@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Device Patch Parameters defines the patch parameters of the resource. </summary>
     public partial class NetworkDevicePatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkDevicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDevicePatch"/>. </summary>
         public NetworkDevicePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDevicePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="hostName"> The host name of the device. </param>
+        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkDevicePatch(IDictionary<string, string> tags, string annotation, string hostName, string serialNumber, Dictionary<string, BinaryData> rawData) : base(tags, rawData)
+        {
+            Annotation = annotation;
+            HostName = hostName;
+            SerialNumber = serialNumber;
         }
 
         /// <summary> Switch configuration description. </summary>

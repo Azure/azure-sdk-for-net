@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationServiceEnvironmentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public IntegrationServiceEnvironmentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,11 +37,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="properties"> The integration service environment properties. </param>
         /// <param name="sku"> The sku. </param>
         /// <param name="identity"> Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None. </param>
-        internal IntegrationServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationServiceEnvironmentProperties properties, IntegrationServiceEnvironmentSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationServiceEnvironmentProperties properties, IntegrationServiceEnvironmentSku sku, ManagedServiceIdentity identity, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
             Identity = identity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentData"/> for deserialization. </summary>
+        internal IntegrationServiceEnvironmentData()
+        {
         }
 
         /// <summary> The integration service environment properties. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClustersPropertiesWithoutSecrets : IUtf8JsonSerializable
+    public partial class ProvisionedClustersPropertiesWithoutSecrets : IUtf8JsonSerializable, IModelJsonSerializable<ProvisionedClustersPropertiesWithoutSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProvisionedClustersPropertiesWithoutSecrets>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProvisionedClustersPropertiesWithoutSecrets>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AadProfile))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClustersPropertiesWithoutSecrets DeserializeProvisionedClustersPropertiesWithoutSecrets(JsonElement element)
+        internal static ProvisionedClustersPropertiesWithoutSecrets DeserializeProvisionedClustersPropertiesWithoutSecrets(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<AADProfileResponse> aadProfile = default;
             Optional<WindowsProfileResponse> windowsProfile = default;
             Optional<HttpProxyConfigResponse> httpProxyConfig = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aadProfile"u8))
@@ -71,8 +94,57 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     httpProxyConfig = HttpProxyConfigResponse.DeserializeHttpProxyConfigResponse(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProvisionedClustersPropertiesWithoutSecrets(aadProfile.Value, windowsProfile.Value, httpProxyConfig.Value);
+            return new ProvisionedClustersPropertiesWithoutSecrets(aadProfile.Value, windowsProfile.Value, httpProxyConfig.Value, rawData);
+        }
+
+        ProvisionedClustersPropertiesWithoutSecrets IModelJsonSerializable<ProvisionedClustersPropertiesWithoutSecrets>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClustersPropertiesWithoutSecrets(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProvisionedClustersPropertiesWithoutSecrets>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProvisionedClustersPropertiesWithoutSecrets IModelSerializable<ProvisionedClustersPropertiesWithoutSecrets>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProvisionedClustersPropertiesWithoutSecrets(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ProvisionedClustersPropertiesWithoutSecrets model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ProvisionedClustersPropertiesWithoutSecrets(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProvisionedClustersPropertiesWithoutSecrets(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

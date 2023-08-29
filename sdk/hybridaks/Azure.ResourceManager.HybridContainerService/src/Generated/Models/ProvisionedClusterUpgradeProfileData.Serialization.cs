@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridContainerService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    public partial class ProvisionedClusterUpgradeProfileData : IUtf8JsonSerializable
+    public partial class ProvisionedClusterUpgradeProfileData : IUtf8JsonSerializable, IModelJsonSerializable<ProvisionedClusterUpgradeProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProvisionedClusterUpgradeProfileData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProvisionedClusterUpgradeProfileData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.HybridContainerService
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClusterUpgradeProfileData DeserializeProvisionedClusterUpgradeProfileData(JsonElement element)
+        internal static ProvisionedClusterUpgradeProfileData DeserializeProvisionedClusterUpgradeProfileData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +67,7 @@ namespace Azure.ResourceManager.HybridContainerService
             Optional<string> provisioningState = default;
             ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = default;
             IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -104,8 +126,57 @@ namespace Azure.ResourceManager.HybridContainerService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProvisionedClusterUpgradeProfileData(id, name, type, systemData.Value, provisioningState.Value, controlPlaneProfile, agentPoolProfiles);
+            return new ProvisionedClusterUpgradeProfileData(id, name, type, systemData.Value, provisioningState.Value, controlPlaneProfile, agentPoolProfiles, rawData);
+        }
+
+        ProvisionedClusterUpgradeProfileData IModelJsonSerializable<ProvisionedClusterUpgradeProfileData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClusterUpgradeProfileData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProvisionedClusterUpgradeProfileData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProvisionedClusterUpgradeProfileData IModelSerializable<ProvisionedClusterUpgradeProfileData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProvisionedClusterUpgradeProfileData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ProvisionedClusterUpgradeProfileData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ProvisionedClusterUpgradeProfileData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProvisionedClusterUpgradeProfileData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

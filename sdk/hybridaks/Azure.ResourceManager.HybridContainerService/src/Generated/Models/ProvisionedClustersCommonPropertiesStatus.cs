@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> HybridAKSClusterStatus defines the observed state of HybridAKSCluster. </summary>
     public partial class ProvisionedClustersCommonPropertiesStatus
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersCommonPropertiesStatus"/>. </summary>
         internal ProvisionedClustersCommonPropertiesStatus()
         {
             AddonStatus = new ChangeTrackingDictionary<string, AddonStatus>();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersCommonPropertiesStatus"/>. </summary>
         /// <param name="featuresStatus"> Additional features status like Arc Agent Onboarding. </param>
         /// <param name="addonStatus"> AddonStatus - Status of Addons. </param>
         /// <param name="errorMessage"> ErrorMessage - Error messages during creation of cluster. </param>
         /// <param name="provisioningStatus"> Contains Provisioning errors. </param>
-        internal ProvisionedClustersCommonPropertiesStatus(ProvisionedClustersCommonPropertiesStatusFeaturesStatus featuresStatus, IReadOnlyDictionary<string, AddonStatus> addonStatus, string errorMessage, ProvisionedClustersCommonPropertiesStatusProvisioningStatus provisioningStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClustersCommonPropertiesStatus(ProvisionedClustersCommonPropertiesStatusFeaturesStatus featuresStatus, IReadOnlyDictionary<string, AddonStatus> addonStatus, string errorMessage, ProvisionedClustersCommonPropertiesStatusProvisioningStatus provisioningStatus, Dictionary<string, BinaryData> rawData)
         {
             FeaturesStatus = featuresStatus;
             AddonStatus = addonStatus;
             ErrorMessage = errorMessage;
             ProvisioningStatus = provisioningStatus;
+            _rawData = rawData;
         }
 
         /// <summary> Additional features status like Arc Agent Onboarding. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonMultiPolygonData : IUtf8JsonSerializable
+    public partial class GeoJsonMultiPolygonData : IUtf8JsonSerializable, IModelJsonSerializable<GeoJsonMultiPolygonData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GeoJsonMultiPolygonData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GeoJsonMultiPolygonData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
@@ -53,16 +60,31 @@ namespace Azure.Maps.Search.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GeoJsonMultiPolygonData DeserializeGeoJsonMultiPolygonData(JsonElement element)
+        internal static GeoJsonMultiPolygonData DeserializeGeoJsonMultiPolygonData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<IList<IList<IList<double>>>> coordinates = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"u8))
@@ -111,8 +133,57 @@ namespace Azure.Maps.Search.Models
                     coordinates = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GeoJsonMultiPolygonData(coordinates);
+            return new GeoJsonMultiPolygonData(coordinates, rawData);
+        }
+
+        GeoJsonMultiPolygonData IModelJsonSerializable<GeoJsonMultiPolygonData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGeoJsonMultiPolygonData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GeoJsonMultiPolygonData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GeoJsonMultiPolygonData IModelSerializable<GeoJsonMultiPolygonData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGeoJsonMultiPolygonData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GeoJsonMultiPolygonData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GeoJsonMultiPolygonData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGeoJsonMultiPolygonData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

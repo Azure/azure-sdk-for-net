@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Parameters to authenticate using a Managed Identity. </summary>
     internal partial class KubernetesAzureBlobManagedIdentityUpdateContent
     {
-        /// <summary> Initializes a new instance of KubernetesAzureBlobManagedIdentityUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesAzureBlobManagedIdentityUpdateContent"/>. </summary>
         public KubernetesAzureBlobManagedIdentityUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesAzureBlobManagedIdentityUpdateContent"/>. </summary>
+        /// <param name="clientId"> The client Id for authenticating a Managed Identity. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesAzureBlobManagedIdentityUpdateContent(string clientId, Dictionary<string, BinaryData> rawData)
+        {
+            ClientId = clientId;
+            _rawData = rawData;
         }
 
         /// <summary> The client Id for authenticating a Managed Identity. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class of paths for streaming. </summary>
     public partial class StreamingPath
     {
-        /// <summary> Initializes a new instance of StreamingPath. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingPath"/>. </summary>
         /// <param name="streamingProtocol"> Streaming protocol. </param>
         /// <param name="encryptionScheme"> Encryption scheme. </param>
         internal StreamingPath(StreamingPolicyStreamingProtocol streamingProtocol, StreamingPathEncryptionScheme encryptionScheme)
@@ -23,15 +26,22 @@ namespace Azure.ResourceManager.Media.Models
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamingPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPath"/>. </summary>
         /// <param name="streamingProtocol"> Streaming protocol. </param>
         /// <param name="encryptionScheme"> Encryption scheme. </param>
         /// <param name="paths"> Streaming paths for each protocol and encryptionScheme pair. </param>
-        internal StreamingPath(StreamingPolicyStreamingProtocol streamingProtocol, StreamingPathEncryptionScheme encryptionScheme, IReadOnlyList<string> paths)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingPath(StreamingPolicyStreamingProtocol streamingProtocol, StreamingPathEncryptionScheme encryptionScheme, IReadOnlyList<string> paths, Dictionary<string, BinaryData> rawData)
         {
             StreamingProtocol = streamingProtocol;
             EncryptionScheme = encryptionScheme;
             Paths = paths;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamingPath"/> for deserialization. </summary>
+        internal StreamingPath()
+        {
         }
 
         /// <summary> Streaming protocol. </summary>

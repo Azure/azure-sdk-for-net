@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ImportRoutePolicy : IUtf8JsonSerializable
+    public partial class ImportRoutePolicy : IUtf8JsonSerializable, IModelJsonSerializable<ImportRoutePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImportRoutePolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImportRoutePolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ImportIPv4RoutePolicyId))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("importIpv6RoutePolicyId"u8);
                 writer.WriteStringValue(ImportIPv6RoutePolicyId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImportRoutePolicy DeserializeImportRoutePolicy(JsonElement element)
+        internal static ImportRoutePolicy DeserializeImportRoutePolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> importIPv4RoutePolicyId = default;
             Optional<ResourceIdentifier> importIPv6RoutePolicyId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("importIpv4RoutePolicyId"u8))
@@ -56,8 +79,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     importIPv6RoutePolicyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImportRoutePolicy(importIPv4RoutePolicyId.Value, importIPv6RoutePolicyId.Value);
+            return new ImportRoutePolicy(importIPv4RoutePolicyId.Value, importIPv6RoutePolicyId.Value, rawData);
+        }
+
+        ImportRoutePolicy IModelJsonSerializable<ImportRoutePolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImportRoutePolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImportRoutePolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImportRoutePolicy IModelSerializable<ImportRoutePolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImportRoutePolicy(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ImportRoutePolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ImportRoutePolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImportRoutePolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

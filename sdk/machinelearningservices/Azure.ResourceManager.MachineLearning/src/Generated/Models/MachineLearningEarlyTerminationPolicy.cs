@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -12,22 +16,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownEarlyTerminationPolicy))]
     public abstract partial class MachineLearningEarlyTerminationPolicy
     {
-        /// <summary> Initializes a new instance of MachineLearningEarlyTerminationPolicy. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEarlyTerminationPolicy"/>. </summary>
         protected MachineLearningEarlyTerminationPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEarlyTerminationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEarlyTerminationPolicy"/>. </summary>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>
-        internal MachineLearningEarlyTerminationPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEarlyTerminationPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, Dictionary<string, BinaryData> rawData)
         {
             DelayEvaluation = delayEvaluation;
             EvaluationInterval = evaluationInterval;
             PolicyType = policyType;
+            _rawData = rawData;
         }
 
         /// <summary> Number of intervals by which to delay the first evaluation. </summary>

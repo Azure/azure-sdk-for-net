@@ -5,16 +5,53 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteDirectionsBatchItemResponse
+    public partial class RouteDirectionsBatchItemResponse : IUtf8JsonSerializable, IModelJsonSerializable<RouteDirectionsBatchItemResponse>
     {
-        internal static RouteDirectionsBatchItemResponse DeserializeRouteDirectionsBatchItemResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteDirectionsBatchItemResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteDirectionsBatchItemResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RouteDirectionsBatchItemResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ErrorDetail))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(ErrorDetail);
+            }
+            if (Optional.IsDefined(Report))
+            {
+                writer.WritePropertyName("report"u8);
+                writer.WriteObjectValue(Report);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RouteDirectionsBatchItemResponse DeserializeRouteDirectionsBatchItemResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +61,7 @@ namespace Azure.Maps.Routing.Models
             Optional<IReadOnlyList<RouteData>> routes = default;
             Optional<IReadOnlyList<RouteOptimizedWaypoint>> optimizedWaypoints = default;
             Optional<RouteReport> report = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -77,8 +115,57 @@ namespace Azure.Maps.Routing.Models
                     report = RouteReport.DeserializeRouteReport(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteDirectionsBatchItemResponse(formatVersion.Value, Optional.ToList(routes), Optional.ToList(optimizedWaypoints), report.Value, error.Value);
+            return new RouteDirectionsBatchItemResponse(formatVersion.Value, Optional.ToList(routes), Optional.ToList(optimizedWaypoints), report.Value, error.Value, rawData);
+        }
+
+        RouteDirectionsBatchItemResponse IModelJsonSerializable<RouteDirectionsBatchItemResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RouteDirectionsBatchItemResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteDirectionsBatchItemResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteDirectionsBatchItemResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RouteDirectionsBatchItemResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteDirectionsBatchItemResponse IModelSerializable<RouteDirectionsBatchItemResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RouteDirectionsBatchItemResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteDirectionsBatchItemResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RouteDirectionsBatchItemResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RouteDirectionsBatchItemResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteDirectionsBatchItemResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

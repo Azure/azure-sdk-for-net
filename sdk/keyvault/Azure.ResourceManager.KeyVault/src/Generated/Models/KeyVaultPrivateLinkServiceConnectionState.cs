@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> An object that represents the approval state of the private link connection. </summary>
     public partial class KeyVaultPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of KeyVaultPrivateLinkServiceConnectionState. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkServiceConnectionState"/>. </summary>
         public KeyVaultPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
         /// <param name="description"> The reason for approval or rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal KeyVaultPrivateLinkServiceConnectionState(KeyVaultPrivateEndpointServiceConnectionStatus? status, string description, KeyVaultActionsRequiredMessage? actionsRequired)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultPrivateLinkServiceConnectionState(KeyVaultPrivateEndpointServiceConnectionStatus? status, string description, KeyVaultActionsRequiredMessage? actionsRequired, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </summary>

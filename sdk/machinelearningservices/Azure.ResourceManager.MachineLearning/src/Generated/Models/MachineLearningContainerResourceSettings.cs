@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningContainerResourceSettings. </summary>
     public partial class MachineLearningContainerResourceSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningContainerResourceSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerResourceSettings"/>. </summary>
         public MachineLearningContainerResourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningContainerResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerResourceSettings"/>. </summary>
         /// <param name="cpu">
         /// Number of vCPUs request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
@@ -28,11 +33,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Memory size request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         /// </param>
-        internal MachineLearningContainerResourceSettings(string cpu, string gpu, string memory)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningContainerResourceSettings(string cpu, string gpu, string memory, Dictionary<string, BinaryData> rawData)
         {
             Cpu = cpu;
             Gpu = gpu;
             Memory = memory;
+            _rawData = rawData;
         }
 
         /// <summary>

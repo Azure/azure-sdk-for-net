@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The WorkspaceConnectionPersonalAccessToken. </summary>
     internal partial class WorkspaceConnectionPersonalAccessToken
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionPersonalAccessToken. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionPersonalAccessToken"/>. </summary>
         public WorkspaceConnectionPersonalAccessToken()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionPersonalAccessToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionPersonalAccessToken"/>. </summary>
         /// <param name="pat"></param>
-        internal WorkspaceConnectionPersonalAccessToken(string pat)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceConnectionPersonalAccessToken(string pat, Dictionary<string, BinaryData> rawData)
         {
             Pat = pat;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the pat. </summary>

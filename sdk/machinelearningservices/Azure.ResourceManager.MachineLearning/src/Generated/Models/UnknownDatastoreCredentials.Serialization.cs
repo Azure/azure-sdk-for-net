@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownDatastoreCredentials : IUtf8JsonSerializable
+    internal partial class UnknownDatastoreCredentials : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningDatastoreCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningDatastoreCredentials>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningDatastoreCredentials>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownDatastoreCredentials DeserializeUnknownDatastoreCredentials(JsonElement element)
+        internal static MachineLearningDatastoreCredentials DeserializeUnknownDatastoreCredentials(JsonElement element, ModelSerializerOptions options = default) => DeserializeMachineLearningDatastoreCredentials(element, options);
+
+        MachineLearningDatastoreCredentials IModelJsonSerializable<MachineLearningDatastoreCredentials>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            CredentialsType credentialsType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("credentialsType"u8))
-                {
-                    credentialsType = new CredentialsType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDatastoreCredentials(credentialsType);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDatastoreCredentials(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningDatastoreCredentials>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningDatastoreCredentials IModelSerializable<MachineLearningDatastoreCredentials>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningDatastoreCredentials(doc.RootElement, options);
         }
     }
 }

@@ -5,16 +5,133 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDiagnoseResultValue
+    public partial class MachineLearningDiagnoseResultValue : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningDiagnoseResultValue>
     {
-        internal static MachineLearningDiagnoseResultValue DeserializeMachineLearningDiagnoseResultValue(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningDiagnoseResultValue>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningDiagnoseResultValue>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(UserDefinedRouteResults))
+            {
+                writer.WritePropertyName("userDefinedRouteResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in UserDefinedRouteResults)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NetworkSecurityRuleResults))
+            {
+                writer.WritePropertyName("networkSecurityRuleResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in NetworkSecurityRuleResults)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ResourceLockResults))
+            {
+                writer.WritePropertyName("resourceLockResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceLockResults)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DnsResolutionResults))
+            {
+                writer.WritePropertyName("dnsResolutionResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in DnsResolutionResults)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(StorageAccountResults))
+            {
+                writer.WritePropertyName("storageAccountResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in StorageAccountResults)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(KeyVaultResults))
+            {
+                writer.WritePropertyName("keyVaultResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in KeyVaultResults)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ContainerRegistryResults))
+            {
+                writer.WritePropertyName("containerRegistryResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in ContainerRegistryResults)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ApplicationInsightsResults))
+            {
+                writer.WritePropertyName("applicationInsightsResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApplicationInsightsResults)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OtherResults))
+            {
+                writer.WritePropertyName("otherResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in OtherResults)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningDiagnoseResultValue DeserializeMachineLearningDiagnoseResultValue(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> containerRegistryResults = default;
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> applicationInsightsResults = default;
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> otherResults = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userDefinedRouteResults"u8))
@@ -156,8 +274,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     otherResults = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningDiagnoseResultValue(Optional.ToList(userDefinedRouteResults), Optional.ToList(networkSecurityRuleResults), Optional.ToList(resourceLockResults), Optional.ToList(dnsResolutionResults), Optional.ToList(storageAccountResults), Optional.ToList(keyVaultResults), Optional.ToList(containerRegistryResults), Optional.ToList(applicationInsightsResults), Optional.ToList(otherResults));
+            return new MachineLearningDiagnoseResultValue(Optional.ToList(userDefinedRouteResults), Optional.ToList(networkSecurityRuleResults), Optional.ToList(resourceLockResults), Optional.ToList(dnsResolutionResults), Optional.ToList(storageAccountResults), Optional.ToList(keyVaultResults), Optional.ToList(containerRegistryResults), Optional.ToList(applicationInsightsResults), Optional.ToList(otherResults), rawData);
+        }
+
+        MachineLearningDiagnoseResultValue IModelJsonSerializable<MachineLearningDiagnoseResultValue>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningDiagnoseResultValue(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningDiagnoseResultValue>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningDiagnoseResultValue IModelSerializable<MachineLearningDiagnoseResultValue>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningDiagnoseResultValue(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningDiagnoseResultValue model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningDiagnoseResultValue(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningDiagnoseResultValue(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineUpdateProperties : IUtf8JsonSerializable
+    public partial class MachineUpdateProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineUpdateProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineUpdateProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LocationData))
             {
@@ -40,7 +48,125 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MachineUpdateProperties DeserializeMachineUpdateProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<LocationData> locationData = default;
+            Optional<OSProfile> osProfile = default;
+            Optional<CloudMetadata> cloudMetadata = default;
+            Optional<string> parentClusterResourceId = default;
+            Optional<string> privateLinkScopeResourceId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("locationData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    locationData = LocationData.DeserializeLocationData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("osProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    osProfile = OSProfile.DeserializeOSProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("cloudMetadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudMetadata = CloudMetadata.DeserializeCloudMetadata(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("parentClusterResourceId"u8))
+                {
+                    parentClusterResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("privateLinkScopeResourceId"u8))
+                {
+                    privateLinkScopeResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MachineUpdateProperties(locationData.Value, osProfile.Value, cloudMetadata.Value, parentClusterResourceId.Value, privateLinkScopeResourceId.Value, rawData);
+        }
+
+        MachineUpdateProperties IModelJsonSerializable<MachineUpdateProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineUpdateProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineUpdateProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineUpdateProperties IModelSerializable<MachineUpdateProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineUpdateProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineUpdateProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineUpdateProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineUpdateProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

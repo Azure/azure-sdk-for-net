@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class ReverseSearchCrossStreetAddressResultItem
+    public partial class ReverseSearchCrossStreetAddressResultItem : IUtf8JsonSerializable, IModelJsonSerializable<ReverseSearchCrossStreetAddressResultItem>
     {
-        internal static ReverseSearchCrossStreetAddressResultItem DeserializeReverseSearchCrossStreetAddressResultItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReverseSearchCrossStreetAddressResultItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReverseSearchCrossStreetAddressResultItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReverseSearchCrossStreetAddressResultItem DeserializeReverseSearchCrossStreetAddressResultItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<MapsAddress> address = default;
             Optional<string> position = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -36,8 +65,57 @@ namespace Azure.Maps.Search.Models
                     position = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReverseSearchCrossStreetAddressResultItem(address.Value, position.Value);
+            return new ReverseSearchCrossStreetAddressResultItem(address.Value, position.Value, rawData);
+        }
+
+        ReverseSearchCrossStreetAddressResultItem IModelJsonSerializable<ReverseSearchCrossStreetAddressResultItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReverseSearchCrossStreetAddressResultItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReverseSearchCrossStreetAddressResultItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReverseSearchCrossStreetAddressResultItem IModelSerializable<ReverseSearchCrossStreetAddressResultItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReverseSearchCrossStreetAddressResultItem(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ReverseSearchCrossStreetAddressResultItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ReverseSearchCrossStreetAddressResultItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReverseSearchCrossStreetAddressResultItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

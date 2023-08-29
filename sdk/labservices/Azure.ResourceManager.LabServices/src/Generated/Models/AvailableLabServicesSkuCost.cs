@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> The array of costs of a lab services SKU. </summary>
     public partial class AvailableLabServicesSkuCost
     {
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCost. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuCost"/>. </summary>
         internal AvailableLabServicesSkuCost()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuCost"/>. </summary>
         /// <param name="meterId"> The meter id. </param>
         /// <param name="quantity"> The quantity of units charged. </param>
         /// <param name="extendedUnit"> The extended unit. </param>
-        internal AvailableLabServicesSkuCost(string meterId, float? quantity, string extendedUnit)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableLabServicesSkuCost(string meterId, float? quantity, string extendedUnit, Dictionary<string, BinaryData> rawData)
         {
             MeterId = meterId;
             Quantity = quantity;
             ExtendedUnit = extendedUnit;
+            _rawData = rawData;
         }
 
         /// <summary> The meter id. </summary>

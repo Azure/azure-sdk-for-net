@@ -5,14 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes a Machine Extension Update. </summary>
     public partial class HybridComputeMachineExtensionPatch : HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of HybridComputeMachineExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineExtensionPatch"/>. </summary>
         public HybridComputeMachineExtensionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineExtensionPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> Describes Machine Extension Update Properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeMachineExtensionPatch(IDictionary<string, string> tags, MachineExtensionUpdateProperties properties, Dictionary<string, BinaryData> rawData) : base(tags, rawData)
+        {
+            Properties = properties;
         }
 
         /// <summary> Describes Machine Extension Update Properties. </summary>

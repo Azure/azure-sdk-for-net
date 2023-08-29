@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Firmware analysis workspace. </summary>
     public partial class FirmwareWorkspacePatch
     {
-        /// <summary> Initializes a new instance of FirmwareWorkspacePatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareWorkspacePatch"/>. </summary>
         public FirmwareWorkspacePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareWorkspacePatch"/>. </summary>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareWorkspacePatch(ProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData)
+        {
+            ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> Provisioning state of the resource. </summary>

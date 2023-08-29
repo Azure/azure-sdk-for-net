@@ -6,15 +6,76 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEndpointAuthToken
+    public partial class MachineLearningEndpointAuthToken : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningEndpointAuthToken>
     {
-        internal static MachineLearningEndpointAuthToken DeserializeMachineLearningEndpointAuthToken(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningEndpointAuthToken>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningEndpointAuthToken>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AccessToken))
+            {
+                if (AccessToken != null)
+                {
+                    writer.WritePropertyName("accessToken"u8);
+                    writer.WriteStringValue(AccessToken);
+                }
+                else
+                {
+                    writer.WriteNull("accessToken");
+                }
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expiryTimeUtc"u8);
+                writer.WriteNumberValue(ExpireOn.Value, "U");
+            }
+            if (Optional.IsDefined(RefreshOn))
+            {
+                writer.WritePropertyName("refreshAfterTimeUtc"u8);
+                writer.WriteNumberValue(RefreshOn.Value, "U");
+            }
+            if (Optional.IsDefined(TokenType))
+            {
+                if (TokenType != null)
+                {
+                    writer.WritePropertyName("tokenType"u8);
+                    writer.WriteStringValue(TokenType);
+                }
+                else
+                {
+                    writer.WriteNull("tokenType");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningEndpointAuthToken DeserializeMachineLearningEndpointAuthToken(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<DateTimeOffset> expiryTimeUtc = default;
             Optional<DateTimeOffset> refreshAfterTimeUtc = default;
             Optional<string> tokenType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessToken"u8))
@@ -63,8 +125,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tokenType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningEndpointAuthToken(accessToken.Value, Optional.ToNullable(expiryTimeUtc), Optional.ToNullable(refreshAfterTimeUtc), tokenType.Value);
+            return new MachineLearningEndpointAuthToken(accessToken.Value, Optional.ToNullable(expiryTimeUtc), Optional.ToNullable(refreshAfterTimeUtc), tokenType.Value, rawData);
+        }
+
+        MachineLearningEndpointAuthToken IModelJsonSerializable<MachineLearningEndpointAuthToken>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningEndpointAuthToken(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningEndpointAuthToken>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningEndpointAuthToken IModelSerializable<MachineLearningEndpointAuthToken>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningEndpointAuthToken(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningEndpointAuthToken model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningEndpointAuthToken(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningEndpointAuthToken(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

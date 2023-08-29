@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The WSDL service. </summary>
     public partial class LogicWsdlService
     {
-        /// <summary> Initializes a new instance of LogicWsdlService. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWsdlService"/>. </summary>
         internal LogicWsdlService()
         {
             EndpointQualifiedNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LogicWsdlService. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWsdlService"/>. </summary>
         /// <param name="qualifiedName"> The qualified name. </param>
         /// <param name="endpointQualifiedNames"> The list of endpoints' qualified names. </param>
-        internal LogicWsdlService(string qualifiedName, IReadOnlyList<string> endpointQualifiedNames)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWsdlService(string qualifiedName, IReadOnlyList<string> endpointQualifiedNames, Dictionary<string, BinaryData> rawData)
         {
             QualifiedName = qualifiedName;
             EndpointQualifiedNames = endpointQualifiedNames;
+            _rawData = rawData;
         }
 
         /// <summary> The qualified name. </summary>

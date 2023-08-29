@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoCosmosDBDataConnection : IUtf8JsonSerializable
+    public partial class KustoCosmosDBDataConnection : IUtf8JsonSerializable, IModelJsonSerializable<KustoCosmosDBDataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoCosmosDBDataConnection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoCosmosDBDataConnection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<KustoCosmosDBDataConnection>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -62,11 +69,25 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStringValue(RetrievalStartOn.Value, "O");
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoCosmosDBDataConnection DeserializeKustoCosmosDBDataConnection(JsonElement element)
+        internal static KustoCosmosDBDataConnection DeserializeKustoCosmosDBDataConnection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,6 +107,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<string> cosmosDBContainer = default;
             Optional<DateTimeOffset> retrievalStartDate = default;
             Optional<KustoProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -203,8 +225,57 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoCosmosDBDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, tableName.Value, mappingRuleName.Value, managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), cosmosDBAccountResourceId.Value, cosmosDBDatabase.Value, cosmosDBContainer.Value, Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState));
+            return new KustoCosmosDBDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, tableName.Value, mappingRuleName.Value, managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), cosmosDBAccountResourceId.Value, cosmosDBDatabase.Value, cosmosDBContainer.Value, Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        KustoCosmosDBDataConnection IModelJsonSerializable<KustoCosmosDBDataConnection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KustoCosmosDBDataConnection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoCosmosDBDataConnection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoCosmosDBDataConnection>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KustoCosmosDBDataConnection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoCosmosDBDataConnection IModelSerializable<KustoCosmosDBDataConnection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KustoCosmosDBDataConnection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoCosmosDBDataConnection(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(KustoCosmosDBDataConnection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator KustoCosmosDBDataConnection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoCosmosDBDataConnection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

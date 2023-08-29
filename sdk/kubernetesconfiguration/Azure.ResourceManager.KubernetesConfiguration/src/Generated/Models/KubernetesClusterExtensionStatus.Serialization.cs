@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesClusterExtensionStatus : IUtf8JsonSerializable
+    public partial class KubernetesClusterExtensionStatus : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesClusterExtensionStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesClusterExtensionStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesClusterExtensionStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
@@ -40,11 +48,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesClusterExtensionStatus DeserializeKubernetesClusterExtensionStatus(JsonElement element)
+        internal static KubernetesClusterExtensionStatus DeserializeKubernetesClusterExtensionStatus(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +76,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<KubernetesClusterExtensionStatusLevel> level = default;
             Optional<string> message = default;
             Optional<string> time = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -85,8 +108,57 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     time = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KubernetesClusterExtensionStatus(code.Value, displayStatus.Value, Optional.ToNullable(level), message.Value, time.Value);
+            return new KubernetesClusterExtensionStatus(code.Value, displayStatus.Value, Optional.ToNullable(level), message.Value, time.Value, rawData);
+        }
+
+        KubernetesClusterExtensionStatus IModelJsonSerializable<KubernetesClusterExtensionStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesClusterExtensionStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesClusterExtensionStatus>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesClusterExtensionStatus IModelSerializable<KubernetesClusterExtensionStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesClusterExtensionStatus(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(KubernetesClusterExtensionStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator KubernetesClusterExtensionStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesClusterExtensionStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

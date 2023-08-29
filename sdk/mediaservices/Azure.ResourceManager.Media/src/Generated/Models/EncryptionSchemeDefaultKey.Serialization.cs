@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class EncryptionSchemeDefaultKey : IUtf8JsonSerializable
+    public partial class EncryptionSchemeDefaultKey : IUtf8JsonSerializable, IModelJsonSerializable<EncryptionSchemeDefaultKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EncryptionSchemeDefaultKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EncryptionSchemeDefaultKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Label))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EncryptionSchemeDefaultKey DeserializeEncryptionSchemeDefaultKey(JsonElement element)
+        internal static EncryptionSchemeDefaultKey DeserializeEncryptionSchemeDefaultKey(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> label = default;
             Optional<string> policyName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -48,8 +71,57 @@ namespace Azure.ResourceManager.Media.Models
                     policyName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EncryptionSchemeDefaultKey(label.Value, policyName.Value);
+            return new EncryptionSchemeDefaultKey(label.Value, policyName.Value, rawData);
+        }
+
+        EncryptionSchemeDefaultKey IModelJsonSerializable<EncryptionSchemeDefaultKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEncryptionSchemeDefaultKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EncryptionSchemeDefaultKey>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EncryptionSchemeDefaultKey IModelSerializable<EncryptionSchemeDefaultKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEncryptionSchemeDefaultKey(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EncryptionSchemeDefaultKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EncryptionSchemeDefaultKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEncryptionSchemeDefaultKey(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

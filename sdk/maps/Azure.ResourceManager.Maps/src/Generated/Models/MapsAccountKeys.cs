@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> The set of keys which can be used to access the Maps REST APIs. Two keys are provided for key rotation without interruption. </summary>
     public partial class MapsAccountKeys
     {
-        /// <summary> Initializes a new instance of MapsAccountKeys. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsAccountKeys"/>. </summary>
         internal MapsAccountKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of MapsAccountKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountKeys"/>. </summary>
         /// <param name="primaryKeyLastUpdatedOn"> The last updated date and time of the primary key. </param>
         /// <param name="primaryKey"> The primary key for accessing the Maps REST APIs. </param>
         /// <param name="secondaryKey"> The secondary key for accessing the Maps REST APIs. </param>
         /// <param name="secondaryKeyLastUpdatedOn"> The last updated date and time of the secondary key. </param>
-        internal MapsAccountKeys(DateTimeOffset? primaryKeyLastUpdatedOn, string primaryKey, string secondaryKey, DateTimeOffset? secondaryKeyLastUpdatedOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsAccountKeys(DateTimeOffset? primaryKeyLastUpdatedOn, string primaryKey, string secondaryKey, DateTimeOffset? secondaryKeyLastUpdatedOn, Dictionary<string, BinaryData> rawData)
         {
             PrimaryKeyLastUpdatedOn = primaryKeyLastUpdatedOn;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             SecondaryKeyLastUpdatedOn = secondaryKeyLastUpdatedOn;
+            _rawData = rawData;
         }
 
         /// <summary> The last updated date and time of the primary key. </summary>

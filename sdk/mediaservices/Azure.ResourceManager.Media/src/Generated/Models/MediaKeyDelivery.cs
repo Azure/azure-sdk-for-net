@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The MediaKeyDelivery. </summary>
     internal partial class MediaKeyDelivery
     {
-        /// <summary> Initializes a new instance of MediaKeyDelivery. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaKeyDelivery"/>. </summary>
         public MediaKeyDelivery()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaKeyDelivery. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaKeyDelivery"/>. </summary>
         /// <param name="accessControl"> The access control properties for Key Delivery. </param>
-        internal MediaKeyDelivery(MediaAccessControl accessControl)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaKeyDelivery(MediaAccessControl accessControl, Dictionary<string, BinaryData> rawData)
         {
             AccessControl = accessControl;
+            _rawData = rawData;
         }
 
         /// <summary> The access control properties for Key Delivery. </summary>

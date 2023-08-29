@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The PrivateStoreOfferResult. </summary>
     public partial class PrivateStoreOfferResult
     {
-        /// <summary> Initializes a new instance of PrivateStoreOfferResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferResult"/>. </summary>
         internal PrivateStoreOfferResult()
         {
             SpecificPlanIdsLimitation = new ChangeTrackingList<string>();
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Plans = new ChangeTrackingList<PrivateStorePlan>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreOfferResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferResult"/>. </summary>
         /// <param name="uniqueOfferId"> Offers unique id. </param>
         /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
@@ -35,7 +37,8 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="isUpdateSuppressedDueToIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
-        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<PrivateStorePlan> plans)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<PrivateStorePlan> plans, Dictionary<string, BinaryData> rawData)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
@@ -48,6 +51,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             IsUpdateSuppressedDueToIdempotence = isUpdateSuppressedDueToIdempotence;
             IconFileUris = iconFileUris;
             Plans = plans;
+            _rawData = rawData;
         }
 
         /// <summary> Offers unique id. </summary>

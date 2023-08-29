@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact agreement protocol settings. </summary>
     public partial class EdifactProtocolSettings
     {
-        /// <summary> Initializes a new instance of EdifactProtocolSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdifactProtocolSettings"/>. </summary>
         /// <param name="validationSettings"> The EDIFACT validation settings. </param>
         /// <param name="framingSettings"> The EDIFACT framing settings. </param>
         /// <param name="envelopeSettings"> The EDIFACT envelope settings. </param>
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.Logic.Models
             EdifactDelimiterOverrides = new ChangeTrackingList<EdifactDelimiterOverride>();
         }
 
-        /// <summary> Initializes a new instance of EdifactProtocolSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactProtocolSettings"/>. </summary>
         /// <param name="validationSettings"> The EDIFACT validation settings. </param>
         /// <param name="framingSettings"> The EDIFACT framing settings. </param>
         /// <param name="envelopeSettings"> The EDIFACT envelope settings. </param>
@@ -59,7 +61,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="schemaReferences"> The EDIFACT schema references. </param>
         /// <param name="validationOverrides"> The EDIFACT validation override settings. </param>
         /// <param name="edifactDelimiterOverrides"> The EDIFACT delimiter override settings. </param>
-        internal EdifactProtocolSettings(EdifactValidationSettings validationSettings, EdifactFramingSettings framingSettings, EdifactEnvelopeSettings envelopeSettings, EdifactAcknowledgementSettings acknowledgementSettings, EdifactMessageFilter messageFilter, EdifactProcessingSettings processingSettings, IList<EdifactEnvelopeOverride> envelopeOverrides, IList<EdifactMessageIdentifier> messageFilterList, IList<EdifactSchemaReference> schemaReferences, IList<EdifactValidationOverride> validationOverrides, IList<EdifactDelimiterOverride> edifactDelimiterOverrides)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdifactProtocolSettings(EdifactValidationSettings validationSettings, EdifactFramingSettings framingSettings, EdifactEnvelopeSettings envelopeSettings, EdifactAcknowledgementSettings acknowledgementSettings, EdifactMessageFilter messageFilter, EdifactProcessingSettings processingSettings, IList<EdifactEnvelopeOverride> envelopeOverrides, IList<EdifactMessageIdentifier> messageFilterList, IList<EdifactSchemaReference> schemaReferences, IList<EdifactValidationOverride> validationOverrides, IList<EdifactDelimiterOverride> edifactDelimiterOverrides, Dictionary<string, BinaryData> rawData)
         {
             ValidationSettings = validationSettings;
             FramingSettings = framingSettings;
@@ -72,6 +75,12 @@ namespace Azure.ResourceManager.Logic.Models
             SchemaReferences = schemaReferences;
             ValidationOverrides = validationOverrides;
             EdifactDelimiterOverrides = edifactDelimiterOverrides;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactProtocolSettings"/> for deserialization. </summary>
+        internal EdifactProtocolSettings()
+        {
         }
 
         /// <summary> The EDIFACT validation settings. </summary>

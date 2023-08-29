@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesFluxConfigurationResource(Client, KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(e)), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, "KubernetesFluxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new KubernetesFluxConfigurationResource(Client, KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(e)), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, "KubernetesFluxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesFluxConfigurationResource(Client, KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(e)), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, "KubernetesFluxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new KubernetesFluxConfigurationResource(Client, KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(e)), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, "KubernetesFluxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Dynamic match configuration object. </summary>
     public partial class CommonDynamicMatchConfiguration
     {
-        /// <summary> Initializes a new instance of CommonDynamicMatchConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommonDynamicMatchConfiguration"/>. </summary>
         public CommonDynamicMatchConfiguration()
         {
             IPGroups = new ChangeTrackingList<MatchConfigurationIPGroupProperties>();
@@ -21,15 +24,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             PortGroups = new ChangeTrackingList<PortGroupProperties>();
         }
 
-        /// <summary> Initializes a new instance of CommonDynamicMatchConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonDynamicMatchConfiguration"/>. </summary>
         /// <param name="ipGroups"> List of IP Groups. </param>
         /// <param name="vlanGroups"> List of vlan groups. </param>
         /// <param name="portGroups"> List of the port group. </param>
-        internal CommonDynamicMatchConfiguration(IList<MatchConfigurationIPGroupProperties> ipGroups, IList<VlanGroupProperties> vlanGroups, IList<PortGroupProperties> portGroups)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommonDynamicMatchConfiguration(IList<MatchConfigurationIPGroupProperties> ipGroups, IList<VlanGroupProperties> vlanGroups, IList<PortGroupProperties> portGroups, Dictionary<string, BinaryData> rawData)
         {
             IPGroups = ipGroups;
             VlanGroups = vlanGroups;
             PortGroups = portGroups;
+            _rawData = rawData;
         }
 
         /// <summary> List of IP Groups. </summary>

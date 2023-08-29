@@ -6,15 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The callback url parameters. </summary>
     public partial class ListOperationCallbackUrlParameterInfo
     {
-        /// <summary> Initializes a new instance of ListOperationCallbackUrlParameterInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListOperationCallbackUrlParameterInfo"/>. </summary>
         public ListOperationCallbackUrlParameterInfo()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListOperationCallbackUrlParameterInfo"/>. </summary>
+        /// <param name="notAfter"> The expiry time. </param>
+        /// <param name="keyType"> The key type. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListOperationCallbackUrlParameterInfo(DateTimeOffset? notAfter, LogicKeyType? keyType, Dictionary<string, BinaryData> rawData)
+        {
+            NotAfter = notAfter;
+            KeyType = keyType;
+            _rawData = rawData;
         }
 
         /// <summary> The expiry time. </summary>

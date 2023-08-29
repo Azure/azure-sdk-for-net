@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiReference : IUtf8JsonSerializable
+    public partial class LogicApiReference : IUtf8JsonSerializable, IModelJsonSerializable<LogicApiReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicApiReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicApiReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<LogicApiReference>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
@@ -60,11 +67,25 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicApiReference DeserializeLogicApiReference(JsonElement element)
+        internal static LogicApiReference DeserializeLogicApiReference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -155,8 +177,57 @@ namespace Azure.ResourceManager.Logic.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicApiReference(id.Value, name.Value, Optional.ToNullable(type), displayName.Value, description.Value, iconUri.Value, swagger.Value, brandColor.Value, Optional.ToNullable(category), integrationServiceEnvironment.Value);
+            return new LogicApiReference(id.Value, name.Value, Optional.ToNullable(type), displayName.Value, description.Value, iconUri.Value, swagger.Value, brandColor.Value, Optional.ToNullable(category), integrationServiceEnvironment.Value, rawData);
+        }
+
+        LogicApiReference IModelJsonSerializable<LogicApiReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LogicApiReference>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicApiReference>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LogicApiReference>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicApiReference IModelSerializable<LogicApiReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LogicApiReference>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicApiReference(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LogicApiReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LogicApiReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicApiReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

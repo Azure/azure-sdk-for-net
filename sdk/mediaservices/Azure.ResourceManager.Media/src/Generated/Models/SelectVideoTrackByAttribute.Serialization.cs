@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class SelectVideoTrackByAttribute : IUtf8JsonSerializable
+    public partial class SelectVideoTrackByAttribute : IUtf8JsonSerializable, IModelJsonSerializable<SelectVideoTrackByAttribute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SelectVideoTrackByAttribute>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SelectVideoTrackByAttribute>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SelectVideoTrackByAttribute>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("attribute"u8);
             writer.WriteStringValue(Attribute.ToString());
@@ -26,11 +34,25 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SelectVideoTrackByAttribute DeserializeSelectVideoTrackByAttribute(JsonElement element)
+        internal static SelectVideoTrackByAttribute DeserializeSelectVideoTrackByAttribute(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.Media.Models
             TrackAttributeFilter filter = default;
             Optional<string> filterValue = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attribute"u8))
@@ -61,8 +84,57 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SelectVideoTrackByAttribute(odataType, attribute, filter, filterValue.Value);
+            return new SelectVideoTrackByAttribute(odataType, attribute, filter, filterValue.Value, rawData);
+        }
+
+        SelectVideoTrackByAttribute IModelJsonSerializable<SelectVideoTrackByAttribute>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SelectVideoTrackByAttribute>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelectVideoTrackByAttribute(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SelectVideoTrackByAttribute>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SelectVideoTrackByAttribute>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SelectVideoTrackByAttribute IModelSerializable<SelectVideoTrackByAttribute>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SelectVideoTrackByAttribute>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSelectVideoTrackByAttribute(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SelectVideoTrackByAttribute model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SelectVideoTrackByAttribute(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSelectVideoTrackByAttribute(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -10,13 +10,38 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class TrialMatcherResult
+    public partial class TrialMatcherResult : IUtf8JsonSerializable, IModelJsonSerializable<TrialMatcherResult>
     {
-        internal static TrialMatcherResult DeserializeTrialMatcherResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrialMatcherResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrialMatcherResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TrialMatcherResult DeserializeTrialMatcherResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +53,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             JobStatus status = default;
             Optional<IReadOnlyList<ResponseError>> errors = default;
             Optional<TrialMatcherResults> results = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -78,16 +104,57 @@ namespace Azure.Health.Insights.ClinicalMatching
                     results = TrialMatcherResults.DeserializeTrialMatcherResults(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrialMatcherResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, Optional.ToList(errors), results.Value);
+            return new TrialMatcherResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, Optional.ToList(errors), results.Value, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TrialMatcherResult FromResponse(Response response)
+        TrialMatcherResult IModelJsonSerializable<TrialMatcherResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTrialMatcherResult(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrialMatcherResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrialMatcherResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrialMatcherResult IModelSerializable<TrialMatcherResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrialMatcherResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TrialMatcherResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TrialMatcherResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrialMatcherResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

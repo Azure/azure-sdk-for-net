@@ -5,24 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ssl configuration for scoring. </summary>
     public partial class MachineLearningSslConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningSslConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSslConfiguration"/>. </summary>
         public MachineLearningSslConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSslConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSslConfiguration"/>. </summary>
         /// <param name="status"> Enable or disable ssl for scoring. </param>
         /// <param name="cert"> Cert data. </param>
         /// <param name="key"> Key data. </param>
         /// <param name="cname"> CNAME of the cert. </param>
         /// <param name="leafDomainLabel"> Leaf domain label of public endpoint. </param>
         /// <param name="overwriteExistingDomain"> Indicates whether to overwrite existing domain label. </param>
-        internal MachineLearningSslConfiguration(MachineLearningSslConfigStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningSslConfiguration(MachineLearningSslConfigStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Cert = cert;
@@ -30,6 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Cname = cname;
             LeafDomainLabel = leafDomainLabel;
             OverwriteExistingDomain = overwriteExistingDomain;
+            _rawData = rawData;
         }
 
         /// <summary> Enable or disable ssl for scoring. </summary>

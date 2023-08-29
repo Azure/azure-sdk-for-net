@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningFqdnEndpointDetail. </summary>
     public partial class MachineLearningFqdnEndpointDetail
     {
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointDetail. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFqdnEndpointDetail"/>. </summary>
         internal MachineLearningFqdnEndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFqdnEndpointDetail"/>. </summary>
         /// <param name="port"></param>
-        internal MachineLearningFqdnEndpointDetail(int? port)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningFqdnEndpointDetail(int? port, Dictionary<string, BinaryData> rawData)
         {
             Port = port;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the port. </summary>

@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The workflow run action repetition index. </summary>
     public partial class LogicWorkflowRepetitionIndex
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRepetitionIndex. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRepetitionIndex"/>. </summary>
         /// <param name="itemIndex"> The index. </param>
         public LogicWorkflowRepetitionIndex(int itemIndex)
         {
             ItemIndex = itemIndex;
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRepetitionIndex. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRepetitionIndex"/>. </summary>
         /// <param name="scopeName"> The scope. </param>
         /// <param name="itemIndex"> The index. </param>
-        internal LogicWorkflowRepetitionIndex(string scopeName, int itemIndex)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRepetitionIndex(string scopeName, int itemIndex, Dictionary<string, BinaryData> rawData)
         {
             ScopeName = scopeName;
             ItemIndex = itemIndex;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRepetitionIndex"/> for deserialization. </summary>
+        internal LogicWorkflowRepetitionIndex()
+        {
         }
 
         /// <summary> The scope. </summary>

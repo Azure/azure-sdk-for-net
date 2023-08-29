@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactDelimiterOverride : IUtf8JsonSerializable
+    public partial class EdifactDelimiterOverride : IUtf8JsonSerializable, IModelJsonSerializable<EdifactDelimiterOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdifactDelimiterOverride>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdifactDelimiterOverride>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MessageId))
             {
@@ -54,11 +62,25 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdifactDelimiterOverride DeserializeEdifactDelimiterOverride(JsonElement element)
+        internal static EdifactDelimiterOverride DeserializeEdifactDelimiterOverride(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +97,7 @@ namespace Azure.ResourceManager.Logic.Models
             int releaseIndicator = default;
             Optional<string> messageAssociationAssignedCode = default;
             Optional<string> targetNamespace = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))
@@ -137,8 +160,57 @@ namespace Azure.ResourceManager.Logic.Models
                     targetNamespace = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdifactDelimiterOverride(messageId.Value, messageVersion.Value, messageRelease.Value, dataElementSeparator, componentSeparator, segmentTerminator, repetitionSeparator, segmentTerminatorSuffix, decimalPointIndicator, releaseIndicator, messageAssociationAssignedCode.Value, targetNamespace.Value);
+            return new EdifactDelimiterOverride(messageId.Value, messageVersion.Value, messageRelease.Value, dataElementSeparator, componentSeparator, segmentTerminator, repetitionSeparator, segmentTerminatorSuffix, decimalPointIndicator, releaseIndicator, messageAssociationAssignedCode.Value, targetNamespace.Value, rawData);
+        }
+
+        EdifactDelimiterOverride IModelJsonSerializable<EdifactDelimiterOverride>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdifactDelimiterOverride(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdifactDelimiterOverride>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdifactDelimiterOverride IModelSerializable<EdifactDelimiterOverride>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdifactDelimiterOverride(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EdifactDelimiterOverride model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EdifactDelimiterOverride(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdifactDelimiterOverride(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

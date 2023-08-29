@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> A new Sas token which can be used to access the Maps REST APIs and is controlled by the specified Managed identity permissions on Azure (IAM) Role Based Access Control. </summary>
     public partial class MapsAccountSasToken
     {
-        /// <summary> Initializes a new instance of MapsAccountSasToken. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsAccountSasToken"/>. </summary>
         internal MapsAccountSasToken()
         {
         }
 
-        /// <summary> Initializes a new instance of MapsAccountSasToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountSasToken"/>. </summary>
         /// <param name="accountSasToken"> The shared access signature access token. </param>
-        internal MapsAccountSasToken(string accountSasToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsAccountSasToken(string accountSasToken, Dictionary<string, BinaryData> rawData)
         {
             AccountSasToken = accountSasToken;
+            _rawData = rawData;
         }
 
         /// <summary> The shared access signature access token. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Defines the match configuration that are supported to filter the traffic. </summary>
     public partial class AccessControlListMatchConfiguration
     {
-        /// <summary> Initializes a new instance of AccessControlListMatchConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AccessControlListMatchConfiguration"/>. </summary>
         public AccessControlListMatchConfiguration()
         {
             MatchConditions = new ChangeTrackingList<AccessControlListMatchCondition>();
             Actions = new ChangeTrackingList<AccessControlListAction>();
         }
 
-        /// <summary> Initializes a new instance of AccessControlListMatchConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListMatchConfiguration"/>. </summary>
         /// <param name="matchConfigurationName"> The name of the match configuration. </param>
         /// <param name="sequenceNumber"> Sequence Number of the match configuration. </param>
         /// <param name="ipAddressType"> Type of IP Address. IPv4 or IPv6. </param>
         /// <param name="matchConditions"> List of the match conditions. </param>
         /// <param name="actions"> List of actions that need to be performed for the matched conditions. </param>
-        internal AccessControlListMatchConfiguration(string matchConfigurationName, long? sequenceNumber, NetworkFabricIPAddressType? ipAddressType, IList<AccessControlListMatchCondition> matchConditions, IList<AccessControlListAction> actions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccessControlListMatchConfiguration(string matchConfigurationName, long? sequenceNumber, NetworkFabricIPAddressType? ipAddressType, IList<AccessControlListMatchCondition> matchConditions, IList<AccessControlListAction> actions, Dictionary<string, BinaryData> rawData)
         {
             MatchConfigurationName = matchConfigurationName;
             SequenceNumber = sequenceNumber;
             IPAddressType = ipAddressType;
             MatchConditions = matchConditions;
             Actions = actions;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the match configuration. </summary>

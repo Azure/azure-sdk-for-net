@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> List of private endpoint connections. </summary>
     internal partial class KeyVaultPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionListResult"/>. </summary>
         internal KeyVaultPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<KeyVaultPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The list of private endpoint connections. </param>
         /// <param name="nextLink"> The URL to get the next set of private endpoint connections. </param>
-        internal KeyVaultPrivateEndpointConnectionListResult(IReadOnlyList<KeyVaultPrivateEndpointConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultPrivateEndpointConnectionListResult(IReadOnlyList<KeyVaultPrivateEndpointConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of private endpoint connections. </summary>

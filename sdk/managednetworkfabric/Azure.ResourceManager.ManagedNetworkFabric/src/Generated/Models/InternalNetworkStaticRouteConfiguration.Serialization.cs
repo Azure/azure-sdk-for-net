@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class InternalNetworkStaticRouteConfiguration : IUtf8JsonSerializable
+    public partial class InternalNetworkStaticRouteConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<InternalNetworkStaticRouteConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InternalNetworkStaticRouteConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InternalNetworkStaticRouteConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<InternalNetworkStaticRouteConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Extension))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InternalNetworkStaticRouteConfiguration DeserializeInternalNetworkStaticRouteConfiguration(JsonElement element)
+        internal static InternalNetworkStaticRouteConfiguration DeserializeInternalNetworkStaticRouteConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<BfdConfiguration> bfdConfiguration = default;
             Optional<IList<StaticRouteProperties>> ipv4Routes = default;
             Optional<IList<StaticRouteProperties>> ipv6Routes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extension"u8))
@@ -107,8 +129,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipv6Routes = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InternalNetworkStaticRouteConfiguration(bfdConfiguration.Value, Optional.ToList(ipv4Routes), Optional.ToList(ipv6Routes), Optional.ToNullable(extension));
+            return new InternalNetworkStaticRouteConfiguration(bfdConfiguration.Value, Optional.ToList(ipv4Routes), Optional.ToList(ipv6Routes), Optional.ToNullable(extension), rawData);
+        }
+
+        InternalNetworkStaticRouteConfiguration IModelJsonSerializable<InternalNetworkStaticRouteConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InternalNetworkStaticRouteConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInternalNetworkStaticRouteConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InternalNetworkStaticRouteConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InternalNetworkStaticRouteConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InternalNetworkStaticRouteConfiguration IModelSerializable<InternalNetworkStaticRouteConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InternalNetworkStaticRouteConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInternalNetworkStaticRouteConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InternalNetworkStaticRouteConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InternalNetworkStaticRouteConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInternalNetworkStaticRouteConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

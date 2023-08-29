@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> The additional capabilities for a lab VM. </summary>
     internal partial class LabVirtualMachineAdditionalCapability
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineAdditionalCapability. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineAdditionalCapability"/>. </summary>
         public LabVirtualMachineAdditionalCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineAdditionalCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineAdditionalCapability"/>. </summary>
         /// <param name="installGpuDrivers"> Flag to pre-install dedicated GPU drivers. </param>
-        internal LabVirtualMachineAdditionalCapability(LabServicesEnableState? installGpuDrivers)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVirtualMachineAdditionalCapability(LabServicesEnableState? installGpuDrivers, Dictionary<string, BinaryData> rawData)
         {
             InstallGpuDrivers = installGpuDrivers;
+            _rawData = rawData;
         }
 
         /// <summary> Flag to pre-install dedicated GPU drivers. </summary>

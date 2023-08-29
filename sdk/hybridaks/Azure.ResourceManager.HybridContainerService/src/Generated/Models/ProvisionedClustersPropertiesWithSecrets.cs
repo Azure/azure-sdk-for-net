@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Properties of provisioned clusters that contain secrets. </summary>
     public partial class ProvisionedClustersPropertiesWithSecrets
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersPropertiesWithSecrets. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersPropertiesWithSecrets"/>. </summary>
         public ProvisionedClustersPropertiesWithSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersPropertiesWithSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersPropertiesWithSecrets"/>. </summary>
         /// <param name="aadProfile"> AAD profile for the provisioned cluster. </param>
         /// <param name="windowsProfile"> WindowsProfile - Profile for Windows VMs in the Provisioned Cluster. </param>
         /// <param name="httpProxyConfig"> HttpProxyConfig - Configurations for provisioning the cluster with HTTP proxy servers. </param>
-        internal ProvisionedClustersPropertiesWithSecrets(AADProfile aadProfile, WindowsProfile windowsProfile, HttpProxyConfig httpProxyConfig)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClustersPropertiesWithSecrets(AADProfile aadProfile, WindowsProfile windowsProfile, HttpProxyConfig httpProxyConfig, Dictionary<string, BinaryData> rawData)
         {
             AadProfile = aadProfile;
             WindowsProfile = windowsProfile;
             HttpProxyConfig = httpProxyConfig;
+            _rawData = rawData;
         }
 
         /// <summary> AAD profile for the provisioned cluster. </summary>

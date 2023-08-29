@@ -5,22 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class ConfigurationQueriesTestResponse
+    public partial class ConfigurationQueriesTestResponse : IUtf8JsonSerializable, IModelJsonSerializable<ConfigurationQueriesTestResponse>
     {
-        internal static ConfigurationQueriesTestResponse DeserializeConfigurationQueriesTestResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConfigurationQueriesTestResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConfigurationQueriesTestResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TargetConditionError))
+            {
+                writer.WritePropertyName("targetConditionError"u8);
+                writer.WriteStringValue(TargetConditionError);
+            }
+            if (Optional.IsCollectionDefined(CustomMetricQueryErrors))
+            {
+                writer.WritePropertyName("customMetricQueryErrors"u8);
+                writer.WriteStartObject();
+                foreach (var item in CustomMetricQueryErrors)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConfigurationQueriesTestResponse DeserializeConfigurationQueriesTestResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> targetConditionError = default;
             Optional<IReadOnlyDictionary<string, string>> customMetricQueryErrors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConditionError"u8))
@@ -42,8 +86,57 @@ namespace Azure.IoT.Hub.Service.Models
                     customMetricQueryErrors = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConfigurationQueriesTestResponse(targetConditionError.Value, Optional.ToDictionary(customMetricQueryErrors));
+            return new ConfigurationQueriesTestResponse(targetConditionError.Value, Optional.ToDictionary(customMetricQueryErrors), rawData);
+        }
+
+        ConfigurationQueriesTestResponse IModelJsonSerializable<ConfigurationQueriesTestResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfigurationQueriesTestResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConfigurationQueriesTestResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConfigurationQueriesTestResponse IModelSerializable<ConfigurationQueriesTestResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConfigurationQueriesTestResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConfigurationQueriesTestResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConfigurationQueriesTestResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConfigurationQueriesTestResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

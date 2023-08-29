@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The estimated price info for using a VM. </summary>
     public partial class MachineLearningEstimatedVmPrices
     {
-        /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrices. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrices"/>. </summary>
         /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
         /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
         /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>
@@ -29,15 +31,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrices. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrices"/>. </summary>
         /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
         /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
         /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>
-        internal MachineLearningEstimatedVmPrices(MachineLearningBillingCurrency billingCurrency, MachineLearningUnitOfMeasure unitOfMeasure, IReadOnlyList<MachineLearningEstimatedVmPrice> values)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEstimatedVmPrices(MachineLearningBillingCurrency billingCurrency, MachineLearningUnitOfMeasure unitOfMeasure, IReadOnlyList<MachineLearningEstimatedVmPrice> values, Dictionary<string, BinaryData> rawData)
         {
             BillingCurrency = billingCurrency;
             UnitOfMeasure = unitOfMeasure;
             Values = values;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrices"/> for deserialization. </summary>
+        internal MachineLearningEstimatedVmPrices()
+        {
         }
 
         /// <summary> Three lettered code specifying the currency of the VM price. Example: USD. </summary>

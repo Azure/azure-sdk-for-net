@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Describes the properties of a VM size. </summary>
     public partial class MachineLearningVmSize
     {
-        /// <summary> Initializes a new instance of MachineLearningVmSize. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVmSize"/>. </summary>
         internal MachineLearningVmSize()
         {
             SupportedComputeTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningVmSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVmSize"/>. </summary>
         /// <param name="name"> The name of the virtual machine size. </param>
         /// <param name="family"> The family name of the virtual machine size. </param>
         /// <param name="vCpus"> The number of vCPUs supported by the virtual machine size. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isPremiumIOSupported"> Specifies if the virtual machine size supports premium IO. </param>
         /// <param name="estimatedVmPrices"> The estimated price information for using a VM. </param>
         /// <param name="supportedComputeTypes"> Specifies the compute types supported by the virtual machine size. </param>
-        internal MachineLearningVmSize(string name, string family, int? vCpus, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? isPremiumIOSupported, MachineLearningEstimatedVmPrices estimatedVmPrices, IReadOnlyList<string> supportedComputeTypes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningVmSize(string name, string family, int? vCpus, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? isPremiumIOSupported, MachineLearningEstimatedVmPrices estimatedVmPrices, IReadOnlyList<string> supportedComputeTypes, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Family = family;
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IsPremiumIOSupported = isPremiumIOSupported;
             EstimatedVmPrices = estimatedVmPrices;
             SupportedComputeTypes = supportedComputeTypes;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the virtual machine size. </summary>

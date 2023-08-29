@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDefaultScaleSettings : IUtf8JsonSerializable
+    public partial class MachineLearningDefaultScaleSettings : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningDefaultScaleSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningDefaultScaleSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningDefaultScaleSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningDefaultScaleSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("scaleType"u8);
             writer.WriteStringValue(ScaleType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningDefaultScaleSettings DeserializeMachineLearningDefaultScaleSettings(JsonElement element)
+        internal static MachineLearningDefaultScaleSettings DeserializeMachineLearningDefaultScaleSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ScaleType scaleType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scaleType"u8))
@@ -34,8 +57,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scaleType = new ScaleType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningDefaultScaleSettings(scaleType);
+            return new MachineLearningDefaultScaleSettings(scaleType, rawData);
+        }
+
+        MachineLearningDefaultScaleSettings IModelJsonSerializable<MachineLearningDefaultScaleSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningDefaultScaleSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningDefaultScaleSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningDefaultScaleSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningDefaultScaleSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningDefaultScaleSettings IModelSerializable<MachineLearningDefaultScaleSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningDefaultScaleSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningDefaultScaleSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningDefaultScaleSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningDefaultScaleSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningDefaultScaleSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -12,18 +16,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutoForecastHorizon"/> and <see cref="CustomForecastHorizon"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownForecastHorizon))]
     public abstract partial class ForecastHorizon
     {
-        /// <summary> Initializes a new instance of ForecastHorizon. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForecastHorizon"/>. </summary>
         protected ForecastHorizon()
         {
         }
 
-        /// <summary> Initializes a new instance of ForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastHorizon"/>. </summary>
         /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
-        internal ForecastHorizon(ForecastHorizonMode mode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastHorizon(ForecastHorizonMode mode, Dictionary<string, BinaryData> rawData)
         {
             Mode = mode;
+            _rawData = rawData;
         }
 
         /// <summary> [Required] Set forecast horizon value selection mode. </summary>

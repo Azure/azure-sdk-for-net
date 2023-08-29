@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> The credential result response. </summary>
     public partial class CredentialResult
     {
-        /// <summary> Initializes a new instance of CredentialResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CredentialResult"/>. </summary>
         internal CredentialResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CredentialResult"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
-        internal CredentialResult(string name, byte[] value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CredentialResult(string name, byte[] value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the credential. </summary>

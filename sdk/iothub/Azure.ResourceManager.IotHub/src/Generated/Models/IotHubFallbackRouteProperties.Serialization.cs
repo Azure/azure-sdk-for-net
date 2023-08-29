@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubFallbackRouteProperties : IUtf8JsonSerializable
+    public partial class IotHubFallbackRouteProperties : IUtf8JsonSerializable, IModelJsonSerializable<IotHubFallbackRouteProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotHubFallbackRouteProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotHubFallbackRouteProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -37,11 +44,25 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteEndArray();
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotHubFallbackRouteProperties DeserializeIotHubFallbackRouteProperties(JsonElement element)
+        internal static IotHubFallbackRouteProperties DeserializeIotHubFallbackRouteProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +72,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<string> condition = default;
             IList<string> endpointNames = default;
             bool isEnabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -83,8 +105,57 @@ namespace Azure.ResourceManager.IotHub.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotHubFallbackRouteProperties(name.Value, source, condition.Value, endpointNames, isEnabled);
+            return new IotHubFallbackRouteProperties(name.Value, source, condition.Value, endpointNames, isEnabled, rawData);
+        }
+
+        IotHubFallbackRouteProperties IModelJsonSerializable<IotHubFallbackRouteProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubFallbackRouteProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotHubFallbackRouteProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotHubFallbackRouteProperties IModelSerializable<IotHubFallbackRouteProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotHubFallbackRouteProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IotHubFallbackRouteProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IotHubFallbackRouteProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotHubFallbackRouteProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

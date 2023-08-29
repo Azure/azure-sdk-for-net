@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningUsernamePasswordAuthTypeWorkspaceConnection : IUtf8JsonSerializable
+    public partial class MachineLearningUsernamePasswordAuthTypeWorkspaceConnection : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Credentials))
             {
@@ -42,11 +50,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("valueFormat"u8);
                 writer.WriteStringValue(ValueFormat.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningUsernamePasswordAuthTypeWorkspaceConnection DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(JsonElement element)
+        internal static MachineLearningUsernamePasswordAuthTypeWorkspaceConnection DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> target = default;
             Optional<string> value = default;
             Optional<MachineLearningValueFormat> valueFormat = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("credentials"u8))
@@ -101,8 +124,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     valueFormat = new MachineLearningValueFormat(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), target.Value, value.Value, Optional.ToNullable(valueFormat), credentials.Value);
+            return new MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), target.Value, value.Value, Optional.ToNullable(valueFormat), credentials.Value, rawData);
+        }
+
+        MachineLearningUsernamePasswordAuthTypeWorkspaceConnection IModelJsonSerializable<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningUsernamePasswordAuthTypeWorkspaceConnection IModelSerializable<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningUsernamePasswordAuthTypeWorkspaceConnection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

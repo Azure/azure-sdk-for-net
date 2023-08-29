@@ -8,14 +8,95 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesRegistrationAssignmentRegistrationProperties
+    public partial class ManagedServicesRegistrationAssignmentRegistrationProperties : IUtf8JsonSerializable, IModelJsonSerializable<ManagedServicesRegistrationAssignmentRegistrationProperties>
     {
-        internal static ManagedServicesRegistrationAssignmentRegistrationProperties DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedServicesRegistrationAssignmentRegistrationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedServicesRegistrationAssignmentRegistrationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(Authorizations))
+            {
+                writer.WritePropertyName("authorizations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Authorizations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(EligibleAuthorizations))
+            {
+                writer.WritePropertyName("eligibleAuthorizations"u8);
+                writer.WriteStartArray();
+                foreach (var item in EligibleAuthorizations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RegistrationDefinitionName))
+            {
+                writer.WritePropertyName("registrationDefinitionName"u8);
+                writer.WriteStringValue(RegistrationDefinitionName);
+            }
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(ManageeTenantId))
+            {
+                writer.WritePropertyName("manageeTenantId"u8);
+                writer.WriteStringValue(ManageeTenantId.Value);
+            }
+            if (Optional.IsDefined(ManageeTenantName))
+            {
+                writer.WritePropertyName("manageeTenantName"u8);
+                writer.WriteStringValue(ManageeTenantName);
+            }
+            if (Optional.IsDefined(ManagedByTenantId))
+            {
+                writer.WritePropertyName("managedByTenantId"u8);
+                writer.WriteStringValue(ManagedByTenantId.Value);
+            }
+            if (Optional.IsDefined(ManagedByTenantName))
+            {
+                writer.WritePropertyName("managedByTenantName"u8);
+                writer.WriteStringValue(ManagedByTenantName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ManagedServicesRegistrationAssignmentRegistrationProperties DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +110,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<string> manageeTenantName = default;
             Optional<Guid> managedByTenantId = default;
             Optional<string> managedByTenantName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -106,8 +188,57 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     managedByTenantName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedServicesRegistrationAssignmentRegistrationProperties(description.Value, Optional.ToList(authorizations), Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, Optional.ToNullable(managedByTenantId), managedByTenantName.Value);
+            return new ManagedServicesRegistrationAssignmentRegistrationProperties(description.Value, Optional.ToList(authorizations), Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, Optional.ToNullable(managedByTenantId), managedByTenantName.Value, rawData);
+        }
+
+        ManagedServicesRegistrationAssignmentRegistrationProperties IModelJsonSerializable<ManagedServicesRegistrationAssignmentRegistrationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedServicesRegistrationAssignmentRegistrationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedServicesRegistrationAssignmentRegistrationProperties IModelSerializable<ManagedServicesRegistrationAssignmentRegistrationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedServicesRegistrationAssignmentRegistrationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedServicesRegistrationAssignmentRegistrationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

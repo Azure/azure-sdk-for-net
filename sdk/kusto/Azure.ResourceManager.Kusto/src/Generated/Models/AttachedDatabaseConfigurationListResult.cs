@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list attached database configurations operation response. </summary>
     internal partial class AttachedDatabaseConfigurationListResult
     {
-        /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttachedDatabaseConfigurationListResult"/>. </summary>
         internal AttachedDatabaseConfigurationListResult()
         {
             Value = new ChangeTrackingList<KustoAttachedDatabaseConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedDatabaseConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of attached database configurations. </param>
-        internal AttachedDatabaseConfigurationListResult(IReadOnlyList<KustoAttachedDatabaseConfigurationData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttachedDatabaseConfigurationListResult(IReadOnlyList<KustoAttachedDatabaseConfigurationData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of attached database configurations. </summary>

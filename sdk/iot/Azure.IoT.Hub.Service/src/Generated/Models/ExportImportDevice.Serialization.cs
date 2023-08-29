@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class ExportImportDevice : IUtf8JsonSerializable
+    public partial class ExportImportDevice : IUtf8JsonSerializable, IModelJsonSerializable<ExportImportDevice>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExportImportDevice>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExportImportDevice>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -86,7 +94,191 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WritePropertyName("deviceScope"u8);
                 writer.WriteStringValue(DeviceScope);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ExportImportDevice DeserializeExportImportDevice(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> id = default;
+            Optional<string> moduleId = default;
+            Optional<string> eTag = default;
+            Optional<ExportImportDeviceImportMode> importMode = default;
+            Optional<ExportImportDeviceStatus> status = default;
+            Optional<string> statusReason = default;
+            Optional<AuthenticationMechanism> authentication = default;
+            Optional<string> twinETag = default;
+            Optional<IDictionary<string, object>> tags = default;
+            Optional<PropertyContainer> properties = default;
+            Optional<DeviceCapabilities> capabilities = default;
+            Optional<string> deviceScope = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("moduleId"u8))
+                {
+                    moduleId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("eTag"u8))
+                {
+                    eTag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("importMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    importMode = new ExportImportDeviceImportMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new ExportImportDeviceStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("statusReason"u8))
+                {
+                    statusReason = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authentication"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authentication = AuthenticationMechanism.DeserializeAuthenticationMechanism(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("twinETag"u8))
+                {
+                    twinETag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PropertyContainer.DeserializePropertyContainer(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("capabilities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capabilities = DeviceCapabilities.DeserializeDeviceCapabilities(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("deviceScope"u8))
+                {
+                    deviceScope = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ExportImportDevice(id.Value, moduleId.Value, eTag.Value, Optional.ToNullable(importMode), Optional.ToNullable(status), statusReason.Value, authentication.Value, twinETag.Value, Optional.ToDictionary(tags), properties.Value, capabilities.Value, deviceScope.Value, rawData);
+        }
+
+        ExportImportDevice IModelJsonSerializable<ExportImportDevice>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportImportDevice(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExportImportDevice>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExportImportDevice IModelSerializable<ExportImportDevice>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExportImportDevice(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExportImportDevice model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExportImportDevice(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExportImportDevice(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

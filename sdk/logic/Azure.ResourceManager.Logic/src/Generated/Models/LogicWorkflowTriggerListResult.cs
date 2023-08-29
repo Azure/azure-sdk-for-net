@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of workflow triggers. </summary>
     internal partial class LogicWorkflowTriggerListResult
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerListResult"/>. </summary>
         internal LogicWorkflowTriggerListResult()
         {
             Value = new ChangeTrackingList<LogicWorkflowTriggerData>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerListResult"/>. </summary>
         /// <param name="value"> A list of workflow triggers. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LogicWorkflowTriggerListResult(IReadOnlyList<LogicWorkflowTriggerData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowTriggerListResult(IReadOnlyList<LogicWorkflowTriggerData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of workflow triggers. </summary>

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateEndpointConnectionResource(Client, HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(e)), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HybridComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HybridComputePrivateEndpointConnectionResource(Client, HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(e)), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HybridComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateEndpointConnectionResource(Client, HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(e)), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HybridComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HybridComputePrivateEndpointConnectionResource(Client, HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(e)), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HybridComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

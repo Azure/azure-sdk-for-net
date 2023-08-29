@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabServicesScheduleData : IUtf8JsonSerializable
+    public partial class LabServicesScheduleData : IUtf8JsonSerializable, IModelJsonSerializable<LabServicesScheduleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LabServicesScheduleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LabServicesScheduleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -50,11 +57,25 @@ namespace Azure.ResourceManager.LabServices
 #endif
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabServicesScheduleData DeserializeLabServicesScheduleData(JsonElement element)
+        internal static LabServicesScheduleData DeserializeLabServicesScheduleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +90,7 @@ namespace Azure.ResourceManager.LabServices
             Optional<string> timeZoneId = default;
             Optional<BinaryData> notes = default;
             Optional<LabServicesProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -157,8 +179,57 @@ namespace Azure.ResourceManager.LabServices
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LabServicesScheduleData(id, name, type, systemData.Value, Optional.ToNullable(startAt), Optional.ToNullable(stopAt), recurrencePattern.Value, timeZoneId.Value, notes.Value, Optional.ToNullable(provisioningState));
+            return new LabServicesScheduleData(id, name, type, systemData.Value, Optional.ToNullable(startAt), Optional.ToNullable(stopAt), recurrencePattern.Value, timeZoneId.Value, notes.Value, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        LabServicesScheduleData IModelJsonSerializable<LabServicesScheduleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabServicesScheduleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LabServicesScheduleData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LabServicesScheduleData IModelSerializable<LabServicesScheduleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLabServicesScheduleData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LabServicesScheduleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LabServicesScheduleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLabServicesScheduleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

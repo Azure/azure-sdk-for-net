@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class AADProfile : IUtf8JsonSerializable
+    public partial class AADProfile : IUtf8JsonSerializable, IModelJsonSerializable<AADProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AADProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AADProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AADProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AdminGroupObjectIds))
             {
@@ -57,11 +63,25 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AADProfile DeserializeAADProfile(JsonElement element)
+        internal static AADProfile DeserializeAADProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +93,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> serverAppId = default;
             Optional<Guid> tenantId = default;
             Optional<string> serverAppSecret = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminGroupObjectIDs"u8))
@@ -131,8 +152,57 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     serverAppSecret = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AADProfile(serverAppSecret.Value, Optional.ToList(adminGroupObjectIds), clientAppId.Value, Optional.ToNullable(enableAzureRbac), Optional.ToNullable(managed), serverAppId.Value, Optional.ToNullable(tenantId));
+            return new AADProfile(serverAppSecret.Value, Optional.ToList(adminGroupObjectIds), clientAppId.Value, Optional.ToNullable(enableAzureRbac), Optional.ToNullable(managed), serverAppId.Value, Optional.ToNullable(tenantId), rawData);
+        }
+
+        AADProfile IModelJsonSerializable<AADProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AADProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAADProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AADProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AADProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AADProfile IModelSerializable<AADProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AADProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAADProfile(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AADProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AADProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAADProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

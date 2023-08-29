@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Access information for the storage account. </summary>
     public partial class StorageAccountCredentials
     {
-        /// <summary> Initializes a new instance of StorageAccountCredentials. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentials"/>. </summary>
         internal StorageAccountCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentials"/>. </summary>
         /// <param name="resourceId"> The ARM resource ID of the storage account. </param>
         /// <param name="primaryKey"> The primary key of the storage account. </param>
         /// <param name="secondaryKey"> The secondary key of the storage account. </param>
-        internal StorageAccountCredentials(string resourceId, string primaryKey, string secondaryKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountCredentials(string resourceId, string primaryKey, string secondaryKey, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            _rawData = rawData;
         }
 
         /// <summary> The ARM resource ID of the storage account. </summary>

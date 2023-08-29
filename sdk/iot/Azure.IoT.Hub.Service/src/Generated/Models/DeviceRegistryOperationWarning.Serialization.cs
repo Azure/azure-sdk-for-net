@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class DeviceRegistryOperationWarning
+    public partial class DeviceRegistryOperationWarning : IUtf8JsonSerializable, IModelJsonSerializable<DeviceRegistryOperationWarning>
     {
-        internal static DeviceRegistryOperationWarning DeserializeDeviceRegistryOperationWarning(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceRegistryOperationWarning>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceRegistryOperationWarning>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DeviceId))
+            {
+                writer.WritePropertyName("deviceId"u8);
+                writer.WriteStringValue(DeviceId);
+            }
+            if (Optional.IsDefined(WarningCode))
+            {
+                writer.WritePropertyName("warningCode"u8);
+                writer.WriteStringValue(WarningCode.Value.ToString());
+            }
+            if (Optional.IsDefined(WarningStatus))
+            {
+                writer.WritePropertyName("warningStatus"u8);
+                writer.WriteStringValue(WarningStatus);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DeviceRegistryOperationWarning DeserializeDeviceRegistryOperationWarning(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<string> deviceId = default;
             Optional<DeviceRegistryOperationWarningCode> warningCode = default;
             Optional<string> warningStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -42,8 +86,57 @@ namespace Azure.IoT.Hub.Service.Models
                     warningStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeviceRegistryOperationWarning(deviceId.Value, Optional.ToNullable(warningCode), warningStatus.Value);
+            return new DeviceRegistryOperationWarning(deviceId.Value, Optional.ToNullable(warningCode), warningStatus.Value, rawData);
+        }
+
+        DeviceRegistryOperationWarning IModelJsonSerializable<DeviceRegistryOperationWarning>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceRegistryOperationWarning(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceRegistryOperationWarning>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceRegistryOperationWarning IModelSerializable<DeviceRegistryOperationWarning>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceRegistryOperationWarning(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DeviceRegistryOperationWarning model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DeviceRegistryOperationWarning(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceRegistryOperationWarning(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

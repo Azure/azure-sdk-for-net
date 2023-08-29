@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,20 +16,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningJobLimits"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningSweepJobLimits"/> and <see cref="MachineLearningCommandJobLimits"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownJobLimits))]
     public abstract partial class MachineLearningJobLimits
     {
-        /// <summary> Initializes a new instance of MachineLearningJobLimits. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobLimits"/>. </summary>
         protected MachineLearningJobLimits()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobLimits"/>. </summary>
         /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
         /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
-        internal MachineLearningJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout, Dictionary<string, BinaryData> rawData)
         {
             JobLimitsType = jobLimitsType;
             Timeout = timeout;
+            _rawData = rawData;
         }
 
         /// <summary> [Required] JobLimit type. </summary>

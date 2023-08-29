@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The integration account sku. </summary>
     internal partial class IntegrationAccountSku
     {
-        /// <summary> Initializes a new instance of IntegrationAccountSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         public IntegrationAccountSku(IntegrationAccountSkuName name)
         {
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSku"/>. </summary>
+        /// <param name="name"> The sku name. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountSku(IntegrationAccountSkuName name, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSku"/> for deserialization. </summary>
+        internal IntegrationAccountSku()
+        {
         }
 
         /// <summary> The sku name. </summary>

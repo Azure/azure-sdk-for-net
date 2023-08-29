@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class ManagedHsmPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of ManagedHsmPrivateLinkResourceListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateLinkResourceListResult"/>. </summary>
         internal ManagedHsmPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<ManagedHsmPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal ManagedHsmPrivateLinkResourceListResult(IReadOnlyList<ManagedHsmPrivateLinkResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedHsmPrivateLinkResourceListResult(IReadOnlyList<ManagedHsmPrivateLinkResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private link resources. </summary>

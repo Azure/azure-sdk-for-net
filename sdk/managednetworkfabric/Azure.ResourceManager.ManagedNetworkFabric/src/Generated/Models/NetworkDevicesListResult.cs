@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of NetworkDevices. </summary>
     internal partial class NetworkDevicesListResult
     {
-        /// <summary> Initializes a new instance of NetworkDevicesListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDevicesListResult"/>. </summary>
         internal NetworkDevicesListResult()
         {
             Value = new ChangeTrackingList<NetworkDeviceData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkDevicesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDevicesListResult"/>. </summary>
         /// <param name="value"> List of NetworkDevice resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NetworkDevicesListResult(IReadOnlyList<NetworkDeviceData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkDevicesListResult(IReadOnlyList<NetworkDeviceData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of NetworkDevice resources. </summary>

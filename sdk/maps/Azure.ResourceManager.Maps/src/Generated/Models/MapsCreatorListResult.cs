@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Maps;
@@ -14,22 +15,26 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> A list of Creator resources. </summary>
     internal partial class MapsCreatorListResult
     {
-        /// <summary> Initializes a new instance of MapsCreatorListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorListResult"/>. </summary>
         internal MapsCreatorListResult()
         {
             Value = new ChangeTrackingList<MapsCreatorData>();
         }
 
-        /// <summary> Initializes a new instance of MapsCreatorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorListResult"/>. </summary>
         /// <param name="value"> a Creator account. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal MapsCreatorListResult(IReadOnlyList<MapsCreatorData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsCreatorListResult(IReadOnlyList<MapsCreatorData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> a Creator account. </summary>

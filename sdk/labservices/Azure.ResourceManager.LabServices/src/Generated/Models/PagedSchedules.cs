@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LabServices;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Paged list of schedules. </summary>
     internal partial class PagedSchedules
     {
-        /// <summary> Initializes a new instance of PagedSchedules. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PagedSchedules"/>. </summary>
         internal PagedSchedules()
         {
             Value = new ChangeTrackingList<LabServicesScheduleData>();
         }
 
-        /// <summary> Initializes a new instance of PagedSchedules. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedSchedules"/>. </summary>
         /// <param name="value"> The array page of schedule results. </param>
         /// <param name="nextLink"> The link to get the next page of schedule results. </param>
-        internal PagedSchedules(IReadOnlyList<LabServicesScheduleData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PagedSchedules(IReadOnlyList<LabServicesScheduleData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The array page of schedule results. </summary>

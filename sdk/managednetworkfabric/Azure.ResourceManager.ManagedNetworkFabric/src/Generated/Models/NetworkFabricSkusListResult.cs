@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Network Fabric SKUs. </summary>
     internal partial class NetworkFabricSkusListResult
     {
-        /// <summary> Initializes a new instance of NetworkFabricSkusListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricSkusListResult"/>. </summary>
         internal NetworkFabricSkusListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricSkuData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricSkusListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricSkusListResult"/>. </summary>
         /// <param name="value"> List of Network Fabric SKU resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NetworkFabricSkusListResult(IReadOnlyList<NetworkFabricSkuData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricSkusListResult(IReadOnlyList<NetworkFabricSkuData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of Network Fabric SKU resources. </summary>

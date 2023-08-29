@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningHDInsightProperties : IUtf8JsonSerializable
+    public partial class MachineLearningHDInsightProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningHDInsightProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningHDInsightProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningHDInsightProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SshPort))
             {
@@ -38,11 +46,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("administratorAccount");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningHDInsightProperties DeserializeMachineLearningHDInsightProperties(JsonElement element)
+        internal static MachineLearningHDInsightProperties DeserializeMachineLearningHDInsightProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> sshPort = default;
             Optional<IPAddress> address = default;
             Optional<MachineLearningVmSshCredentials> administratorAccount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sshPort"u8))
@@ -80,8 +103,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningHDInsightProperties(Optional.ToNullable(sshPort), address.Value, administratorAccount.Value);
+            return new MachineLearningHDInsightProperties(Optional.ToNullable(sshPort), address.Value, administratorAccount.Value, rawData);
+        }
+
+        MachineLearningHDInsightProperties IModelJsonSerializable<MachineLearningHDInsightProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningHDInsightProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningHDInsightProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningHDInsightProperties IModelSerializable<MachineLearningHDInsightProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningHDInsightProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningHDInsightProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningHDInsightProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningHDInsightProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

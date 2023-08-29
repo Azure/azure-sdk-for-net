@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Common properties for Layer2 Configuration. </summary>
     public partial class Layer2Configuration
     {
-        /// <summary> Initializes a new instance of Layer2Configuration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Layer2Configuration"/>. </summary>
         public Layer2Configuration()
         {
             Interfaces = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of Layer2Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Layer2Configuration"/>. </summary>
         /// <param name="mtu"> MTU of the packets between PE &amp; CE. </param>
         /// <param name="interfaces"> List of network device interfaces resource IDs. </param>
-        internal Layer2Configuration(int? mtu, IList<ResourceIdentifier> interfaces)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Layer2Configuration(int? mtu, IList<ResourceIdentifier> interfaces, Dictionary<string, BinaryData> rawData)
         {
             Mtu = mtu;
             Interfaces = interfaces;
+            _rawData = rawData;
         }
 
         /// <summary> MTU of the packets between PE &amp; CE. </summary>

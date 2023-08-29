@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The current state of a private endpoint connection. </summary>
     public partial class IotHubPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of IotHubPrivateLinkServiceConnectionState. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The status of a private endpoint connection. </param>
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
@@ -25,15 +28,22 @@ namespace Azure.ResourceManager.IotHub.Models
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of IotHubPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The status of a private endpoint connection. </param>
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>
-        internal IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus status, string description, string actionsRequired, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateLinkServiceConnectionState"/> for deserialization. </summary>
+        internal IotHubPrivateLinkServiceConnectionState()
+        {
         }
 
         /// <summary> The status of a private endpoint connection. </summary>

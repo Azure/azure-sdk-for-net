@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaTransformOutput : IUtf8JsonSerializable
+    public partial class MediaTransformOutput : IUtf8JsonSerializable, IModelJsonSerializable<MediaTransformOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaTransformOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaTransformOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OnError))
             {
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("preset"u8);
             writer.WriteObjectValue(Preset);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaTransformOutput DeserializeMediaTransformOutput(JsonElement element)
+        internal static MediaTransformOutput DeserializeMediaTransformOutput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<MediaTransformOnErrorType> onError = default;
             Optional<MediaJobPriority> relativePriority = default;
             MediaTransformPreset preset = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("onError"u8))
@@ -64,8 +87,57 @@ namespace Azure.ResourceManager.Media.Models
                     preset = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaTransformOutput(Optional.ToNullable(onError), Optional.ToNullable(relativePriority), preset);
+            return new MediaTransformOutput(Optional.ToNullable(onError), Optional.ToNullable(relativePriority), preset, rawData);
+        }
+
+        MediaTransformOutput IModelJsonSerializable<MediaTransformOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaTransformOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaTransformOutput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaTransformOutput IModelSerializable<MediaTransformOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaTransformOutput(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MediaTransformOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MediaTransformOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaTransformOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

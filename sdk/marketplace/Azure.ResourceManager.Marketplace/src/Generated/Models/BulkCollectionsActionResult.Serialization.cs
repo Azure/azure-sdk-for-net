@@ -5,22 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class BulkCollectionsActionResult
+    public partial class BulkCollectionsActionResult : IUtf8JsonSerializable, IModelJsonSerializable<BulkCollectionsActionResult>
     {
-        internal static BulkCollectionsActionResult DeserializeBulkCollectionsActionResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BulkCollectionsActionResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BulkCollectionsActionResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Succeeded))
+            {
+                writer.WritePropertyName("succeeded"u8);
+                writer.WriteStartArray();
+                foreach (var item in Succeeded)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Failed))
+            {
+                writer.WritePropertyName("failed"u8);
+                writer.WriteStartArray();
+                foreach (var item in Failed)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BulkCollectionsActionResult DeserializeBulkCollectionsActionResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<PrivateStoreCollectionDetails>> succeeded = default;
             Optional<IReadOnlyList<PrivateStoreCollectionDetails>> failed = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("succeeded"u8))
@@ -51,8 +99,57 @@ namespace Azure.ResourceManager.Marketplace.Models
                     failed = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BulkCollectionsActionResult(Optional.ToList(succeeded), Optional.ToList(failed));
+            return new BulkCollectionsActionResult(Optional.ToList(succeeded), Optional.ToList(failed), rawData);
+        }
+
+        BulkCollectionsActionResult IModelJsonSerializable<BulkCollectionsActionResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBulkCollectionsActionResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BulkCollectionsActionResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BulkCollectionsActionResult IModelSerializable<BulkCollectionsActionResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBulkCollectionsActionResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BulkCollectionsActionResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BulkCollectionsActionResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBulkCollectionsActionResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

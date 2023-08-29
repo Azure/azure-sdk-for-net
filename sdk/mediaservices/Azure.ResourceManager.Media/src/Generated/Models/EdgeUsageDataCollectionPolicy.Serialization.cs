@@ -6,15 +6,62 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class EdgeUsageDataCollectionPolicy
+    public partial class EdgeUsageDataCollectionPolicy : IUtf8JsonSerializable, IModelJsonSerializable<EdgeUsageDataCollectionPolicy>
     {
-        internal static EdgeUsageDataCollectionPolicy DeserializeEdgeUsageDataCollectionPolicy(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeUsageDataCollectionPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeUsageDataCollectionPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DataCollectionFrequency))
+            {
+                writer.WritePropertyName("dataCollectionFrequency"u8);
+                writer.WriteStringValue(DataCollectionFrequency);
+            }
+            if (Optional.IsDefined(DataReportingFrequency))
+            {
+                writer.WritePropertyName("dataReportingFrequency"u8);
+                writer.WriteStringValue(DataReportingFrequency);
+            }
+            if (Optional.IsDefined(MaxAllowedUnreportedUsageDuration))
+            {
+                writer.WritePropertyName("maxAllowedUnreportedUsageDuration"u8);
+                writer.WriteStringValue(MaxAllowedUnreportedUsageDuration.Value, "P");
+            }
+            if (Optional.IsDefined(EventHubDetails))
+            {
+                writer.WritePropertyName("eventHubDetails"u8);
+                writer.WriteObjectValue(EventHubDetails);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EdgeUsageDataCollectionPolicy DeserializeEdgeUsageDataCollectionPolicy(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> dataReportingFrequency = default;
             Optional<TimeSpan> maxAllowedUnreportedUsageDuration = default;
             Optional<EdgeUsageDataEventHub> eventHubDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataCollectionFrequency"u8))
@@ -53,8 +101,57 @@ namespace Azure.ResourceManager.Media.Models
                     eventHubDetails = EdgeUsageDataEventHub.DeserializeEdgeUsageDataEventHub(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdgeUsageDataCollectionPolicy(dataCollectionFrequency.Value, dataReportingFrequency.Value, Optional.ToNullable(maxAllowedUnreportedUsageDuration), eventHubDetails.Value);
+            return new EdgeUsageDataCollectionPolicy(dataCollectionFrequency.Value, dataReportingFrequency.Value, Optional.ToNullable(maxAllowedUnreportedUsageDuration), eventHubDetails.Value, rawData);
+        }
+
+        EdgeUsageDataCollectionPolicy IModelJsonSerializable<EdgeUsageDataCollectionPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeUsageDataCollectionPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeUsageDataCollectionPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeUsageDataCollectionPolicy IModelSerializable<EdgeUsageDataCollectionPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeUsageDataCollectionPolicy(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EdgeUsageDataCollectionPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EdgeUsageDataCollectionPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeUsageDataCollectionPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

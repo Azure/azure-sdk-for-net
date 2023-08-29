@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class VpnConfigurationOptionAProperties : IUtf8JsonSerializable
+    public partial class VpnConfigurationOptionAProperties : IUtf8JsonSerializable, IModelJsonSerializable<VpnConfigurationOptionAProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VpnConfigurationOptionAProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VpnConfigurationOptionAProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VpnConfigurationOptionAProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
@@ -55,11 +63,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VpnConfigurationOptionAProperties DeserializeVpnConfigurationOptionAProperties(JsonElement element)
+        internal static VpnConfigurationOptionAProperties DeserializeVpnConfigurationOptionAProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<int> vlanId = default;
             Optional<long> peerAsn = default;
             Optional<BfdConfiguration> bfdConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -130,8 +153,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VpnConfigurationOptionAProperties(Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(peerAsn), bfdConfiguration.Value, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
+            return new VpnConfigurationOptionAProperties(Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(peerAsn), bfdConfiguration.Value, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, rawData);
+        }
+
+        VpnConfigurationOptionAProperties IModelJsonSerializable<VpnConfigurationOptionAProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VpnConfigurationOptionAProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnConfigurationOptionAProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VpnConfigurationOptionAProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VpnConfigurationOptionAProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VpnConfigurationOptionAProperties IModelSerializable<VpnConfigurationOptionAProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VpnConfigurationOptionAProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVpnConfigurationOptionAProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VpnConfigurationOptionAProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VpnConfigurationOptionAProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVpnConfigurationOptionAProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

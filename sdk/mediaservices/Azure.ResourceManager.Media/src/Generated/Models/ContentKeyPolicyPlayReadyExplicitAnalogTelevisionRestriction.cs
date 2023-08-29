@@ -5,18 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Configures the Explicit Analog Television Output Restriction control bits. For further details see the PlayReady Compliance Rules. </summary>
     public partial class ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction"/>. </summary>
         /// <param name="isBestEffort"> Indicates whether this restriction is enforced on a Best Effort basis. </param>
         /// <param name="configurationData"> Configures the restriction control bits. Must be between 0 and 3 inclusive. </param>
         public ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(bool isBestEffort, int configurationData)
         {
             IsBestEffort = isBestEffort;
             ConfigurationData = configurationData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction"/>. </summary>
+        /// <param name="isBestEffort"> Indicates whether this restriction is enforced on a Best Effort basis. </param>
+        /// <param name="configurationData"> Configures the restriction control bits. Must be between 0 and 3 inclusive. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(bool isBestEffort, int configurationData, Dictionary<string, BinaryData> rawData)
+        {
+            IsBestEffort = isBestEffort;
+            ConfigurationData = configurationData;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction"/> for deserialization. </summary>
+        internal ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction()
+        {
         }
 
         /// <summary> Indicates whether this restriction is enforced on a Best Effort basis. </summary>

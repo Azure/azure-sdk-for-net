@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger custom dynamic properties. </summary>
     public partial class SwaggerCustomDynamicProperties
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicProperties"/>. </summary>
         public SwaggerCustomDynamicProperties()
         {
             Parameters = new ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicProperties"/>. </summary>
         /// <param name="operationId"> The operation id to fetch dynamic schema. </param>
         /// <param name="valuePath"> Json pointer to the dynamic schema on the response body. </param>
         /// <param name="parameters"> The operation parameters. </param>
-        internal SwaggerCustomDynamicProperties(string operationId, string valuePath, IDictionary<string, SwaggerCustomDynamicProperties> parameters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerCustomDynamicProperties(string operationId, string valuePath, IDictionary<string, SwaggerCustomDynamicProperties> parameters, Dictionary<string, BinaryData> rawData)
         {
             OperationId = operationId;
             ValuePath = valuePath;
             Parameters = parameters;
+            _rawData = rawData;
         }
 
         /// <summary> The operation id to fetch dynamic schema. </summary>

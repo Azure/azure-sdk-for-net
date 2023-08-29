@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotHub;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized array of IotHubDescription objects with a next link. </summary>
     internal partial class IotHubDescriptionListResult
     {
-        /// <summary> Initializes a new instance of IotHubDescriptionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubDescriptionListResult"/>. </summary>
         internal IotHubDescriptionListResult()
         {
             Value = new ChangeTrackingList<IotHubDescriptionData>();
         }
 
-        /// <summary> Initializes a new instance of IotHubDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDescriptionListResult"/>. </summary>
         /// <param name="value"> The array of IotHubDescription objects. </param>
         /// <param name="nextLink"> The next link. </param>
-        internal IotHubDescriptionListResult(IReadOnlyList<IotHubDescriptionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubDescriptionListResult(IReadOnlyList<IotHubDescriptionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The array of IotHubDescription objects. </summary>
