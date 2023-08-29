@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class AvailabilitySetDataTests : ModelJsonTests<AvailabilitySetData>
+    internal class AvailabilitySetDataTestsWithVMs : ModelJsonTests<AvailabilitySetData>
     {
-        protected override string WirePayload => File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataWireFormat.json")).TrimEnd();
+        protected override string WirePayload => File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataWithVMsWireFormat.json")).TrimEnd();
 
         protected override string JsonPayload => WirePayload;
 
@@ -29,10 +29,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             expectedSerializedString += "\"sku\":{\"name\":\"Classic\"";
             //if (!ignoreAdditionalProperties)
             //    expectedSerializedString += ",\"extraSku\":\"extraSku\"";
-            expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3}";
+            expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3";
             //if (!ignoreAdditionalProperties)
             //    expectedSerializedString += ",\"extraRoot\":\"extraRoot\"";
-            expectedSerializedString += "}";
+            expectedSerializedString += ",\"virtualMachines\":[{\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS1\"},{\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS2\"}]";
+            expectedSerializedString += "}}";
             return expectedSerializedString; ;
         }
 
@@ -48,6 +49,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(5, model.PlatformUpdateDomainCount);
             Assert.AreEqual(3, model.PlatformFaultDomainCount);
             Assert.AreEqual("Classic", model.Sku.Name);
+            Assert.AreEqual(2, model.VirtualMachines.Count);
+            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS1", model.VirtualMachines[0].Id.ToString());
+            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS2", model.VirtualMachines[1].Id.ToString());
         }
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, ModelSerializerFormat format)
@@ -61,6 +65,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 Assert.AreEqual(model.ResourceType, model2.ResourceType);
             CollectionAssert.AreEquivalent(model.Tags, model2.Tags);
             Assert.AreEqual(model.Sku.Name, model2.Sku.Name);
+            Assert.AreEqual(model.VirtualMachines.Count, model2.VirtualMachines.Count);
+            Assert.AreEqual(model.VirtualMachines[0].Id, model2.VirtualMachines[0].Id);
+            Assert.AreEqual(model.VirtualMachines[1].Id, model2.VirtualMachines[1].Id);
         }
     }
 }
