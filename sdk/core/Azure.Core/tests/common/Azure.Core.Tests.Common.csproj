@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
   
@@ -13,8 +12,28 @@
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingList.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ErrorResponse.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HttpPipelineExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)JsonElementExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)IXmlSerializable.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Optional.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)XElementExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)XmlWriterContent.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)XmlWriterExtensions.cs" LinkBase="Shared/Core" />
   </ItemGroup>
   
   <ItemGroup>
