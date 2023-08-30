@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 internal static class ResourceExtensions
 {
     private const string AiSdkPrefixKey = "ai.sdk.prefix";
-    private const string AiSdkDistroKey = "telemetry.distro.name";
+    private const string TelemetryDistroNameKey = "telemetry.distro.name";
     private const string DefaultServiceName = "unknown_service";
     private const int Version = 2;
 
@@ -61,7 +61,7 @@ internal static class ResourceExtensions
                 case AiSdkPrefixKey when attribute.Value is string _aiSdkPrefixValue:
                     SdkVersionUtils.SdkVersionPrefix = _aiSdkPrefixValue;
                     continue;
-                case AiSdkDistroKey when attribute.Value is string _aiSdkDistroValue:
+                case TelemetryDistroNameKey when attribute.Value is string _aiSdkDistroValue:
                     if (_aiSdkDistroValue == "Azure.Monitor.OpenTelemetry.AspNetCore")
                     {
                         SdkVersionUtils.IsDistro = true;
