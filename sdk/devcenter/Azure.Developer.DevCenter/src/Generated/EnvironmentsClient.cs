@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -382,7 +383,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsNextPageRequest(nextLink, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -404,7 +405,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsNextPageRequest(nextLink, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -431,7 +432,7 @@ namespace Azure.Developer.DevCenter
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsByUserRequest(userId, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsByUserNextPageRequest(nextLink, userId, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -458,7 +459,7 @@ namespace Azure.Developer.DevCenter
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsByUserRequest(userId, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsByUserNextPageRequest(nextLink, userId, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -480,7 +481,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemsNextPageRequest(nextLink, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -502,7 +503,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemsNextPageRequest(nextLink, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -529,7 +530,7 @@ namespace Azure.Developer.DevCenter
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemVersionsRequest(catalogItemId, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemVersionsNextPageRequest(nextLink, catalogItemId, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -556,7 +557,7 @@ namespace Azure.Developer.DevCenter
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemVersionsRequest(catalogItemId, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemVersionsNextPageRequest(nextLink, catalogItemId, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -578,7 +579,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentTypesNextPageRequest(nextLink, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -600,7 +601,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentTypesNextPageRequest(nextLink, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
         }
 
         /// <summary>
