@@ -17,7 +17,7 @@ public class OpenAIClient
     public OpenAIClient(KeyCredential credential, OpenAIClientOptions options = default)
     {
         _credential = credential;
-        _pipeline = HttpPipelineBuilder.Build(new OptionsWrapper());
+        _pipeline = HttpPipelineBuilder.Build(new PipelineOptions());
     }
 
     public Result<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
@@ -47,5 +47,5 @@ public class OpenAIClient
         return Result.FromValue(completions, message.Response);
     }
 
-    internal class OptionsWrapper : ClientOptions { }
+    private class PipelineOptions : ClientOptions { }
 }
