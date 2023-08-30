@@ -5,10 +5,10 @@ namespace System.ServiceModel.Rest;
 
 internal class NotNullWhenAttribute : Attribute
 {
-    public NotNullWhenAttribute(bool v)
+    public NotNullWhenAttribute(bool returnValue)
     {
-        V = v;
+        ReturnValue = returnValue;
     }
 
-    public bool V { get; }
+    public bool ReturnValue { get; }
 }

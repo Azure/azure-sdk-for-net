@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using OpenAI;
+using System.Diagnostics;
 using System.ServiceModel.Rest;
 using Xunit;
 
@@ -17,6 +18,6 @@ public class OpenAIClientTests
         var client = new OpenAIClient(credential);
         Result<Completions> result = client.GetCompletions("tell me something about life.");
         Choice choice = result.Value.Choices[0];
-        Console.WriteLine(choice.Text);
+        Debug.WriteLine(choice.Text);
     }
 }
