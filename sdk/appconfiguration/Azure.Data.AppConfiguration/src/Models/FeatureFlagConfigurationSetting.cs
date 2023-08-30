@@ -163,8 +163,8 @@ namespace Azure.Data.AppConfiguration
 
         private string FormatValue()
         {
-            using var memoryStream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(memoryStream);
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
 
             writer.WriteStartObject();
             writer.WriteString("id", _featureId);
@@ -182,7 +182,7 @@ namespace Azure.Data.AppConfiguration
             if (_clientFilters.Any())
             {
                 writer.WriteStartArray("client_filters");
-                foreach (var featureFlagFilter in _clientFilters)
+                foreach (FeatureFlagFilter featureFlagFilter in _clientFilters)
                 {
                     writer.WriteStartObject();
                     writer.WriteString("name", featureFlagFilter.Name);
@@ -203,51 +203,49 @@ namespace Azure.Data.AppConfiguration
         {
             try
             {
-                using var document = JsonDocument.Parse(_originalValue);
-                var root = document.RootElement;
+                using JsonDocument document = JsonDocument.Parse(_originalValue);
+                JsonElement root = document.RootElement;
 
-                if (!root.TryGetProperty("id", out var idProperty))
+                if (!root.TryGetProperty("id", out JsonElement idProperty))
                 {
                     return false;
                 }
-
                 _featureId = idProperty.GetString();
 
-                if (!root.TryGetProperty("enabled", out var enabledProperty))
+                if (!root.TryGetProperty("enabled", out JsonElement enabledProperty))
                 {
                     return false;
                 }
-
                 _isEnabled = enabledProperty.GetBoolean();
 
-                if (!root.TryGetProperty("conditions", out var conditionsProperty))
+                if (!root.TryGetProperty("conditions", out JsonElement conditionsProperty))
                 {
                     return false;
                 }
 
-                if (root.TryGetProperty("description", out var descriptionProperty))
+                if (root.TryGetProperty("description", out JsonElement descriptionProperty))
                 {
                     _description = descriptionProperty.GetString();
                 }
 
-                if (root.TryGetProperty("display_name", out var displayNameProperty))
+                if (root.TryGetProperty("display_name", out JsonElement displayNameProperty))
                 {
                     _displayName = displayNameProperty.GetString();
                 }
 
-                var newFilters = new ObservableCollection<FeatureFlagFilter>();
-                if (conditionsProperty.TryGetProperty("client_filters", out var clientFiltersProperty) &&
+                ObservableCollection<FeatureFlagFilter> newFilters = new ObservableCollection<FeatureFlagFilter>();
+                if (conditionsProperty.TryGetProperty("client_filters", out JsonElement clientFiltersProperty) &&
                     clientFiltersProperty.ValueKind == JsonValueKind.Array)
                 {
-                    foreach (var clientFilter in clientFiltersProperty.EnumerateArray())
+                    foreach (JsonElement clientFilter in clientFiltersProperty.EnumerateArray())
                     {
-                        if (!clientFilter.TryGetProperty("name", out var filterNameProperty))
+                        if (!clientFilter.TryGetProperty("name", out JsonElement filterNameProperty))
                         {
                             return false;
                         }
 
                         Dictionary<string, object> value = null;
-                        if (clientFilter.TryGetProperty("parameters", out var parametersProperty))
+                        if (clientFilter.TryGetProperty("parameters", out JsonElement parametersProperty))
                         {
                             value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
                         }
@@ -258,6 +256,8 @@ namespace Azure.Data.AppConfiguration
 
                 _clientFilters = newFilters;
             }
+            // TODO: we shouldn't catch a top-level exception; this could swallow something important.
+            // Should it be JsonException?
             catch (Exception)
             {
                 return false;
@@ -290,14 +290,14 @@ namespace Azure.Data.AppConfiguration
                 case JsonValueKind.Null:
                     return null;
                 case JsonValueKind.Object:
-                    var dictionary = new Dictionary<string, object>();
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (JsonProperty jsonProperty in element.EnumerateObject())
                     {
                         dictionary.Add(jsonProperty.Name, ReadParameterValue(jsonProperty.Value));
                     }
                     return dictionary;
                 case JsonValueKind.Array:
-                    var list = new List<object>();
+                    List<object> list = new List<object>();
                     foreach (JsonElement item in element.EnumerateArray())
                     {
                         list.Add(ReadParameterValue(item));
