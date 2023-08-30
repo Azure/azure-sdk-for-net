@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CassandraKeyspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraKeyspaceCassandraResourcesRestClient.CreateListCassandraKeyspacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraKeyspaceResource(Client, CassandraKeyspaceData.DeserializeCassandraKeyspaceData(e)), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, "CassandraKeyspaceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraKeyspaceResource(Client, CassandraKeyspaceData.DeserializeCassandraKeyspaceData(e)), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, "CassandraKeyspaceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CassandraKeyspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraKeyspaceCassandraResourcesRestClient.CreateListCassandraKeyspacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraKeyspaceResource(Client, CassandraKeyspaceData.DeserializeCassandraKeyspaceData(e)), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, "CassandraKeyspaceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraKeyspaceResource(Client, CassandraKeyspaceData.DeserializeCassandraKeyspaceData(e)), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, "CassandraKeyspaceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
