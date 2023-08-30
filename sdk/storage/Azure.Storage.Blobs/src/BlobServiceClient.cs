@@ -246,7 +246,13 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(options), credential, options ?? new BlobClientOptions())
+            : this(
+                  serviceUri,
+                  credential.AsPolicy(
+                    options?.Audience != null ? options.Audience.Value.ToString() : BlobAudience.PublicAudience.ToString(),
+                    options),
+                  credential,
+                  options ?? new BlobClientOptions())
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
