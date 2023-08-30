@@ -48,6 +48,9 @@ namespace Azure.Data.AppConfiguration
         private bool _isEnabled;
         private IList<FeatureFlagFilter> _clientFilters;
 
+        private Dictionary<string, JsonElement> _unknownRootValues;
+        private Dictionary<string, JsonElement> _unknownConditions;
+
         internal FeatureFlagConfigurationSetting()
         {
             _clientFilters = new List<FeatureFlagFilter>();
@@ -169,6 +172,7 @@ namespace Azure.Data.AppConfiguration
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
 
             writer.WriteStartObject();
+
             writer.WriteString("id", _featureId);
             if (_description != null)
             {
@@ -194,7 +198,27 @@ namespace Azure.Data.AppConfiguration
                 }
                 writer.WriteEndArray();
             }
+
+            if (_unknownConditions != default)
+            {
+                foreach (KeyValuePair<string, JsonElement> condition in _unknownRootValues)
+                {
+                    writer.WritePropertyName(condition.Key);
+                    condition.Value.WriteTo(writer);
+                }
+            }
+
             writer.WriteEndObject();
+
+            if (_unknownRootValues != default)
+            {
+                foreach (KeyValuePair<string, JsonElement> value in _unknownRootValues)
+                {
+                    writer.WritePropertyName(value.Key);
+                    value.Value.WriteTo(writer);
+                }
+            }
+
             writer.WriteEndObject();
             writer.Flush();
 
@@ -392,6 +416,10 @@ namespace Azure.Data.AppConfiguration
             {
                 _clientFilters = newFilters;
             }
+
+            // unknown
+            _unknownRootValues = unknownRootValues;
+            _unknownConditions = unknownConditions;
 
             return true;
         }
