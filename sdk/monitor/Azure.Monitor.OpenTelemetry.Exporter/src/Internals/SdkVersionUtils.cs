@@ -14,6 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private static string? s_prefix;
         internal static string? s_sdkVersion = GetSdkVersion();
+        internal static bool s_isDistro = false;
 
         internal static string? SdkVersionPrefix
         {
@@ -25,7 +26,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static bool IsDistro { get; set; } = false;
+        internal static bool IsDistro
+        {
+            get => s_isDistro;
+            set
+            {
+                s_isDistro = value;
+                s_sdkVersion = GetSdkVersion();
+            }
+        }
 
         internal static string? GetVersion(Type type)
         {
