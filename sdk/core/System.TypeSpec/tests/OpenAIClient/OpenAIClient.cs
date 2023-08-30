@@ -17,15 +17,16 @@ public class OpenAIClient
     public OpenAIClient(KeyCredential credential, OpenAIClientOptions options = default)
     {
         _credential = credential;
-        _pipeline = new HttpPipeline(new HttpClientTransport());
+        _pipeline = HttpPipelineBuilder.Build(new OptionsWrapper());
     }
 
     public Result<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
     {
         HttpMessage message = _pipeline.CreateMessage();
+        message.BufferResponse = true;
         Request request = message.Request;
         request.Uri.Reset(new Uri("https://api.openai.com/v1/completions"));
-        request.Method = RequestMethod.Get;
+        request.Method = RequestMethod.Post;
         request.Headers.Add(HttpHeader.Common.JsonContentType);
         request.Headers.Add(HttpHeader.Names.Authorization, $"Bearer {_credential.Key}");
 
@@ -45,4 +46,6 @@ public class OpenAIClient
 
         return Result.FromValue(completions, message.Response);
     }
+
+    internal class OptionsWrapper : ClientOptions { }
 }

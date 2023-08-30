@@ -20,7 +20,10 @@ public abstract class Result
     /// <param name="result"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public static Result<T> FromValue<T>(T value, Result result) => throw new NotImplementedException();
+    public static Result<T> FromValue<T>(T value, Result result)
+    {
+        return new Result<T>(value, result);
+    }
 
     /// <summary>
     /// Gets the contents of HTTP response, if it is available.
