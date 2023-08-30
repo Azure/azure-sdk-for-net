@@ -114,13 +114,32 @@ public class ResourceExtensionsTests
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
         var testAttributes = new Dictionary<string, object>
         {
-            { "ai.sdk.distro", "" }
+            { "telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore" }
         };
 
         var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
         _ = resource.CreateAzureMonitorResource();
 
         Assert.EndsWith("-d", SdkVersionUtils.s_sdkVersion);
+
+        // Clean up
+        SdkVersionUtils.s_sdkVersion = sdkVersion;
+    }
+
+    [Fact]
+    public void DoesNotSetSdkDistroSuffixForWrongValueFromResource()
+    {
+        // SDK version is static, preserve to clean up later.
+        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var testAttributes = new Dictionary<string, object>
+        {
+            { "telemetry.distro.name", "" }
+        };
+
+        var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+        _ = resource.CreateAzureMonitorResource();
+
+        Assert.DoesNotContain("-d", SdkVersionUtils.s_sdkVersion);
 
         // Clean up
         SdkVersionUtils.s_sdkVersion = sdkVersion;
