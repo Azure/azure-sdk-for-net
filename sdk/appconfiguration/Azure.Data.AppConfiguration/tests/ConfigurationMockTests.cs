@@ -870,6 +870,29 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.IsEmpty(feature.ClientFilters);
         }
 
+        [Test]
+        public async Task CanRoundTripUnknownCondition()
+        {
+            var response = new MockResponse(200);
+
+            //response.SetContent("""{"key":".appconfig.featureflag/flagtest","content_type":"application/vnd.microsoft.appconfig.ff+json;charset=utf-8","value":"{\"id\":\"feature 1829697669\",\"enabled\":true,\"conditions\":{\"client_filters\":null}}"}""");
+
+            response.SetContent("""
+                {
+                    "key":".appconfig.featureflag/flagtest",
+                    "content_type":"application/vnd.microsoft.appconfig.ff+json;charset=utf-8",
+                    "value":"{\"id\":\"feature 1829697669\",\"enabled\":true,\"conditions\":{\"requirement_type\": \"All\",\"client_filters\":null}}"
+                }
+                """);
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var setting = await service.GetConfigurationSettingAsync(".appconfig.featureflag/flagtest");
+            var feature = (FeatureFlagConfigurationSetting)setting.Value;
+            Assert.IsEmpty(feature.ClientFilters);
+        }
+
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
             using (var stream = new MemoryStream())

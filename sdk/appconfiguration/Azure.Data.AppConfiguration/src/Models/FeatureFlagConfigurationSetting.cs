@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -289,6 +290,10 @@ namespace Azure.Data.AppConfiguration
 
             ObservableCollection<FeatureFlagFilter> newFilters = default;
 
+            // unknowns
+            Dictionary<string, JsonElement> unknownRootValues = new();
+            Dictionary<string, JsonElement> unknownConditions = new();
+
             foreach (JsonProperty property in root.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -306,26 +311,39 @@ namespace Azure.Data.AppConfiguration
                 if (property.NameEquals("conditions"u8))
                 {
                     hasConditions = true;
-                    newFilters = new();
 
-                    if (property.Value.TryGetProperty("client_filters", out JsonElement clientFiltersProperty) &&
-                        clientFiltersProperty.ValueKind == JsonValueKind.Array)
+                    foreach (JsonProperty conditionProperty in property.Value.EnumerateObject())
                     {
-                        foreach (JsonElement clientFilter in clientFiltersProperty.EnumerateArray())
+                        if (conditionProperty.NameEquals("client_filters"u8))
                         {
-                            if (!clientFilter.TryGetProperty("name", out JsonElement filterNameProperty))
+                            if (conditionProperty.Value.ValueKind != JsonValueKind.Array)
                             {
-                                return false;
+                                continue;
                             }
 
-                            Dictionary<string, object> value = null;
-                            if (clientFilter.TryGetProperty("parameters", out JsonElement parametersProperty))
+                            newFilters = new();
+
+                            foreach (JsonElement clientFilter in conditionProperty.Value.EnumerateArray())
                             {
-                                value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
+                                if (!clientFilter.TryGetProperty("name", out JsonElement filterNameProperty))
+                                {
+                                    return false;
+                                }
+
+                                Dictionary<string, object> value = null;
+                                if (clientFilter.TryGetProperty("parameters", out JsonElement parametersProperty))
+                                {
+                                    value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
+                                }
+
+                                newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
                             }
 
-                            newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
+                            continue;
                         }
+
+                        // unknown conditions
+                        unknownConditions[conditionProperty.Name] = conditionProperty.Value.Clone();
                     }
 
                     continue;
@@ -342,6 +360,9 @@ namespace Azure.Data.AppConfiguration
                     _displayName = property.Value.GetString();
                     continue;
                 }
+
+                // Store any unknown properties - use Clone to allow disposing the root document.
+                unknownRootValues[property.Name] = property.Value.Clone();
             }
 
             // Validate
