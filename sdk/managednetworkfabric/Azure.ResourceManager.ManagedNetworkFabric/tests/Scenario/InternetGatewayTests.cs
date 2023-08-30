@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -31,6 +32,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             Assert.IsNotNull(resourceData);
             Assert.AreEqual(resourceData.Name, TestEnvironment.InternetGatewayName);
             TestContext.Out.WriteLine($"Get Operation Succeeded on id: {resourceData.Id}");
+
+            TestContext.Out.WriteLine($"Entered into the Internet Gateway update");
+            NetworkFabricInternetGatewayPatch patch = new NetworkFabricInternetGatewayPatch()
+            {
+                InternetGatewayRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxxx/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/example-internetGatewayRule"),
+            };
+            ArmOperation<NetworkFabricInternetGatewayResource> lro = await networkFabricInternetGateway.UpdateAsync(WaitUntil.Completed, patch);
+            NetworkFabricInternetGatewayResource result1 = lro.Value;
+            NetworkFabricInternetGatewayData resourceData1 = result1.Data;
+            TestContext.Out.WriteLine($"Update succeeded on id: {resourceData1.Id}");
 
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
             ResourceGroupResource resourceGroupResource = Client.GetResourceGroupResource(resourceGroupResourceId);
