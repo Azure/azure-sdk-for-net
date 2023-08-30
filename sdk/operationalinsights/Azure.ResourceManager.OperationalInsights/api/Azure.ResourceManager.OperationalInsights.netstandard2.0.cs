@@ -1248,7 +1248,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         internal OperationalInsightsWorkspacePurgeResult() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
-        public System.Guid OperationId { get { throw null; } set { } }
+        public System.Guid OperationId { get { throw null; } }
         public string OperationStringId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
