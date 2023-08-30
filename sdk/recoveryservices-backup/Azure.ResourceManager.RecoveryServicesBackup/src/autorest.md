@@ -9,7 +9,7 @@ csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
 # tag: package-2023-01
-require: https://github.com/Azure/azure-rest-api-specs/blob/add28efcd3a5fd422285d992fb1ec5ee5a7a40a6/specification/recoveryservicesbackup/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d99cad13db6f16e55ddf4e45879980c9e1aaf178/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
