@@ -22,7 +22,6 @@ namespace Azure.Data.AppConfiguration
 
         private const string NameValue = "name";
         private const string StatusValue = "status";
-        private const string StatusCodeValue = "status_code";
         private const string FiltersValue = "filters";
         private const string CompositionTypeValue = "composition_type";
         private const string CreatedValue = "created";
