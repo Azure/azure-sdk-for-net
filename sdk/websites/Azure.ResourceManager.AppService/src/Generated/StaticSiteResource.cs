@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -524,7 +525,7 @@ namespace Azure.ResourceManager.AppService
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteUsersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteUsersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteUser.DeserializeStaticSiteUser, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteUser.DeserializeStaticSiteUser, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -551,7 +552,7 @@ namespace Azure.ResourceManager.AppService
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteUsersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteUsersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteUser.DeserializeStaticSiteUser, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteUser.DeserializeStaticSiteUser, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -997,7 +998,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetStaticSiteFunctions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetStaticSiteFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1019,7 +1020,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetStaticSiteFunctions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetStaticSiteFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1280,7 +1281,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1301,7 +1302,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
