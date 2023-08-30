@@ -12,7 +12,8 @@ public class OpenAIClientTests
     [Fact]
     public void ClientDoesNotExposeAzureTypes()
     {
-        var credential = new KeyCredential("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");
+        var key = Environment.GetEnvironmentVariable("OPENAI_KEY");
+        var credential = new KeyCredential();
         var client = new OpenAIClient(credential);
         Result<Completions> result = client.GetCompletions("tell me something about life.");
         Choice choice = result.Value.Choices[0];
