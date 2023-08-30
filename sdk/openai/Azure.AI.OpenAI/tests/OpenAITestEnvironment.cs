@@ -8,7 +8,9 @@ namespace Azure.AI.OpenAI.Tests
 {
     public class OpenAITestEnvironment : TestEnvironment
     {
-        public string PublicOpenAiApiKey => GetOptionalVariable("PUBLIC_OPENAI_API_KEY");
+        public string NonAzureOpenAIApiKey => GetOptionalVariable("OPENAI_API_KEY");
+
+        public string AzureCognitiveSearchApiKey => GetOptionalVariable("ACS_BYOD_API_KEY");
 
         public void ThrowIfCannotDeploy()
         {

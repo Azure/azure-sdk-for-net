@@ -35,16 +35,9 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         public CompletionsFinishReason? FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
 
-        internal bool StreamingDoneSignalReceived
-        {
-            get => _streamingDoneSignalReceived;
-            set
-            {
-                _streamingDoneSignalReceived = value;
-                _updateAvailableEvent.Set();
-            }
-        }
-        private bool _streamingDoneSignalReceived;
+        private bool _isFinishedStreaming { get; set; } = false;
+
+        private Exception _pumpException { get; set; }
 
         /// <summary>
         /// Gets the log probabilities associated with tokens in this Choice.
@@ -63,6 +56,10 @@ namespace Azure.AI.OpenAI
             lock (_baseChoicesLock)
             {
                 _baseChoices.Add(streamingChoice);
+            }
+            if (streamingChoice.FinishReason != null)
+            {
+                EnsureFinishStreaming();
             }
             _updateAvailableEvent.Set();
         }
@@ -87,16 +84,20 @@ namespace Azure.AI.OpenAI
                     lock (_baseChoicesLock)
                     {
                         Choice mostRecentChoice = _baseChoices.Last();
-                        bool choiceIsComplete = mostRecentChoice.FinishReason != null || StreamingDoneSignalReceived;
 
-                        doneWaiting = choiceIsComplete || i < _baseChoices.Count;
-                        isFinalIndex = choiceIsComplete && i >= _baseChoices.Count - 1;
+                        doneWaiting = _isFinishedStreaming || i < _baseChoices.Count;
+                        isFinalIndex = _isFinishedStreaming && i >= _baseChoices.Count - 1;
                     }
 
                     if (!doneWaiting)
                     {
                         await _updateAvailableEvent.WaitAsync(cancellationToken).ConfigureAwait(false);
                     }
+                }
+
+                if (_pumpException != null)
+                {
+                    throw _pumpException;
                 }
 
                 string newText = string.Empty;
@@ -112,6 +113,16 @@ namespace Azure.AI.OpenAI
                 {
                     yield return newText;
                 }
+            }
+        }
+
+        internal void EnsureFinishStreaming(Exception pumpException = null)
+        {
+            if (!_isFinishedStreaming)
+            {
+                _isFinishedStreaming = true;
+                _pumpException = pumpException;
+                _updateAvailableEvent.Set();
             }
         }
 

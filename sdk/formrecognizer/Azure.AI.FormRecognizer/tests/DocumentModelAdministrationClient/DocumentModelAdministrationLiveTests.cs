@@ -17,7 +17,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class DocumentModelAdministrationLiveTests : DocumentAnalysisLiveTestBase
     {
         private static readonly DocumentBuildMode[] s_buildDocumentModelTestCases = new[]
@@ -108,10 +107,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.AreEqual(modelId, model.ModelId);
             Assert.AreEqual(options.Description, model.Description);
-            Assert.AreEqual(ServiceVersionString, model.ApiVersion);
+            Assert.AreEqual(ServiceVersionString, model.ServiceVersion);
             Assert.Greater(model.CreatedOn, startTime);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 Assert.Greater(model.ExpiresOn, model.CreatedOn);
             }
@@ -211,7 +210,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.AreEqual(modelId, model.ModelId);
             Assert.AreEqual(description, model.Description);
-            Assert.AreEqual(ServiceVersionString, model.ApiVersion);
+            Assert.AreEqual(ServiceVersionString, model.ServiceVersion);
             Assert.Greater(model.CreatedOn, startTime);
             Assert.Greater(model.ExpiresOn, model.CreatedOn);
 
@@ -262,10 +261,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.AreEqual(modelId, model.ModelId);
             Assert.AreEqual(description, model.Description);
-            Assert.AreEqual(ServiceVersionString, model.ApiVersion);
+            Assert.AreEqual(ServiceVersionString, model.ServiceVersion);
             Assert.Greater(model.CreatedOn, startTime);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 Assert.Greater(model.ExpiresOn, model.CreatedOn);
             }
@@ -321,7 +320,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.AreEqual(expected.ModelId, model.ModelId);
             Assert.AreEqual(expected.Description, model.Description);
-            Assert.AreEqual(expected.ApiVersion, model.ApiVersion);
+            Assert.AreEqual(expected.ServiceVersion, model.ServiceVersion);
             Assert.AreEqual(expected.CreatedOn, model.CreatedOn);
             Assert.AreEqual(expected.ExpiresOn, model.ExpiresOn);
 
@@ -389,7 +388,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 Assert.AreEqual(expected.ModelId, model.ModelId);
                 Assert.AreEqual(expected.Description, model.Description);
-                Assert.AreEqual(expected.ApiVersion, model.ApiVersion);
+                Assert.AreEqual(expected.ServiceVersion, model.ServiceVersion);
                 Assert.AreEqual(expected.CreatedOn, model.CreatedOn);
                 Assert.AreEqual(expected.ExpiresOn, model.ExpiresOn);
 

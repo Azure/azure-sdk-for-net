@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Synapse Analytics (Artifacts) linked service. </summary>
-    public partial class AzureSynapseArtifactsLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class AzureSynapseArtifactsLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of AzureSynapseArtifactsLinkedService. </summary>
         /// <param name="endpoint"> https://&lt;workspacename&gt;.dev.azuresynapse.net, Azure Synapse Analytics workspace URL. Type: string (or Expression with resultType string). </param>

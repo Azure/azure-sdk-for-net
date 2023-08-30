@@ -118,7 +118,61 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void ValidateDependencyDurationMetric()
+        public void ValidateRequestDurationMetricConsumerKind()
+        {
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateRequestDurationMetricConsumerKind));
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
+
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+
+            var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
+            var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
+                .AddSource(nameof(StandardMetricTests.ValidateRequestDurationMetricConsumerKind))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            using (var activity = activitySource.StartActivity("Test", ActivityKind.Consumer))
+            {
+                activity?.SetTag(SemanticConventions.AttributeMessagingSystem, "messagingsystem");
+                activity?.SetTag(SemanticConventions.AttributeServerAddress, "localhost");
+                activity?.SetTag(SemanticConventions.AttributeMessagingDestinationName, "destination");
+                activity?.SetStatus(ActivityStatusCode.Ok);
+            }
+
+            tracerProvider?.ForceFlush();
+
+            WaitForActivityExport(traceTelemetryItems);
+
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+
+            Assert.Single(metricTelemetryItems);
+
+            var metricTelemetry = metricTelemetryItems.Last()!;
+            Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
+            var metricData = (MetricsData)metricTelemetry.Data.BaseData;
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.RequestSuccessKey, out var isSuccess));
+            Assert.Equal("True", isSuccess);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.RequestResultCodeKey, out var resultCode));
+            Assert.Equal("0", resultCode);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsAutoCollectedKey, out var isAutoCollectedFlag));
+            Assert.Equal("True", isAutoCollectedFlag);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleInstanceKey, out _));
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out var cloudRoleName));
+            Assert.Equal("trace.service", cloudRoleName);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
+            Assert.Equal(StandardMetricConstants.RequestDurationMetricIdValue, metricId);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ValidateDependencyDurationMetric(bool isAzureSDK)
         {
             var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateDependencyDurationMetric));
             var traceTelemetryItems = new List<TelemetryItem>();
@@ -139,6 +193,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Client))
             {
+                if (isAzureSDK)
+                {
+                    activity?.SetTag(SemanticConventions.AttributeAzureNameSpace, "aznamespace");
+                }
                 activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
                 activity?.SetTag(SemanticConventions.AttributeHttpMethod, "Get");
                 activity?.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.com");
@@ -167,13 +225,91 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
             Assert.Equal(StandardMetricConstants.DependencyDurationMetricIdValue, metricId);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTypeKey, out var dependencyType));
-            Assert.Equal("Http", dependencyType);
+            if (isAzureSDK)
+            {
+                Assert.Equal("aznamespace", dependencyType);
+            }
+            else
+            {
+                Assert.Equal("Http", dependencyType);
+            }
+
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTargetKey, out var dependencyTarget));
             Assert.Equal("www.foo.com", dependencyTarget);
         }
 
-        [Fact]
-        public void ValidateDependencyDurationMetricNew()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ValidateDependencyDurationMetricForProducerKind(bool isAzureSDKSpan)
+        {
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateDependencyDurationMetricForProducerKind));
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
+
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+
+            var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
+            var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
+                .AddSource(nameof(StandardMetricTests.ValidateDependencyDurationMetricForProducerKind))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            using (var activity = activitySource.StartActivity("Test", ActivityKind.Producer))
+            {
+                if (isAzureSDKSpan)
+                {
+                    activity?.SetTag(SemanticConventions.AttributeAzureNameSpace, "aznamespace");
+                }
+                activity?.SetTag(SemanticConventions.AttributeMessagingSystem, "messagingsystem");
+                activity?.SetTag(SemanticConventions.AttributeServerAddress, "localhost");
+                activity?.SetTag(SemanticConventions.AttributeMessagingDestinationName, "destination");
+            }
+
+            tracerProvider?.ForceFlush();
+
+            WaitForActivityExport(traceTelemetryItems);
+
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+
+            Assert.Single(metricTelemetryItems);
+
+            var metricTelemetry = metricTelemetryItems.Last()!;
+            Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
+            var metricData = (MetricsData)metricTelemetry.Data.BaseData;
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencySuccessKey, out var isSuccess));
+            Assert.Equal("True", isSuccess);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyResultCodeKey, out var resultCode));
+            Assert.Equal("0", resultCode);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsAutoCollectedKey, out var isAutoCollectedFlag));
+            Assert.Equal("True", isAutoCollectedFlag);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleInstanceKey, out _));
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out var cloudRoleName));
+            Assert.Equal("trace.service", cloudRoleName);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
+            Assert.Equal(StandardMetricConstants.DependencyDurationMetricIdValue, metricId);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTypeKey, out var dependencyType));
+            if (isAzureSDKSpan)
+            {
+                Assert.Equal("Queue Message | aznamespace", dependencyType);
+            }
+            else
+            {
+                Assert.Equal("messagingsystem", dependencyType);
+            }
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTargetKey, out var dependencyTarget));
+            Assert.Equal("localhost/destination", dependencyTarget);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ValidateDependencyDurationMetricNew(bool isAzureSDK)
         {
             var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateDependencyDurationMetric));
             var traceTelemetryItems = new List<TelemetryItem>();
@@ -194,6 +330,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Client))
             {
+                if (isAzureSDK)
+                {
+                    activity?.SetTag(SemanticConventions.AttributeAzureNameSpace, "aznamespace");
+                }
                 activity?.SetTag(SemanticConventions.AttributeHttpResponseStatusCode, 200);
                 activity?.SetTag(SemanticConventions.AttributeHttpRequestMethod, "Get");
                 activity?.SetTag(SemanticConventions.AttributeServerAddress, "foo.com");
@@ -222,7 +362,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
             Assert.Equal(StandardMetricConstants.DependencyDurationMetricIdValue, metricId);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTypeKey, out var dependencyType));
-            Assert.Equal("Http", dependencyType);
+            if (isAzureSDK)
+            {
+                Assert.Equal("aznamespace", dependencyType);
+            }
+            else
+            {
+                Assert.Equal("Http", dependencyType);
+            }
+
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTargetKey, out var dependencyTarget));
             Assert.Equal("foo.com", dependencyTarget);
         }

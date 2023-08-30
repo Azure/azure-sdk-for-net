@@ -1,6 +1,6 @@
 # Azure Quantum Jobs client library for .NET
 
-Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library to:
+Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library to:
 - Create, enumerate, and cancel quantum jobs
 - Enumerate provider status and quotas
 
@@ -69,7 +69,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 Create an instance of the QuantumJobClient by passing in these parameters:
 - [Subscription][subscriptions] - looks like XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX and can be found in your list of subscriptions on azure
 - [Resource Group][resource-groups] - a container that holds related resources for an Azure solution
-- [Workspace][workspaces] - a collection of assets associated with running quantum or optimization applications
+- [Workspace][workspaces] - a collection of assets associated with running quantum
 - [Location][location] - choose the best data center by geographical region
 - [StorageContainerName][blob-storage] - your blob storage
 - [Credential][credentials] - used to authenticate
@@ -103,76 +103,67 @@ var containerUri = (quantumJobClient.GetStorageSasUri(
     new BlobDetails(storageContainerName))).Value.SasUri;
 ```
 
+### Compile your quantum program into QIR
+
+This step can be done in multiple ways and it is not in scope for this sample.
+
+[Quantum Intermediate Representation (QIR)](https://github.com/qir-alliance/qir-spec) is a [QIR Alliance](https://www.qir-alliance.org/) specification to represent quantum programs within the [LLVM](https://llvm.org/) Intermediate Representation (IR).
+
+A few methods to compile or generate a quantum program into QIR:
+- [Q# compiler](https://github.com/microsoft/qsharp-compiler/): Can be used to [compile Q# Code into QIR](https://github.com/microsoft/qsharp-compiler/tree/main/src/QsCompiler/QirGeneration).
+- [PyQIR](https://github.com/qir-alliance/pyqir): PyQIR is a set of APIs for generating, parsing, and evaluating Quantum Intermediate Representation (QIR).
+- [IQ#](https://github.com/microsoft/iqsharp): Can be used to compile a Q# program into QIR with the [%qir](https://learn.microsoft.com/qsharp/api/iqsharp-magic/qir) magic command.
+
+In this sample, we assume you already have a file with the QIR bitcode and you know the method name that you want to execute (entry point).
+
+We will use the QIR bitcode sample (./samples/BellState.bc), compiled a Q# code (./samples/BellState.qs) targeting the `quantinuum.sim.h1-1e` target, with `AdaptiveExecution` target capability.
+
 ### Upload Input Data
 
-Using the SAS URI, upload the compressed json input data to the blob client.
-Note that we need to compress the json input data before uploading it to the blob storage.
-This contains the parameters to be used with [Quantum Inspired Optimizations](https://docs.microsoft.com/azure/quantum/optimization-overview-introduction)
+Using the SAS URI, upload the QIR bitcode input data to the blob client.
 
-```C# Snippet:Azure_Quantum_Jobs_UploadInputData
-string problemFilePath = "./problem.json";
+```C# Snippet:Azure_Quantum_Jobs_UploadQIRBitCode
+string qirFilePath = "./BellState.bc";
 
 // Get input data blob Uri with SAS key
-string blobName = Path.GetFileName(problemFilePath);
+string blobName = Path.GetFileName(qirFilePath);
 var inputDataUri = (quantumJobClient.GetStorageSasUri(
     new BlobDetails(storageContainerName)
     {
         BlobName = blobName,
     })).Value.SasUri;
 
-using (var problemStreamToUpload = new MemoryStream())
+// Upload QIR bitcode to blob storage
+var blobClient = new BlobClient(new Uri(inputDataUri));
+var blobHeaders = new BlobHttpHeaders
 {
-    using (FileStream problemFileStream = File.OpenRead(problemFilePath))
-    {
-        // Check if problem file is a gzip file.
-        // If it is, just read its contents.
-        // If not, read and compress the content.
-        var fileExtension = Path.GetExtension(problemFilePath).ToLower();
-        if (fileExtension == ".gz" ||
-            fileExtension == ".gzip")
-        {
-            problemFileStream.CopyTo(problemStreamToUpload);
-        }
-        else
-        {
-            using (var gzip = new GZipStream(problemStreamToUpload, CompressionMode.Compress, leaveOpen: true))
-            {
-                byte[] buffer = new byte[8192];
-                int count;
-                while ((count = problemFileStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    gzip.Write(buffer, 0, count);
-                }
-            }
-        }
-    }
-    problemStreamToUpload.Position = 0;
-
-    // Upload input data to blob
-    var blobClient = new BlobClient(new Uri(inputDataUri));
-    var blobHeaders = new BlobHttpHeaders
-    {
-        ContentType = "application/json",
-        ContentEncoding = "gzip"
-    };
-    var blobUploadOptions = new BlobUploadOptions { HttpHeaders = blobHeaders };
-    blobClient.Upload(problemStreamToUpload, options: blobUploadOptions);
+    ContentType = "qir.v1"
+};
+var blobUploadOptions = new BlobUploadOptions { HttpHeaders = blobHeaders };
+using (FileStream qirFileStream = File.OpenRead(qirFilePath))
+{
+    blobClient.Upload(qirFileStream, options: blobUploadOptions);
 }
 ```
 
 ### Create The Job
 
-Now that you've uploaded your problem definition to Azure Storage, you can use `CreateJob` to define an Azure Quantum job.
+Now that you've uploaded your QIR program bitcode to Azure Storage, you can use `CreateJob` to define an Azure Quantum job.
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateJob
 // Submit job
 var jobId = $"job-{Guid.NewGuid():N}";
 var jobName = $"jobName-{Guid.NewGuid():N}";
-var inputDataFormat = "microsoft.qio.v2";
-var outputDataFormat = "microsoft.qio-results.v2";
-var providerId = "microsoft";
-var target = "microsoft.paralleltempering-parameterfree.cpu";
-var inputParams = new Dictionary<string, object>() { { "params", new Dictionary<string, object>() } };
+var inputDataFormat = "qir.v1";
+var outputDataFormat = "microsoft.quantum-results.v1";
+var providerId = "quantinuum";
+var target = "quantinuum.sim.h1-1e";
+var inputParams = new Dictionary<string, object>()
+{
+    { "entryPoint", "ENTRYPOINT__BellState" },
+    { "arguments", new string[] { } },
+    { "targetCapability", "AdaptiveExecution" },
+};
 var createJobDetails = new JobDetails(containerUri, inputDataFormat, providerId, target)
 {
     Id = jobId,

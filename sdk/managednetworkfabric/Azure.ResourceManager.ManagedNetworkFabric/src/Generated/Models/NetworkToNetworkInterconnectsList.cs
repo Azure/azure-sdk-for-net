@@ -11,7 +11,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of NetworkToNetworkInterconnects. </summary>
+    /// <summary> List of Network To Network Interconnects. </summary>
     internal partial class NetworkToNetworkInterconnectsList
     {
         /// <summary> Initializes a new instance of NetworkToNetworkInterconnectsList. </summary>

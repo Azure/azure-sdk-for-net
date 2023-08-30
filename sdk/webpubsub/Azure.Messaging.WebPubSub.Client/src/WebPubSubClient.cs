@@ -231,9 +231,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// Stop the client.
         /// </summary>
         /// <returns></returns>
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Task StopAsync()
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             ThrowIfDisposed();
 
@@ -284,9 +282,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// </summary>
         /// <returns></returns>
 #pragma warning disable AZC0003 // DO make service methods virtual.
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public async ValueTask DisposeAsync()
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning restore AZC0003 // DO make service methods virtual.
         {
             // Perform async cleanup.
