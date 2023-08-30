@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -58,7 +59,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="featureId">The identified of the feature flag.</param>
         /// <param name="isEnabled">The value indicating whether the feature flag is enabled.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null): this()
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null) : this()
         {
             _isValidValue = true;
             Key = KeyPrefix + featureId;
@@ -153,7 +154,7 @@ namespace Azure.Data.AppConfiguration
         {
             _originalValue = value;
 
-            _isValidValue = TryParseValue();
+            _isValidValue = TryParseValueWithUnknownProperties();
         }
 
         internal override string GetValue()
@@ -206,33 +207,39 @@ namespace Azure.Data.AppConfiguration
                 using JsonDocument document = JsonDocument.Parse(_originalValue);
                 JsonElement root = document.RootElement;
 
+                // "id" - required
                 if (!root.TryGetProperty("id", out JsonElement idProperty))
                 {
                     return false;
                 }
                 _featureId = idProperty.GetString();
 
+                // "enabled" - required
                 if (!root.TryGetProperty("enabled", out JsonElement enabledProperty))
                 {
                     return false;
                 }
                 _isEnabled = enabledProperty.GetBoolean();
 
+                // "conditions" - required
                 if (!root.TryGetProperty("conditions", out JsonElement conditionsProperty))
                 {
                     return false;
                 }
 
+                // "description" - optional
                 if (root.TryGetProperty("description", out JsonElement descriptionProperty))
                 {
                     _description = descriptionProperty.GetString();
                 }
 
+                // "display_name" - optional
                 if (root.TryGetProperty("display_name", out JsonElement displayNameProperty))
                 {
                     _displayName = displayNameProperty.GetString();
                 }
 
+                // "conditions.client_filters" - optional
                 ObservableCollection<FeatureFlagFilter> newFilters = new ObservableCollection<FeatureFlagFilter>();
                 if (conditionsProperty.TryGetProperty("client_filters", out JsonElement clientFiltersProperty) &&
                     clientFiltersProperty.ValueKind == JsonValueKind.Array)
@@ -261,6 +268,108 @@ namespace Azure.Data.AppConfiguration
             catch (Exception)
             {
                 return false;
+            }
+
+            return true;
+        }
+
+        private bool TryParseValueWithUnknownProperties()
+        {
+            using JsonDocument document = JsonDocument.Parse(_originalValue);
+            JsonElement root = document.RootElement;
+
+            // required
+            string featureId = default;
+            bool? isEnabled = default;
+            bool hasConditions = false;
+
+            // optional
+            string description = default;
+            string displayName = default;
+
+            ObservableCollection<FeatureFlagFilter> newFilters = default;
+
+            foreach (JsonProperty property in root.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    featureId = property.Value.GetString();
+                    continue;
+                }
+
+                if (property.NameEquals("enabled"u8))
+                {
+                    isEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+
+                if (property.NameEquals("conditions"u8))
+                {
+                    hasConditions = true;
+                    newFilters = new();
+
+                    if (property.Value.TryGetProperty("client_filters", out JsonElement clientFiltersProperty) &&
+                        clientFiltersProperty.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (JsonElement clientFilter in clientFiltersProperty.EnumerateArray())
+                        {
+                            if (!clientFilter.TryGetProperty("name", out JsonElement filterNameProperty))
+                            {
+                                return false;
+                            }
+
+                            Dictionary<string, object> value = null;
+                            if (clientFilter.TryGetProperty("parameters", out JsonElement parametersProperty))
+                            {
+                                value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
+                            }
+
+                            newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
+                        }
+                    }
+
+                    continue;
+                }
+
+                if (property.NameEquals("description"u8))
+                {
+                    _description = property.Value.GetString();
+                    continue;
+                }
+
+                if (property.NameEquals("display_name"u8))
+                {
+                    _displayName = property.Value.GetString();
+                    continue;
+                }
+            }
+
+            // Validate
+            if (featureId == default ||
+                isEnabled == default ||
+                !hasConditions)
+            {
+                return false;
+            }
+
+            // required
+            _featureId = featureId;
+            _isEnabled = isEnabled.Value;
+
+            // optional
+            if (description != null)
+            {
+                _description = description;
+            }
+
+            if (displayName != null)
+            {
+                _displayName = displayName;
+            }
+
+            if (newFilters != default)
+            {
+                _clientFilters = newFilters;
             }
 
             return true;
