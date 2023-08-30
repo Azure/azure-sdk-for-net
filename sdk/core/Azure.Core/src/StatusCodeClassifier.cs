@@ -51,20 +51,15 @@ namespace Azure.Core
                 }
             }
 
-            return !IsSuccessCode(message.Response.Status);
+            return !_successCodes[message.Response.Status];
         }
 
-        internal virtual StatusCodeClassifier Clone()
-        {
-            return new StatusCodeClassifier(_successCodes, Handlers);
-        }
+        internal virtual StatusCodeClassifier Clone() => new(_successCodes, Handlers);
 
         internal void AddClassifier(int statusCode, bool isError)
         {
             Argument.AssertInRange(statusCode, 0, 639, nameof(statusCode));
             _successCodes[statusCode] = isError;
         }
-
-        private bool IsSuccessCode(int statusCode) => _successCodes[statusCode];
     }
 }
