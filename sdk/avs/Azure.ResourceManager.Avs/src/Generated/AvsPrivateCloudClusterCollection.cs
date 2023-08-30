@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterClustersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudClusterResource(Client, AvsPrivateCloudClusterData.DeserializeAvsPrivateCloudClusterData(e)), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudClusterResource(Client, AvsPrivateCloudClusterData.DeserializeAvsPrivateCloudClusterData(e)), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterClustersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudClusterResource(Client, AvsPrivateCloudClusterData.DeserializeAvsPrivateCloudClusterData(e)), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudClusterResource(Client, AvsPrivateCloudClusterData.DeserializeAvsPrivateCloudClusterData(e)), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
