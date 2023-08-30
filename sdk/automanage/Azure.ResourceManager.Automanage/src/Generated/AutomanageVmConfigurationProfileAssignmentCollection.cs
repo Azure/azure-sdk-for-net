@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<AutomanageVmConfigurationProfileAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateListByVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageVmConfigurationProfileAssignmentResource(Client, AutomanageConfigurationProfileAssignmentData.DeserializeAutomanageConfigurationProfileAssignmentData(e)), _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics, Pipeline, "AutomanageVmConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageVmConfigurationProfileAssignmentResource(Client, AutomanageConfigurationProfileAssignmentData.DeserializeAutomanageConfigurationProfileAssignmentData(e)), _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics, Pipeline, "AutomanageVmConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<AutomanageVmConfigurationProfileAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateListByVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageVmConfigurationProfileAssignmentResource(Client, AutomanageConfigurationProfileAssignmentData.DeserializeAutomanageConfigurationProfileAssignmentData(e)), _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics, Pipeline, "AutomanageVmConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageVmConfigurationProfileAssignmentResource(Client, AutomanageConfigurationProfileAssignmentData.DeserializeAutomanageConfigurationProfileAssignmentData(e)), _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics, Pipeline, "AutomanageVmConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
