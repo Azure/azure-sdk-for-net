@@ -69,6 +69,15 @@
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
+    <Compile Include="Shared\MutableJsonChange.cs" />
+    <Compile Include="Shared\MutableJsonChangeKind.cs" />
+    <Compile Include="Shared\MutableJsonDocument.ChangeTracker.cs" />
+    <Compile Include="Shared\MutableJsonDocument.cs" />
+    <Compile Include="Shared\MutableJsonElement.ArrayEnumerator.cs" />
+    <Compile Include="Shared\MutableJsonElement.cs" />
+    <Compile Include="Shared\MutableJsonElement.ObjectEnumerator.cs" />
+    <Compile Include="Shared\MutableJsonElement.WriteTo.cs" />
+    <Compile Include="Shared\MutableJsonElement.WriteTo.MergePatch.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\OperationInternalBase.cs" />
     <Compile Include="Shared\TrimmingAttribute.cs" />
