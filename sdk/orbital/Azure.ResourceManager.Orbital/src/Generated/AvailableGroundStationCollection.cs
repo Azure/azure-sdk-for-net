@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Orbital
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableGroundStationRestClient.CreateListByCapabilityRequest(Id.SubscriptionId, capability);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availableGroundStationRestClient.CreateListByCapabilityNextPageRequest(nextLink, Id.SubscriptionId, capability);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvailableGroundStationResource(Client, AvailableGroundStationData.DeserializeAvailableGroundStationData(e)), _availableGroundStationClientDiagnostics, Pipeline, "AvailableGroundStationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvailableGroundStationResource(Client, AvailableGroundStationData.DeserializeAvailableGroundStationData(e)), _availableGroundStationClientDiagnostics, Pipeline, "AvailableGroundStationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Orbital
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableGroundStationRestClient.CreateListByCapabilityRequest(Id.SubscriptionId, capability);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availableGroundStationRestClient.CreateListByCapabilityNextPageRequest(nextLink, Id.SubscriptionId, capability);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvailableGroundStationResource(Client, AvailableGroundStationData.DeserializeAvailableGroundStationData(e)), _availableGroundStationClientDiagnostics, Pipeline, "AvailableGroundStationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvailableGroundStationResource(Client, AvailableGroundStationData.DeserializeAvailableGroundStationData(e)), _availableGroundStationClientDiagnostics, Pipeline, "AvailableGroundStationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
