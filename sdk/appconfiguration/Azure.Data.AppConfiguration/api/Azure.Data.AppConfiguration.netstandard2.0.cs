@@ -122,7 +122,7 @@ namespace Azure.Data.AppConfiguration
         public ConfigurationSettingsSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotSettingFilter> filters) { }
         public Azure.Data.AppConfiguration.CompositionType? CompositionType { get { throw null; } set { } }
         public System.DateTimeOffset? Created { get { throw null; } }
-        public Azure.ETag Etag { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset? Expires { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SnapshotSettingFilter> Filters { get { throw null; } }
         public long? ItemCount { get { throw null; } }
@@ -130,7 +130,6 @@ namespace Azure.Data.AppConfiguration
         public System.TimeSpan? RetentionPeriod { get { throw null; } set { } }
         public long? Size { get { throw null; } }
         public Azure.Data.AppConfiguration.SnapshotStatus? Status { get { throw null; } }
-        public int? StatusCode { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class CreateSnapshotOperation : Azure.Operation<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot>
@@ -204,15 +203,14 @@ namespace Azure.Data.AppConfiguration
         public SnapshotFields(string value) { throw null; }
         public static Azure.Data.AppConfiguration.SnapshotFields CompositionType { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Created { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SnapshotFields Etag { get { throw null; } }
+        public static Azure.Data.AppConfiguration.SnapshotFields ETag { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Expires { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Filters { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SnapshotFields ItemsCount { get { throw null; } }
+        public static Azure.Data.AppConfiguration.SnapshotFields ItemCount { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Name { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields RetentionPeriod { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Size { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Status { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SnapshotFields StatusCode { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Tags { get { throw null; } }
         public bool Equals(Azure.Data.AppConfiguration.SnapshotFields other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
