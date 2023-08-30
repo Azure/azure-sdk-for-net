@@ -75,13 +75,13 @@ namespace Azure.Core.Tests.PatchModels
             {
                 writer.WriteStartObject();
 
-                if (_changes.HasChanged(AProperty))
+                if (_changed[AProperty])
                 {
                     writer.WritePropertyName("a");
                     writer.WriteStringValue(A);
                 }
 
-                if (_changes.HasChanged(BProperty))
+                if (_changed[BProperty])
                 {
                     writer.WritePropertyName("b");
                     writer.WriteStringValue(B);

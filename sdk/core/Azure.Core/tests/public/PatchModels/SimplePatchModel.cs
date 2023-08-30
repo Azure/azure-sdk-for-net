@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
@@ -11,15 +10,13 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class SimplePatchModel
     {
-        private readonly MergePatchChanges _changes;
+        private BitVector64 _changed;
 
         /// <summary>
         /// Public constructor.
         /// </summary>
         public SimplePatchModel()
         {
-            // Size = the number of properties to track
-            _changes = new MergePatchChanges(3);
         }
 
         /// <summary>
@@ -28,15 +25,13 @@ namespace Azure.Core.Tests.PatchModels
         /// <param name="element"></param>
         internal SimplePatchModel(string name, int count, DateTimeOffset updatedOn)
         {
-            _changes = new MergePatchChanges(3);
-
             _name = name;
             _count = count;
             _updatedOn = updatedOn;
         }
 
         private string _name;
-        private static int NameProperty => 0;
+        private const int NameProperty = 0;
         /// <summary>
         /// Optional string property corresponding to JSON """{"name": "abc"}""".
         /// </summary>
@@ -45,13 +40,13 @@ namespace Azure.Core.Tests.PatchModels
             get => _name;
             set
             {
-                _changes.SetChanged(NameProperty);
+                _changed[NameProperty] = true;
                 _name = value;
             }
         }
 
         private int _count;
-        private static int CountProperty => 1;
+        private const int CountProperty = 1;
         /// <summary>
         /// Optional int property corresponding to JSON """{"count": 1}""".
         /// </summary>
@@ -60,13 +55,13 @@ namespace Azure.Core.Tests.PatchModels
             get => _count;
             set
             {
-                _changes.SetChanged(CountProperty);
+                _changed[CountProperty] = true;
                 _count = value;
             }
         }
 
         private DateTimeOffset _updatedOn;
-        private static int UpdatedOnProperty => 2;
+        private const int UpdatedOnProperty = 2;
         /// <summary>
         /// Optional DateTimeOffset property corresponding to JSON """{"updatedOn": "2020-06-25T17:44:37.6830000Z"}""".
         /// </summary>
@@ -75,7 +70,7 @@ namespace Azure.Core.Tests.PatchModels
             get => _updatedOn;
             set
             {
-                _changes.SetChanged(UpdatedOnProperty);
+                _changed[UpdatedOnProperty] = true;
                 _updatedOn = value;
             }
         }

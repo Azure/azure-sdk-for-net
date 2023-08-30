@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Serialization;
-
 namespace Azure.Core.Tests.PatchModels
 {
     /// <summary>
@@ -10,29 +8,26 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ChildPatchModel
     {
-        private readonly MergePatchChanges _changes;
+        private BitVector64 _changed;
 
         /// <summary>
         /// Serialization constructor.
         /// </summary>
         internal ChildPatchModel()
         {
-            _changes = new MergePatchChanges(2);
         }
 
         /// <summary> Deserialization constructor. </summary>
         internal ChildPatchModel(string a, string b)
         {
-            _changes = new MergePatchChanges(2);
-
             _a = a;
             _b = b;
         }
 
-        public bool HasChanges => _changes.HasChanges();
+        public bool HasChanges => _changed.IsNonzero();
 
         private string _a;
-        private static int AProperty => 0;
+        private const int AProperty = 0;
         /// <summary>
         /// Optional string property corresponding to JSON """{"a": "aaa"}""".
         /// </summary>
@@ -41,13 +36,13 @@ namespace Azure.Core.Tests.PatchModels
             get => _a;
             set
             {
-                _changes.SetChanged(AProperty);
+                _changed[AProperty] = true;
                 _a = value;
             }
         }
 
         private string _b;
-        private static int BProperty => 1;
+        private const int BProperty = 1;
         /// <summary>
         /// Optional string property corresponding to JSON """{"b": "bbb"}""".
         /// </summary>
@@ -56,7 +51,7 @@ namespace Azure.Core.Tests.PatchModels
             get => _b;
             set
             {
-                _changes.SetChanged(BProperty);
+                _changed[BProperty] = true;
                 _b = value;
             }
         }

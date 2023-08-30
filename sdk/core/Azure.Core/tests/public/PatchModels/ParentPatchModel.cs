@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Serialization;
-
 namespace Azure.Core.Tests.PatchModels
 {
     /// <summary>
@@ -10,14 +8,13 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ParentPatchModel
     {
-        private readonly MergePatchChanges _changes;
+        private BitVector64 _changed;
 
         /// <summary>
         /// Public constructor.
         /// </summary>
         public ParentPatchModel()
         {
-            _changes = new MergePatchChanges(2);
         }
 
         /// <summary>
@@ -25,14 +22,12 @@ namespace Azure.Core.Tests.PatchModels
         /// </summary>
         internal ParentPatchModel(string id, ChildPatchModel child)
         {
-            _changes = new MergePatchChanges(2);
-
             _id = id;
             _child = child;
         }
 
         private string _id;
-        private static int IdProperty => 0;
+        private const int IdProperty = 0;
         /// <summary>
         /// Optional string property corresponding to JSON """{"id": "abc"}""".
         /// </summary>
@@ -41,13 +36,13 @@ namespace Azure.Core.Tests.PatchModels
             get => _id;
             set
             {
-                _changes.SetChanged(IdProperty);
+                _changed[IdProperty] = true;
                 _id = value;
             }
         }
 
         private ChildPatchModel _child;
-        private static int ChildProperty => 1;
+        private const int ChildProperty = 1;
         /// <summary>
         /// Optional ChildPatchModel property corresponding to JSON """{"child": {"a":"aa", "b": "bb"}}""".
         /// </summary>
@@ -55,7 +50,7 @@ namespace Azure.Core.Tests.PatchModels
         {
             get
             {
-                if (_child == null && !_changes.HasChanged(ChildProperty))
+                if (_child == null && !_changed[ChildProperty])
                 {
                     _child = new ChildPatchModel();
                 }
@@ -64,7 +59,7 @@ namespace Azure.Core.Tests.PatchModels
             }
             set
             {
-                _changes.SetChanged(ChildProperty);
+                _changed[ChildProperty] = true;
                 _child = value;
             }
         }

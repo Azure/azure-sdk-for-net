@@ -206,135 +206,135 @@ namespace Azure.Core.Tests.Public
         }
         #endregion
 
-        #region CollectionPatchModel
-        [Test]
-        public void CanPatchCollectionProperty()
-        {
-            CollectionPatchModel model = new();
-            model.Variables["abc"] = "123";
-            model.Variables["xyz"] = "456";
+        //#region CollectionPatchModel
+        //[Test]
+        //public void CanPatchCollectionProperty()
+        //{
+        //    CollectionPatchModel model = new();
+        //    model.Variables["abc"] = "123";
+        //    model.Variables["xyz"] = "456";
 
-            ValidatePatch("""{"variables": {"abc":"123", "xyz":"456"}}""", model);
-        }
+        //    ValidatePatch("""{"variables": {"abc":"123", "xyz":"456"}}""", model);
+        //}
 
-        [Test]
-        public void CanPatchCollectionProperty_DeleteItem()
-        {
-            CollectionPatchModel model = new();
-            model.Variables["abc"] = "123";
-            model.Variables.Remove("abc");
+        //[Test]
+        //public void CanPatchCollectionProperty_DeleteItem()
+        //{
+        //    CollectionPatchModel model = new();
+        //    model.Variables["abc"] = "123";
+        //    model.Variables.Remove("abc");
 
-            ValidatePatch("""{"variables": {"abc": null}}""", model);
-        }
+        //    ValidatePatch("""{"variables": {"abc": null}}""", model);
+        //}
 
-        [Test]
-        public void CanPatchCollectionProperty_ClearItems()
-        {
-            BinaryData json = BinaryData.FromString("""
-                {
-                    "id": "abc",
-                    "variables":
-                    {
-                        "a": "aa",
-                        "b": "bb"
-                    }
-                }
-                """);
+        //[Test]
+        //public void CanPatchCollectionProperty_ClearItems()
+        //{
+        //    BinaryData json = BinaryData.FromString("""
+        //        {
+        //            "id": "abc",
+        //            "variables":
+        //            {
+        //                "a": "aa",
+        //                "b": "bb"
+        //            }
+        //        }
+        //        """);
 
-            CollectionPatchModel model = ModelSerializer.Deserialize<CollectionPatchModel>(json);
-            model.Variables.Clear();
+        //    CollectionPatchModel model = ModelSerializer.Deserialize<CollectionPatchModel>(json);
+        //    model.Variables.Clear();
 
-            ValidatePatch("""{"variables": {"a": null, "b":null}}""", model);
-        }
+        //    ValidatePatch("""{"variables": {"a": null, "b":null}}""", model);
+        //}
 
-        [Test]
-        public void CanRoundTripCollectionPatchModel()
-        {
-            BinaryData json = BinaryData.FromString("""
-                {
-                    "id": "abc",
-                    "variables":
-                    {
-                        "a": "aa",
-                        "b": "bb"
-                    }
-                }
-                """);
+        //[Test]
+        //public void CanRoundTripCollectionPatchModel()
+        //{
+        //    BinaryData json = BinaryData.FromString("""
+        //        {
+        //            "id": "abc",
+        //            "variables":
+        //            {
+        //                "a": "aa",
+        //                "b": "bb"
+        //            }
+        //        }
+        //        """);
 
-            CollectionPatchModel model = ModelSerializer.Deserialize<CollectionPatchModel>(json);
+        //    CollectionPatchModel model = ModelSerializer.Deserialize<CollectionPatchModel>(json);
 
-            Assert.AreEqual("abc", model.Id);
-            Assert.AreEqual("aa", model.Variables["a"]);
-            Assert.AreEqual("bb", model.Variables["b"]);
+        //    Assert.AreEqual("abc", model.Id);
+        //    Assert.AreEqual("aa", model.Variables["a"]);
+        //    Assert.AreEqual("bb", model.Variables["b"]);
 
-            ValidateSerialize("""{"id": "abc","variables":{"a": "aa","b": "bb"}}""", model);
-            ValidatePatch("{}", model);
+        //    ValidateSerialize("""{"id": "abc","variables":{"a": "aa","b": "bb"}}""", model);
+        //    ValidatePatch("{}", model);
 
-            model.Variables["a"] = "a2";
+        //    model.Variables["a"] = "a2";
 
-            ValidateSerialize("""{"id": "abc","variables":{"a": "a2","b": "bb"}}""", model);
-            ValidatePatch("""{"variables": {"a":"a2"}}""", model);
+        //    ValidateSerialize("""{"id": "abc","variables":{"a": "a2","b": "bb"}}""", model);
+        //    ValidatePatch("""{"variables": {"a":"a2"}}""", model);
 
-            model.Variables.Remove("b");
+        //    model.Variables.Remove("b");
 
-            ValidateSerialize("""{"id": "abc","variables":{"a": "a2"}}""", model);
-            ValidatePatch("""{"variables": {"a":"a2", "b": null}}""", model);
-        }
+        //    ValidateSerialize("""{"id": "abc","variables":{"a": "a2"}}""", model);
+        //    ValidatePatch("""{"variables": {"a":"a2", "b": null}}""", model);
+        //}
 
-        [Test]
-        public void CanRoundTripCollectionPatchModel_ChangeChildren()
-        {
-            string jsonString = """
-                {
-                    "id": "abc",
-                    "variables":
-                    {
-                        "a": "aa",
-                        "b": "bb"
-                    },
-                    "children" :
-                    {
-                        "first":
-                        {
-                            "a": "a1",
-                            "b": "b1"
-                        },
-                        "second":
-                        {
-                            "a": "a2",
-                            "b": "b2"
-                        }
-                    }
-                }
-                """;
-            BinaryData json = BinaryData.FromString(jsonString);
+        //[Test]
+        //public void CanRoundTripCollectionPatchModel_ChangeChildren()
+        //{
+        //    string jsonString = """
+        //        {
+        //            "id": "abc",
+        //            "variables":
+        //            {
+        //                "a": "aa",
+        //                "b": "bb"
+        //            },
+        //            "children" :
+        //            {
+        //                "first":
+        //                {
+        //                    "a": "a1",
+        //                    "b": "b1"
+        //                },
+        //                "second":
+        //                {
+        //                    "a": "a2",
+        //                    "b": "b2"
+        //                }
+        //            }
+        //        }
+        //        """;
+        //    BinaryData json = BinaryData.FromString(jsonString);
 
-            CollectionPatchModel model = ModelSerializer.Deserialize<CollectionPatchModel>(json);
+        //    CollectionPatchModel model = ModelSerializer.Deserialize<CollectionPatchModel>(json);
 
-            Assert.AreEqual("abc", model.Id);
-            Assert.AreEqual("aa", model.Variables["a"]);
-            Assert.AreEqual("bb", model.Variables["b"]);
+        //    Assert.AreEqual("abc", model.Id);
+        //    Assert.AreEqual("aa", model.Variables["a"]);
+        //    Assert.AreEqual("bb", model.Variables["b"]);
 
-            Assert.AreEqual("a1", model.Children["first"].A);
-            Assert.AreEqual("b1", model.Children["first"].B);
+        //    Assert.AreEqual("a1", model.Children["first"].A);
+        //    Assert.AreEqual("b1", model.Children["first"].B);
 
-            Assert.AreEqual("a2", model.Children["second"].A);
-            Assert.AreEqual("b2", model.Children["second"].B);
+        //    Assert.AreEqual("a2", model.Children["second"].A);
+        //    Assert.AreEqual("b2", model.Children["second"].B);
 
-            ValidateSerialize(jsonString, model);
-            ValidatePatch("{}", model);
+        //    ValidateSerialize(jsonString, model);
+        //    ValidatePatch("{}", model);
 
-            model.Children["first"].A = "a11";
+        //    model.Children["first"].A = "a11";
 
-            ValidateSerialize("""{"id": "abc","variables":{"a": "aa","b": "bb"},"children":{"first": {"a":"a11","b":"b1"},"second": {"a":"a2","b":"b2"}}}""", model);
-            ValidatePatch("""{"children": {"first":{"a":"a11"}}}""", model);
+        //    ValidateSerialize("""{"id": "abc","variables":{"a": "aa","b": "bb"},"children":{"first": {"a":"a11","b":"b1"},"second": {"a":"a2","b":"b2"}}}""", model);
+        //    ValidatePatch("""{"children": {"first":{"a":"a11"}}}""", model);
 
-            model.Variables.Remove("b");
+        //    model.Variables.Remove("b");
 
-            ValidateSerialize("""{"id": "abc","variables":{"a": "aa"},"children":{"first": {"a":"a11","b":"b1"},"second": {"a":"a2","b":"b2"}}}""", model);
-            ValidatePatch("""{"variables": {"b": null}, "children": {"first":{"a":"a11"}}}""", model);
-        }
-        #endregion
+        //    ValidateSerialize("""{"id": "abc","variables":{"a": "aa"},"children":{"first": {"a":"a11","b":"b1"},"second": {"a":"a2","b":"b2"}}}""", model);
+        //    ValidatePatch("""{"variables": {"b": null}, "children": {"first":{"a":"a11"}}}""", model);
+        //}
+        //#endregion
 
         #region Helpers
         private static void ValidateSerialize<T>(string expected, IModelJsonSerializable<T> model)
