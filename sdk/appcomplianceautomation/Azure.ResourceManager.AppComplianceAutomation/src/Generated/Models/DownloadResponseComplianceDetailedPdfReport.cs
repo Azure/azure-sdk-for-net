@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> compliance detailed pdf report. </summary>
     internal partial class DownloadResponseComplianceDetailedPdfReport
     {
-        /// <summary> Initializes a new instance of DownloadResponseComplianceDetailedPdfReport. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DownloadResponseComplianceDetailedPdfReport"/>. </summary>
         internal DownloadResponseComplianceDetailedPdfReport()
         {
         }
 
-        /// <summary> Initializes a new instance of DownloadResponseComplianceDetailedPdfReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="DownloadResponseComplianceDetailedPdfReport"/>. </summary>
         /// <param name="sasUri"> uri of compliance detailed pdf report. </param>
-        internal DownloadResponseComplianceDetailedPdfReport(Uri sasUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DownloadResponseComplianceDetailedPdfReport(Uri sasUri, Dictionary<string, BinaryData> rawData)
         {
             SasUri = sasUri;
+            _rawData = rawData;
         }
 
         /// <summary> uri of compliance detailed pdf report. </summary>

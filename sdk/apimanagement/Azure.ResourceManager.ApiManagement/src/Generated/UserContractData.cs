@@ -19,14 +19,16 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class UserContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of UserContractData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserContractData"/>. </summary>
         public UserContractData()
         {
             Identities = new ChangeTrackingList<UserIdentityContract>();
             Groups = new ChangeTrackingList<GroupContractProperties>();
         }
 
-        /// <summary> Initializes a new instance of UserContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +44,8 @@ namespace Azure.ResourceManager.ApiManagement
         ///
         /// </param>
         /// <param name="groups"> Collection of groups user is part of. </param>
-        internal UserContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string firstName, string lastName, string email, DateTimeOffset? registriesOn, IReadOnlyList<GroupContractProperties> groups) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string firstName, string lastName, string email, DateTimeOffset? registriesOn, IReadOnlyList<GroupContractProperties> groups, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             Note = note;
@@ -52,6 +55,7 @@ namespace Azure.ResourceManager.ApiManagement
             Email = email;
             RegistriesOn = registriesOn;
             Groups = groups;
+            _rawData = rawData;
         }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>

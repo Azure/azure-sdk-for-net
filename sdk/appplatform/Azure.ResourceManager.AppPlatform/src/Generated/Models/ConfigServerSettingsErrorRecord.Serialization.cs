@@ -8,14 +8,60 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ConfigServerSettingsErrorRecord
+    public partial class ConfigServerSettingsErrorRecord : IUtf8JsonSerializable, IModelJsonSerializable<ConfigServerSettingsErrorRecord>
     {
-        internal static ConfigServerSettingsErrorRecord DeserializeConfigServerSettingsErrorRecord(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConfigServerSettingsErrorRecord>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConfigServerSettingsErrorRecord>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("uri"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (Optional.IsCollectionDefined(Messages))
+            {
+                writer.WritePropertyName("messages"u8);
+                writer.WriteStartArray();
+                foreach (var item in Messages)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConfigServerSettingsErrorRecord DeserializeConfigServerSettingsErrorRecord(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> name = default;
             Optional<Uri> uri = default;
             Optional<IReadOnlyList<string>> messages = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,8 +100,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     messages = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, Optional.ToList(messages));
+            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, Optional.ToList(messages), rawData);
+        }
+
+        ConfigServerSettingsErrorRecord IModelJsonSerializable<ConfigServerSettingsErrorRecord>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfigServerSettingsErrorRecord(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConfigServerSettingsErrorRecord>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConfigServerSettingsErrorRecord IModelSerializable<ConfigServerSettingsErrorRecord>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConfigServerSettingsErrorRecord(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConfigServerSettingsErrorRecord"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConfigServerSettingsErrorRecord"/> to convert. </param>
+        public static implicit operator RequestContent(ConfigServerSettingsErrorRecord model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConfigServerSettingsErrorRecord"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConfigServerSettingsErrorRecord(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConfigServerSettingsErrorRecord(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

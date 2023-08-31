@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class WorkloadNetworkSegmentSubnet : IUtf8JsonSerializable
+    public partial class WorkloadNetworkSegmentSubnet : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadNetworkSegmentSubnet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadNetworkSegmentSubnet>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadNetworkSegmentSubnet>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DhcpRanges))
             {
@@ -31,17 +38,32 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("gatewayAddress"u8);
                 writer.WriteStringValue(GatewayAddress);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadNetworkSegmentSubnet DeserializeWorkloadNetworkSegmentSubnet(JsonElement element)
+        internal static WorkloadNetworkSegmentSubnet DeserializeWorkloadNetworkSegmentSubnet(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> dhcpRanges = default;
             Optional<string> gatewayAddress = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dhcpRanges"u8))
@@ -63,8 +85,61 @@ namespace Azure.ResourceManager.Avs.Models
                     gatewayAddress = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadNetworkSegmentSubnet(Optional.ToList(dhcpRanges), gatewayAddress.Value);
+            return new WorkloadNetworkSegmentSubnet(Optional.ToList(dhcpRanges), gatewayAddress.Value, rawData);
+        }
+
+        WorkloadNetworkSegmentSubnet IModelJsonSerializable<WorkloadNetworkSegmentSubnet>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadNetworkSegmentSubnet(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadNetworkSegmentSubnet>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadNetworkSegmentSubnet IModelSerializable<WorkloadNetworkSegmentSubnet>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadNetworkSegmentSubnet(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WorkloadNetworkSegmentSubnet"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WorkloadNetworkSegmentSubnet"/> to convert. </param>
+        public static implicit operator RequestContent(WorkloadNetworkSegmentSubnet model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WorkloadNetworkSegmentSubnet"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WorkloadNetworkSegmentSubnet(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadNetworkSegmentSubnet(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

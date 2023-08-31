@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
@@ -17,14 +19,16 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class InventoryItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of InventoryItemData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/>. </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         public InventoryItemData(InventoryType inventoryType)
         {
             InventoryType = inventoryType;
         }
 
-        /// <summary> Initializes a new instance of InventoryItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
         /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
-        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, string provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             InventoryType = inventoryType;
@@ -43,6 +48,12 @@ namespace Azure.ResourceManager.ArcScVmm
             Uuid = uuid;
             InventoryItemName = inventoryItemName;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/> for deserialization. </summary>
+        internal InventoryItemData()
+        {
         }
 
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>

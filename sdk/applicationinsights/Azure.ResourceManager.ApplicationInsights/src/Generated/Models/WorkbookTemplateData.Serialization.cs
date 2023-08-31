@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    public partial class WorkbookTemplateData : IUtf8JsonSerializable
+    public partial class WorkbookTemplateData : IUtf8JsonSerializable, IModelJsonSerializable<WorkbookTemplateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkbookTemplateData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkbookTemplateData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -59,7 +65,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<WorkbookTemplateGallery>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -78,18 +91,39 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0);
+                        if (item0 is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<WorkbookTemplateLocalizedGallery>)item0).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkbookTemplateData DeserializeWorkbookTemplateData(JsonElement element)
+        internal static WorkbookTemplateData DeserializeWorkbookTemplateData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,6 +139,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Optional<BinaryData> templateData = default;
             Optional<IList<WorkbookTemplateGallery>> galleries = default;
             Optional<IDictionary<string, IList<WorkbookTemplateLocalizedGallery>>> localized = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -225,8 +260,61 @@ namespace Azure.ResourceManager.ApplicationInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkbookTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(priority), author.Value, templateData.Value, Optional.ToList(galleries), Optional.ToDictionary(localized));
+            return new WorkbookTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(priority), author.Value, templateData.Value, Optional.ToList(galleries), Optional.ToDictionary(localized), rawData);
+        }
+
+        WorkbookTemplateData IModelJsonSerializable<WorkbookTemplateData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkbookTemplateData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkbookTemplateData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkbookTemplateData IModelSerializable<WorkbookTemplateData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkbookTemplateData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WorkbookTemplateData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WorkbookTemplateData"/> to convert. </param>
+        public static implicit operator RequestContent(WorkbookTemplateData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WorkbookTemplateData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WorkbookTemplateData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkbookTemplateData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

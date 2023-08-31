@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,14 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class CdnOriginData : ResourceData
     {
-        /// <summary> Initializes a new instance of CdnOriginData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CdnOriginData"/>. </summary>
         public CdnOriginData()
         {
         }
 
-        /// <summary> Initializes a new instance of CdnOriginData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnOriginData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +45,8 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceState"> Resource status of the origin. </param>
         /// <param name="provisioningState"> Provisioning status of the origin. </param>
         /// <param name="privateEndpointStatus"> The approval status for the connection to the Private Link. </param>
-        internal CdnOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, OriginResourceState? resourceState, OriginProvisioningState? provisioningState, PrivateEndpointStatus? privateEndpointStatus) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, OriginResourceState? resourceState, OriginProvisioningState? provisioningState, PrivateEndpointStatus? privateEndpointStatus, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             HostName = hostName;
             HttpPort = httpPort;
@@ -57,6 +62,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
             PrivateEndpointStatus = privateEndpointStatus;
+            _rawData = rawData;
         }
 
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>

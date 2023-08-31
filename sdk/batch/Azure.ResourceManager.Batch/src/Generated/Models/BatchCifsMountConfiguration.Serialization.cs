@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchCifsMountConfiguration : IUtf8JsonSerializable
+    public partial class BatchCifsMountConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<BatchCifsMountConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchCifsMountConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchCifsMountConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(Username);
@@ -28,11 +36,25 @@ namespace Azure.ResourceManager.Batch.Models
             }
             writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchCifsMountConfiguration DeserializeBatchCifsMountConfiguration(JsonElement element)
+        internal static BatchCifsMountConfiguration DeserializeBatchCifsMountConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Batch.Models
             string relativeMountPath = default;
             Optional<string> mountOptions = default;
             string password = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userName"u8))
@@ -69,8 +92,61 @@ namespace Azure.ResourceManager.Batch.Models
                     password = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchCifsMountConfiguration(userName, source, relativeMountPath, mountOptions.Value, password);
+            return new BatchCifsMountConfiguration(userName, source, relativeMountPath, mountOptions.Value, password, rawData);
+        }
+
+        BatchCifsMountConfiguration IModelJsonSerializable<BatchCifsMountConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchCifsMountConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchCifsMountConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchCifsMountConfiguration IModelSerializable<BatchCifsMountConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchCifsMountConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BatchCifsMountConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BatchCifsMountConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(BatchCifsMountConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BatchCifsMountConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BatchCifsMountConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchCifsMountConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

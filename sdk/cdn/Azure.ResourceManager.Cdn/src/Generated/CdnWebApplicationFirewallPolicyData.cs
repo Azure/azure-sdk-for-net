@@ -21,7 +21,9 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class CdnWebApplicationFirewallPolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Cdn
             EndpointLinks = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +51,8 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
-        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSku sku, WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSku sku, WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Sku = sku;
@@ -60,6 +63,12 @@ namespace Azure.ResourceManager.Cdn
             EndpointLinks = endpointLinks;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyData"/> for deserialization. </summary>
+        internal CdnWebApplicationFirewallPolicyData()
+        {
         }
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>

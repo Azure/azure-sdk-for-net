@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class BillingBenefitsAppliedScopeProperties : IUtf8JsonSerializable
+    public partial class BillingBenefitsAppliedScopeProperties : IUtf8JsonSerializable, IModelJsonSerializable<BillingBenefitsAppliedScopeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BillingBenefitsAppliedScopeProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BillingBenefitsAppliedScopeProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BillingBenefitsAppliedScopeProperties DeserializeBillingBenefitsAppliedScopeProperties(JsonElement element)
+        internal static BillingBenefitsAppliedScopeProperties DeserializeBillingBenefitsAppliedScopeProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<ResourceIdentifier> subscriptionId = default;
             Optional<ResourceIdentifier> resourceGroupId = default;
             Optional<string> displayName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -98,8 +120,61 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     displayName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BillingBenefitsAppliedScopeProperties(Optional.ToNullable(tenantId), managementGroupId.Value, subscriptionId.Value, resourceGroupId.Value, displayName.Value);
+            return new BillingBenefitsAppliedScopeProperties(Optional.ToNullable(tenantId), managementGroupId.Value, subscriptionId.Value, resourceGroupId.Value, displayName.Value, rawData);
+        }
+
+        BillingBenefitsAppliedScopeProperties IModelJsonSerializable<BillingBenefitsAppliedScopeProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingBenefitsAppliedScopeProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BillingBenefitsAppliedScopeProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BillingBenefitsAppliedScopeProperties IModelSerializable<BillingBenefitsAppliedScopeProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBillingBenefitsAppliedScopeProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BillingBenefitsAppliedScopeProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BillingBenefitsAppliedScopeProperties"/> to convert. </param>
+        public static implicit operator RequestContent(BillingBenefitsAppliedScopeProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BillingBenefitsAppliedScopeProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BillingBenefitsAppliedScopeProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBillingBenefitsAppliedScopeProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

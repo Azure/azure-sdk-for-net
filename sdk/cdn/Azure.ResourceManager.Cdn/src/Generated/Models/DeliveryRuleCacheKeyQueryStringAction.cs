@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the cache-key query string action for the delivery rule. </summary>
     public partial class DeliveryRuleCacheKeyQueryStringAction : DeliveryRuleAction
     {
-        /// <summary> Initializes a new instance of DeliveryRuleCacheKeyQueryStringAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheKeyQueryStringAction"/>. </summary>
         /// <param name="properties"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleCacheKeyQueryStringAction(CacheKeyQueryStringActionProperties properties)
@@ -24,13 +25,19 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = DeliveryRuleActionType.CacheKeyQueryString;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleCacheKeyQueryStringAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheKeyQueryStringAction"/>. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="properties"> Defines the parameters for the action. </param>
-        internal DeliveryRuleCacheKeyQueryStringAction(DeliveryRuleActionType name, CacheKeyQueryStringActionProperties properties) : base(name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeliveryRuleCacheKeyQueryStringAction(DeliveryRuleActionType name, CacheKeyQueryStringActionProperties properties, Dictionary<string, BinaryData> rawData) : base(name, rawData)
         {
             Properties = properties;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheKeyQueryStringAction"/> for deserialization. </summary>
+        internal DeliveryRuleCacheKeyQueryStringAction()
+        {
         }
 
         /// <summary> Defines the parameters for the action. </summary>

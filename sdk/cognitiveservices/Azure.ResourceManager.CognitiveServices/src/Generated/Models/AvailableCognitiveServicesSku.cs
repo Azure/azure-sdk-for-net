@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Describes an available Cognitive Services SKU. </summary>
     public partial class AvailableCognitiveServicesSku
     {
-        /// <summary> Initializes a new instance of AvailableCognitiveServicesSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableCognitiveServicesSku"/>. </summary>
         internal AvailableCognitiveServicesSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Restrictions = new ChangeTrackingList<CognitiveServicesSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of AvailableCognitiveServicesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableCognitiveServicesSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of Cognitive Services account. </param>
         /// <param name="kind"> The Kind of resources that are supported in this SKU. </param>
         /// <param name="locations"> The set of locations that the SKU is available. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal AvailableCognitiveServicesSku(string resourceType, string name, string tier, string kind, IReadOnlyList<AzureLocation> locations, IReadOnlyList<CognitiveServicesSkuRestrictions> restrictions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableCognitiveServicesSku(string resourceType, string name, string tier, string kind, IReadOnlyList<AzureLocation> locations, IReadOnlyList<CognitiveServicesSkuRestrictions> restrictions, Dictionary<string, BinaryData> rawData)
         {
             ResourceType = resourceType;
             Name = name;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Kind = kind;
             Locations = locations;
             Restrictions = restrictions;
+            _rawData = rawData;
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>

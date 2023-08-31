@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
 
@@ -14,7 +15,9 @@ namespace Azure.Communication.CallingServer
     /// <summary> The RecognizeOptions. </summary>
     internal partial class RecognizeOptionsInternal
     {
-        /// <summary> Initializes a new instance of RecognizeOptionsInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/>. </summary>
         /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public RecognizeOptionsInternal(CommunicationIdentifierModel targetParticipant)
@@ -22,6 +25,26 @@ namespace Azure.Communication.CallingServer
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/>. </summary>
+        /// <param name="interruptPrompt"> Determines if we interrupt the prompt and start recognizing. </param>
+        /// <param name="initialSilenceTimeoutInSeconds"> Time to wait for first input after prompt (if any). </param>
+        /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
+        /// <param name="dtmfOptions"> Defines configurations for DTMF. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecognizeOptionsInternal(bool? interruptPrompt, int? initialSilenceTimeoutInSeconds, CommunicationIdentifierModel targetParticipant, DtmfOptionsInternal dtmfOptions, Dictionary<string, BinaryData> rawData)
+        {
+            InterruptPrompt = interruptPrompt;
+            InitialSilenceTimeoutInSeconds = initialSilenceTimeoutInSeconds;
+            TargetParticipant = targetParticipant;
+            DtmfOptions = dtmfOptions;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/> for deserialization. </summary>
+        internal RecognizeOptionsInternal()
+        {
         }
 
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,14 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class ScriptPackageData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScriptPackageData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptPackageData"/>. </summary>
         public ScriptPackageData()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptPackageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +34,14 @@ namespace Azure.ResourceManager.Avs
         /// <param name="version"> Module version. </param>
         /// <param name="company"> Company that created and supports the package. </param>
         /// <param name="uri"> Link to support by the package vendor. </param>
-        internal ScriptPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string version, string company, Uri uri) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string version, string company, Uri uri, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Version = version;
             Company = company;
             Uri = uri;
+            _rawData = rawData;
         }
 
         /// <summary> User friendly description of the package. </summary>

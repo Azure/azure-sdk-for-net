@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,20 +18,24 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class TagContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of TagContractData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TagContractData"/>. </summary>
         public TagContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of TagContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Tag name. </param>
-        internal TagContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TagContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
+            _rawData = rawData;
         }
 
         /// <summary> Tag name. </summary>

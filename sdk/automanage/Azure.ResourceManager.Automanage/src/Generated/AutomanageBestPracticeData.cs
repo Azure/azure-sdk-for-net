@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,20 +18,24 @@ namespace Azure.ResourceManager.Automanage
     /// </summary>
     public partial class AutomanageBestPracticeData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomanageBestPracticeData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomanageBestPracticeData"/>. </summary>
         internal AutomanageBestPracticeData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomanageBestPracticeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageBestPracticeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="configuration"> configuration dictionary of the configuration profile. </param>
-        internal AutomanageBestPracticeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData configuration) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomanageBestPracticeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData configuration, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Configuration = configuration;
+            _rawData = rawData;
         }
 
         /// <summary>

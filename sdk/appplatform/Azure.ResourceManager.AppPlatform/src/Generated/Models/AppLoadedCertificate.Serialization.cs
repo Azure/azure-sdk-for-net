@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppLoadedCertificate : IUtf8JsonSerializable
+    public partial class AppLoadedCertificate : IUtf8JsonSerializable, IModelJsonSerializable<AppLoadedCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppLoadedCertificate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppLoadedCertificate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("loadTrustStore"u8);
                 writer.WriteBooleanValue(LoadTrustStore.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppLoadedCertificate DeserializeAppLoadedCertificate(JsonElement element)
+        internal static AppLoadedCertificate DeserializeAppLoadedCertificate(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier resourceId = default;
             Optional<bool> loadTrustStore = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -49,8 +72,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     loadTrustStore = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppLoadedCertificate(resourceId, Optional.ToNullable(loadTrustStore));
+            return new AppLoadedCertificate(resourceId, Optional.ToNullable(loadTrustStore), rawData);
+        }
+
+        AppLoadedCertificate IModelJsonSerializable<AppLoadedCertificate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppLoadedCertificate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppLoadedCertificate>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppLoadedCertificate IModelSerializable<AppLoadedCertificate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppLoadedCertificate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppLoadedCertificate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppLoadedCertificate"/> to convert. </param>
+        public static implicit operator RequestContent(AppLoadedCertificate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppLoadedCertificate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppLoadedCertificate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppLoadedCertificate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

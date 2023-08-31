@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Check SKU availability result list. </summary>
     internal partial class CognitiveServicesSkuAvailabilityListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityListResult"/>. </summary>
         internal CognitiveServicesSkuAvailabilityListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesSkuAvailabilityList>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityListResult"/>. </summary>
         /// <param name="value"> Check SKU availability result list. </param>
-        internal CognitiveServicesSkuAvailabilityListResult(IReadOnlyList<CognitiveServicesSkuAvailabilityList> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesSkuAvailabilityListResult(IReadOnlyList<CognitiveServicesSkuAvailabilityList> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Check SKU availability result list. </summary>

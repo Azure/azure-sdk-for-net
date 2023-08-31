@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _experimentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), _experimentClientDiagnostics, Pipeline, "ExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), _experimentClientDiagnostics, Pipeline, "ExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _experimentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), _experimentClientDiagnostics, Pipeline, "ExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), _experimentClientDiagnostics, Pipeline, "ExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

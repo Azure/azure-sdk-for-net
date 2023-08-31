@@ -5,15 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class DialogStateResponseInternal
+    internal partial class DialogStateResponseInternal : IUtf8JsonSerializable, IModelJsonSerializable<DialogStateResponseInternal>
     {
-        internal static DialogStateResponseInternal DeserializeDialogStateResponseInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DialogStateResponseInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DialogStateResponseInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DialogId))
+            {
+                writer.WritePropertyName("dialogId"u8);
+                writer.WriteStringValue(DialogId);
+            }
+            if (Optional.IsDefined(DialogOptions))
+            {
+                writer.WritePropertyName("dialogOptions"u8);
+                if (DialogOptions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DialogOptionsInternal>)DialogOptions).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(DialogInputType))
+            {
+                writer.WritePropertyName("dialogInputType"u8);
+                writer.WriteStringValue(DialogInputType.Value.ToString());
+            }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DialogStateResponseInternal DeserializeDialogStateResponseInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +77,7 @@ namespace Azure.Communication.CallAutomation
             Optional<DialogOptionsInternal> dialogOptions = default;
             Optional<DialogInputType> dialogInputType = default;
             Optional<string> operationContext = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dialogId"u8))
@@ -52,8 +108,61 @@ namespace Azure.Communication.CallAutomation
                     operationContext = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DialogStateResponseInternal(dialogId.Value, dialogOptions.Value, Optional.ToNullable(dialogInputType), operationContext.Value);
+            return new DialogStateResponseInternal(dialogId.Value, dialogOptions.Value, Optional.ToNullable(dialogInputType), operationContext.Value, rawData);
+        }
+
+        DialogStateResponseInternal IModelJsonSerializable<DialogStateResponseInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDialogStateResponseInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DialogStateResponseInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DialogStateResponseInternal IModelSerializable<DialogStateResponseInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDialogStateResponseInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DialogStateResponseInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DialogStateResponseInternal"/> to convert. </param>
+        public static implicit operator RequestContent(DialogStateResponseInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DialogStateResponseInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DialogStateResponseInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDialogStateResponseInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

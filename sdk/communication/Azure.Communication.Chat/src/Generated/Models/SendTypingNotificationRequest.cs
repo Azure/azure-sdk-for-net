@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Chat
 {
     /// <summary> Request payload for typing notifications. </summary>
     internal partial class SendTypingNotificationRequest
     {
-        /// <summary> Initializes a new instance of SendTypingNotificationRequest. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SendTypingNotificationRequest"/>. </summary>
         public SendTypingNotificationRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendTypingNotificationRequest"/>. </summary>
+        /// <param name="senderDisplayName"> The display name of the typing notification sender. This property is used to populate sender name for push notifications. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SendTypingNotificationRequest(string senderDisplayName, Dictionary<string, BinaryData> rawData)
+        {
+            SenderDisplayName = senderDisplayName;
+            _rawData = rawData;
         }
 
         /// <summary> The display name of the typing notification sender. This property is used to populate sender name for push notifications. </summary>

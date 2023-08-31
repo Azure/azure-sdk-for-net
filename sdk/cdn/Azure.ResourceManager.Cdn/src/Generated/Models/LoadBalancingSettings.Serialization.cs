@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class LoadBalancingSettings : IUtf8JsonSerializable
+    public partial class LoadBalancingSettings : IUtf8JsonSerializable, IModelJsonSerializable<LoadBalancingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LoadBalancingSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LoadBalancingSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SampleSize))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("additionalLatencyInMilliseconds"u8);
                 writer.WriteNumberValue(AdditionalLatencyInMilliseconds.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancingSettings DeserializeLoadBalancingSettings(JsonElement element)
+        internal static LoadBalancingSettings DeserializeLoadBalancingSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<int> sampleSize = default;
             Optional<int> successfulSamplesRequired = default;
             Optional<int> additionalLatencyInMilliseconds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sampleSize"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalLatencyInMilliseconds = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LoadBalancingSettings(Optional.ToNullable(sampleSize), Optional.ToNullable(successfulSamplesRequired), Optional.ToNullable(additionalLatencyInMilliseconds));
+            return new LoadBalancingSettings(Optional.ToNullable(sampleSize), Optional.ToNullable(successfulSamplesRequired), Optional.ToNullable(additionalLatencyInMilliseconds), rawData);
+        }
+
+        LoadBalancingSettings IModelJsonSerializable<LoadBalancingSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancingSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LoadBalancingSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LoadBalancingSettings IModelSerializable<LoadBalancingSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLoadBalancingSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LoadBalancingSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LoadBalancingSettings"/> to convert. </param>
+        public static implicit operator RequestContent(LoadBalancingSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LoadBalancingSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LoadBalancingSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLoadBalancingSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

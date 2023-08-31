@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Customer Certificate used for https. </summary>
     public partial class CustomerCertificateProperties : FrontDoorSecretProperties
     {
-        /// <summary> Initializes a new instance of CustomerCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerCertificateProperties"/>. </summary>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSource"/> is null. </exception>
         public CustomerCertificateProperties(WritableSubResource secretSource)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretType = SecretType.CustomerCertificate;
         }
 
-        /// <summary> Initializes a new instance of CustomerCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerCertificateProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateAuthority"> Certificate issuing authority. </param>
         /// <param name="subjectAlternativeNames"> The list of SANs. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
-        internal CustomerCertificateProperties(SecretType secretType, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, DateTimeOffset? expiresOn, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomerCertificateProperties(SecretType secretType, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, DateTimeOffset? expiresOn, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint, Dictionary<string, BinaryData> rawData) : base(secretType, rawData)
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;
@@ -48,6 +49,11 @@ namespace Azure.ResourceManager.Cdn.Models
             SubjectAlternativeNames = subjectAlternativeNames;
             Thumbprint = thumbprint;
             SecretType = secretType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomerCertificateProperties"/> for deserialization. </summary>
+        internal CustomerCertificateProperties()
+        {
         }
 
         /// <summary> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>

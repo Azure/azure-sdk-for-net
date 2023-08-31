@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkSegmentResource(Client, WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(e)), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkSegmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadNetworkSegmentResource(Client, WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(e)), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkSegmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkSegmentResource(Client, WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(e)), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkSegmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadNetworkSegmentResource(Client, WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(e)), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkSegmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

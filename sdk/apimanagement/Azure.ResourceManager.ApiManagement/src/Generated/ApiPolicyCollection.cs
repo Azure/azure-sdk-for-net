@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<ApiPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiPolicyRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApiPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiPolicyClientDiagnostics, Pipeline, "ApiPolicyCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ApiPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiPolicyClientDiagnostics, Pipeline, "ApiPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<ApiPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiPolicyRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApiPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiPolicyClientDiagnostics, Pipeline, "ApiPolicyCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ApiPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiPolicyClientDiagnostics, Pipeline, "ApiPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

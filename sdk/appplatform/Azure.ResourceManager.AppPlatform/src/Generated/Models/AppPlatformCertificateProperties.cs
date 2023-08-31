@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -16,15 +17,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// Please note <see cref="AppPlatformCertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AppPlatformContentCertificateProperties"/> and <see cref="AppPlatformKeyVaultCertificateProperties"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownCertificateProperties))]
     public abstract partial class AppPlatformCertificateProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformCertificateProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCertificateProperties"/>. </summary>
         protected AppPlatformCertificateProperties()
         {
             DnsNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCertificateProperties"/>. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
         /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
-        internal AppPlatformCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, DateTimeOffset? activateOn, string subjectName, IReadOnlyList<string> dnsNames, AppPlatformCertificateProvisioningState? provisioningState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, DateTimeOffset? activateOn, string subjectName, IReadOnlyList<string> dnsNames, AppPlatformCertificateProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData)
         {
             CertificatePropertiesType = certificatePropertiesType;
             Thumbprint = thumbprint;
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             SubjectName = subjectName;
             DnsNames = dnsNames;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> The type of the certificate source. </summary>

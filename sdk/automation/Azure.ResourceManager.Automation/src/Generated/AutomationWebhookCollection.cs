@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationWebhookResource(Client, AutomationWebhookData.DeserializeAutomationWebhookData(e)), _automationWebhookWebhookClientDiagnostics, Pipeline, "AutomationWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AutomationWebhookResource(Client, AutomationWebhookData.DeserializeAutomationWebhookData(e)), _automationWebhookWebhookClientDiagnostics, Pipeline, "AutomationWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationWebhookResource(Client, AutomationWebhookData.DeserializeAutomationWebhookData(e)), _automationWebhookWebhookClientDiagnostics, Pipeline, "AutomationWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AutomationWebhookResource(Client, AutomationWebhookData.DeserializeAutomationWebhookData(e)), _automationWebhookWebhookClientDiagnostics, Pipeline, "AutomationWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

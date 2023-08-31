@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list watcher operation. </summary>
     internal partial class AutomationWatcherListResult
     {
-        /// <summary> Initializes a new instance of AutomationWatcherListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherListResult"/>. </summary>
         internal AutomationWatcherListResult()
         {
             Value = new ChangeTrackingList<AutomationWatcherData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationWatcherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of watchers. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal AutomationWatcherListResult(IReadOnlyList<AutomationWatcherData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationWatcherListResult(IReadOnlyList<AutomationWatcherData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets a list of watchers. </summary>

@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CustomerCertificateProperties : IUtf8JsonSerializable
+    public partial class CustomerCertificateProperties : IUtf8JsonSerializable, IModelJsonSerializable<CustomerCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomerCertificateProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomerCertificateProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CustomerCertificateProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("secretSource"u8);
             JsonSerializer.Serialize(writer, SecretSource); if (Optional.IsDefined(SecretVersion))
@@ -41,11 +47,25 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SecretType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomerCertificateProperties DeserializeCustomerCertificateProperties(JsonElement element)
+        internal static CustomerCertificateProperties DeserializeCustomerCertificateProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +79,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IList<string>> subjectAlternativeNames = default;
             Optional<string> thumbprint = default;
             SecretType type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretSource"u8))
@@ -123,8 +144,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     type = new SecretType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomerCertificateProperties(type, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
+            return new CustomerCertificateProperties(type, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value, rawData);
+        }
+
+        CustomerCertificateProperties IModelJsonSerializable<CustomerCertificateProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CustomerCertificateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomerCertificateProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomerCertificateProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CustomerCertificateProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomerCertificateProperties IModelSerializable<CustomerCertificateProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CustomerCertificateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomerCertificateProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomerCertificateProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomerCertificateProperties"/> to convert. </param>
+        public static implicit operator RequestContent(CustomerCertificateProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomerCertificateProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomerCertificateProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomerCertificateProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

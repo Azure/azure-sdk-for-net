@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,12 +16,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> A reference to a related private endpoint connection. </summary>
     public partial class AppConfigurationPrivateEndpointConnectionReference : ResourceData
     {
-        /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionReference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionReference"/>. </summary>
         internal AppConfigurationPrivateEndpointConnectionReference()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionReference"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,11 +31,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="provisioningState"> The provisioning status of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppConfigurationProvisioningState? provisioningState, WritableSubResource privateEndpoint, AppConfigurationPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppConfigurationProvisioningState? provisioningState, WritableSubResource privateEndpoint, AppConfigurationPrivateLinkServiceConnectionState connectionState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
+            _rawData = rawData;
         }
 
         /// <summary> The provisioning status of the private endpoint connection. </summary>

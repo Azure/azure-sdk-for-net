@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class DscNodeData : IUtf8JsonSerializable
+    public partial class DscNodeData : IUtf8JsonSerializable, IModelJsonSerializable<DscNodeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DscNodeData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DscNodeData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -68,7 +73,14 @@ namespace Azure.ResourceManager.Automation
                 writer.WriteStartArray();
                 foreach (var item in ExtensionHandler)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DscNodeExtensionHandlerAssociationProperty>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,11 +100,25 @@ namespace Azure.ResourceManager.Automation
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DscNodeData DeserializeDscNodeData(JsonElement element)
+        internal static DscNodeData DeserializeDscNodeData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,6 +137,7 @@ namespace Azure.ResourceManager.Automation
             Optional<int> totalCount = default;
             Optional<IList<DscNodeExtensionHandlerAssociationProperty>> extensionHandler = default;
             Optional<string> name0 = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -241,8 +268,61 @@ namespace Azure.ResourceManager.Automation
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DscNodeData(id, name, type, systemData.Value, Optional.ToNullable(lastSeen), Optional.ToNullable(registrationTime), ip.Value, accountId.Value, status.Value, nodeId.Value, Optional.ToNullable(etag), Optional.ToNullable(totalCount), Optional.ToList(extensionHandler), name0.Value);
+            return new DscNodeData(id, name, type, systemData.Value, Optional.ToNullable(lastSeen), Optional.ToNullable(registrationTime), ip.Value, accountId.Value, status.Value, nodeId.Value, Optional.ToNullable(etag), Optional.ToNullable(totalCount), Optional.ToList(extensionHandler), name0.Value, rawData);
+        }
+
+        DscNodeData IModelJsonSerializable<DscNodeData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDscNodeData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DscNodeData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DscNodeData IModelSerializable<DscNodeData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDscNodeData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DscNodeData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DscNodeData"/> to convert. </param>
+        public static implicit operator RequestContent(DscNodeData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DscNodeData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DscNodeData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDscNodeData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

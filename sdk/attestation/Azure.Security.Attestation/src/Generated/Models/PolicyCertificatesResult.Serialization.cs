@@ -6,22 +6,62 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyCertificatesResultConverter))]
-    internal partial class PolicyCertificatesResult
+    internal partial class PolicyCertificatesResult : IUtf8JsonSerializable, IModelJsonSerializable<PolicyCertificatesResult>
     {
-        internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyCertificatesResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyCertificatesResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(InternalPolicyCertificates))
+            {
+                writer.WritePropertyName("x-ms-policy-certificates"u8);
+                if (InternalPolicyCertificates is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JsonWebKeySet>)InternalPolicyCertificates).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<JsonWebKeySet> xMsPolicyCertificates = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-policy-certificates"u8))
@@ -33,15 +73,68 @@ namespace Azure.Security.Attestation
                     xMsPolicyCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicyCertificatesResult(xMsPolicyCertificates.Value);
+            return new PolicyCertificatesResult(xMsPolicyCertificates.Value, rawData);
+        }
+
+        PolicyCertificatesResult IModelJsonSerializable<PolicyCertificatesResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyCertificatesResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyCertificatesResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyCertificatesResult IModelSerializable<PolicyCertificatesResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyCertificatesResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PolicyCertificatesResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PolicyCertificatesResult"/> to convert. </param>
+        public static implicit operator RequestContent(PolicyCertificatesResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PolicyCertificatesResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PolicyCertificatesResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyCertificatesResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class PolicyCertificatesResultConverter : JsonConverter<PolicyCertificatesResult>
         {
             public override void Write(Utf8JsonWriter writer, PolicyCertificatesResult model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override PolicyCertificatesResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

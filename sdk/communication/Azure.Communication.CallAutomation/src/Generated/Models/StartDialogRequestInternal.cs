@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -13,7 +14,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The StartDialogRequest. </summary>
     internal partial class StartDialogRequestInternal
     {
-        /// <summary> Initializes a new instance of StartDialogRequestInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/>. </summary>
         /// <param name="dialogOptions"> Defines options for dialog. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dialogOptions"/> is null. </exception>
@@ -23,6 +26,24 @@ namespace Azure.Communication.CallAutomation
 
             DialogOptions = dialogOptions;
             DialogInputType = dialogInputType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/>. </summary>
+        /// <param name="dialogOptions"> Defines options for dialog. </param>
+        /// <param name="dialogInputType"> Determines the type of the dialog. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StartDialogRequestInternal(DialogOptionsInternal dialogOptions, DialogInputType dialogInputType, string operationContext, Dictionary<string, BinaryData> rawData)
+        {
+            DialogOptions = dialogOptions;
+            DialogInputType = dialogInputType;
+            OperationContext = operationContext;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/> for deserialization. </summary>
+        internal StartDialogRequestInternal()
+        {
         }
 
         /// <summary> Defines options for dialog. </summary>

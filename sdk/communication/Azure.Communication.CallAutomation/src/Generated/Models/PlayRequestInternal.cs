@@ -15,7 +15,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The PlayRequest. </summary>
     internal partial class PlayRequestInternal
     {
-        /// <summary> Initializes a new instance of PlayRequestInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/>. </summary>
         /// <param name="playSourceInfo"> The source of the audio to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> is null. </exception>
         public PlayRequestInternal(PlaySourceInternal playSourceInfo)
@@ -24,6 +26,31 @@ namespace Azure.Communication.CallAutomation
 
             PlaySourceInfo = playSourceInfo;
             PlayTo = new ChangeTrackingList<CommunicationIdentifierModel>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/>. </summary>
+        /// <param name="playSourceInfo"> The source of the audio to be played. </param>
+        /// <param name="playTo">
+        /// The list of call participants play provided audio to.
+        /// Plays to everyone in the call when not provided.
+        /// </param>
+        /// <param name="playOptions"> Defines options for playing the audio. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlayRequestInternal(PlaySourceInternal playSourceInfo, IList<CommunicationIdentifierModel> playTo, PlayOptionsInternal playOptions, string operationContext, string callbackUri, Dictionary<string, BinaryData> rawData)
+        {
+            PlaySourceInfo = playSourceInfo;
+            PlayTo = playTo;
+            PlayOptions = playOptions;
+            OperationContext = operationContext;
+            CallbackUri = callbackUri;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/> for deserialization. </summary>
+        internal PlayRequestInternal()
+        {
         }
 
         /// <summary> The source of the audio to be played. </summary>

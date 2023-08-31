@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,14 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class PlacementPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of PlacementPolicyData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyData"/>. </summary>
         public PlacementPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of PlacementPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +36,11 @@ namespace Azure.ResourceManager.Avs
         /// Please note <see cref="PlacementPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VmHostPlacementPolicyProperties"/> and <see cref="VmPlacementPolicyProperties"/>.
         /// </param>
-        internal PlacementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PlacementPolicyProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlacementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PlacementPolicyProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary>

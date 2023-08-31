@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
@@ -17,20 +19,24 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformSupportedStackData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformSupportedStackData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSupportedStackData"/>. </summary>
         public AppPlatformSupportedStackData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSupportedStackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSupportedStackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Supported stack resource properties. </param>
-        internal AppPlatformSupportedStackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformSupportedStackProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformSupportedStackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformSupportedStackProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Supported stack resource properties. </summary>

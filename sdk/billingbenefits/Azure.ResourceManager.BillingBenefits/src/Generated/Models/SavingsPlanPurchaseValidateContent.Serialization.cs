@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class SavingsPlanPurchaseValidateContent : IUtf8JsonSerializable
+    public partial class SavingsPlanPurchaseValidateContent : IUtf8JsonSerializable, IModelJsonSerializable<SavingsPlanPurchaseValidateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SavingsPlanPurchaseValidateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SavingsPlanPurchaseValidateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Benefits))
             {
@@ -21,11 +30,113 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Benefits)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BillingBenefitsSavingsPlanOrderAliasData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SavingsPlanPurchaseValidateContent DeserializeSavingsPlanPurchaseValidateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<BillingBenefitsSavingsPlanOrderAliasData>> benefits = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("benefits"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<BillingBenefitsSavingsPlanOrderAliasData> array = new List<BillingBenefitsSavingsPlanOrderAliasData>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(BillingBenefitsSavingsPlanOrderAliasData.DeserializeBillingBenefitsSavingsPlanOrderAliasData(item));
+                    }
+                    benefits = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SavingsPlanPurchaseValidateContent(Optional.ToList(benefits), rawData);
+        }
+
+        SavingsPlanPurchaseValidateContent IModelJsonSerializable<SavingsPlanPurchaseValidateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanPurchaseValidateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SavingsPlanPurchaseValidateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SavingsPlanPurchaseValidateContent IModelSerializable<SavingsPlanPurchaseValidateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSavingsPlanPurchaseValidateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SavingsPlanPurchaseValidateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SavingsPlanPurchaseValidateContent"/> to convert. </param>
+        public static implicit operator RequestContent(SavingsPlanPurchaseValidateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SavingsPlanPurchaseValidateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SavingsPlanPurchaseValidateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSavingsPlanPurchaseValidateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

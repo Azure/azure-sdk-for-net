@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformImageRegistryCredential : IUtf8JsonSerializable
+    public partial class AppPlatformImageRegistryCredential : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformImageRegistryCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformImageRegistryCredential>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformImageRegistryCredential>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Username))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformImageRegistryCredential DeserializeAppPlatformImageRegistryCredential(JsonElement element)
+        internal static AppPlatformImageRegistryCredential DeserializeAppPlatformImageRegistryCredential(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> username = default;
             Optional<string> password = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     password = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformImageRegistryCredential(username.Value, password.Value);
+            return new AppPlatformImageRegistryCredential(username.Value, password.Value, rawData);
+        }
+
+        AppPlatformImageRegistryCredential IModelJsonSerializable<AppPlatformImageRegistryCredential>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformImageRegistryCredential(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformImageRegistryCredential>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformImageRegistryCredential IModelSerializable<AppPlatformImageRegistryCredential>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformImageRegistryCredential(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppPlatformImageRegistryCredential"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppPlatformImageRegistryCredential"/> to convert. </param>
+        public static implicit operator RequestContent(AppPlatformImageRegistryCredential model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppPlatformImageRegistryCredential"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppPlatformImageRegistryCredential(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformImageRegistryCredential(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

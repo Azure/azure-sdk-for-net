@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class ScVmmServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScVmmServerData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScVmmServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <param name="fqdn"> Fqdn is the hostname/ip of the vmmServer. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.ArcScVmm
             Fqdn = fqdn;
         }
 
-        /// <summary> Initializes a new instance of ScVmmServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +52,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="uuid"> Unique ID of vmmServer. </param>
         /// <param name="version"> Version is the version of the vmmSever. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal ScVmmServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, VmmServerPropertiesCredentials credentials, string fqdn, int? port, string connectionStatus, string errorMessage, string uuid, string version, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, VmmServerPropertiesCredentials credentials, string fqdn, int? port, string connectionStatus, string errorMessage, string uuid, string version, string provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Credentials = credentials;
@@ -61,6 +64,12 @@ namespace Azure.ResourceManager.ArcScVmm
             Uuid = uuid;
             Version = version;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScVmmServerData"/> for deserialization. </summary>
+        internal ScVmmServerData()
+        {
         }
 
         /// <summary> The extended location. </summary>

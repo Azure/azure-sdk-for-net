@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementOpenIdConnectProviderData : IUtf8JsonSerializable
+    public partial class ApiManagementOpenIdConnectProviderData : IUtf8JsonSerializable, IModelJsonSerializable<ApiManagementOpenIdConnectProviderData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiManagementOpenIdConnectProviderData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiManagementOpenIdConnectProviderData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -44,11 +52,25 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStringValue(ClientSecret);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiManagementOpenIdConnectProviderData DeserializeApiManagementOpenIdConnectProviderData(JsonElement element)
+        internal static ApiManagementOpenIdConnectProviderData DeserializeApiManagementOpenIdConnectProviderData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +84,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> metadataEndpoint = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -125,8 +148,61 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApiManagementOpenIdConnectProviderData(id, name, type, systemData.Value, displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value);
+            return new ApiManagementOpenIdConnectProviderData(id, name, type, systemData.Value, displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value, rawData);
+        }
+
+        ApiManagementOpenIdConnectProviderData IModelJsonSerializable<ApiManagementOpenIdConnectProviderData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementOpenIdConnectProviderData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiManagementOpenIdConnectProviderData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiManagementOpenIdConnectProviderData IModelSerializable<ApiManagementOpenIdConnectProviderData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiManagementOpenIdConnectProviderData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiManagementOpenIdConnectProviderData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiManagementOpenIdConnectProviderData"/> to convert. </param>
+        public static implicit operator RequestContent(ApiManagementOpenIdConnectProviderData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiManagementOpenIdConnectProviderData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiManagementOpenIdConnectProviderData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiManagementOpenIdConnectProviderData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

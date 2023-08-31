@@ -6,16 +6,66 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DeletedAutomationAccount
+    public partial class DeletedAutomationAccount : IUtf8JsonSerializable, IModelJsonSerializable<DeletedAutomationAccount>
     {
-        internal static DeletedAutomationAccount DeserializeDeletedAutomationAccount(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeletedAutomationAccount>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeletedAutomationAccount>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AutomationAccountResourceId))
+            {
+                writer.WritePropertyName("automationAccountResourceId"u8);
+                writer.WriteStringValue(AutomationAccountResourceId);
+            }
+            if (Optional.IsDefined(AutomationAccountId))
+            {
+                writer.WritePropertyName("automationAccountId"u8);
+                writer.WriteStringValue(AutomationAccountId);
+            }
+            if (Optional.IsDefined(LocationPropertiesLocation))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(LocationPropertiesLocation);
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DeletedAutomationAccount DeserializeDeletedAutomationAccount(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> automationAccountId = default;
             Optional<string> location0 = default;
             Optional<DateTimeOffset> deletionTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -104,8 +155,61 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeletedAutomationAccount(id, name, type, systemData.Value, Optional.ToNullable(location), automationAccountResourceId.Value, automationAccountId.Value, location0.Value, Optional.ToNullable(deletionTime));
+            return new DeletedAutomationAccount(id, name, type, systemData.Value, Optional.ToNullable(location), automationAccountResourceId.Value, automationAccountId.Value, location0.Value, Optional.ToNullable(deletionTime), rawData);
+        }
+
+        DeletedAutomationAccount IModelJsonSerializable<DeletedAutomationAccount>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeletedAutomationAccount(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeletedAutomationAccount>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeletedAutomationAccount IModelSerializable<DeletedAutomationAccount>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeletedAutomationAccount(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeletedAutomationAccount"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeletedAutomationAccount"/> to convert. </param>
+        public static implicit operator RequestContent(DeletedAutomationAccount model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeletedAutomationAccount"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeletedAutomationAccount(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeletedAutomationAccount(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

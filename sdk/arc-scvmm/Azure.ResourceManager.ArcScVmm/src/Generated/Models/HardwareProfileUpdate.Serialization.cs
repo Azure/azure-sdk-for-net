@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class HardwareProfileUpdate : IUtf8JsonSerializable
+    public partial class HardwareProfileUpdate : IUtf8JsonSerializable, IModelJsonSerializable<HardwareProfileUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HardwareProfileUpdate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HardwareProfileUpdate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MemoryMB))
             {
@@ -45,7 +53,147 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HardwareProfileUpdate DeserializeHardwareProfileUpdate(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> memoryMB = default;
+            Optional<int> cpuCount = default;
+            Optional<LimitCpuForMigration> limitCpuForMigration = default;
+            Optional<DynamicMemoryEnabled> dynamicMemoryEnabled = default;
+            Optional<int> dynamicMemoryMaxMB = default;
+            Optional<int> dynamicMemoryMinMB = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("memoryMB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    memoryMB = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("cpuCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cpuCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("limitCpuForMigration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    limitCpuForMigration = new LimitCpuForMigration(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dynamicMemoryEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dynamicMemoryEnabled = new DynamicMemoryEnabled(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dynamicMemoryMaxMB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dynamicMemoryMaxMB = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("dynamicMemoryMinMB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dynamicMemoryMinMB = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HardwareProfileUpdate(Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), rawData);
+        }
+
+        HardwareProfileUpdate IModelJsonSerializable<HardwareProfileUpdate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHardwareProfileUpdate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HardwareProfileUpdate>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HardwareProfileUpdate IModelSerializable<HardwareProfileUpdate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHardwareProfileUpdate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HardwareProfileUpdate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HardwareProfileUpdate"/> to convert. </param>
+        public static implicit operator RequestContent(HardwareProfileUpdate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HardwareProfileUpdate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HardwareProfileUpdate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHardwareProfileUpdate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

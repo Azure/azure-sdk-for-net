@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class IssueContractData : IUtf8JsonSerializable
+    public partial class IssueContractData : IUtf8JsonSerializable, IModelJsonSerializable<IssueContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IssueContractData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IssueContractData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStringValue(UserId);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IssueContractData DeserializeIssueContractData(JsonElement element)
+        internal static IssueContractData DeserializeIssueContractData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> title = default;
             Optional<string> description = default;
             Optional<ResourceIdentifier> userId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -154,8 +176,61 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IssueContractData(id, name, type, systemData.Value, Optional.ToNullable(createdDate), Optional.ToNullable(state), apiId.Value, title.Value, description.Value, userId.Value);
+            return new IssueContractData(id, name, type, systemData.Value, Optional.ToNullable(createdDate), Optional.ToNullable(state), apiId.Value, title.Value, description.Value, userId.Value, rawData);
+        }
+
+        IssueContractData IModelJsonSerializable<IssueContractData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIssueContractData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IssueContractData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IssueContractData IModelSerializable<IssueContractData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIssueContractData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IssueContractData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IssueContractData"/> to convert. </param>
+        public static implicit operator RequestContent(IssueContractData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IssueContractData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IssueContractData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIssueContractData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

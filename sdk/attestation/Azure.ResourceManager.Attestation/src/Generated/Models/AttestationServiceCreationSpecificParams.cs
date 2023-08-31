@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Attestation.Models
@@ -12,9 +13,22 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Client supplied parameters used to create a new attestation provider. </summary>
     public partial class AttestationServiceCreationSpecificParams
     {
-        /// <summary> Initializes a new instance of AttestationServiceCreationSpecificParams. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttestationServiceCreationSpecificParams"/>. </summary>
         public AttestationServiceCreationSpecificParams()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AttestationServiceCreationSpecificParams"/>. </summary>
+        /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
+        /// <param name="policySigningCertificates"> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationServiceCreationSpecificParams(PublicNetworkAccessType? publicNetworkAccess, JsonWebKeySet policySigningCertificates, Dictionary<string, BinaryData> rawData)
+        {
+            PublicNetworkAccess = publicNetworkAccess;
+            PolicySigningCertificates = policySigningCertificates;
+            _rawData = rawData;
         }
 
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>

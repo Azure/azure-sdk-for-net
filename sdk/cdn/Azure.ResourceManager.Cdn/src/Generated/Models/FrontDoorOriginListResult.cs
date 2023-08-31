@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list origins. It contains a list of origin objects and a URL link to get the next set of results. </summary>
     internal partial class FrontDoorOriginListResult
     {
-        /// <summary> Initializes a new instance of FrontDoorOriginListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginListResult"/>. </summary>
         internal FrontDoorOriginListResult()
         {
             Value = new ChangeTrackingList<FrontDoorOriginData>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorOriginListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginListResult"/>. </summary>
         /// <param name="value"> List of CDN origins within an endpoint. </param>
         /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
-        internal FrontDoorOriginListResult(IReadOnlyList<FrontDoorOriginData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorOriginListResult(IReadOnlyList<FrontDoorOriginData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of CDN origins within an endpoint. </summary>

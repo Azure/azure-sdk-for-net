@@ -14,7 +14,9 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> The error object. </summary>
     internal partial class Error
     {
-        /// <summary> Initializes a new instance of Error. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
@@ -27,19 +29,26 @@ namespace Azure.AI.Language.QuestionAnswering
             Details = new ChangeTrackingList<Error>();
         }
 
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal Error(ErrorCode code, string message, string target, IReadOnlyList<Error> details, InnerErrorModel innererror)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Error(ErrorCode code, string message, string target, IReadOnlyList<Error> details, InnerErrorModel innererror, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
             Innererror = innererror;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Error"/> for deserialization. </summary>
+        internal Error()
+        {
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>

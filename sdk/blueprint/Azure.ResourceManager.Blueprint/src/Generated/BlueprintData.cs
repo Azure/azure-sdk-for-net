@@ -19,14 +19,16 @@ namespace Azure.ResourceManager.Blueprint
     /// </summary>
     public partial class BlueprintData : ResourceData
     {
-        /// <summary> Initializes a new instance of BlueprintData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlueprintData"/>. </summary>
         public BlueprintData()
         {
             Parameters = new ChangeTrackingDictionary<string, ParameterDefinition>();
             ResourceGroups = new ChangeTrackingDictionary<string, ResourceGroupDefinition>();
         }
 
-        /// <summary> Initializes a new instance of BlueprintData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlueprintData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +41,8 @@ namespace Azure.ResourceManager.Blueprint
         /// <param name="resourceGroups"> Resource group placeholders defined by this blueprint definition. </param>
         /// <param name="versions"> Published versions of this blueprint definition. </param>
         /// <param name="layout"> Layout view of the blueprint definition for UI reference. </param>
-        internal BlueprintData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, BlueprintStatus status, BlueprintTargetScope? targetScope, IDictionary<string, ParameterDefinition> parameters, IDictionary<string, ResourceGroupDefinition> resourceGroups, BinaryData versions, BinaryData layout) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlueprintData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, BlueprintStatus status, BlueprintTargetScope? targetScope, IDictionary<string, ParameterDefinition> parameters, IDictionary<string, ResourceGroupDefinition> resourceGroups, BinaryData versions, BinaryData layout, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.Blueprint
             ResourceGroups = resourceGroups;
             Versions = versions;
             Layout = layout;
+            _rawData = rawData;
         }
 
         /// <summary> One-liner string explain this resource. </summary>

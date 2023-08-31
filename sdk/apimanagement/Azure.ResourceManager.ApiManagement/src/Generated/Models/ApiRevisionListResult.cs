@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged API Revision list representation. </summary>
     internal partial class ApiRevisionListResult
     {
-        /// <summary> Initializes a new instance of ApiRevisionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiRevisionListResult"/>. </summary>
         internal ApiRevisionListResult()
         {
             Value = new ChangeTrackingList<ApiRevisionContract>();
         }
 
-        /// <summary> Initializes a new instance of ApiRevisionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiRevisionListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal ApiRevisionListResult(IReadOnlyList<ApiRevisionContract> value, long? count, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiRevisionListResult(IReadOnlyList<ApiRevisionContract> value, long? count, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Page values. </summary>

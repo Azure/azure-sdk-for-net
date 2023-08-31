@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class SubscriptionContractData : IUtf8JsonSerializable
+    public partial class SubscriptionContractData : IUtf8JsonSerializable, IModelJsonSerializable<SubscriptionContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubscriptionContractData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubscriptionContractData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -81,11 +88,25 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteBooleanValue(AllowTracing.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SubscriptionContractData DeserializeSubscriptionContractData(JsonElement element)
+        internal static SubscriptionContractData DeserializeSubscriptionContractData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,6 +128,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> secondaryKey = default;
             Optional<string> stateComment = default;
             Optional<bool> allowTracing = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -238,8 +260,61 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubscriptionContractData(id, name, type, systemData.Value, ownerId.Value, scope.Value, displayName.Value, Optional.ToNullable(state), Optional.ToNullable(createdDate), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), Optional.ToNullable(endDate), Optional.ToNullable(notificationDate), primaryKey.Value, secondaryKey.Value, stateComment.Value, Optional.ToNullable(allowTracing));
+            return new SubscriptionContractData(id, name, type, systemData.Value, ownerId.Value, scope.Value, displayName.Value, Optional.ToNullable(state), Optional.ToNullable(createdDate), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), Optional.ToNullable(endDate), Optional.ToNullable(notificationDate), primaryKey.Value, secondaryKey.Value, stateComment.Value, Optional.ToNullable(allowTracing), rawData);
+        }
+
+        SubscriptionContractData IModelJsonSerializable<SubscriptionContractData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionContractData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubscriptionContractData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubscriptionContractData IModelSerializable<SubscriptionContractData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubscriptionContractData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SubscriptionContractData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SubscriptionContractData"/> to convert. </param>
+        public static implicit operator RequestContent(SubscriptionContractData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SubscriptionContractData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SubscriptionContractData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubscriptionContractData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

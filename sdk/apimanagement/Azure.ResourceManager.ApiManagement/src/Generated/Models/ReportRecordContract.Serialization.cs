@@ -6,15 +6,162 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ReportRecordContract
+    public partial class ReportRecordContract : IUtf8JsonSerializable, IModelJsonSerializable<ReportRecordContract>
     {
-        internal static ReportRecordContract DeserializeReportRecordContract(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReportRecordContract>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReportRecordContract>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(Interval))
+            {
+                writer.WritePropertyName("interval"u8);
+                writer.WriteStringValue(Interval);
+            }
+            if (Optional.IsDefined(Country))
+            {
+                writer.WritePropertyName("country"u8);
+                writer.WriteStringValue(Country);
+            }
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region);
+            }
+            if (Optional.IsDefined(Zip))
+            {
+                writer.WritePropertyName("zip"u8);
+                writer.WriteStringValue(Zip);
+            }
+            if (Optional.IsDefined(ApiId))
+            {
+                writer.WritePropertyName("apiId"u8);
+                writer.WriteStringValue(ApiId);
+            }
+            if (Optional.IsDefined(OperationId))
+            {
+                writer.WritePropertyName("operationId"u8);
+                writer.WriteStringValue(OperationId);
+            }
+            if (Optional.IsDefined(ApiRegion))
+            {
+                writer.WritePropertyName("apiRegion"u8);
+                writer.WriteStringValue(ApiRegion);
+            }
+            if (Optional.IsDefined(SubscriptionResourceId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionResourceId);
+            }
+            if (Optional.IsDefined(CallCountSuccess))
+            {
+                writer.WritePropertyName("callCountSuccess"u8);
+                writer.WriteNumberValue(CallCountSuccess.Value);
+            }
+            if (Optional.IsDefined(CallCountBlocked))
+            {
+                writer.WritePropertyName("callCountBlocked"u8);
+                writer.WriteNumberValue(CallCountBlocked.Value);
+            }
+            if (Optional.IsDefined(CallCountFailed))
+            {
+                writer.WritePropertyName("callCountFailed"u8);
+                writer.WriteNumberValue(CallCountFailed.Value);
+            }
+            if (Optional.IsDefined(CallCountOther))
+            {
+                writer.WritePropertyName("callCountOther"u8);
+                writer.WriteNumberValue(CallCountOther.Value);
+            }
+            if (Optional.IsDefined(CallCountTotal))
+            {
+                writer.WritePropertyName("callCountTotal"u8);
+                writer.WriteNumberValue(CallCountTotal.Value);
+            }
+            if (Optional.IsDefined(Bandwidth))
+            {
+                writer.WritePropertyName("bandwidth"u8);
+                writer.WriteNumberValue(Bandwidth.Value);
+            }
+            if (Optional.IsDefined(CacheHitCount))
+            {
+                writer.WritePropertyName("cacheHitCount"u8);
+                writer.WriteNumberValue(CacheHitCount.Value);
+            }
+            if (Optional.IsDefined(CacheMissCount))
+            {
+                writer.WritePropertyName("cacheMissCount"u8);
+                writer.WriteNumberValue(CacheMissCount.Value);
+            }
+            if (Optional.IsDefined(ApiTimeAvg))
+            {
+                writer.WritePropertyName("apiTimeAvg"u8);
+                writer.WriteNumberValue(ApiTimeAvg.Value);
+            }
+            if (Optional.IsDefined(ApiTimeMin))
+            {
+                writer.WritePropertyName("apiTimeMin"u8);
+                writer.WriteNumberValue(ApiTimeMin.Value);
+            }
+            if (Optional.IsDefined(ApiTimeMax))
+            {
+                writer.WritePropertyName("apiTimeMax"u8);
+                writer.WriteNumberValue(ApiTimeMax.Value);
+            }
+            if (Optional.IsDefined(ServiceTimeAvg))
+            {
+                writer.WritePropertyName("serviceTimeAvg"u8);
+                writer.WriteNumberValue(ServiceTimeAvg.Value);
+            }
+            if (Optional.IsDefined(ServiceTimeMin))
+            {
+                writer.WritePropertyName("serviceTimeMin"u8);
+                writer.WriteNumberValue(ServiceTimeMin.Value);
+            }
+            if (Optional.IsDefined(ServiceTimeMax))
+            {
+                writer.WritePropertyName("serviceTimeMax"u8);
+                writer.WriteNumberValue(ServiceTimeMax.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReportRecordContract DeserializeReportRecordContract(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +192,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<double> serviceTimeAvg = default;
             Optional<double> serviceTimeMin = default;
             Optional<double> serviceTimeMax = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -241,8 +389,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     serviceTimeMax = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReportRecordContract(name.Value, Optional.ToNullable(timestamp), interval.Value, country.Value, region.Value, zip.Value, userId.Value, productId.Value, apiId.Value, operationId.Value, apiRegion.Value, subscriptionId.Value, Optional.ToNullable(callCountSuccess), Optional.ToNullable(callCountBlocked), Optional.ToNullable(callCountFailed), Optional.ToNullable(callCountOther), Optional.ToNullable(callCountTotal), Optional.ToNullable(bandwidth), Optional.ToNullable(cacheHitCount), Optional.ToNullable(cacheMissCount), Optional.ToNullable(apiTimeAvg), Optional.ToNullable(apiTimeMin), Optional.ToNullable(apiTimeMax), Optional.ToNullable(serviceTimeAvg), Optional.ToNullable(serviceTimeMin), Optional.ToNullable(serviceTimeMax));
+            return new ReportRecordContract(name.Value, Optional.ToNullable(timestamp), interval.Value, country.Value, region.Value, zip.Value, userId.Value, productId.Value, apiId.Value, operationId.Value, apiRegion.Value, subscriptionId.Value, Optional.ToNullable(callCountSuccess), Optional.ToNullable(callCountBlocked), Optional.ToNullable(callCountFailed), Optional.ToNullable(callCountOther), Optional.ToNullable(callCountTotal), Optional.ToNullable(bandwidth), Optional.ToNullable(cacheHitCount), Optional.ToNullable(cacheMissCount), Optional.ToNullable(apiTimeAvg), Optional.ToNullable(apiTimeMin), Optional.ToNullable(apiTimeMax), Optional.ToNullable(serviceTimeAvg), Optional.ToNullable(serviceTimeMin), Optional.ToNullable(serviceTimeMax), rawData);
+        }
+
+        ReportRecordContract IModelJsonSerializable<ReportRecordContract>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReportRecordContract(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReportRecordContract>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReportRecordContract IModelSerializable<ReportRecordContract>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReportRecordContract(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReportRecordContract"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReportRecordContract"/> to convert. </param>
+        public static implicit operator RequestContent(ReportRecordContract model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReportRecordContract"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReportRecordContract(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReportRecordContract(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,25 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> An API key used for authenticating with a configuration store endpoint. </summary>
     public partial class AppConfigurationStoreApiKey
     {
-        /// <summary> Initializes a new instance of AppConfigurationStoreApiKey. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreApiKey"/>. </summary>
         internal AppConfigurationStoreApiKey()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationStoreApiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreApiKey"/>. </summary>
         /// <param name="id"> The key ID. </param>
         /// <param name="name"> A name for the key describing its usage. </param>
         /// <param name="value"> The value of the key that is used for authentication purposes. </param>
         /// <param name="connectionString"> A connection string that can be used by supporting clients for authentication. </param>
         /// <param name="lastModifiedOn"> The last time any of the key's properties were modified. </param>
         /// <param name="isReadOnly"> Whether this key can only be used for read operations. </param>
-        internal AppConfigurationStoreApiKey(string id, string name, string value, string connectionString, DateTimeOffset? lastModifiedOn, bool? isReadOnly)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationStoreApiKey(string id, string name, string value, string connectionString, DateTimeOffset? lastModifiedOn, bool? isReadOnly, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -32,6 +36,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             ConnectionString = connectionString;
             LastModifiedOn = lastModifiedOn;
             IsReadOnly = isReadOnly;
+            _rawData = rawData;
         }
 
         /// <summary> The key ID. </summary>

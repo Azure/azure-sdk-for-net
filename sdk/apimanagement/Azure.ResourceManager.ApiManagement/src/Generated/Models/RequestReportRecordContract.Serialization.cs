@@ -6,16 +6,123 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RequestReportRecordContract
+    public partial class RequestReportRecordContract : IUtf8JsonSerializable, IModelJsonSerializable<RequestReportRecordContract>
     {
-        internal static RequestReportRecordContract DeserializeRequestReportRecordContract(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RequestReportRecordContract>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RequestReportRecordContract>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ApiId))
+            {
+                writer.WritePropertyName("apiId"u8);
+                writer.WriteStringValue(ApiId);
+            }
+            if (Optional.IsDefined(OperationId))
+            {
+                writer.WritePropertyName("operationId"u8);
+                writer.WriteStringValue(OperationId);
+            }
+            if (Optional.IsDefined(Method))
+            {
+                writer.WritePropertyName("method"u8);
+                writer.WriteStringValue(Method.Value.ToString());
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(BackendResponseCode))
+            {
+                writer.WritePropertyName("backendResponseCode"u8);
+                writer.WriteStringValue(BackendResponseCode);
+            }
+            if (Optional.IsDefined(ResponseCode))
+            {
+                writer.WritePropertyName("responseCode"u8);
+                writer.WriteNumberValue(ResponseCode.Value);
+            }
+            if (Optional.IsDefined(ResponseSize))
+            {
+                writer.WritePropertyName("responseSize"u8);
+                writer.WriteNumberValue(ResponseSize.Value);
+            }
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(Cache))
+            {
+                writer.WritePropertyName("cache"u8);
+                writer.WriteStringValue(Cache);
+            }
+            if (Optional.IsDefined(ApiTime))
+            {
+                writer.WritePropertyName("apiTime"u8);
+                writer.WriteNumberValue(ApiTime.Value);
+            }
+            if (Optional.IsDefined(ServiceTime))
+            {
+                writer.WritePropertyName("serviceTime"u8);
+                writer.WriteNumberValue(ServiceTime.Value);
+            }
+            if (Optional.IsDefined(ApiRegion))
+            {
+                writer.WritePropertyName("apiRegion"u8);
+                writer.WriteStringValue(ApiRegion);
+            }
+            if (Optional.IsDefined(SubscriptionResourceId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionResourceId);
+            }
+            if (Optional.IsDefined(RequestId))
+            {
+                writer.WritePropertyName("requestId"u8);
+                writer.WriteStringValue(RequestId);
+            }
+            if (Optional.IsDefined(RequestSize))
+            {
+                writer.WritePropertyName("requestSize"u8);
+                writer.WriteNumberValue(RequestSize.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RequestReportRecordContract DeserializeRequestReportRecordContract(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +145,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<ResourceIdentifier> subscriptionId = default;
             Optional<string> requestId = default;
             Optional<int> requestSize = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiId"u8))
@@ -170,8 +278,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     requestSize = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Optional.ToNullable(method), uri.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize));
+            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Optional.ToNullable(method), uri.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize), rawData);
+        }
+
+        RequestReportRecordContract IModelJsonSerializable<RequestReportRecordContract>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRequestReportRecordContract(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RequestReportRecordContract>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RequestReportRecordContract IModelSerializable<RequestReportRecordContract>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRequestReportRecordContract(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RequestReportRecordContract"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RequestReportRecordContract"/> to convert. </param>
+        public static implicit operator RequestContent(RequestReportRecordContract model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RequestReportRecordContract"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RequestReportRecordContract(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRequestReportRecordContract(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RegionContract
+    public partial class RegionContract : IUtf8JsonSerializable, IModelJsonSerializable<RegionContract>
     {
-        internal static RegionContract DeserializeRegionContract(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RegionContract>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RegionContract>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsMasterRegion))
+            {
+                writer.WritePropertyName("isMasterRegion"u8);
+                writer.WriteBooleanValue(IsMasterRegion.Value);
+            }
+            if (Optional.IsDefined(IsDeleted))
+            {
+                writer.WritePropertyName("isDeleted"u8);
+                writer.WriteBooleanValue(IsDeleted.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RegionContract DeserializeRegionContract(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> name = default;
             Optional<bool> isMasterRegion = default;
             Optional<bool> isDeleted = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -46,8 +85,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     isDeleted = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RegionContract(name.Value, Optional.ToNullable(isMasterRegion), Optional.ToNullable(isDeleted));
+            return new RegionContract(name.Value, Optional.ToNullable(isMasterRegion), Optional.ToNullable(isDeleted), rawData);
+        }
+
+        RegionContract IModelJsonSerializable<RegionContract>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegionContract(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RegionContract>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RegionContract IModelSerializable<RegionContract>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRegionContract(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RegionContract"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RegionContract"/> to convert. </param>
+        public static implicit operator RequestContent(RegionContract model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RegionContract"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RegionContract(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRegionContract(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

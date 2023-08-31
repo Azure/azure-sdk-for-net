@@ -6,26 +6,54 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertProperties : IUtf8JsonSerializable
+    public partial class ServiceAlertProperties : IUtf8JsonSerializable, IModelJsonSerializable<ServiceAlertProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceAlertProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceAlertProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Essentials))
             {
                 writer.WritePropertyName("essentials"u8);
-                writer.WriteObjectValue(Essentials);
+                if (Essentials is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ServiceAlertEssentials>)Essentials).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ServiceAlertProperties DeserializeServiceAlertProperties(JsonElement element)
+        internal static ServiceAlertProperties DeserializeServiceAlertProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +61,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<ServiceAlertEssentials> essentials = default;
             Optional<BinaryData> context = default;
             Optional<BinaryData> egressConfig = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("essentials"u8))
@@ -62,8 +91,61 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     egressConfig = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceAlertProperties(essentials.Value, context.Value, egressConfig.Value);
+            return new ServiceAlertProperties(essentials.Value, context.Value, egressConfig.Value, rawData);
+        }
+
+        ServiceAlertProperties IModelJsonSerializable<ServiceAlertProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAlertProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceAlertProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceAlertProperties IModelSerializable<ServiceAlertProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceAlertProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceAlertProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceAlertProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceAlertProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceAlertProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceAlertProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceAlertProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

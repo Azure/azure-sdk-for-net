@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.BotService.Models;
@@ -19,13 +20,15 @@ namespace Azure.ResourceManager.BotService
     /// </summary>
     public partial class BotServicePrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotServicePrivateEndpointConnectionData"/>. </summary>
         public BotServicePrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServicePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +37,14 @@ namespace Azure.ResourceManager.BotService
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="groupIds"> Group ids. </param>
-        internal BotServicePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, BotServicePrivateLinkServiceConnectionState connectionState, BotServicePrivateEndpointConnectionProvisioningState? provisioningState, IList<string> groupIds) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotServicePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, BotServicePrivateLinkServiceConnectionState connectionState, BotServicePrivateEndpointConnectionProvisioningState? provisioningState, IList<string> groupIds, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             GroupIds = groupIds;
+            _rawData = rawData;
         }
 
         /// <summary> The resource of private end point. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,14 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class TenantAccessInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of TenantAccessInfoData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoData"/>. </summary>
         public TenantAccessInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of TenantAccessInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,11 +33,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
         /// <param name="principalId"> Principal (User) Identifier. </param>
         /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
-        internal TenantAccessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accessInfoType, string principalId, bool? isDirectAccessEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TenantAccessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accessInfoType, string principalId, bool? isDirectAccessEnabled, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             AccessInfoType = accessInfoType;
             PrincipalId = principalId;
             IsDirectAccessEnabled = isDirectAccessEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Access Information type ('access' or 'gitAccess'). </summary>

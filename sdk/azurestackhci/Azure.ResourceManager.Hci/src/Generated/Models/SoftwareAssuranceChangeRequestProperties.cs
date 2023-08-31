@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The SoftwareAssuranceChangeRequestProperties. </summary>
     internal partial class SoftwareAssuranceChangeRequestProperties
     {
-        /// <summary> Initializes a new instance of SoftwareAssuranceChangeRequestProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceChangeRequestProperties"/>. </summary>
         public SoftwareAssuranceChangeRequestProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceChangeRequestProperties"/>. </summary>
+        /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareAssuranceChangeRequestProperties(SoftwareAssuranceIntent? softwareAssuranceIntent, Dictionary<string, BinaryData> rawData)
+        {
+            SoftwareAssuranceIntent = softwareAssuranceIntent;
+            _rawData = rawData;
         }
 
         /// <summary> Customer Intent for Software Assurance Benefit. </summary>

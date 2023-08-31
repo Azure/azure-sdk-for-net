@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Azure FirstParty Managed Certificate provided by other first party resource providers to enable HTTPS. </summary>
     public partial class AzureFirstPartyManagedCertificateProperties : FrontDoorSecretProperties
     {
-        /// <summary> Initializes a new instance of AzureFirstPartyManagedCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirstPartyManagedCertificateProperties"/>. </summary>
         public AzureFirstPartyManagedCertificateProperties()
         {
             SecretType = SecretType.AzureFirstPartyManagedCertificate;
         }
 
-        /// <summary> Initializes a new instance of AzureFirstPartyManagedCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirstPartyManagedCertificateProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
-        internal AzureFirstPartyManagedCertificateProperties(SecretType secretType) : base(secretType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirstPartyManagedCertificateProperties(SecretType secretType, Dictionary<string, BinaryData> rawData) : base(secretType, rawData)
         {
             SecretType = secretType;
         }

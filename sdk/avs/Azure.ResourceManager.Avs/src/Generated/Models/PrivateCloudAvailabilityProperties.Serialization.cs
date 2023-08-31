@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class PrivateCloudAvailabilityProperties : IUtf8JsonSerializable
+    public partial class PrivateCloudAvailabilityProperties : IUtf8JsonSerializable, IModelJsonSerializable<PrivateCloudAvailabilityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrivateCloudAvailabilityProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrivateCloudAvailabilityProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Strategy))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("secondaryZone"u8);
                 writer.WriteNumberValue(SecondaryZone.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateCloudAvailabilityProperties DeserializePrivateCloudAvailabilityProperties(JsonElement element)
+        internal static PrivateCloudAvailabilityProperties DeserializePrivateCloudAvailabilityProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<AvailabilityStrategy> strategy = default;
             Optional<int> zone = default;
             Optional<int> secondaryZone = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("strategy"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.Avs.Models
                     secondaryZone = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrivateCloudAvailabilityProperties(Optional.ToNullable(strategy), Optional.ToNullable(zone), Optional.ToNullable(secondaryZone));
+            return new PrivateCloudAvailabilityProperties(Optional.ToNullable(strategy), Optional.ToNullable(zone), Optional.ToNullable(secondaryZone), rawData);
+        }
+
+        PrivateCloudAvailabilityProperties IModelJsonSerializable<PrivateCloudAvailabilityProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateCloudAvailabilityProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrivateCloudAvailabilityProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrivateCloudAvailabilityProperties IModelSerializable<PrivateCloudAvailabilityProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrivateCloudAvailabilityProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PrivateCloudAvailabilityProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PrivateCloudAvailabilityProperties"/> to convert. </param>
+        public static implicit operator RequestContent(PrivateCloudAvailabilityProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PrivateCloudAvailabilityProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PrivateCloudAvailabilityProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrivateCloudAvailabilityProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

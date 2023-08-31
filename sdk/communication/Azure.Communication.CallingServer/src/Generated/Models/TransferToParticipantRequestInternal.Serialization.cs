@@ -5,22 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class TransferToParticipantRequestInternal : IUtf8JsonSerializable
+    internal partial class TransferToParticipantRequestInternal : IUtf8JsonSerializable, IModelJsonSerializable<TransferToParticipantRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TransferToParticipantRequestInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TransferToParticipantRequestInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            if (TargetParticipant is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<CommunicationIdentifierModel>)TargetParticipant).Serialize(writer, options);
+            }
             if (Optional.IsDefined(TransfereeCallerId))
             {
                 writer.WritePropertyName("transfereeCallerId"u8);
-                writer.WriteObjectValue(TransfereeCallerId);
+                if (TransfereeCallerId is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PhoneNumberIdentifierModel>)TransfereeCallerId).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(UserToUserInformation))
             {
@@ -32,7 +55,115 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static TransferToParticipantRequestInternal DeserializeTransferToParticipantRequestInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CommunicationIdentifierModel targetParticipant = default;
+            Optional<PhoneNumberIdentifierModel> transfereeCallerId = default;
+            Optional<string> userToUserInformation = default;
+            Optional<string> operationContext = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("targetParticipant"u8))
+                {
+                    targetParticipant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("transfereeCallerId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transfereeCallerId = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("userToUserInformation"u8))
+                {
+                    userToUserInformation = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new TransferToParticipantRequestInternal(targetParticipant, transfereeCallerId.Value, userToUserInformation.Value, operationContext.Value, rawData);
+        }
+
+        TransferToParticipantRequestInternal IModelJsonSerializable<TransferToParticipantRequestInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTransferToParticipantRequestInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TransferToParticipantRequestInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TransferToParticipantRequestInternal IModelSerializable<TransferToParticipantRequestInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTransferToParticipantRequestInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TransferToParticipantRequestInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TransferToParticipantRequestInternal"/> to convert. </param>
+        public static implicit operator RequestContent(TransferToParticipantRequestInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TransferToParticipantRequestInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TransferToParticipantRequestInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTransferToParticipantRequestInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

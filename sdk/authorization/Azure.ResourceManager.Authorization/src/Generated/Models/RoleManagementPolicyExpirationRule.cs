@@ -6,25 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The role management policy expiration rule. </summary>
     public partial class RoleManagementPolicyExpirationRule : RoleManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyExpirationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyExpirationRule"/>. </summary>
         public RoleManagementPolicyExpirationRule()
         {
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyExpirationRule;
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyExpirationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyExpirationRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="isExpirationRequired"> The value indicating whether expiration is required. </param>
         /// <param name="maximumDuration"> The maximum duration of expiration in timespan. </param>
-        internal RoleManagementPolicyExpirationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isExpirationRequired, TimeSpan? maximumDuration) : base(id, ruleType, target)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleManagementPolicyExpirationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isExpirationRequired, TimeSpan? maximumDuration, Dictionary<string, BinaryData> rawData) : base(id, ruleType, target, rawData)
         {
             IsExpirationRequired = isExpirationRequired;
             MaximumDuration = maximumDuration;

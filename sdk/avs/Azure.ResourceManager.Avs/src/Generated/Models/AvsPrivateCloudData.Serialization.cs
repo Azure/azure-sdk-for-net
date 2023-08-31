@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class AvsPrivateCloudData : IUtf8JsonSerializable
+    public partial class AvsPrivateCloudData : IUtf8JsonSerializable, IModelJsonSerializable<AvsPrivateCloudData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvsPrivateCloudData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AvsPrivateCloudData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<AvsSku>)Sku).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -43,7 +57,14 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster);
+                if (ManagementCluster is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AvsManagementCluster>)ManagementCluster).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Internet))
             {
@@ -56,24 +77,52 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SingleSignOnIdentitySource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability);
+                if (Availability is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PrivateCloudAvailabilityProperties>)Availability).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                if (Encryption is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CustomerManagedEncryption>)Encryption).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Circuit))
             {
                 writer.WritePropertyName("circuit"u8);
-                writer.WriteObjectValue(Circuit);
+                if (Circuit is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExpressRouteCircuit>)Circuit).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NetworkBlock))
             {
@@ -93,14 +142,35 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(SecondaryCircuit))
             {
                 writer.WritePropertyName("secondaryCircuit"u8);
-                writer.WriteObjectValue(SecondaryCircuit);
+                if (SecondaryCircuit is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExpressRouteCircuit>)SecondaryCircuit).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AvsPrivateCloudData DeserializeAvsPrivateCloudData(JsonElement element)
+        internal static AvsPrivateCloudData DeserializeAvsPrivateCloudData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -132,6 +202,7 @@ namespace Azure.ResourceManager.Avs
             Optional<IReadOnlyList<ResourceIdentifier>> externalCloudLinks = default;
             Optional<ExpressRouteCircuit> secondaryCircuit = default;
             Optional<NsxPublicIPQuotaRaisedEnum> nsxPublicIPQuotaRaised = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -359,8 +430,61 @@ namespace Azure.ResourceManager.Avs
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AvsPrivateCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, Optional.ToList(externalCloudLinks), secondaryCircuit.Value, Optional.ToNullable(nsxPublicIPQuotaRaised));
+            return new AvsPrivateCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, Optional.ToList(externalCloudLinks), secondaryCircuit.Value, Optional.ToNullable(nsxPublicIPQuotaRaised), rawData);
+        }
+
+        AvsPrivateCloudData IModelJsonSerializable<AvsPrivateCloudData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvsPrivateCloudData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AvsPrivateCloudData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AvsPrivateCloudData IModelSerializable<AvsPrivateCloudData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvsPrivateCloudData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AvsPrivateCloudData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AvsPrivateCloudData"/> to convert. </param>
+        public static implicit operator RequestContent(AvsPrivateCloudData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AvsPrivateCloudData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AvsPrivateCloudData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAvsPrivateCloudData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,26 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchAccountDetectorData : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchAccountDetectorData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountDetectorData"/>. </summary>
         public BatchAccountDetectorData()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchAccountDetectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountDetectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="value"> A base64 encoded string that represents the content of a detector. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchAccountDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, ETag? etag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Value = value;
             ETag = etag;
+            _rawData = rawData;
         }
 
         /// <summary> A base64 encoded string that represents the content of a detector. </summary>

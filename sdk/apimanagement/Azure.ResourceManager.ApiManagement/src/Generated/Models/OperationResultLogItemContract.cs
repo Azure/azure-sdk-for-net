@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Log of the entity being created, updated or deleted. </summary>
     public partial class OperationResultLogItemContract
     {
-        /// <summary> Initializes a new instance of OperationResultLogItemContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationResultLogItemContract"/>. </summary>
         internal OperationResultLogItemContract()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationResultLogItemContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResultLogItemContract"/>. </summary>
         /// <param name="objectType"> The type of entity contract. </param>
         /// <param name="action"> Action like create/update/delete. </param>
         /// <param name="objectKey"> Identifier of the entity being created/updated/deleted. </param>
-        internal OperationResultLogItemContract(string objectType, string action, string objectKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationResultLogItemContract(string objectType, string action, string objectKey, Dictionary<string, BinaryData> rawData)
         {
             ObjectType = objectType;
             Action = action;
             ObjectKey = objectKey;
+            _rawData = rawData;
         }
 
         /// <summary> The type of entity contract. </summary>

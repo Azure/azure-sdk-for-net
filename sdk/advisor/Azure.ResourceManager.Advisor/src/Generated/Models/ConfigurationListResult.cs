@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> The list of Advisor configurations. </summary>
     internal partial class ConfigurationListResult
     {
-        /// <summary> Initializes a new instance of ConfigurationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationListResult"/>. </summary>
         internal ConfigurationListResult()
         {
             Value = new ChangeTrackingList<ConfigData>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of configurations. </param>
         /// <param name="nextLink"> The link used to get the next page of configurations. </param>
-        internal ConfigurationListResult(IReadOnlyList<ConfigData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationListResult(IReadOnlyList<ConfigData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of configurations. </summary>

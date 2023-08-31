@@ -6,17 +6,47 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    public partial class ExperimentExecutionDetailData
+    public partial class ExperimentExecutionDetailData : IUtf8JsonSerializable, IModelJsonSerializable<ExperimentExecutionDetailData>
     {
-        internal static ExperimentExecutionDetailData DeserializeExperimentExecutionDetailData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExperimentExecutionDetailData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExperimentExecutionDetailData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ExperimentExecutionDetailData DeserializeExperimentExecutionDetailData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +63,7 @@ namespace Azure.ResourceManager.Chaos
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> stopDateTime = default;
             Optional<ExperimentExecutionDetailsPropertiesRunInformation> runInformation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -131,8 +162,61 @@ namespace Azure.ResourceManager.Chaos
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExperimentExecutionDetailData(id, name, type, systemData.Value, experimentId.Value, status.Value, failureReason.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(lastActionDateTime), Optional.ToNullable(startDateTime), Optional.ToNullable(stopDateTime), runInformation.Value);
+            return new ExperimentExecutionDetailData(id, name, type, systemData.Value, experimentId.Value, status.Value, failureReason.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(lastActionDateTime), Optional.ToNullable(startDateTime), Optional.ToNullable(stopDateTime), runInformation.Value, rawData);
+        }
+
+        ExperimentExecutionDetailData IModelJsonSerializable<ExperimentExecutionDetailData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExperimentExecutionDetailData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExperimentExecutionDetailData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExperimentExecutionDetailData IModelSerializable<ExperimentExecutionDetailData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExperimentExecutionDetailData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExperimentExecutionDetailData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExperimentExecutionDetailData"/> to convert. </param>
+        public static implicit operator RequestContent(ExperimentExecutionDetailData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExperimentExecutionDetailData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExperimentExecutionDetailData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExperimentExecutionDetailData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

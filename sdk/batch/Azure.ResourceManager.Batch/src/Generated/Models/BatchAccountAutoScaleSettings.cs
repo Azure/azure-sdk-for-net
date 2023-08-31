@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> AutoScale settings for the pool. </summary>
     public partial class BatchAccountAutoScaleSettings
     {
-        /// <summary> Initializes a new instance of BatchAccountAutoScaleSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountAutoScaleSettings"/>. </summary>
         /// <param name="formula"> A formula for the desired number of compute nodes in the pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="formula"/> is null. </exception>
         public BatchAccountAutoScaleSettings(string formula)
@@ -23,13 +26,20 @@ namespace Azure.ResourceManager.Batch.Models
             Formula = formula;
         }
 
-        /// <summary> Initializes a new instance of BatchAccountAutoScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountAutoScaleSettings"/>. </summary>
         /// <param name="formula"> A formula for the desired number of compute nodes in the pool. </param>
         /// <param name="evaluationInterval"> If omitted, the default value is 15 minutes (PT15M). </param>
-        internal BatchAccountAutoScaleSettings(string formula, TimeSpan? evaluationInterval)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountAutoScaleSettings(string formula, TimeSpan? evaluationInterval, Dictionary<string, BinaryData> rawData)
         {
             Formula = formula;
             EvaluationInterval = evaluationInterval;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountAutoScaleSettings"/> for deserialization. </summary>
+        internal BatchAccountAutoScaleSettings()
+        {
         }
 
         /// <summary> A formula for the desired number of compute nodes in the pool. </summary>

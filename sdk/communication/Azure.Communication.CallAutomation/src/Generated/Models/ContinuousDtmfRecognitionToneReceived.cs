@@ -5,24 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ContinuousDtmfRecognitionToneReceived. </summary>
     public partial class ContinuousDtmfRecognitionToneReceived
     {
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneReceived"/>. </summary>
         internal ContinuousDtmfRecognitionToneReceived()
         {
         }
 
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneReceived"/>. </summary>
         /// <param name="toneInfo"> Information about Tone. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId or skype chain ID. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        internal ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo, string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation, string operationContext)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo, string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation, string operationContext, Dictionary<string, BinaryData> rawData)
         {
             ToneInfo = toneInfo;
             CallConnectionId = callConnectionId;
@@ -30,6 +36,7 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = correlationId;
             ResultInformation = resultInformation;
             OperationContext = operationContext;
+            _rawData = rawData;
         }
 
         /// <summary> Information about Tone. </summary>

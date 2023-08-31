@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentFeatureCapability
+    public partial class ApplicationInsightsComponentFeatureCapability : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationInsightsComponentFeatureCapability>
     {
-        internal static ApplicationInsightsComponentFeatureCapability DeserializeApplicationInsightsComponentFeatureCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationInsightsComponentFeatureCapability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationInsightsComponentFeatureCapability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ApplicationInsightsComponentFeatureCapability DeserializeApplicationInsightsComponentFeatureCapability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +52,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> unit = default;
             Optional<string> meterId = default;
             Optional<string> meterRateFrequency = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Name"u8))
@@ -56,8 +85,61 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     meterRateFrequency = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationInsightsComponentFeatureCapability(name.Value, description.Value, value.Value, unit.Value, meterId.Value, meterRateFrequency.Value);
+            return new ApplicationInsightsComponentFeatureCapability(name.Value, description.Value, value.Value, unit.Value, meterId.Value, meterRateFrequency.Value, rawData);
+        }
+
+        ApplicationInsightsComponentFeatureCapability IModelJsonSerializable<ApplicationInsightsComponentFeatureCapability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentFeatureCapability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationInsightsComponentFeatureCapability>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationInsightsComponentFeatureCapability IModelSerializable<ApplicationInsightsComponentFeatureCapability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentFeatureCapability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationInsightsComponentFeatureCapability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationInsightsComponentFeatureCapability"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationInsightsComponentFeatureCapability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationInsightsComponentFeatureCapability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationInsightsComponentFeatureCapability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationInsightsComponentFeatureCapability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

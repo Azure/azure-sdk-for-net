@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The properties of the create advanced schedule monthly occurrence. </summary>
     public partial class AutomationAdvancedScheduleMonthlyOccurrence
     {
-        /// <summary> Initializes a new instance of AutomationAdvancedScheduleMonthlyOccurrence. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAdvancedScheduleMonthlyOccurrence"/>. </summary>
         public AutomationAdvancedScheduleMonthlyOccurrence()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationAdvancedScheduleMonthlyOccurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAdvancedScheduleMonthlyOccurrence"/>. </summary>
         /// <param name="occurrence"> Occurrence of the week within the month. Must be between 1 and 5. </param>
         /// <param name="day"> Day of the occurrence. Must be one of monday, tuesday, wednesday, thursday, friday, saturday, sunday. </param>
-        internal AutomationAdvancedScheduleMonthlyOccurrence(int? occurrence, AutomationDayOfWeek? day)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAdvancedScheduleMonthlyOccurrence(int? occurrence, AutomationDayOfWeek? day, Dictionary<string, BinaryData> rawData)
         {
             Occurrence = occurrence;
             Day = day;
+            _rawData = rawData;
         }
 
         /// <summary> Occurrence of the week within the month. Must be between 1 and 5. </summary>

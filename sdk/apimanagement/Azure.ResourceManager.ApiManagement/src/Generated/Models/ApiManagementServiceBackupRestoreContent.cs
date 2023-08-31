@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to the Backup/Restore of an API Management service operation. </summary>
     public partial class ApiManagementServiceBackupRestoreContent
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceBackupRestoreContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceBackupRestoreContent"/>. </summary>
         /// <param name="storageAccount"> The name of the Azure storage account (used to place/retrieve the backup). </param>
         /// <param name="containerName"> The name of the blob container (used to place/retrieve the backup). </param>
         /// <param name="backupName"> The name of the backup file to create/retrieve. </param>
@@ -27,6 +30,30 @@ namespace Azure.ResourceManager.ApiManagement.Models
             StorageAccount = storageAccount;
             ContainerName = containerName;
             BackupName = backupName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceBackupRestoreContent"/>. </summary>
+        /// <param name="storageAccount"> The name of the Azure storage account (used to place/retrieve the backup). </param>
+        /// <param name="containerName"> The name of the blob container (used to place/retrieve the backup). </param>
+        /// <param name="backupName"> The name of the backup file to create/retrieve. </param>
+        /// <param name="accessType"> The type of access to be used for the storage account. </param>
+        /// <param name="accessKey"> Storage account access key. Required only if `accessType` is set to `AccessKey`. </param>
+        /// <param name="clientId"> The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementServiceBackupRestoreContent(string storageAccount, string containerName, string backupName, StorageAccountAccessType? accessType, string accessKey, string clientId, Dictionary<string, BinaryData> rawData)
+        {
+            StorageAccount = storageAccount;
+            ContainerName = containerName;
+            BackupName = backupName;
+            AccessType = accessType;
+            AccessKey = accessKey;
+            ClientId = clientId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceBackupRestoreContent"/> for deserialization. </summary>
+        internal ApiManagementServiceBackupRestoreContent()
+        {
         }
 
         /// <summary> The name of the Azure storage account (used to place/retrieve the backup). </summary>

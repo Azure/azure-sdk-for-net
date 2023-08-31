@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform;
@@ -14,22 +15,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of API portal resources and a possible link for next set. </summary>
     internal partial class ApiPortalResourceList
     {
-        /// <summary> Initializes a new instance of ApiPortalResourceList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiPortalResourceList"/>. </summary>
         internal ApiPortalResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformApiPortalData>();
         }
 
-        /// <summary> Initializes a new instance of ApiPortalResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiPortalResourceList"/>. </summary>
         /// <param name="value"> Collection of API portal resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal ApiPortalResourceList(IReadOnlyList<AppPlatformApiPortalData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiPortalResourceList(IReadOnlyList<AppPlatformApiPortalData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Collection of API portal resources. </summary>

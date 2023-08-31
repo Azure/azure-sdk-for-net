@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The api properties for special APIs. </summary>
     public partial class ServiceAccountApiProperties
     {
-        /// <summary> Initializes a new instance of ServiceAccountApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountApiProperties"/>. </summary>
         public ServiceAccountApiProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountApiProperties"/>. </summary>
         /// <param name="qnaRuntimeEndpoint"> (QnAMaker Only) The runtime endpoint of QnAMaker. </param>
         /// <param name="qnaAzureSearchEndpointKey"> (QnAMaker Only) The Azure Search endpoint key of QnAMaker. </param>
         /// <param name="qnaAzureSearchEndpointId"> (QnAMaker Only) The Azure Search endpoint id of QnAMaker. </param>

@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Terms of service contract properties. </summary>
     public partial class TermsOfServiceProperties
     {
-        /// <summary> Initializes a new instance of TermsOfServiceProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TermsOfServiceProperties"/>. </summary>
         public TermsOfServiceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TermsOfServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TermsOfServiceProperties"/>. </summary>
         /// <param name="text"> A terms of service text. </param>
         /// <param name="isDisplayEnabled"> Display terms of service during a sign-up process. </param>
         /// <param name="isConsentRequired"> Ask user for consent to the terms of service. </param>
-        internal TermsOfServiceProperties(string text, bool? isDisplayEnabled, bool? isConsentRequired)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TermsOfServiceProperties(string text, bool? isDisplayEnabled, bool? isConsentRequired, Dictionary<string, BinaryData> rawData)
         {
             Text = text;
             IsDisplayEnabled = isDisplayEnabled;
             IsConsentRequired = isConsentRequired;
+            _rawData = rawData;
         }
 
         /// <summary> A terms of service text. </summary>

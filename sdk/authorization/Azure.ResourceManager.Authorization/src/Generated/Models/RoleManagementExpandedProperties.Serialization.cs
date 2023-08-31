@@ -6,15 +6,101 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementExpandedProperties
+    public partial class RoleManagementExpandedProperties : IUtf8JsonSerializable, IModelJsonSerializable<RoleManagementExpandedProperties>
     {
-        internal static RoleManagementExpandedProperties DeserializeRoleManagementExpandedProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoleManagementExpandedProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoleManagementExpandedProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("principal"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrincipalId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(PrincipalId.Value);
+            }
+            if (Optional.IsDefined(PrincipalDisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(PrincipalDisplayName);
+            }
+            if (Optional.IsDefined(Email))
+            {
+                writer.WritePropertyName("email"u8);
+                writer.WriteStringValue(Email);
+            }
+            if (Optional.IsDefined(PrincipalType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(PrincipalType.Value.ToString());
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("roleDefinition"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RoleDefinitionId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(RoleDefinitionId);
+            }
+            if (Optional.IsDefined(RoleDefinitionDisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(RoleDefinitionDisplayName);
+            }
+            if (Optional.IsDefined(RoleType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(RoleType.Value.ToString());
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("scope"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ScopeId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(ScopeId);
+            }
+            if (Optional.IsDefined(ScopeDisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(ScopeDisplayName);
+            }
+            if (Optional.IsDefined(ScopeType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ScopeType.Value.ToString());
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RoleManagementExpandedProperties DeserializeRoleManagementExpandedProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +115,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<ResourceIdentifier> id1 = default;
             Optional<string> displayName1 = default;
             Optional<RoleManagementScopeType> type1 = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principal"u8))
@@ -141,8 +228,61 @@ namespace Azure.ResourceManager.Authorization.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoleManagementExpandedProperties(Optional.ToNullable(id), displayName.Value, email.Value, Optional.ToNullable(type), id0.Value, displayName0.Value, Optional.ToNullable(type0), id1.Value, displayName1.Value, Optional.ToNullable(type1));
+            return new RoleManagementExpandedProperties(Optional.ToNullable(id), displayName.Value, email.Value, Optional.ToNullable(type), id0.Value, displayName0.Value, Optional.ToNullable(type0), id1.Value, displayName1.Value, Optional.ToNullable(type1), rawData);
+        }
+
+        RoleManagementExpandedProperties IModelJsonSerializable<RoleManagementExpandedProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleManagementExpandedProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoleManagementExpandedProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoleManagementExpandedProperties IModelSerializable<RoleManagementExpandedProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoleManagementExpandedProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RoleManagementExpandedProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RoleManagementExpandedProperties"/> to convert. </param>
+        public static implicit operator RequestContent(RoleManagementExpandedProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RoleManagementExpandedProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RoleManagementExpandedProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoleManagementExpandedProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

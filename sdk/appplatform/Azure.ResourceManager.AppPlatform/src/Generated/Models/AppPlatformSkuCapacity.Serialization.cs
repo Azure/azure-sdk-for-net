@@ -5,15 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformSkuCapacity
+    public partial class AppPlatformSkuCapacity : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformSkuCapacity>
     {
-        internal static AppPlatformSkuCapacity DeserializeAppPlatformSkuCapacity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformSkuCapacity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformSkuCapacity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("minimum"u8);
+            writer.WriteNumberValue(Minimum);
+            if (Optional.IsDefined(Maximum))
+            {
+                writer.WritePropertyName("maximum"u8);
+                writer.WriteNumberValue(Maximum.Value);
+            }
+            if (Optional.IsDefined(Default))
+            {
+                writer.WritePropertyName("default"u8);
+                writer.WriteNumberValue(Default.Value);
+            }
+            if (Optional.IsDefined(ScaleType))
+            {
+                writer.WritePropertyName("scaleType"u8);
+                writer.WriteStringValue(ScaleType.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AppPlatformSkuCapacity DeserializeAppPlatformSkuCapacity(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +67,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<int> maximum = default;
             Optional<int> @default = default;
             Optional<AppPlatformSkuScaleType> scaleType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -56,8 +102,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     scaleType = new AppPlatformSkuScaleType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformSkuCapacity(minimum, Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
+            return new AppPlatformSkuCapacity(minimum, Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType), rawData);
+        }
+
+        AppPlatformSkuCapacity IModelJsonSerializable<AppPlatformSkuCapacity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformSkuCapacity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformSkuCapacity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformSkuCapacity IModelSerializable<AppPlatformSkuCapacity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformSkuCapacity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppPlatformSkuCapacity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppPlatformSkuCapacity"/> to convert. </param>
+        public static implicit operator RequestContent(AppPlatformSkuCapacity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppPlatformSkuCapacity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppPlatformSkuCapacity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformSkuCapacity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

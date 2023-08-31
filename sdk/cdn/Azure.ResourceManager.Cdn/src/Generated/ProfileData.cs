@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class ProfileData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProfileData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Cdn
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of ProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +45,8 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status of the profile. </param>
         /// <param name="frontDoorId"> The Id of the frontdoor. </param>
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -51,6 +54,12 @@ namespace Azure.ResourceManager.Cdn
             ProvisioningState = provisioningState;
             FrontDoorId = frontDoorId;
             OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProfileData"/> for deserialization. </summary>
+        internal ProfileData()
+        {
         }
 
         /// <summary> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </summary>

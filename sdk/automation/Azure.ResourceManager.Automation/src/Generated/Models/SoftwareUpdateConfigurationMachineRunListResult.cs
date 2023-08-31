@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> result of listing all software update configuration machine runs. </summary>
     internal partial class SoftwareUpdateConfigurationMachineRunListResult
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationMachineRunListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationMachineRunListResult"/>. </summary>
         internal SoftwareUpdateConfigurationMachineRunListResult()
         {
             Value = new ChangeTrackingList<SoftwareUpdateConfigurationMachineRun>();
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationMachineRunListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationMachineRunListResult"/>. </summary>
         /// <param name="value"> outer object returned when listing all software update configuration machine runs. </param>
         /// <param name="nextLink"> link to next page of results. </param>
-        internal SoftwareUpdateConfigurationMachineRunListResult(IReadOnlyList<SoftwareUpdateConfigurationMachineRun> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationMachineRunListResult(IReadOnlyList<SoftwareUpdateConfigurationMachineRun> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> outer object returned when listing all software update configuration machine runs. </summary>

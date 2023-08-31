@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    public partial class WebTestData : IUtf8JsonSerializable
+    public partial class WebTestData : IUtf8JsonSerializable, IModelJsonSerializable<WebTestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebTestData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebTestData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -84,31 +91,73 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<WebTestGeolocation>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("Configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                if (Configuration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WebTestPropertiesConfiguration>)Configuration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("Request"u8);
-                writer.WriteObjectValue(Request);
+                if (Request is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WebTestPropertiesRequest>)Request).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ValidationRules))
             {
                 writer.WritePropertyName("ValidationRules"u8);
-                writer.WriteObjectValue(ValidationRules);
+                if (ValidationRules is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WebTestPropertiesValidationRules>)ValidationRules).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebTestData DeserializeWebTestData(JsonElement element)
+        internal static WebTestData DeserializeWebTestData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -133,6 +182,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Optional<string> provisioningState = default;
             Optional<WebTestPropertiesRequest> request = default;
             Optional<WebTestPropertiesValidationRules> validationRules = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -305,8 +355,61 @@ namespace Azure.ResourceManager.ApplicationInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebTestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), syntheticMonitorId.Value, name0.Value, description.Value, Optional.ToNullable(enabled), Optional.ToNullable(frequency), Optional.ToNullable(timeout), Optional.ToNullable(kind0), Optional.ToNullable(retryEnabled), Optional.ToList(locations), configuration.Value, provisioningState.Value, request.Value, validationRules.Value);
+            return new WebTestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), syntheticMonitorId.Value, name0.Value, description.Value, Optional.ToNullable(enabled), Optional.ToNullable(frequency), Optional.ToNullable(timeout), Optional.ToNullable(kind0), Optional.ToNullable(retryEnabled), Optional.ToList(locations), configuration.Value, provisioningState.Value, request.Value, validationRules.Value, rawData);
+        }
+
+        WebTestData IModelJsonSerializable<WebTestData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebTestData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebTestData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebTestData IModelSerializable<WebTestData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebTestData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebTestData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebTestData"/> to convert. </param>
+        public static implicit operator RequestContent(WebTestData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebTestData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebTestData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebTestData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationConnectionTypeConnectionTypeRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationConnectionTypeConnectionTypeRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationConnectionTypeResource(Client, AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(e)), _automationConnectionTypeConnectionTypeClientDiagnostics, Pipeline, "AutomationConnectionTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AutomationConnectionTypeResource(Client, AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(e)), _automationConnectionTypeConnectionTypeClientDiagnostics, Pipeline, "AutomationConnectionTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationConnectionTypeConnectionTypeRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationConnectionTypeConnectionTypeRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationConnectionTypeResource(Client, AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(e)), _automationConnectionTypeConnectionTypeClientDiagnostics, Pipeline, "AutomationConnectionTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AutomationConnectionTypeResource(Client, AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(e)), _automationConnectionTypeConnectionTypeClientDiagnostics, Pipeline, "AutomationConnectionTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

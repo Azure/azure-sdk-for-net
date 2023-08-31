@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<ApiManagementPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApiManagementPrivateLinkResource(Client, ApiManagementPrivateLinkResourceData.DeserializeApiManagementPrivateLinkResourceData(e)), _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics, Pipeline, "ApiManagementPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ApiManagementPrivateLinkResource(Client, ApiManagementPrivateLinkResourceData.DeserializeApiManagementPrivateLinkResourceData(e)), _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics, Pipeline, "ApiManagementPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<ApiManagementPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApiManagementPrivateLinkResource(Client, ApiManagementPrivateLinkResourceData.DeserializeApiManagementPrivateLinkResourceData(e)), _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics, Pipeline, "ApiManagementPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ApiManagementPrivateLinkResource(Client, ApiManagementPrivateLinkResourceData.DeserializeApiManagementPrivateLinkResourceData(e)), _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics, Pipeline, "ApiManagementPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class AttestSgxEnclaveRequest : IUtf8JsonSerializable
+    internal partial class AttestSgxEnclaveRequest : IUtf8JsonSerializable, IModelJsonSerializable<AttestSgxEnclaveRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AttestSgxEnclaveRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AttestSgxEnclaveRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Quote))
             {
@@ -23,19 +31,149 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(RuntimeData))
             {
                 writer.WritePropertyName("runtimeData"u8);
-                writer.WriteObjectValue(RuntimeData);
+                if (RuntimeData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RuntimeData>)RuntimeData).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(InitTimeData))
             {
                 writer.WritePropertyName("initTimeData"u8);
-                writer.WriteObjectValue(InitTimeData);
+                if (InitTimeData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InitTimeData>)InitTimeData).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DraftPolicyForAttestation))
             {
                 writer.WritePropertyName("draftPolicyForAttestation"u8);
                 writer.WriteStringValue(DraftPolicyForAttestation);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AttestSgxEnclaveRequest DeserializeAttestSgxEnclaveRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<byte[]> quote = default;
+            Optional<RuntimeData> runtimeData = default;
+            Optional<InitTimeData> initTimeData = default;
+            Optional<string> draftPolicyForAttestation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("quote"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    quote = property.Value.GetBytesFromBase64("U");
+                    continue;
+                }
+                if (property.NameEquals("runtimeData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runtimeData = RuntimeData.DeserializeRuntimeData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("initTimeData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    initTimeData = InitTimeData.DeserializeInitTimeData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("draftPolicyForAttestation"u8))
+                {
+                    draftPolicyForAttestation = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AttestSgxEnclaveRequest(quote.Value, runtimeData.Value, initTimeData.Value, draftPolicyForAttestation.Value, rawData);
+        }
+
+        AttestSgxEnclaveRequest IModelJsonSerializable<AttestSgxEnclaveRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAttestSgxEnclaveRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AttestSgxEnclaveRequest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AttestSgxEnclaveRequest IModelSerializable<AttestSgxEnclaveRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAttestSgxEnclaveRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AttestSgxEnclaveRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AttestSgxEnclaveRequest"/> to convert. </param>
+        public static implicit operator RequestContent(AttestSgxEnclaveRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AttestSgxEnclaveRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AttestSgxEnclaveRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAttestSgxEnclaveRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

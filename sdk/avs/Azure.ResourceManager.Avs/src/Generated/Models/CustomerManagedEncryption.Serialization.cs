@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class CustomerManagedEncryption : IUtf8JsonSerializable
+    public partial class CustomerManagedEncryption : IUtf8JsonSerializable, IModelJsonSerializable<CustomerManagedEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomerManagedEncryption>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomerManagedEncryption>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -23,19 +31,41 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                if (KeyVaultProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AvsEncryptionKeyVaultProperties>)KeyVaultProperties).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CustomerManagedEncryption DeserializeCustomerManagedEncryption(JsonElement element)
+        internal static CustomerManagedEncryption DeserializeCustomerManagedEncryption(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AvsEncryptionState> status = default;
             Optional<AvsEncryptionKeyVaultProperties> keyVaultProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -56,8 +86,61 @@ namespace Azure.ResourceManager.Avs.Models
                     keyVaultProperties = AvsEncryptionKeyVaultProperties.DeserializeAvsEncryptionKeyVaultProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomerManagedEncryption(Optional.ToNullable(status), keyVaultProperties.Value);
+            return new CustomerManagedEncryption(Optional.ToNullable(status), keyVaultProperties.Value, rawData);
+        }
+
+        CustomerManagedEncryption IModelJsonSerializable<CustomerManagedEncryption>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomerManagedEncryption(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomerManagedEncryption>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomerManagedEncryption IModelSerializable<CustomerManagedEncryption>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomerManagedEncryption(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomerManagedEncryption"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomerManagedEncryption"/> to convert. </param>
+        public static implicit operator RequestContent(CustomerManagedEncryption model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomerManagedEncryption"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomerManagedEncryption(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomerManagedEncryption(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

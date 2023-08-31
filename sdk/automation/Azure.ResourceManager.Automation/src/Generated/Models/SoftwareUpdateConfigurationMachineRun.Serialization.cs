@@ -6,15 +6,81 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationMachineRun
+    public partial class SoftwareUpdateConfigurationMachineRun : IUtf8JsonSerializable, IModelJsonSerializable<SoftwareUpdateConfigurationMachineRun>
     {
-        internal static SoftwareUpdateConfigurationMachineRun DeserializeSoftwareUpdateConfigurationMachineRun(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SoftwareUpdateConfigurationMachineRun>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SoftwareUpdateConfigurationMachineRun>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SoftwareUpdateConfiguration))
+            {
+                writer.WritePropertyName("softwareUpdateConfiguration"u8);
+                if (SoftwareUpdateConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SoftwareUpdateConfigurationNavigation>)SoftwareUpdateConfiguration).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Job))
+            {
+                writer.WritePropertyName("job"u8);
+                if (Job is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JobNavigation>)Job).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                if (Error is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AutomationResponseError>)Error).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SoftwareUpdateConfigurationMachineRun DeserializeSoftwareUpdateConfigurationMachineRun(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +103,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> lastModifiedBy = default;
             Optional<AutomationResponseError> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -190,8 +257,61 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Optional.ToNullable(correlationId), Optional.ToNullable(sourceComputerId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(configuredDuration), job.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value);
+            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Optional.ToNullable(correlationId), Optional.ToNullable(sourceComputerId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(configuredDuration), job.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value, rawData);
+        }
+
+        SoftwareUpdateConfigurationMachineRun IModelJsonSerializable<SoftwareUpdateConfigurationMachineRun>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareUpdateConfigurationMachineRun(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SoftwareUpdateConfigurationMachineRun>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SoftwareUpdateConfigurationMachineRun IModelSerializable<SoftwareUpdateConfigurationMachineRun>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSoftwareUpdateConfigurationMachineRun(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SoftwareUpdateConfigurationMachineRun"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SoftwareUpdateConfigurationMachineRun"/> to convert. </param>
+        public static implicit operator RequestContent(SoftwareUpdateConfigurationMachineRun model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SoftwareUpdateConfigurationMachineRun"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SoftwareUpdateConfigurationMachineRun(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSoftwareUpdateConfigurationMachineRun(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

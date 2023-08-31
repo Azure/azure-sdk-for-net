@@ -5,19 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnOriginGroupData : IUtf8JsonSerializable
+    public partial class CdnOriginGroupData : IUtf8JsonSerializable, IModelJsonSerializable<CdnOriginGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CdnOriginGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CdnOriginGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -26,7 +33,14 @@ namespace Azure.ResourceManager.Cdn
                 if (HealthProbeSettings != null)
                 {
                     writer.WritePropertyName("healthProbeSettings"u8);
-                    writer.WriteObjectValue(HealthProbeSettings);
+                    if (HealthProbeSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HealthProbeSettings>)HealthProbeSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -60,7 +74,14 @@ namespace Azure.ResourceManager.Cdn
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
                     writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
-                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
+                    if (ResponseBasedOriginErrorDetectionSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResponseBasedOriginErrorDetectionSettings>)ResponseBasedOriginErrorDetectionSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -68,11 +89,25 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CdnOriginGroupData DeserializeCdnOriginGroupData(JsonElement element)
+        internal static CdnOriginGroupData DeserializeCdnOriginGroupData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +122,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
             Optional<OriginGroupResourceState> resourceState = default;
             Optional<OriginGroupProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -187,8 +223,61 @@ namespace Azure.ResourceManager.Cdn
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CdnOriginGroupData(id, name, type, systemData.Value, healthProbeSettings.Value, Optional.ToList(origins), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState));
+            return new CdnOriginGroupData(id, name, type, systemData.Value, healthProbeSettings.Value, Optional.ToList(origins), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        CdnOriginGroupData IModelJsonSerializable<CdnOriginGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCdnOriginGroupData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CdnOriginGroupData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CdnOriginGroupData IModelSerializable<CdnOriginGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCdnOriginGroupData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CdnOriginGroupData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CdnOriginGroupData"/> to convert. </param>
+        public static implicit operator RequestContent(CdnOriginGroupData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CdnOriginGroupData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CdnOriginGroupData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCdnOriginGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

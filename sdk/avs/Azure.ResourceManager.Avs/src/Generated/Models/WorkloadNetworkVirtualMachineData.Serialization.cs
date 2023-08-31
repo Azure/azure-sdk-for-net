@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class WorkloadNetworkVirtualMachineData : IUtf8JsonSerializable
+    public partial class WorkloadNetworkVirtualMachineData : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadNetworkVirtualMachineData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadNetworkVirtualMachineData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadNetworkVirtualMachineData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadNetworkVirtualMachineData DeserializeWorkloadNetworkVirtualMachineData(JsonElement element)
+        internal static WorkloadNetworkVirtualMachineData DeserializeWorkloadNetworkVirtualMachineData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +62,7 @@ namespace Azure.ResourceManager.Avs
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<WorkloadNetworkVmType> vmType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -92,8 +115,61 @@ namespace Azure.ResourceManager.Avs
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadNetworkVirtualMachineData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(vmType));
+            return new WorkloadNetworkVirtualMachineData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(vmType), rawData);
+        }
+
+        WorkloadNetworkVirtualMachineData IModelJsonSerializable<WorkloadNetworkVirtualMachineData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadNetworkVirtualMachineData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadNetworkVirtualMachineData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadNetworkVirtualMachineData IModelSerializable<WorkloadNetworkVirtualMachineData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadNetworkVirtualMachineData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WorkloadNetworkVirtualMachineData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WorkloadNetworkVirtualMachineData"/> to convert. </param>
+        public static implicit operator RequestContent(WorkloadNetworkVirtualMachineData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WorkloadNetworkVirtualMachineData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WorkloadNetworkVirtualMachineData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadNetworkVirtualMachineData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

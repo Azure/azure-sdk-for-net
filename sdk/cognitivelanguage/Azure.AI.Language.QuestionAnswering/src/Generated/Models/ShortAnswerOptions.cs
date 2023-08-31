@@ -5,15 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> To configure Answer span prediction feature. </summary>
     public partial class ShortAnswerOptions
     {
-        /// <summary> Initializes a new instance of ShortAnswerOptions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShortAnswerOptions"/>. </summary>
         public ShortAnswerOptions()
         {
             Enable = true;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShortAnswerOptions"/>. </summary>
+        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
+        /// <param name="confidenceThreshold"> Minimum threshold score required to include an answer span, value ranges from 0 to 1. </param>
+        /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShortAnswerOptions(bool enable, double? confidenceThreshold, int? size, Dictionary<string, BinaryData> rawData)
+        {
+            Enable = enable;
+            ConfidenceThreshold = confidenceThreshold;
+            Size = size;
+            _rawData = rawData;
         }
         /// <summary> Minimum threshold score required to include an answer span, value ranges from 0 to 1. </summary>
         public double? ConfidenceThreshold { get; set; }

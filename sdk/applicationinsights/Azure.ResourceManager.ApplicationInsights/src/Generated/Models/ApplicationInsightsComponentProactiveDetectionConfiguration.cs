@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,23 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Properties that define a ProactiveDetection configuration. </summary>
     public partial class ApplicationInsightsComponentProactiveDetectionConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentProactiveDetectionConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration"/>. </summary>
         public ApplicationInsightsComponentProactiveDetectionConfiguration()
         {
             CustomEmails = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentProactiveDetectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration"/>. </summary>
         /// <param name="name"> The rule name. </param>
         /// <param name="isEnabled"> A flag that indicates whether this rule is enabled by the user. </param>
         /// <param name="sendEmailsToSubscriptionOwners"> A flag that indicated whether notifications on this rule should be sent to subscription owners. </param>
         /// <param name="customEmails"> Custom email addresses for this rule notifications. </param>
         /// <param name="lastUpdatedTime"> The last time this rule was updated. </param>
         /// <param name="ruleDefinitions"> Static definitions of the ProactiveDetection configuration rule (same values for all components). </param>
-        internal ApplicationInsightsComponentProactiveDetectionConfiguration(string name, bool? isEnabled, bool? sendEmailsToSubscriptionOwners, IList<string> customEmails, string lastUpdatedTime, ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentProactiveDetectionConfiguration(string name, bool? isEnabled, bool? sendEmailsToSubscriptionOwners, IList<string> customEmails, string lastUpdatedTime, ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             IsEnabled = isEnabled;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             CustomEmails = customEmails;
             LastUpdatedTime = lastUpdatedTime;
             RuleDefinitions = ruleDefinitions;
+            _rawData = rawData;
         }
 
         /// <summary> The rule name. </summary>

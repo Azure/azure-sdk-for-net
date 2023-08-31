@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RouteCacheCompressionSettings : IUtf8JsonSerializable
+    public partial class RouteCacheCompressionSettings : IUtf8JsonSerializable, IModelJsonSerializable<RouteCacheCompressionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteCacheCompressionSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteCacheCompressionSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ContentTypesToCompress))
             {
@@ -31,17 +38,32 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RouteCacheCompressionSettings DeserializeRouteCacheCompressionSettings(JsonElement element)
+        internal static RouteCacheCompressionSettings DeserializeRouteCacheCompressionSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> contentTypesToCompress = default;
             Optional<bool> isCompressionEnabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentTypesToCompress"u8))
@@ -67,8 +89,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     isCompressionEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteCacheCompressionSettings(Optional.ToList(contentTypesToCompress), Optional.ToNullable(isCompressionEnabled));
+            return new RouteCacheCompressionSettings(Optional.ToList(contentTypesToCompress), Optional.ToNullable(isCompressionEnabled), rawData);
+        }
+
+        RouteCacheCompressionSettings IModelJsonSerializable<RouteCacheCompressionSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteCacheCompressionSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteCacheCompressionSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteCacheCompressionSettings IModelSerializable<RouteCacheCompressionSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteCacheCompressionSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RouteCacheCompressionSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RouteCacheCompressionSettings"/> to convert. </param>
+        public static implicit operator RequestContent(RouteCacheCompressionSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RouteCacheCompressionSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RouteCacheCompressionSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteCacheCompressionSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

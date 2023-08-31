@@ -5,21 +5,49 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SupportedOptimizationTypesListResult
+    public partial class SupportedOptimizationTypesListResult : IUtf8JsonSerializable, IModelJsonSerializable<SupportedOptimizationTypesListResult>
     {
-        internal static SupportedOptimizationTypesListResult DeserializeSupportedOptimizationTypesListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SupportedOptimizationTypesListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SupportedOptimizationTypesListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SupportedOptimizationTypesListResult DeserializeSupportedOptimizationTypesListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<OptimizationType>> supportedOptimizationTypes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedOptimizationTypes"u8))
@@ -36,8 +64,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     supportedOptimizationTypes = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SupportedOptimizationTypesListResult(Optional.ToList(supportedOptimizationTypes));
+            return new SupportedOptimizationTypesListResult(Optional.ToList(supportedOptimizationTypes), rawData);
+        }
+
+        SupportedOptimizationTypesListResult IModelJsonSerializable<SupportedOptimizationTypesListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSupportedOptimizationTypesListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SupportedOptimizationTypesListResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SupportedOptimizationTypesListResult IModelSerializable<SupportedOptimizationTypesListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSupportedOptimizationTypesListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SupportedOptimizationTypesListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SupportedOptimizationTypesListResult"/> to convert. </param>
+        public static implicit operator RequestContent(SupportedOptimizationTypesListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SupportedOptimizationTypesListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SupportedOptimizationTypesListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSupportedOptimizationTypesListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

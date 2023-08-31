@@ -6,17 +6,134 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    public partial class RoleAssignmentScheduleData
+    public partial class RoleAssignmentScheduleData : IUtf8JsonSerializable, IModelJsonSerializable<RoleAssignmentScheduleData>
     {
-        internal static RoleAssignmentScheduleData DeserializeRoleAssignmentScheduleData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoleAssignmentScheduleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoleAssignmentScheduleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope);
+            }
+            if (Optional.IsDefined(RoleDefinitionId))
+            {
+                writer.WritePropertyName("roleDefinitionId"u8);
+                writer.WriteStringValue(RoleDefinitionId);
+            }
+            if (Optional.IsDefined(PrincipalId))
+            {
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId.Value);
+            }
+            if (Optional.IsDefined(PrincipalType))
+            {
+                writer.WritePropertyName("principalType"u8);
+                writer.WriteStringValue(PrincipalType.Value.ToString());
+            }
+            if (Optional.IsDefined(RoleAssignmentScheduleRequestId))
+            {
+                writer.WritePropertyName("roleAssignmentScheduleRequestId"u8);
+                writer.WriteStringValue(RoleAssignmentScheduleRequestId);
+            }
+            if (Optional.IsDefined(LinkedRoleEligibilityScheduleId))
+            {
+                writer.WritePropertyName("linkedRoleEligibilityScheduleId"u8);
+                writer.WriteStringValue(LinkedRoleEligibilityScheduleId);
+            }
+            if (Optional.IsDefined(AssignmentType))
+            {
+                writer.WritePropertyName("assignmentType"u8);
+                writer.WriteStringValue(AssignmentType.Value.ToString());
+            }
+            if (Optional.IsDefined(MemberType))
+            {
+                writer.WritePropertyName("memberType"u8);
+                writer.WriteStringValue(MemberType.Value.ToString());
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDateTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endDateTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition"u8);
+                writer.WriteStringValue(Condition);
+            }
+            if (Optional.IsDefined(ConditionVersion))
+            {
+                writer.WritePropertyName("conditionVersion"u8);
+                writer.WriteStringValue(ConditionVersion);
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdOn"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedOn"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ExpandedProperties))
+            {
+                writer.WritePropertyName("expandedProperties"u8);
+                if (ExpandedProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RoleManagementExpandedProperties>)ExpandedProperties).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RoleAssignmentScheduleData DeserializeRoleAssignmentScheduleData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -41,6 +158,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> updatedOn = default;
             Optional<RoleManagementExpandedProperties> expandedProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -211,8 +329,61 @@ namespace Azure.ResourceManager.Authorization
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoleAssignmentScheduleData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleAssignmentScheduleRequestId.Value, linkedRoleEligibilityScheduleId.Value, Optional.ToNullable(assignmentType), Optional.ToNullable(memberType), Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), expandedProperties.Value);
+            return new RoleAssignmentScheduleData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleAssignmentScheduleRequestId.Value, linkedRoleEligibilityScheduleId.Value, Optional.ToNullable(assignmentType), Optional.ToNullable(memberType), Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), expandedProperties.Value, rawData);
+        }
+
+        RoleAssignmentScheduleData IModelJsonSerializable<RoleAssignmentScheduleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleAssignmentScheduleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoleAssignmentScheduleData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoleAssignmentScheduleData IModelSerializable<RoleAssignmentScheduleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoleAssignmentScheduleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RoleAssignmentScheduleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RoleAssignmentScheduleData"/> to convert. </param>
+        public static implicit operator RequestContent(RoleAssignmentScheduleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RoleAssignmentScheduleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RoleAssignmentScheduleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoleAssignmentScheduleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,17 +6,71 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyModificationResultConverter))]
-    public partial class PolicyModificationResult
+    public partial class PolicyModificationResult : IUtf8JsonSerializable, IModelJsonSerializable<PolicyModificationResult>
     {
-        internal static PolicyModificationResult DeserializePolicyModificationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyModificationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyModificationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PolicyResolution))
+            {
+                writer.WritePropertyName("x-ms-policy-result"u8);
+                writer.WriteStringValue(PolicyResolution.ToString());
+            }
+            if (Optional.IsDefined(BasePolicyTokenHash))
+            {
+                writer.WritePropertyName("x-ms-policy-token-hash"u8);
+                writer.WriteStringValue(BasePolicyTokenHash);
+            }
+            if (Optional.IsDefined(BasePolicySigner))
+            {
+                writer.WritePropertyName("x-ms-policy-signer"u8);
+                if (BasePolicySigner is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JsonWebKey>)BasePolicySigner).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(BasePolicy))
+            {
+                writer.WritePropertyName("x-ms-policy"u8);
+                writer.WriteStringValue(BasePolicy);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PolicyModificationResult DeserializePolicyModificationResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +79,7 @@ namespace Azure.Security.Attestation
             Optional<string> xMsPolicyTokenHash = default;
             Optional<JsonWebKey> xMsPolicySigner = default;
             Optional<string> xMsPolicy = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-policy-result"u8))
@@ -55,15 +110,68 @@ namespace Azure.Security.Attestation
                     xMsPolicy = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicyModificationResult(xMsPolicyResult, xMsPolicyTokenHash.Value, xMsPolicySigner.Value, xMsPolicy.Value);
+            return new PolicyModificationResult(xMsPolicyResult, xMsPolicyTokenHash.Value, xMsPolicySigner.Value, xMsPolicy.Value, rawData);
+        }
+
+        PolicyModificationResult IModelJsonSerializable<PolicyModificationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyModificationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyModificationResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyModificationResult IModelSerializable<PolicyModificationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyModificationResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PolicyModificationResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PolicyModificationResult"/> to convert. </param>
+        public static implicit operator RequestContent(PolicyModificationResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PolicyModificationResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PolicyModificationResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyModificationResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class PolicyModificationResultConverter : JsonConverter<PolicyModificationResult>
         {
             public override void Write(Utf8JsonWriter writer, PolicyModificationResult model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override PolicyModificationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

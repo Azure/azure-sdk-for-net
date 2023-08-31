@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class PolicyAssignmentArtifact : IUtf8JsonSerializable
+    public partial class PolicyAssignmentArtifact : IUtf8JsonSerializable, IModelJsonSerializable<PolicyAssignmentArtifact>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyAssignmentArtifact>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyAssignmentArtifact>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PolicyAssignmentArtifact>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -48,7 +55,14 @@ namespace Azure.ResourceManager.Blueprint.Models
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ParameterValue>)item.Value).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(ResourceGroup))
@@ -57,11 +71,25 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStringValue(ResourceGroup);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PolicyAssignmentArtifact DeserializePolicyAssignmentArtifact(JsonElement element)
+        internal static PolicyAssignmentArtifact DeserializePolicyAssignmentArtifact(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +105,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             string policyDefinitionId = default;
             IDictionary<string, ParameterValue> parameters = default;
             Optional<string> resourceGroup = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -164,8 +193,61 @@ namespace Azure.ResourceManager.Blueprint.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicyAssignmentArtifact(id, name, type, systemData.Value, kind, displayName.Value, description.Value, Optional.ToList(dependsOn), policyDefinitionId, parameters, resourceGroup.Value);
+            return new PolicyAssignmentArtifact(id, name, type, systemData.Value, kind, displayName.Value, description.Value, Optional.ToList(dependsOn), policyDefinitionId, parameters, resourceGroup.Value, rawData);
+        }
+
+        PolicyAssignmentArtifact IModelJsonSerializable<PolicyAssignmentArtifact>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PolicyAssignmentArtifact>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyAssignmentArtifact(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyAssignmentArtifact>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PolicyAssignmentArtifact>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyAssignmentArtifact IModelSerializable<PolicyAssignmentArtifact>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PolicyAssignmentArtifact>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyAssignmentArtifact(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PolicyAssignmentArtifact"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PolicyAssignmentArtifact"/> to convert. </param>
+        public static implicit operator RequestContent(PolicyAssignmentArtifact model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PolicyAssignmentArtifact"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PolicyAssignmentArtifact(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyAssignmentArtifact(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Remote debugging config. </summary>
     public partial class ApplicationRemoteDebuggingConfig
     {
-        /// <summary> Initializes a new instance of ApplicationRemoteDebuggingConfig. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationRemoteDebuggingConfig"/>. </summary>
         internal ApplicationRemoteDebuggingConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationRemoteDebuggingConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationRemoteDebuggingConfig"/>. </summary>
         /// <param name="port"> Application debugging port. </param>
         /// <param name="isEnabled"> Indicate if remote debugging is enabled. </param>
-        internal ApplicationRemoteDebuggingConfig(int? port, bool? isEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationRemoteDebuggingConfig(int? port, bool? isEnabled, Dictionary<string, BinaryData> rawData)
         {
             Port = port;
             IsEnabled = isEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Application debugging port. </summary>

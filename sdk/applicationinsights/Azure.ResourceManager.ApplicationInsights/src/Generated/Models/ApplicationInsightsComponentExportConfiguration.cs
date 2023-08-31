@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Properties that define a Continuous Export configuration. </summary>
     public partial class ApplicationInsightsComponentExportConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentExportConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentExportConfiguration"/>. </summary>
         internal ApplicationInsightsComponentExportConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentExportConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentExportConfiguration"/>. </summary>
         /// <param name="exportId"> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </param>
         /// <param name="instrumentationKey"> The instrumentation key of the Application Insights component. </param>
         /// <param name="recordTypes"> This comma separated list of document types that will be exported. The possible values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </param>
@@ -35,7 +40,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="permanentErrorReason"> This is the reason the Continuous Export configuration started failing. It can be 'AzureStorageNotFound' or 'AzureStorageAccessDenied'. </param>
         /// <param name="storageName"> The name of the destination storage account. </param>
         /// <param name="containerName"> The name of the destination storage container. </param>
-        internal ApplicationInsightsComponentExportConfiguration(string exportId, string instrumentationKey, string recordTypes, string applicationName, string subscriptionId, string resourceGroup, string destinationStorageSubscriptionId, string destinationStorageLocationId, string destinationAccountId, string destinationType, string isUserEnabled, string lastUserUpdate, string notificationQueueEnabled, string exportStatus, string lastSuccessTime, string lastGapTime, string permanentErrorReason, string storageName, string containerName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentExportConfiguration(string exportId, string instrumentationKey, string recordTypes, string applicationName, string subscriptionId, string resourceGroup, string destinationStorageSubscriptionId, string destinationStorageLocationId, string destinationAccountId, string destinationType, string isUserEnabled, string lastUserUpdate, string notificationQueueEnabled, string exportStatus, string lastSuccessTime, string lastGapTime, string permanentErrorReason, string storageName, string containerName, Dictionary<string, BinaryData> rawData)
         {
             ExportId = exportId;
             InstrumentationKey = instrumentationKey;
@@ -56,6 +62,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             PermanentErrorReason = permanentErrorReason;
             StorageName = storageName;
             ContainerName = containerName;
+            _rawData = rawData;
         }
 
         /// <summary> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </summary>

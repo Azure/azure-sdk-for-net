@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> The private link scope resource reference. </summary>
     public partial class PrivateLinkScopedResource
     {
-        /// <summary> Initializes a new instance of PrivateLinkScopedResource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopedResource"/>. </summary>
         internal PrivateLinkScopedResource()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopedResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopedResource"/>. </summary>
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
         /// <param name="scopeId"> The private link scope unique Identifier. </param>
-        internal PrivateLinkScopedResource(string resourceId, string scopeId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkScopedResource(string resourceId, string scopeId, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
             ScopeId = scopeId;
+            _rawData = rawData;
         }
 
         /// <summary> The full resource Id of the private link scope resource. </summary>

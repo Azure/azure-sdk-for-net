@@ -144,9 +144,7 @@ namespace Azure.ResourceManager.AppPlatform
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -386,9 +384,7 @@ namespace Azure.ResourceManager.AppPlatform
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(settings);
-            request.Content = content;
+            request.Content = settings;
             _userAgent.Apply(message);
             return message;
         }

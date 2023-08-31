@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UriRedirectAction : IUtf8JsonSerializable
+    public partial class UriRedirectAction : IUtf8JsonSerializable, IModelJsonSerializable<UriRedirectAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UriRedirectAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UriRedirectAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<UriRedirectAction>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<UriRedirectActionProperties>)Properties).Serialize(writer, options);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UriRedirectAction DeserializeUriRedirectAction(JsonElement element)
+        internal static UriRedirectAction DeserializeUriRedirectAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             UriRedirectActionProperties parameters = default;
             DeliveryRuleActionType name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -42,8 +72,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     name = new DeliveryRuleActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UriRedirectAction(name, parameters);
+            return new UriRedirectAction(name, parameters, rawData);
+        }
+
+        UriRedirectAction IModelJsonSerializable<UriRedirectAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UriRedirectAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUriRedirectAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UriRedirectAction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UriRedirectAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UriRedirectAction IModelSerializable<UriRedirectAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UriRedirectAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUriRedirectAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UriRedirectAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UriRedirectAction"/> to convert. </param>
+        public static implicit operator RequestContent(UriRedirectAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UriRedirectAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UriRedirectAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUriRedirectAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

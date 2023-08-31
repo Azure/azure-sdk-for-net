@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementCacheCacheRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementCacheCacheRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementCacheResource(Client, ApiManagementCacheData.DeserializeApiManagementCacheData(e)), _apiManagementCacheCacheClientDiagnostics, Pipeline, "ApiManagementCacheCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementCacheResource(Client, ApiManagementCacheData.DeserializeApiManagementCacheData(e)), _apiManagementCacheCacheClientDiagnostics, Pipeline, "ApiManagementCacheCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementCacheCacheRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementCacheCacheRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementCacheResource(Client, ApiManagementCacheData.DeserializeApiManagementCacheData(e)), _apiManagementCacheCacheClientDiagnostics, Pipeline, "ApiManagementCacheCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementCacheResource(Client, ApiManagementCacheData.DeserializeApiManagementCacheData(e)), _apiManagementCacheCacheClientDiagnostics, Pipeline, "ApiManagementCacheCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

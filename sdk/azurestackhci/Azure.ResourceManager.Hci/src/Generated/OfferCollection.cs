@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _offerRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "OfferCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "OfferCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _offerRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "OfferCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "OfferCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

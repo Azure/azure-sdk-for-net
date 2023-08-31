@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Deploy Tenant Configuration Contract. </summary>
     public partial class ConfigurationDeployContent
     {
-        /// <summary> Initializes a new instance of ConfigurationDeployContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationDeployContent"/>. </summary>
         public ConfigurationDeployContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationDeployContent"/>. </summary>
+        /// <param name="branch"> The name of the Git branch from which the configuration is to be deployed to the configuration database. </param>
+        /// <param name="forceDelete"> The value enforcing deleting subscriptions to products that are deleted in this update. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationDeployContent(string branch, bool? forceDelete, Dictionary<string, BinaryData> rawData)
+        {
+            Branch = branch;
+            ForceDelete = forceDelete;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the Git branch from which the configuration is to be deployed to the configuration database. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list endpoints. It contains a list of endpoint objects and a URL link to get the next set of results. </summary>
     internal partial class FrontDoorEndpointListResult
     {
-        /// <summary> Initializes a new instance of FrontDoorEndpointListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointListResult"/>. </summary>
         internal FrontDoorEndpointListResult()
         {
             Value = new ChangeTrackingList<FrontDoorEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointListResult"/>. </summary>
         /// <param name="value"> List of AzureFrontDoor endpoints within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of endpoint objects if there is any. </param>
-        internal FrontDoorEndpointListResult(IReadOnlyList<FrontDoorEndpointData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorEndpointListResult(IReadOnlyList<FrontDoorEndpointData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of AzureFrontDoor endpoints within a profile. </summary>

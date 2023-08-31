@@ -5,37 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformDeploymentProperties : IUtf8JsonSerializable
+    public partial class AppPlatformDeploymentProperties : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformDeploymentProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformDeploymentProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                if (Source is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppPlatformUserSourceInfo>)Source).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DeploymentSettings))
             {
                 writer.WritePropertyName("deploymentSettings"u8);
-                writer.WriteObjectValue(DeploymentSettings);
+                if (DeploymentSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppPlatformDeploymentSettings>)DeploymentSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformDeploymentProperties DeserializeAppPlatformDeploymentProperties(JsonElement element)
+        internal static AppPlatformDeploymentProperties DeserializeAppPlatformDeploymentProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +81,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppPlatformDeploymentStatus> status = default;
             Optional<bool> active = default;
             Optional<IReadOnlyList<AppPlatformDeploymentInstance>> instances = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -107,8 +143,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     instances = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformDeploymentProperties(source.Value, deploymentSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(active), Optional.ToList(instances));
+            return new AppPlatformDeploymentProperties(source.Value, deploymentSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(active), Optional.ToList(instances), rawData);
+        }
+
+        AppPlatformDeploymentProperties IModelJsonSerializable<AppPlatformDeploymentProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformDeploymentProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformDeploymentProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformDeploymentProperties IModelSerializable<AppPlatformDeploymentProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformDeploymentProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppPlatformDeploymentProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppPlatformDeploymentProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AppPlatformDeploymentProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppPlatformDeploymentProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppPlatformDeploymentProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformDeploymentProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

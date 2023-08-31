@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Resource request payload of Service Registry. </summary>
     public partial class AppPlatformServiceRegistryResourceRequirements
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceRegistryResourceRequirements. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceRegistryResourceRequirements"/>. </summary>
         internal AppPlatformServiceRegistryResourceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceRegistryResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceRegistryResourceRequirements"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each Service Registry instance. </param>
         /// <param name="memory"> Memory allocated to each Service Registry instance. </param>
         /// <param name="instanceCount"> Instance count of the Service Registry. </param>
-        internal AppPlatformServiceRegistryResourceRequirements(string cpu, string memory, int? instanceCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformServiceRegistryResourceRequirements(string cpu, string memory, int? instanceCount, Dictionary<string, BinaryData> rawData)
         {
             Cpu = cpu;
             Memory = memory;
             InstanceCount = instanceCount;
+            _rawData = rawData;
         }
 
         /// <summary> Cpu allocated to each Service Registry instance. </summary>

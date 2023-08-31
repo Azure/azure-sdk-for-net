@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,14 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementGatewayHostnameConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementGatewayHostnameConfigurationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayHostnameConfigurationData"/>. </summary>
         public ApiManagementGatewayHostnameConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayHostnameConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayHostnameConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="isTls10Enabled"> Specifies if TLS 1.0 is supported. </param>
         /// <param name="isTls11Enabled"> Specifies if TLS 1.1 is supported. </param>
         /// <param name="isHttp20Enabled"> Specifies if HTTP/2.0 is supported. </param>
-        internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostname, string certificateId, bool? isClientCertificateRequired, bool? isTls10Enabled, bool? isTls11Enabled, bool? isHttp20Enabled) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostname, string certificateId, bool? isClientCertificateRequired, bool? isTls10Enabled, bool? isTls11Enabled, bool? isHttp20Enabled, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Hostname = hostname;
             CertificateId = certificateId;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
             IsTls1_0Enabled = isTls10Enabled;
             IsTls1_1Enabled = isTls11Enabled;
             IsHttp2_0Enabled = isHttp20Enabled;
+            _rawData = rawData;
         }
 
         /// <summary> Hostname value. Supports valid domain name, partial or full wildcard. </summary>

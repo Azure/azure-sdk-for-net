@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    internal partial class SavingsPlanSummaryCount
+    internal partial class SavingsPlanSummaryCount : IUtf8JsonSerializable, IModelJsonSerializable<SavingsPlanSummaryCount>
     {
-        internal static SavingsPlanSummaryCount DeserializeSavingsPlanSummaryCount(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SavingsPlanSummaryCount>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SavingsPlanSummaryCount>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SavingsPlanSummaryCount DeserializeSavingsPlanSummaryCount(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +55,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<float> processingCount = default;
             Optional<float> noBenefitCount = default;
             Optional<float> warningCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("succeededCount"u8))
@@ -110,8 +139,61 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     warningCount = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SavingsPlanSummaryCount(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(noBenefitCount), Optional.ToNullable(warningCount));
+            return new SavingsPlanSummaryCount(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(noBenefitCount), Optional.ToNullable(warningCount), rawData);
+        }
+
+        SavingsPlanSummaryCount IModelJsonSerializable<SavingsPlanSummaryCount>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanSummaryCount(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SavingsPlanSummaryCount>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SavingsPlanSummaryCount IModelSerializable<SavingsPlanSummaryCount>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSavingsPlanSummaryCount(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SavingsPlanSummaryCount"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SavingsPlanSummaryCount"/> to convert. </param>
+        public static implicit operator RequestContent(SavingsPlanSummaryCount model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SavingsPlanSummaryCount"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SavingsPlanSummaryCount(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSavingsPlanSummaryCount(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

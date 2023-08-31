@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> OAuth Server Secrets Contract. </summary>
     public partial class AuthorizationServerSecretsContract
     {
-        /// <summary> Initializes a new instance of AuthorizationServerSecretsContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationServerSecretsContract"/>. </summary>
         internal AuthorizationServerSecretsContract()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationServerSecretsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationServerSecretsContract"/>. </summary>
         /// <param name="clientSecret"> oAuth Authorization Server Secrets. </param>
         /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
         /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>
-        internal AuthorizationServerSecretsContract(string clientSecret, string resourceOwnerUsername, string resourceOwnerPassword)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationServerSecretsContract(string clientSecret, string resourceOwnerUsername, string resourceOwnerPassword, Dictionary<string, BinaryData> rawData)
         {
             ClientSecret = clientSecret;
             ResourceOwnerUsername = resourceOwnerUsername;
             ResourceOwnerPassword = resourceOwnerPassword;
+            _rawData = rawData;
         }
 
         /// <summary> oAuth Authorization Server Secrets. </summary>

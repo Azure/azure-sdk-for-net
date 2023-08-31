@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.BillingBenefits;
@@ -14,22 +15,26 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The SavingsPlanModelListResult. </summary>
     internal partial class SavingsPlanModelListResult
     {
-        /// <summary> Initializes a new instance of SavingsPlanModelListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanModelListResult"/>. </summary>
         internal SavingsPlanModelListResult()
         {
             Value = new ChangeTrackingList<BillingBenefitsSavingsPlanData>();
             AdditionalProperties = new ChangeTrackingList<SavingsPlanSummary>();
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanModelListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanModelListResult"/>. </summary>
         /// <param name="value"> The list of savings plans. </param>
         /// <param name="nextLink"> Url to get the next page. </param>
         /// <param name="additionalProperties"> The roll out count summary of the savings plans. </param>
-        internal SavingsPlanModelListResult(IReadOnlyList<BillingBenefitsSavingsPlanData> value, string nextLink, IReadOnlyList<SavingsPlanSummary> additionalProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanModelListResult(IReadOnlyList<BillingBenefitsSavingsPlanData> value, string nextLink, IReadOnlyList<SavingsPlanSummary> additionalProperties, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
             AdditionalProperties = additionalProperties;
+            _rawData = rawData;
         }
 
         /// <summary> The list of savings plans. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Information used to connect to an Azure Fileshare. </summary>
     public partial class BatchFileShareConfiguration
     {
-        /// <summary> Initializes a new instance of BatchFileShareConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchFileShareConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage account name. </param>
         /// <param name="fileUri"> This is of the form 'https://{account}.file.core.windows.net/'. </param>
         /// <param name="accountKey"> The Azure Storage account key. </param>
@@ -32,19 +35,26 @@ namespace Azure.ResourceManager.Batch.Models
             RelativeMountPath = relativeMountPath;
         }
 
-        /// <summary> Initializes a new instance of BatchFileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchFileShareConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage account name. </param>
         /// <param name="fileUri"> This is of the form 'https://{account}.file.core.windows.net/'. </param>
         /// <param name="accountKey"> The Azure Storage account key. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> These are 'net use' options in Windows and 'mount' options in Linux. </param>
-        internal BatchFileShareConfiguration(string accountName, Uri fileUri, string accountKey, string relativeMountPath, string mountOptions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchFileShareConfiguration(string accountName, Uri fileUri, string accountKey, string relativeMountPath, string mountOptions, Dictionary<string, BinaryData> rawData)
         {
             AccountName = accountName;
             FileUri = fileUri;
             AccountKey = accountKey;
             RelativeMountPath = relativeMountPath;
             MountOptions = mountOptions;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchFileShareConfiguration"/> for deserialization. </summary>
+        internal BatchFileShareConfiguration()
+        {
         }
 
         /// <summary> The Azure Storage account name. </summary>

@@ -5,16 +5,90 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
-    public partial class DetailedInformation
+    public partial class DetailedInformation : IUtf8JsonSerializable, IModelJsonSerializable<DetailedInformation>
     {
-        internal static DetailedInformation DeserializeDetailedInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DetailedInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DetailedInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ApiName))
+            {
+                writer.WritePropertyName("apiName"u8);
+                writer.WriteStringValue(ApiName);
+            }
+            if (Optional.IsCollectionDefined(CustomParameters))
+            {
+                writer.WritePropertyName("customParameters"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomParameters)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PlatformParameters))
+            {
+                writer.WritePropertyName("platformParameters"u8);
+                writer.WriteStartArray();
+                foreach (var item in PlatformParameters)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(UnitsSupported))
+            {
+                writer.WritePropertyName("unitsSupported"u8);
+                if (UnitsSupported is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<UnitSystemsInfo>)UnitsSupported).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(ApiInputParameters))
+            {
+                writer.WritePropertyName("apiInputParameters"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApiInputParameters)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DetailedInformation DeserializeDetailedInformation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +98,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             Optional<IReadOnlyList<string>> platformParameters = default;
             Optional<UnitSystemsInfo> unitsSupported = default;
             Optional<IReadOnlyList<string>> apiInputParameters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiName"u8))
@@ -82,8 +157,61 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     apiInputParameters = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DetailedInformation(apiName.Value, Optional.ToList(customParameters), Optional.ToList(platformParameters), unitsSupported.Value, Optional.ToList(apiInputParameters));
+            return new DetailedInformation(apiName.Value, Optional.ToList(customParameters), Optional.ToList(platformParameters), unitsSupported.Value, Optional.ToList(apiInputParameters), rawData);
+        }
+
+        DetailedInformation IModelJsonSerializable<DetailedInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDetailedInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DetailedInformation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DetailedInformation IModelSerializable<DetailedInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDetailedInformation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DetailedInformation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DetailedInformation"/> to convert. </param>
+        public static implicit operator RequestContent(DetailedInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DetailedInformation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DetailedInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDetailedInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

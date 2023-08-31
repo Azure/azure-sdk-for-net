@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list source controls operation. </summary>
     internal partial class AutomationSourceControlListResult
     {
-        /// <summary> Initializes a new instance of AutomationSourceControlListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlListResult"/>. </summary>
         internal AutomationSourceControlListResult()
         {
             Value = new ChangeTrackingList<AutomationSourceControlData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationSourceControlListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlListResult"/>. </summary>
         /// <param name="value"> The list of source controls. </param>
         /// <param name="nextLink"> The next link. </param>
-        internal AutomationSourceControlListResult(IReadOnlyList<AutomationSourceControlData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationSourceControlListResult(IReadOnlyList<AutomationSourceControlData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of source controls. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -12,16 +14,20 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The reference to a user assigned identity associated with the Batch pool which a compute node will use. </summary>
     internal partial class ComputeNodeIdentityReference
     {
-        /// <summary> Initializes a new instance of ComputeNodeIdentityReference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeNodeIdentityReference"/>. </summary>
         public ComputeNodeIdentityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeNodeIdentityReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeNodeIdentityReference"/>. </summary>
         /// <param name="resourceId"> The ARM resource id of the user assigned identity. </param>
-        internal ComputeNodeIdentityReference(ResourceIdentifier resourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeNodeIdentityReference(ResourceIdentifier resourceId, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
+            _rawData = rawData;
         }
 
         /// <summary> The ARM resource id of the user assigned identity. </summary>

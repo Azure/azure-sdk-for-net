@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged deleted API Management Services List Representation. </summary>
     internal partial class DeletedServicesListResult
     {
-        /// <summary> Initializes a new instance of DeletedServicesListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedServicesListResult"/>. </summary>
         internal DeletedServicesListResult()
         {
             Value = new ChangeTrackingList<ApiManagementDeletedServiceData>();
         }
 
-        /// <summary> Initializes a new instance of DeletedServicesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedServicesListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal DeletedServicesListResult(IReadOnlyList<ApiManagementDeletedServiceData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedServicesListResult(IReadOnlyList<ApiManagementDeletedServiceData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Page values. </summary>

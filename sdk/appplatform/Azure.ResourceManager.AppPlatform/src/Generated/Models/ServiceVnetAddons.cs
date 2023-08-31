@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Additional Service settings in vnet injection instance. </summary>
     internal partial class ServiceVnetAddons
     {
-        /// <summary> Initializes a new instance of ServiceVnetAddons. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceVnetAddons"/>. </summary>
         public ServiceVnetAddons()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceVnetAddons. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceVnetAddons"/>. </summary>
         /// <param name="isLogStreamPublicEndpoint"> Indicates whether the log stream in vnet injection instance could be accessed from internet. </param>
-        internal ServiceVnetAddons(bool? isLogStreamPublicEndpoint)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceVnetAddons(bool? isLogStreamPublicEndpoint, Dictionary<string, BinaryData> rawData)
         {
             IsLogStreamPublicEndpoint = isLogStreamPublicEndpoint;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates whether the log stream in vnet injection instance could be accessed from internet. </summary>

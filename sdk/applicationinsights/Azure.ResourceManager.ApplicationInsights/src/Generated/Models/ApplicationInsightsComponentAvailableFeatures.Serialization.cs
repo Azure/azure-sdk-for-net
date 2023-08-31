@@ -5,21 +5,49 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentAvailableFeatures
+    public partial class ApplicationInsightsComponentAvailableFeatures : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationInsightsComponentAvailableFeatures>
     {
-        internal static ApplicationInsightsComponentAvailableFeatures DeserializeApplicationInsightsComponentAvailableFeatures(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationInsightsComponentAvailableFeatures>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationInsightsComponentAvailableFeatures>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ApplicationInsightsComponentAvailableFeatures DeserializeApplicationInsightsComponentAvailableFeatures(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ApplicationInsightsComponentFeature>> result = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Result"u8))
@@ -36,8 +64,61 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     result = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationInsightsComponentAvailableFeatures(Optional.ToList(result));
+            return new ApplicationInsightsComponentAvailableFeatures(Optional.ToList(result), rawData);
+        }
+
+        ApplicationInsightsComponentAvailableFeatures IModelJsonSerializable<ApplicationInsightsComponentAvailableFeatures>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentAvailableFeatures(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationInsightsComponentAvailableFeatures>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationInsightsComponentAvailableFeatures IModelSerializable<ApplicationInsightsComponentAvailableFeatures>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentAvailableFeatures(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationInsightsComponentAvailableFeatures"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationInsightsComponentAvailableFeatures"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationInsightsComponentAvailableFeatures model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationInsightsComponentAvailableFeatures"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationInsightsComponentAvailableFeatures(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationInsightsComponentAvailableFeatures(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

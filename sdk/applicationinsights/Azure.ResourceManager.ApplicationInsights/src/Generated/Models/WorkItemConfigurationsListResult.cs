@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Work item configuration list result. </summary>
     internal partial class WorkItemConfigurationsListResult
     {
-        /// <summary> Initializes a new instance of WorkItemConfigurationsListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkItemConfigurationsListResult"/>. </summary>
         internal WorkItemConfigurationsListResult()
         {
             Value = new ChangeTrackingList<WorkItemConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of WorkItemConfigurationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkItemConfigurationsListResult"/>. </summary>
         /// <param name="value"> An array of work item configurations. </param>
-        internal WorkItemConfigurationsListResult(IReadOnlyList<WorkItemConfiguration> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkItemConfigurationsListResult(IReadOnlyList<WorkItemConfiguration> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> An array of work item configurations. </summary>

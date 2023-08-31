@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> HTTPGetAction describes an action based on HTTP Get requests. </summary>
     public partial class AppInstanceHttpGetAction : AppInstanceProbeAction
     {
-        /// <summary> Initializes a new instance of AppInstanceHttpGetAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInstanceHttpGetAction"/>. </summary>
         public AppInstanceHttpGetAction()
         {
             ProbeActionType = ProbeActionType.HttpGetAction;
         }
 
-        /// <summary> Initializes a new instance of AppInstanceHttpGetAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInstanceHttpGetAction"/>. </summary>
         /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
         /// <param name="path"> Path to access on the HTTP server. </param>
         /// <param name="scheme">
@@ -26,7 +29,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         ///  - `"HTTP"` means that the scheme used will be http://
         ///  - `"HTTPS"` means that the scheme used will be https://
         /// </param>
-        internal AppInstanceHttpGetAction(ProbeActionType probeActionType, string path, AppInstanceHttpSchemeType? scheme) : base(probeActionType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppInstanceHttpGetAction(ProbeActionType probeActionType, string path, AppInstanceHttpSchemeType? scheme, Dictionary<string, BinaryData> rawData) : base(probeActionType, rawData)
         {
             Path = path;
             Scheme = scheme;

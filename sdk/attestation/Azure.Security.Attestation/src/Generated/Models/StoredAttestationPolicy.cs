@@ -5,10 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> The StoredAttestationPolicy. </summary>
     public partial class StoredAttestationPolicy
     {
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StoredAttestationPolicy"/>. </summary>
+        /// <param name="attestationPolicy"> Policy text to set as a sequence of UTF-8 encoded octets. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StoredAttestationPolicy(string attestationPolicy, Dictionary<string, BinaryData> rawData)
+        {
+            AttestationPolicy = attestationPolicy;
+            _rawData = rawData;
+        }
     }
 }

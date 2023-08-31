@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationModuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutomationModuleData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AutomationModuleData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationModuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +47,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="isComposite"> Gets or sets type of module, if its composite or not. </param>
-        internal AutomationModuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, bool? isGlobal, string version, long? sizeInBytes, int? activityCount, ModuleProvisioningState? provisioningState, AutomationContentLink contentLink, AutomationModuleErrorInfo error, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, bool? isComposite) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationModuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, bool? isGlobal, string version, long? sizeInBytes, int? activityCount, ModuleProvisioningState? provisioningState, AutomationContentLink contentLink, AutomationModuleErrorInfo error, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, bool? isComposite, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             IsGlobal = isGlobal;
@@ -59,6 +62,12 @@ namespace Azure.ResourceManager.Automation
             LastModifiedOn = lastModifiedOn;
             Description = description;
             IsComposite = isComposite;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleData"/> for deserialization. </summary>
+        internal AutomationModuleData()
+        {
         }
 
         /// <summary> Gets or sets the etag of the resource. </summary>

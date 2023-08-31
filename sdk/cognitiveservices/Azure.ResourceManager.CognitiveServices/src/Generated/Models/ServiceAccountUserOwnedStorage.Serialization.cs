@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountUserOwnedStorage : IUtf8JsonSerializable
+    public partial class ServiceAccountUserOwnedStorage : IUtf8JsonSerializable, IModelJsonSerializable<ServiceAccountUserOwnedStorage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceAccountUserOwnedStorage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceAccountUserOwnedStorage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
@@ -26,17 +33,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceAccountUserOwnedStorage DeserializeServiceAccountUserOwnedStorage(JsonElement element)
+        internal static ServiceAccountUserOwnedStorage DeserializeServiceAccountUserOwnedStorage(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<Guid> identityClientId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -57,8 +79,61 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     identityClientId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceAccountUserOwnedStorage(resourceId.Value, Optional.ToNullable(identityClientId));
+            return new ServiceAccountUserOwnedStorage(resourceId.Value, Optional.ToNullable(identityClientId), rawData);
+        }
+
+        ServiceAccountUserOwnedStorage IModelJsonSerializable<ServiceAccountUserOwnedStorage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAccountUserOwnedStorage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceAccountUserOwnedStorage>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceAccountUserOwnedStorage IModelSerializable<ServiceAccountUserOwnedStorage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceAccountUserOwnedStorage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceAccountUserOwnedStorage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceAccountUserOwnedStorage"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceAccountUserOwnedStorage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceAccountUserOwnedStorage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceAccountUserOwnedStorage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceAccountUserOwnedStorage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

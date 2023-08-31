@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Pageable list of script executions. </summary>
     internal partial class ScriptExecutionsList
     {
-        /// <summary> Initializes a new instance of ScriptExecutionsList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionsList"/>. </summary>
         internal ScriptExecutionsList()
         {
             Value = new ChangeTrackingList<ScriptExecutionData>();
         }
 
-        /// <summary> Initializes a new instance of ScriptExecutionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionsList"/>. </summary>
         /// <param name="value"> List of scripts. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal ScriptExecutionsList(IReadOnlyList<ScriptExecutionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptExecutionsList(IReadOnlyList<ScriptExecutionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of scripts. </summary>

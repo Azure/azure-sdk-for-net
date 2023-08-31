@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class CreateChatThreadRequest : IUtf8JsonSerializable
+    internal partial class CreateChatThreadRequest : IUtf8JsonSerializable, IModelJsonSerializable<CreateChatThreadRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CreateChatThreadRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CreateChatThreadRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("topic"u8);
             writer.WriteStringValue(Topic);
@@ -23,11 +31,119 @@ namespace Azure.Communication.Chat
                 writer.WriteStartArray();
                 foreach (var item in Participants)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ChatParticipantInternal>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CreateChatThreadRequest DeserializeCreateChatThreadRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string topic = default;
+            Optional<IList<ChatParticipantInternal>> participants = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("topic"u8))
+                {
+                    topic = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("participants"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ChatParticipantInternal> array = new List<ChatParticipantInternal>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChatParticipantInternal.DeserializeChatParticipantInternal(item));
+                    }
+                    participants = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CreateChatThreadRequest(topic, Optional.ToList(participants), rawData);
+        }
+
+        CreateChatThreadRequest IModelJsonSerializable<CreateChatThreadRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateChatThreadRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CreateChatThreadRequest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CreateChatThreadRequest IModelSerializable<CreateChatThreadRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCreateChatThreadRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CreateChatThreadRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CreateChatThreadRequest"/> to convert. </param>
+        public static implicit operator RequestContent(CreateChatThreadRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CreateChatThreadRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CreateChatThreadRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCreateChatThreadRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

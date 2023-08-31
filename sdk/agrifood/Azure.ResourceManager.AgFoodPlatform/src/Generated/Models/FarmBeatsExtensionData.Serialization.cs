@@ -5,27 +5,48 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
-    public partial class FarmBeatsExtensionData : IUtf8JsonSerializable
+    public partial class FarmBeatsExtensionData : IUtf8JsonSerializable, IModelJsonSerializable<FarmBeatsExtensionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FarmBeatsExtensionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FarmBeatsExtensionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FarmBeatsExtensionData DeserializeFarmBeatsExtensionData(JsonElement element)
+        internal static FarmBeatsExtensionData DeserializeFarmBeatsExtensionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +65,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             Optional<string> extensionAuthLink = default;
             Optional<string> extensionApiDocsLink = default;
             Optional<IReadOnlyList<DetailedInformation>> detailedInformation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -141,8 +163,61 @@ namespace Azure.ResourceManager.AgFoodPlatform
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FarmBeatsExtensionData(id, name, type, systemData.Value, targetResourceType.Value, farmBeatsExtensionId.Value, farmBeatsExtensionName.Value, farmBeatsExtensionVersion.Value, publisherId.Value, description.Value, extensionCategory.Value, extensionAuthLink.Value, extensionApiDocsLink.Value, Optional.ToList(detailedInformation));
+            return new FarmBeatsExtensionData(id, name, type, systemData.Value, targetResourceType.Value, farmBeatsExtensionId.Value, farmBeatsExtensionName.Value, farmBeatsExtensionVersion.Value, publisherId.Value, description.Value, extensionCategory.Value, extensionAuthLink.Value, extensionApiDocsLink.Value, Optional.ToList(detailedInformation), rawData);
+        }
+
+        FarmBeatsExtensionData IModelJsonSerializable<FarmBeatsExtensionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFarmBeatsExtensionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FarmBeatsExtensionData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FarmBeatsExtensionData IModelSerializable<FarmBeatsExtensionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFarmBeatsExtensionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FarmBeatsExtensionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FarmBeatsExtensionData"/> to convert. </param>
+        public static implicit operator RequestContent(FarmBeatsExtensionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FarmBeatsExtensionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FarmBeatsExtensionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFarmBeatsExtensionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

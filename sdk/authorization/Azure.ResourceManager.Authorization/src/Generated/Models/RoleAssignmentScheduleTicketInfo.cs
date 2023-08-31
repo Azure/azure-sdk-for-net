@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Ticket Info of the role assignment. </summary>
     public partial class RoleAssignmentScheduleTicketInfo
     {
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleTicketInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleTicketInfo"/>. </summary>
         public RoleAssignmentScheduleTicketInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleTicketInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleTicketInfo"/>. </summary>
         /// <param name="ticketNumber"> Ticket number for the role assignment. </param>
         /// <param name="ticketSystem"> Ticket system name for the role assignment. </param>
-        internal RoleAssignmentScheduleTicketInfo(string ticketNumber, string ticketSystem)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentScheduleTicketInfo(string ticketNumber, string ticketSystem, Dictionary<string, BinaryData> rawData)
         {
             TicketNumber = ticketNumber;
             TicketSystem = ticketSystem;
+            _rawData = rawData;
         }
 
         /// <summary> Ticket number for the role assignment. </summary>

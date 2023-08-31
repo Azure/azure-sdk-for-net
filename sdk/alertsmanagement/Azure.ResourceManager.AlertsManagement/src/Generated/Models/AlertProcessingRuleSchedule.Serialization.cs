@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleSchedule : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleSchedule : IUtf8JsonSerializable, IModelJsonSerializable<AlertProcessingRuleSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AlertProcessingRuleSchedule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AlertProcessingRuleSchedule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EffectiveFrom))
             {
@@ -38,15 +44,36 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Recurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AlertProcessingRuleRecurrence>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AlertProcessingRuleSchedule DeserializeAlertProcessingRuleSchedule(JsonElement element)
+        internal static AlertProcessingRuleSchedule DeserializeAlertProcessingRuleSchedule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +82,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<DateTimeOffset> effectiveUntil = default;
             Optional<string> timeZone = default;
             Optional<IList<AlertProcessingRuleRecurrence>> recurrences = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("effectiveFrom"u8))
@@ -94,8 +122,61 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     recurrences = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AlertProcessingRuleSchedule(Optional.ToNullable(effectiveFrom), Optional.ToNullable(effectiveUntil), timeZone.Value, Optional.ToList(recurrences));
+            return new AlertProcessingRuleSchedule(Optional.ToNullable(effectiveFrom), Optional.ToNullable(effectiveUntil), timeZone.Value, Optional.ToList(recurrences), rawData);
+        }
+
+        AlertProcessingRuleSchedule IModelJsonSerializable<AlertProcessingRuleSchedule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertProcessingRuleSchedule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AlertProcessingRuleSchedule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AlertProcessingRuleSchedule IModelSerializable<AlertProcessingRuleSchedule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAlertProcessingRuleSchedule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AlertProcessingRuleSchedule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AlertProcessingRuleSchedule"/> to convert. </param>
+        public static implicit operator RequestContent(AlertProcessingRuleSchedule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AlertProcessingRuleSchedule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AlertProcessingRuleSchedule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAlertProcessingRuleSchedule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

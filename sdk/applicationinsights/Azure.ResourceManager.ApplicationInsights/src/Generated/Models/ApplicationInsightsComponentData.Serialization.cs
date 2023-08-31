@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    public partial class ApplicationInsightsComponentData : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentData : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationInsightsComponentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationInsightsComponentData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationInsightsComponentData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -113,11 +118,25 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteBooleanValue(IsForceCustomerStorageForProfiler.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationInsightsComponentData DeserializeApplicationInsightsComponentData(JsonElement element)
+        internal static ApplicationInsightsComponentData DeserializeApplicationInsightsComponentData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,6 +174,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Optional<IngestionMode> ingestionMode = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> forceCustomerStorageForProfiler = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -420,8 +440,61 @@ namespace Azure.ResourceManager.ApplicationInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationInsightsComponentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind, Optional.ToNullable(etag), applicationId.Value, appId.Value, name0.Value, Optional.ToNullable(applicationType), Optional.ToNullable(flowType), Optional.ToNullable(requestSource), instrumentationKey.Value, Optional.ToNullable(creationDate), Optional.ToNullable(tenantId), hockeyAppId.Value, hockeyAppToken.Value, provisioningState.Value, Optional.ToNullable(samplingPercentage), connectionString.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(disableIPMasking), Optional.ToNullable(immediatePurgeDataOn30Days), workspaceResourceId.Value, Optional.ToNullable(laMigrationDate), Optional.ToList(privateLinkScopedResources), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(ingestionMode), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(forceCustomerStorageForProfiler));
+            return new ApplicationInsightsComponentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind, Optional.ToNullable(etag), applicationId.Value, appId.Value, name0.Value, Optional.ToNullable(applicationType), Optional.ToNullable(flowType), Optional.ToNullable(requestSource), instrumentationKey.Value, Optional.ToNullable(creationDate), Optional.ToNullable(tenantId), hockeyAppId.Value, hockeyAppToken.Value, provisioningState.Value, Optional.ToNullable(samplingPercentage), connectionString.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(disableIPMasking), Optional.ToNullable(immediatePurgeDataOn30Days), workspaceResourceId.Value, Optional.ToNullable(laMigrationDate), Optional.ToList(privateLinkScopedResources), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(ingestionMode), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(forceCustomerStorageForProfiler), rawData);
+        }
+
+        ApplicationInsightsComponentData IModelJsonSerializable<ApplicationInsightsComponentData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationInsightsComponentData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationInsightsComponentData IModelSerializable<ApplicationInsightsComponentData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationInsightsComponentData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationInsightsComponentData"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationInsightsComponentData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationInsightsComponentData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationInsightsComponentData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationInsightsComponentData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
