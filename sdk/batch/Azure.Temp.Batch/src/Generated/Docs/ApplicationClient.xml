@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetApplicationAsync(string,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetApplicationAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ApplicationClient("<batchUrl>", credential);
+
+Response response = await client.GetApplicationAsync("<applicationId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("versions")[0].ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetApplication(string,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetApplication with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ApplicationClient("<batchUrl>", credential);
+
+Response response = client.GetApplication("<applicationId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("versions")[0].ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetApplicationsAsync(int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetApplicationsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ApplicationClient("<batchUrl>", credential);
+
+await foreach (var item in client.GetApplicationsAsync(1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("versions")[0].ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetApplications(int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetApplications with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ApplicationClient("<batchUrl>", credential);
+
+foreach (var item in client.GetApplications(1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("versions")[0].ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

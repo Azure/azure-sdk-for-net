@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSupportedImagesAsync(string,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetSupportedImagesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new AccountClient("<batchUrl>", credential);
+
+await foreach (var item in client.GetSupportedImagesAsync("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("nodeAgentSKUId").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("publisher").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("offer").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("sku").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("exactVersion").ToString());
+    Console.WriteLine(result.GetProperty("osType").ToString());
+    Console.WriteLine(result.GetProperty("capabilities")[0].ToString());
+    Console.WriteLine(result.GetProperty("batchSupportEndOfLife").ToString());
+    Console.WriteLine(result.GetProperty("verificationType").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetSupportedImages(string,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetSupportedImages with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new AccountClient("<batchUrl>", credential);
+
+foreach (var item in client.GetSupportedImages("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("nodeAgentSKUId").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("publisher").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("offer").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("sku").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+    Console.WriteLine(result.GetProperty("imageReference").GetProperty("exactVersion").ToString());
+    Console.WriteLine(result.GetProperty("osType").ToString());
+    Console.WriteLine(result.GetProperty("capabilities")[0].ToString());
+    Console.WriteLine(result.GetProperty("batchSupportEndOfLife").ToString());
+    Console.WriteLine(result.GetProperty("verificationType").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetPoolNodeCountsAsync(string,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetPoolNodeCountsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new AccountClient("<batchUrl>", credential);
+
+await foreach (var item in client.GetPoolNodeCountsAsync("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("poolId").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("creating").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("idle").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("offline").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("preempted").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("rebooting").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("reimaging").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("running").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("starting").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("startTaskFailed").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("leavingPool").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("unknown").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("unusable").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("waitingForStartTask").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("total").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("creating").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("idle").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("offline").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("preempted").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("rebooting").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("reimaging").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("running").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("starting").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("startTaskFailed").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("leavingPool").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("unknown").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("unusable").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("waitingForStartTask").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("total").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetPoolNodeCounts(string,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetPoolNodeCounts with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new AccountClient("<batchUrl>", credential);
+
+foreach (var item in client.GetPoolNodeCounts("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("poolId").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("creating").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("idle").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("offline").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("preempted").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("rebooting").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("reimaging").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("running").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("starting").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("startTaskFailed").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("leavingPool").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("unknown").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("unusable").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("waitingForStartTask").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("total").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("creating").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("idle").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("offline").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("preempted").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("rebooting").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("reimaging").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("running").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("starting").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("startTaskFailed").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("leavingPool").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("unknown").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("unusable").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("waitingForStartTask").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("total").ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

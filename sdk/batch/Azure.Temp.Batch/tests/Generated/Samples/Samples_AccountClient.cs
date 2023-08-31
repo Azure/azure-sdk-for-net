@@ -26,7 +26,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new AccountClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetSupportedImages("<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetSupportedImages("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("nodeAgentSKUId").ToString());
@@ -43,7 +43,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new AccountClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetSupportedImages("<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetSupportedImages("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("nodeAgentSKUId").ToString());
@@ -67,7 +67,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new AccountClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetSupportedImagesAsync("<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetSupportedImagesAsync("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("nodeAgentSKUId").ToString());
@@ -84,7 +84,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new AccountClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetSupportedImagesAsync("<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetSupportedImagesAsync("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("nodeAgentSKUId").ToString());
@@ -108,7 +108,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new AccountClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetPoolNodeCounts("<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetPoolNodeCounts("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -122,7 +122,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new AccountClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetPoolNodeCounts("<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetPoolNodeCounts("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -164,7 +164,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new AccountClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetPoolNodeCountsAsync("<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetPoolNodeCountsAsync("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -178,7 +178,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new AccountClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetPoolNodeCountsAsync("<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetPoolNodeCountsAsync("<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolId").ToString());

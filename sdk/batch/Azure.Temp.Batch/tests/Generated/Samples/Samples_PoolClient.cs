@@ -176,6 +176,16 @@ namespace Azure.Temp.Batch.Samples
                     {
                         containerRunOptions = "<containerRunOptions>",
                         imageName = "<imageName>",
+                        registry = new
+                        {
+                            username = "<username>",
+                            password = "<password>",
+                            registryServer = "<registryServer>",
+                            identityReference = new
+                            {
+                                resourceId = "<resourceId>",
+                            },
+                        },
                         workingDirectory = "taskWorkingDirectory",
                     },
                     resourceFiles = new[] {
@@ -186,6 +196,9 @@ namespace Azure.Temp.Batch.Samples
                 blobPrefix = "<blobPrefix>",
                 filePath = "<filePath>",
                 fileMode = "<fileMode>",
+                identityReference = new {
+                    resourceId = "<resourceId>",
+                },
             }
         },
                     environmentSettings = new[] {
@@ -261,6 +274,9 @@ namespace Azure.Temp.Batch.Samples
                 sasKey = "<sasKey>",
                 blobfuseOptions = "<blobfuseOptions>",
                 relativeMountPath = "<relativeMountPath>",
+                identityReference = new {
+                    resourceId = "<resourceId>",
+                },
             },
             nfsMountConfiguration = new {
                 source = "<source>",
@@ -286,7 +302,7 @@ namespace Azure.Temp.Batch.Samples
                 targetNodeCommunicationMode = "default",
             };
 
-            Response response = client.Add(RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.Add(RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -447,6 +463,16 @@ namespace Azure.Temp.Batch.Samples
                     {
                         containerRunOptions = "<containerRunOptions>",
                         imageName = "<imageName>",
+                        registry = new
+                        {
+                            username = "<username>",
+                            password = "<password>",
+                            registryServer = "<registryServer>",
+                            identityReference = new
+                            {
+                                resourceId = "<resourceId>",
+                            },
+                        },
                         workingDirectory = "taskWorkingDirectory",
                     },
                     resourceFiles = new[] {
@@ -457,6 +483,9 @@ namespace Azure.Temp.Batch.Samples
                 blobPrefix = "<blobPrefix>",
                 filePath = "<filePath>",
                 fileMode = "<fileMode>",
+                identityReference = new {
+                    resourceId = "<resourceId>",
+                },
             }
         },
                     environmentSettings = new[] {
@@ -532,6 +561,9 @@ namespace Azure.Temp.Batch.Samples
                 sasKey = "<sasKey>",
                 blobfuseOptions = "<blobfuseOptions>",
                 relativeMountPath = "<relativeMountPath>",
+                identityReference = new {
+                    resourceId = "<resourceId>",
+                },
             },
             nfsMountConfiguration = new {
                 source = "<source>",
@@ -557,7 +589,7 @@ namespace Azure.Temp.Batch.Samples
                 targetNodeCommunicationMode = "default",
             };
 
-            Response response = await client.AddAsync(RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.AddAsync(RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -579,7 +611,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = client.Delete("<poolId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.Delete("<poolId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -601,7 +633,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = await client.DeleteAsync("<poolId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.DeleteAsync("<poolId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -623,7 +655,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = client.Exists("<poolId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.Exists("<poolId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -645,7 +677,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = await client.ExistsAsync("<poolId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.ExistsAsync("<poolId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -656,7 +688,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = client.GetPool("<poolId>", "<select>", "<expand>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null, new RequestContext());
+            Response response = client.GetPool("<poolId>", "<select>", "<expand>", 1234, DateTimeOffset.UtcNow, null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -669,7 +701,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = client.GetPool("<poolId>", "<select>", "<expand>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null, new RequestContext());
+            Response response = client.GetPool("<poolId>", "<select>", "<expand>", 1234, DateTimeOffset.UtcNow, null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -844,7 +876,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = await client.GetPoolAsync("<poolId>", "<select>", "<expand>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null, new RequestContext());
+            Response response = await client.GetPoolAsync("<poolId>", "<select>", "<expand>", 1234, DateTimeOffset.UtcNow, null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -857,7 +889,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = await client.GetPoolAsync("<poolId>", "<select>", "<expand>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null, new RequestContext());
+            Response response = await client.GetPoolAsync("<poolId>", "<select>", "<expand>", 1234, DateTimeOffset.UtcNow, null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -1074,6 +1106,9 @@ namespace Azure.Temp.Batch.Samples
                 blobPrefix = "<blobPrefix>",
                 filePath = "<filePath>",
                 fileMode = "<fileMode>",
+                identityReference = new {
+                    resourceId = "<resourceId>",
+                },
             }
         },
                     environmentSettings = new[] {
@@ -1120,7 +1155,7 @@ namespace Azure.Temp.Batch.Samples
                 targetNodeCommunicationMode = "default",
             };
 
-            Response response = client.Patch("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.Patch("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1173,6 +1208,9 @@ namespace Azure.Temp.Batch.Samples
                 blobPrefix = "<blobPrefix>",
                 filePath = "<filePath>",
                 fileMode = "<fileMode>",
+                identityReference = new {
+                    resourceId = "<resourceId>",
+                },
             }
         },
                     environmentSettings = new[] {
@@ -1219,7 +1257,7 @@ namespace Azure.Temp.Batch.Samples
                 targetNodeCommunicationMode = "default",
             };
 
-            Response response = await client.PatchAsync("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.PatchAsync("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1241,7 +1279,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = client.DisableAutoScale("<poolId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.DisableAutoScale("<poolId>", 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -1263,7 +1301,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = await client.DisableAutoScaleAsync("<poolId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.DisableAutoScaleAsync("<poolId>", 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -1293,7 +1331,7 @@ namespace Azure.Temp.Batch.Samples
                 autoScaleEvaluationInterval = "PT1H23M45S",
             };
 
-            Response response = client.EnableAutoScale("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.EnableAutoScale("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1323,7 +1361,7 @@ namespace Azure.Temp.Batch.Samples
                 autoScaleEvaluationInterval = "PT1H23M45S",
             };
 
-            Response response = await client.EnableAutoScaleAsync("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.EnableAutoScaleAsync("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1357,7 +1395,7 @@ namespace Azure.Temp.Batch.Samples
                 autoScaleFormula = "<autoScaleFormula>",
             };
 
-            Response response = client.EvaluateAutoScale("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.EvaluateAutoScale("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("timestamp").ToString());
@@ -1398,7 +1436,7 @@ namespace Azure.Temp.Batch.Samples
                 autoScaleFormula = "<autoScaleFormula>",
             };
 
-            Response response = await client.EvaluateAutoScaleAsync("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.EvaluateAutoScaleAsync("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("timestamp").ToString());
@@ -1437,7 +1475,7 @@ namespace Azure.Temp.Batch.Samples
                 nodeDeallocationOption = "requeue",
             };
 
-            Response response = client.Resize("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.Resize("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1469,7 +1507,7 @@ namespace Azure.Temp.Batch.Samples
                 nodeDeallocationOption = "requeue",
             };
 
-            Response response = await client.ResizeAsync("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.ResizeAsync("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1491,7 +1529,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = client.StopResize("<poolId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.StopResize("<poolId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1513,7 +1551,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            Response response = await client.StopResizeAsync("<poolId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.StopResizeAsync("<poolId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1585,6 +1623,9 @@ namespace Azure.Temp.Batch.Samples
                 blobPrefix = "<blobPrefix>",
                 filePath = "<filePath>",
                 fileMode = "<fileMode>",
+                identityReference = new {
+                    resourceId = "<resourceId>",
+                },
             }
         },
                     environmentSettings = new[] {
@@ -1631,7 +1672,7 @@ namespace Azure.Temp.Batch.Samples
                 targetNodeCommunicationMode = "default",
             };
 
-            Response response = client.UpdateProperties("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.UpdateProperties("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -1703,6 +1744,9 @@ namespace Azure.Temp.Batch.Samples
                 blobPrefix = "<blobPrefix>",
                 filePath = "<filePath>",
                 fileMode = "<fileMode>",
+                identityReference = new {
+                    resourceId = "<resourceId>",
+                },
             }
         },
                     environmentSettings = new[] {
@@ -1749,7 +1793,7 @@ namespace Azure.Temp.Batch.Samples
                 targetNodeCommunicationMode = "default",
             };
 
-            Response response = await client.UpdatePropertiesAsync("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.UpdatePropertiesAsync("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -1787,7 +1831,7 @@ namespace Azure.Temp.Batch.Samples
                 nodeDeallocationOption = "requeue",
             };
 
-            Response response = client.RemoveNodes("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.RemoveNodes("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1825,7 +1869,7 @@ namespace Azure.Temp.Batch.Samples
                 nodeDeallocationOption = "requeue",
             };
 
-            Response response = await client.RemoveNodesAsync("<poolId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.RemoveNodesAsync("<poolId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1836,7 +1880,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetUsageMetrics(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetUsageMetrics(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -1854,7 +1898,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetUsageMetrics(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetUsageMetrics(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -1872,7 +1916,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetUsageMetricsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetUsageMetricsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -1890,7 +1934,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetUsageMetricsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<filter>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetUsageMetricsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<filter>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -1908,7 +1952,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetPools("<filter>", "<select>", "<expand>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetPools("<filter>", "<select>", "<expand>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1922,7 +1966,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetPools("<filter>", "<select>", "<expand>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetPools("<filter>", "<select>", "<expand>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -2098,7 +2142,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetPoolsAsync("<filter>", "<select>", "<expand>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetPoolsAsync("<filter>", "<select>", "<expand>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -2112,7 +2156,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new PoolClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetPoolsAsync("<filter>", "<select>", "<expand>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetPoolsAsync("<filter>", "<select>", "<expand>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());

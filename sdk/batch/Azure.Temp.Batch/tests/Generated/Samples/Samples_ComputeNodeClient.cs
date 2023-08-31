@@ -51,7 +51,7 @@ namespace Azure.Temp.Batch.Samples
                 sshPublicKey = "<sshPublicKey>",
             };
 
-            Response response = client.AddUser("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.AddUser("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Temp.Batch.Samples
                 sshPublicKey = "<sshPublicKey>",
             };
 
-            Response response = await client.AddUserAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.AddUserAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = client.DeleteUser("<poolId>", "<nodeId>", "<userName>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.DeleteUser("<poolId>", "<nodeId>", "<userName>", 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = await client.DeleteUserAsync("<poolId>", "<nodeId>", "<userName>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.DeleteUserAsync("<poolId>", "<nodeId>", "<userName>", 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -162,7 +162,7 @@ namespace Azure.Temp.Batch.Samples
                 sshPublicKey = "<sshPublicKey>",
             };
 
-            Response response = client.UpdateUser("<poolId>", "<nodeId>", "<userName>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.UpdateUser("<poolId>", "<nodeId>", "<userName>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Temp.Batch.Samples
                 sshPublicKey = "<sshPublicKey>",
             };
 
-            Response response = await client.UpdateUserAsync("<poolId>", "<nodeId>", "<userName>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.UpdateUserAsync("<poolId>", "<nodeId>", "<userName>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -204,7 +204,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = client.GetComputeNode("<poolId>", "<nodeId>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetComputeNode("<poolId>", "<nodeId>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -217,7 +217,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = client.GetComputeNode("<poolId>", "<nodeId>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetComputeNode("<poolId>", "<nodeId>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -325,7 +325,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = await client.GetComputeNodeAsync("<poolId>", "<nodeId>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetComputeNodeAsync("<poolId>", "<nodeId>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -338,7 +338,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = await client.GetComputeNodeAsync("<poolId>", "<nodeId>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetComputeNodeAsync("<poolId>", "<nodeId>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -464,7 +464,7 @@ namespace Azure.Temp.Batch.Samples
                 nodeRebootOption = "requeue",
             };
 
-            Response response = client.Reboot("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.Reboot("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -493,7 +493,7 @@ namespace Azure.Temp.Batch.Samples
                 nodeRebootOption = "requeue",
             };
 
-            Response response = await client.RebootAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.RebootAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -522,7 +522,7 @@ namespace Azure.Temp.Batch.Samples
                 nodeReimageOption = "requeue",
             };
 
-            Response response = client.Reimage("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.Reimage("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -551,7 +551,7 @@ namespace Azure.Temp.Batch.Samples
                 nodeReimageOption = "requeue",
             };
 
-            Response response = await client.ReimageAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.ReimageAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -580,7 +580,7 @@ namespace Azure.Temp.Batch.Samples
                 nodeDisableSchedulingOption = "requeue",
             };
 
-            Response response = client.DisableScheduling("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.DisableScheduling("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -609,7 +609,7 @@ namespace Azure.Temp.Batch.Samples
                 nodeDisableSchedulingOption = "requeue",
             };
 
-            Response response = await client.DisableSchedulingAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.DisableSchedulingAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -631,7 +631,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = client.EnableScheduling("<poolId>", "<nodeId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.EnableScheduling("<poolId>", "<nodeId>", 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -653,7 +653,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = await client.EnableSchedulingAsync("<poolId>", "<nodeId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.EnableSchedulingAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -664,7 +664,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = client.GetRemoteLoginSettings("<poolId>", "<nodeId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetRemoteLoginSettings("<poolId>", "<nodeId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
@@ -678,7 +678,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = client.GetRemoteLoginSettings("<poolId>", "<nodeId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetRemoteLoginSettings("<poolId>", "<nodeId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
@@ -692,7 +692,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = await client.GetRemoteLoginSettingsAsync("<poolId>", "<nodeId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetRemoteLoginSettingsAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
@@ -706,7 +706,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = await client.GetRemoteLoginSettingsAsync("<poolId>", "<nodeId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetRemoteLoginSettingsAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
@@ -720,7 +720,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = client.GetRemoteDesktop("<poolId>", "<nodeId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetRemoteDesktop("<poolId>", "<nodeId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -737,7 +737,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = client.GetRemoteDesktop("<poolId>", "<nodeId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetRemoteDesktop("<poolId>", "<nodeId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -754,7 +754,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = await client.GetRemoteDesktopAsync("<poolId>", "<nodeId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetRemoteDesktopAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -771,7 +771,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            Response response = await client.GetRemoteDesktopAsync("<poolId>", "<nodeId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetRemoteDesktopAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -819,7 +819,7 @@ namespace Azure.Temp.Batch.Samples
                 },
             };
 
-            Response response = client.UploadBatchServiceLogs("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.UploadBatchServiceLogs("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("virtualDirectoryName").ToString());
@@ -864,7 +864,7 @@ namespace Azure.Temp.Batch.Samples
                 },
             };
 
-            Response response = await client.UploadBatchServiceLogsAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.UploadBatchServiceLogsAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("virtualDirectoryName").ToString());
@@ -878,7 +878,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetComputeNodes("<poolId>", "<filter>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetComputeNodes("<poolId>", "<filter>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -892,7 +892,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetComputeNodes("<poolId>", "<filter>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetComputeNodes("<poolId>", "<filter>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1001,7 +1001,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetComputeNodesAsync("<poolId>", "<filter>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetComputeNodesAsync("<poolId>", "<filter>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1015,7 +1015,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetComputeNodesAsync("<poolId>", "<filter>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetComputeNodesAsync("<poolId>", "<filter>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());

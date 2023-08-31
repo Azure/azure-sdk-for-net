@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="DeleteFromTaskAsync(string,string,string,bool?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call DeleteFromTaskAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = await client.DeleteFromTaskAsync("<jobId>", "<taskId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteFromTaskAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = await client.DeleteFromTaskAsync("<jobId>", "<taskId>", "<filePath>", true, 1234, DateTimeOffset.UtcNow);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteFromTask(string,string,string,bool?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call DeleteFromTask with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = client.DeleteFromTask("<jobId>", "<taskId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteFromTask with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = client.DeleteFromTask("<jobId>", "<taskId>", "<filePath>", true, 1234, DateTimeOffset.UtcNow);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetFromTaskAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetFromTaskAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = await client.GetFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+if (response.ContentStream != null)
+{
+    using(Stream outFileStream = File.OpenWrite("<filePath>"))
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetFromTask(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetFromTask with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = client.GetFromTask("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+if (response.ContentStream != null)
+{
+    using(Stream outFileStream = File.OpenWrite("<filePath>"))
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetPropertiesFromTaskAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetPropertiesFromTaskAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = await client.GetPropertiesFromTaskAsync("<jobId>", "<taskId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call GetPropertiesFromTaskAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = await client.GetPropertiesFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.UtcNow, null);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetPropertiesFromTask(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetPropertiesFromTask with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = client.GetPropertiesFromTask("<jobId>", "<taskId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call GetPropertiesFromTask with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = client.GetPropertiesFromTask("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.UtcNow, null);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteFromComputeNodeAsync(string,string,string,bool?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call DeleteFromComputeNodeAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = await client.DeleteFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteFromComputeNodeAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = await client.DeleteFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", true, 1234, DateTimeOffset.UtcNow);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteFromComputeNode(string,string,string,bool?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call DeleteFromComputeNode with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = client.DeleteFromComputeNode("<poolId>", "<nodeId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteFromComputeNode with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = client.DeleteFromComputeNode("<poolId>", "<nodeId>", "<filePath>", true, 1234, DateTimeOffset.UtcNow);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetFromComputeNodeAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetFromComputeNodeAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = await client.GetFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+if (response.ContentStream != null)
+{
+    using(Stream outFileStream = File.OpenWrite("<filePath>"))
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetFromComputeNode(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetFromComputeNode with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = client.GetFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+if (response.ContentStream != null)
+{
+    using(Stream outFileStream = File.OpenWrite("<filePath>"))
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetPropertiesFromComputeNodeAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetPropertiesFromComputeNodeAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = await client.GetPropertiesFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call GetPropertiesFromComputeNodeAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = await client.GetPropertiesFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.UtcNow, null);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetPropertiesFromComputeNode(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetPropertiesFromComputeNode with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = client.GetPropertiesFromComputeNode("<poolId>", "<nodeId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call GetPropertiesFromComputeNode with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+Response response = client.GetPropertiesFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.UtcNow, null);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetFromTasksAsync(string,string,string,bool?,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetFromTasksAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+await foreach (var item in client.GetFromTasksAsync("<jobId>", "<taskId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("isDirectory").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("creationTime").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("lastModified").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("contentLength").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("contentType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("fileMode").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetFromTasks(string,string,string,bool?,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetFromTasks with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+foreach (var item in client.GetFromTasks("<jobId>", "<taskId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("isDirectory").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("creationTime").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("lastModified").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("contentLength").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("contentType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("fileMode").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetFromComputeNodesAsync(string,string,string,bool?,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetFromComputeNodesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+await foreach (var item in client.GetFromComputeNodesAsync("<poolId>", "<nodeId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("isDirectory").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("creationTime").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("lastModified").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("contentLength").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("contentType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("fileMode").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetFromComputeNodes(string,string,string,bool?,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetFromComputeNodes with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FileClient("<batchUrl>", credential);
+
+foreach (var item in client.GetFromComputeNodes("<poolId>", "<nodeId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("isDirectory").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("creationTime").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("lastModified").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("contentLength").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("contentType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("fileMode").ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

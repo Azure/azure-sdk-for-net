@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetComputeNodeExtensionAsync(string,string,string,string,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetComputeNodeExtensionAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
+
+Response response = await client.GetComputeNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("typeHandlerVersion").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("autoUpgradeMinorVersion").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("enableAutomaticUpgrade").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("settings").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("protectedSettings").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("provisionAfterExtensions")[0].ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("displayStatus").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("time").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("displayStatus").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("time").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetComputeNodeExtension(string,string,string,string,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetComputeNodeExtension with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
+
+Response response = client.GetComputeNodeExtension("<poolId>", "<nodeId>", "<extensionName>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("typeHandlerVersion").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("autoUpgradeMinorVersion").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("enableAutomaticUpgrade").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("settings").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("protectedSettings").ToString());
+Console.WriteLine(result.GetProperty("vmExtension").GetProperty("provisionAfterExtensions")[0].ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("displayStatus").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("time").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("displayStatus").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("time").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetComputeNodeExtensionsAsync(string,string,string,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetComputeNodeExtensionsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
+
+await foreach (var item in client.GetComputeNodeExtensionsAsync("<poolId>", "<nodeId>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("publisher").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("typeHandlerVersion").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("autoUpgradeMinorVersion").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("enableAutomaticUpgrade").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("settings").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("protectedSettings").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("provisionAfterExtensions")[0].ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("displayStatus").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("level").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("time").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("displayStatus").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("level").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("time").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetComputeNodeExtensions(string,string,string,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetComputeNodeExtensions with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
+
+foreach (var item in client.GetComputeNodeExtensions("<poolId>", "<nodeId>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("publisher").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("typeHandlerVersion").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("autoUpgradeMinorVersion").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("enableAutomaticUpgrade").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("settings").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("protectedSettings").ToString());
+    Console.WriteLine(result.GetProperty("vmExtension").GetProperty("provisionAfterExtensions")[0].ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("displayStatus").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("level").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("statuses")[0].GetProperty("time").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("displayStatus").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("level").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("instanceView").GetProperty("subStatuses")[0].GetProperty("time").ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

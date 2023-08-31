@@ -26,7 +26,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
 
-            Response response = client.GetComputeNodeExtension("<poolId>", "<nodeId>", "<extensionName>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetComputeNodeExtension("<poolId>", "<nodeId>", "<extensionName>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -39,7 +39,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
 
-            Response response = client.GetComputeNodeExtension("<poolId>", "<nodeId>", "<extensionName>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetComputeNodeExtension("<poolId>", "<nodeId>", "<extensionName>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("provisioningState").ToString());
@@ -72,7 +72,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
 
-            Response response = await client.GetComputeNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetComputeNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -85,7 +85,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
 
-            Response response = await client.GetComputeNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetComputeNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("provisioningState").ToString());
@@ -118,7 +118,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetComputeNodeExtensions("<poolId>", "<nodeId>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetComputeNodeExtensions("<poolId>", "<nodeId>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -132,7 +132,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetComputeNodeExtensions("<poolId>", "<nodeId>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetComputeNodeExtensions("<poolId>", "<nodeId>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("provisioningState").ToString());
@@ -166,7 +166,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetComputeNodeExtensionsAsync("<poolId>", "<nodeId>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetComputeNodeExtensionsAsync("<poolId>", "<nodeId>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -180,7 +180,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ComputeNodeExtensionClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetComputeNodeExtensionsAsync("<poolId>", "<nodeId>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetComputeNodeExtensionsAsync("<poolId>", "<nodeId>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("provisioningState").ToString());

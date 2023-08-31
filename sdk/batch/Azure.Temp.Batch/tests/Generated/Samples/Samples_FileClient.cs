@@ -37,7 +37,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = client.DeleteFromTask("<jobId>", "<taskId>", "<filePath>", true, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.DeleteFromTask("<jobId>", "<taskId>", "<filePath>", true, 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = await client.DeleteFromTaskAsync("<jobId>", "<taskId>", "<filePath>", true, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.DeleteFromTaskAsync("<jobId>", "<taskId>", "<filePath>", true, 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = client.GetFromTask("<jobId>", "<taskId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+            Response response = client.GetFromTask("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -87,7 +87,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = client.GetFromTask("<jobId>", "<taskId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+            Response response = client.GetFromTask("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -104,7 +104,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = await client.GetFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+            Response response = await client.GetFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -121,7 +121,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = await client.GetFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+            Response response = await client.GetFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -149,7 +149,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = client.GetPropertiesFromTask("<jobId>", "<taskId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.GetPropertiesFromTask("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -171,7 +171,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = await client.GetPropertiesFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.GetPropertiesFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = client.DeleteFromComputeNode("<poolId>", "<nodeId>", "<filePath>", true, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.DeleteFromComputeNode("<poolId>", "<nodeId>", "<filePath>", true, 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -215,7 +215,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = await client.DeleteFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", true, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.DeleteFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", true, 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -226,7 +226,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = client.GetFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+            Response response = client.GetFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -243,7 +243,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = client.GetFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+            Response response = client.GetFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -260,7 +260,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = await client.GetFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+            Response response = await client.GetFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -277,7 +277,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = await client.GetFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
+            Response response = await client.GetFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.UtcNow, "<ocpRange>", null, new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -305,7 +305,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = client.GetPropertiesFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.GetPropertiesFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -327,7 +327,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            Response response = await client.GetPropertiesFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.GetPropertiesFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -338,7 +338,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetFromTasks("<jobId>", "<taskId>", "<filter>", true, 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetFromTasks("<jobId>", "<taskId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -352,7 +352,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetFromTasks("<jobId>", "<taskId>", "<filter>", true, 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetFromTasks("<jobId>", "<taskId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -373,7 +373,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetFromTasksAsync("<jobId>", "<taskId>", "<filter>", true, 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetFromTasksAsync("<jobId>", "<taskId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -387,7 +387,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetFromTasksAsync("<jobId>", "<taskId>", "<filter>", true, 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetFromTasksAsync("<jobId>", "<taskId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -408,7 +408,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetFromComputeNodes("<poolId>", "<nodeId>", "<filter>", true, 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetFromComputeNodes("<poolId>", "<nodeId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -422,7 +422,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetFromComputeNodes("<poolId>", "<nodeId>", "<filter>", true, 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetFromComputeNodes("<poolId>", "<nodeId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -443,7 +443,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetFromComputeNodesAsync("<poolId>", "<nodeId>", "<filter>", true, 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetFromComputeNodesAsync("<poolId>", "<nodeId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -457,7 +457,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new FileClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetFromComputeNodesAsync("<poolId>", "<nodeId>", "<filter>", true, 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetFromComputeNodesAsync("<poolId>", "<nodeId>", "<filter>", true, 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());

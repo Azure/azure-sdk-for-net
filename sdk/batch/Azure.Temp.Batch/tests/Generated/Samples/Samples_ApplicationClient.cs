@@ -26,7 +26,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ApplicationClient("<batchUrl>", credential);
 
-            Response response = client.GetApplication("<applicationId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetApplication("<applicationId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -41,7 +41,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ApplicationClient("<batchUrl>", credential);
 
-            Response response = client.GetApplication("<applicationId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetApplication("<applicationId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -56,7 +56,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ApplicationClient("<batchUrl>", credential);
 
-            Response response = await client.GetApplicationAsync("<applicationId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetApplicationAsync("<applicationId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -71,7 +71,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ApplicationClient("<batchUrl>", credential);
 
-            Response response = await client.GetApplicationAsync("<applicationId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetApplicationAsync("<applicationId>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -86,7 +86,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ApplicationClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetApplications(1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetApplications(1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -102,7 +102,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ApplicationClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetApplications(1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetApplications(1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -118,7 +118,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ApplicationClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetApplicationsAsync(1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetApplicationsAsync(1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -134,7 +134,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new ApplicationClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetApplicationsAsync(1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetApplicationsAsync(1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());

@@ -53,7 +53,7 @@ namespace Azure.Temp.Batch.Samples
                 password = "<password>",
             };
 
-            Response response = client.Add(RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.Add(RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.Temp.Batch.Samples
                 password = "<password>",
             };
 
-            Response response = await client.AddAsync(RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.AddAsync(RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            Response response = client.CancelDeletion("<thumbprintAlgorithm>", "<thumbprint>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.CancelDeletion("<thumbprintAlgorithm>", "<thumbprint>", 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -135,7 +135,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            Response response = await client.CancelDeletionAsync("<thumbprintAlgorithm>", "<thumbprint>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.CancelDeletionAsync("<thumbprintAlgorithm>", "<thumbprint>", 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -157,7 +157,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            Response response = client.Delete("<thumbprintAlgorithm>", "<thumbprint>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.Delete("<thumbprintAlgorithm>", "<thumbprint>", 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -179,7 +179,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            Response response = await client.DeleteAsync("<thumbprintAlgorithm>", "<thumbprint>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.DeleteAsync("<thumbprintAlgorithm>", "<thumbprint>", 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -190,7 +190,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            Response response = client.GetCertificate("<thumbprintAlgorithm>", "<thumbprint>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetCertificate("<thumbprintAlgorithm>", "<thumbprint>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -203,7 +203,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            Response response = client.GetCertificate("<thumbprintAlgorithm>", "<thumbprint>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetCertificate("<thumbprintAlgorithm>", "<thumbprint>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("thumbprint").ToString());
@@ -227,7 +227,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            Response response = await client.GetCertificateAsync("<thumbprintAlgorithm>", "<thumbprint>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetCertificateAsync("<thumbprintAlgorithm>", "<thumbprint>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -240,7 +240,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            Response response = await client.GetCertificateAsync("<thumbprintAlgorithm>", "<thumbprint>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetCertificateAsync("<thumbprintAlgorithm>", "<thumbprint>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("thumbprint").ToString());
@@ -264,7 +264,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetCertificates("<filter>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetCertificates("<filter>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -278,7 +278,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetCertificates("<filter>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetCertificates("<filter>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("thumbprint").ToString());
@@ -303,7 +303,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetCertificatesAsync("<filter>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetCertificatesAsync("<filter>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -317,7 +317,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new CertificateClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetCertificatesAsync("<filter>", "<select>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetCertificatesAsync("<filter>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("thumbprint").ToString());

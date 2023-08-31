@@ -11,5 +11,4 @@ input-file:
 namespace: Azure.Temp.Batch
 security: AADToken
 security-scopes: https://batch.core.windows.net/.default
-generation1-convenience-client: true
 ```

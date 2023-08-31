@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="AddAsync(RequestContent,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call AddAsync with required parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+var data = new {
+    thumbprint = "<thumbprint>",
+    thumbprintAlgorithm = "<thumbprintAlgorithm>",
+    data = "<data>",
+};
+
+Response response = await client.AddAsync(RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call AddAsync with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+var data = new {
+    thumbprint = "<thumbprint>",
+    thumbprintAlgorithm = "<thumbprintAlgorithm>",
+    data = "<data>",
+    certificateFormat = "pfx",
+    password = "<password>",
+};
+
+Response response = await client.AddAsync(RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="Add(RequestContent,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call Add with required parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+var data = new {
+    thumbprint = "<thumbprint>",
+    thumbprintAlgorithm = "<thumbprintAlgorithm>",
+    data = "<data>",
+};
+
+Response response = client.Add(RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Add with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+var data = new {
+    thumbprint = "<thumbprint>",
+    thumbprintAlgorithm = "<thumbprintAlgorithm>",
+    data = "<data>",
+    certificateFormat = "pfx",
+    password = "<password>",
+};
+
+Response response = client.Add(RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CancelDeletionAsync(string,string,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call CancelDeletionAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+Response response = await client.CancelDeletionAsync("<thumbprintAlgorithm>", "<thumbprint>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CancelDeletionAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+Response response = await client.CancelDeletionAsync("<thumbprintAlgorithm>", "<thumbprint>", 1234, DateTimeOffset.UtcNow);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CancelDeletion(string,string,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call CancelDeletion with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+Response response = client.CancelDeletion("<thumbprintAlgorithm>", "<thumbprint>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CancelDeletion with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+Response response = client.CancelDeletion("<thumbprintAlgorithm>", "<thumbprint>", 1234, DateTimeOffset.UtcNow);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteAsync(string,string,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+Response response = await client.DeleteAsync("<thumbprintAlgorithm>", "<thumbprint>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+Response response = await client.DeleteAsync("<thumbprintAlgorithm>", "<thumbprint>", 1234, DateTimeOffset.UtcNow);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="Delete(string,string,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+Response response = client.Delete("<thumbprintAlgorithm>", "<thumbprint>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+Response response = client.Delete("<thumbprintAlgorithm>", "<thumbprint>", 1234, DateTimeOffset.UtcNow);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetCertificateAsync(string,string,string,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetCertificateAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+Response response = await client.GetCertificateAsync("<thumbprintAlgorithm>", "<thumbprint>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("thumbprint").ToString());
+Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("previousState").ToString());
+Console.WriteLine(result.GetProperty("previousStateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("publicData").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("value").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetCertificate(string,string,string,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetCertificate with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+Response response = client.GetCertificate("<thumbprintAlgorithm>", "<thumbprint>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("thumbprint").ToString());
+Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("previousState").ToString());
+Console.WriteLine(result.GetProperty("previousStateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("publicData").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("value").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetCertificatesAsync(string,string,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetCertificatesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+await foreach (var item in client.GetCertificatesAsync("<filter>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("thumbprint").ToString());
+    Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
+    Console.WriteLine(result.GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
+    Console.WriteLine(result.GetProperty("previousState").ToString());
+    Console.WriteLine(result.GetProperty("previousStateTransitionTime").ToString());
+    Console.WriteLine(result.GetProperty("publicData").ToString());
+    Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("value").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetCertificates(string,string,int?,int?,DateTimeOffset?,RequestContext)">
+<example>
+This sample shows how to call GetCertificates with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new CertificateClient("<batchUrl>", credential);
+
+foreach (var item in client.GetCertificates("<filter>", "<select>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("thumbprint").ToString());
+    Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
+    Console.WriteLine(result.GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
+    Console.WriteLine(result.GetProperty("previousState").ToString());
+    Console.WriteLine(result.GetProperty("previousStateTransitionTime").ToString());
+    Console.WriteLine(result.GetProperty("publicData").ToString());
+    Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("value").ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

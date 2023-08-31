@@ -79,6 +79,10 @@ namespace Azure.Temp.Batch.Samples
             new {
                 start = 1234,
                 end = 1234,
+                exitOptions = new {
+                    jobAction = "none",
+                    dependencyAction = "satisfy",
+                },
             }
         },
                     preProcessingError = new
@@ -105,6 +109,9 @@ namespace Azure.Temp.Batch.Samples
             blobPrefix = "<blobPrefix>",
             filePath = "<filePath>",
             fileMode = "<fileMode>",
+            identityReference = new {
+                resourceId = "<resourceId>",
+            },
         }
     },
                 outputFiles = new[] {
@@ -114,6 +121,9 @@ namespace Azure.Temp.Batch.Samples
                 container = new {
                     path = "<path>",
                     containerUrl = "<containerUrl>",
+                    identityReference = new {
+                        resourceId = "<resourceId>",
+                    },
                     uploadHeaders = new[] {
                         new {
                             name = "<name>",
@@ -157,6 +167,19 @@ namespace Azure.Temp.Batch.Samples
                 {
                     numberOfInstances = 1234,
                     coordinationCommandLine = "<coordinationCommandLine>",
+                    commonResourceFiles = new[] {
+            new {
+                autoStorageContainerName = "<autoStorageContainerName>",
+                storageContainerUrl = "<storageContainerUrl>",
+                httpUrl = "<httpUrl>",
+                blobPrefix = "<blobPrefix>",
+                filePath = "<filePath>",
+                fileMode = "<fileMode>",
+                identityReference = new {
+                    resourceId = "<resourceId>",
+                },
+            }
+        },
                 },
                 dependsOn = new
                 {
@@ -184,7 +207,7 @@ namespace Azure.Temp.Batch.Samples
                 },
             };
 
-            Response response = client.Add("<jobId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.Add("<jobId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -248,6 +271,10 @@ namespace Azure.Temp.Batch.Samples
             new {
                 start = 1234,
                 end = 1234,
+                exitOptions = new {
+                    jobAction = "none",
+                    dependencyAction = "satisfy",
+                },
             }
         },
                     preProcessingError = new
@@ -274,6 +301,9 @@ namespace Azure.Temp.Batch.Samples
             blobPrefix = "<blobPrefix>",
             filePath = "<filePath>",
             fileMode = "<fileMode>",
+            identityReference = new {
+                resourceId = "<resourceId>",
+            },
         }
     },
                 outputFiles = new[] {
@@ -283,6 +313,9 @@ namespace Azure.Temp.Batch.Samples
                 container = new {
                     path = "<path>",
                     containerUrl = "<containerUrl>",
+                    identityReference = new {
+                        resourceId = "<resourceId>",
+                    },
                     uploadHeaders = new[] {
                         new {
                             name = "<name>",
@@ -326,6 +359,19 @@ namespace Azure.Temp.Batch.Samples
                 {
                     numberOfInstances = 1234,
                     coordinationCommandLine = "<coordinationCommandLine>",
+                    commonResourceFiles = new[] {
+            new {
+                autoStorageContainerName = "<autoStorageContainerName>",
+                storageContainerUrl = "<storageContainerUrl>",
+                httpUrl = "<httpUrl>",
+                blobPrefix = "<blobPrefix>",
+                filePath = "<filePath>",
+                fileMode = "<fileMode>",
+                identityReference = new {
+                    resourceId = "<resourceId>",
+                },
+            }
+        },
                 },
                 dependsOn = new
                 {
@@ -353,7 +399,7 @@ namespace Azure.Temp.Batch.Samples
                 },
             };
 
-            Response response = await client.AddAsync("<jobId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.AddAsync("<jobId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
             Console.WriteLine(response.Status);
         }
 
@@ -421,6 +467,10 @@ namespace Azure.Temp.Batch.Samples
                     new {
                         start = 1234,
                         end = 1234,
+                        exitOptions = new {
+                            jobAction = "none",
+                            dependencyAction = "satisfy",
+                        },
                     }
                 },
                 preProcessingError = new {
@@ -444,6 +494,9 @@ namespace Azure.Temp.Batch.Samples
                     blobPrefix = "<blobPrefix>",
                     filePath = "<filePath>",
                     fileMode = "<fileMode>",
+                    identityReference = new {
+                        resourceId = "<resourceId>",
+                    },
                 }
             },
             outputFiles = new[] {
@@ -453,6 +506,9 @@ namespace Azure.Temp.Batch.Samples
                         container = new {
                             path = "<path>",
                             containerUrl = "<containerUrl>",
+                            identityReference = new {
+                                resourceId = "<resourceId>",
+                            },
                             uploadHeaders = new[] {
                                 new {
                                     name = "<name>",
@@ -491,6 +547,19 @@ namespace Azure.Temp.Batch.Samples
             multiInstanceSettings = new {
                 numberOfInstances = 1234,
                 coordinationCommandLine = "<coordinationCommandLine>",
+                commonResourceFiles = new[] {
+                    new {
+                        autoStorageContainerName = "<autoStorageContainerName>",
+                        storageContainerUrl = "<storageContainerUrl>",
+                        httpUrl = "<httpUrl>",
+                        blobPrefix = "<blobPrefix>",
+                        filePath = "<filePath>",
+                        fileMode = "<fileMode>",
+                        identityReference = new {
+                            resourceId = "<resourceId>",
+                        },
+                    }
+                },
             },
             dependsOn = new {
                 taskIds = new[] {
@@ -518,7 +587,7 @@ namespace Azure.Temp.Batch.Samples
     },
             };
 
-            Response response = client.AddCollection("<jobId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = client.AddCollection("<jobId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
@@ -597,6 +666,10 @@ namespace Azure.Temp.Batch.Samples
                     new {
                         start = 1234,
                         end = 1234,
+                        exitOptions = new {
+                            jobAction = "none",
+                            dependencyAction = "satisfy",
+                        },
                     }
                 },
                 preProcessingError = new {
@@ -620,6 +693,9 @@ namespace Azure.Temp.Batch.Samples
                     blobPrefix = "<blobPrefix>",
                     filePath = "<filePath>",
                     fileMode = "<fileMode>",
+                    identityReference = new {
+                        resourceId = "<resourceId>",
+                    },
                 }
             },
             outputFiles = new[] {
@@ -629,6 +705,9 @@ namespace Azure.Temp.Batch.Samples
                         container = new {
                             path = "<path>",
                             containerUrl = "<containerUrl>",
+                            identityReference = new {
+                                resourceId = "<resourceId>",
+                            },
                             uploadHeaders = new[] {
                                 new {
                                     name = "<name>",
@@ -667,6 +746,19 @@ namespace Azure.Temp.Batch.Samples
             multiInstanceSettings = new {
                 numberOfInstances = 1234,
                 coordinationCommandLine = "<coordinationCommandLine>",
+                commonResourceFiles = new[] {
+                    new {
+                        autoStorageContainerName = "<autoStorageContainerName>",
+                        storageContainerUrl = "<storageContainerUrl>",
+                        httpUrl = "<httpUrl>",
+                        blobPrefix = "<blobPrefix>",
+                        filePath = "<filePath>",
+                        fileMode = "<fileMode>",
+                        identityReference = new {
+                            resourceId = "<resourceId>",
+                        },
+                    }
+                },
             },
             dependsOn = new {
                 taskIds = new[] {
@@ -694,7 +786,7 @@ namespace Azure.Temp.Batch.Samples
     },
             };
 
-            Response response = await client.AddCollectionAsync("<jobId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow);
+            Response response = await client.AddCollectionAsync("<jobId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
@@ -727,7 +819,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = client.Delete("<jobId>", "<taskId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.Delete("<jobId>", "<taskId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -749,7 +841,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = await client.DeleteAsync("<jobId>", "<taskId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.DeleteAsync("<jobId>", "<taskId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -760,7 +852,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = client.GetTask("<jobId>", "<taskId>", "<select>", "<expand>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null, new RequestContext());
+            Response response = client.GetTask("<jobId>", "<taskId>", "<select>", "<expand>", 1234, DateTimeOffset.UtcNow, null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -773,7 +865,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = client.GetTask("<jobId>", "<taskId>", "<select>", "<expand>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null, new RequestContext());
+            Response response = client.GetTask("<jobId>", "<taskId>", "<select>", "<expand>", 1234, DateTimeOffset.UtcNow, null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -888,7 +980,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = await client.GetTaskAsync("<jobId>", "<taskId>", "<select>", "<expand>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null, new RequestContext());
+            Response response = await client.GetTaskAsync("<jobId>", "<taskId>", "<select>", "<expand>", 1234, DateTimeOffset.UtcNow, null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -901,7 +993,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = await client.GetTaskAsync("<jobId>", "<taskId>", "<select>", "<expand>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null, new RequestContext());
+            Response response = await client.GetTaskAsync("<jobId>", "<taskId>", "<select>", "<expand>", 1234, DateTimeOffset.UtcNow, null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -1039,7 +1131,7 @@ namespace Azure.Temp.Batch.Samples
                 },
             };
 
-            Response response = client.Update("<jobId>", "<taskId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.Update("<jobId>", "<taskId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1073,7 +1165,7 @@ namespace Azure.Temp.Batch.Samples
                 },
             };
 
-            Response response = await client.UpdateAsync("<jobId>", "<taskId>", RequestContent.Create(data), 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.UpdateAsync("<jobId>", "<taskId>", RequestContent.Create(data), 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1084,7 +1176,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = client.GetSubtasks("<jobId>", "<taskId>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetSubtasks("<jobId>", "<taskId>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1097,7 +1189,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = client.GetSubtasks("<jobId>", "<taskId>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.GetSubtasks("<jobId>", "<taskId>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -1132,7 +1224,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = await client.GetSubtasksAsync("<jobId>", "<taskId>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetSubtasksAsync("<jobId>", "<taskId>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1145,7 +1237,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = await client.GetSubtasksAsync("<jobId>", "<taskId>", "<select>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.GetSubtasksAsync("<jobId>", "<taskId>", "<select>", 1234, DateTimeOffset.UtcNow, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -1191,7 +1283,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = client.Terminate("<jobId>", "<taskId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.Terminate("<jobId>", "<taskId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1213,7 +1305,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = await client.TerminateAsync("<jobId>", "<taskId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.TerminateAsync("<jobId>", "<taskId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1235,7 +1327,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = client.Reactivate("<jobId>", "<taskId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = client.Reactivate("<jobId>", "<taskId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1257,7 +1349,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            Response response = await client.ReactivateAsync("<jobId>", "<taskId>", 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, null);
+            Response response = await client.ReactivateAsync("<jobId>", "<taskId>", 1234, DateTimeOffset.UtcNow, null);
             Console.WriteLine(response.Status);
         }
 
@@ -1268,7 +1360,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetTasks("<jobId>", "<filter>", "<select>", "<expand>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetTasks("<jobId>", "<filter>", "<select>", "<expand>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1282,7 +1374,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            foreach (var item in client.GetTasks("<jobId>", "<filter>", "<select>", "<expand>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.GetTasks("<jobId>", "<filter>", "<select>", "<expand>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1398,7 +1490,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetTasksAsync("<jobId>", "<filter>", "<select>", "<expand>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetTasksAsync("<jobId>", "<filter>", "<select>", "<expand>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1412,7 +1504,7 @@ namespace Azure.Temp.Batch.Samples
             var credential = new DefaultAzureCredential();
             var client = new TaskClient("<batchUrl>", credential);
 
-            await foreach (var item in client.GetTasksAsync("<jobId>", "<filter>", "<select>", "<expand>", 1234, 1234, Guid.NewGuid(), true, DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.GetTasksAsync("<jobId>", "<filter>", "<select>", "<expand>", 1234, 1234, DateTimeOffset.UtcNow, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
