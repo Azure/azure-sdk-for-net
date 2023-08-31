@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryDataFlowDebugPackageContent : IUtf8JsonSerializable
+    public partial class DataFactoryDataFlowDebugPackageContent : IUtf8JsonSerializable, IModelJsonSerializable<DataFactoryDataFlowDebugPackageContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFactoryDataFlowDebugPackageContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFactoryDataFlowDebugPackageContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
             {
@@ -75,6 +83,153 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             }
             writer.WriteEndObject();
+        }
+
+        internal static DataFactoryDataFlowDebugPackageContent DeserializeDataFactoryDataFlowDebugPackageContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Guid> sessionId = default;
+            Optional<DataFactoryDataFlowDebugInfo> dataFlow = default;
+            Optional<IList<DataFactoryDataFlowDebugInfo>> dataFlows = default;
+            Optional<IList<DataFactoryDatasetDebugInfo>> datasets = default;
+            Optional<IList<DataFactoryLinkedServiceDebugInfo>> linkedServices = default;
+            Optional<DataFlowStagingInfo> staging = default;
+            Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sessionId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sessionId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("dataFlow"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataFlow = DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dataFlows"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryDataFlowDebugInfo> array = new List<DataFactoryDataFlowDebugInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(item));
+                    }
+                    dataFlows = array;
+                    continue;
+                }
+                if (property.NameEquals("datasets"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryDatasetDebugInfo> array = new List<DataFactoryDatasetDebugInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFactoryDatasetDebugInfo.DeserializeDataFactoryDatasetDebugInfo(item));
+                    }
+                    datasets = array;
+                    continue;
+                }
+                if (property.NameEquals("linkedServices"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryLinkedServiceDebugInfo> array = new List<DataFactoryLinkedServiceDebugInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFactoryLinkedServiceDebugInfo.DeserializeDataFactoryLinkedServiceDebugInfo(item));
+                    }
+                    linkedServices = array;
+                    continue;
+                }
+                if (property.NameEquals("staging"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("debugSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    debugSettings = DataFlowDebugPackageDebugSettings.DeserializeDataFlowDebugPackageDebugSettings(property.Value);
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new DataFactoryDataFlowDebugPackageContent(Optional.ToNullable(sessionId), dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
+        }
+
+        DataFactoryDataFlowDebugPackageContent IModelJsonSerializable<DataFactoryDataFlowDebugPackageContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryDataFlowDebugPackageContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFactoryDataFlowDebugPackageContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFactoryDataFlowDebugPackageContent IModelSerializable<DataFactoryDataFlowDebugPackageContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFactoryDataFlowDebugPackageContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataFactoryDataFlowDebugPackageContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataFactoryDataFlowDebugPackageContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFactoryDataFlowDebugPackageContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

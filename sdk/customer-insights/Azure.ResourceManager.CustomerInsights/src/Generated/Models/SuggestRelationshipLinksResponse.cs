@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The response of suggest relationship links operation. </summary>
     public partial class SuggestRelationshipLinksResponse
     {
-        /// <summary> Initializes a new instance of SuggestRelationshipLinksResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SuggestRelationshipLinksResponse"/>. </summary>
         internal SuggestRelationshipLinksResponse()
         {
             SuggestedRelationships = new ChangeTrackingList<RelationshipsLookup>();
         }
 
-        /// <summary> Initializes a new instance of SuggestRelationshipLinksResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuggestRelationshipLinksResponse"/>. </summary>
         /// <param name="interactionName"> The interaction name. </param>
         /// <param name="suggestedRelationships"> Suggested relationships for the type. </param>
-        internal SuggestRelationshipLinksResponse(string interactionName, IReadOnlyList<RelationshipsLookup> suggestedRelationships)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SuggestRelationshipLinksResponse(string interactionName, IReadOnlyList<RelationshipsLookup> suggestedRelationships, Dictionary<string, BinaryData> rawData)
         {
             InteractionName = interactionName;
             SuggestedRelationships = suggestedRelationships;
+            _rawData = rawData;
         }
 
         /// <summary> The interaction name. </summary>

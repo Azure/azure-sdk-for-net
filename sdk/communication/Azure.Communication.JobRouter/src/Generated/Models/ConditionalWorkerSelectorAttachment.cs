@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a set of worker selectors that will be attached if the given condition resolves to true. </summary>
     public partial class ConditionalWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of ConditionalWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConditionalWorkerSelectorAttachment"/>. </summary>
         /// <param name="condition">
         /// A rule of one of the following types:
         ///
@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter
             Kind = "conditional";
         }
 
-        /// <summary> Initializes a new instance of ConditionalWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConditionalWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing the type of worker selector attachment. </param>
         /// <param name="condition">
         /// A rule of one of the following types:
@@ -53,11 +53,17 @@ namespace Azure.Communication.JobRouter
         /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
-        internal ConditionalWorkerSelectorAttachment(string kind, RouterRule condition, IList<RouterWorkerSelector> workerSelectors) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConditionalWorkerSelectorAttachment(string kind, RouterRule condition, IList<RouterWorkerSelector> workerSelectors, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             Condition = condition;
             WorkerSelectors = workerSelectors;
             Kind = kind ?? "conditional";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConditionalWorkerSelectorAttachment"/> for deserialization. </summary>
+        internal ConditionalWorkerSelectorAttachment()
+        {
         }
 
         /// <summary>

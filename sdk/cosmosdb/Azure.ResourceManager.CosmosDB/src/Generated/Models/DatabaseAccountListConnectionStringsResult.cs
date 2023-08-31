@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The connection strings for the given database account. </summary>
     internal partial class DatabaseAccountListConnectionStringsResult
     {
-        /// <summary> Initializes a new instance of DatabaseAccountListConnectionStringsResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountListConnectionStringsResult"/>. </summary>
         internal DatabaseAccountListConnectionStringsResult()
         {
             ConnectionStrings = new ChangeTrackingList<CosmosDBAccountConnectionString>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseAccountListConnectionStringsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountListConnectionStringsResult"/>. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for the Cosmos DB account. </param>
-        internal DatabaseAccountListConnectionStringsResult(IReadOnlyList<CosmosDBAccountConnectionString> connectionStrings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseAccountListConnectionStringsResult(IReadOnlyList<CosmosDBAccountConnectionString> connectionStrings, Dictionary<string, BinaryData> rawData)
         {
             ConnectionStrings = connectionStrings;
+            _rawData = rawData;
         }
 
         /// <summary> An array that contains the connection strings for the Cosmos DB account. </summary>

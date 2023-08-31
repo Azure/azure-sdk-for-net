@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class PreferencesValidationContent : IUtf8JsonSerializable
+    public partial class PreferencesValidationContent : IUtf8JsonSerializable, IModelJsonSerializable<PreferencesValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PreferencesValidationContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PreferencesValidationContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PreferencesValidationContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Preference))
             {
@@ -24,7 +32,105 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(DeviceType.ToSerialString());
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PreferencesValidationContent DeserializePreferencesValidationContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataBoxOrderPreferences> preference = default;
+            DataBoxSkuName deviceType = default;
+            DataBoxValidationInputDiscriminator validationType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("preference"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preference = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("deviceType"u8))
+                {
+                    deviceType = property.Value.GetString().ToDataBoxSkuName();
+                    continue;
+                }
+                if (property.NameEquals("validationType"u8))
+                {
+                    validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PreferencesValidationContent(validationType, preference.Value, deviceType, rawData);
+        }
+
+        PreferencesValidationContent IModelJsonSerializable<PreferencesValidationContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PreferencesValidationContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePreferencesValidationContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PreferencesValidationContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PreferencesValidationContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PreferencesValidationContent IModelSerializable<PreferencesValidationContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PreferencesValidationContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePreferencesValidationContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PreferencesValidationContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PreferencesValidationContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePreferencesValidationContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

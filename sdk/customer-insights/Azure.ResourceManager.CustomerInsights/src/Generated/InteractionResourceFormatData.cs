@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class InteractionResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of InteractionResourceFormatData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InteractionResourceFormatData"/>. </summary>
         public InteractionResourceFormatData()
         {
             Attributes = new ChangeTrackingDictionary<string, IList<string>>();
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.CustomerInsights
             DataSourcePrecedenceRules = new ChangeTrackingList<DataSourcePrecedence>();
         }
 
-        /// <summary> Initializes a new instance of InteractionResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InteractionResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +66,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="status"> The data source status. </param>
         /// <param name="idPropertiesDefaultDataSourceId"> The data source ID. </param>
         /// <param name="dataSourceReferenceId"> The data source reference id. </param>
-        internal InteractionResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, IList<string>> attributes, IDictionary<string, string> description, IDictionary<string, string> displayName, IDictionary<string, IDictionary<string, string>> localizedAttributes, string smallImage, string mediumImage, string largeImage, string apiEntitySetName, EntityType? entityType, IList<PropertyDefinition> fields, int? instancesCount, DateTimeOffset? lastChangedUtc, ProvisioningState? provisioningState, string schemaItemTypeLink, Guid? tenantId, string timestampFieldName, string typeName, IList<string> idPropertyNames, IList<Participant> participantProfiles, string primaryParticipantProfilePropertyName, IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules, bool? isActivity, string namePropertiesDefaultDataSourceName, DataSourceType? dataSourceType, Status? status, int? idPropertiesDefaultDataSourceId, string dataSourceReferenceId) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InteractionResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, IList<string>> attributes, IDictionary<string, string> description, IDictionary<string, string> displayName, IDictionary<string, IDictionary<string, string>> localizedAttributes, string smallImage, string mediumImage, string largeImage, string apiEntitySetName, EntityType? entityType, IList<PropertyDefinition> fields, int? instancesCount, DateTimeOffset? lastChangedUtc, ProvisioningState? provisioningState, string schemaItemTypeLink, Guid? tenantId, string timestampFieldName, string typeName, IList<string> idPropertyNames, IList<Participant> participantProfiles, string primaryParticipantProfilePropertyName, IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules, bool? isActivity, string namePropertiesDefaultDataSourceName, DataSourceType? dataSourceType, Status? status, int? idPropertiesDefaultDataSourceId, string dataSourceReferenceId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Attributes = attributes;
             Description = description;
@@ -93,6 +96,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Status = status;
             IdPropertiesDefaultDataSourceId = idPropertiesDefaultDataSourceId;
             DataSourceReferenceId = dataSourceReferenceId;
+            _rawData = rawData;
         }
 
         /// <summary> The attributes for the Type. </summary>

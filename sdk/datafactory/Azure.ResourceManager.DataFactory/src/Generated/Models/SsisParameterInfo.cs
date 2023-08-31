@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Ssis parameter. </summary>
     public partial class SsisParameterInfo
     {
-        /// <summary> Initializes a new instance of SsisParameterInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisParameterInfo"/>. </summary>
         internal SsisParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisParameterInfo"/>. </summary>
         /// <param name="id"> Parameter id. </param>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
@@ -28,7 +33,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="valueType"> Parameter value type. </param>
         /// <param name="hasValueSet"> Parameter value set. </param>
         /// <param name="variable"> Parameter reference variable. </param>
-        internal SsisParameterInfo(long? id, string name, string description, string dataType, bool? isRequired, bool? isSensitive, string designDefaultValue, string defaultValue, string sensitiveDefaultValue, string valueType, bool? hasValueSet, string variable)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisParameterInfo(long? id, string name, string description, string dataType, bool? isRequired, bool? isSensitive, string designDefaultValue, string defaultValue, string sensitiveDefaultValue, string valueType, bool? hasValueSet, string variable, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -42,6 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ValueType = valueType;
             HasValueSet = hasValueSet;
             Variable = variable;
+            _rawData = rawData;
         }
 
         /// <summary> Parameter id. </summary>

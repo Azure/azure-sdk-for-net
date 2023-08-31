@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,9 +15,24 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The source user image virtual hard disk. Only tags may be updated. </summary>
     public partial class DiskImagePatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of DiskImagePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskImagePatch"/>. </summary>
         public DiskImagePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskImagePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sourceVirtualMachine"> The source virtual machine from which Image is created. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskImagePatch(IDictionary<string, string> tags, WritableSubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGeneration? hyperVGeneration, Dictionary<string, BinaryData> rawData) : base(tags, rawData)
+        {
+            SourceVirtualMachine = sourceVirtualMachine;
+            StorageProfile = storageProfile;
+            ProvisioningState = provisioningState;
+            HyperVGeneration = hyperVGeneration;
         }
 
         /// <summary> The source virtual machine from which Image is created. </summary>

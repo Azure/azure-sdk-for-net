@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,27 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The instance view of the init container. Only valid in response. </summary>
     public partial class InitContainerPropertiesDefinitionInstanceView
     {
-        /// <summary> Initializes a new instance of InitContainerPropertiesDefinitionInstanceView. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinitionInstanceView"/>. </summary>
         internal InitContainerPropertiesDefinitionInstanceView()
         {
             Events = new ChangeTrackingList<ContainerEvent>();
         }
 
-        /// <summary> Initializes a new instance of InitContainerPropertiesDefinitionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinitionInstanceView"/>. </summary>
         /// <param name="restartCount"> The number of times that the init container has been restarted. </param>
         /// <param name="currentState"> The current state of the init container. </param>
         /// <param name="previousState"> The previous state of the init container. </param>
         /// <param name="events"> The events of the init container. </param>
-        internal InitContainerPropertiesDefinitionInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, IReadOnlyList<ContainerEvent> events)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InitContainerPropertiesDefinitionInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, IReadOnlyList<ContainerEvent> events, Dictionary<string, BinaryData> rawData)
         {
             RestartCount = restartCount;
             CurrentState = currentState;
             PreviousState = previousState;
             Events = events;
+            _rawData = rawData;
         }
 
         /// <summary> The number of times that the init container has been restarted. </summary>

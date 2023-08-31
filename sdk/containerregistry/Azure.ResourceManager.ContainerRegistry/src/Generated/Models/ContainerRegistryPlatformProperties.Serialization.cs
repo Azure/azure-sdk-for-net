@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryPlatformProperties : IUtf8JsonSerializable
+    public partial class ContainerRegistryPlatformProperties : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryPlatformProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryPlatformProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryPlatformProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("os"u8);
             writer.WriteStringValue(OS.ToString());
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("variant"u8);
                 writer.WriteStringValue(Variant.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryPlatformProperties DeserializeContainerRegistryPlatformProperties(JsonElement element)
+        internal static ContainerRegistryPlatformProperties DeserializeContainerRegistryPlatformProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryOS os = default;
             Optional<ContainerRegistryOSArchitecture> architecture = default;
             Optional<ContainerRegistryCpuVariant> variant = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("os"u8))
@@ -64,8 +87,57 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     variant = new ContainerRegistryCpuVariant(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryPlatformProperties(os, Optional.ToNullable(architecture), Optional.ToNullable(variant));
+            return new ContainerRegistryPlatformProperties(os, Optional.ToNullable(architecture), Optional.ToNullable(variant), rawData);
+        }
+
+        ContainerRegistryPlatformProperties IModelJsonSerializable<ContainerRegistryPlatformProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryPlatformProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryPlatformProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryPlatformProperties IModelSerializable<ContainerRegistryPlatformProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryPlatformProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerRegistryPlatformProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerRegistryPlatformProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryPlatformProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

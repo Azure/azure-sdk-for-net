@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The status of virtual machine patch operations. </summary>
     public partial class VirtualMachinePatchStatus
     {
-        /// <summary> Initializes a new instance of VirtualMachinePatchStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePatchStatus"/>. </summary>
         internal VirtualMachinePatchStatus()
         {
             ConfigurationStatuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachinePatchStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePatchStatus"/>. </summary>
         /// <param name="availablePatchSummary"> The available patch summary of the latest assessment operation for the virtual machine. </param>
         /// <param name="lastPatchInstallationSummary"> The installation summary of the latest installation operation for the virtual machine. </param>
         /// <param name="configurationStatuses"> The enablement status of the specified patchMode. </param>
-        internal VirtualMachinePatchStatus(AvailablePatchSummary availablePatchSummary, LastPatchInstallationSummary lastPatchInstallationSummary, IReadOnlyList<InstanceViewStatus> configurationStatuses)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachinePatchStatus(AvailablePatchSummary availablePatchSummary, LastPatchInstallationSummary lastPatchInstallationSummary, IReadOnlyList<InstanceViewStatus> configurationStatuses, Dictionary<string, BinaryData> rawData)
         {
             AvailablePatchSummary = availablePatchSummary;
             LastPatchInstallationSummary = lastPatchInstallationSummary;
             ConfigurationStatuses = configurationStatuses;
+            _rawData = rawData;
         }
 
         /// <summary> The available patch summary of the latest assessment operation for the virtual machine. </summary>

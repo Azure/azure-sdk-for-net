@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be '1-23'. </summary>
     public partial class ContainerServiceNetworkProfileKubeProxyConfig
     {
-        /// <summary> Initializes a new instance of ContainerServiceNetworkProfileKubeProxyConfig. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfileKubeProxyConfig"/>. </summary>
         public ContainerServiceNetworkProfileKubeProxyConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceNetworkProfileKubeProxyConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfileKubeProxyConfig"/>. </summary>
         /// <param name="isEnabled"> Whether to enable on kube-proxy on the cluster (if no 'kubeProxyConfig' exists, kube-proxy is enabled in AKS by default without these customizations). </param>
         /// <param name="mode"> Specify which proxy mode to use ('IPTABLES' or 'IPVS'). </param>
         /// <param name="ipvsConfig"> Holds configuration customizations for IPVS. May only be specified if 'mode' is set to 'IPVS'. </param>
-        internal ContainerServiceNetworkProfileKubeProxyConfig(bool? isEnabled, ContainerServiceNetworkProfileKubeProxyMode? mode, ContainerServiceNetworkProfileKubeProxyIPVSConfig ipvsConfig)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceNetworkProfileKubeProxyConfig(bool? isEnabled, ContainerServiceNetworkProfileKubeProxyMode? mode, ContainerServiceNetworkProfileKubeProxyIPVSConfig ipvsConfig, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             Mode = mode;
             IPVSConfig = ipvsConfig;
+            _rawData = rawData;
         }
 
         /// <summary> Whether to enable on kube-proxy on the cluster (if no 'kubeProxyConfig' exists, kube-proxy is enabled in AKS by default without these customizations). </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Get monitoring data response. </summary>
     public partial class IntegrationRuntimeMonitoringData
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeMonitoringData"/>. </summary>
         internal IntegrationRuntimeMonitoringData()
         {
             Nodes = new ChangeTrackingList<IntegrationRuntimeNodeMonitoringData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeMonitoringData"/>. </summary>
         /// <param name="name"> Integration runtime name. </param>
         /// <param name="nodes"> Integration runtime node monitoring data. </param>
-        internal IntegrationRuntimeMonitoringData(string name, IReadOnlyList<IntegrationRuntimeNodeMonitoringData> nodes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeMonitoringData(string name, IReadOnlyList<IntegrationRuntimeNodeMonitoringData> nodes, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Nodes = nodes;
+            _rawData = rawData;
         }
 
         /// <summary> Integration runtime name. </summary>

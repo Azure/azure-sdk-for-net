@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAzureStaticWebAppsConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppAzureStaticWebAppsConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppAzureStaticWebAppsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppAzureStaticWebAppsConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppAzureStaticWebAppsConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppAzureStaticWebAppsConfiguration DeserializeContainerAppAzureStaticWebAppsConfiguration(JsonElement element)
+        internal static ContainerAppAzureStaticWebAppsConfiguration DeserializeContainerAppAzureStaticWebAppsConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> enabled = default;
             Optional<AzureStaticWebAppsRegistration> registration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -56,8 +79,57 @@ namespace Azure.ResourceManager.AppContainers.Models
                     registration = AzureStaticWebAppsRegistration.DeserializeAzureStaticWebAppsRegistration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppAzureStaticWebAppsConfiguration(Optional.ToNullable(enabled), registration.Value);
+            return new ContainerAppAzureStaticWebAppsConfiguration(Optional.ToNullable(enabled), registration.Value, rawData);
+        }
+
+        ContainerAppAzureStaticWebAppsConfiguration IModelJsonSerializable<ContainerAppAzureStaticWebAppsConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppAzureStaticWebAppsConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppAzureStaticWebAppsConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppAzureStaticWebAppsConfiguration IModelSerializable<ContainerAppAzureStaticWebAppsConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppAzureStaticWebAppsConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerAppAzureStaticWebAppsConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerAppAzureStaticWebAppsConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppAzureStaticWebAppsConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

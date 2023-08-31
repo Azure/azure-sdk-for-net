@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
@@ -12,11 +14,17 @@ namespace Azure.Communication.MediaComposition
     /// <summary> The UnknownMediaOutput. </summary>
     internal partial class UnknownMediaOutput : MediaOutput
     {
-        /// <summary> Initializes a new instance of UnknownMediaOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMediaOutput"/>. </summary>
         /// <param name="kind"> Kind of media output. </param>
-        internal UnknownMediaOutput(MediaOutputType kind) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMediaOutput(MediaOutputType kind, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownMediaOutput"/> for deserialization. </summary>
+        internal UnknownMediaOutput()
+        {
         }
     }
 }

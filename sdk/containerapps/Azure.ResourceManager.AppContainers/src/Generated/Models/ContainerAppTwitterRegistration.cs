@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
     public partial class ContainerAppTwitterRegistration
     {
-        /// <summary> Initializes a new instance of ContainerAppTwitterRegistration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppTwitterRegistration"/>. </summary>
         public ContainerAppTwitterRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppTwitterRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppTwitterRegistration"/>. </summary>
         /// <param name="consumerKey">
         /// The OAuth 1.0a consumer key of the Twitter application used for sign-in.
         /// This setting is required for enabling Twitter Sign-In.
@@ -25,10 +30,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// The app setting name that contains the OAuth 1.0a consumer secret of the Twitter
         /// application used for sign-in.
         /// </param>
-        internal ContainerAppTwitterRegistration(string consumerKey, string consumerSecretSettingName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppTwitterRegistration(string consumerKey, string consumerSecretSettingName, Dictionary<string, BinaryData> rawData)
         {
             ConsumerKey = consumerKey;
             ConsumerSecretSettingName = consumerSecretSettingName;
+            _rawData = rawData;
         }
 
         /// <summary>

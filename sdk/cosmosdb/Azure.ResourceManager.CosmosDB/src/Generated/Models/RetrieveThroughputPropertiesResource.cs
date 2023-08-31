@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Resource to retrieve throughput information for Cosmos DB resource. </summary>
     public partial class RetrieveThroughputPropertiesResource
     {
-        /// <summary> Initializes a new instance of RetrieveThroughputPropertiesResource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RetrieveThroughputPropertiesResource"/>. </summary>
         /// <param name="physicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="physicalPartitionIds"/> is null. </exception>
         public RetrieveThroughputPropertiesResource(IEnumerable<WritableSubResource> physicalPartitionIds)
@@ -26,11 +28,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             PhysicalPartitionIds = physicalPartitionIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of RetrieveThroughputPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetrieveThroughputPropertiesResource"/>. </summary>
         /// <param name="physicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
-        internal RetrieveThroughputPropertiesResource(IList<WritableSubResource> physicalPartitionIds)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RetrieveThroughputPropertiesResource(IList<WritableSubResource> physicalPartitionIds, Dictionary<string, BinaryData> rawData)
         {
             PhysicalPartitionIds = physicalPartitionIds;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RetrieveThroughputPropertiesResource"/> for deserialization. </summary>
+        internal RetrieveThroughputPropertiesResource()
+        {
         }
 
         /// <summary> Array of PhysicalPartitionId objects. </summary>

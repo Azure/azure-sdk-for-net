@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> The properties of the meter detail. </summary>
     public partial class ConsumptionMeterDetailsInfo
     {
-        /// <summary> Initializes a new instance of ConsumptionMeterDetailsInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionMeterDetailsInfo"/>. </summary>
         internal ConsumptionMeterDetailsInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionMeterDetailsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionMeterDetailsInfo"/>. </summary>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
         /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
         /// <param name="unitOfMeasure"> The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc. </param>
         /// <param name="serviceFamily"> The service family. </param>
-        internal ConsumptionMeterDetailsInfo(string meterName, string meterCategory, string meterSubCategory, string unitOfMeasure, string serviceFamily)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionMeterDetailsInfo(string meterName, string meterCategory, string meterSubCategory, string unitOfMeasure, string serviceFamily, Dictionary<string, BinaryData> rawData)
         {
             MeterName = meterName;
             MeterCategory = meterCategory;
             MeterSubCategory = meterSubCategory;
             UnitOfMeasure = unitOfMeasure;
             ServiceFamily = serviceFamily;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the meter, within the given meter category. </summary>

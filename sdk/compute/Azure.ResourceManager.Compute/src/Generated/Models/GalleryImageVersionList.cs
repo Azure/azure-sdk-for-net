@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Gallery Image version operation response. </summary>
     internal partial class GalleryImageVersionList
     {
-        /// <summary> Initializes a new instance of GalleryImageVersionList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionList"/>. </summary>
         /// <param name="value"> A list of gallery image versions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GalleryImageVersionList(IEnumerable<GalleryImageVersionData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GalleryImageVersionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionList"/>. </summary>
         /// <param name="value"> A list of gallery image versions. </param>
         /// <param name="nextLink"> The uri to fetch the next page of gallery image versions. Call ListNext() with this to fetch the next page of gallery image versions. </param>
-        internal GalleryImageVersionList(IReadOnlyList<GalleryImageVersionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryImageVersionList(IReadOnlyList<GalleryImageVersionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionList"/> for deserialization. </summary>
+        internal GalleryImageVersionList()
+        {
         }
 
         /// <summary> A list of gallery image versions. </summary>

@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSqlServerSqlDBTaskOutputTableLevel. </summary>
     public partial class MigrateSqlServerSqlDBTaskOutputTableLevel : MigrateSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputTableLevel"/>. </summary>
         internal MigrateSqlServerSqlDBTaskOutputTableLevel()
         {
             ResultType = "TableLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="objectName"> Name of the item. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="itemsCompletedCount"> Number of successfully completed items. </param>
         /// <param name="errorPrefix"> Wildcard string prefix to use for querying all errors of the item. </param>
         /// <param name="resultPrefix"> Wildcard string prefix to use for querying all sub-tem results of the item. </param>
-        internal MigrateSqlServerSqlDBTaskOutputTableLevel(string id, string resultType, string objectName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, MigrationState? state, string statusMessage, long? itemsCount, long? itemsCompletedCount, string errorPrefix, string resultPrefix) : base(id, resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlDBTaskOutputTableLevel(string id, string resultType, string objectName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, MigrationState? state, string statusMessage, long? itemsCount, long? itemsCompletedCount, string errorPrefix, string resultPrefix, Dictionary<string, BinaryData> rawData) : base(id, resultType, rawData)
         {
             ObjectName = objectName;
             StartedOn = startedOn;

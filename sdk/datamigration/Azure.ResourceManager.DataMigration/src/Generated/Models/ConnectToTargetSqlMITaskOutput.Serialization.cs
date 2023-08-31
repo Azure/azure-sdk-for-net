@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetSqlMITaskOutput
+    public partial class ConnectToTargetSqlMITaskOutput : IUtf8JsonSerializable, IModelJsonSerializable<ConnectToTargetSqlMITaskOutput>
     {
-        internal static ConnectToTargetSqlMITaskOutput DeserializeConnectToTargetSqlMITaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectToTargetSqlMITaskOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectToTargetSqlMITaskOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConnectToTargetSqlMITaskOutput DeserializeConnectToTargetSqlMITaskOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<string>> logins = default;
             Optional<IReadOnlyList<string>> agentJobs = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -84,8 +112,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectToTargetSqlMITaskOutput(id.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(logins), Optional.ToList(agentJobs), Optional.ToList(validationErrors));
+            return new ConnectToTargetSqlMITaskOutput(id.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(logins), Optional.ToList(agentJobs), Optional.ToList(validationErrors), rawData);
+        }
+
+        ConnectToTargetSqlMITaskOutput IModelJsonSerializable<ConnectToTargetSqlMITaskOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToTargetSqlMITaskOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectToTargetSqlMITaskOutput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectToTargetSqlMITaskOutput IModelSerializable<ConnectToTargetSqlMITaskOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectToTargetSqlMITaskOutput(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConnectToTargetSqlMITaskOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConnectToTargetSqlMITaskOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectToTargetSqlMITaskOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

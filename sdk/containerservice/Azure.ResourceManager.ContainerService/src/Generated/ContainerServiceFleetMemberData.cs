@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
@@ -18,12 +20,14 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceFleetMemberData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberData"/>. </summary>
         public ContainerServiceFleetMemberData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,11 +35,13 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="clusterResourceId"> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </param>
         /// <param name="provisioningState"> The provisioning state of the last accepted operation. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier clusterResourceId, ContainerServiceFleetMemberProvisioningState? provisioningState, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier clusterResourceId, ContainerServiceFleetMemberProvisioningState? provisioningState, ETag? etag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ClusterResourceId = clusterResourceId;
             ProvisioningState = provisioningState;
             ETag = etag;
+            _rawData = rawData;
         }
 
         /// <summary> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class PassThroughWorkerSelectorAttachment : IUtf8JsonSerializable
+    public partial class PassThroughWorkerSelectorAttachment : IUtf8JsonSerializable, IModelJsonSerializable<PassThroughWorkerSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PassThroughWorkerSelectorAttachment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PassThroughWorkerSelectorAttachment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PassThroughWorkerSelectorAttachment>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
@@ -26,11 +34,25 @@ namespace Azure.Communication.JobRouter
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PassThroughWorkerSelectorAttachment DeserializePassThroughWorkerSelectorAttachment(JsonElement element)
+        internal static PassThroughWorkerSelectorAttachment DeserializePassThroughWorkerSelectorAttachment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.Communication.JobRouter
             LabelOperator labelOperator = default;
             Optional<double> expiresAfterSeconds = default;
             string kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -65,8 +88,57 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PassThroughWorkerSelectorAttachment(kind, key, labelOperator, Optional.ToNullable(expiresAfterSeconds));
+            return new PassThroughWorkerSelectorAttachment(kind, key, labelOperator, Optional.ToNullable(expiresAfterSeconds), rawData);
+        }
+
+        PassThroughWorkerSelectorAttachment IModelJsonSerializable<PassThroughWorkerSelectorAttachment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PassThroughWorkerSelectorAttachment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePassThroughWorkerSelectorAttachment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PassThroughWorkerSelectorAttachment>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PassThroughWorkerSelectorAttachment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PassThroughWorkerSelectorAttachment IModelSerializable<PassThroughWorkerSelectorAttachment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PassThroughWorkerSelectorAttachment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePassThroughWorkerSelectorAttachment(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PassThroughWorkerSelectorAttachment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PassThroughWorkerSelectorAttachment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePassThroughWorkerSelectorAttachment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

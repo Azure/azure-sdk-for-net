@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Destination of the view data. This is optional. Currently only CSV format is supported. </summary>
     internal partial class FileDestination
     {
-        /// <summary> Initializes a new instance of FileDestination. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileDestination"/>. </summary>
         public FileDestination()
         {
             FileFormats = new ChangeTrackingList<ScheduledActionFileFormat>();
         }
 
-        /// <summary> Initializes a new instance of FileDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileDestination"/>. </summary>
         /// <param name="fileFormats"> Destination of the view data. Currently only CSV format is supported. </param>
-        internal FileDestination(IList<ScheduledActionFileFormat> fileFormats)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileDestination(IList<ScheduledActionFileFormat> fileFormats, Dictionary<string, BinaryData> rawData)
         {
             FileFormats = fileFormats;
+            _rawData = rawData;
         }
 
         /// <summary> Destination of the view data. Currently only CSV format is supported. </summary>

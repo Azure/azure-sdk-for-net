@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class FormatWriteSettings
     {
-        /// <summary> Initializes a new instance of FormatWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormatWriteSettings"/>. </summary>
         public FormatWriteSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of FormatWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormatWriteSettings"/>. </summary>
         /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal FormatWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties)

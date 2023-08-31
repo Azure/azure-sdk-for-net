@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Represents the capacity a job in this channel will consume from a worker. </summary>
     public partial class ChannelConfiguration
     {
-        /// <summary> Initializes a new instance of ChannelConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChannelConfiguration"/>. </summary>
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         public ChannelConfiguration(int capacityCostPerJob)
         {
             CapacityCostPerJob = capacityCostPerJob;
         }
 
-        /// <summary> Initializes a new instance of ChannelConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChannelConfiguration"/>. </summary>
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. </param>
-        internal ChannelConfiguration(int capacityCostPerJob, int? maxNumberOfJobs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChannelConfiguration(int capacityCostPerJob, int? maxNumberOfJobs, Dictionary<string, BinaryData> rawData)
         {
             CapacityCostPerJob = capacityCostPerJob;
             MaxNumberOfJobs = maxNumberOfJobs;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChannelConfiguration"/> for deserialization. </summary>
+        internal ChannelConfiguration()
+        {
         }
 
         /// <summary> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </summary>

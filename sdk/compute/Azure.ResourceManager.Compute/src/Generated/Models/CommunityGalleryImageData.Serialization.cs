@@ -8,15 +8,117 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class CommunityGalleryImageData
+    public partial class CommunityGalleryImageData : IUtf8JsonSerializable, IModelJsonSerializable<CommunityGalleryImageData>
     {
-        internal static CommunityGalleryImageData DeserializeCommunityGalleryImageData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommunityGalleryImageData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommunityGalleryImageData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CommunityGalleryImageData>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(OSState))
+            {
+                writer.WritePropertyName("osState"u8);
+                writer.WriteStringValue(OSState.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(EndOfLifeOn))
+            {
+                writer.WritePropertyName("endOfLifeDate"u8);
+                writer.WriteStringValue(EndOfLifeOn.Value, "O");
+            }
+            if (Optional.IsDefined(ImageIdentifier))
+            {
+                writer.WritePropertyName("identifier"u8);
+                writer.WriteObjectValue(ImageIdentifier);
+            }
+            if (Optional.IsDefined(Recommended))
+            {
+                writer.WritePropertyName("recommended"u8);
+                writer.WriteObjectValue(Recommended);
+            }
+            if (Optional.IsDefined(Disallowed))
+            {
+                writer.WritePropertyName("disallowed"u8);
+                writer.WriteObjectValue(Disallowed);
+            }
+            if (Optional.IsDefined(HyperVGeneration))
+            {
+                writer.WritePropertyName("hyperVGeneration"u8);
+                writer.WriteStringValue(HyperVGeneration.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Features))
+            {
+                writer.WritePropertyName("features"u8);
+                writer.WriteStartArray();
+                foreach (var item in Features)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PurchasePlan))
+            {
+                writer.WritePropertyName("purchasePlan"u8);
+                writer.WriteObjectValue(PurchasePlan);
+            }
+            if (Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture"u8);
+                writer.WriteStringValue(Architecture.Value.ToString());
+            }
+            if (Optional.IsDefined(PrivacyStatementUri))
+            {
+                writer.WritePropertyName("privacyStatementUri"u8);
+                writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Eula))
+            {
+                writer.WritePropertyName("eula"u8);
+                writer.WriteStringValue(Eula);
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("identifier"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UniqueId))
+            {
+                writer.WritePropertyName("uniqueId"u8);
+                writer.WriteStringValue(UniqueId);
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CommunityGalleryImageData DeserializeCommunityGalleryImageData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +139,7 @@ namespace Azure.ResourceManager.Compute
             Optional<Uri> privacyStatementUri = default;
             Optional<string> eula = default;
             Optional<string> uniqueId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -200,8 +303,57 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CommunityGalleryImageData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value);
+            return new CommunityGalleryImageData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value, rawData);
+        }
+
+        CommunityGalleryImageData IModelJsonSerializable<CommunityGalleryImageData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CommunityGalleryImageData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunityGalleryImageData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommunityGalleryImageData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CommunityGalleryImageData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommunityGalleryImageData IModelSerializable<CommunityGalleryImageData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CommunityGalleryImageData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommunityGalleryImageData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CommunityGalleryImageData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CommunityGalleryImageData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCommunityGalleryImageData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

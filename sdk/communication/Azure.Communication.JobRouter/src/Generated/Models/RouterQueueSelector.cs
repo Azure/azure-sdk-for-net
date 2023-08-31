@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,15 +14,24 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a condition that must be met against a set of labels for queue selection. </summary>
     public partial class RouterQueueSelector
     {
-        /// <summary> Initializes a new instance of RouterQueueSelector. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterQueueSelector"/>. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
         /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
-        internal RouterQueueSelector(string key, LabelOperator labelOperator, object value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterQueueSelector(string key, LabelOperator labelOperator, object value, Dictionary<string, BinaryData> rawData)
         {
             Key = key;
             LabelOperator = labelOperator;
             _value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterQueueSelector"/> for deserialization. </summary>
+        internal RouterQueueSelector()
+        {
         }
 
         /// <summary> The label key to query against. </summary>

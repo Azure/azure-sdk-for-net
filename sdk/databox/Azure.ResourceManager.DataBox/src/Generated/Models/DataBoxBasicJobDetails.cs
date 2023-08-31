@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -16,9 +17,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="DataBoxBasicJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataBoxJobDetails"/>, <see cref="DataBoxCustomerDiskJobDetails"/>, <see cref="DataBoxDiskJobDetails"/> and <see cref="DataBoxHeavyJobDetails"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownJobDetails))]
     public abstract partial class DataBoxBasicJobDetails
     {
-        /// <summary> Initializes a new instance of DataBoxBasicJobDetails. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxBasicJobDetails"/>. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         protected DataBoxBasicJobDetails(DataBoxContactDetails contactDetails)
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Actions = new ChangeTrackingList<CustomerResolutionCode>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxBasicJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxBasicJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -62,7 +66,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        internal DataBoxBasicJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxBasicJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, Dictionary<string, BinaryData> rawData)
         {
             JobStages = jobStages;
             ContactDetails = contactDetails;
@@ -84,6 +89,12 @@ namespace Azure.ResourceManager.DataBox.Models
             LastMitigationActionOnJob = lastMitigationActionOnJob;
             DataCenterAddress = dataCenterAddress;
             DataCenterCode = dataCenterCode;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxBasicJobDetails"/> for deserialization. </summary>
+        internal DataBoxBasicJobDetails()
+        {
         }
 
         /// <summary> List of stages that run in the job. </summary>

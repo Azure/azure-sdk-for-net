@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Configuration values for periodic mode backup. </summary>
     internal partial class ContinuousModeProperties
     {
-        /// <summary> Initializes a new instance of ContinuousModeProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContinuousModeProperties"/>. </summary>
         public ContinuousModeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContinuousModeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousModeProperties"/>. </summary>
         /// <param name="tier"> Enum to indicate type of Continuos backup mode. </param>
-        internal ContinuousModeProperties(ContinuousTier? tier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContinuousModeProperties(ContinuousTier? tier, Dictionary<string, BinaryData> rawData)
         {
             Tier = tier;
+            _rawData = rawData;
         }
 
         /// <summary> Enum to indicate type of Continuos backup mode. </summary>

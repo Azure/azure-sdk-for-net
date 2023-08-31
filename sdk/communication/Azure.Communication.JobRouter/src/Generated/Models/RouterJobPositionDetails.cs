@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
@@ -13,7 +14,9 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> Position and estimated wait time for a job. </summary>
     public partial class RouterJobPositionDetails
     {
-        /// <summary> Initializes a new instance of RouterJobPositionDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobPositionDetails"/>. </summary>
         /// <param name="jobId"> Id of the job these details are about. </param>
         /// <param name="position"> Position of the job in question within that queue. </param>
         /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
@@ -30,6 +33,28 @@ namespace Azure.Communication.JobRouter.Models
             QueueId = queueId;
             QueueLength = queueLength;
             _estimatedWaitTimeMinutes = estimatedWaitTimeMinutes;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobPositionDetails"/>. </summary>
+        /// <param name="jobId"> Id of the job these details are about. </param>
+        /// <param name="position"> Position of the job in question within that queue. </param>
+        /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
+        /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
+        /// <param name="estimatedWaitTimeMinutes"> Estimated wait time of the job rounded up to the nearest minute. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterJobPositionDetails(string jobId, int position, string queueId, int queueLength, double estimatedWaitTimeMinutes, Dictionary<string, BinaryData> rawData)
+        {
+            JobId = jobId;
+            Position = position;
+            QueueId = queueId;
+            QueueLength = queueLength;
+            _estimatedWaitTimeMinutes = estimatedWaitTimeMinutes;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobPositionDetails"/> for deserialization. </summary>
+        internal RouterJobPositionDetails()
+        {
         }
 
         /// <summary> Id of the job these details are about. </summary>

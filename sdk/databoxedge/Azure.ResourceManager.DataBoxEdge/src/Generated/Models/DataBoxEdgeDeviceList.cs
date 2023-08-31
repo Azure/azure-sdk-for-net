@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The collection of Data Box Edge/Gateway devices. </summary>
     internal partial class DataBoxEdgeDeviceList
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceList"/>. </summary>
         internal DataBoxEdgeDeviceList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeDeviceData>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceList"/>. </summary>
         /// <param name="value"> The list of Data Box Edge/Gateway devices. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal DataBoxEdgeDeviceList(IReadOnlyList<DataBoxEdgeDeviceData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDeviceList(IReadOnlyList<DataBoxEdgeDeviceData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of Data Box Edge/Gateway devices. </summary>

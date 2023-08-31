@@ -5,15 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharedGalleryDataDiskImage
+    public partial class SharedGalleryDataDiskImage : IUtf8JsonSerializable, IModelJsonSerializable<SharedGalleryDataDiskImage>
     {
-        internal static SharedGalleryDataDiskImage DeserializeSharedGalleryDataDiskImage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SharedGalleryDataDiskImage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SharedGalleryDataDiskImage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SharedGalleryDataDiskImage>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("lun"u8);
+            writer.WriteNumberValue(Lun);
+            if (Optional.IsDefined(HostCaching))
+            {
+                writer.WritePropertyName("hostCaching"u8);
+                writer.WriteStringValue(HostCaching.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SharedGalleryDataDiskImage DeserializeSharedGalleryDataDiskImage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
             int lun = default;
             Optional<int> diskSizeGB = default;
             Optional<SharedGalleryHostCaching> hostCaching = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -46,8 +82,57 @@ namespace Azure.ResourceManager.Compute.Models
                     hostCaching = new SharedGalleryHostCaching(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SharedGalleryDataDiskImage(Optional.ToNullable(diskSizeGB), Optional.ToNullable(hostCaching), lun);
+            return new SharedGalleryDataDiskImage(Optional.ToNullable(diskSizeGB), Optional.ToNullable(hostCaching), lun, rawData);
+        }
+
+        SharedGalleryDataDiskImage IModelJsonSerializable<SharedGalleryDataDiskImage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SharedGalleryDataDiskImage>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSharedGalleryDataDiskImage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SharedGalleryDataDiskImage>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SharedGalleryDataDiskImage>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SharedGalleryDataDiskImage IModelSerializable<SharedGalleryDataDiskImage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SharedGalleryDataDiskImage>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSharedGalleryDataDiskImage(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SharedGalleryDataDiskImage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SharedGalleryDataDiskImage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSharedGalleryDataDiskImage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

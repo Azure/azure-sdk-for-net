@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class AnalyzeTextOptions : IUtf8JsonSerializable
+    public partial class AnalyzeTextOptions : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeTextOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeTextOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeTextOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
@@ -42,15 +50,129 @@ namespace Azure.AI.ContentSafety
                 writer.WritePropertyName("breakByBlocklists"u8);
                 writer.WriteBooleanValue(BreakByBlocklists.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal static AnalyzeTextOptions DeserializeAnalyzeTextOptions(JsonElement element, ModelSerializerOptions options = default)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string text = default;
+            Optional<IList<TextCategory>> categories = default;
+            Optional<IList<string>> blocklistNames = default;
+            Optional<bool> breakByBlocklists = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("text"u8))
+                {
+                    text = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("categories"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TextCategory> array = new List<TextCategory>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new TextCategory(item.GetString()));
+                    }
+                    categories = array;
+                    continue;
+                }
+                if (property.NameEquals("blocklistNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    blocklistNames = array;
+                    continue;
+                }
+                if (property.NameEquals("breakByBlocklists"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    breakByBlocklists = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AnalyzeTextOptions(text, Optional.ToList(categories), Optional.ToList(blocklistNames), Optional.ToNullable(breakByBlocklists), rawData);
+        }
+
+        AnalyzeTextOptions IModelJsonSerializable<AnalyzeTextOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeTextOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeTextOptions IModelSerializable<AnalyzeTextOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeTextOptions(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AnalyzeTextOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AnalyzeTextOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzeTextOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

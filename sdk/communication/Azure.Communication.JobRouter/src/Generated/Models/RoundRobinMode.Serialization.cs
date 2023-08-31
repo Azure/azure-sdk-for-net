@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RoundRobinMode : IUtf8JsonSerializable
+    public partial class RoundRobinMode : IUtf8JsonSerializable, IModelJsonSerializable<RoundRobinMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoundRobinMode>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoundRobinMode>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RoundRobinMode>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -32,11 +40,25 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoundRobinMode DeserializeRoundRobinMode(JsonElement element)
+        internal static RoundRobinMode DeserializeRoundRobinMode(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +67,7 @@ namespace Azure.Communication.JobRouter
             Optional<int> minConcurrentOffers = default;
             Optional<int> maxConcurrentOffers = default;
             Optional<bool> bypassSelectors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -79,8 +102,57 @@ namespace Azure.Communication.JobRouter
                     bypassSelectors = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoundRobinMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors));
+            return new RoundRobinMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), rawData);
+        }
+
+        RoundRobinMode IModelJsonSerializable<RoundRobinMode>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoundRobinMode>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoundRobinMode(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoundRobinMode>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoundRobinMode>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoundRobinMode IModelSerializable<RoundRobinMode>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoundRobinMode>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoundRobinMode(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RoundRobinMode model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RoundRobinMode(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoundRobinMode(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

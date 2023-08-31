@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBRestartCommand : IUtf8JsonSerializable
+    public partial class MongoDBRestartCommand : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBRestartCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBRestartCommand>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBRestartCommand>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MongoDBRestartCommand>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
@@ -23,11 +30,25 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MongoDBRestartCommand DeserializeMongoDBRestartCommand(JsonElement element)
+        internal static MongoDBRestartCommand DeserializeMongoDBRestartCommand(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             CommandType commandType = default;
             Optional<IReadOnlyList<ODataError>> errors = default;
             Optional<CommandState> state = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -75,8 +97,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     state = new CommandState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MongoDBRestartCommand(commandType, Optional.ToList(errors), Optional.ToNullable(state), input.Value);
+            return new MongoDBRestartCommand(commandType, Optional.ToList(errors), Optional.ToNullable(state), input.Value, rawData);
+        }
+
+        MongoDBRestartCommand IModelJsonSerializable<MongoDBRestartCommand>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDBRestartCommand>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBRestartCommand(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBRestartCommand>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDBRestartCommand>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBRestartCommand IModelSerializable<MongoDBRestartCommand>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDBRestartCommand>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBRestartCommand(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MongoDBRestartCommand model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MongoDBRestartCommand(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDBRestartCommand(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

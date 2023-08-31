@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryDataFlowDebugCommandResult
+    public partial class DataFactoryDataFlowDebugCommandResult : IUtf8JsonSerializable, IModelJsonSerializable<DataFactoryDataFlowDebugCommandResult>
     {
-        internal static DataFactoryDataFlowDebugCommandResult DeserializeDataFactoryDataFlowDebugCommandResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFactoryDataFlowDebugCommandResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFactoryDataFlowDebugCommandResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(Data))
+            {
+                writer.WritePropertyName("data"u8);
+                writer.WriteStringValue(Data);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataFactoryDataFlowDebugCommandResult DeserializeDataFactoryDataFlowDebugCommandResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> status = default;
             Optional<string> data = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -32,8 +71,57 @@ namespace Azure.ResourceManager.DataFactory.Models
                     data = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataFactoryDataFlowDebugCommandResult(status.Value, data.Value);
+            return new DataFactoryDataFlowDebugCommandResult(status.Value, data.Value, rawData);
+        }
+
+        DataFactoryDataFlowDebugCommandResult IModelJsonSerializable<DataFactoryDataFlowDebugCommandResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryDataFlowDebugCommandResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFactoryDataFlowDebugCommandResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFactoryDataFlowDebugCommandResult IModelSerializable<DataFactoryDataFlowDebugCommandResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFactoryDataFlowDebugCommandResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataFactoryDataFlowDebugCommandResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataFactoryDataFlowDebugCommandResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFactoryDataFlowDebugCommandResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

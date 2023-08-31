@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary>
@@ -14,9 +17,20 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class DataBoxValidationInputContent
     {
-        /// <summary> Initializes a new instance of DataBoxValidationInputContent. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationInputContent"/>. </summary>
         protected DataBoxValidationInputContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationInputContent"/>. </summary>
+        /// <param name="validationType"> Identifies the type of validation request. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxValidationInputContent(DataBoxValidationInputDiscriminator validationType, Dictionary<string, BinaryData> rawData)
+        {
+            ValidationType = validationType;
+            _rawData = rawData;
         }
 
         /// <summary> Identifies the type of validation request. </summary>

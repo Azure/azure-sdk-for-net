@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The export dataset configuration. Allows columns to be selected for the export. If not provided then the export will include all available columns. </summary>
     internal partial class ExportDatasetConfiguration
     {
-        /// <summary> Initializes a new instance of ExportDatasetConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportDatasetConfiguration"/>. </summary>
         public ExportDatasetConfiguration()
         {
             Columns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ExportDatasetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDatasetConfiguration"/>. </summary>
         /// <param name="columns"> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </param>
-        internal ExportDatasetConfiguration(IList<string> columns)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportDatasetConfiguration(IList<string> columns, Dictionary<string, BinaryData> rawData)
         {
             Columns = columns;
+            _rawData = rawData;
         }
 
         /// <summary> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </summary>

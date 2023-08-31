@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,7 +14,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a worker selector that will be attached to the job. </summary>
     public partial class StaticWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticWorkerSelectorAttachment"/>. </summary>
         /// <param name="workerSelector"> Describes a condition that must be met against a set of labels for worker selection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerSelector"/> is null. </exception>
         public StaticWorkerSelectorAttachment(RouterWorkerSelector workerSelector)
@@ -24,13 +25,19 @@ namespace Azure.Communication.JobRouter
             Kind = "static";
         }
 
-        /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing the type of worker selector attachment. </param>
         /// <param name="workerSelector"> Describes a condition that must be met against a set of labels for worker selection. </param>
-        internal StaticWorkerSelectorAttachment(string kind, RouterWorkerSelector workerSelector) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticWorkerSelectorAttachment(string kind, RouterWorkerSelector workerSelector, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             WorkerSelector = workerSelector;
             Kind = kind ?? "static";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StaticWorkerSelectorAttachment"/> for deserialization. </summary>
+        internal StaticWorkerSelectorAttachment()
+        {
         }
 
         /// <summary> Describes a condition that must be met against a set of labels for worker selection. </summary>

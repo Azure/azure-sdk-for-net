@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Snapshots operation response. </summary>
     internal partial class SnapshotList
     {
-        /// <summary> Initializes a new instance of SnapshotList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotList"/>. </summary>
         /// <param name="value"> A list of snapshots. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SnapshotList(IEnumerable<SnapshotData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SnapshotList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotList"/>. </summary>
         /// <param name="value"> A list of snapshots. </param>
         /// <param name="nextLink"> The uri to fetch the next page of snapshots. Call ListNext() with this to fetch the next page of snapshots. </param>
-        internal SnapshotList(IReadOnlyList<SnapshotData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotList(IReadOnlyList<SnapshotData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotList"/> for deserialization. </summary>
+        internal SnapshotList()
+        {
         }
 
         /// <summary> A list of snapshots. </summary>

@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A query of triggers. </summary>
     internal partial class DataFactoryTriggerQueryResult
     {
-        /// <summary> Initializes a new instance of DataFactoryTriggerQueryResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerQueryResult"/>. </summary>
         /// <param name="value"> List of triggers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryTriggerQueryResult(IEnumerable<DataFactoryTriggerData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryTriggerQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerQueryResult"/>. </summary>
         /// <param name="value"> List of triggers. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        internal DataFactoryTriggerQueryResult(IReadOnlyList<DataFactoryTriggerData> value, string continuationToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryTriggerQueryResult(IReadOnlyList<DataFactoryTriggerData> value, string continuationToken, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             ContinuationToken = continuationToken;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerQueryResult"/> for deserialization. </summary>
+        internal DataFactoryTriggerQueryResult()
+        {
         }
 
         /// <summary> List of triggers. </summary>

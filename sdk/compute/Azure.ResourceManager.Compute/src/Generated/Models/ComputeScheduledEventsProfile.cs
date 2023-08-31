@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The ComputeScheduledEventsProfile. </summary>
     public partial class ComputeScheduledEventsProfile
     {
-        /// <summary> Initializes a new instance of ComputeScheduledEventsProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduledEventsProfile"/>. </summary>
         public ComputeScheduledEventsProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeScheduledEventsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduledEventsProfile"/>. </summary>
         /// <param name="terminateNotificationProfile"> Specifies Terminate Scheduled Event related configurations. </param>
         /// <param name="osImageNotificationProfile"> Specifies OS Image Scheduled Event related configurations. </param>
-        internal ComputeScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile, OSImageNotificationProfile osImageNotificationProfile)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile, OSImageNotificationProfile osImageNotificationProfile, Dictionary<string, BinaryData> rawData)
         {
             TerminateNotificationProfile = terminateNotificationProfile;
             OSImageNotificationProfile = osImageNotificationProfile;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>

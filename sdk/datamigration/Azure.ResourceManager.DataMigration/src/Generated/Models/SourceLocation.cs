@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Source Location details of backups. </summary>
     public partial class SourceLocation
     {
-        /// <summary> Initializes a new instance of SourceLocation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceLocation"/>. </summary>
         public SourceLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceLocation"/>. </summary>
         /// <param name="fileShare"> Source File share. </param>
         /// <param name="azureBlob"> Source Azure Blob. </param>
         /// <param name="fileStorageType"> Backup storage Type. </param>
-        internal SourceLocation(SqlFileShare fileShare, AzureBlob azureBlob, string fileStorageType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceLocation(SqlFileShare fileShare, AzureBlob azureBlob, string fileStorageType, Dictionary<string, BinaryData> rawData)
         {
             FileShare = fileShare;
             AzureBlob = azureBlob;
             FileStorageType = fileStorageType;
+            _rawData = rawData;
         }
 
         /// <summary> Source File share. </summary>

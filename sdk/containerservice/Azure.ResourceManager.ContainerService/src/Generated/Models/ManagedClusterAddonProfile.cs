@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> A Kubernetes add-on profile for a managed cluster. </summary>
     public partial class ManagedClusterAddonProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterAddonProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfile"/>. </summary>
         /// <param name="isEnabled"> Whether the add-on is enabled or not. </param>
         public ManagedClusterAddonProfile(bool isEnabled)
         {
@@ -21,15 +24,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             Config = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAddonProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfile"/>. </summary>
         /// <param name="isEnabled"> Whether the add-on is enabled or not. </param>
         /// <param name="config"> Key-value pairs for configuring an add-on. </param>
         /// <param name="identity"> Information of user assigned identity used by this add-on. </param>
-        internal ManagedClusterAddonProfile(bool isEnabled, IDictionary<string, string> config, ManagedClusterAddonProfileIdentity identity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAddonProfile(bool isEnabled, IDictionary<string, string> config, ManagedClusterAddonProfileIdentity identity, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             Config = config;
             Identity = identity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfile"/> for deserialization. </summary>
+        internal ManagedClusterAddonProfile()
+        {
         }
 
         /// <summary> Whether the add-on is enabled or not. </summary>

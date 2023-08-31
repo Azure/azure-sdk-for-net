@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Input for the service task to upload an OCI driver. </summary>
     internal partial class UploadOciDriverTaskInput
     {
-        /// <summary> Initializes a new instance of UploadOciDriverTaskInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskInput"/>. </summary>
         public UploadOciDriverTaskInput()
         {
         }
 
-        /// <summary> Initializes a new instance of UploadOciDriverTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskInput"/>. </summary>
         /// <param name="driverShare"> File share information for the OCI driver archive. </param>
-        internal UploadOciDriverTaskInput(FileShare driverShare)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UploadOciDriverTaskInput(FileShare driverShare, Dictionary<string, BinaryData> rawData)
         {
             DriverShare = driverShare;
+            _rawData = rawData;
         }
 
         /// <summary> File share information for the OCI driver archive. </summary>

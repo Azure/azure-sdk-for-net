@@ -5,16 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogHost
+    public partial class DatadogHost : IUtf8JsonSerializable, IModelJsonSerializable<DatadogHost>
     {
-        internal static DatadogHost DeserializeDatadogHost(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatadogHost>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatadogHost>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsCollectionDefined(Aliases))
+            {
+                writer.WritePropertyName("aliases"u8);
+                writer.WriteStartArray();
+                foreach (var item in Aliases)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Apps))
+            {
+                writer.WritePropertyName("apps"u8);
+                writer.WriteStartArray();
+                foreach (var item in Apps)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Meta))
+            {
+                writer.WritePropertyName("meta"u8);
+                writer.WriteObjectValue(Meta);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DatadogHost DeserializeDatadogHost(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +80,7 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<IReadOnlyList<string>> aliases = default;
             Optional<IReadOnlyList<string>> apps = default;
             Optional<DatadogHostMetadata> meta = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -67,8 +125,57 @@ namespace Azure.ResourceManager.Datadog.Models
                     meta = DatadogHostMetadata.DeserializeDatadogHostMetadata(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DatadogHost(name.Value, Optional.ToList(aliases), Optional.ToList(apps), meta.Value);
+            return new DatadogHost(name.Value, Optional.ToList(aliases), Optional.ToList(apps), meta.Value, rawData);
+        }
+
+        DatadogHost IModelJsonSerializable<DatadogHost>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatadogHost(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatadogHost>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatadogHost IModelSerializable<DatadogHost>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatadogHost(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DatadogHost model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DatadogHost(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatadogHost(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

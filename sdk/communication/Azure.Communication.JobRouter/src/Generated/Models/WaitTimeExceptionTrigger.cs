@@ -5,18 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
     public partial class WaitTimeExceptionTrigger : ExceptionTrigger
     {
-        /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitTimeExceptionTrigger"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
         /// <param name="thresholdSeconds"> Threshold for wait time for this trigger. </param>
-        internal WaitTimeExceptionTrigger(string kind, double thresholdSeconds) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WaitTimeExceptionTrigger(string kind, double thresholdSeconds, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             _thresholdSeconds = thresholdSeconds;
             Kind = kind ?? "wait-time";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WaitTimeExceptionTrigger"/> for deserialization. </summary>
+        internal WaitTimeExceptionTrigger()
+        {
         }
     }
 }

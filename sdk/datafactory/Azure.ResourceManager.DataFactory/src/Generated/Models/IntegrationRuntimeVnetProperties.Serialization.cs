@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeVnetProperties : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeVnetProperties : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationRuntimeVnetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationRuntimeVnetProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationRuntimeVnetProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VnetId))
             {
@@ -54,8 +60,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeVnetProperties DeserializeIntegrationRuntimeVnetProperties(JsonElement element)
+        internal static IntegrationRuntimeVnetProperties DeserializeIntegrationRuntimeVnetProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +117,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeVnetProperties(Optional.ToNullable(vnetId), subnet.Value, Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
+        }
+
+        IntegrationRuntimeVnetProperties IModelJsonSerializable<IntegrationRuntimeVnetProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntimeVnetProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationRuntimeVnetProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationRuntimeVnetProperties IModelSerializable<IntegrationRuntimeVnetProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationRuntimeVnetProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IntegrationRuntimeVnetProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IntegrationRuntimeVnetProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationRuntimeVnetProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

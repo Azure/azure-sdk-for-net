@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update an Azure Cosmos DB Mongo User Definition. </summary>
     public partial class MongoDBUserDefinitionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionCreateOrUpdateContent"/>. </summary>
         public MongoDBUserDefinitionCreateOrUpdateContent()
         {
             Roles = new ChangeTrackingList<MongoDBRole>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionCreateOrUpdateContent"/>. </summary>
+        /// <param name="userName"> The user name for User Definition. </param>
+        /// <param name="password"> The password for User Definition. Response does not contain user password. </param>
+        /// <param name="databaseName"> The database name for which access is being granted for this User Definition. </param>
+        /// <param name="customData"> A custom definition for the USer Definition. </param>
+        /// <param name="roles"> The set of roles inherited by the User Definition. </param>
+        /// <param name="mechanisms"> The Mongo Auth mechanism. For now, we only support auth mechanism SCRAM-SHA-256. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBUserDefinitionCreateOrUpdateContent(string userName, string password, string databaseName, string customData, IList<MongoDBRole> roles, string mechanisms, Dictionary<string, BinaryData> rawData)
+        {
+            UserName = userName;
+            Password = password;
+            DatabaseName = databaseName;
+            CustomData = customData;
+            Roles = roles;
+            Mechanisms = mechanisms;
+            _rawData = rawData;
         }
 
         /// <summary> The user name for User Definition. </summary>

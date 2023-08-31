@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The comparison expression to be used in the report. </summary>
     public partial class ReportConfigComparisonExpression
     {
-        /// <summary> Initializes a new instance of ReportConfigComparisonExpression. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReportConfigComparisonExpression"/>. </summary>
         /// <param name="name"> The name of the column to use in comparison. </param>
         /// <param name="operator"> The operator to use for comparison. </param>
         /// <param name="values"> Array of values to use for comparison. </param>
@@ -30,15 +32,22 @@ namespace Azure.ResourceManager.CostManagement.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of ReportConfigComparisonExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportConfigComparisonExpression"/>. </summary>
         /// <param name="name"> The name of the column to use in comparison. </param>
         /// <param name="operator"> The operator to use for comparison. </param>
         /// <param name="values"> Array of values to use for comparison. </param>
-        internal ReportConfigComparisonExpression(string name, ComparisonOperatorType @operator, IList<string> values)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReportConfigComparisonExpression(string name, ComparisonOperatorType @operator, IList<string> values, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Operator = @operator;
             Values = values;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReportConfigComparisonExpression"/> for deserialization. </summary>
+        internal ReportConfigComparisonExpression()
+        {
         }
 
         /// <summary> The name of the column to use in comparison. </summary>

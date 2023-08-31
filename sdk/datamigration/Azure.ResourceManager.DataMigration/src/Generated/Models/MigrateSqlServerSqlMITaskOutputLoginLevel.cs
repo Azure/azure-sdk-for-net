@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSqlServerSqlMITaskOutputLoginLevel. </summary>
     public partial class MigrateSqlServerSqlMITaskOutputLoginLevel : MigrateSqlServerSqlMITaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputLoginLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/>. </summary>
         internal MigrateSqlServerSqlMITaskOutputLoginLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "LoginLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputLoginLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="loginName"> Login name. </param>
@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Login migration end time. </param>
         /// <param name="message"> Login migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Login migration errors and warnings per login. </param>
-        internal MigrateSqlServerSqlMITaskOutputLoginLevel(string id, string resultType, string loginName, MigrationState? state, LoginMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlMITaskOutputLoginLevel(string id, string resultType, string loginName, MigrationState? state, LoginMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings, Dictionary<string, BinaryData> rawData) : base(id, resultType, rawData)
         {
             LoginName = loginName;
             State = state;

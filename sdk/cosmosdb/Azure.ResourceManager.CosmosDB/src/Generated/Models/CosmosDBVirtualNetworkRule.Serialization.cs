@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBVirtualNetworkRule : IUtf8JsonSerializable
+    public partial class CosmosDBVirtualNetworkRule : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBVirtualNetworkRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBVirtualNetworkRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBVirtualNetworkRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("ignoreMissingVNetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBVirtualNetworkRule DeserializeCosmosDBVirtualNetworkRule(JsonElement element)
+        internal static CosmosDBVirtualNetworkRule DeserializeCosmosDBVirtualNetworkRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> id = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -56,8 +79,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     ignoreMissingVnetServiceEndpoint = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CosmosDBVirtualNetworkRule(id.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
+            return new CosmosDBVirtualNetworkRule(id.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), rawData);
+        }
+
+        CosmosDBVirtualNetworkRule IModelJsonSerializable<CosmosDBVirtualNetworkRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBVirtualNetworkRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBVirtualNetworkRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBVirtualNetworkRule IModelSerializable<CosmosDBVirtualNetworkRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBVirtualNetworkRule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CosmosDBVirtualNetworkRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CosmosDBVirtualNetworkRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBVirtualNetworkRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

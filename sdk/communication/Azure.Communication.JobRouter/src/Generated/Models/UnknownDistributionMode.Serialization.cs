@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class UnknownDistributionMode : IUtf8JsonSerializable
+    internal partial class UnknownDistributionMode : IUtf8JsonSerializable, IModelJsonSerializable<DistributionMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DistributionMode>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DistributionMode>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -32,55 +38,44 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownDistributionMode DeserializeUnknownDistributionMode(JsonElement element)
+        internal static DistributionMode DeserializeUnknownDistributionMode(JsonElement element, ModelSerializerOptions options = default) => DeserializeDistributionMode(element, options);
+
+        DistributionMode IModelJsonSerializable<DistributionMode>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string kind = "Unknown";
-            Optional<int> minConcurrentOffers = default;
-            Optional<int> maxConcurrentOffers = default;
-            Optional<bool> bypassSelectors = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("minConcurrentOffers"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    minConcurrentOffers = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("maxConcurrentOffers"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentOffers = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("bypassSelectors"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bypassSelectors = property.Value.GetBoolean();
-                    continue;
-                }
-            }
-            return new UnknownDistributionMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors));
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDistributionMode(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DistributionMode>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DistributionMode IModelSerializable<DistributionMode>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDistributionMode(doc.RootElement, options);
         }
     }
 }

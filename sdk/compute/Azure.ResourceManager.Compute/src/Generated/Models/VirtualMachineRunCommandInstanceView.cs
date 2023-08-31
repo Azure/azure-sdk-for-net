@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a virtual machine run command. </summary>
     public partial class VirtualMachineRunCommandInstanceView
     {
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandInstanceView. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandInstanceView"/>. </summary>
         internal VirtualMachineRunCommandInstanceView()
         {
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandInstanceView"/>. </summary>
         /// <param name="executionState"> Script execution status. </param>
         /// <param name="executionMessage"> Communicate script configuration errors or execution messages. </param>
         /// <param name="exitCode"> Exit code returned from script execution. </param>
@@ -29,7 +31,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="startOn"> Script start time. </param>
         /// <param name="endOn"> Script end time. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal VirtualMachineRunCommandInstanceView(ExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<InstanceViewStatus> statuses)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineRunCommandInstanceView(ExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<InstanceViewStatus> statuses, Dictionary<string, BinaryData> rawData)
         {
             ExecutionState = executionState;
             ExecutionMessage = executionMessage;
@@ -39,6 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             StartOn = startOn;
             EndOn = endOn;
             Statuses = statuses;
+            _rawData = rawData;
         }
 
         /// <summary> Script execution status. </summary>

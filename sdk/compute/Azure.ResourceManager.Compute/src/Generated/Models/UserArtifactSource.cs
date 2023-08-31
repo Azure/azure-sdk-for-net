@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The source image from which the Image Version is going to be created. </summary>
     public partial class UserArtifactSource
     {
-        /// <summary> Initializes a new instance of UserArtifactSource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserArtifactSource"/>. </summary>
         /// <param name="mediaLink"> Required. The mediaLink of the artifact, must be a readable storage page blob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaLink"/> is null. </exception>
         public UserArtifactSource(string mediaLink)
@@ -23,13 +26,20 @@ namespace Azure.ResourceManager.Compute.Models
             MediaLink = mediaLink;
         }
 
-        /// <summary> Initializes a new instance of UserArtifactSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserArtifactSource"/>. </summary>
         /// <param name="mediaLink"> Required. The mediaLink of the artifact, must be a readable storage page blob. </param>
         /// <param name="defaultConfigurationLink"> Optional. The defaultConfigurationLink of the artifact, must be a readable storage page blob. </param>
-        internal UserArtifactSource(string mediaLink, string defaultConfigurationLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserArtifactSource(string mediaLink, string defaultConfigurationLink, Dictionary<string, BinaryData> rawData)
         {
             MediaLink = mediaLink;
             DefaultConfigurationLink = defaultConfigurationLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserArtifactSource"/> for deserialization. </summary>
+        internal UserArtifactSource()
+        {
         }
 
         /// <summary> Required. The mediaLink of the artifact, must be a readable storage page blob. </summary>

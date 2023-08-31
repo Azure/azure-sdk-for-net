@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ZipDeflateReadSettings : IUtf8JsonSerializable
+    public partial class ZipDeflateReadSettings : IUtf8JsonSerializable, IModelJsonSerializable<ZipDeflateReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ZipDeflateReadSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ZipDeflateReadSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ZipDeflateReadSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreserveZipFileNameAsFolder))
             {
@@ -37,8 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ZipDeflateReadSettings DeserializeZipDeflateReadSettings(JsonElement element)
+        internal static ZipDeflateReadSettings DeserializeZipDeflateReadSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +75,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ZipDeflateReadSettings(type, additionalProperties, preserveZipFileNameAsFolder.Value);
+        }
+
+        ZipDeflateReadSettings IModelJsonSerializable<ZipDeflateReadSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ZipDeflateReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeZipDeflateReadSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ZipDeflateReadSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ZipDeflateReadSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ZipDeflateReadSettings IModelSerializable<ZipDeflateReadSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ZipDeflateReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeZipDeflateReadSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ZipDeflateReadSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ZipDeflateReadSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeZipDeflateReadSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

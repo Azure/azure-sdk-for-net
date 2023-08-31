@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The health status of the VM. </summary>
     internal partial class VirtualMachineHealthStatus
     {
-        /// <summary> Initializes a new instance of VirtualMachineHealthStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineHealthStatus"/>. </summary>
         internal VirtualMachineHealthStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineHealthStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineHealthStatus"/>. </summary>
         /// <param name="status"> The health status information for the VM. </param>
-        internal VirtualMachineHealthStatus(InstanceViewStatus status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineHealthStatus(InstanceViewStatus status, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> The health status information for the VM. </summary>

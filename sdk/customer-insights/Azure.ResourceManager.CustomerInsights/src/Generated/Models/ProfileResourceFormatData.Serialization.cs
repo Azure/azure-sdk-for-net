@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CustomerInsights.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class ProfileResourceFormatData : IUtf8JsonSerializable
+    public partial class ProfileResourceFormatData : IUtf8JsonSerializable, IModelJsonSerializable<ProfileResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProfileResourceFormatData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProfileResourceFormatData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -152,11 +158,25 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProfileResourceFormatData DeserializeProfileResourceFormatData(JsonElement element)
+        internal static ProfileResourceFormatData DeserializeProfileResourceFormatData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -183,6 +203,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> timestampFieldName = default;
             Optional<string> typeName = default;
             Optional<IList<StrongId>> strongIds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -409,8 +430,57 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProfileResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(attributes), Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), Optional.ToList(fields), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, Optional.ToList(strongIds));
+            return new ProfileResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(attributes), Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), Optional.ToList(fields), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, Optional.ToList(strongIds), rawData);
+        }
+
+        ProfileResourceFormatData IModelJsonSerializable<ProfileResourceFormatData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProfileResourceFormatData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProfileResourceFormatData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProfileResourceFormatData IModelSerializable<ProfileResourceFormatData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProfileResourceFormatData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ProfileResourceFormatData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ProfileResourceFormatData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProfileResourceFormatData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

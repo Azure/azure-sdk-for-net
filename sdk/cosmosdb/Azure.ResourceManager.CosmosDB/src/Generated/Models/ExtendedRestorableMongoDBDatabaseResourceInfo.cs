@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB MongoDB database event. </summary>
     public partial class ExtendedRestorableMongoDBDatabaseResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedRestorableMongoDBDatabaseResourceInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableMongoDBDatabaseResourceInfo"/>. </summary>
         internal ExtendedRestorableMongoDBDatabaseResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedRestorableMongoDBDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableMongoDBDatabaseResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this database event. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
         /// <param name="databaseName"> The name of this MongoDB database. </param>
         /// <param name="databaseId"> The resource ID of this MongoDB database. </param>
-        internal ExtendedRestorableMongoDBDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string databaseName, string databaseId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedRestorableMongoDBDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string databaseName, string databaseId, Dictionary<string, BinaryData> rawData)
         {
             Rid = rid;
             OperationType = operationType;
             EventTimestamp = eventTimestamp;
             DatabaseName = databaseName;
             DatabaseId = databaseId;
+            _rawData = rawData;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

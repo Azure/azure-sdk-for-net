@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    internal partial class DataLakeAnalyticsComputePolicyListResult
+    internal partial class DataLakeAnalyticsComputePolicyListResult : IUtf8JsonSerializable, IModelJsonSerializable<DataLakeAnalyticsComputePolicyListResult>
     {
-        internal static DataLakeAnalyticsComputePolicyListResult DeserializeDataLakeAnalyticsComputePolicyListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataLakeAnalyticsComputePolicyListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataLakeAnalyticsComputePolicyListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataLakeAnalyticsComputePolicyListResult DeserializeDataLakeAnalyticsComputePolicyListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<DataLakeAnalyticsComputePolicyData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,57 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataLakeAnalyticsComputePolicyListResult(Optional.ToList(value), nextLink.Value);
+            return new DataLakeAnalyticsComputePolicyListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        DataLakeAnalyticsComputePolicyListResult IModelJsonSerializable<DataLakeAnalyticsComputePolicyListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeAnalyticsComputePolicyListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataLakeAnalyticsComputePolicyListResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataLakeAnalyticsComputePolicyListResult IModelSerializable<DataLakeAnalyticsComputePolicyListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataLakeAnalyticsComputePolicyListResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataLakeAnalyticsComputePolicyListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataLakeAnalyticsComputePolicyListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataLakeAnalyticsComputePolicyListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

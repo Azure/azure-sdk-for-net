@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
     internal partial class LoginRoutes
     {
-        /// <summary> Initializes a new instance of LoginRoutes. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoginRoutes"/>. </summary>
         public LoginRoutes()
         {
         }
 
-        /// <summary> Initializes a new instance of LoginRoutes. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoginRoutes"/>. </summary>
         /// <param name="logoutEndpoint"> The endpoint at which a logout request should be made. </param>
-        internal LoginRoutes(string logoutEndpoint)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoginRoutes(string logoutEndpoint, Dictionary<string, BinaryData> rawData)
         {
             LogoutEndpoint = logoutEndpoint;
+            _rawData = rawData;
         }
 
         /// <summary> The endpoint at which a logout request should be made. </summary>

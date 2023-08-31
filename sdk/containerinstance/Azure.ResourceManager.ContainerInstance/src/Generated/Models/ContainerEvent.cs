@@ -6,25 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> A container group or container instance event. </summary>
     public partial class ContainerEvent
     {
-        /// <summary> Initializes a new instance of ContainerEvent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerEvent"/>. </summary>
         internal ContainerEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerEvent"/>. </summary>
         /// <param name="count"> The count of the event. </param>
         /// <param name="firstTimestamp"> The date-time of the earliest logged event. </param>
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>
         /// <param name="name"> The event name. </param>
         /// <param name="message"> The event message. </param>
         /// <param name="eventType"> The event type. </param>
-        internal ContainerEvent(int? count, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, string name, string message, string eventType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerEvent(int? count, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, string name, string message, string eventType, Dictionary<string, BinaryData> rawData)
         {
             Count = count;
             FirstTimestamp = firstTimestamp;
@@ -32,6 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Name = name;
             Message = message;
             EventType = eventType;
+            _rawData = rawData;
         }
 
         /// <summary> The count of the event. </summary>

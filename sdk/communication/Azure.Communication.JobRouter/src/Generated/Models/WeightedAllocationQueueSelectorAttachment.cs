@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes multiple sets of queue selectors, of which one will be selected and attached according to a weighting. </summary>
     public partial class WeightedAllocationQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightedAllocationQueueSelectorAttachment"/>. </summary>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allocations"/> is null. </exception>
         public WeightedAllocationQueueSelectorAttachment(IEnumerable<QueueWeightedAllocation> allocations)
@@ -26,13 +26,19 @@ namespace Azure.Communication.JobRouter
             Kind = "weighted-allocation-queue-selector";
         }
 
-        /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightedAllocationQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing the type of queue selector attachment. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        internal WeightedAllocationQueueSelectorAttachment(string kind, IList<QueueWeightedAllocation> allocations) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WeightedAllocationQueueSelectorAttachment(string kind, IList<QueueWeightedAllocation> allocations, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             Allocations = allocations;
             Kind = kind ?? "weighted-allocation-queue-selector";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WeightedAllocationQueueSelectorAttachment"/> for deserialization. </summary>
+        internal WeightedAllocationQueueSelectorAttachment()
+        {
         }
 
         /// <summary> A collection of percentage based weighted allocations. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBKeyWrapMetadata : IUtf8JsonSerializable
+    public partial class CosmosDBKeyWrapMetadata : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBKeyWrapMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBKeyWrapMetadata>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBKeyWrapMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBKeyWrapMetadata DeserializeCosmosDBKeyWrapMetadata(JsonElement element)
+        internal static CosmosDBKeyWrapMetadata DeserializeCosmosDBKeyWrapMetadata(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> type = default;
             Optional<string> value = default;
             Optional<string> algorithm = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -70,8 +93,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     algorithm = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CosmosDBKeyWrapMetadata(name.Value, type.Value, value.Value, algorithm.Value);
+            return new CosmosDBKeyWrapMetadata(name.Value, type.Value, value.Value, algorithm.Value, rawData);
+        }
+
+        CosmosDBKeyWrapMetadata IModelJsonSerializable<CosmosDBKeyWrapMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBKeyWrapMetadata(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBKeyWrapMetadata>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBKeyWrapMetadata IModelSerializable<CosmosDBKeyWrapMetadata>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBKeyWrapMetadata(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CosmosDBKeyWrapMetadata model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CosmosDBKeyWrapMetadata(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBKeyWrapMetadata(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

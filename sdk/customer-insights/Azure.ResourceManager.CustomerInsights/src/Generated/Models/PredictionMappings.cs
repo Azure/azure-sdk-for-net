@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Definition of the link mapping of prediction. </summary>
     public partial class PredictionMappings
     {
-        /// <summary> Initializes a new instance of PredictionMappings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredictionMappings"/>. </summary>
         /// <param name="score"> The score of the link mapping. </param>
         /// <param name="grade"> The grade of the link mapping. </param>
         /// <param name="reason"> The reason of the link mapping. </param>
@@ -27,6 +30,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Score = score;
             Grade = grade;
             Reason = reason;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PredictionMappings"/>. </summary>
+        /// <param name="score"> The score of the link mapping. </param>
+        /// <param name="grade"> The grade of the link mapping. </param>
+        /// <param name="reason"> The reason of the link mapping. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredictionMappings(string score, string grade, string reason, Dictionary<string, BinaryData> rawData)
+        {
+            Score = score;
+            Grade = grade;
+            Reason = reason;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PredictionMappings"/> for deserialization. </summary>
+        internal PredictionMappings()
+        {
         }
 
         /// <summary> The score of the link mapping. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,12 +20,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// </summary>
     public partial class DataLakeAnalyticsFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRuleData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRuleData"/>. </summary>
         internal DataLakeAnalyticsFirewallRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,10 +40,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
         /// Serialized Name: FirewallRule.properties.endIpAddress
         /// </param>
-        internal DataLakeAnalyticsFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIPAddress, IPAddress endIPAddress) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIPAddress, IPAddress endIPAddress, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
+            _rawData = rawData;
         }
 
         /// <summary>

@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The AgentPoolAvailableVersion. </summary>
     public partial class AgentPoolAvailableVersion
     {
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersion. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersion"/>. </summary>
         internal AgentPoolAvailableVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersion"/>. </summary>
         /// <param name="isDefault"> Whether this version is the default agent pool version. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether Kubernetes version is currently in preview. </param>
-        internal AgentPoolAvailableVersion(bool? isDefault, string kubernetesVersion, bool? isPreview)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolAvailableVersion(bool? isDefault, string kubernetesVersion, bool? isPreview, Dictionary<string, BinaryData> rawData)
         {
             IsDefault = isDefault;
             KubernetesVersion = kubernetesVersion;
             IsPreview = isPreview;
+            _rawData = rawData;
         }
 
         /// <summary> Whether this version is the default agent pool version. </summary>

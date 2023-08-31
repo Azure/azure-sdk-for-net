@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Wait statistics gathered during query batch execution. </summary>
     public partial class WaitStatistics
     {
-        /// <summary> Initializes a new instance of WaitStatistics. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WaitStatistics"/>. </summary>
         internal WaitStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of WaitStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitStatistics"/>. </summary>
         /// <param name="waitType"> Type of the Wait. </param>
         /// <param name="waitTimeMs"> Total wait time in millisecond(s). </param>
         /// <param name="waitCount"> Total no. of waits. </param>
-        internal WaitStatistics(string waitType, float? waitTimeMs, long? waitCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WaitStatistics(string waitType, float? waitTimeMs, long? waitCount, Dictionary<string, BinaryData> rawData)
         {
             WaitType = waitType;
             WaitTimeMs = waitTimeMs;
             WaitCount = waitCount;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the Wait. </summary>

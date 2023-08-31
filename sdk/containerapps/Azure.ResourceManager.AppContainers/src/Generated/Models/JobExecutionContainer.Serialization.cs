@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobExecutionContainer : IUtf8JsonSerializable
+    public partial class JobExecutionContainer : IUtf8JsonSerializable, IModelJsonSerializable<JobExecutionContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobExecutionContainer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobExecutionContainer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Image))
             {
@@ -61,11 +68,25 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobExecutionContainer DeserializeJobExecutionContainer(JsonElement element)
+        internal static JobExecutionContainer DeserializeJobExecutionContainer(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<string>> args = default;
             Optional<IList<ContainerAppEnvironmentVariable>> env = default;
             Optional<AppContainerResources> resources = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("image"u8))
@@ -139,8 +161,57 @@ namespace Azure.ResourceManager.AppContainers.Models
                     resources = AppContainerResources.DeserializeAppContainerResources(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JobExecutionContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value);
+            return new JobExecutionContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value, rawData);
+        }
+
+        JobExecutionContainer IModelJsonSerializable<JobExecutionContainer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobExecutionContainer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobExecutionContainer>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobExecutionContainer IModelSerializable<JobExecutionContainer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobExecutionContainer(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(JobExecutionContainer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator JobExecutionContainer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobExecutionContainer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

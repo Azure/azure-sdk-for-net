@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,30 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for connect to MySQL type source. </summary>
     public partial class ConnectToSourceNonSqlTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceNonSqlTaskOutput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceNonSqlTaskOutput"/>. </summary>
         internal ConnectToSourceNonSqlTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceNonSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceNonSqlTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="sourceServerBrandVersion"> Server brand version. </param>
         /// <param name="serverProperties"> Server properties. </param>
         /// <param name="databases"> List of databases on the server. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
-        internal ConnectToSourceNonSqlTaskOutput(string id, string sourceServerBrandVersion, ServerProperties serverProperties, IReadOnlyList<string> databases, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceNonSqlTaskOutput(string id, string sourceServerBrandVersion, ServerProperties serverProperties, IReadOnlyList<string> databases, IReadOnlyList<ReportableException> validationErrors, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             SourceServerBrandVersion = sourceServerBrandVersion;
             ServerProperties = serverProperties;
             Databases = databases;
             ValidationErrors = validationErrors;
+            _rawData = rawData;
         }
 
         /// <summary> Result identifier. </summary>

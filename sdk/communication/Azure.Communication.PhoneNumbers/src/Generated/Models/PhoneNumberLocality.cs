@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
@@ -13,7 +14,9 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a locality. </summary>
     public partial class PhoneNumberLocality
     {
-        /// <summary> Initializes a new instance of PhoneNumberLocality. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberLocality"/>. </summary>
         /// <param name="localizedName"> Represents the localized name of the locality. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> is null. </exception>
         internal PhoneNumberLocality(string localizedName)
@@ -23,13 +26,20 @@ namespace Azure.Communication.PhoneNumbers
             LocalizedName = localizedName;
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberLocality. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberLocality"/>. </summary>
         /// <param name="localizedName"> Represents the localized name of the locality. </param>
         /// <param name="administrativeDivision"> Represents an administrative division. e.g. state or province. </param>
-        internal PhoneNumberLocality(string localizedName, PhoneNumberAdministrativeDivision administrativeDivision)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberLocality(string localizedName, PhoneNumberAdministrativeDivision administrativeDivision, Dictionary<string, BinaryData> rawData)
         {
             LocalizedName = localizedName;
             AdministrativeDivision = administrativeDivision;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberLocality"/> for deserialization. </summary>
+        internal PhoneNumberLocality()
+        {
         }
 
         /// <summary> Represents the localized name of the locality. </summary>

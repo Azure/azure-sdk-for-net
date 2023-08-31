@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Backup information of a resource. </summary>
     public partial class CosmosDBBackupInformation
     {
-        /// <summary> Initializes a new instance of CosmosDBBackupInformation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBackupInformation"/>. </summary>
         internal CosmosDBBackupInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBBackupInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBackupInformation"/>. </summary>
         /// <param name="continuousBackupInformation"> Information about the status of continuous backups. </param>
-        internal CosmosDBBackupInformation(ContinuousBackupInformation continuousBackupInformation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBBackupInformation(ContinuousBackupInformation continuousBackupInformation, Dictionary<string, BinaryData> rawData)
         {
             ContinuousBackupInformation = continuousBackupInformation;
+            _rawData = rawData;
         }
 
         /// <summary> Information about the status of continuous backups. </summary>

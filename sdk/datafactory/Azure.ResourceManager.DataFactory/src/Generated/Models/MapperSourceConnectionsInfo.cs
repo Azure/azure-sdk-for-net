@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A object which contains list of tables and connection details for a source connection. </summary>
     public partial class MapperSourceConnectionsInfo
     {
-        /// <summary> Initializes a new instance of MapperSourceConnectionsInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapperSourceConnectionsInfo"/>. </summary>
         public MapperSourceConnectionsInfo()
         {
             SourceEntities = new ChangeTrackingList<MapperTable>();
         }
 
-        /// <summary> Initializes a new instance of MapperSourceConnectionsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperSourceConnectionsInfo"/>. </summary>
         /// <param name="sourceEntities"> List of source tables for a source connection. </param>
         /// <param name="connection"> Source connection details. </param>
-        internal MapperSourceConnectionsInfo(IList<MapperTable> sourceEntities, MapperConnection connection)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapperSourceConnectionsInfo(IList<MapperTable> sourceEntities, MapperConnection connection, Dictionary<string, BinaryData> rawData)
         {
             SourceEntities = sourceEntities;
             Connection = connection;
+            _rawData = rawData;
         }
 
         /// <summary> List of source tables for a source connection. </summary>

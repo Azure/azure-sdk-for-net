@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CloudServiceNetworkProfile : IUtf8JsonSerializable
+    public partial class CloudServiceNetworkProfile : IUtf8JsonSerializable, IModelJsonSerializable<CloudServiceNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudServiceNetworkProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudServiceNetworkProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
@@ -37,11 +44,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("swappableCloudService"u8);
                 JsonSerializer.Serialize(writer, SwappableCloudService);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element)
+        internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<CloudServiceLoadBalancerConfiguration>> loadBalancerConfigurations = default;
             Optional<CloudServiceSlotType> slotType = default;
             Optional<WritableSubResource> swappableCloudService = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loadBalancerConfigurations"u8))
@@ -83,8 +105,57 @@ namespace Azure.ResourceManager.Compute.Models
                     swappableCloudService = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), Optional.ToNullable(slotType), swappableCloudService);
+            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), Optional.ToNullable(slotType), swappableCloudService, rawData);
+        }
+
+        CloudServiceNetworkProfile IModelJsonSerializable<CloudServiceNetworkProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudServiceNetworkProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudServiceNetworkProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudServiceNetworkProfile IModelSerializable<CloudServiceNetworkProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudServiceNetworkProfile(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CloudServiceNetworkProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CloudServiceNetworkProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudServiceNetworkProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

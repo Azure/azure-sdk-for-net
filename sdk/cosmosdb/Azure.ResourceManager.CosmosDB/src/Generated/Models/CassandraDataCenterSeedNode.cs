@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CassandraDataCenterSeedNode. </summary>
     public partial class CassandraDataCenterSeedNode
     {
-        /// <summary> Initializes a new instance of CassandraDataCenterSeedNode. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterSeedNode"/>. </summary>
         public CassandraDataCenterSeedNode()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraDataCenterSeedNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterSeedNode"/>. </summary>
         /// <param name="ipAddress"> IP address of this seed node. </param>
-        internal CassandraDataCenterSeedNode(string ipAddress)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraDataCenterSeedNode(string ipAddress, Dictionary<string, BinaryData> rawData)
         {
             IPAddress = ipAddress;
+            _rawData = rawData;
         }
 
         /// <summary> IP address of this seed node. </summary>

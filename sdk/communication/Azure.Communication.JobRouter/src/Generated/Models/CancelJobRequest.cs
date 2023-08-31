@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for deleting a job. </summary>
     internal partial class CancelJobRequest
     {
-        /// <summary> Initializes a new instance of CancelJobRequest. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CancelJobRequest"/>. </summary>
         public CancelJobRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CancelJobRequest"/>. </summary>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
+        /// <param name="dispositionCode">
+        /// Indicates the outcome of the job, populate this field with your own custom values.
+        /// If not provided, default value of "Cancelled" is set.
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CancelJobRequest(string note, string dispositionCode, Dictionary<string, BinaryData> rawData)
+        {
+            Note = note;
+            DispositionCode = dispositionCode;
+            _rawData = rawData;
         }
 
         /// <summary> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </summary>

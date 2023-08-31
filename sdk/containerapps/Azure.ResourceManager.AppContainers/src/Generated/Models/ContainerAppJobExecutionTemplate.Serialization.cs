@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJobExecutionTemplate : IUtf8JsonSerializable
+    public partial class ContainerAppJobExecutionTemplate : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppJobExecutionTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppJobExecutionTemplate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppJobExecutionTemplate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Containers))
             {
@@ -36,17 +43,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppJobExecutionTemplate DeserializeContainerAppJobExecutionTemplate(JsonElement element)
+        internal static ContainerAppJobExecutionTemplate DeserializeContainerAppJobExecutionTemplate(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<JobExecutionContainer>> containers = default;
             Optional<IList<JobExecutionContainer>> initContainers = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containers"u8))
@@ -77,8 +99,57 @@ namespace Azure.ResourceManager.AppContainers.Models
                     initContainers = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppJobExecutionTemplate(Optional.ToList(containers), Optional.ToList(initContainers));
+            return new ContainerAppJobExecutionTemplate(Optional.ToList(containers), Optional.ToList(initContainers), rawData);
+        }
+
+        ContainerAppJobExecutionTemplate IModelJsonSerializable<ContainerAppJobExecutionTemplate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppJobExecutionTemplate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppJobExecutionTemplate>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppJobExecutionTemplate IModelSerializable<ContainerAppJobExecutionTemplate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppJobExecutionTemplate(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerAppJobExecutionTemplate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerAppJobExecutionTemplate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppJobExecutionTemplate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

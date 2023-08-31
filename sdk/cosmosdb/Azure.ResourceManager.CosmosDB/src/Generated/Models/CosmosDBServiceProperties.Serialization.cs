@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBServiceProperties : IUtf8JsonSerializable
+    public partial class CosmosDBServiceProperties : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBServiceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBServiceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(InstanceSize))
             {
@@ -39,8 +47,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBServiceProperties DeserializeCosmosDBServiceProperties(JsonElement element)
+        internal static CosmosDBServiceProperties DeserializeCosmosDBServiceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,7 +65,106 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     case "SqlDedicatedGateway": return SqlDedicatedGatewayServiceProperties.DeserializeSqlDedicatedGatewayServiceProperties(element);
                 }
             }
-            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<CosmosDBServiceSize> instanceSize = default;
+            Optional<int> instanceCount = default;
+            CosmosDBServiceType serviceType = default;
+            Optional<CosmosDBServiceStatus> status = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("creationTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    creationTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("instanceSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instanceSize = new CosmosDBServiceSize(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("instanceCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instanceCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("serviceType"u8))
+                {
+                    serviceType = new CosmosDBServiceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new CosmosDBServiceStatus(property.Value.GetString());
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new UnknownServiceResourceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties);
+        }
+
+        CosmosDBServiceProperties IModelJsonSerializable<CosmosDBServiceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBServiceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBServiceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBServiceProperties IModelSerializable<CosmosDBServiceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBServiceProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CosmosDBServiceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CosmosDBServiceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBServiceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

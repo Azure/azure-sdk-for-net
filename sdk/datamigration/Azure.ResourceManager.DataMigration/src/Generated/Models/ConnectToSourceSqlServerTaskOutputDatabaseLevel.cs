@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database level output for the task that validates connection to SQL Server and also validates source server requirements. </summary>
     public partial class ConnectToSourceSqlServerTaskOutputDatabaseLevel : ConnectToSourceSqlServerTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>. </summary>
         internal ConnectToSourceSqlServerTaskOutputDatabaseLevel()
         {
             DatabaseFiles = new ChangeTrackingList<DatabaseFileInfo>();
             ResultType = "DatabaseLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
         /// <param name="name"> Database name. </param>
@@ -28,7 +29,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="databaseFiles"> The list of database files. </param>
         /// <param name="compatibilityLevel"> SQL Server compatibility level of database. </param>
         /// <param name="databaseState"> State of the database. </param>
-        internal ConnectToSourceSqlServerTaskOutputDatabaseLevel(string id, string resultType, string name, double? sizeMB, IReadOnlyList<DatabaseFileInfo> databaseFiles, DatabaseCompatLevel? compatibilityLevel, DatabaseState? databaseState) : base(id, resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceSqlServerTaskOutputDatabaseLevel(string id, string resultType, string name, double? sizeMB, IReadOnlyList<DatabaseFileInfo> databaseFiles, DatabaseCompatLevel? compatibilityLevel, DatabaseState? databaseState, Dictionary<string, BinaryData> rawData) : base(id, resultType, rawData)
         {
             Name = name;
             SizeMB = sizeMB;

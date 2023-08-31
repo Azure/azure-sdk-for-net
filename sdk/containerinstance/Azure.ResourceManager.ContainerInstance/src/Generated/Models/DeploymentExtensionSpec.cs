@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Extension sidecars to be added to the deployment. </summary>
     public partial class DeploymentExtensionSpec
     {
-        /// <summary> Initializes a new instance of DeploymentExtensionSpec. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionSpec"/>. </summary>
         /// <param name="name"> Name of the extension. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DeploymentExtensionSpec(string name)
@@ -23,19 +26,26 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of DeploymentExtensionSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionSpec"/>. </summary>
         /// <param name="name"> Name of the extension. </param>
         /// <param name="extensionType"> Type of extension to be added. </param>
         /// <param name="version"> Version of the extension being used. </param>
         /// <param name="settings"> Settings for the extension. </param>
         /// <param name="protectedSettings"> Protected settings for the extension. </param>
-        internal DeploymentExtensionSpec(string name, string extensionType, string version, BinaryData settings, BinaryData protectedSettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentExtensionSpec(string name, string extensionType, string version, BinaryData settings, BinaryData protectedSettings, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ExtensionType = extensionType;
             Version = version;
             Settings = settings;
             ProtectedSettings = protectedSettings;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionSpec"/> for deserialization. </summary>
+        internal DeploymentExtensionSpec()
+        {
         }
 
         /// <summary> Name of the extension. </summary>

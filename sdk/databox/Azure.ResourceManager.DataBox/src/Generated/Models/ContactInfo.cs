@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Contact Info. </summary>
     public partial class ContactInfo
     {
-        /// <summary> Initializes a new instance of ContactInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContactInfo"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactName"/> or <paramref name="phone"/> is null. </exception>
@@ -26,17 +29,24 @@ namespace Azure.ResourceManager.DataBox.Models
             Phone = phone;
         }
 
-        /// <summary> Initializes a new instance of ContactInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactInfo"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
         /// <param name="mobile"> Mobile number of the contact person. </param>
-        internal ContactInfo(string contactName, string phone, string phoneExtension, string mobile)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContactInfo(string contactName, string phone, string phoneExtension, string mobile, Dictionary<string, BinaryData> rawData)
         {
             ContactName = contactName;
             Phone = phone;
             PhoneExtension = phoneExtension;
             Mobile = mobile;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContactInfo"/> for deserialization. </summary>
+        internal ContactInfo()
+        {
         }
 
         /// <summary> Contact name of the person. </summary>

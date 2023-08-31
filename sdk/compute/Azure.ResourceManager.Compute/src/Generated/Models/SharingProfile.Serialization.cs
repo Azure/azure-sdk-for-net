@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharingProfile : IUtf8JsonSerializable
+    public partial class SharingProfile : IUtf8JsonSerializable, IModelJsonSerializable<SharingProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SharingProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SharingProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Permission))
             {
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("communityGalleryInfo"u8);
                 writer.WriteObjectValue(CommunityGalleryInfo);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SharingProfile DeserializeSharingProfile(JsonElement element)
+        internal static SharingProfile DeserializeSharingProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<GallerySharingPermissionType> permissions = default;
             Optional<IReadOnlyList<SharingProfileGroup>> groups = default;
             Optional<CommunityGalleryInfo> communityGalleryInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("permissions"u8))
@@ -72,8 +94,57 @@ namespace Azure.ResourceManager.Compute.Models
                     communityGalleryInfo = CommunityGalleryInfo.DeserializeCommunityGalleryInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SharingProfile(Optional.ToNullable(permissions), Optional.ToList(groups), communityGalleryInfo.Value);
+            return new SharingProfile(Optional.ToNullable(permissions), Optional.ToList(groups), communityGalleryInfo.Value, rawData);
+        }
+
+        SharingProfile IModelJsonSerializable<SharingProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSharingProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SharingProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SharingProfile IModelSerializable<SharingProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSharingProfile(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SharingProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SharingProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSharingProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

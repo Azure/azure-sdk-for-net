@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -12,18 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Defines an update domain for the cloud service. </summary>
     public partial class UpdateDomainIdentifier
     {
-        /// <summary> Initializes a new instance of UpdateDomainIdentifier. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDomainIdentifier"/>. </summary>
         public UpdateDomainIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateDomainIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDomainIdentifier"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource Name. </param>
-        internal UpdateDomainIdentifier(ResourceIdentifier id, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateDomainIdentifier(ResourceIdentifier id, string name, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Resource Id. </summary>

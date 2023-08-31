@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The SKU of a container registry. </summary>
     public partial class ContainerRegistrySku
     {
-        /// <summary> Initializes a new instance of ContainerRegistrySku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySku"/>. </summary>
         /// <param name="name"> The SKU name of the container registry. Required for registry creation. </param>
         public ContainerRegistrySku(ContainerRegistrySkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistrySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySku"/>. </summary>
         /// <param name="name"> The SKU name of the container registry. Required for registry creation. </param>
         /// <param name="tier"> The SKU tier based on the SKU name. </param>
-        internal ContainerRegistrySku(ContainerRegistrySkuName name, ContainerRegistrySkuTier? tier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistrySku(ContainerRegistrySkuName name, ContainerRegistrySkuTier? tier, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySku"/> for deserialization. </summary>
+        internal ContainerRegistrySku()
+        {
         }
 
         /// <summary> The SKU name of the container registry. Required for registry creation. </summary>

@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerCapabilities
+    public partial class ContainerCapabilities : IUtf8JsonSerializable, IModelJsonSerializable<ContainerCapabilities>
     {
-        internal static ContainerCapabilities DeserializeContainerCapabilities(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerCapabilities>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerCapabilities>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerCapabilities DeserializeContainerCapabilities(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<string> ipAddressType = default;
             Optional<string> gpu = default;
             Optional<ContainerSupportedCapabilities> capabilities = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -64,8 +93,57 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     capabilities = ContainerSupportedCapabilities.DeserializeContainerSupportedCapabilities(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerCapabilities(resourceType.Value, osType.Value, Optional.ToNullable(location), ipAddressType.Value, gpu.Value, capabilities.Value);
+            return new ContainerCapabilities(resourceType.Value, osType.Value, Optional.ToNullable(location), ipAddressType.Value, gpu.Value, capabilities.Value, rawData);
+        }
+
+        ContainerCapabilities IModelJsonSerializable<ContainerCapabilities>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerCapabilities(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerCapabilities>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerCapabilities IModelSerializable<ContainerCapabilities>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerCapabilities(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerCapabilities model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerCapabilities(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerCapabilities(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

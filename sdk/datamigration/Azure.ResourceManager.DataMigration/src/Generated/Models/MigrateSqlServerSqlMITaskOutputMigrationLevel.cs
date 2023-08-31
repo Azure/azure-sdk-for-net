@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSqlServerSqlMITaskOutputMigrationLevel. </summary>
     public partial class MigrateSqlServerSqlMITaskOutputMigrationLevel : MigrateSqlServerSqlMITaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>. </summary>
         internal MigrateSqlServerSqlMITaskOutputMigrationLevel()
         {
             OrphanedUsersInfo = new ChangeTrackingList<OrphanedUserInfo>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -40,7 +40,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSqlServerSqlMITaskOutputMigrationLevel(string id, string resultType, DateTimeOffset? startedOn, DateTimeOffset? endedOn, MigrationStatus? status, MigrationState? state, string agentJobs, string logins, string message, string serverRoleResults, IReadOnlyList<OrphanedUserInfo> orphanedUsersInfo, string databases, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlMITaskOutputMigrationLevel(string id, string resultType, DateTimeOffset? startedOn, DateTimeOffset? endedOn, MigrationStatus? status, MigrationState? state, string agentJobs, string logins, string message, string serverRoleResults, IReadOnlyList<OrphanedUserInfo> orphanedUsersInfo, string databases, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<ReportableException> exceptionsAndWarnings, Dictionary<string, BinaryData> rawData) : base(id, resultType, rawData)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;

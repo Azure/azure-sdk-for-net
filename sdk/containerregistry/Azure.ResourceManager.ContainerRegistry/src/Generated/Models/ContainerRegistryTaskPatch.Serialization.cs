@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTaskPatch : IUtf8JsonSerializable
+    public partial class ContainerRegistryTaskPatch : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryTaskPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryTaskPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryTaskPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -79,7 +88,202 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStringValue(LogTemplate);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ContainerRegistryTaskPatch DeserializeContainerRegistryTaskPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ContainerRegistryTaskStatus> status = default;
+            Optional<ContainerRegistryPlatformUpdateContent> platform = default;
+            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
+            Optional<string> agentPoolName = default;
+            Optional<int> timeout = default;
+            Optional<ContainerRegistryTaskStepUpdateContent> step = default;
+            Optional<ContainerRegistryTriggerUpdateContent> trigger = default;
+            Optional<ContainerRegistryCredentials> credentials = default;
+            Optional<string> logTemplate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = new ContainerRegistryTaskStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("platform"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            platform = ContainerRegistryPlatformUpdateContent.DeserializeContainerRegistryPlatformUpdateContent(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("agentConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("agentPoolName"u8))
+                        {
+                            agentPoolName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("timeout"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            timeout = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("step"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            step = ContainerRegistryTaskStepUpdateContent.DeserializeContainerRegistryTaskStepUpdateContent(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("trigger"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            trigger = ContainerRegistryTriggerUpdateContent.DeserializeContainerRegistryTriggerUpdateContent(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("credentials"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("logTemplate"u8))
+                        {
+                            logTemplate = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ContainerRegistryTaskPatch(identity, Optional.ToDictionary(tags), Optional.ToNullable(status), platform.Value, agentConfiguration.Value, agentPoolName.Value, Optional.ToNullable(timeout), step.Value, trigger.Value, credentials.Value, logTemplate.Value, rawData);
+        }
+
+        ContainerRegistryTaskPatch IModelJsonSerializable<ContainerRegistryTaskPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryTaskPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryTaskPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryTaskPatch IModelSerializable<ContainerRegistryTaskPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryTaskPatch(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerRegistryTaskPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerRegistryTaskPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryTaskPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

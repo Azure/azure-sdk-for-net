@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeNetworkAdapterPosition
+    public partial class DataBoxEdgeNetworkAdapterPosition : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeNetworkAdapterPosition>
     {
-        internal static DataBoxEdgeNetworkAdapterPosition DeserializeDataBoxEdgeNetworkAdapterPosition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeNetworkAdapterPosition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeNetworkAdapterPosition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxEdgeNetworkAdapterPosition DeserializeDataBoxEdgeNetworkAdapterPosition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DataBoxEdgeNetworkGroup> networkGroup = default;
             Optional<int> port = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkGroup"u8))
@@ -40,8 +69,57 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeNetworkAdapterPosition(Optional.ToNullable(networkGroup), Optional.ToNullable(port));
+            return new DataBoxEdgeNetworkAdapterPosition(Optional.ToNullable(networkGroup), Optional.ToNullable(port), rawData);
+        }
+
+        DataBoxEdgeNetworkAdapterPosition IModelJsonSerializable<DataBoxEdgeNetworkAdapterPosition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeNetworkAdapterPosition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeNetworkAdapterPosition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeNetworkAdapterPosition IModelSerializable<DataBoxEdgeNetworkAdapterPosition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeNetworkAdapterPosition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataBoxEdgeNetworkAdapterPosition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataBoxEdgeNetworkAdapterPosition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeNetworkAdapterPosition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

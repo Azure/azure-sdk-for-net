@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Copy Log Details for customer disk. </summary>
     public partial class DataBoxCustomerDiskCopyLogDetails : CopyLogDetails
     {
-        /// <summary> Initializes a new instance of DataBoxCustomerDiskCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxCustomerDiskCopyLogDetails"/>. </summary>
         internal DataBoxCustomerDiskCopyLogDetails()
         {
             CopyLogDetailsType = DataBoxOrderType.DataBoxCustomerDisk;
         }
 
-        /// <summary> Initializes a new instance of DataBoxCustomerDiskCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxCustomerDiskCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
-        internal DataBoxCustomerDiskCopyLogDetails(DataBoxOrderType copyLogDetailsType, string serialNumber, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxCustomerDiskCopyLogDetails(DataBoxOrderType copyLogDetailsType, string serialNumber, string errorLogLink, string verboseLogLink, Dictionary<string, BinaryData> rawData) : base(copyLogDetailsType, rawData)
         {
             SerialNumber = serialNumber;
             ErrorLogLink = errorLogLink;

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class AppContainerResources : IUtf8JsonSerializable
+    public partial class AppContainerResources : IUtf8JsonSerializable, IModelJsonSerializable<AppContainerResources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppContainerResources>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppContainerResources>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Cpu))
             {
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("memory"u8);
                 writer.WriteStringValue(Memory);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppContainerResources DeserializeAppContainerResources(JsonElement element)
+        internal static AppContainerResources DeserializeAppContainerResources(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<double> cpu = default;
             Optional<string> memory = default;
             Optional<string> ephemeralStorage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpu"u8))
@@ -58,8 +81,57 @@ namespace Azure.ResourceManager.AppContainers.Models
                     ephemeralStorage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppContainerResources(Optional.ToNullable(cpu), memory.Value, ephemeralStorage.Value);
+            return new AppContainerResources(Optional.ToNullable(cpu), memory.Value, ephemeralStorage.Value, rawData);
+        }
+
+        AppContainerResources IModelJsonSerializable<AppContainerResources>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppContainerResources(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppContainerResources>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppContainerResources IModelSerializable<AppContainerResources>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppContainerResources(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AppContainerResources model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AppContainerResources(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppContainerResources(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

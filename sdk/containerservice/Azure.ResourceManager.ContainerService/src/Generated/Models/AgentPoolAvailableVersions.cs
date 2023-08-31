@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,21 +15,25 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The list of available versions for an agent pool. </summary>
     public partial class AgentPoolAvailableVersions : ResourceData
     {
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersions"/>. </summary>
         internal AgentPoolAvailableVersions()
         {
             AgentPoolVersions = new ChangeTrackingList<AgentPoolAvailableVersion>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersions"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="agentPoolVersions"> List of versions available for agent pool. </param>
-        internal AgentPoolAvailableVersions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<AgentPoolAvailableVersion> agentPoolVersions) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolAvailableVersions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<AgentPoolAvailableVersion> agentPoolVersions, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             AgentPoolVersions = agentPoolVersions;
+            _rawData = rawData;
         }
 
         /// <summary> List of versions available for agent pool. </summary>

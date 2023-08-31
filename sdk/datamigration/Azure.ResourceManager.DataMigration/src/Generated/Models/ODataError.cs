@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Error information in OData format. </summary>
     public partial class ODataError
     {
-        /// <summary> Initializes a new instance of ODataError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ODataError"/>. </summary>
         internal ODataError()
         {
             Details = new ChangeTrackingList<ODataError>();
         }
 
-        /// <summary> Initializes a new instance of ODataError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ODataError"/>. </summary>
         /// <param name="code"> The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'. </param>
         /// <param name="message"> The human-readable description of the error. </param>
         /// <param name="details"> Inner errors that caused this error. </param>
-        internal ODataError(string code, string message, IReadOnlyList<ODataError> details)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ODataError(string code, string message, IReadOnlyList<ODataError> details, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Details = details;
+            _rawData = rawData;
         }
 
         /// <summary> The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'. </summary>

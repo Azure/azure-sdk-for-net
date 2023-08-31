@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> The CompanyInformation. </summary>
     public partial class CompanyInformation
     {
-        /// <summary> Initializes a new instance of CompanyInformation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CompanyInformation"/>. </summary>
         public CompanyInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of CompanyInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompanyInformation"/>. </summary>
         /// <param name="name"> Legal entity name for customer submitting Program Brief. </param>
         /// <param name="url"> Company URL for customer submitting Program Brief. </param>
         /// <param name="address"> Company's address for the customer submitting the Program Brief. </param>
         /// <param name="contactInformation"> Contact Information. </param>
         /// <param name="customerCareInformation"> Customer Care Information. </param>
-        internal CompanyInformation(string name, Uri url, string address, ContactInformation contactInformation, CustomerCareInformation customerCareInformation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompanyInformation(string name, Uri url, string address, ContactInformation contactInformation, CustomerCareInformation customerCareInformation, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Url = url;
             Address = address;
             ContactInformation = contactInformation;
             CustomerCareInformation = customerCareInformation;
+            _rawData = rawData;
         }
 
         /// <summary> Legal entity name for customer submitting Program Brief. </summary>

@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> A single usage result. </summary>
     public partial class ContainerInstanceUsage
     {
-        /// <summary> Initializes a new instance of ContainerInstanceUsage. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceUsage"/>. </summary>
         internal ContainerInstanceUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceUsage"/>. </summary>
         /// <param name="id"> Id of the usage result. </param>
         /// <param name="unit"> Unit of the usage result. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name object of the resource. </param>
-        internal ContainerInstanceUsage(string id, string unit, int? currentValue, int? limit, ContainerInstanceUsageName name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerInstanceUsage(string id, string unit, int? currentValue, int? limit, ContainerInstanceUsageName name, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Id of the usage result. </summary>

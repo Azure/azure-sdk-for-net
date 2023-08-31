@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CosmosDBExcludedPath. </summary>
     public partial class CosmosDBExcludedPath
     {
-        /// <summary> Initializes a new instance of CosmosDBExcludedPath. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBExcludedPath"/>. </summary>
         public CosmosDBExcludedPath()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBExcludedPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBExcludedPath"/>. </summary>
         /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
-        internal CosmosDBExcludedPath(string path)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBExcludedPath(string path, Dictionary<string, BinaryData> rawData)
         {
             Path = path;
+            _rawData = rawData;
         }
 
         /// <summary> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </summary>

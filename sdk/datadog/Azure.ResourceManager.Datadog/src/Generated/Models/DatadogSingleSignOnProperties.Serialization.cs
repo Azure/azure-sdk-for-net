@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogSingleSignOnProperties : IUtf8JsonSerializable
+    public partial class DatadogSingleSignOnProperties : IUtf8JsonSerializable, IModelJsonSerializable<DatadogSingleSignOnProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatadogSingleSignOnProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatadogSingleSignOnProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SingleSignOnState))
             {
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DatadogSingleSignOnProperties DeserializeDatadogSingleSignOnProperties(JsonElement element)
+        internal static DatadogSingleSignOnProperties DeserializeDatadogSingleSignOnProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +60,7 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<SingleSignOnState> singleSignOnState = default;
             Optional<string> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -73,8 +95,57 @@ namespace Azure.ResourceManager.Datadog.Models
                     singleSignOnUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DatadogSingleSignOnProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value);
+            return new DatadogSingleSignOnProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value, rawData);
+        }
+
+        DatadogSingleSignOnProperties IModelJsonSerializable<DatadogSingleSignOnProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatadogSingleSignOnProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatadogSingleSignOnProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatadogSingleSignOnProperties IModelSerializable<DatadogSingleSignOnProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatadogSingleSignOnProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DatadogSingleSignOnProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DatadogSingleSignOnProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatadogSingleSignOnProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

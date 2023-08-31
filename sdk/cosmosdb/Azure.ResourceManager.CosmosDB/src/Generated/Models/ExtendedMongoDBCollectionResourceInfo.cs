@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedMongoDBCollectionResourceInfo. </summary>
     public partial class ExtendedMongoDBCollectionResourceInfo : MongoDBCollectionResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedMongoDBCollectionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedMongoDBCollectionResourceInfo"/>. </summary>
         /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public ExtendedMongoDBCollectionResourceInfo(string collectionName) : base(collectionName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(collectionName, nameof(collectionName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedMongoDBCollectionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedMongoDBCollectionResourceInfo"/>. </summary>
         /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
         /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
         /// <param name="indexes"> List of index keys. </param>
@@ -33,11 +33,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedMongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string rid, float? timestamp, ETag? etag) : base(collectionName, shardKey, indexes, analyticalStorageTtl, restoreParameters, createMode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedMongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string rid, float? timestamp, ETag? etag, Dictionary<string, BinaryData> rawData) : base(collectionName, shardKey, indexes, analyticalStorageTtl, restoreParameters, createMode, rawData)
         {
             Rid = rid;
             Timestamp = timestamp;
             ETag = etag;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedMongoDBCollectionResourceInfo"/> for deserialization. </summary>
+        internal ExtendedMongoDBCollectionResourceInfo()
+        {
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

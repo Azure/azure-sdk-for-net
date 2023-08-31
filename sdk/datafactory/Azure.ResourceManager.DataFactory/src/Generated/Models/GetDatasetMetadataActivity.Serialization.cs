@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class GetDatasetMetadataActivity : IUtf8JsonSerializable
+    public partial class GetDatasetMetadataActivity : IUtf8JsonSerializable, IModelJsonSerializable<GetDatasetMetadataActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GetDatasetMetadataActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GetDatasetMetadataActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<GetDatasetMetadataActivity>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -113,8 +119,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static GetDatasetMetadataActivity DeserializeGetDatasetMetadataActivity(JsonElement element)
+        internal static GetDatasetMetadataActivity DeserializeGetDatasetMetadataActivity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -275,6 +283,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GetDatasetMetadataActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, dataset, Optional.ToList(fieldList), storeSettings.Value, formatSettings.Value);
+        }
+
+        GetDatasetMetadataActivity IModelJsonSerializable<GetDatasetMetadataActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GetDatasetMetadataActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetDatasetMetadataActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetDatasetMetadataActivity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GetDatasetMetadataActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetDatasetMetadataActivity IModelSerializable<GetDatasetMetadataActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GetDatasetMetadataActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetDatasetMetadataActivity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GetDatasetMetadataActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GetDatasetMetadataActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetDatasetMetadataActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

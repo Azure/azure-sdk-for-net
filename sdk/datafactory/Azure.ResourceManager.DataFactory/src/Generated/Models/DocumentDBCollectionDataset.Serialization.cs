@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DocumentDBCollectionDataset : IUtf8JsonSerializable
+    public partial class DocumentDBCollectionDataset : IUtf8JsonSerializable, IModelJsonSerializable<DocumentDBCollectionDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DocumentDBCollectionDataset>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DocumentDBCollectionDataset>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DocumentDBCollectionDataset>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -88,8 +94,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DocumentDBCollectionDataset DeserializeDocumentDBCollectionDataset(JsonElement element)
+        internal static DocumentDBCollectionDataset DeserializeDocumentDBCollectionDataset(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -205,6 +213,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DocumentDBCollectionDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, collectionName);
+        }
+
+        DocumentDBCollectionDataset IModelJsonSerializable<DocumentDBCollectionDataset>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DocumentDBCollectionDataset>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentDBCollectionDataset(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DocumentDBCollectionDataset>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DocumentDBCollectionDataset>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DocumentDBCollectionDataset IModelSerializable<DocumentDBCollectionDataset>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DocumentDBCollectionDataset>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDocumentDBCollectionDataset(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DocumentDBCollectionDataset model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DocumentDBCollectionDataset(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDocumentDBCollectionDataset(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

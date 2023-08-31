@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> JSON web key parameter. </summary>
     internal partial class JWKHeader
     {
-        /// <summary> Initializes a new instance of JWKHeader. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JWKHeader"/>. </summary>
         internal JWKHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of JWKHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="JWKHeader"/>. </summary>
         /// <param name="crv"> crv value. </param>
         /// <param name="kid"> kid value. </param>
         /// <param name="kty"> kty value. </param>
         /// <param name="x"> x value. </param>
         /// <param name="y"> y value. </param>
-        internal JWKHeader(string crv, string kid, string kty, string x, string y)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JWKHeader(string crv, string kid, string kty, string x, string y, Dictionary<string, BinaryData> rawData)
         {
             Crv = crv;
             Kid = kid;
             Kty = kty;
             X = x;
             Y = y;
+            _rawData = rawData;
         }
 
         /// <summary> crv value. </summary>

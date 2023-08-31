@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> User property. </summary>
     public partial class PipelineActivityUserProperty
     {
-        /// <summary> Initializes a new instance of PipelineActivityUserProperty. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityUserProperty"/>. </summary>
         /// <param name="name"> User property name. </param>
         /// <param name="value"> User property value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -25,6 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityUserProperty"/>. </summary>
+        /// <param name="name"> User property name. </param>
+        /// <param name="value"> User property value. Type: string (or Expression with resultType string). </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineActivityUserProperty(string name, DataFactoryElement<string> value, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityUserProperty"/> for deserialization. </summary>
+        internal PipelineActivityUserProperty()
+        {
         }
 
         /// <summary> User property name. </summary>

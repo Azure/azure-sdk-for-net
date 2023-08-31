@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Capture Virtual Machine parameters. </summary>
     public partial class VirtualMachineCaptureContent
     {
-        /// <summary> Initializes a new instance of VirtualMachineCaptureContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureContent"/>. </summary>
         /// <param name="vhdPrefix"> The captured virtual hard disk's name prefix. </param>
         /// <param name="destinationContainerName"> The destination container name. </param>
         /// <param name="overwriteVhds"> Specifies whether to overwrite the destination virtual hard disk, in case of conflict. </param>
@@ -26,6 +29,24 @@ namespace Azure.ResourceManager.Compute.Models
             VhdPrefix = vhdPrefix;
             DestinationContainerName = destinationContainerName;
             OverwriteVhds = overwriteVhds;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureContent"/>. </summary>
+        /// <param name="vhdPrefix"> The captured virtual hard disk's name prefix. </param>
+        /// <param name="destinationContainerName"> The destination container name. </param>
+        /// <param name="overwriteVhds"> Specifies whether to overwrite the destination virtual hard disk, in case of conflict. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineCaptureContent(string vhdPrefix, string destinationContainerName, bool overwriteVhds, Dictionary<string, BinaryData> rawData)
+        {
+            VhdPrefix = vhdPrefix;
+            DestinationContainerName = destinationContainerName;
+            OverwriteVhds = overwriteVhds;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureContent"/> for deserialization. </summary>
+        internal VirtualMachineCaptureContent()
+        {
         }
 
         /// <summary> The captured virtual hard disk's name prefix. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 
@@ -17,7 +18,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsFirewallRuleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRuleCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRuleCreateOrUpdateContent"/>. </summary>
         /// <param name="startIPAddress">
         /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
         /// Serialized Name: CreateOrUpdateFirewallRuleParameters.properties.startIpAddress
@@ -34,6 +37,28 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRuleCreateOrUpdateContent"/>. </summary>
+        /// <param name="startIPAddress">
+        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: CreateOrUpdateFirewallRuleParameters.properties.startIpAddress
+        /// </param>
+        /// <param name="endIPAddress">
+        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: CreateOrUpdateFirewallRuleParameters.properties.endIpAddress
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsFirewallRuleCreateOrUpdateContent(IPAddress startIPAddress, IPAddress endIPAddress, Dictionary<string, BinaryData> rawData)
+        {
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRuleCreateOrUpdateContent"/> for deserialization. </summary>
+        internal DataLakeAnalyticsFirewallRuleCreateOrUpdateContent()
+        {
         }
 
         /// <summary>

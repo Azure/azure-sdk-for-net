@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -19,7 +20,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VMwareClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareClusterData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareClusterData(AzureLocation location) : base(location)
         {
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             NetworkIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VMwareClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +50,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="datastoreIds"> Gets or sets the datastore ARM ids. </param>
         /// <param name="networkIds"> Gets or sets the network ARM ids. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VMwareClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, string provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -61,6 +65,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             DatastoreIds = datastoreIds;
             NetworkIds = networkIds;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareClusterData"/> for deserialization. </summary>
+        internal VMwareClusterData()
+        {
         }
 
         /// <summary> Gets or sets the extended location. </summary>

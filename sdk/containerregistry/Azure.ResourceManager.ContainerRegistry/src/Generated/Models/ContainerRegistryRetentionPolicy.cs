@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The retention policy for a container registry. </summary>
     public partial class ContainerRegistryRetentionPolicy
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRetentionPolicy. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRetentionPolicy"/>. </summary>
         public ContainerRegistryRetentionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRetentionPolicy"/>. </summary>
         /// <param name="days"> The number of days to retain an untagged manifest after which it gets purged. </param>
         /// <param name="lastUpdatedOn"> The timestamp when the policy was last updated. </param>
         /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
-        internal ContainerRegistryRetentionPolicy(int? days, DateTimeOffset? lastUpdatedOn, ContainerRegistryPolicyStatus? status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryRetentionPolicy(int? days, DateTimeOffset? lastUpdatedOn, ContainerRegistryPolicyStatus? status, Dictionary<string, BinaryData> rawData)
         {
             Days = days;
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> The number of days to retain an untagged manifest after which it gets purged. </summary>

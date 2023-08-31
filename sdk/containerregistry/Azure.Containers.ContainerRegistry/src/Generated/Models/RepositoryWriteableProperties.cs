@@ -5,14 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Changeable attributes for Repository. </summary>
     internal partial class RepositoryWriteableProperties
     {
-        /// <summary> Initializes a new instance of RepositoryWriteableProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RepositoryWriteableProperties"/>. </summary>
         public RepositoryWriteableProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RepositoryWriteableProperties"/>. </summary>
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RepositoryWriteableProperties(bool? canDelete, bool? canWrite, bool? canList, bool? canRead, Dictionary<string, BinaryData> rawData)
+        {
+            CanDelete = canDelete;
+            CanWrite = canWrite;
+            CanList = canList;
+            CanRead = canRead;
+            _rawData = rawData;
         }
 
         /// <summary> Delete enabled. </summary>

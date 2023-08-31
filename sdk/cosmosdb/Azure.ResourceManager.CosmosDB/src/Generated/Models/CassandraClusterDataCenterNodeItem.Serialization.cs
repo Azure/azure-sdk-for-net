@@ -8,14 +8,130 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraClusterDataCenterNodeItem
+    public partial class CassandraClusterDataCenterNodeItem : IUtf8JsonSerializable, IModelJsonSerializable<CassandraClusterDataCenterNodeItem>
     {
-        internal static CassandraClusterDataCenterNodeItem DeserializeCassandraClusterDataCenterNodeItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CassandraClusterDataCenterNodeItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CassandraClusterDataCenterNodeItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Address))
+            {
+                writer.WritePropertyName("address"u8);
+                writer.WriteStringValue(Address);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(CassandraProcessStatus))
+            {
+                writer.WritePropertyName("cassandraProcessStatus"u8);
+                writer.WriteStringValue(CassandraProcessStatus);
+            }
+            if (Optional.IsDefined(Load))
+            {
+                writer.WritePropertyName("load"u8);
+                writer.WriteStringValue(Load);
+            }
+            if (Optional.IsCollectionDefined(Tokens))
+            {
+                writer.WritePropertyName("tokens"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tokens)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Size))
+            {
+                writer.WritePropertyName("size"u8);
+                writer.WriteNumberValue(Size.Value);
+            }
+            if (Optional.IsDefined(HostId))
+            {
+                writer.WritePropertyName("hostID"u8);
+                writer.WriteStringValue(HostId.Value);
+            }
+            if (Optional.IsDefined(Rack))
+            {
+                writer.WritePropertyName("rack"u8);
+                writer.WriteStringValue(Rack);
+            }
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp);
+            }
+            if (Optional.IsDefined(DiskUsedKB))
+            {
+                writer.WritePropertyName("diskUsedKB"u8);
+                writer.WriteNumberValue(DiskUsedKB.Value);
+            }
+            if (Optional.IsDefined(DiskFreeKB))
+            {
+                writer.WritePropertyName("diskFreeKB"u8);
+                writer.WriteNumberValue(DiskFreeKB.Value);
+            }
+            if (Optional.IsDefined(MemoryUsedKB))
+            {
+                writer.WritePropertyName("memoryUsedKB"u8);
+                writer.WriteNumberValue(MemoryUsedKB.Value);
+            }
+            if (Optional.IsDefined(MemoryBuffersAndCachedKB))
+            {
+                writer.WritePropertyName("memoryBuffersAndCachedKB"u8);
+                writer.WriteNumberValue(MemoryBuffersAndCachedKB.Value);
+            }
+            if (Optional.IsDefined(MemoryFreeKB))
+            {
+                writer.WritePropertyName("memoryFreeKB"u8);
+                writer.WriteNumberValue(MemoryFreeKB.Value);
+            }
+            if (Optional.IsDefined(MemoryTotalKB))
+            {
+                writer.WritePropertyName("memoryTotalKB"u8);
+                writer.WriteNumberValue(MemoryTotalKB.Value);
+            }
+            if (Optional.IsDefined(CpuUsage))
+            {
+                writer.WritePropertyName("cpuUsage"u8);
+                writer.WriteNumberValue(CpuUsage.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CassandraClusterDataCenterNodeItem DeserializeCassandraClusterDataCenterNodeItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +153,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<long> memoryFreeKB = default;
             Optional<long> memoryTotalKB = default;
             Optional<double> cpuUsage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -173,8 +290,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     cpuUsage = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, cassandraProcessStatus.Value, load.Value, Optional.ToList(tokens), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage));
+            return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, cassandraProcessStatus.Value, load.Value, Optional.ToList(tokens), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage), rawData);
+        }
+
+        CassandraClusterDataCenterNodeItem IModelJsonSerializable<CassandraClusterDataCenterNodeItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCassandraClusterDataCenterNodeItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CassandraClusterDataCenterNodeItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CassandraClusterDataCenterNodeItem IModelSerializable<CassandraClusterDataCenterNodeItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCassandraClusterDataCenterNodeItem(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CassandraClusterDataCenterNodeItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CassandraClusterDataCenterNodeItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCassandraClusterDataCenterNodeItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,14 +8,74 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DataMigrationServiceStatusResponse
+    public partial class DataMigrationServiceStatusResponse : IUtf8JsonSerializable, IModelJsonSerializable<DataMigrationServiceStatusResponse>
     {
-        internal static DataMigrationServiceStatusResponse DeserializeDataMigrationServiceStatusResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataMigrationServiceStatusResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataMigrationServiceStatusResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(AgentConfiguration))
+            {
+                writer.WritePropertyName("agentConfiguration"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AgentConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AgentConfiguration.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(VmSize))
+            {
+                writer.WritePropertyName("vmSize"u8);
+                writer.WriteStringValue(VmSize);
+            }
+            if (Optional.IsCollectionDefined(SupportedTaskTypes))
+            {
+                writer.WritePropertyName("supportedTaskTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedTaskTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataMigrationServiceStatusResponse DeserializeDataMigrationServiceStatusResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +85,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> status = default;
             Optional<string> vmSize = default;
             Optional<IReadOnlyList<string>> supportedTaskTypes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentVersion"u8))
@@ -65,8 +126,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     supportedTaskTypes = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataMigrationServiceStatusResponse(agentVersion.Value, agentConfiguration.Value, status.Value, vmSize.Value, Optional.ToList(supportedTaskTypes));
+            return new DataMigrationServiceStatusResponse(agentVersion.Value, agentConfiguration.Value, status.Value, vmSize.Value, Optional.ToList(supportedTaskTypes), rawData);
+        }
+
+        DataMigrationServiceStatusResponse IModelJsonSerializable<DataMigrationServiceStatusResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataMigrationServiceStatusResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataMigrationServiceStatusResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataMigrationServiceStatusResponse IModelSerializable<DataMigrationServiceStatusResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataMigrationServiceStatusResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataMigrationServiceStatusResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataMigrationServiceStatusResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataMigrationServiceStatusResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

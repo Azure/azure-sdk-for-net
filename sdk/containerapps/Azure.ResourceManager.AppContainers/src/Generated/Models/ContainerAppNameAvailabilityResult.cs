@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The check availability result. </summary>
     public partial class ContainerAppNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of ContainerAppNameAvailabilityResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppNameAvailabilityResult"/>. </summary>
         internal ContainerAppNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        internal ContainerAppNameAvailabilityResult(bool? isNameAvailable, ContainerAppNameUnavailableReason? reason, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppNameAvailabilityResult(bool? isNameAvailable, ContainerAppNameUnavailableReason? reason, string message, Dictionary<string, BinaryData> rawData)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates if the resource name is available. </summary>

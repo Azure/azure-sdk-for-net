@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Pipeline reference type. </summary>
     public partial class DataFactoryPipelineReference
     {
-        /// <summary> Initializes a new instance of DataFactoryPipelineReference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineReference"/>. </summary>
         /// <param name="referenceType"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -25,15 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceName = referenceName;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPipelineReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineReference"/>. </summary>
         /// <param name="referenceType"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <param name="name"> Reference name. </param>
-        internal DataFactoryPipelineReference(DataFactoryPipelineReferenceType referenceType, string referenceName, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPipelineReference(DataFactoryPipelineReferenceType referenceType, string referenceName, string name, Dictionary<string, BinaryData> rawData)
         {
             ReferenceType = referenceType;
             ReferenceName = referenceName;
             Name = name;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineReference"/> for deserialization. </summary>
+        internal DataFactoryPipelineReference()
+        {
         }
 
         /// <summary> Pipeline reference type. </summary>

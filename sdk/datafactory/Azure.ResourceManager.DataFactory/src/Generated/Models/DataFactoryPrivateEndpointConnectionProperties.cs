@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,20 +15,24 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A remote private endpoint connection. </summary>
     public partial class DataFactoryPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointConnectionProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionProperties"/>. </summary>
         public DataFactoryPrivateEndpointConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="privateEndpoint"> PrivateEndpoint of a remote private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
-        internal DataFactoryPrivateEndpointConnectionProperties(string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPrivateEndpointConnectionProperties(string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the provisioning state. </summary>

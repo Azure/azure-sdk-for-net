@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Cluster Storage Data. </summary>
     public partial class EdgeClusterStorageViewInfo
     {
-        /// <summary> Initializes a new instance of EdgeClusterStorageViewInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterStorageViewInfo"/>. </summary>
         public EdgeClusterStorageViewInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeClusterStorageViewInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterStorageViewInfo"/>. </summary>
         /// <param name="clusterTotalStorageInMB"> Total storage on the cluster in MB. </param>
         /// <param name="clusterFreeStorageInMB"> The available or free storage on the cluster in MB. </param>
-        internal EdgeClusterStorageViewInfo(double? clusterTotalStorageInMB, double? clusterFreeStorageInMB)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeClusterStorageViewInfo(double? clusterTotalStorageInMB, double? clusterFreeStorageInMB, Dictionary<string, BinaryData> rawData)
         {
             ClusterTotalStorageInMB = clusterTotalStorageInMB;
             ClusterFreeStorageInMB = clusterFreeStorageInMB;
+            _rawData = rawData;
         }
 
         /// <summary> Total storage on the cluster in MB. </summary>

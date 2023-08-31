@@ -5,16 +5,74 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryWebhookEventResponseMessage
+    public partial class ContainerRegistryWebhookEventResponseMessage : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryWebhookEventResponseMessage>
     {
-        internal static ContainerRegistryWebhookEventResponseMessage DeserializeContainerRegistryWebhookEventResponseMessage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryWebhookEventResponseMessage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryWebhookEventResponseMessage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Content))
+            {
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
+            }
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                writer.WritePropertyName("headers"u8);
+                writer.WriteStartObject();
+                foreach (var item in Headers)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ReasonPhrase))
+            {
+                writer.WritePropertyName("reasonPhrase"u8);
+                writer.WriteStringValue(ReasonPhrase);
+            }
+            if (Optional.IsDefined(StatusCode))
+            {
+                writer.WritePropertyName("statusCode"u8);
+                writer.WriteStringValue(StatusCode);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerRegistryWebhookEventResponseMessage DeserializeContainerRegistryWebhookEventResponseMessage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> reasonPhrase = default;
             Optional<string> statusCode = default;
             Optional<string> version = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -60,8 +119,57 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryWebhookEventResponseMessage(content.Value, Optional.ToDictionary(headers), reasonPhrase.Value, statusCode.Value, version.Value);
+            return new ContainerRegistryWebhookEventResponseMessage(content.Value, Optional.ToDictionary(headers), reasonPhrase.Value, statusCode.Value, version.Value, rawData);
+        }
+
+        ContainerRegistryWebhookEventResponseMessage IModelJsonSerializable<ContainerRegistryWebhookEventResponseMessage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryWebhookEventResponseMessage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryWebhookEventResponseMessage>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryWebhookEventResponseMessage IModelSerializable<ContainerRegistryWebhookEventResponseMessage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryWebhookEventResponseMessage(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerRegistryWebhookEventResponseMessage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerRegistryWebhookEventResponseMessage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryWebhookEventResponseMessage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

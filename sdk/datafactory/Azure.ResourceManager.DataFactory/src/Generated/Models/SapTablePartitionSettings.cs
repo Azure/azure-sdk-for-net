@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,22 +14,26 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The settings that will be leveraged for SAP table source partitioning. </summary>
     public partial class SapTablePartitionSettings
     {
-        /// <summary> Initializes a new instance of SapTablePartitionSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapTablePartitionSettings"/>. </summary>
         public SapTablePartitionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SapTablePartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapTablePartitionSettings"/>. </summary>
         /// <param name="partitionColumnName"> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="maxPartitionsNumber"> The maximum value of partitions the table will be split into. Type: integer (or Expression with resultType string). </param>
-        internal SapTablePartitionSettings(DataFactoryElement<string> partitionColumnName, DataFactoryElement<string> partitionUpperBound, DataFactoryElement<string> partitionLowerBound, DataFactoryElement<int> maxPartitionsNumber)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapTablePartitionSettings(DataFactoryElement<string> partitionColumnName, DataFactoryElement<string> partitionUpperBound, DataFactoryElement<string> partitionLowerBound, DataFactoryElement<int> maxPartitionsNumber, Dictionary<string, BinaryData> rawData)
         {
             PartitionColumnName = partitionColumnName;
             PartitionUpperBound = partitionUpperBound;
             PartitionLowerBound = partitionLowerBound;
             MaxPartitionsNumber = maxPartitionsNumber;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>

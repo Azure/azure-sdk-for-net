@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -12,12 +14,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. NOTE: Image reference publisher and offer can only be set when you create the scale set. </summary>
     public partial class ImageReference : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of ImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
         public ImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="publisher"> The image publisher. </param>
         /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>
@@ -26,7 +28,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="exactVersion"> Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This readonly field differs from 'version', only if the value specified in 'version' field is 'latest'. </param>
         /// <param name="sharedGalleryImageUniqueId"> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </param>
         /// <param name="communityGalleryImageId"> Specified the community gallery image unique id for vm deployment. This can be fetched from community gallery image GET call. </param>
-        internal ImageReference(ResourceIdentifier id, string publisher, string offer, string sku, string version, string exactVersion, string sharedGalleryImageUniqueId, string communityGalleryImageId) : base(id)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageReference(ResourceIdentifier id, string publisher, string offer, string sku, string version, string exactVersion, string sharedGalleryImageUniqueId, string communityGalleryImageId, Dictionary<string, BinaryData> rawData) : base(id, rawData)
         {
             Publisher = publisher;
             Offer = offer;

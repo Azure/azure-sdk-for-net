@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFactoryChangeDataCaptureData : IUtf8JsonSerializable
+    public partial class DataFactoryChangeDataCaptureData : IUtf8JsonSerializable, IModelJsonSerializable<DataFactoryChangeDataCaptureData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFactoryChangeDataCaptureData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFactoryChangeDataCaptureData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -71,8 +76,10 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryChangeDataCaptureData DeserializeDataFactoryChangeDataCaptureData(JsonElement element)
+        internal static DataFactoryChangeDataCaptureData DeserializeDataFactoryChangeDataCaptureData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -195,6 +202,50 @@ namespace Azure.ResourceManager.DataFactory
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryChangeDataCaptureData(id, name, type, systemData.Value, folder.Value, description.Value, sourceConnectionsInfo, targetConnectionsInfo, policy, Optional.ToNullable(allowVnetOverride), status.Value, Optional.ToNullable(etag), additionalProperties);
+        }
+
+        DataFactoryChangeDataCaptureData IModelJsonSerializable<DataFactoryChangeDataCaptureData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryChangeDataCaptureData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFactoryChangeDataCaptureData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFactoryChangeDataCaptureData IModelSerializable<DataFactoryChangeDataCaptureData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFactoryChangeDataCaptureData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataFactoryChangeDataCaptureData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataFactoryChangeDataCaptureData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFactoryChangeDataCaptureData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

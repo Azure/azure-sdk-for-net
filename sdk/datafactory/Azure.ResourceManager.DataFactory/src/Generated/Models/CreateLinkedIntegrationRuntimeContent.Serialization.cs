@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CreateLinkedIntegrationRuntimeContent : IUtf8JsonSerializable
+    public partial class CreateLinkedIntegrationRuntimeContent : IUtf8JsonSerializable, IModelJsonSerializable<CreateLinkedIntegrationRuntimeContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CreateLinkedIntegrationRuntimeContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CreateLinkedIntegrationRuntimeContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -35,7 +43,111 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("dataFactoryLocation"u8);
                 writer.WriteStringValue(DataFactoryLocation.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CreateLinkedIntegrationRuntimeContent DeserializeCreateLinkedIntegrationRuntimeContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> name = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> dataFactoryName = default;
+            Optional<AzureLocation> dataFactoryLocation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("subscriptionId"u8))
+                {
+                    subscriptionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataFactoryName"u8))
+                {
+                    dataFactoryName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataFactoryLocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataFactoryLocation = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CreateLinkedIntegrationRuntimeContent(name.Value, subscriptionId.Value, dataFactoryName.Value, Optional.ToNullable(dataFactoryLocation), rawData);
+        }
+
+        CreateLinkedIntegrationRuntimeContent IModelJsonSerializable<CreateLinkedIntegrationRuntimeContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateLinkedIntegrationRuntimeContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CreateLinkedIntegrationRuntimeContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CreateLinkedIntegrationRuntimeContent IModelSerializable<CreateLinkedIntegrationRuntimeContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCreateLinkedIntegrationRuntimeContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CreateLinkedIntegrationRuntimeContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CreateLinkedIntegrationRuntimeContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCreateLinkedIntegrationRuntimeContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

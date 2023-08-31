@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Ssis project. </summary>
     public partial class SsisProject : SsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SsisProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisProject"/>. </summary>
         internal SsisProject()
         {
             EnvironmentRefs = new ChangeTrackingList<SsisEnvironmentReference>();
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             MetadataType = SsisObjectMetadataType.Project;
         }
 
-        /// <summary> Initializes a new instance of SsisProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisProject"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="version"> Project version. </param>
         /// <param name="environmentRefs"> Environment reference in project. </param>
         /// <param name="parameters"> Parameters in project. </param>
-        internal SsisProject(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? version, IReadOnlyList<SsisEnvironmentReference> environmentRefs, IReadOnlyList<SsisParameterInfo> parameters) : base(metadataType, id, name, description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisProject(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? version, IReadOnlyList<SsisEnvironmentReference> environmentRefs, IReadOnlyList<SsisParameterInfo> parameters, Dictionary<string, BinaryData> rawData) : base(metadataType, id, name, description, rawData)
         {
             FolderId = folderId;
             Version = version;

@@ -5,16 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class OCIIndex
+    internal partial class OCIIndex : IUtf8JsonSerializable, IModelJsonSerializable<OCIIndex>
     {
-        internal static OCIIndex DeserializeOCIIndex(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OCIIndex>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OCIIndex>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<OCIIndex>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Manifests))
+            {
+                writer.WritePropertyName("manifests"u8);
+                writer.WriteStartArray();
+                foreach (var item in Manifests)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Annotations))
+            {
+                if (Annotations != null)
+                {
+                    writer.WritePropertyName("annotations"u8);
+                    writer.WriteObjectValue(Annotations);
+                }
+                else
+                {
+                    writer.WriteNull("annotations");
+                }
+            }
+            if (Optional.IsDefined(SchemaVersion))
+            {
+                writer.WritePropertyName("schemaVersion"u8);
+                writer.WriteNumberValue(SchemaVersion.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static OCIIndex DeserializeOCIIndex(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +76,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<OciAnnotations> annotations = default;
             Optional<int> schemaVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("manifests"u8))
@@ -57,8 +112,57 @@ namespace Azure.Containers.ContainerRegistry
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OCIIndex(Optional.ToNullable(schemaVersion), Optional.ToList(manifests), annotations.Value);
+            return new OCIIndex(Optional.ToNullable(schemaVersion), Optional.ToList(manifests), annotations.Value, rawData);
+        }
+
+        OCIIndex IModelJsonSerializable<OCIIndex>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OCIIndex>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOCIIndex(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OCIIndex>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OCIIndex>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OCIIndex IModelSerializable<OCIIndex>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<OCIIndex>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOCIIndex(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(OCIIndex model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator OCIIndex(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOCIIndex(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

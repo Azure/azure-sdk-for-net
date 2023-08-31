@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Selected tables for the migration. </summary>
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput
     {
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput"/>. </summary>
         public MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput()
         {
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput"/>. </summary>
         /// <param name="name"> Name of the table to migrate. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput(string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput(string name, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the table to migrate. </summary>

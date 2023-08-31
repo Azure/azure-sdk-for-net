@@ -5,16 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterPoolUpgradeProfile
+    public partial class ManagedClusterPoolUpgradeProfile : IUtf8JsonSerializable, IModelJsonSerializable<ManagedClusterPoolUpgradeProfile>
     {
-        internal static ManagedClusterPoolUpgradeProfile DeserializeManagedClusterPoolUpgradeProfile(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedClusterPoolUpgradeProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedClusterPoolUpgradeProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("kubernetesVersion"u8);
+            writer.WriteStringValue(KubernetesVersion);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            writer.WritePropertyName("osType"u8);
+            writer.WriteStringValue(OSType.ToString());
+            if (Optional.IsCollectionDefined(Upgrades))
+            {
+                writer.WritePropertyName("upgrades"u8);
+                writer.WriteStartArray();
+                foreach (var item in Upgrades)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ManagedClusterPoolUpgradeProfile DeserializeManagedClusterPoolUpgradeProfile(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> name = default;
             ContainerServiceOSType osType = default;
             Optional<IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem>> upgrades = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -54,8 +101,57 @@ namespace Azure.ResourceManager.ContainerService.Models
                     upgrades = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name.Value, osType, Optional.ToList(upgrades));
+            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name.Value, osType, Optional.ToList(upgrades), rawData);
+        }
+
+        ManagedClusterPoolUpgradeProfile IModelJsonSerializable<ManagedClusterPoolUpgradeProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterPoolUpgradeProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedClusterPoolUpgradeProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedClusterPoolUpgradeProfile IModelSerializable<ManagedClusterPoolUpgradeProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedClusterPoolUpgradeProfile(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedClusterPoolUpgradeProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedClusterPoolUpgradeProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedClusterPoolUpgradeProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

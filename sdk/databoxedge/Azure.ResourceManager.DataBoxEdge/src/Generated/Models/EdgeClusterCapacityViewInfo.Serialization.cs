@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeClusterCapacityViewInfo : IUtf8JsonSerializable
+    public partial class EdgeClusterCapacityViewInfo : IUtf8JsonSerializable, IModelJsonSerializable<EdgeClusterCapacityViewInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeClusterCapacityViewInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeClusterCapacityViewInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Fqdn))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("totalProvisionedNonHpnCores"u8);
                 writer.WriteNumberValue(TotalProvisionedNonHpnCores.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeClusterCapacityViewInfo DeserializeEdgeClusterCapacityViewInfo(JsonElement element)
+        internal static EdgeClusterCapacityViewInfo DeserializeEdgeClusterCapacityViewInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<EdgeClusterMemoryCapacity> memoryCapacity = default;
             Optional<DateTimeOffset> lastRefreshedTime = default;
             Optional<long> totalProvisionedNonHpnCores = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -98,8 +120,57 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     totalProvisionedNonHpnCores = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdgeClusterCapacityViewInfo(fqdn.Value, gpuCapacity.Value, memoryCapacity.Value, Optional.ToNullable(lastRefreshedTime), Optional.ToNullable(totalProvisionedNonHpnCores));
+            return new EdgeClusterCapacityViewInfo(fqdn.Value, gpuCapacity.Value, memoryCapacity.Value, Optional.ToNullable(lastRefreshedTime), Optional.ToNullable(totalProvisionedNonHpnCores), rawData);
+        }
+
+        EdgeClusterCapacityViewInfo IModelJsonSerializable<EdgeClusterCapacityViewInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeClusterCapacityViewInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeClusterCapacityViewInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeClusterCapacityViewInfo IModelSerializable<EdgeClusterCapacityViewInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeClusterCapacityViewInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EdgeClusterCapacityViewInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EdgeClusterCapacityViewInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeClusterCapacityViewInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

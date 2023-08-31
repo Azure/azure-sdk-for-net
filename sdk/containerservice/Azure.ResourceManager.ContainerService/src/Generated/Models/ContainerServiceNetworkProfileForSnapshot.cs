@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> network profile for managed cluster snapshot, these properties are read only. </summary>
     public partial class ContainerServiceNetworkProfileForSnapshot
     {
-        /// <summary> Initializes a new instance of ContainerServiceNetworkProfileForSnapshot. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfileForSnapshot"/>. </summary>
         internal ContainerServiceNetworkProfileForSnapshot()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceNetworkProfileForSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfileForSnapshot"/>. </summary>
         /// <param name="networkPlugin"> networkPlugin for managed cluster snapshot. </param>
         /// <param name="networkPluginMode"> NetworkPluginMode for managed cluster snapshot. </param>
         /// <param name="networkPolicy"> networkPolicy for managed cluster snapshot. </param>
         /// <param name="networkMode"> networkMode for managed cluster snapshot. </param>
         /// <param name="loadBalancerSku"> loadBalancerSku for managed cluster snapshot. </param>
-        internal ContainerServiceNetworkProfileForSnapshot(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, ContainerServiceLoadBalancerSku? loadBalancerSku)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceNetworkProfileForSnapshot(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, ContainerServiceLoadBalancerSku? loadBalancerSku, Dictionary<string, BinaryData> rawData)
         {
             NetworkPlugin = networkPlugin;
             NetworkPluginMode = networkPluginMode;
             NetworkPolicy = networkPolicy;
             NetworkMode = networkMode;
             LoadBalancerSku = loadBalancerSku;
+            _rawData = rawData;
         }
 
         /// <summary> networkPlugin for managed cluster snapshot. </summary>

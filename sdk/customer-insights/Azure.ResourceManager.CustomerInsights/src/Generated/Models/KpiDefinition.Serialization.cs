@@ -8,14 +8,122 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class KpiDefinition
+    public partial class KpiDefinition : IUtf8JsonSerializable, IModelJsonSerializable<KpiDefinition>
     {
-        internal static KpiDefinition DeserializeKpiDefinition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KpiDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KpiDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("entityType"u8);
+            writer.WriteStringValue(EntityType.ToSerialString());
+            writer.WritePropertyName("entityTypeName"u8);
+            writer.WriteStringValue(EntityTypeName);
+            if (Optional.IsCollectionDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStartObject();
+                foreach (var item in DisplayName)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStartObject();
+                foreach (var item in Description)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("calculationWindow"u8);
+            writer.WriteStringValue(CalculationWindow.ToSerialString());
+            if (Optional.IsDefined(CalculationWindowFieldName))
+            {
+                writer.WritePropertyName("calculationWindowFieldName"u8);
+                writer.WriteStringValue(CalculationWindowFieldName);
+            }
+            writer.WritePropertyName("function"u8);
+            writer.WriteStringValue(Function.ToSerialString());
+            writer.WritePropertyName("expression"u8);
+            writer.WriteStringValue(Expression);
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (Optional.IsDefined(Filter))
+            {
+                writer.WritePropertyName("filter"u8);
+                writer.WriteStringValue(Filter);
+            }
+            if (Optional.IsCollectionDefined(GroupBy))
+            {
+                writer.WritePropertyName("groupBy"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupBy)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ThresHolds))
+            {
+                writer.WritePropertyName("thresHolds"u8);
+                writer.WriteObjectValue(ThresHolds);
+            }
+            if (Optional.IsCollectionDefined(Aliases))
+            {
+                writer.WritePropertyName("aliases"u8);
+                writer.WriteStartArray();
+                foreach (var item in Aliases)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Extracts))
+            {
+                writer.WritePropertyName("extracts"u8);
+                writer.WriteStartArray();
+                foreach (var item in Extracts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static KpiDefinition DeserializeKpiDefinition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +147,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<KpiThresholds> thresHolds = default;
             Optional<IReadOnlyList<KpiAlias>> aliases = default;
             Optional<IReadOnlyList<KpiExtract>> extracts = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entityType"u8))
@@ -211,8 +320,57 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     extracts = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts));
+            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts), rawData);
+        }
+
+        KpiDefinition IModelJsonSerializable<KpiDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKpiDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KpiDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KpiDefinition IModelSerializable<KpiDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKpiDefinition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(KpiDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator KpiDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKpiDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

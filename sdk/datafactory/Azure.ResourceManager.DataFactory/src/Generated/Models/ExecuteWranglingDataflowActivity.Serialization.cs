@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecuteWranglingDataflowActivity : IUtf8JsonSerializable
+    public partial class ExecuteWranglingDataflowActivity : IUtf8JsonSerializable, IModelJsonSerializable<ExecuteWranglingDataflowActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExecuteWranglingDataflowActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExecuteWranglingDataflowActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ExecuteWranglingDataflowActivity>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Policy))
             {
@@ -135,8 +141,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ExecuteWranglingDataflowActivity DeserializeExecuteWranglingDataflowActivity(JsonElement element)
+        internal static ExecuteWranglingDataflowActivity DeserializeExecuteWranglingDataflowActivity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -345,6 +353,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ExecuteWranglingDataflowActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, policy.Value, dataFlow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value, Optional.ToDictionary(sinks), Optional.ToList(queries));
+        }
+
+        ExecuteWranglingDataflowActivity IModelJsonSerializable<ExecuteWranglingDataflowActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExecuteWranglingDataflowActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecuteWranglingDataflowActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExecuteWranglingDataflowActivity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExecuteWranglingDataflowActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExecuteWranglingDataflowActivity IModelSerializable<ExecuteWranglingDataflowActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExecuteWranglingDataflowActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExecuteWranglingDataflowActivity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExecuteWranglingDataflowActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExecuteWranglingDataflowActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExecuteWranglingDataflowActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

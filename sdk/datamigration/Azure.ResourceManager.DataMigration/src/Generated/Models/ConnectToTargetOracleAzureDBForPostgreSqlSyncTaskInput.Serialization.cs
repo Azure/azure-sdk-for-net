@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput : IUtf8JsonSerializable
+    internal partial class ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput : IUtf8JsonSerializable, IModelJsonSerializable<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(JsonElement element)
+        internal static ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             PostgreSqlConnectionInfo targetConnectionInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
@@ -34,8 +57,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(targetConnectionInfo);
+            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(targetConnectionInfo, rawData);
+        }
+
+        ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput IModelJsonSerializable<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput IModelSerializable<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

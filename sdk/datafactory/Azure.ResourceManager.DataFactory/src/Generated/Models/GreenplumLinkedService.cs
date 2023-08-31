@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Greenplum Database linked service. </summary>
     public partial class GreenplumLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of GreenplumLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GreenplumLinkedService"/>. </summary>
         public GreenplumLinkedService()
         {
             LinkedServiceType = "Greenplum";
         }
 
-        /// <summary> Initializes a new instance of GreenplumLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GreenplumLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

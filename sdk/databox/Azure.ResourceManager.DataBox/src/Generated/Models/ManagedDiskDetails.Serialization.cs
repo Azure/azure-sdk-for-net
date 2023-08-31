@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ManagedDiskDetails : IUtf8JsonSerializable
+    public partial class ManagedDiskDetails : IUtf8JsonSerializable, IModelJsonSerializable<ManagedDiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedDiskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedDiskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ManagedDiskDetails>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceGroupId"u8);
             writer.WriteStringValue(ResourceGroupId);
@@ -26,11 +34,25 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedDiskDetails DeserializeManagedDiskDetails(JsonElement element)
+        internal static ManagedDiskDetails DeserializeManagedDiskDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             ResourceIdentifier stagingStorageAccountId = default;
             DataAccountType dataAccountType = default;
             Optional<string> sharePassword = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGroupId"u8))
@@ -61,8 +84,57 @@ namespace Azure.ResourceManager.DataBox.Models
                     sharePassword = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedDiskDetails(dataAccountType, sharePassword.Value, resourceGroupId, stagingStorageAccountId);
+            return new ManagedDiskDetails(dataAccountType, sharePassword.Value, resourceGroupId, stagingStorageAccountId, rawData);
+        }
+
+        ManagedDiskDetails IModelJsonSerializable<ManagedDiskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ManagedDiskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedDiskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedDiskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ManagedDiskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedDiskDetails IModelSerializable<ManagedDiskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ManagedDiskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedDiskDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedDiskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedDiskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedDiskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

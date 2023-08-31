@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CassandraViewGetResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraViewGetResultCassandraResourcesRestClient.CreateListCassandraViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraViewGetResultResource(Client, CassandraViewGetResultData.DeserializeCassandraViewGetResultData(e)), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, "CassandraViewGetResultCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CassandraViewGetResultResource(Client, CassandraViewGetResultData.DeserializeCassandraViewGetResultData(e)), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, "CassandraViewGetResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CassandraViewGetResultResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraViewGetResultCassandraResourcesRestClient.CreateListCassandraViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraViewGetResultResource(Client, CassandraViewGetResultData.DeserializeCassandraViewGetResultData(e)), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, "CassandraViewGetResultCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CassandraViewGetResultResource(Client, CassandraViewGetResultData.DeserializeCassandraViewGetResultData(e)), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, "CassandraViewGetResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

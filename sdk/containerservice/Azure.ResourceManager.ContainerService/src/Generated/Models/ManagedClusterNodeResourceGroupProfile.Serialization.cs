@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterNodeResourceGroupProfile : IUtf8JsonSerializable
+    internal partial class ManagedClusterNodeResourceGroupProfile : IUtf8JsonSerializable, IModelJsonSerializable<ManagedClusterNodeResourceGroupProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedClusterNodeResourceGroupProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedClusterNodeResourceGroupProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RestrictionLevel))
             {
                 writer.WritePropertyName("restrictionLevel"u8);
                 writer.WriteStringValue(RestrictionLevel.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterNodeResourceGroupProfile DeserializeManagedClusterNodeResourceGroupProfile(JsonElement element)
+        internal static ManagedClusterNodeResourceGroupProfile DeserializeManagedClusterNodeResourceGroupProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ManagedClusterNodeResourceGroupRestrictionLevel> restrictionLevel = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restrictionLevel"u8))
@@ -41,8 +64,57 @@ namespace Azure.ResourceManager.ContainerService.Models
                     restrictionLevel = new ManagedClusterNodeResourceGroupRestrictionLevel(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedClusterNodeResourceGroupProfile(Optional.ToNullable(restrictionLevel));
+            return new ManagedClusterNodeResourceGroupProfile(Optional.ToNullable(restrictionLevel), rawData);
+        }
+
+        ManagedClusterNodeResourceGroupProfile IModelJsonSerializable<ManagedClusterNodeResourceGroupProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterNodeResourceGroupProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedClusterNodeResourceGroupProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedClusterNodeResourceGroupProfile IModelSerializable<ManagedClusterNodeResourceGroupProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedClusterNodeResourceGroupProfile(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedClusterNodeResourceGroupProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedClusterNodeResourceGroupProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedClusterNodeResourceGroupProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -13,7 +14,9 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Tag attribute details. </summary>
     internal partial class TagAttributesBase
     {
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TagAttributesBase"/>. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
@@ -30,7 +33,7 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagAttributesBase"/>. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
@@ -39,7 +42,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        internal TagAttributesBase(string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TagAttributesBase(string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Digest = digest;
@@ -49,6 +53,12 @@ namespace Azure.Containers.ContainerRegistry
             CanWrite = canWrite;
             CanList = canList;
             CanRead = canRead;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TagAttributesBase"/> for deserialization. </summary>
+        internal TagAttributesBase()
+        {
         }
 
         /// <summary> Tag name. </summary>

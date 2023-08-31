@@ -8,14 +8,95 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class BackupSetInfo
+    public partial class BackupSetInfo : IUtf8JsonSerializable, IModelJsonSerializable<BackupSetInfo>
     {
-        internal static BackupSetInfo DeserializeBackupSetInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupSetInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupSetInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(BackupSetId))
+            {
+                writer.WritePropertyName("backupSetId"u8);
+                writer.WriteStringValue(BackupSetId);
+            }
+            if (Optional.IsDefined(FirstLsn))
+            {
+                writer.WritePropertyName("firstLsn"u8);
+                writer.WriteStringValue(FirstLsn);
+            }
+            if (Optional.IsDefined(LastLsn))
+            {
+                writer.WritePropertyName("lastLsn"u8);
+                writer.WriteStringValue(LastLsn);
+            }
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedTime"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            if (Optional.IsDefined(BackupType))
+            {
+                writer.WritePropertyName("backupType"u8);
+                writer.WriteStringValue(BackupType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ListOfBackupFiles))
+            {
+                writer.WritePropertyName("listOfBackupFiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in ListOfBackupFiles)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (Optional.IsDefined(BackupStartOn))
+            {
+                writer.WritePropertyName("backupStartDate"u8);
+                writer.WriteStringValue(BackupStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(BackupFinishedOn))
+            {
+                writer.WritePropertyName("backupFinishedDate"u8);
+                writer.WriteStringValue(BackupFinishedOn.Value, "O");
+            }
+            if (Optional.IsDefined(IsBackupRestored))
+            {
+                writer.WritePropertyName("isBackupRestored"u8);
+                writer.WriteBooleanValue(IsBackupRestored.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BackupSetInfo DeserializeBackupSetInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<DateTimeOffset> backupStartDate = default;
             Optional<DateTimeOffset> backupFinishedDate = default;
             Optional<bool> isBackupRestored = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupSetId"u8))
@@ -111,8 +193,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     isBackupRestored = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupSetInfo(backupSetId.Value, firstLsn.Value, lastLsn.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(backupType), Optional.ToList(listOfBackupFiles), databaseName.Value, Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishedDate), Optional.ToNullable(isBackupRestored));
+            return new BackupSetInfo(backupSetId.Value, firstLsn.Value, lastLsn.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(backupType), Optional.ToList(listOfBackupFiles), databaseName.Value, Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishedDate), Optional.ToNullable(isBackupRestored), rawData);
+        }
+
+        BackupSetInfo IModelJsonSerializable<BackupSetInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupSetInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupSetInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupSetInfo IModelSerializable<BackupSetInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupSetInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BackupSetInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BackupSetInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupSetInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

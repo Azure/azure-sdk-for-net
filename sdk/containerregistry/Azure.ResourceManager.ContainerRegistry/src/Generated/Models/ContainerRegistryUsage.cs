@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The quota usage for a container registry. </summary>
     public partial class ContainerRegistryUsage
     {
-        /// <summary> Initializes a new instance of ContainerRegistryUsage. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryUsage"/>. </summary>
         internal ContainerRegistryUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryUsage"/>. </summary>
         /// <param name="name"> The name of the usage. </param>
         /// <param name="limit"> The limit of the usage. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="unit"> The unit of measurement. </param>
-        internal ContainerRegistryUsage(string name, long? limit, long? currentValue, ContainerRegistryUsageUnit? unit)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryUsage(string name, long? limit, long? currentValue, ContainerRegistryUsageUnit? unit, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Limit = limit;
             CurrentValue = currentValue;
             Unit = unit;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the usage. </summary>

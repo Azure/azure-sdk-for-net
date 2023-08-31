@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -12,18 +13,22 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition for data in the export. </summary>
     public partial class ExportDataset
     {
-        /// <summary> Initializes a new instance of ExportDataset. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportDataset"/>. </summary>
         public ExportDataset()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDataset"/>. </summary>
         /// <param name="granularity"> The granularity of rows in the export. Currently only 'Daily' is supported. </param>
         /// <param name="configuration"> The export dataset configuration. </param>
-        internal ExportDataset(GranularityType? granularity, ExportDatasetConfiguration configuration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportDataset(GranularityType? granularity, ExportDatasetConfiguration configuration, Dictionary<string, BinaryData> rawData)
         {
             Granularity = granularity;
             Configuration = configuration;
+            _rawData = rawData;
         }
 
         /// <summary> The granularity of rows in the export. Currently only 'Daily' is supported. </summary>

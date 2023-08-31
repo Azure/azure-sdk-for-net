@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database specific information for PostgreSQL to Azure Database for PostgreSQL migration task inputs. </summary>
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput
     {
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput"/>. </summary>
         public MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput()
         {
             MigrationSetting = new ChangeTrackingDictionary<string, BinaryData>();
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedTables = new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>();
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="id"> Result identifier. </param>
         /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
@@ -31,7 +33,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceSetting"> Source settings to tune source endpoint migration behavior. </param>
         /// <param name="targetSetting"> Target settings to tune target endpoint migration behavior. </param>
         /// <param name="selectedTables"> Tables selected for migration. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(string name, string id, string targetDatabaseName, IDictionary<string, BinaryData> migrationSetting, IDictionary<string, string> sourceSetting, IDictionary<string, string> targetSetting, IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput> selectedTables)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(string name, string id, string targetDatabaseName, IDictionary<string, BinaryData> migrationSetting, IDictionary<string, string> sourceSetting, IDictionary<string, string> targetSetting, IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput> selectedTables, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Id = id;
@@ -40,6 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceSetting = sourceSetting;
             TargetSetting = targetSetting;
             SelectedTables = selectedTables;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the database. </summary>

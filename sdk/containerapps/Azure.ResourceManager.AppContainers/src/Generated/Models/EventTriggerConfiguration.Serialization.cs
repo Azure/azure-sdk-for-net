@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class EventTriggerConfiguration : IUtf8JsonSerializable
+    public partial class EventTriggerConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<EventTriggerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventTriggerConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventTriggerConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplicaCompletionCount))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventTriggerConfiguration DeserializeEventTriggerConfiguration(JsonElement element)
+        internal static EventTriggerConfiguration DeserializeEventTriggerConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> replicaCompletionCount = default;
             Optional<int> parallelism = default;
             Optional<ContainerAppJobScale> scale = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicaCompletionCount"u8))
@@ -71,8 +94,57 @@ namespace Azure.ResourceManager.AppContainers.Models
                     scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventTriggerConfiguration(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value);
+            return new EventTriggerConfiguration(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value, rawData);
+        }
+
+        EventTriggerConfiguration IModelJsonSerializable<EventTriggerConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventTriggerConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventTriggerConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventTriggerConfiguration IModelSerializable<EventTriggerConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventTriggerConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EventTriggerConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EventTriggerConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventTriggerConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class DomainPropertiesVerificationRecords
+    public partial class DomainPropertiesVerificationRecords : IUtf8JsonSerializable, IModelJsonSerializable<DomainPropertiesVerificationRecords>
     {
-        internal static DomainPropertiesVerificationRecords DeserializeDomainPropertiesVerificationRecords(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DomainPropertiesVerificationRecords>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DomainPropertiesVerificationRecords>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Domain))
+            {
+                writer.WritePropertyName("Domain"u8);
+                writer.WriteObjectValue(Domain);
+            }
+            if (Optional.IsDefined(Spf))
+            {
+                writer.WritePropertyName("SPF"u8);
+                writer.WriteObjectValue(Spf);
+            }
+            if (Optional.IsDefined(Dkim))
+            {
+                writer.WritePropertyName("DKIM"u8);
+                writer.WriteObjectValue(Dkim);
+            }
+            if (Optional.IsDefined(Dkim2))
+            {
+                writer.WritePropertyName("DKIM2"u8);
+                writer.WriteObjectValue(Dkim2);
+            }
+            if (Optional.IsDefined(Dmarc))
+            {
+                writer.WritePropertyName("DMARC"u8);
+                writer.WriteObjectValue(Dmarc);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DomainPropertiesVerificationRecords DeserializeDomainPropertiesVerificationRecords(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.ResourceManager.Communication.Models
             Optional<VerificationDnsRecord> dkim = default;
             Optional<VerificationDnsRecord> dkiM2 = default;
             Optional<VerificationDnsRecord> dmarc = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Domain"u8))
@@ -70,8 +124,57 @@ namespace Azure.ResourceManager.Communication.Models
                     dmarc = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DomainPropertiesVerificationRecords(domain.Value, spf.Value, dkim.Value, dkiM2.Value, dmarc.Value);
+            return new DomainPropertiesVerificationRecords(domain.Value, spf.Value, dkim.Value, dkiM2.Value, dmarc.Value, rawData);
+        }
+
+        DomainPropertiesVerificationRecords IModelJsonSerializable<DomainPropertiesVerificationRecords>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDomainPropertiesVerificationRecords(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DomainPropertiesVerificationRecords>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DomainPropertiesVerificationRecords IModelSerializable<DomainPropertiesVerificationRecords>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDomainPropertiesVerificationRecords(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DomainPropertiesVerificationRecords model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DomainPropertiesVerificationRecords(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDomainPropertiesVerificationRecords(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

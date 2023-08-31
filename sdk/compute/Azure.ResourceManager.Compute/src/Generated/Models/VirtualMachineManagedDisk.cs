@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,17 +15,18 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The parameters of a managed disk. </summary>
     public partial class VirtualMachineManagedDisk : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineManagedDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineManagedDisk"/>. </summary>
         public VirtualMachineManagedDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineManagedDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineManagedDisk"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
         /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        internal VirtualMachineManagedDisk(ResourceIdentifier id, StorageAccountType? storageAccountType, WritableSubResource diskEncryptionSet, VirtualMachineDiskSecurityProfile securityProfile) : base(id)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineManagedDisk(ResourceIdentifier id, StorageAccountType? storageAccountType, WritableSubResource diskEncryptionSet, VirtualMachineDiskSecurityProfile securityProfile, Dictionary<string, BinaryData> rawData) : base(id, rawData)
         {
             StorageAccountType = storageAccountType;
             DiskEncryptionSet = diskEncryptionSet;

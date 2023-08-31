@@ -14,25 +14,29 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Service health status. </summary>
     public partial class DataMigrationServiceStatusResponse
     {
-        /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceStatusResponse"/>. </summary>
         internal DataMigrationServiceStatusResponse()
         {
             SupportedTaskTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceStatusResponse"/>. </summary>
         /// <param name="agentVersion"> The DMS instance agent version. </param>
         /// <param name="agentConfiguration"> Agent Configuration. </param>
         /// <param name="status"> The machine-readable status, such as 'Initializing', 'Offline', 'Online', 'Deploying', 'Deleting', 'Stopped', 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop' or 'Failed'. </param>
         /// <param name="vmSize"> The services virtual machine size, such as 'Standard_D2_v2'. </param>
         /// <param name="supportedTaskTypes"> The list of supported task types. </param>
-        internal DataMigrationServiceStatusResponse(string agentVersion, BinaryData agentConfiguration, string status, string vmSize, IReadOnlyList<string> supportedTaskTypes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationServiceStatusResponse(string agentVersion, BinaryData agentConfiguration, string status, string vmSize, IReadOnlyList<string> supportedTaskTypes, Dictionary<string, BinaryData> rawData)
         {
             AgentVersion = agentVersion;
             AgentConfiguration = agentConfiguration;
             Status = status;
             VmSize = vmSize;
             SupportedTaskTypes = supportedTaskTypes;
+            _rawData = rawData;
         }
 
         /// <summary> The DMS instance agent version. </summary>

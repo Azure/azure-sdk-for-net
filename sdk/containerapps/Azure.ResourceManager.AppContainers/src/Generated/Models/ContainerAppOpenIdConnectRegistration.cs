@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the app registration for the custom Open ID Connect provider. </summary>
     public partial class ContainerAppOpenIdConnectRegistration
     {
-        /// <summary> Initializes a new instance of ContainerAppOpenIdConnectRegistration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectRegistration"/>. </summary>
         public ContainerAppOpenIdConnectRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppOpenIdConnectRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectRegistration"/>. </summary>
         /// <param name="clientId"> The client id of the custom Open ID Connect provider. </param>
         /// <param name="clientCredential"> The authentication credentials of the custom Open ID Connect provider. </param>
         /// <param name="openIdConnectConfiguration"> The configuration settings of the endpoints used for the custom Open ID Connect provider. </param>
-        internal ContainerAppOpenIdConnectRegistration(string clientId, ContainerAppOpenIdConnectClientCredential clientCredential, ContainerAppOpenIdConnectConfig openIdConnectConfiguration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppOpenIdConnectRegistration(string clientId, ContainerAppOpenIdConnectClientCredential clientCredential, ContainerAppOpenIdConnectConfig openIdConnectConfiguration, Dictionary<string, BinaryData> rawData)
         {
             ClientId = clientId;
             ClientCredential = clientCredential;
             OpenIdConnectConfiguration = openIdConnectConfiguration;
+            _rawData = rawData;
         }
 
         /// <summary> The client id of the custom Open ID Connect provider. </summary>

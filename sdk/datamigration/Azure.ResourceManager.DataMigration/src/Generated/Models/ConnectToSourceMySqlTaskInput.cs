@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates MySQL database connection. </summary>
     public partial class ConnectToSourceMySqlTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceMySqlTaskInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceMySqlTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to MySQL source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
         public ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo)
@@ -23,17 +26,24 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceMySqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceMySqlTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to MySQL source. </param>
         /// <param name="targetPlatform"> Target Platform for the migration. </param>
         /// <param name="checkPermissionsGroup"> Permission group for validations. </param>
         /// <param name="isOfflineMigration"> Flag for whether or not the migration is offline. </param>
-        internal ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlTargetPlatformType? targetPlatform, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? isOfflineMigration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlTargetPlatformType? targetPlatform, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? isOfflineMigration, Dictionary<string, BinaryData> rawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetPlatform = targetPlatform;
             CheckPermissionsGroup = checkPermissionsGroup;
             IsOfflineMigration = isOfflineMigration;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceMySqlTaskInput"/> for deserialization. </summary>
+        internal ConnectToSourceMySqlTaskInput()
+        {
         }
 
         /// <summary> Information for connecting to MySQL source. </summary>

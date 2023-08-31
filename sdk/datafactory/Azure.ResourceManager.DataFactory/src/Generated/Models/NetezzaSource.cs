@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity Netezza source. </summary>
     public partial class NetezzaSource : TabularSource
     {
-        /// <summary> Initializes a new instance of NetezzaSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetezzaSource"/>. </summary>
         public NetezzaSource()
         {
             CopySourceType = "NetezzaSource";
         }
 
-        /// <summary> Initializes a new instance of NetezzaSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetezzaSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Rooms
@@ -13,7 +14,9 @@ namespace Azure.Communication.Rooms
     /// <summary> The meeting room. </summary>
     public partial class CommunicationRoom
     {
-        /// <summary> Initializes a new instance of CommunicationRoom. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationRoom"/>. </summary>
         /// <param name="id"> Unique identifier of a room. This id is server generated. </param>
         /// <param name="createdAt"> The timestamp when the room was created at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
@@ -27,6 +30,26 @@ namespace Azure.Communication.Rooms
             CreatedAt = createdAt;
             ValidFrom = validFrom;
             ValidUntil = validUntil;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationRoom"/>. </summary>
+        /// <param name="id"> Unique identifier of a room. This id is server generated. </param>
+        /// <param name="createdAt"> The timestamp when the room was created at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationRoom(string id, DateTimeOffset createdAt, DateTimeOffset validFrom, DateTimeOffset validUntil, Dictionary<string, BinaryData> rawData)
+        {
+            Id = id;
+            CreatedAt = createdAt;
+            ValidFrom = validFrom;
+            ValidUntil = validUntil;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationRoom"/> for deserialization. </summary>
+        internal CommunicationRoom()
+        {
         }
 
         /// <summary> Unique identifier of a room. This id is server generated. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class RelationshipLinkFieldMapping : IUtf8JsonSerializable
+    public partial class RelationshipLinkFieldMapping : IUtf8JsonSerializable, IModelJsonSerializable<RelationshipLinkFieldMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RelationshipLinkFieldMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RelationshipLinkFieldMapping>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("interactionFieldName"u8);
             writer.WriteStringValue(InteractionFieldName);
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             writer.WritePropertyName("relationshipFieldName"u8);
             writer.WriteStringValue(RelationshipFieldName);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RelationshipLinkFieldMapping DeserializeRelationshipLinkFieldMapping(JsonElement element)
+        internal static RelationshipLinkFieldMapping DeserializeRelationshipLinkFieldMapping(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string interactionFieldName = default;
             Optional<LinkType> linkType = default;
             string relationshipFieldName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interactionFieldName"u8))
@@ -57,8 +80,57 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     relationshipFieldName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RelationshipLinkFieldMapping(interactionFieldName, Optional.ToNullable(linkType), relationshipFieldName);
+            return new RelationshipLinkFieldMapping(interactionFieldName, Optional.ToNullable(linkType), relationshipFieldName, rawData);
+        }
+
+        RelationshipLinkFieldMapping IModelJsonSerializable<RelationshipLinkFieldMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRelationshipLinkFieldMapping(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RelationshipLinkFieldMapping>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RelationshipLinkFieldMapping IModelSerializable<RelationshipLinkFieldMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRelationshipLinkFieldMapping(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RelationshipLinkFieldMapping model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RelationshipLinkFieldMapping(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRelationshipLinkFieldMapping(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

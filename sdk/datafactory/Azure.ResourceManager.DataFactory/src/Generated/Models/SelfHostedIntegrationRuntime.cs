@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Self-hosted integration runtime. </summary>
     public partial class SelfHostedIntegrationRuntime : DataFactoryIntegrationRuntimeProperties
     {
-        /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntime"/>. </summary>
         public SelfHostedIntegrationRuntime()
         {
             IntegrationRuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 
-        /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntime"/>. </summary>
         /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

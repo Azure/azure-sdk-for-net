@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class Participant : IUtf8JsonSerializable
+    public partial class Participant : IUtf8JsonSerializable, IModelJsonSerializable<Participant>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Participant>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Participant>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("profileTypeName"u8);
             writer.WriteStringValue(ProfileTypeName);
@@ -54,11 +61,25 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Participant DeserializeParticipant(JsonElement element)
+        internal static Participant DeserializeParticipant(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +90,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<IDictionary<string, string>> displayName = default;
             Optional<IDictionary<string, string>> description = default;
             Optional<string> role = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileTypeName"u8))
@@ -124,8 +146,57 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     role = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Participant(profileTypeName, participantPropertyReferences, participantName, Optional.ToDictionary(displayName), Optional.ToDictionary(description), role.Value);
+            return new Participant(profileTypeName, participantPropertyReferences, participantName, Optional.ToDictionary(displayName), Optional.ToDictionary(description), role.Value, rawData);
+        }
+
+        Participant IModelJsonSerializable<Participant>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeParticipant(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Participant>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Participant IModelSerializable<Participant>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeParticipant(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(Participant model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator Participant(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeParticipant(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

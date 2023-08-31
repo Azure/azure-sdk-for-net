@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies additional settings to be applied when patch mode AutomaticByPlatform is selected in Windows patch settings. </summary>
     public partial class WindowsVmGuestPatchAutomaticByPlatformSettings
     {
-        /// <summary> Initializes a new instance of WindowsVmGuestPatchAutomaticByPlatformSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WindowsVmGuestPatchAutomaticByPlatformSettings"/>. </summary>
         public WindowsVmGuestPatchAutomaticByPlatformSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsVmGuestPatchAutomaticByPlatformSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsVmGuestPatchAutomaticByPlatformSettings"/>. </summary>
         /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
         /// <param name="bypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
-        internal WindowsVmGuestPatchAutomaticByPlatformSettings(WindowsVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? bypassPlatformSafetyChecksOnUserSchedule)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsVmGuestPatchAutomaticByPlatformSettings(WindowsVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? bypassPlatformSafetyChecksOnUserSchedule, Dictionary<string, BinaryData> rawData)
         {
             RebootSetting = rebootSetting;
             BypassPlatformSafetyChecksOnUserSchedule = bypassPlatformSafetyChecksOnUserSchedule;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> An authentication key. </summary>
     public partial class AuthenticationKeys
     {
-        /// <summary> Initializes a new instance of AuthenticationKeys. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthenticationKeys"/>. </summary>
         internal AuthenticationKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthenticationKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationKeys"/>. </summary>
         /// <param name="authKey1"> The first authentication key. </param>
         /// <param name="authKey2"> The second authentication key. </param>
-        internal AuthenticationKeys(string authKey1, string authKey2)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthenticationKeys(string authKey1, string authKey2, Dictionary<string, BinaryData> rawData)
         {
             AuthKey1 = authKey1;
             AuthKey2 = authKey2;
+            _rawData = rawData;
         }
 
         /// <summary> The first authentication key. </summary>

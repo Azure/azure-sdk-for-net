@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Information of the sku. </summary>
     public partial class DataBoxSkuInformation
     {
-        /// <summary> Initializes a new instance of DataBoxSkuInformation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxSkuInformation"/>. </summary>
         internal DataBoxSkuInformation()
         {
             DataLocationToServiceLocationMap = new ChangeTrackingList<DataLocationToServiceLocationMap>();
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.DataBox.Models
             CountriesWithinCommerceBoundary = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSkuInformation"/>. </summary>
         /// <param name="sku"> The Sku. </param>
         /// <param name="isEnabled"> The sku is enabled or not. </param>
         /// <param name="dataLocationToServiceLocationMap"> The map of data location to service location. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="disabledReasonMessage"> Message for why the Sku is disabled. </param>
         /// <param name="requiredFeature"> Required feature to access the sku. </param>
         /// <param name="countriesWithinCommerceBoundary"> List of all the Countries in the SKU specific commerce boundary. </param>
-        internal DataBoxSkuInformation(DataBoxSku sku, bool? isEnabled, IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap, DataBoxSkuCapacity capacity, IReadOnlyList<DataBoxSkuCost> costs, IReadOnlyList<string> apiVersions, SkuDisabledReason? disabledReason, string disabledReasonMessage, string requiredFeature, IReadOnlyList<string> countriesWithinCommerceBoundary)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxSkuInformation(DataBoxSku sku, bool? isEnabled, IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap, DataBoxSkuCapacity capacity, IReadOnlyList<DataBoxSkuCost> costs, IReadOnlyList<string> apiVersions, SkuDisabledReason? disabledReason, string disabledReasonMessage, string requiredFeature, IReadOnlyList<string> countriesWithinCommerceBoundary, Dictionary<string, BinaryData> rawData)
         {
             Sku = sku;
             IsEnabled = isEnabled;
@@ -45,6 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DisabledReasonMessage = disabledReasonMessage;
             RequiredFeature = requiredFeature;
             CountriesWithinCommerceBoundary = countriesWithinCommerceBoundary;
+            _rawData = rawData;
         }
 
         /// <summary> The Sku. </summary>

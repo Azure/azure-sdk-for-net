@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> SourceControl collection ARM resource. </summary>
     internal partial class SourceControlCollection
     {
-        /// <summary> Initializes a new instance of SourceControlCollection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceControlCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SourceControlCollection(IEnumerable<ContainerAppSourceControlData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SourceControlCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal SourceControlCollection(IReadOnlyList<ContainerAppSourceControlData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceControlCollection(IReadOnlyList<ContainerAppSourceControlData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceControlCollection"/> for deserialization. </summary>
+        internal SourceControlCollection()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

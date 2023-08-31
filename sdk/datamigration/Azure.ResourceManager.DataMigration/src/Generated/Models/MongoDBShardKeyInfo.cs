@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a MongoDB shard key. </summary>
     public partial class MongoDBShardKeyInfo
     {
-        /// <summary> Initializes a new instance of MongoDBShardKeyInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeyInfo"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <param name="isUnique"> Whether the shard key is unique. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fields"/> is null. </exception>
@@ -27,13 +29,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             IsUnique = isUnique;
         }
 
-        /// <summary> Initializes a new instance of MongoDBShardKeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeyInfo"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <param name="isUnique"> Whether the shard key is unique. </param>
-        internal MongoDBShardKeyInfo(IReadOnlyList<MongoDBShardKeyField> fields, bool isUnique)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBShardKeyInfo(IReadOnlyList<MongoDBShardKeyField> fields, bool isUnique, Dictionary<string, BinaryData> rawData)
         {
             Fields = fields;
             IsUnique = isUnique;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeyInfo"/> for deserialization. </summary>
+        internal MongoDBShardKeyInfo()
+        {
         }
 
         /// <summary> The fields within the shard key. </summary>

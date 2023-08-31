@@ -15,7 +15,9 @@ namespace Azure.Communication.Rooms
     /// <summary> A collection of participants in a room. </summary>
     internal partial class ParticipantsCollection
     {
-        /// <summary> Initializes a new instance of ParticipantsCollection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ParticipantsCollection"/>. </summary>
         /// <param name="value"> A collection of participants. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ParticipantsCollection(IEnumerable<RoomParticipant> value)
@@ -25,13 +27,20 @@ namespace Azure.Communication.Rooms
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ParticipantsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParticipantsCollection"/>. </summary>
         /// <param name="value"> A collection of participants. </param>
         /// <param name="nextLink"> If there are more participants that can be retrieved, the next link will be populated. </param>
-        internal ParticipantsCollection(IReadOnlyList<RoomParticipant> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParticipantsCollection(IReadOnlyList<RoomParticipant> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParticipantsCollection"/> for deserialization. </summary>
+        internal ParticipantsCollection()
+        {
         }
 
         /// <summary> A collection of participants. </summary>

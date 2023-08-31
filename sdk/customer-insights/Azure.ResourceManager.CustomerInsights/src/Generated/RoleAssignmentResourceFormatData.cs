@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class RoleAssignmentResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of RoleAssignmentResourceFormatData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentResourceFormatData"/>. </summary>
         public RoleAssignmentResourceFormatData()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Principals = new ChangeTrackingList<AssignmentPrincipal>();
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +54,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="roleAssignments"> The Role assignments set for the assignment. </param>
         /// <param name="conflationPolicies"> Widget types set for the assignment. </param>
         /// <param name="segments"> The Role assignments set for the assignment. </param>
-        internal RoleAssignmentResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string assignmentName, IDictionary<string, string> displayName, IDictionary<string, string> description, ProvisioningState? provisioningState, RoleType? role, IList<AssignmentPrincipal> principals, ResourceSetDescription profiles, ResourceSetDescription interactions, ResourceSetDescription links, ResourceSetDescription kpis, ResourceSetDescription sasPolicies, ResourceSetDescription connectors, ResourceSetDescription views, ResourceSetDescription relationshipLinks, ResourceSetDescription relationships, ResourceSetDescription widgetTypes, ResourceSetDescription roleAssignments, ResourceSetDescription conflationPolicies, ResourceSetDescription segments) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string assignmentName, IDictionary<string, string> displayName, IDictionary<string, string> description, ProvisioningState? provisioningState, RoleType? role, IList<AssignmentPrincipal> principals, ResourceSetDescription profiles, ResourceSetDescription interactions, ResourceSetDescription links, ResourceSetDescription kpis, ResourceSetDescription sasPolicies, ResourceSetDescription connectors, ResourceSetDescription views, ResourceSetDescription relationshipLinks, ResourceSetDescription relationships, ResourceSetDescription widgetTypes, ResourceSetDescription roleAssignments, ResourceSetDescription conflationPolicies, ResourceSetDescription segments, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             TenantId = tenantId;
             AssignmentName = assignmentName;
@@ -74,6 +77,7 @@ namespace Azure.ResourceManager.CustomerInsights
             RoleAssignments = roleAssignments;
             ConflationPolicies = conflationPolicies;
             Segments = segments;
+            _rawData = rawData;
         }
 
         /// <summary> The hub name. </summary>

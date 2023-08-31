@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraKeyspacePropertiesConfig : IUtf8JsonSerializable
+    public partial class CassandraKeyspacePropertiesConfig : IUtf8JsonSerializable, IModelJsonSerializable<CassandraKeyspacePropertiesConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CassandraKeyspacePropertiesConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CassandraKeyspacePropertiesConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CassandraKeyspacePropertiesConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Throughput))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CassandraKeyspacePropertiesConfig DeserializeCassandraKeyspacePropertiesConfig(JsonElement element)
+        internal static CassandraKeyspacePropertiesConfig DeserializeCassandraKeyspacePropertiesConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> throughput = default;
             Optional<AutoscaleSettings> autoscaleSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -56,8 +79,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     autoscaleSettings = AutoscaleSettings.DeserializeAutoscaleSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CassandraKeyspacePropertiesConfig(Optional.ToNullable(throughput), autoscaleSettings.Value);
+            return new CassandraKeyspacePropertiesConfig(Optional.ToNullable(throughput), autoscaleSettings.Value, rawData);
+        }
+
+        CassandraKeyspacePropertiesConfig IModelJsonSerializable<CassandraKeyspacePropertiesConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CassandraKeyspacePropertiesConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCassandraKeyspacePropertiesConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CassandraKeyspacePropertiesConfig>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CassandraKeyspacePropertiesConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CassandraKeyspacePropertiesConfig IModelSerializable<CassandraKeyspacePropertiesConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CassandraKeyspacePropertiesConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCassandraKeyspacePropertiesConfig(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CassandraKeyspacePropertiesConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CassandraKeyspacePropertiesConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCassandraKeyspacePropertiesConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

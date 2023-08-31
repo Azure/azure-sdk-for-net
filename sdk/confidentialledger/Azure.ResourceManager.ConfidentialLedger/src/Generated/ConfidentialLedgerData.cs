@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConfidentialLedger.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.ConfidentialLedger
     /// </summary>
     public partial class ConfidentialLedgerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ConfidentialLedgerData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +35,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of Confidential Ledger Resource. </param>
-        internal ConfidentialLedgerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfidentialLedgerProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfidentialLedgerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfidentialLedgerProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerData"/> for deserialization. </summary>
+        internal ConfidentialLedgerData()
+        {
         }
 
         /// <summary> Properties of Confidential Ledger Resource. </summary>

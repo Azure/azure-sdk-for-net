@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesPostgreSqlTaskOutput
+    public partial class GetUserTablesPostgreSqlTaskOutput : IUtf8JsonSerializable, IModelJsonSerializable<GetUserTablesPostgreSqlTaskOutput>
     {
-        internal static GetUserTablesPostgreSqlTaskOutput DeserializeGetUserTablesPostgreSqlTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GetUserTablesPostgreSqlTaskOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GetUserTablesPostgreSqlTaskOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GetUserTablesPostgreSqlTaskOutput DeserializeGetUserTablesPostgreSqlTaskOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> databaseName = default;
             Optional<IReadOnlyList<DatabaseTable>> tables = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -57,8 +85,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GetUserTablesPostgreSqlTaskOutput(databaseName.Value, Optional.ToList(tables), Optional.ToList(validationErrors));
+            return new GetUserTablesPostgreSqlTaskOutput(databaseName.Value, Optional.ToList(tables), Optional.ToList(validationErrors), rawData);
+        }
+
+        GetUserTablesPostgreSqlTaskOutput IModelJsonSerializable<GetUserTablesPostgreSqlTaskOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetUserTablesPostgreSqlTaskOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetUserTablesPostgreSqlTaskOutput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetUserTablesPostgreSqlTaskOutput IModelSerializable<GetUserTablesPostgreSqlTaskOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetUserTablesPostgreSqlTaskOutput(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GetUserTablesPostgreSqlTaskOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GetUserTablesPostgreSqlTaskOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetUserTablesPostgreSqlTaskOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,18 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The input for OrchestrationServiceState. </summary>
     public partial class OrchestrationServiceStateContent
     {
-        /// <summary> Initializes a new instance of OrchestrationServiceStateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrchestrationServiceStateContent"/>. </summary>
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="action"> The action to be performed. </param>
         public OrchestrationServiceStateContent(OrchestrationServiceName serviceName, OrchestrationServiceStateAction action)
         {
             ServiceName = serviceName;
             Action = action;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrchestrationServiceStateContent"/>. </summary>
+        /// <param name="serviceName"> The name of the service. </param>
+        /// <param name="action"> The action to be performed. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrchestrationServiceStateContent(OrchestrationServiceName serviceName, OrchestrationServiceStateAction action, Dictionary<string, BinaryData> rawData)
+        {
+            ServiceName = serviceName;
+            Action = action;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrchestrationServiceStateContent"/> for deserialization. </summary>
+        internal OrchestrationServiceStateContent()
+        {
         }
 
         /// <summary> The name of the service. </summary>

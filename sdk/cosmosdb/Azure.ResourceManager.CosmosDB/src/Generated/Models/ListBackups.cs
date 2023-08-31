@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> List of restorable backups for a Cassandra cluster. </summary>
     internal partial class ListBackups
     {
-        /// <summary> Initializes a new instance of ListBackups. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListBackups"/>. </summary>
         internal ListBackups()
         {
             Value = new ChangeTrackingList<CassandraClusterBackupResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ListBackups. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBackups"/>. </summary>
         /// <param name="value"> Container for array of backups. </param>
-        internal ListBackups(IReadOnlyList<CassandraClusterBackupResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListBackups(IReadOnlyList<CassandraClusterBackupResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Container for array of backups. </summary>

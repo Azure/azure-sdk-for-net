@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that migrates MySQL databases to Azure Database for MySQL for offline migrations. </summary>
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskInput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source MySQL. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for MySQL. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             OptionalAgentSettings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source MySQL. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for MySQL. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -40,7 +42,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="startedOn"> Parameter to specify when the migration started. </param>
         /// <param name="optionalAgentSettings"> Optional parameters for fine tuning the data transfer rate during migration. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlConnectionInfo targetConnectionInfo, IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases, bool? makeSourceServerReadOnly, DateTimeOffset? startedOn, IDictionary<string, string> optionalAgentSettings, string encryptedKeyForSecureFields)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlConnectionInfo targetConnectionInfo, IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases, bool? makeSourceServerReadOnly, DateTimeOffset? startedOn, IDictionary<string, string> optionalAgentSettings, string encryptedKeyForSecureFields, Dictionary<string, BinaryData> rawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
@@ -49,6 +52,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             StartedOn = startedOn;
             OptionalAgentSettings = optionalAgentSettings;
             EncryptedKeyForSecureFields = encryptedKeyForSecureFields;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskInput"/> for deserialization. </summary>
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskInput()
+        {
         }
 
         /// <summary> Connection information for source MySQL. </summary>

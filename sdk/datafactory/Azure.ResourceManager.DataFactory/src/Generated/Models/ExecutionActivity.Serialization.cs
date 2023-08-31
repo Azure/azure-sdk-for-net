@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecutionActivity : IUtf8JsonSerializable
+    public partial class ExecutionActivity : IUtf8JsonSerializable, IModelJsonSerializable<ExecutionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExecutionActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExecutionActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ExecutionActivity>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -79,8 +85,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ExecutionActivity DeserializeExecutionActivity(JsonElement element)
+        internal static ExecutionActivity DeserializeExecutionActivity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,6 +125,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "WebActivity": return WebActivity.DeserializeWebActivity(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<PipelineActivityPolicy> policy = default;
             string name = default;
@@ -213,6 +223,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ExecutionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value);
+        }
+
+        ExecutionActivity IModelJsonSerializable<ExecutionActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExecutionActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecutionActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExecutionActivity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExecutionActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExecutionActivity IModelSerializable<ExecutionActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExecutionActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExecutionActivity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExecutionActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExecutionActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExecutionActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineStorageProfile : IUtf8JsonSerializable
+    public partial class VirtualMachineStorageProfile : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineStorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineStorageProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineStorageProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ImageReference))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskControllerType"u8);
                 writer.WriteStringValue(DiskControllerType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineStorageProfile DeserializeVirtualMachineStorageProfile(JsonElement element)
+        internal static VirtualMachineStorageProfile DeserializeVirtualMachineStorageProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineOSDisk> osDisk = default;
             Optional<IList<VirtualMachineDataDisk>> dataDisks = default;
             Optional<DiskControllerType> diskControllerType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageReference"u8))
@@ -97,8 +119,57 @@ namespace Azure.ResourceManager.Compute.Models
                     diskControllerType = new DiskControllerType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineStorageProfile(imageReference.Value, osDisk.Value, Optional.ToList(dataDisks), Optional.ToNullable(diskControllerType));
+            return new VirtualMachineStorageProfile(imageReference.Value, osDisk.Value, Optional.ToList(dataDisks), Optional.ToNullable(diskControllerType), rawData);
+        }
+
+        VirtualMachineStorageProfile IModelJsonSerializable<VirtualMachineStorageProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineStorageProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineStorageProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineStorageProfile IModelSerializable<VirtualMachineStorageProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineStorageProfile(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VirtualMachineStorageProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VirtualMachineStorageProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineStorageProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

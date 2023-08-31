@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryManagedVirtualNetworkProperties : IUtf8JsonSerializable
+    public partial class DataFactoryManagedVirtualNetworkProperties : IUtf8JsonSerializable, IModelJsonSerializable<DataFactoryManagedVirtualNetworkProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFactoryManagedVirtualNetworkProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFactoryManagedVirtualNetworkProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             foreach (var item in AdditionalProperties)
             {
@@ -29,8 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryManagedVirtualNetworkProperties DeserializeDataFactoryManagedVirtualNetworkProperties(JsonElement element)
+        internal static DataFactoryManagedVirtualNetworkProperties DeserializeDataFactoryManagedVirtualNetworkProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +67,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryManagedVirtualNetworkProperties(Optional.ToNullable(vnetId), @alias.Value, additionalProperties);
+        }
+
+        DataFactoryManagedVirtualNetworkProperties IModelJsonSerializable<DataFactoryManagedVirtualNetworkProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryManagedVirtualNetworkProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFactoryManagedVirtualNetworkProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFactoryManagedVirtualNetworkProperties IModelSerializable<DataFactoryManagedVirtualNetworkProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFactoryManagedVirtualNetworkProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataFactoryManagedVirtualNetworkProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataFactoryManagedVirtualNetworkProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFactoryManagedVirtualNetworkProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

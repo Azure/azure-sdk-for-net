@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Secret to be added to volume. </summary>
     public partial class SecretVolumeItem
     {
-        /// <summary> Initializes a new instance of SecretVolumeItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecretVolumeItem"/>. </summary>
         public SecretVolumeItem()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretVolumeItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretVolumeItem"/>. </summary>
         /// <param name="secretRef"> Name of the Container App secret from which to pull the secret value. </param>
         /// <param name="path"> Path to project secret to. If no path is provided, path defaults to name of secret listed in secretRef. </param>
-        internal SecretVolumeItem(string secretRef, string path)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecretVolumeItem(string secretRef, string path, Dictionary<string, BinaryData> rawData)
         {
             SecretRef = secretRef;
             Path = path;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the Container App secret from which to pull the secret value. </summary>

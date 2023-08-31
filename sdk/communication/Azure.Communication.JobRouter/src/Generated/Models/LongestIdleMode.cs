@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are directed to the worker who has been idle longest. </summary>
     public partial class LongestIdleMode : DistributionMode
     {
-        /// <summary> Initializes a new instance of LongestIdleMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongestIdleMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Mode. </param>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
@@ -21,7 +24,8 @@ namespace Azure.Communication.JobRouter
         /// variable to true. This flag is intended more for temporary usage.
         /// By default, set to false.
         /// </param>
-        internal LongestIdleMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors) : base(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LongestIdleMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, Dictionary<string, BinaryData> rawData) : base(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors, rawData)
         {
             Kind = kind ?? "longest-idle";
         }

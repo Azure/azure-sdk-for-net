@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Parameters to be applied to the cluster-autoscaler when enabled. </summary>
     public partial class ManagedClusterAutoScalerProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterAutoScalerProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAutoScalerProfile"/>. </summary>
         public ManagedClusterAutoScalerProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAutoScalerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAutoScalerProfile"/>. </summary>
         /// <param name="balanceSimilarNodeGroups"> Valid values are 'true' and 'false'. </param>
         /// <param name="expander"> If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </param>
         /// <param name="maxEmptyBulkDelete"> The default is 10. </param>
@@ -33,7 +38,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="scaleDownUtilizationThreshold"> The default is '0.5'. </param>
         /// <param name="skipNodesWithLocalStorage"> The default is true. </param>
         /// <param name="skipNodesWithSystemPods"> The default is true. </param>
-        internal ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups, AutoScaleExpander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanIntervalInSeconds, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups, AutoScaleExpander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanIntervalInSeconds, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods, Dictionary<string, BinaryData> rawData)
         {
             BalanceSimilarNodeGroups = balanceSimilarNodeGroups;
             Expander = expander;
@@ -52,6 +58,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ScaleDownUtilizationThreshold = scaleDownUtilizationThreshold;
             SkipNodesWithLocalStorage = skipNodesWithLocalStorage;
             SkipNodesWithSystemPods = skipNodesWithSystemPods;
+            _rawData = rawData;
         }
 
         /// <summary> Valid values are 'true' and 'false'. </summary>

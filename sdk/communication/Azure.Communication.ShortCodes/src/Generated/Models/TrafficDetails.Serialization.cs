@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class TrafficDetails : IUtf8JsonSerializable
+    public partial class TrafficDetails : IUtf8JsonSerializable, IModelJsonSerializable<TrafficDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrafficDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrafficDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TotalMonthlyVolume))
             {
@@ -45,11 +53,25 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("estimatedRampUpTimeInDays"u8);
                 writer.WriteNumberValue(EstimatedRampUpTimeInDays.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrafficDetails DeserializeTrafficDetails(JsonElement element)
+        internal static TrafficDetails DeserializeTrafficDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +82,7 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<bool> isSpiky = default;
             Optional<string> spikeDetails = default;
             Optional<int> estimatedRampUpTimeInDays = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalMonthlyVolume"u8))
@@ -112,8 +135,57 @@ namespace Azure.Communication.ShortCodes.Models
                     estimatedRampUpTimeInDays = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrafficDetails(Optional.ToNullable(totalMonthlyVolume), Optional.ToNullable(monthlyAverageMessagesFromUser), Optional.ToNullable(monthlyAverageMessagesToUser), Optional.ToNullable(isSpiky), spikeDetails.Value, Optional.ToNullable(estimatedRampUpTimeInDays));
+            return new TrafficDetails(Optional.ToNullable(totalMonthlyVolume), Optional.ToNullable(monthlyAverageMessagesFromUser), Optional.ToNullable(monthlyAverageMessagesToUser), Optional.ToNullable(isSpiky), spikeDetails.Value, Optional.ToNullable(estimatedRampUpTimeInDays), rawData);
+        }
+
+        TrafficDetails IModelJsonSerializable<TrafficDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrafficDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrafficDetails IModelSerializable<TrafficDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrafficDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TrafficDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TrafficDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrafficDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

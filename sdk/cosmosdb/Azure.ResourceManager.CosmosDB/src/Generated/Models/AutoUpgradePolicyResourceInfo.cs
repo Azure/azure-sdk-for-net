@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB resource auto-upgrade policy. </summary>
     internal partial class AutoUpgradePolicyResourceInfo
     {
-        /// <summary> Initializes a new instance of AutoUpgradePolicyResourceInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradePolicyResourceInfo"/>. </summary>
         public AutoUpgradePolicyResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoUpgradePolicyResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradePolicyResourceInfo"/>. </summary>
         /// <param name="throughputPolicy"> Represents throughput policy which service must adhere to for auto-upgrade. </param>
-        internal AutoUpgradePolicyResourceInfo(ThroughputPolicyResourceInfo throughputPolicy)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoUpgradePolicyResourceInfo(ThroughputPolicyResourceInfo throughputPolicy, Dictionary<string, BinaryData> rawData)
         {
             ThroughputPolicy = throughputPolicy;
+            _rawData = rawData;
         }
 
         /// <summary> Represents throughput policy which service must adhere to for auto-upgrade. </summary>

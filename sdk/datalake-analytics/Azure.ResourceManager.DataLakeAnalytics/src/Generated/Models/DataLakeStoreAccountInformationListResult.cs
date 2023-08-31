@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataLakeAnalytics;
@@ -17,13 +18,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     internal partial class DataLakeStoreAccountInformationListResult
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountInformationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountInformationListResult"/>. </summary>
         internal DataLakeStoreAccountInformationListResult()
         {
             Value = new ChangeTrackingList<DataLakeStoreAccountInformationData>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountInformationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountInformationListResult"/>. </summary>
         /// <param name="value">
         /// The results of the list operation.
         /// Serialized Name: DataLakeStoreAccountInformationListResult.value
@@ -32,10 +35,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The link (url) to the next page of results.
         /// Serialized Name: DataLakeStoreAccountInformationListResult.nextLink
         /// </param>
-        internal DataLakeStoreAccountInformationListResult(IReadOnlyList<DataLakeStoreAccountInformationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreAccountInformationListResult(IReadOnlyList<DataLakeStoreAccountInformationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary>

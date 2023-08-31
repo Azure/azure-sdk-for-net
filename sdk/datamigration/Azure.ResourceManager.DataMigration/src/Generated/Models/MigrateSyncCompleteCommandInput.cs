@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for command that completes sync migration for a database. </summary>
     public partial class MigrateSyncCompleteCommandInput
     {
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandInput"/>. </summary>
         /// <param name="databaseName"> Name of database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public MigrateSyncCompleteCommandInput(string databaseName)
@@ -23,13 +26,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             DatabaseName = databaseName;
         }
 
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandInput"/>. </summary>
         /// <param name="databaseName"> Name of database. </param>
         /// <param name="commitTimeStamp"> Time stamp to complete. </param>
-        internal MigrateSyncCompleteCommandInput(string databaseName, DateTimeOffset? commitTimeStamp)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSyncCompleteCommandInput(string databaseName, DateTimeOffset? commitTimeStamp, Dictionary<string, BinaryData> rawData)
         {
             DatabaseName = databaseName;
             CommitTimeStamp = commitTimeStamp;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandInput"/> for deserialization. </summary>
+        internal MigrateSyncCompleteCommandInput()
+        {
         }
 
         /// <summary> Name of database. </summary>

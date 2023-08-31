@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Certificate resource specific properties. </summary>
     public partial class ContainerAppCertificateProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppCertificateProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificateProperties"/>. </summary>
         public ContainerAppCertificateProperties()
         {
             SubjectAlternativeNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificateProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the certificate. </param>
         /// <param name="password"> Certificate password. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
@@ -32,7 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
-        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             Password = password;
@@ -45,6 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Thumbprint = thumbprint;
             IsValid = isValid;
             PublicKeyHash = publicKeyHash;
+            _rawData = rawData;
         }
 
         /// <summary> Provisioning state of the certificate. </summary>

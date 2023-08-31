@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,29 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The event response message received from the service URI. </summary>
     public partial class ContainerRegistryWebhookEventResponseMessage
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventResponseMessage. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventResponseMessage"/>. </summary>
         internal ContainerRegistryWebhookEventResponseMessage()
         {
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventResponseMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventResponseMessage"/>. </summary>
         /// <param name="content"> The content of the event response message. </param>
         /// <param name="headers"> The headers of the event response message. </param>
         /// <param name="reasonPhrase"> The reason phrase of the event response message. </param>
         /// <param name="statusCode"> The status code of the event response message. </param>
         /// <param name="version"> The HTTP message version. </param>
-        internal ContainerRegistryWebhookEventResponseMessage(string content, IReadOnlyDictionary<string, string> headers, string reasonPhrase, string statusCode, string version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryWebhookEventResponseMessage(string content, IReadOnlyDictionary<string, string> headers, string reasonPhrase, string statusCode, string version, Dictionary<string, BinaryData> rawData)
         {
             Content = content;
             Headers = headers;
             ReasonPhrase = reasonPhrase;
             StatusCode = statusCode;
             Version = version;
+            _rawData = rawData;
         }
 
         /// <summary> The content of the event response message. </summary>

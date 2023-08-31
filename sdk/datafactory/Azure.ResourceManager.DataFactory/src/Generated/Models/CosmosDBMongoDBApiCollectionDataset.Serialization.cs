@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CosmosDBMongoDBApiCollectionDataset : IUtf8JsonSerializable
+    public partial class CosmosDBMongoDBApiCollectionDataset : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBMongoDBApiCollectionDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBMongoDBApiCollectionDataset>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBMongoDBApiCollectionDataset>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CosmosDBMongoDBApiCollectionDataset>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -88,8 +94,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBMongoDBApiCollectionDataset DeserializeCosmosDBMongoDBApiCollectionDataset(JsonElement element)
+        internal static CosmosDBMongoDBApiCollectionDataset DeserializeCosmosDBMongoDBApiCollectionDataset(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -205,6 +213,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDBMongoDBApiCollectionDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, collection);
+        }
+
+        CosmosDBMongoDBApiCollectionDataset IModelJsonSerializable<CosmosDBMongoDBApiCollectionDataset>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDBMongoDBApiCollectionDataset>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBMongoDBApiCollectionDataset(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBMongoDBApiCollectionDataset>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDBMongoDBApiCollectionDataset>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBMongoDBApiCollectionDataset IModelSerializable<CosmosDBMongoDBApiCollectionDataset>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDBMongoDBApiCollectionDataset>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBMongoDBApiCollectionDataset(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CosmosDBMongoDBApiCollectionDataset model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CosmosDBMongoDBApiCollectionDataset(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBMongoDBApiCollectionDataset(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

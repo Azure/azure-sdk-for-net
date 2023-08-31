@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of listing the run history of an export. </summary>
     internal partial class ExportExecutionListResult
     {
-        /// <summary> Initializes a new instance of ExportExecutionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportExecutionListResult"/>. </summary>
         public ExportExecutionListResult()
         {
             Value = new ChangeTrackingList<ExportRun>();
         }
 
-        /// <summary> Initializes a new instance of ExportExecutionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportExecutionListResult"/>. </summary>
         /// <param name="value"> A list of export runs. </param>
-        internal ExportExecutionListResult(IReadOnlyList<ExportRun> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportExecutionListResult(IReadOnlyList<ExportRun> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> A list of export runs. </summary>

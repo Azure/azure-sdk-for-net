@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class StaticRouterRule : IUtf8JsonSerializable
+    public partial class StaticRouterRule : IUtf8JsonSerializable, IModelJsonSerializable<StaticRouterRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StaticRouterRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StaticRouterRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<StaticRouterRule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(_value))
             {
@@ -22,17 +30,32 @@ namespace Azure.Communication.JobRouter
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StaticRouterRule DeserializeStaticRouterRule(JsonElement element)
+        internal static StaticRouterRule DeserializeStaticRouterRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<object> value = default;
             string kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -49,8 +72,57 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StaticRouterRule(kind, value.Value);
+            return new StaticRouterRule(kind, value.Value, rawData);
+        }
+
+        StaticRouterRule IModelJsonSerializable<StaticRouterRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StaticRouterRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticRouterRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StaticRouterRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StaticRouterRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StaticRouterRule IModelSerializable<StaticRouterRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StaticRouterRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStaticRouterRule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StaticRouterRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StaticRouterRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStaticRouterRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

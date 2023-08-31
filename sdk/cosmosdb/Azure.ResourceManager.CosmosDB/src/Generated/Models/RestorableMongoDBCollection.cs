@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> An Azure Cosmos DB MongoDB collection event. </summary>
     public partial class RestorableMongoDBCollection : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableMongoDBCollection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableMongoDBCollection"/>. </summary>
         internal RestorableMongoDBCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableMongoDBCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableMongoDBCollection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB MongoDB collection event. </param>
-        internal RestorableMongoDBCollection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableMongoDBCollectionResourceInfo resource) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableMongoDBCollection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableMongoDBCollectionResourceInfo resource, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
+            _rawData = rawData;
         }
 
         /// <summary> The resource of an Azure Cosmos DB MongoDB collection event. </summary>

@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ManagedIntegrationRuntime : IUtf8JsonSerializable
+    public partial class ManagedIntegrationRuntime : IUtf8JsonSerializable, IModelJsonSerializable<ManagedIntegrationRuntime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedIntegrationRuntime>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedIntegrationRuntime>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ManagedIntegrationRuntime>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedVirtualNetwork))
             {
@@ -59,8 +65,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedIntegrationRuntime DeserializeManagedIntegrationRuntime(JsonElement element)
+        internal static ManagedIntegrationRuntime DeserializeManagedIntegrationRuntime(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -147,6 +155,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), managedVirtualNetwork.Value, computeProperties.Value, ssisProperties.Value, customerVirtualNetwork.Value);
+        }
+
+        ManagedIntegrationRuntime IModelJsonSerializable<ManagedIntegrationRuntime>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ManagedIntegrationRuntime>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedIntegrationRuntime(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedIntegrationRuntime>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ManagedIntegrationRuntime>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedIntegrationRuntime IModelSerializable<ManagedIntegrationRuntime>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ManagedIntegrationRuntime>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedIntegrationRuntime(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedIntegrationRuntime model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedIntegrationRuntime(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedIntegrationRuntime(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

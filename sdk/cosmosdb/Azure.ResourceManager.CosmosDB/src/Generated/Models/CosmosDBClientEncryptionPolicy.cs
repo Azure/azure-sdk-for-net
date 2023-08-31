@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB client encryption policy. </summary>
     public partial class CosmosDBClientEncryptionPolicy
     {
-        /// <summary> Initializes a new instance of CosmosDBClientEncryptionPolicy. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBClientEncryptionPolicy"/>. </summary>
         /// <param name="includedPaths"> Paths of the item that need encryption along with path-specific settings. </param>
         /// <param name="policyFormatVersion"> Version of the client encryption policy definition. Supported versions are 1 and 2. Version 2 supports id and partition key path encryption. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="includedPaths"/> is null. </exception>
@@ -27,13 +29,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
             PolicyFormatVersion = policyFormatVersion;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBClientEncryptionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBClientEncryptionPolicy"/>. </summary>
         /// <param name="includedPaths"> Paths of the item that need encryption along with path-specific settings. </param>
         /// <param name="policyFormatVersion"> Version of the client encryption policy definition. Supported versions are 1 and 2. Version 2 supports id and partition key path encryption. </param>
-        internal CosmosDBClientEncryptionPolicy(IList<CosmosDBClientEncryptionIncludedPath> includedPaths, int policyFormatVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBClientEncryptionPolicy(IList<CosmosDBClientEncryptionIncludedPath> includedPaths, int policyFormatVersion, Dictionary<string, BinaryData> rawData)
         {
             IncludedPaths = includedPaths;
             PolicyFormatVersion = policyFormatVersion;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBClientEncryptionPolicy"/> for deserialization. </summary>
+        internal CosmosDBClientEncryptionPolicy()
+        {
         }
 
         /// <summary> Paths of the item that need encryption along with path-specific settings. </summary>

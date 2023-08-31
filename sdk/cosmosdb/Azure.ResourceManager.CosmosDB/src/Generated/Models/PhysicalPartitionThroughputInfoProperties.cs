@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The properties of an Azure Cosmos DB PhysicalPartitionThroughputInfoProperties object. </summary>
     internal partial class PhysicalPartitionThroughputInfoProperties
     {
-        /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoProperties"/>. </summary>
         public PhysicalPartitionThroughputInfoProperties()
         {
             PhysicalPartitionThroughputInfo = new ChangeTrackingList<PhysicalPartitionThroughputInfoResource>();
         }
 
-        /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoProperties"/>. </summary>
         /// <param name="physicalPartitionThroughputInfo"> Array of physical partition throughput info objects. </param>
-        internal PhysicalPartitionThroughputInfoProperties(IList<PhysicalPartitionThroughputInfoResource> physicalPartitionThroughputInfo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhysicalPartitionThroughputInfoProperties(IList<PhysicalPartitionThroughputInfoResource> physicalPartitionThroughputInfo, Dictionary<string, BinaryData> rawData)
         {
             PhysicalPartitionThroughputInfo = physicalPartitionThroughputInfo;
+            _rawData = rawData;
         }
 
         /// <summary> Array of physical partition throughput info objects. </summary>

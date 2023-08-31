@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class CommandProperties : IUtf8JsonSerializable
+    public partial class CommandProperties : IUtf8JsonSerializable, IModelJsonSerializable<CommandProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommandProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommandProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CommandProperties DeserializeCommandProperties(JsonElement element)
+        internal static CommandProperties DeserializeCommandProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,7 +59,93 @@ namespace Azure.ResourceManager.DataMigration.Models
                     case "restart": return MongoDBRestartCommand.DeserializeMongoDBRestartCommand(element);
                 }
             }
-            return UnknownCommandProperties.DeserializeUnknownCommandProperties(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            CommandType commandType = default;
+            Optional<IReadOnlyList<ODataError>> errors = default;
+            Optional<CommandState> state = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("commandType"u8))
+                {
+                    commandType = new CommandType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("errors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ODataError> array = new List<ODataError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ODataError.DeserializeODataError(item));
+                    }
+                    errors = array;
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new CommandState(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownCommandProperties(commandType, Optional.ToList(errors), Optional.ToNullable(state), rawData);
+        }
+
+        CommandProperties IModelJsonSerializable<CommandProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommandProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommandProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommandProperties IModelSerializable<CommandProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommandProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CommandProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CommandProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCommandProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

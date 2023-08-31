@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> VNet properties for managed integration runtime. </summary>
     public partial class IntegrationRuntimeVnetProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeVnetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeVnetProperties"/>. </summary>
         public IntegrationRuntimeVnetProperties()
         {
             PublicIPs = new ChangeTrackingList<string>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeVnetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeVnetProperties"/>. </summary>
         /// <param name="vnetId"> The ID of the VNet that this integration runtime will join. </param>
         /// <param name="subnet"> The name of the subnet this integration runtime will join. </param>
         /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>

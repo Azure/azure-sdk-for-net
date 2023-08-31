@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
@@ -18,20 +19,24 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CassandraClusterBackupResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of CassandraClusterBackupResourceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterBackupResourceData"/>. </summary>
         public CassandraClusterBackupResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterBackupResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterBackupResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
-        internal CassandraClusterBackupResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupResourceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraClusterBackupResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupResourceProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the properties. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the userDefinedFunctions and their properties. </summary>
     internal partial class CosmosDBSqlUserDefinedFunctionListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionListResult"/>. </summary>
         internal CosmosDBSqlUserDefinedFunctionListResult()
         {
             Value = new ChangeTrackingList<CosmosDBSqlUserDefinedFunctionData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionListResult"/>. </summary>
         /// <param name="value"> List of userDefinedFunctions and their properties. </param>
-        internal CosmosDBSqlUserDefinedFunctionListResult(IReadOnlyList<CosmosDBSqlUserDefinedFunctionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlUserDefinedFunctionListResult(IReadOnlyList<CosmosDBSqlUserDefinedFunctionData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of userDefinedFunctions and their properties. </summary>

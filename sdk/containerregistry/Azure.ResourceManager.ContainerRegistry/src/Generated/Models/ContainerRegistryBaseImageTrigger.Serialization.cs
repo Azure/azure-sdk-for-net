@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryBaseImageTrigger : IUtf8JsonSerializable
+    public partial class ContainerRegistryBaseImageTrigger : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryBaseImageTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryBaseImageTrigger>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryBaseImageTrigger>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("baseImageTriggerType"u8);
             writer.WriteStringValue(BaseImageTriggerType.ToString());
@@ -34,11 +42,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryBaseImageTrigger DeserializeContainerRegistryBaseImageTrigger(JsonElement element)
+        internal static ContainerRegistryBaseImageTrigger DeserializeContainerRegistryBaseImageTrigger(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<ContainerRegistryUpdateTriggerPayloadType> updateTriggerPayloadType = default;
             Optional<ContainerRegistryTriggerStatus> status = default;
             string name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseImageTriggerType"u8))
@@ -83,8 +106,57 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryBaseImageTrigger(baseImageTriggerType, updateTriggerEndpoint.Value, Optional.ToNullable(updateTriggerPayloadType), Optional.ToNullable(status), name);
+            return new ContainerRegistryBaseImageTrigger(baseImageTriggerType, updateTriggerEndpoint.Value, Optional.ToNullable(updateTriggerPayloadType), Optional.ToNullable(status), name, rawData);
+        }
+
+        ContainerRegistryBaseImageTrigger IModelJsonSerializable<ContainerRegistryBaseImageTrigger>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryBaseImageTrigger(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryBaseImageTrigger>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryBaseImageTrigger IModelSerializable<ContainerRegistryBaseImageTrigger>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryBaseImageTrigger(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerRegistryBaseImageTrigger model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerRegistryBaseImageTrigger(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryBaseImageTrigger(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

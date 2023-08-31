@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Gallery Applications operation response. </summary>
     internal partial class GalleryApplicationList
     {
-        /// <summary> Initializes a new instance of GalleryApplicationList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationList"/>. </summary>
         /// <param name="value"> A list of Gallery Applications. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GalleryApplicationList(IEnumerable<GalleryApplicationData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationList"/>. </summary>
         /// <param name="value"> A list of Gallery Applications. </param>
         /// <param name="nextLink"> The uri to fetch the next page of Application Definitions in the Application Gallery. Call ListNext() with this to fetch the next page of gallery Application Definitions. </param>
-        internal GalleryApplicationList(IReadOnlyList<GalleryApplicationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryApplicationList(IReadOnlyList<GalleryApplicationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationList"/> for deserialization. </summary>
+        internal GalleryApplicationList()
+        {
         }
 
         /// <summary> A list of Gallery Applications. </summary>

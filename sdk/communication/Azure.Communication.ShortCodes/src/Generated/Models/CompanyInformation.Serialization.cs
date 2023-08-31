@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class CompanyInformation : IUtf8JsonSerializable
+    public partial class CompanyInformation : IUtf8JsonSerializable, IModelJsonSerializable<CompanyInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CompanyInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CompanyInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -41,11 +48,25 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("customerCareInformation"u8);
                 writer.WriteObjectValue(CustomerCareInformation);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CompanyInformation DeserializeCompanyInformation(JsonElement element)
+        internal static CompanyInformation DeserializeCompanyInformation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<string> address = default;
             Optional<ContactInformation> contactInformation = default;
             Optional<CustomerCareInformation> customerCareInformation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -94,8 +116,57 @@ namespace Azure.Communication.ShortCodes.Models
                     customerCareInformation = CustomerCareInformation.DeserializeCustomerCareInformation(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CompanyInformation(name.Value, url.Value, address.Value, contactInformation.Value, customerCareInformation.Value);
+            return new CompanyInformation(name.Value, url.Value, address.Value, contactInformation.Value, customerCareInformation.Value, rawData);
+        }
+
+        CompanyInformation IModelJsonSerializable<CompanyInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCompanyInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CompanyInformation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CompanyInformation IModelSerializable<CompanyInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCompanyInformation(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CompanyInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CompanyInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCompanyInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

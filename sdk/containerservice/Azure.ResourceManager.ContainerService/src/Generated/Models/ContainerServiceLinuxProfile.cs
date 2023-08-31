@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Profile for Linux VMs in the container service cluster. </summary>
     public partial class ContainerServiceLinuxProfile
     {
-        /// <summary> Initializes a new instance of ContainerServiceLinuxProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/>. </summary>
         /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
         /// <param name="ssh"> The SSH configuration for Linux-based VMs running on Azure. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="ssh"/> is null. </exception>
@@ -25,6 +27,22 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             AdminUsername = adminUsername;
             Ssh = ssh;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/>. </summary>
+        /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
+        /// <param name="ssh"> The SSH configuration for Linux-based VMs running on Azure. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh, Dictionary<string, BinaryData> rawData)
+        {
+            AdminUsername = adminUsername;
+            Ssh = ssh;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/> for deserialization. </summary>
+        internal ContainerServiceLinuxProfile()
+        {
         }
 
         /// <summary> The administrator username to use for Linux VMs. </summary>

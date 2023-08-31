@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
@@ -12,20 +16,25 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Please note <see cref="MigrateSqlServerSqlMISyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/> and <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownMigrateSqlServerSqlMISyncTaskOutput))]
     public abstract partial class MigrateSqlServerSqlMISyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutput. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutput"/>. </summary>
         protected MigrateSqlServerSqlMISyncTaskOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        internal MigrateSqlServerSqlMISyncTaskOutput(string id, string resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlMISyncTaskOutput(string id, string resultType, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             ResultType = resultType;
+            _rawData = rawData;
         }
 
         /// <summary> Result identifier. </summary>

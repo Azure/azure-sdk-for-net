@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating a source based trigger. </summary>
     public partial class ContainerRegistrySourceTriggerUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTriggerUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerUpdateContent"/>. </summary>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerRegistrySourceTriggerUpdateContent(string name)
@@ -23,6 +25,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
             SourceTriggerEvents = new ChangeTrackingList<ContainerRegistrySourceTriggerEvent>();
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerUpdateContent"/>. </summary>
+        /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
+        /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
+        /// <param name="status"> The current status of trigger. </param>
+        /// <param name="name"> The name of the trigger. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistrySourceTriggerUpdateContent(SourceCodeRepoUpdateContent sourceRepository, IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents, ContainerRegistryTriggerStatus? status, string name, Dictionary<string, BinaryData> rawData)
+        {
+            SourceRepository = sourceRepository;
+            SourceTriggerEvents = sourceTriggerEvents;
+            Status = status;
+            Name = name;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerUpdateContent"/> for deserialization. </summary>
+        internal ContainerRegistrySourceTriggerUpdateContent()
+        {
         }
 
         /// <summary> The properties that describes the source(code) for the task. </summary>

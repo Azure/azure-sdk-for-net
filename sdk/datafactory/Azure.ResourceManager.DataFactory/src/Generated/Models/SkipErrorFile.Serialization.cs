@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SkipErrorFile : IUtf8JsonSerializable
+    public partial class SkipErrorFile : IUtf8JsonSerializable, IModelJsonSerializable<SkipErrorFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SkipErrorFile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SkipErrorFile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FileMissing))
             {
@@ -26,17 +34,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("dataInconsistency"u8);
                 JsonSerializer.Serialize(writer, DataInconsistency);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SkipErrorFile DeserializeSkipErrorFile(JsonElement element)
+        internal static SkipErrorFile DeserializeSkipErrorFile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DataFactoryElement<bool>> fileMissing = default;
             Optional<DataFactoryElement<bool>> dataInconsistency = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileMissing"u8))
@@ -57,8 +80,57 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dataInconsistency = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SkipErrorFile(fileMissing.Value, dataInconsistency.Value);
+            return new SkipErrorFile(fileMissing.Value, dataInconsistency.Value, rawData);
+        }
+
+        SkipErrorFile IModelJsonSerializable<SkipErrorFile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSkipErrorFile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SkipErrorFile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SkipErrorFile IModelSerializable<SkipErrorFile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSkipErrorFile(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SkipErrorFile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SkipErrorFile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSkipErrorFile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

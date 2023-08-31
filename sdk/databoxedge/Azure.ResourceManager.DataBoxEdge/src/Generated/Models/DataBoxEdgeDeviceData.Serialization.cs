@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeDeviceData : IUtf8JsonSerializable
+    public partial class DataBoxEdgeDeviceData : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeDeviceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeDeviceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeDeviceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -55,11 +61,25 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteObjectValue(DataResidency);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeDeviceData DeserializeDataBoxEdgeDeviceData(JsonElement element)
+        internal static DataBoxEdgeDeviceData DeserializeDataBoxEdgeDeviceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<DataBoxEdgeResourceMoveDetails> resourceMoveDetails = default;
             Optional<EdgeProfile> edgeProfile = default;
             Optional<DataResidency> dataResidency = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -306,8 +327,57 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Optional.ToList(configuredRoleTypes), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value);
+            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Optional.ToList(configuredRoleTypes), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value, rawData);
+        }
+
+        DataBoxEdgeDeviceData IModelJsonSerializable<DataBoxEdgeDeviceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeDeviceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeDeviceData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeDeviceData IModelSerializable<DataBoxEdgeDeviceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeDeviceData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataBoxEdgeDeviceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataBoxEdgeDeviceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeDeviceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

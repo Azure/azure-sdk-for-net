@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> The definition of a canonical profile property. </summary>
     public partial class CanonicalProfileDefinitionPropertiesItem
     {
-        /// <summary> Initializes a new instance of CanonicalProfileDefinitionPropertiesItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinitionPropertiesItem"/>. </summary>
         internal CanonicalProfileDefinitionPropertiesItem()
         {
         }
 
-        /// <summary> Initializes a new instance of CanonicalProfileDefinitionPropertiesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinitionPropertiesItem"/>. </summary>
         /// <param name="profileName"> Profile name. </param>
         /// <param name="profilePropertyName"> Property name of profile. </param>
         /// <param name="rank"> The rank. </param>
         /// <param name="valueType"> Type of canonical property value. </param>
         /// <param name="value"> Value of the canonical property. </param>
-        internal CanonicalProfileDefinitionPropertiesItem(string profileName, string profilePropertyName, int? rank, CanonicalPropertyValueType? valueType, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CanonicalProfileDefinitionPropertiesItem(string profileName, string profilePropertyName, int? rank, CanonicalPropertyValueType? valueType, string value, Dictionary<string, BinaryData> rawData)
         {
             ProfileName = profileName;
             ProfilePropertyName = profilePropertyName;
             Rank = rank;
             ValueType = valueType;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Profile name. </summary>

@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> Additional Managed CCF properties. </summary>
     public partial class ManagedCcfProperties
     {
-        /// <summary> Initializes a new instance of ManagedCcfProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfProperties"/>. </summary>
         public ManagedCcfProperties()
         {
             MemberIdentityCertificates = new ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>();
         }
 
-        /// <summary> Initializes a new instance of ManagedCcfProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfProperties"/>. </summary>
         /// <param name="appName"> Unique name for the Managed CCF. </param>
         /// <param name="appUri"> Endpoint for calling Managed CCF Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>
@@ -28,7 +30,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="deploymentType"> Deployment Type of Managed CCF. </param>
         /// <param name="provisioningState"> Provisioning state of Ledger Resource. </param>
         /// <param name="nodeCount"> Number of CCF nodes in the Managed CCF. </param>
-        internal ManagedCcfProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedCcfProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount, Dictionary<string, BinaryData> rawData)
         {
             AppName = appName;
             AppUri = appUri;
@@ -37,6 +40,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             DeploymentType = deploymentType;
             ProvisioningState = provisioningState;
             NodeCount = nodeCount;
+            _rawData = rawData;
         }
 
         /// <summary> Unique name for the Managed CCF. </summary>

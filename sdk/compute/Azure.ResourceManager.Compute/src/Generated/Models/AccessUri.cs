@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> A disk access SAS uri. </summary>
     public partial class AccessUri
     {
-        /// <summary> Initializes a new instance of AccessUri. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AccessUri"/>. </summary>
         internal AccessUri()
         {
         }
 
-        /// <summary> Initializes a new instance of AccessUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessUri"/>. </summary>
         /// <param name="accessSas"> A SAS uri for accessing a disk. </param>
         /// <param name="securityDataAccessSas"> A SAS uri for accessing a VM guest state. </param>
-        internal AccessUri(string accessSas, string securityDataAccessSas)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccessUri(string accessSas, string securityDataAccessSas, Dictionary<string, BinaryData> rawData)
         {
             AccessSas = accessSas;
             SecurityDataAccessSas = securityDataAccessSas;
+            _rawData = rawData;
         }
 
         /// <summary> A SAS uri for accessing a disk. </summary>

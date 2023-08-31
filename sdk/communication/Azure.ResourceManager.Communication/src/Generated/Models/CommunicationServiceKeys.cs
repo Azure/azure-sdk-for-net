@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class representing the access keys of a CommunicationService. </summary>
     public partial class CommunicationServiceKeys
     {
-        /// <summary> Initializes a new instance of CommunicationServiceKeys. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceKeys"/>. </summary>
         internal CommunicationServiceKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> CommunicationService connection string constructed via the primaryKey. </param>
         /// <param name="secondaryConnectionString"> CommunicationService connection string constructed via the secondaryKey. </param>
-        internal CommunicationServiceKeys(string primaryKey, string secondaryKey, string primaryConnectionString, string secondaryConnectionString)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationServiceKeys(string primaryKey, string secondaryKey, string primaryConnectionString, string secondaryConnectionString, Dictionary<string, BinaryData> rawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
+            _rawData = rawData;
         }
 
         /// <summary> The primary access key. </summary>

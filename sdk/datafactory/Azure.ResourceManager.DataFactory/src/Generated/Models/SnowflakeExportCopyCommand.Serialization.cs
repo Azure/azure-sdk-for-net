@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SnowflakeExportCopyCommand : IUtf8JsonSerializable
+    public partial class SnowflakeExportCopyCommand : IUtf8JsonSerializable, IModelJsonSerializable<SnowflakeExportCopyCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SnowflakeExportCopyCommand>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SnowflakeExportCopyCommand>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SnowflakeExportCopyCommand>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AdditionalCopyOptions))
             {
@@ -71,8 +77,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SnowflakeExportCopyCommand DeserializeSnowflakeExportCopyCommand(JsonElement element)
+        internal static SnowflakeExportCopyCommand DeserializeSnowflakeExportCopyCommand(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -135,6 +143,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SnowflakeExportCopyCommand(type, additionalProperties, Optional.ToDictionary(additionalCopyOptions), Optional.ToDictionary(additionalFormatOptions));
+        }
+
+        SnowflakeExportCopyCommand IModelJsonSerializable<SnowflakeExportCopyCommand>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SnowflakeExportCopyCommand>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnowflakeExportCopyCommand(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SnowflakeExportCopyCommand>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SnowflakeExportCopyCommand>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SnowflakeExportCopyCommand IModelSerializable<SnowflakeExportCopyCommand>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SnowflakeExportCopyCommand>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSnowflakeExportCopyCommand(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SnowflakeExportCopyCommand model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SnowflakeExportCopyCommand(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSnowflakeExportCopyCommand(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

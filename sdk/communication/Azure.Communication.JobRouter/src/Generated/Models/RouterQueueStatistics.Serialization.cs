@@ -5,16 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class RouterQueueStatistics
+    public partial class RouterQueueStatistics : IUtf8JsonSerializable, IModelJsonSerializable<RouterQueueStatistics>
     {
-        internal static RouterQueueStatistics DeserializeRouterQueueStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouterQueueStatistics>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouterQueueStatistics>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("queueId"u8);
+            writer.WriteStringValue(QueueId);
+            writer.WritePropertyName("length"u8);
+            writer.WriteNumberValue(Length);
+            if (Optional.IsCollectionDefined(EstimatedWaitTimeMinutes))
+            {
+                writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
+                writer.WriteStartObject();
+                foreach (var item in EstimatedWaitTimeMinutes)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(LongestJobWaitTimeMinutes))
+            {
+                writer.WritePropertyName("longestJobWaitTimeMinutes"u8);
+                writer.WriteNumberValue(LongestJobWaitTimeMinutes.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RouterQueueStatistics DeserializeRouterQueueStatistics(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +70,7 @@ namespace Azure.Communication.JobRouter.Models
             int length = default;
             Optional<IReadOnlyDictionary<string, double>> estimatedWaitTimeMinutes = default;
             Optional<double> longestJobWaitTimeMinutes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueId"u8))
@@ -58,8 +106,57 @@ namespace Azure.Communication.JobRouter.Models
                     longestJobWaitTimeMinutes = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouterQueueStatistics(queueId, length, Optional.ToDictionary(estimatedWaitTimeMinutes), Optional.ToNullable(longestJobWaitTimeMinutes));
+            return new RouterQueueStatistics(queueId, length, Optional.ToDictionary(estimatedWaitTimeMinutes), Optional.ToNullable(longestJobWaitTimeMinutes), rawData);
+        }
+
+        RouterQueueStatistics IModelJsonSerializable<RouterQueueStatistics>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterQueueStatistics(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouterQueueStatistics>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouterQueueStatistics IModelSerializable<RouterQueueStatistics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouterQueueStatistics(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RouterQueueStatistics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RouterQueueStatistics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouterQueueStatistics(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

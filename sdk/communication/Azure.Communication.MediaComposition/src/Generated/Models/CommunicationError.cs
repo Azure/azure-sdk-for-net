@@ -14,7 +14,9 @@ namespace Azure.Communication.MediaComposition.Models
     /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationError
     {
-        /// <summary> Initializes a new instance of CommunicationError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,19 +30,26 @@ namespace Azure.Communication.MediaComposition.Models
             Details = new ChangeTrackingList<CommunicationError>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
         /// <param name="details"> Further details about specific errors that led to this error. </param>
         /// <param name="innerError"> The inner error if any. </param>
-        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innerError)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innerError, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
             InnerError = innerError;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationError"/> for deserialization. </summary>
+        internal CommunicationError()
+        {
         }
 
         /// <summary> The error code. </summary>

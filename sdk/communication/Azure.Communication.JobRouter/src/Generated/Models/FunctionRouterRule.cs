@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,11 +14,12 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule providing a binding to an HTTP Triggered Azure Function. </summary>
     public partial class FunctionRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of FunctionRouterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
         /// <param name="functionUri"> URL for Azure Function. </param>
         /// <param name="credential"> Credentials used to access Azure function rule. </param>
-        internal FunctionRouterRule(string kind, Uri functionUri, FunctionRouterRuleCredential credential) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionRouterRule(string kind, Uri functionUri, FunctionRouterRuleCredential credential, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             FunctionUri = functionUri;
             Credential = credential;

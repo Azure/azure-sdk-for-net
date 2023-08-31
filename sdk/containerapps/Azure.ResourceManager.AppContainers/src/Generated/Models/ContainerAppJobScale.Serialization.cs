@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJobScale : IUtf8JsonSerializable
+    public partial class ContainerAppJobScale : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppJobScale>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppJobScale>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppJobScale>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PollingIntervalInSeconds))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppJobScale DeserializeContainerAppJobScale(JsonElement element)
+        internal static ContainerAppJobScale DeserializeContainerAppJobScale(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> minExecutions = default;
             Optional<int> maxExecutions = default;
             Optional<IList<ContainerAppJobScaleRule>> rules = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pollingInterval"u8))
@@ -97,8 +119,57 @@ namespace Azure.ResourceManager.AppContainers.Models
                     rules = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppJobScale(Optional.ToNullable(pollingInterval), Optional.ToNullable(minExecutions), Optional.ToNullable(maxExecutions), Optional.ToList(rules));
+            return new ContainerAppJobScale(Optional.ToNullable(pollingInterval), Optional.ToNullable(minExecutions), Optional.ToNullable(maxExecutions), Optional.ToList(rules), rawData);
+        }
+
+        ContainerAppJobScale IModelJsonSerializable<ContainerAppJobScale>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppJobScale(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppJobScale>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppJobScale IModelSerializable<ContainerAppJobScale>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppJobScale(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerAppJobScale model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerAppJobScale(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppJobScale(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

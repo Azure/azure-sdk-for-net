@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Workload profile to scope container app execution. </summary>
     public partial class ContainerAppWorkloadProfile
     {
-        /// <summary> Initializes a new instance of ContainerAppWorkloadProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfile"/>. </summary>
         /// <param name="name"> Workload profile type for the workloads to run on. </param>
         /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="workloadProfileType"/> is null. </exception>
@@ -26,17 +29,24 @@ namespace Azure.ResourceManager.AppContainers.Models
             WorkloadProfileType = workloadProfileType;
         }
 
-        /// <summary> Initializes a new instance of ContainerAppWorkloadProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfile"/>. </summary>
         /// <param name="name"> Workload profile type for the workloads to run on. </param>
         /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
         /// <param name="minimumNodeCount"> The minimum capacity. </param>
         /// <param name="maximumNodeCount"> The maximum capacity. </param>
-        internal ContainerAppWorkloadProfile(string name, string workloadProfileType, int? minimumNodeCount, int? maximumNodeCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppWorkloadProfile(string name, string workloadProfileType, int? minimumNodeCount, int? maximumNodeCount, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             WorkloadProfileType = workloadProfileType;
             MinimumNodeCount = minimumNodeCount;
             MaximumNodeCount = maximumNodeCount;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfile"/> for deserialization. </summary>
+        internal ContainerAppWorkloadProfile()
+        {
         }
 
         /// <summary> Workload profile type for the workloads to run on. </summary>

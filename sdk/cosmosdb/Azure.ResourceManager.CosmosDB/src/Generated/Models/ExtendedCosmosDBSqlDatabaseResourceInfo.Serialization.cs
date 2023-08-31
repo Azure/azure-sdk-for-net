@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCosmosDBSqlDatabaseResourceInfo : IUtf8JsonSerializable
+    public partial class ExtendedCosmosDBSqlDatabaseResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<ExtendedCosmosDBSqlDatabaseResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExtendedCosmosDBSqlDatabaseResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExtendedCosmosDBSqlDatabaseResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlDatabaseResourceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Colls))
             {
@@ -38,11 +45,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedCosmosDBSqlDatabaseResourceInfo DeserializeExtendedCosmosDBSqlDatabaseResourceInfo(JsonElement element)
+        internal static ExtendedCosmosDBSqlDatabaseResourceInfo DeserializeExtendedCosmosDBSqlDatabaseResourceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string id = default;
             Optional<ResourceRestoreParameters> restoreParameters = default;
             Optional<CosmosDBAccountCreateMode> createMode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_colls"u8))
@@ -113,8 +135,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExtendedCosmosDBSqlDatabaseResourceInfo(id, restoreParameters.Value, Optional.ToNullable(createMode), colls.Value, users.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCosmosDBSqlDatabaseResourceInfo(id, restoreParameters.Value, Optional.ToNullable(createMode), colls.Value, users.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag), rawData);
+        }
+
+        ExtendedCosmosDBSqlDatabaseResourceInfo IModelJsonSerializable<ExtendedCosmosDBSqlDatabaseResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlDatabaseResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedCosmosDBSqlDatabaseResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExtendedCosmosDBSqlDatabaseResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlDatabaseResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExtendedCosmosDBSqlDatabaseResourceInfo IModelSerializable<ExtendedCosmosDBSqlDatabaseResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlDatabaseResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExtendedCosmosDBSqlDatabaseResourceInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExtendedCosmosDBSqlDatabaseResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExtendedCosmosDBSqlDatabaseResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExtendedCosmosDBSqlDatabaseResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
