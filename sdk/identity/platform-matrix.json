@@ -10,7 +10,9 @@
                 "AdditionalTestFilters": "TestCategory=NonVirtualized"
             }
           }
-        },
+        }
+      },
+      "ContainerAgent": {
         "ubuntu_keyring_container": {
           "OSVmImage": "ubuntu-20.04",
           "Pool": "Azure Pipelines",
