@@ -246,9 +246,10 @@ StorageApplianceName = "vmName",
 
             // invoke the operation
             ClusterDeployContent content = new ClusterDeployContent();
-            await networkCloudCluster.DeployAsync(WaitUntil.Completed, content: content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudCluster.DeployAsync(WaitUntil.Completed, content: content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Deploy cluster skipping validation
@@ -280,9 +281,10 @@ StorageApplianceName = "vmName",
 "bmmName1"
 },
             };
-            await networkCloudCluster.DeployAsync(WaitUntil.Completed, content: content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudCluster.DeployAsync(WaitUntil.Completed, content: content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Update cluster version
@@ -308,9 +310,10 @@ StorageApplianceName = "vmName",
 
             // invoke the operation
             ClusterUpdateVersionContent content = new ClusterUpdateVersionContent("2.0");
-            await networkCloudCluster.UpdateVersionAsync(WaitUntil.Completed, content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudCluster.UpdateVersionAsync(WaitUntil.Completed, content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

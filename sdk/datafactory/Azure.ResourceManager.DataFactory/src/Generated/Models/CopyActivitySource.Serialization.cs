@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SalesforceMarketingCloudSource": return SalesforceMarketingCloudSource.DeserializeSalesforceMarketingCloudSource(element);
                     case "SalesforceServiceCloudSource": return SalesforceServiceCloudSource.DeserializeSalesforceServiceCloudSource(element);
                     case "SalesforceSource": return SalesforceSource.DeserializeSalesforceSource(element);
-                    case "SapBwSource": return SapBwSource.DeserializeSapBwSource(element);
+                    case "SapBwSource": return SapBWSource.DeserializeSapBWSource(element);
                     case "SapCloudForCustomerSource": return SapCloudForCustomerSource.DeserializeSapCloudForCustomerSource(element);
                     case "SapEccSource": return SapEccSource.DeserializeSapEccSource(element);
                     case "SapHanaSource": return SapHanaSource.DeserializeSapHanaSource(element);

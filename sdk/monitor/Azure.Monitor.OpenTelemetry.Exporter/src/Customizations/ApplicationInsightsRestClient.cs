@@ -89,14 +89,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 content.WriteNewLine();
             }
 
+#if DEBUG
             TelemetryDebugWriter.WriteTelemetry(content);
+#endif
 
             return CreateRequest(RequestContent.Create(content.ToBytes()));
         }
 
         internal HttpMessage CreateTrackRequest(ReadOnlyMemory<byte> body)
         {
+#if DEBUG
             TelemetryDebugWriter.WriteTelemetryFromStorage(body);
+#endif
 
             return CreateRequest(RequestContent.Create(body));
         }

@@ -895,6 +895,15 @@ namespace Azure.IoT.DeviceUpdate.Samples
                 isRetried = true,
                 rollbackPolicy = new
                 {
+                    update = new
+                    {
+                        updateId = new
+                        {
+                            provider = "<provider>",
+                            name = "<name>",
+                            version = "<version>",
+                        },
+                    },
                     failure = new
                     {
                         devicesFailedPercentage = 1234,
@@ -992,6 +1001,15 @@ namespace Azure.IoT.DeviceUpdate.Samples
                 isRetried = true,
                 rollbackPolicy = new
                 {
+                    update = new
+                    {
+                        updateId = new
+                        {
+                            provider = "<provider>",
+                            name = "<name>",
+                            version = "<version>",
+                        },
+                    },
                     failure = new
                     {
                         devicesFailedPercentage = 1234,

@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<Ambr> guaranteedBitRate = default;
             Optional<int> _5qi = default;
             Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<PreemptionCapability> preemptionCapability = default;
-            Optional<PreemptionVulnerability> preemptionVulnerability = default;
+            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
+            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
             Ambr maximumBitRate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    preemptionCapability = new PreemptionCapability(property.Value.GetString());
+                    preemptionCapability = new MobileNetworkPreemptionCapability(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("preemptionVulnerability"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    preemptionVulnerability = new PreemptionVulnerability(property.Value.GetString());
+                    preemptionVulnerability = new MobileNetworkPreemptionVulnerability(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maximumBitRate"u8))

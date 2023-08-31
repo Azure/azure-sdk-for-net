@@ -34,7 +34,7 @@ namespace Azure.Identity.Tests
             {
                 Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new SharedTokenCacheCredential(config.TenantId, null, options, pipeline, null));

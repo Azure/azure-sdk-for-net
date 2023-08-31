@@ -1865,6 +1865,7 @@ namespace Azure.Storage.Files.DataLake
                     // Pagination only applies to service version 2023-08-03 and later, when using OAuth.
                     bool? paginated = null;
                     if (_clientConfiguration.ClientOptions.Version >= DataLakeClientOptions.ServiceVersion.V2023_08_03
+                        && recursive.GetValueOrDefault()
                         && _clientConfiguration.TokenCredential != null)
                     {
                         paginated = true;

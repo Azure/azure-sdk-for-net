@@ -8,7 +8,13 @@
 
 ### Bugs Fixed
 
+- When using the `EventHubBufferedProducerClient`, events are now instrumented when `EnqueueEventAsync` or `EnqueueEventsAsync` is called, rather than when the event is published. This ensures that the instrumentation is accurate when the event is published, regardless of whether the event is published immediately or buffered for a period of time.
+
 ### Other Changes
+
+- Several improvements to logging have been made to capture additional context and fix typos.  Most notable among them is the inclusion of starting and ending sequence numbers when events are read from Event Hubs and dispatched for processing by event processor types.
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.3.  This fixes an issue with timeout duration calculations during link creation and includes several efficiency improvements.
 
 ## 5.9.2 (2023-06-06)
 

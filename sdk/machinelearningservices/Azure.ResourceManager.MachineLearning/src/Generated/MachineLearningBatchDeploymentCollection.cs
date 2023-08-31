@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchDeploymentResource(Client, MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(e)), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, "MachineLearningBatchDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchDeploymentResource(Client, MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(e)), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, "MachineLearningBatchDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchDeploymentResource(Client, MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(e)), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, "MachineLearningBatchDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchDeploymentResource(Client, MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(e)), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, "MachineLearningBatchDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
