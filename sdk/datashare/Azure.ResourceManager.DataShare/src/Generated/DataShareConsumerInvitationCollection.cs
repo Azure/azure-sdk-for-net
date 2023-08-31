@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsRequest(skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsNextPageRequest(nextLink, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareConsumerInvitationResource(Client, DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(e)), _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics, Pipeline, "DataShareConsumerInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareConsumerInvitationResource(Client, DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(e)), _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics, Pipeline, "DataShareConsumerInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsRequest(skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsNextPageRequest(nextLink, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareConsumerInvitationResource(Client, DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(e)), _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics, Pipeline, "DataShareConsumerInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareConsumerInvitationResource(Client, DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(e)), _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics, Pipeline, "DataShareConsumerInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
