@@ -188,7 +188,7 @@ namespace Azure.Core.Serialization
                 DeserializationProxyAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(DeserializationProxyAttribute)) as DeserializationProxyAttribute;
                 if (attribute is null)
                 {
-                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(DeserializationProxyAttribute)} to be used with {nameof(ModelSerializer)}");
+                    throw new InvalidOperationException($"{returnType.Name} must be decorated with {nameof(DeserializationProxyAttribute)} to be used with {nameof(ModelSerializer)}");
                 }
                 typeToActivate = attribute.ProxyType;
             }
