@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The LanguageDetectionAnalysisInput. </summary>
     internal partial class LanguageDetectionAnalysisInput
     {
-        /// <summary> Initializes a new instance of LanguageDetectionAnalysisInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionAnalysisInput"/>. </summary>
         public LanguageDetectionAnalysisInput()
         {
             Documents = new ChangeTrackingList<LanguageInput>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionAnalysisInput"/>. </summary>
+        /// <param name="documents"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LanguageDetectionAnalysisInput(IList<LanguageInput> documents, Dictionary<string, BinaryData> rawData)
+        {
+            Documents = documents;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the documents. </summary>

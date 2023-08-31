@@ -5,27 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Settings for Azure Files identity based authentication. </summary>
     public partial class FilesIdentityBasedAuthentication
     {
-        /// <summary> Initializes a new instance of FilesIdentityBasedAuthentication. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilesIdentityBasedAuthentication"/>. </summary>
         /// <param name="directoryServiceOptions"> Indicates the directory service used. Note that this enum may be extended in the future. </param>
         public FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions)
         {
             DirectoryServiceOptions = directoryServiceOptions;
         }
 
-        /// <summary> Initializes a new instance of FilesIdentityBasedAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilesIdentityBasedAuthentication"/>. </summary>
         /// <param name="directoryServiceOptions"> Indicates the directory service used. Note that this enum may be extended in the future. </param>
         /// <param name="activeDirectoryProperties"> Required if directoryServiceOptions are AD, optional if they are AADKERB. </param>
         /// <param name="defaultSharePermission"> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </param>
-        internal FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions, StorageActiveDirectoryProperties activeDirectoryProperties, DefaultSharePermission? defaultSharePermission)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions, StorageActiveDirectoryProperties activeDirectoryProperties, DefaultSharePermission? defaultSharePermission, Dictionary<string, BinaryData> rawData)
         {
             DirectoryServiceOptions = directoryServiceOptions;
             ActiveDirectoryProperties = activeDirectoryProperties;
             DefaultSharePermission = defaultSharePermission;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilesIdentityBasedAuthentication"/> for deserialization. </summary>
+        internal FilesIdentityBasedAuthentication()
+        {
         }
 
         /// <summary> Indicates the directory service used. Note that this enum may be extended in the future. </summary>

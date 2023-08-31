@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Outstanding conditions that will need to be resolved. </summary>
     public partial class OutstandingCondition
     {
-        /// <summary> Initializes a new instance of OutstandingCondition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OutstandingCondition"/>. </summary>
         internal OutstandingCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of OutstandingCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutstandingCondition"/>. </summary>
         /// <param name="timestamp"> The time when the condition was raised. </param>
         /// <param name="message"> The issue requiring attention. </param>
-        internal OutstandingCondition(DateTimeOffset? timestamp, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OutstandingCondition(DateTimeOffset? timestamp, string message, Dictionary<string, BinaryData> rawData)
         {
             Timestamp = timestamp;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> The time when the condition was raised. </summary>

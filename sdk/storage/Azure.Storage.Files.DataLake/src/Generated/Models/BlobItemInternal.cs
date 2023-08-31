@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -13,7 +14,9 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> An Azure Storage blob. </summary>
     internal partial class BlobItemInternal
     {
-        /// <summary> Initializes a new instance of BlobItemInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="deleted"></param>
         /// <param name="snapshot"></param>
@@ -31,7 +34,7 @@ namespace Azure.Storage.Files.DataLake.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of BlobItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="deleted"></param>
         /// <param name="snapshot"></param>
@@ -39,7 +42,8 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="isCurrentVersion"></param>
         /// <param name="properties"> Properties of a blob. </param>
         /// <param name="deletionId"></param>
-        internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, string deletionId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, string deletionId, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Deleted = deleted;
@@ -48,6 +52,12 @@ namespace Azure.Storage.Files.DataLake.Models
             IsCurrentVersion = isCurrentVersion;
             Properties = properties;
             DeletionId = deletionId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/> for deserialization. </summary>
+        internal BlobItemInternal()
+        {
         }
 
         /// <summary> Gets the name. </summary>

@@ -6,17 +6,97 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SparkSchedulerConverter))]
-    public partial class SparkScheduler
+    public partial class SparkScheduler : IUtf8JsonSerializable, IModelJsonSerializable<SparkScheduler>
     {
-        internal static SparkScheduler DeserializeSparkScheduler(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SparkScheduler>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SparkScheduler>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SubmittedAt))
+            {
+                if (SubmittedAt != null)
+                {
+                    writer.WritePropertyName("submittedAt"u8);
+                    writer.WriteStringValue(SubmittedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("submittedAt");
+                }
+            }
+            if (Optional.IsDefined(ScheduledAt))
+            {
+                if (ScheduledAt != null)
+                {
+                    writer.WritePropertyName("scheduledAt"u8);
+                    writer.WriteStringValue(ScheduledAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("scheduledAt");
+                }
+            }
+            if (Optional.IsDefined(EndedAt))
+            {
+                if (EndedAt != null)
+                {
+                    writer.WritePropertyName("endedAt"u8);
+                    writer.WriteStringValue(EndedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endedAt");
+                }
+            }
+            if (Optional.IsDefined(CancellationRequestedAt))
+            {
+                if (CancellationRequestedAt != null)
+                {
+                    writer.WritePropertyName("cancellationRequestedAt"u8);
+                    writer.WriteStringValue(CancellationRequestedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("cancellationRequestedAt");
+                }
+            }
+            if (Optional.IsDefined(CurrentState))
+            {
+                writer.WritePropertyName("currentState"u8);
+                writer.WriteStringValue(CurrentState.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SparkScheduler DeserializeSparkScheduler(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset?> endedAt = default;
             Optional<DateTimeOffset?> cancellationRequestedAt = default;
             Optional<SchedulerCurrentState> currentState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("submittedAt"u8))
@@ -77,15 +158,64 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     currentState = new SchedulerCurrentState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SparkScheduler(Optional.ToNullable(submittedAt), Optional.ToNullable(scheduledAt), Optional.ToNullable(endedAt), Optional.ToNullable(cancellationRequestedAt), Optional.ToNullable(currentState));
+            return new SparkScheduler(Optional.ToNullable(submittedAt), Optional.ToNullable(scheduledAt), Optional.ToNullable(endedAt), Optional.ToNullable(cancellationRequestedAt), Optional.ToNullable(currentState), rawData);
+        }
+
+        SparkScheduler IModelJsonSerializable<SparkScheduler>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkScheduler(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SparkScheduler>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SparkScheduler IModelSerializable<SparkScheduler>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSparkScheduler(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SparkScheduler model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SparkScheduler(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSparkScheduler(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SparkSchedulerConverter : JsonConverter<SparkScheduler>
         {
             public override void Write(Utf8JsonWriter writer, SparkScheduler model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override SparkScheduler Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

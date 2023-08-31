@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Set of data with rendering instructions. </summary>
     public partial class DiagnosticDataset
     {
-        /// <summary> Initializes a new instance of DiagnosticDataset. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticDataset"/>. </summary>
         public DiagnosticDataset()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticDataset"/>. </summary>
         /// <param name="table"> Data in table form. </param>
         /// <param name="renderingProperties"> Properties that describe how the table should be rendered. </param>
-        internal DiagnosticDataset(DataTableResponseObject table, DiagnosticDataRendering renderingProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticDataset(DataTableResponseObject table, DiagnosticDataRendering renderingProperties, Dictionary<string, BinaryData> rawData)
         {
             Table = table;
             RenderingProperties = renderingProperties;
+            _rawData = rawData;
         }
 
         /// <summary> Data in table form. </summary>

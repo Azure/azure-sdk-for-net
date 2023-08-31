@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DocumentDbCollectionSinkConverter))]
-    public partial class DocumentDbCollectionSink : IUtf8JsonSerializable
+    public partial class DocumentDbCollectionSink : IUtf8JsonSerializable, IModelJsonSerializable<DocumentDbCollectionSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DocumentDbCollectionSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DocumentDbCollectionSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DocumentDbCollectionSink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NestingSeparator))
             {
@@ -64,8 +70,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DocumentDbCollectionSink DeserializeDocumentDbCollectionSink(JsonElement element)
+        internal static DocumentDbCollectionSink DeserializeDocumentDbCollectionSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,6 +162,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DocumentDbCollectionSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, nestingSeparator.Value, writeBehavior.Value);
+        }
+
+        DocumentDbCollectionSink IModelJsonSerializable<DocumentDbCollectionSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DocumentDbCollectionSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentDbCollectionSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DocumentDbCollectionSink>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DocumentDbCollectionSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DocumentDbCollectionSink IModelSerializable<DocumentDbCollectionSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DocumentDbCollectionSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDocumentDbCollectionSink(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DocumentDbCollectionSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DocumentDbCollectionSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDocumentDbCollectionSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DocumentDbCollectionSinkConverter : JsonConverter<DocumentDbCollectionSink>

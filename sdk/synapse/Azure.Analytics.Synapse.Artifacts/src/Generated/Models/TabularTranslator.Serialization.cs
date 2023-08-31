@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TabularTranslatorConverter))]
-    public partial class TabularTranslator : IUtf8JsonSerializable
+    public partial class TabularTranslator : IUtf8JsonSerializable, IModelJsonSerializable<TabularTranslator>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TabularTranslator>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TabularTranslator>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TabularTranslator>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnMappings))
             {
@@ -64,8 +70,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static TabularTranslator DeserializeTabularTranslator(JsonElement element)
+        internal static TabularTranslator DeserializeTabularTranslator(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,6 +162,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TabularTranslator(type, additionalProperties, columnMappings.Value, schemaMapping.Value, collectionReference.Value, mapComplexValuesToString.Value, mappings.Value, typeConversion.Value, typeConversionSettings.Value);
+        }
+
+        TabularTranslator IModelJsonSerializable<TabularTranslator>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TabularTranslator>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTabularTranslator(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TabularTranslator>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TabularTranslator>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TabularTranslator IModelSerializable<TabularTranslator>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TabularTranslator>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTabularTranslator(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TabularTranslator model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TabularTranslator(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTabularTranslator(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class TabularTranslatorConverter : JsonConverter<TabularTranslator>

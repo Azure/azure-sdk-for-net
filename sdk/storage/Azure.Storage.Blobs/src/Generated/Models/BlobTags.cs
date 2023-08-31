@@ -15,7 +15,9 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Blob tags. </summary>
     internal partial class BlobTags
     {
-        /// <summary> Initializes a new instance of BlobTags. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobTags"/>. </summary>
         /// <param name="blobTagSet"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobTagSet"/> is null. </exception>
         public BlobTags(IEnumerable<BlobTag> blobTagSet)
@@ -25,11 +27,18 @@ namespace Azure.Storage.Blobs.Models
             BlobTagSet = blobTagSet.ToList();
         }
 
-        /// <summary> Initializes a new instance of BlobTags. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobTags"/>. </summary>
         /// <param name="blobTagSet"></param>
-        internal BlobTags(IList<BlobTag> blobTagSet)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobTags(IList<BlobTag> blobTagSet, Dictionary<string, BinaryData> rawData)
         {
             BlobTagSet = blobTagSet;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobTags"/> for deserialization. </summary>
+        internal BlobTags()
+        {
         }
 
         /// <summary> Gets the blob tag set. </summary>

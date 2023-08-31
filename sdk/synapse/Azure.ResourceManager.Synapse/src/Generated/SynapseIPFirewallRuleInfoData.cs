@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,12 +20,14 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseIPFirewallRuleInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseIPFirewallRuleInfoData"/>. </summary>
         public SynapseIPFirewallRuleInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIPFirewallRuleInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,11 +35,13 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. </param>
-        internal SynapseIPFirewallRuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress endIPAddress, SynapseProvisioningState? provisioningState, IPAddress startIPAddress) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseIPFirewallRuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress endIPAddress, SynapseProvisioningState? provisioningState, IPAddress startIPAddress, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             EndIPAddress = endIPAddress;
             ProvisioningState = provisioningState;
             StartIPAddress = startIPAddress;
+            _rawData = rawData;
         }
 
         /// <summary> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </summary>

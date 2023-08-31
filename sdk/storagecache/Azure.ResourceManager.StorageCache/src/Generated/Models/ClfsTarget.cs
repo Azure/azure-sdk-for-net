@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
@@ -12,16 +14,20 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Properties pertaining to the ClfsTarget. </summary>
     internal partial class ClfsTarget
     {
-        /// <summary> Initializes a new instance of ClfsTarget. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClfsTarget"/>. </summary>
         public ClfsTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of ClfsTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClfsTarget"/>. </summary>
         /// <param name="target"> Resource ID of storage container. </param>
-        internal ClfsTarget(ResourceIdentifier target)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClfsTarget(ResourceIdentifier target, Dictionary<string, BinaryData> rawData)
         {
             Target = target;
+            _rawData = rawData;
         }
 
         /// <summary> Resource ID of storage container. </summary>

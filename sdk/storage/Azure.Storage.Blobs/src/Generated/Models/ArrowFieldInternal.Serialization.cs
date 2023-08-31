@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ArrowFieldInternal : IXmlSerializable
+    internal partial class ArrowFieldInternal : IXmlSerializable, IModelSerializable<ArrowFieldInternal>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Field");
             writer.WriteStartElement("Type");
@@ -37,6 +42,80 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ArrowFieldInternal DeserializeArrowFieldInternal(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            string type = default;
+            string name = default;
+            int? precision = default;
+            int? scale = default;
+            if (element.Element("Type") is XElement typeElement)
+            {
+                type = (string)typeElement;
+            }
+            if (element.Element("Name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("Precision") is XElement precisionElement)
+            {
+                precision = (int?)precisionElement;
+            }
+            if (element.Element("Scale") is XElement scaleElement)
+            {
+                scale = (int?)scaleElement;
+            }
+            return new ArrowFieldInternal(type, name, precision, scale, default);
+        }
+
+        BinaryData IModelSerializable<ArrowFieldInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ArrowFieldInternal IModelSerializable<ArrowFieldInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeArrowFieldInternal(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(ArrowFieldInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ArrowFieldInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeArrowFieldInternal(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

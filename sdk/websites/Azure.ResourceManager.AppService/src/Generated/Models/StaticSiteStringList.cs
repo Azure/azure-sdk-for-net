@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,23 +15,27 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> String list resource. </summary>
     public partial class StaticSiteStringList : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteStringList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticSiteStringList"/>. </summary>
         public StaticSiteStringList()
         {
             Properties = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StaticSiteStringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteStringList"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> List of string resources. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal StaticSiteStringList(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> properties, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteStringList(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> properties, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> List of string resources. </summary>

@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Template Options for the static site. </summary>
     public partial class StaticSiteTemplate
     {
-        /// <summary> Initializes a new instance of StaticSiteTemplate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticSiteTemplate"/>. </summary>
         public StaticSiteTemplate()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteTemplate"/>. </summary>
         /// <param name="templateRepositoryUri"> URL of the template repository. The newly generated repository will be based on this one. </param>
         /// <param name="owner"> Owner of the newly generated repository. </param>
         /// <param name="repositoryName"> Name of the newly generated repository. </param>
         /// <param name="description"> Description of the newly generated repository. </param>
         /// <param name="isPrivate"> Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public). </param>
-        internal StaticSiteTemplate(Uri templateRepositoryUri, string owner, string repositoryName, string description, bool? isPrivate)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteTemplate(Uri templateRepositoryUri, string owner, string repositoryName, string description, bool? isPrivate, Dictionary<string, BinaryData> rawData)
         {
             TemplateRepositoryUri = templateRepositoryUri;
             Owner = owner;
             RepositoryName = repositoryName;
             Description = description;
             IsPrivate = isPrivate;
+            _rawData = rawData;
         }
 
         /// <summary> URL of the template repository. The newly generated repository will be based on this one. </summary>

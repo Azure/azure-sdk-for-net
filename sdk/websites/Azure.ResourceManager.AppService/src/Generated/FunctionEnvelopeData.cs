@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class FunctionEnvelopeData : ResourceData
     {
-        /// <summary> Initializes a new instance of FunctionEnvelopeData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionEnvelopeData"/>. </summary>
         public FunctionEnvelopeData()
         {
             Files = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of FunctionEnvelopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionEnvelopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +45,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="language"> The function language. </param>
         /// <param name="isDisabled"> Gets or sets a value indicating whether the function is disabled. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal FunctionEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionAppId, string scriptRootPathHref, string scriptHref, string configHref, string testDataHref, string secretsFileHref, string href, BinaryData config, IDictionary<string, string> files, string testData, string invokeUrlTemplate, string language, bool? isDisabled, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionAppId, string scriptRootPathHref, string scriptHref, string configHref, string testDataHref, string secretsFileHref, string href, BinaryData config, IDictionary<string, string> files, string testData, string invokeUrlTemplate, string language, bool? isDisabled, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             FunctionAppId = functionAppId;
             ScriptRootPathHref = scriptRootPathHref;
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.AppService
             Language = language;
             IsDisabled = isDisabled;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Function App ID. </summary>

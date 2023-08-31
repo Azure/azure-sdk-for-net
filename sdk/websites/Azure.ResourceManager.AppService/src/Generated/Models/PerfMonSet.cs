@@ -14,25 +14,29 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Metric information. </summary>
     public partial class PerfMonSet
     {
-        /// <summary> Initializes a new instance of PerfMonSet. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PerfMonSet"/>. </summary>
         internal PerfMonSet()
         {
             Values = new ChangeTrackingList<PerfMonSample>();
         }
 
-        /// <summary> Initializes a new instance of PerfMonSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerfMonSet"/>. </summary>
         /// <param name="name"> Unique key name of the counter. </param>
         /// <param name="startOn"> Start time of the period. </param>
         /// <param name="endOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. </param>
         /// <param name="values"> Collection of workers that are active during this time. </param>
-        internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IReadOnlyList<PerfMonSample> values)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IReadOnlyList<PerfMonSample> values, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             StartOn = startOn;
             EndOn = endOn;
             TimeGrain = timeGrain;
             Values = values;
+            _rawData = rawData;
         }
 
         /// <summary> Unique key name of the counter. </summary>

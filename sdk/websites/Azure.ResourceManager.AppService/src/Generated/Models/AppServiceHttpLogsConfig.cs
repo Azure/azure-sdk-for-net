@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Http logs configuration. </summary>
     public partial class AppServiceHttpLogsConfig
     {
-        /// <summary> Initializes a new instance of AppServiceHttpLogsConfig. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceHttpLogsConfig"/>. </summary>
         public AppServiceHttpLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceHttpLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceHttpLogsConfig"/>. </summary>
         /// <param name="fileSystem"> Http logs to file system configuration. </param>
         /// <param name="azureBlobStorage"> Http logs to azure blob storage configuration. </param>
-        internal AppServiceHttpLogsConfig(FileSystemHttpLogsConfig fileSystem, AppServiceBlobStorageHttpLogsConfig azureBlobStorage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceHttpLogsConfig(FileSystemHttpLogsConfig fileSystem, AppServiceBlobStorageHttpLogsConfig azureBlobStorage, Dictionary<string, BinaryData> rawData)
         {
             FileSystem = fileSystem;
             AzureBlobStorage = azureBlobStorage;
+            _rawData = rawData;
         }
 
         /// <summary> Http logs to file system configuration. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class DateAfterModification : IUtf8JsonSerializable
+    public partial class DateAfterModification : IUtf8JsonSerializable, IModelJsonSerializable<DateAfterModification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DateAfterModification>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DateAfterModification>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DaysAfterModificationGreaterThan))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("daysAfterCreationGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterCreationGreaterThan.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DateAfterModification DeserializeDateAfterModification(JsonElement element)
+        internal static DateAfterModification DeserializeDateAfterModification(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<float> daysAfterLastAccessTimeGreaterThan = default;
             Optional<float> daysAfterLastTierChangeGreaterThan = default;
             Optional<float> daysAfterCreationGreaterThan = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysAfterModificationGreaterThan"u8))
@@ -86,8 +109,57 @@ namespace Azure.ResourceManager.Storage.Models
                     daysAfterCreationGreaterThan = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DateAfterModification(Optional.ToNullable(daysAfterModificationGreaterThan), Optional.ToNullable(daysAfterLastAccessTimeGreaterThan), Optional.ToNullable(daysAfterLastTierChangeGreaterThan), Optional.ToNullable(daysAfterCreationGreaterThan));
+            return new DateAfterModification(Optional.ToNullable(daysAfterModificationGreaterThan), Optional.ToNullable(daysAfterLastAccessTimeGreaterThan), Optional.ToNullable(daysAfterLastTierChangeGreaterThan), Optional.ToNullable(daysAfterCreationGreaterThan), rawData);
+        }
+
+        DateAfterModification IModelJsonSerializable<DateAfterModification>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDateAfterModification(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DateAfterModification>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DateAfterModification IModelSerializable<DateAfterModification>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDateAfterModification(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DateAfterModification model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DateAfterModification(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDateAfterModification(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

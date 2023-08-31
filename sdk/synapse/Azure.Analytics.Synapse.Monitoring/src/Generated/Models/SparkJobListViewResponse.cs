@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     /// <summary> The SparkJobListViewResponse. </summary>
     public partial class SparkJobListViewResponse
     {
-        /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkJobListViewResponse"/>. </summary>
         internal SparkJobListViewResponse()
         {
             SparkJobs = new ChangeTrackingList<SparkJob>();
         }
 
-        /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobListViewResponse"/>. </summary>
         /// <param name="nJobs"></param>
         /// <param name="sparkJobs"></param>
-        internal SparkJobListViewResponse(int? nJobs, IReadOnlyList<SparkJob> sparkJobs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkJobListViewResponse(int? nJobs, IReadOnlyList<SparkJob> sparkJobs, Dictionary<string, BinaryData> rawData)
         {
             NJobs = nJobs;
             SparkJobs = sparkJobs;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the n jobs. </summary>

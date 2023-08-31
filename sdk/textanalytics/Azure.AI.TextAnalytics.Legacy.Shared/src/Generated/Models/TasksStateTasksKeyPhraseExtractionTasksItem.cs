@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
@@ -13,21 +14,27 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The TasksStateTasksKeyPhraseExtractionTasksItem. </summary>
     internal partial class TasksStateTasksKeyPhraseExtractionTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksKeyPhraseExtractionTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksKeyPhraseExtractionTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         internal TasksStateTasksKeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, State status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksKeyPhraseExtractionTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksKeyPhraseExtractionTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
-        internal TasksStateTasksKeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, State status, KeyPhraseResult results) : base(lastUpdateDateTime, taskName, status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TasksStateTasksKeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, State status, KeyPhraseResult results, Dictionary<string, BinaryData> rawData) : base(lastUpdateDateTime, taskName, status, rawData)
         {
             Results = results;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksKeyPhraseExtractionTasksItem"/> for deserialization. </summary>
+        internal TasksStateTasksKeyPhraseExtractionTasksItem()
+        {
         }
 
         /// <summary> Gets the results. </summary>

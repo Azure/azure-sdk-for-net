@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Column definition. </summary>
     public partial class DataTableResponseColumn
     {
-        /// <summary> Initializes a new instance of DataTableResponseColumn. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataTableResponseColumn"/>. </summary>
         public DataTableResponseColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of DataTableResponseColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTableResponseColumn"/>. </summary>
         /// <param name="columnName"> Name of the column. </param>
         /// <param name="dataType"> Data type which looks like 'String' or 'Int32'. </param>
         /// <param name="columnType"> Column Type. </param>
-        internal DataTableResponseColumn(string columnName, string dataType, string columnType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataTableResponseColumn(string columnName, string dataType, string columnType, Dictionary<string, BinaryData> rawData)
         {
             ColumnName = columnName;
             DataType = dataType;
             ColumnType = columnType;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the column. </summary>

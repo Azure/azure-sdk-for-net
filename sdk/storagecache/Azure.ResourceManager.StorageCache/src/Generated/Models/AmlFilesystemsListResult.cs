@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StorageCache;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Result of the request to list AML file systems. It contains a list of AML file systems and a URL link to get the next set of results. </summary>
     internal partial class AmlFilesystemsListResult
     {
-        /// <summary> Initializes a new instance of AmlFilesystemsListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlFilesystemsListResult"/>. </summary>
         internal AmlFilesystemsListResult()
         {
             Value = new ChangeTrackingList<AmlFileSystemData>();
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFilesystemsListResult"/>. </summary>
         /// <param name="nextLink"> URL to get the next set of AML file system list results, if there are any. </param>
         /// <param name="value"> List of AML file systems. </param>
-        internal AmlFilesystemsListResult(string nextLink, IReadOnlyList<AmlFileSystemData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFilesystemsListResult(string nextLink, IReadOnlyList<AmlFileSystemData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> URL to get the next set of AML file system list results, if there are any. </summary>

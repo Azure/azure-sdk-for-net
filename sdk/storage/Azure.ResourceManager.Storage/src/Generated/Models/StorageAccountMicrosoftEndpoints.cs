@@ -6,25 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The URIs that are used to perform a retrieval of a public blob, queue, table, web or dfs object via a microsoft routing endpoint. </summary>
     public partial class StorageAccountMicrosoftEndpoints
     {
-        /// <summary> Initializes a new instance of StorageAccountMicrosoftEndpoints. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountMicrosoftEndpoints"/>. </summary>
         internal StorageAccountMicrosoftEndpoints()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountMicrosoftEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountMicrosoftEndpoints"/>. </summary>
         /// <param name="blobUri"> Gets the blob endpoint. </param>
         /// <param name="queueUri"> Gets the queue endpoint. </param>
         /// <param name="tableUri"> Gets the table endpoint. </param>
         /// <param name="fileUri"> Gets the file endpoint. </param>
         /// <param name="webUri"> Gets the web endpoint. </param>
         /// <param name="dfsUri"> Gets the dfs endpoint. </param>
-        internal StorageAccountMicrosoftEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountMicrosoftEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, Dictionary<string, BinaryData> rawData)
         {
             BlobUri = blobUri;
             QueueUri = queueUri;
@@ -32,6 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
             FileUri = fileUri;
             WebUri = webUri;
             DfsUri = dfsUri;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the blob endpoint. </summary>

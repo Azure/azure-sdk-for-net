@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The UnknownOutputDataSource. </summary>
     internal partial class UnknownOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of UnknownOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
-        internal UnknownOutputDataSource(string outputDataSourceType) : base(outputDataSourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownOutputDataSource(string outputDataSourceType, Dictionary<string, BinaryData> rawData) : base(outputDataSourceType, rawData)
         {
             OutputDataSourceType = outputDataSourceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownOutputDataSource"/> for deserialization. </summary>
+        internal UnknownOutputDataSource()
+        {
         }
     }
 }

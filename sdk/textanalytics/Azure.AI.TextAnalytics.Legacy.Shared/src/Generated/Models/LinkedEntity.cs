@@ -15,7 +15,9 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The LinkedEntity. </summary>
     internal partial class LinkedEntity
     {
-        /// <summary> Initializes a new instance of LinkedEntity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedEntity"/>. </summary>
         /// <param name="name"> Entity Linking formal name. </param>
         /// <param name="matches"> List of instances this entity appears in the text. </param>
         /// <param name="language"> Language used in the data source. </param>
@@ -37,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             DataSource = dataSource;
         }
 
-        /// <summary> Initializes a new instance of LinkedEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedEntity"/>. </summary>
         /// <param name="name"> Entity Linking formal name. </param>
         /// <param name="matches"> List of instances this entity appears in the text. </param>
         /// <param name="language"> Language used in the data source. </param>
@@ -45,7 +47,8 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="url"> URL for the entity's page from the data source. </param>
         /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
         /// <param name="bingId"> Bing Entity Search API unique identifier of the recognized entity. </param>
-        internal LinkedEntity(string name, IReadOnlyList<Match> matches, string language, string id, string url, string dataSource, string bingId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedEntity(string name, IReadOnlyList<Match> matches, string language, string id, string url, string dataSource, string bingId, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Matches = matches;
@@ -54,6 +57,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             Url = url;
             DataSource = dataSource;
             BingId = bingId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedEntity"/> for deserialization. </summary>
+        internal LinkedEntity()
+        {
         }
 
         /// <summary> Entity Linking formal name. </summary>

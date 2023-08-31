@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectConfig
     {
-        /// <summary> Initializes a new instance of OpenIdConnectConfig. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OpenIdConnectConfig"/>. </summary>
         public OpenIdConnectConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of OpenIdConnectConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenIdConnectConfig"/>. </summary>
         /// <param name="authorizationEndpoint"> The endpoint to be used to make an authorization request. </param>
         /// <param name="tokenEndpoint"> The endpoint to be used to request a token. </param>
         /// <param name="issuer"> The endpoint that issues the token. </param>
         /// <param name="certificationUri"> The endpoint that provides the keys necessary to validate the token. </param>
         /// <param name="wellKnownOpenIdConfiguration"> The endpoint that contains all the configuration endpoints for the provider. </param>
-        internal OpenIdConnectConfig(string authorizationEndpoint, string tokenEndpoint, string issuer, Uri certificationUri, string wellKnownOpenIdConfiguration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OpenIdConnectConfig(string authorizationEndpoint, string tokenEndpoint, string issuer, Uri certificationUri, string wellKnownOpenIdConfiguration, Dictionary<string, BinaryData> rawData)
         {
             AuthorizationEndpoint = authorizationEndpoint;
             TokenEndpoint = tokenEndpoint;
             Issuer = issuer;
             CertificationUri = certificationUri;
             WellKnownOpenIdConfiguration = wellKnownOpenIdConfiguration;
+            _rawData = rawData;
         }
 
         /// <summary> The endpoint to be used to make an authorization request. </summary>

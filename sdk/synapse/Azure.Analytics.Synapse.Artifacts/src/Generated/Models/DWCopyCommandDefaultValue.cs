@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Default value. </summary>
     public partial class DWCopyCommandDefaultValue
     {
-        /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DWCopyCommandDefaultValue"/>. </summary>
         public DWCopyCommandDefaultValue()
         {
         }
 
-        /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="DWCopyCommandDefaultValue"/>. </summary>
         /// <param name="columnName"> Column name. Type: object (or Expression with resultType string). </param>
         /// <param name="defaultValue"> The default value of the column. Type: object (or Expression with resultType string). </param>
-        internal DWCopyCommandDefaultValue(object columnName, object defaultValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DWCopyCommandDefaultValue(object columnName, object defaultValue, Dictionary<string, BinaryData> rawData)
         {
             ColumnName = columnName;
             DefaultValue = defaultValue;
+            _rawData = rawData;
         }
 
         /// <summary> Column name. Type: object (or Expression with resultType string). </summary>

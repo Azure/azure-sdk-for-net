@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class StaticSiteCustomDomainOverviewData : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewData"/>. </summary>
         public StaticSiteCustomDomainOverviewData()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +37,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="validationToken"> The TXT record validation token. </param>
         /// <param name="errorMessage"></param>
         /// <param name="kind"> Kind of resource. </param>
-        internal StaticSiteCustomDomainOverviewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteCustomDomainOverviewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DomainName = domainName;
             CreatedOn = createdOn;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.AppService
             ValidationToken = validationToken;
             ErrorMessage = errorMessage;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> The domain name for the static site custom domain. </summary>

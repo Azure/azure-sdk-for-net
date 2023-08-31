@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.VoiceServices.Models
@@ -12,9 +14,22 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The check availability request body. </summary>
     public partial class VoiceServicesCheckNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of VoiceServicesCheckNameAvailabilityContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCheckNameAvailabilityContent"/>. </summary>
         public VoiceServicesCheckNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCheckNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VoiceServicesCheckNameAvailabilityContent(string name, ResourceType? resourceType, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>

@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(PowerBIWorkspaceLinkedServiceConverter))]
-    public partial class PowerBIWorkspaceLinkedService : IUtf8JsonSerializable
+    public partial class PowerBIWorkspaceLinkedService : IUtf8JsonSerializable, IModelJsonSerializable<PowerBIWorkspaceLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PowerBIWorkspaceLinkedService>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PowerBIWorkspaceLinkedService>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PowerBIWorkspaceLinkedService>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -72,8 +78,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static PowerBIWorkspaceLinkedService DeserializePowerBIWorkspaceLinkedService(JsonElement element)
+        internal static PowerBIWorkspaceLinkedService DeserializePowerBIWorkspaceLinkedService(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -169,6 +177,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PowerBIWorkspaceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, workspaceId, tenantId);
+        }
+
+        PowerBIWorkspaceLinkedService IModelJsonSerializable<PowerBIWorkspaceLinkedService>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PowerBIWorkspaceLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePowerBIWorkspaceLinkedService(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PowerBIWorkspaceLinkedService>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PowerBIWorkspaceLinkedService>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PowerBIWorkspaceLinkedService IModelSerializable<PowerBIWorkspaceLinkedService>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PowerBIWorkspaceLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePowerBIWorkspaceLinkedService(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PowerBIWorkspaceLinkedService model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PowerBIWorkspaceLinkedService(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePowerBIWorkspaceLinkedService(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class PowerBIWorkspaceLinkedServiceConverter : JsonConverter<PowerBIWorkspaceLinkedService>

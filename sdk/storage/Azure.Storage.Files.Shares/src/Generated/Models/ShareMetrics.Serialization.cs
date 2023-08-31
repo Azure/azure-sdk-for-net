@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareMetrics : IXmlSerializable
+    public partial class ShareMetrics : IXmlSerializable, IModelSerializable<ShareMetrics>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Metrics");
             writer.WriteStartElement("Version");
@@ -35,8 +39,11 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareMetrics DeserializeShareMetrics(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ShareMetrics DeserializeShareMetrics(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string version = default;
             bool enabled = default;
             bool? includeApis = default;
@@ -57,7 +64,53 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 retentionPolicy = ShareRetentionPolicy.DeserializeShareRetentionPolicy(retentionPolicyElement);
             }
-            return new ShareMetrics(version, enabled, includeApis, retentionPolicy);
+            return new ShareMetrics(version, enabled, includeApis, retentionPolicy, default);
+        }
+
+        BinaryData IModelSerializable<ShareMetrics>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ShareMetrics IModelSerializable<ShareMetrics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeShareMetrics(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(ShareMetrics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ShareMetrics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeShareMetrics(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

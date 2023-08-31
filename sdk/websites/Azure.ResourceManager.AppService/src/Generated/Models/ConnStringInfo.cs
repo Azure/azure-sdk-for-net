@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Database connection string information. </summary>
     public partial class ConnStringInfo
     {
-        /// <summary> Initializes a new instance of ConnStringInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnStringInfo"/>. </summary>
         public ConnStringInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnStringInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnStringInfo"/>. </summary>
         /// <param name="name"> Name of connection string. </param>
         /// <param name="connectionString"> Connection string value. </param>
         /// <param name="connectionStringType"> Type of database. </param>
-        internal ConnStringInfo(string name, string connectionString, ConnectionStringType? connectionStringType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnStringInfo(string name, string connectionString, ConnectionStringType? connectionStringType, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ConnectionString = connectionString;
             ConnectionStringType = connectionStringType;
+            _rawData = rawData;
         }
 
         /// <summary> Name of connection string. </summary>

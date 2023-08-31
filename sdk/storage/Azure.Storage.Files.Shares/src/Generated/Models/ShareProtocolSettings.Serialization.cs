@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareProtocolSettings : IXmlSerializable
+    public partial class ShareProtocolSettings : IXmlSerializable, IModelSerializable<ShareProtocolSettings>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "ProtocolSettings");
             if (Optional.IsDefined(Smb))
@@ -23,14 +27,63 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             ShareSmbSettings smb = default;
             if (element.Element("SMB") is XElement smbElement)
             {
                 smb = ShareSmbSettings.DeserializeShareSmbSettings(smbElement);
             }
-            return new ShareProtocolSettings(smb);
+            return new ShareProtocolSettings(smb, default);
+        }
+
+        BinaryData IModelSerializable<ShareProtocolSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ShareProtocolSettings IModelSerializable<ShareProtocolSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeShareProtocolSettings(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(ShareProtocolSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ShareProtocolSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeShareProtocolSettings(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

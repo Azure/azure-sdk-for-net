@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class JavaScriptFunctionBinding : IUtf8JsonSerializable
+    public partial class JavaScriptFunctionBinding : IUtf8JsonSerializable, IModelJsonSerializable<JavaScriptFunctionBinding>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JavaScriptFunctionBinding>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JavaScriptFunctionBinding>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<JavaScriptFunctionBinding>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionBindingType);
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(Script);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JavaScriptFunctionBinding DeserializeJavaScriptFunctionBinding(JsonElement element)
+        internal static JavaScriptFunctionBinding DeserializeJavaScriptFunctionBinding(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
             Optional<string> script = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -60,8 +83,57 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JavaScriptFunctionBinding(type, script.Value);
+            return new JavaScriptFunctionBinding(type, script.Value, rawData);
+        }
+
+        JavaScriptFunctionBinding IModelJsonSerializable<JavaScriptFunctionBinding>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<JavaScriptFunctionBinding>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJavaScriptFunctionBinding(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JavaScriptFunctionBinding>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<JavaScriptFunctionBinding>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JavaScriptFunctionBinding IModelSerializable<JavaScriptFunctionBinding>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<JavaScriptFunctionBinding>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJavaScriptFunctionBinding(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(JavaScriptFunctionBinding model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator JavaScriptFunctionBinding(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJavaScriptFunctionBinding(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A list of ONVIF devices that were discovered in the same subnet as the IoT Edge device. </summary>
     public partial class DiscoveredOnvifDeviceCollection
     {
-        /// <summary> Initializes a new instance of DiscoveredOnvifDeviceCollection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiscoveredOnvifDeviceCollection"/>. </summary>
         public DiscoveredOnvifDeviceCollection()
         {
             Value = new ChangeTrackingList<DiscoveredOnvifDevice>();
         }
 
-        /// <summary> Initializes a new instance of DiscoveredOnvifDeviceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredOnvifDeviceCollection"/>. </summary>
         /// <param name="value"> An array of ONVIF devices that have been discovered in the same subnet as the IoT Edge device. </param>
-        internal DiscoveredOnvifDeviceCollection(IList<DiscoveredOnvifDevice> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiscoveredOnvifDeviceCollection(IList<DiscoveredOnvifDevice> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> An array of ONVIF devices that have been discovered in the same subnet as the IoT Edge device. </summary>

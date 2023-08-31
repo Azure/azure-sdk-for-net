@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Xml read settings. </summary>
     public partial class XmlReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of XmlReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="XmlReadSettings"/>. </summary>
         public XmlReadSettings()
         {
             Type = "XmlReadSettings";
         }
 
-        /// <summary> Initializes a new instance of XmlReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="XmlReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties">

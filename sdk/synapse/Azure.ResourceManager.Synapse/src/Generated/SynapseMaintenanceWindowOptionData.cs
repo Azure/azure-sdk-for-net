@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseMaintenanceWindowOptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseMaintenanceWindowOptionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseMaintenanceWindowOptionData"/>. </summary>
         public SynapseMaintenanceWindowOptionData()
         {
             MaintenanceWindowCycles = new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>();
         }
 
-        /// <summary> Initializes a new instance of SynapseMaintenanceWindowOptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseMaintenanceWindowOptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +39,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="minCycles"> Minimum number of maintenance windows cycles to be set on the database. </param>
         /// <param name="timeGranularityInMinutes"> Time granularity in minutes for maintenance windows. </param>
         /// <param name="allowMultipleMaintenanceWindowsPerCycle"> Whether we allow multiple maintenance windows per cycle. </param>
-        internal SynapseMaintenanceWindowOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<SynapseMaintenanceWindowTimeRange> maintenanceWindowCycles, int? minDurationInMinutes, int? defaultDurationInMinutes, int? minCycles, int? timeGranularityInMinutes, bool? allowMultipleMaintenanceWindowsPerCycle) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseMaintenanceWindowOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<SynapseMaintenanceWindowTimeRange> maintenanceWindowCycles, int? minDurationInMinutes, int? defaultDurationInMinutes, int? minCycles, int? timeGranularityInMinutes, bool? allowMultipleMaintenanceWindowsPerCycle, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
             MaintenanceWindowCycles = maintenanceWindowCycles;
@@ -45,6 +49,7 @@ namespace Azure.ResourceManager.Synapse
             MinCycles = minCycles;
             TimeGranularityInMinutes = timeGranularityInMinutes;
             AllowMultipleMaintenanceWindowsPerCycle = allowMultipleMaintenanceWindowsPerCycle;
+            _rawData = rawData;
         }
 
         /// <summary> Whether maintenance windows are enabled for the database. </summary>

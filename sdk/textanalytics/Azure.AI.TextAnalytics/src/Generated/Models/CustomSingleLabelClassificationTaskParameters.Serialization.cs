@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomSingleLabelClassificationTaskParameters : IUtf8JsonSerializable
+    internal partial class CustomSingleLabelClassificationTaskParameters : IUtf8JsonSerializable, IModelJsonSerializable<CustomSingleLabelClassificationTaskParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomSingleLabelClassificationTaskParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomSingleLabelClassificationTaskParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CustomSingleLabelClassificationTaskParameters>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
@@ -24,11 +32,25 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomSingleLabelClassificationTaskParameters DeserializeCustomSingleLabelClassificationTaskParameters(JsonElement element)
+        internal static CustomSingleLabelClassificationTaskParameters DeserializeCustomSingleLabelClassificationTaskParameters(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.AI.TextAnalytics.Models
             string projectName = default;
             string deploymentName = default;
             Optional<bool> loggingOptOut = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("projectName"u8))
@@ -57,8 +80,57 @@ namespace Azure.AI.TextAnalytics.Models
                     loggingOptOut = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomSingleLabelClassificationTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName);
+            return new CustomSingleLabelClassificationTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName, rawData);
+        }
+
+        CustomSingleLabelClassificationTaskParameters IModelJsonSerializable<CustomSingleLabelClassificationTaskParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CustomSingleLabelClassificationTaskParameters>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomSingleLabelClassificationTaskParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomSingleLabelClassificationTaskParameters>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CustomSingleLabelClassificationTaskParameters>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomSingleLabelClassificationTaskParameters IModelSerializable<CustomSingleLabelClassificationTaskParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CustomSingleLabelClassificationTaskParameters>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomSingleLabelClassificationTaskParameters(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CustomSingleLabelClassificationTaskParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CustomSingleLabelClassificationTaskParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomSingleLabelClassificationTaskParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

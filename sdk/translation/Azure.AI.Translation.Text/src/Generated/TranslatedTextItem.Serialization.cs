@@ -5,17 +5,60 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class TranslatedTextItem
+    public partial class TranslatedTextItem : IUtf8JsonSerializable, IModelJsonSerializable<TranslatedTextItem>
     {
-        internal static TranslatedTextItem DeserializeTranslatedTextItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TranslatedTextItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TranslatedTextItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DetectedLanguage))
+            {
+                writer.WritePropertyName("detectedLanguage"u8);
+                writer.WriteObjectValue(DetectedLanguage);
+            }
+            writer.WritePropertyName("translations"u8);
+            writer.WriteStartArray();
+            foreach (var item in Translations)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(SourceText))
+            {
+                writer.WritePropertyName("sourceText"u8);
+                writer.WriteObjectValue(SourceText);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TranslatedTextItem DeserializeTranslatedTextItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +66,7 @@ namespace Azure.AI.Translation.Text
             Optional<DetectedLanguage> detectedLanguage = default;
             IReadOnlyList<Translation> translations = default;
             Optional<SourceText> sourceText = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("detectedLanguage"u8))
@@ -53,16 +97,57 @@ namespace Azure.AI.Translation.Text
                     sourceText = SourceText.DeserializeSourceText(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TranslatedTextItem(detectedLanguage.Value, translations, sourceText.Value);
+            return new TranslatedTextItem(detectedLanguage.Value, translations, sourceText.Value, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TranslatedTextItem FromResponse(Response response)
+        TranslatedTextItem IModelJsonSerializable<TranslatedTextItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTranslatedTextItem(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTranslatedTextItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TranslatedTextItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TranslatedTextItem IModelSerializable<TranslatedTextItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTranslatedTextItem(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TranslatedTextItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TranslatedTextItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTranslatedTextItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> A list of cache usage models. </summary>
     internal partial class StorageCacheUsageModelsResult
     {
-        /// <summary> Initializes a new instance of StorageCacheUsageModelsResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsageModelsResult"/>. </summary>
         internal StorageCacheUsageModelsResult()
         {
             Value = new ChangeTrackingList<StorageCacheUsageModel>();
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsageModelsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsageModelsResult"/>. </summary>
         /// <param name="nextLink"> The URI to fetch the next page of cache usage models. </param>
         /// <param name="value"> The list of usage models available for the subscription. </param>
-        internal StorageCacheUsageModelsResult(string nextLink, IReadOnlyList<StorageCacheUsageModel> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheUsageModelsResult(string nextLink, IReadOnlyList<StorageCacheUsageModel> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The URI to fetch the next page of cache usage models. </summary>

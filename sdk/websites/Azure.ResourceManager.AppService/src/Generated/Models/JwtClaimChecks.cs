@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
     public partial class JwtClaimChecks
     {
-        /// <summary> Initializes a new instance of JwtClaimChecks. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JwtClaimChecks"/>. </summary>
         public JwtClaimChecks()
         {
             AllowedGroups = new ChangeTrackingList<string>();
             AllowedClientApplications = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of JwtClaimChecks. </summary>
+        /// <summary> Initializes a new instance of <see cref="JwtClaimChecks"/>. </summary>
         /// <param name="allowedGroups"> The list of the allowed groups. </param>
         /// <param name="allowedClientApplications"> The list of the allowed client applications. </param>
-        internal JwtClaimChecks(IList<string> allowedGroups, IList<string> allowedClientApplications)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JwtClaimChecks(IList<string> allowedGroups, IList<string> allowedClientApplications, Dictionary<string, BinaryData> rawData)
         {
             AllowedGroups = allowedGroups;
             AllowedClientApplications = allowedClientApplications;
+            _rawData = rawData;
         }
 
         /// <summary> The list of the allowed groups. </summary>

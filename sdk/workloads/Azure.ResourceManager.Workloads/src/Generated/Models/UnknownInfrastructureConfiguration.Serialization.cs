@@ -5,45 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class UnknownInfrastructureConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownInfrastructureConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<InfrastructureConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InfrastructureConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InfrastructureConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("appResourceGroup"u8);
             writer.WriteStringValue(AppResourceGroup);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownInfrastructureConfiguration DeserializeUnknownInfrastructureConfiguration(JsonElement element)
+        internal static InfrastructureConfiguration DeserializeUnknownInfrastructureConfiguration(JsonElement element, ModelSerializerOptions options = default) => DeserializeInfrastructureConfiguration(element, options);
+
+        InfrastructureConfiguration IModelJsonSerializable<InfrastructureConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            SapDeploymentType deploymentType = "Unknown";
-            string appResourceGroup = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("deploymentType"u8))
-                {
-                    deploymentType = new SapDeploymentType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("appResourceGroup"u8))
-                {
-                    appResourceGroup = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownInfrastructureConfiguration(deploymentType, appResourceGroup);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownInfrastructureConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InfrastructureConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InfrastructureConfiguration IModelSerializable<InfrastructureConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInfrastructureConfiguration(doc.RootElement, options);
         }
     }
 }

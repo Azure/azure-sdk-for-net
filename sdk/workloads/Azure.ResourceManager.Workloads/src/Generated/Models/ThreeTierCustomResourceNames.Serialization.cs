@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ThreeTierCustomResourceNames : IUtf8JsonSerializable
+    public partial class ThreeTierCustomResourceNames : IUtf8JsonSerializable, IModelJsonSerializable<ThreeTierCustomResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ThreeTierCustomResourceNames>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ThreeTierCustomResourceNames>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("namingPatternType"u8);
             writer.WriteStringValue(NamingPatternType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ThreeTierCustomResourceNames DeserializeThreeTierCustomResourceNames(JsonElement element)
+        internal static ThreeTierCustomResourceNames DeserializeThreeTierCustomResourceNames(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,7 +55,68 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "FullResourceName": return ThreeTierFullResourceNames.DeserializeThreeTierFullResourceNames(element);
                 }
             }
-            return UnknownThreeTierCustomResourceNames.DeserializeUnknownThreeTierCustomResourceNames(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            SapNamingPatternType namingPatternType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("namingPatternType"u8))
+                {
+                    namingPatternType = new SapNamingPatternType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownThreeTierCustomResourceNames(namingPatternType, rawData);
+        }
+
+        ThreeTierCustomResourceNames IModelJsonSerializable<ThreeTierCustomResourceNames>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreeTierCustomResourceNames(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ThreeTierCustomResourceNames>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ThreeTierCustomResourceNames IModelSerializable<ThreeTierCustomResourceNames>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeThreeTierCustomResourceNames(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ThreeTierCustomResourceNames model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ThreeTierCustomResourceNames(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeThreeTierCustomResourceNames(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

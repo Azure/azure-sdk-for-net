@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
@@ -12,18 +16,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="ImageFormatProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ImageFormatBmp"/>, <see cref="ImageFormatJpeg"/>, <see cref="ImageFormatPng"/> and <see cref="ImageFormatRaw"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownImageFormatProperties))]
     public abstract partial class ImageFormatProperties
     {
-        /// <summary> Initializes a new instance of ImageFormatProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageFormatProperties"/>. </summary>
         protected ImageFormatProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageFormatProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatProperties"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
-        internal ImageFormatProperties(string type)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageFormatProperties(string type, Dictionary<string, BinaryData> rawData)
         {
             Type = type;
+            _rawData = rawData;
         }
 
         /// <summary> Type discriminator for the derived types. </summary>

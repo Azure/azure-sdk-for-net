@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

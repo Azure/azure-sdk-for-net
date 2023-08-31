@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GoogleCloudStorageLocationConverter))]
-    public partial class GoogleCloudStorageLocation : IUtf8JsonSerializable
+    public partial class GoogleCloudStorageLocation : IUtf8JsonSerializable, IModelJsonSerializable<GoogleCloudStorageLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GoogleCloudStorageLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GoogleCloudStorageLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<GoogleCloudStorageLocation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BucketName))
             {
@@ -49,8 +55,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static GoogleCloudStorageLocation DeserializeGoogleCloudStorageLocation(JsonElement element)
+        internal static GoogleCloudStorageLocation DeserializeGoogleCloudStorageLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +117,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleCloudStorageLocation(type, folderPath.Value, fileName.Value, additionalProperties, bucketName.Value, version.Value);
+        }
+
+        GoogleCloudStorageLocation IModelJsonSerializable<GoogleCloudStorageLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GoogleCloudStorageLocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGoogleCloudStorageLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GoogleCloudStorageLocation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GoogleCloudStorageLocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GoogleCloudStorageLocation IModelSerializable<GoogleCloudStorageLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GoogleCloudStorageLocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGoogleCloudStorageLocation(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GoogleCloudStorageLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GoogleCloudStorageLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGoogleCloudStorageLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class GoogleCloudStorageLocationConverter : JsonConverter<GoogleCloudStorageLocation>

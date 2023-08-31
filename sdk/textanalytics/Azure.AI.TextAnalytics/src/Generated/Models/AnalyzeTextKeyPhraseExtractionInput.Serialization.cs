@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AnalyzeTextKeyPhraseExtractionInput : IUtf8JsonSerializable
+    internal partial class AnalyzeTextKeyPhraseExtractionInput : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeTextKeyPhraseExtractionInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeTextKeyPhraseExtractionInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeTextKeyPhraseExtractionInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AnalyzeTextKeyPhraseExtractionInput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AnalysisInput))
             {
@@ -27,7 +35,109 @@ namespace Azure.AI.TextAnalytics.Models
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AnalyzeTextKeyPhraseExtractionInput DeserializeAnalyzeTextKeyPhraseExtractionInput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<MultiLanguageAnalysisInput> analysisInput = default;
+            Optional<KeyPhraseTaskParameters> parameters = default;
+            AnalyzeTextTaskKind kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("analysisInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    analysisInput = MultiLanguageAnalysisInput.DeserializeMultiLanguageAnalysisInput(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = KeyPhraseTaskParameters.DeserializeKeyPhraseTaskParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new AnalyzeTextTaskKind(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AnalyzeTextKeyPhraseExtractionInput(kind, analysisInput.Value, parameters.Value, rawData);
+        }
+
+        AnalyzeTextKeyPhraseExtractionInput IModelJsonSerializable<AnalyzeTextKeyPhraseExtractionInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnalyzeTextKeyPhraseExtractionInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextKeyPhraseExtractionInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeTextKeyPhraseExtractionInput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnalyzeTextKeyPhraseExtractionInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeTextKeyPhraseExtractionInput IModelSerializable<AnalyzeTextKeyPhraseExtractionInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnalyzeTextKeyPhraseExtractionInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeTextKeyPhraseExtractionInput(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AnalyzeTextKeyPhraseExtractionInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AnalyzeTextKeyPhraseExtractionInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzeTextKeyPhraseExtractionInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

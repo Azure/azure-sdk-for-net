@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The compute resource properties for managed integration runtime. </summary>
     public partial class IntegrationRuntimeComputeProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeComputeProperties"/>. </summary>
         public IntegrationRuntimeComputeProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeComputeProperties"/>. </summary>
         /// <param name="location"> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </param>
         /// <param name="nodeSize"> The node size requirement to managed integration runtime. </param>
         /// <param name="numberOfNodes"> The required number of nodes for managed integration runtime. </param>

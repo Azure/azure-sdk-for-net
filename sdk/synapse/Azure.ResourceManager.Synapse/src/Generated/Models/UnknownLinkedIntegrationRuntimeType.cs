@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The UnknownLinkedIntegrationRuntimeType. </summary>
     internal partial class UnknownLinkedIntegrationRuntimeType : SynapseLinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of UnknownLinkedIntegrationRuntimeType. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownLinkedIntegrationRuntimeType"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
-        internal UnknownLinkedIntegrationRuntimeType(string authorizationType) : base(authorizationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownLinkedIntegrationRuntimeType(string authorizationType, Dictionary<string, BinaryData> rawData) : base(authorizationType, rawData)
         {
             AuthorizationType = authorizationType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownLinkedIntegrationRuntimeType"/> for deserialization. </summary>
+        internal UnknownLinkedIntegrationRuntimeType()
+        {
         }
     }
 }

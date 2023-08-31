@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The Sql pool usages. </summary>
     public partial class SqlPoolUsage
     {
-        /// <summary> Initializes a new instance of SqlPoolUsage. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlPoolUsage"/>. </summary>
         internal SqlPoolUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlPoolUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolUsage"/>. </summary>
         /// <param name="name"> The name of the usage metric. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="displayName"> The usage metric display name. </param>
@@ -25,7 +28,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="limit"> The current limit of the usage metric. </param>
         /// <param name="unit"> The units of the usage metric. </param>
         /// <param name="nextResetOn"> The next reset time for the usage metric (ISO8601 format). </param>
-        internal SqlPoolUsage(string name, string resourceName, string displayName, double? currentValue, double? limit, string unit, DateTimeOffset? nextResetOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlPoolUsage(string name, string resourceName, string displayName, double? currentValue, double? limit, string unit, DateTimeOffset? nextResetOn, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ResourceName = resourceName;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Limit = limit;
             Unit = unit;
             NextResetOn = nextResetOn;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the usage metric. </summary>

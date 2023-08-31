@@ -6,15 +6,18 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueAccessPolicy : IXmlSerializable
+    public partial class QueueAccessPolicy : IXmlSerializable, IModelSerializable<QueueAccessPolicy>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
             if (Optional.IsDefined(StartsOn))
@@ -38,8 +41,11 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueAccessPolicy DeserializeQueueAccessPolicy(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static QueueAccessPolicy DeserializeQueueAccessPolicy(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             DateTimeOffset? startsOn = default;
             DateTimeOffset? expiresOn = default;
             string permissions = default;
@@ -55,7 +61,53 @@ namespace Azure.Storage.Queues.Models
             {
                 permissions = (string)permissionElement;
             }
-            return new QueueAccessPolicy(startsOn, expiresOn, permissions);
+            return new QueueAccessPolicy(startsOn, expiresOn, permissions, default);
+        }
+
+        BinaryData IModelSerializable<QueueAccessPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueueAccessPolicy IModelSerializable<QueueAccessPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeQueueAccessPolicy(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(QueueAccessPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator QueueAccessPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeQueueAccessPolicy(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

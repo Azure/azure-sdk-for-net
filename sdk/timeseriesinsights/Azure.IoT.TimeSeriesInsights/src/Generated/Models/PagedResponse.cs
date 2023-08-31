@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Partial result that has continuation token to fetch the next partial result. </summary>
     internal partial class PagedResponse
     {
-        /// <summary> Initializes a new instance of PagedResponse. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PagedResponse"/>. </summary>
         internal PagedResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of PagedResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedResponse"/>. </summary>
         /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </param>
-        internal PagedResponse(string continuationToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PagedResponse(string continuationToken, Dictionary<string, BinaryData> rawData)
         {
             ContinuationToken = continuationToken;
+            _rawData = rawData;
         }
 
         /// <summary> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </summary>

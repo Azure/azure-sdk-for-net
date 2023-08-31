@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> An object representing the task definition for a Key Phrase Extraction task. </summary>
     internal partial class KeyPhraseLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of KeyPhraseLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseLROTask"/>. </summary>
         public KeyPhraseLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.KeyPhraseExtraction;
         }
 
-        /// <summary> Initializes a new instance of KeyPhraseLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseLROTask"/>. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for a Key Phrase Extraction task. </param>
-        internal KeyPhraseLROTask(string taskName, AnalyzeTextLROTaskKind kind, KeyPhraseTaskParameters parameters) : base(taskName, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyPhraseLROTask(string taskName, AnalyzeTextLROTaskKind kind, KeyPhraseTaskParameters parameters, Dictionary<string, BinaryData> rawData) : base(taskName, kind, rawData)
         {
             Parameters = parameters;
             Kind = kind;

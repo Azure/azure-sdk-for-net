@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,7 +14,9 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Groups the set of query request settings. </summary>
     internal partial class QueryRequest
     {
-        /// <summary> Initializes a new instance of QueryRequest. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
         /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public QueryRequest(string expression)
@@ -22,6 +25,21 @@ namespace Azure.Storage.Blobs.Models
 
             QueryType = "SQL";
             Expression = expression;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
+        /// <param name="queryType"> Required. The type of the provided query expression. </param>
+        /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
+        /// <param name="inputSerialization"></param>
+        /// <param name="outputSerialization"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryRequest(string queryType, string expression, QuerySerialization inputSerialization, QuerySerialization outputSerialization, Dictionary<string, BinaryData> rawData)
+        {
+            QueryType = queryType;
+            Expression = expression;
+            InputSerialization = inputSerialization;
+            OutputSerialization = outputSerialization;
+            _rawData = rawData;
         }
         /// <summary> Gets or sets the input serialization. </summary>
         public QuerySerialization InputSerialization { get; set; }

@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The Pagination. </summary>
     internal partial class Pagination
     {
-        /// <summary> Initializes a new instance of Pagination. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Pagination"/>. </summary>
         internal Pagination()
         {
         }
 
-        /// <summary> Initializes a new instance of Pagination. </summary>
+        /// <summary> Initializes a new instance of <see cref="Pagination"/>. </summary>
         /// <param name="nextLink"></param>
-        internal Pagination(string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Pagination(string nextLink, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the next link. </summary>

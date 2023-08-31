@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,26 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Functions host level keys. </summary>
     public partial class FunctionAppHostKeys
     {
-        /// <summary> Initializes a new instance of FunctionAppHostKeys. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionAppHostKeys"/>. </summary>
         internal FunctionAppHostKeys()
         {
             FunctionKeys = new ChangeTrackingDictionary<string, string>();
             SystemKeys = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of FunctionAppHostKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppHostKeys"/>. </summary>
         /// <param name="masterKey"> Secret key. </param>
         /// <param name="functionKeys"> Host level function keys. </param>
         /// <param name="systemKeys"> System keys. </param>
-        internal FunctionAppHostKeys(string masterKey, IReadOnlyDictionary<string, string> functionKeys, IReadOnlyDictionary<string, string> systemKeys)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppHostKeys(string masterKey, IReadOnlyDictionary<string, string> functionKeys, IReadOnlyDictionary<string, string> systemKeys, Dictionary<string, BinaryData> rawData)
         {
             MasterKey = masterKey;
             FunctionKeys = functionKeys;
             SystemKeys = systemKeys;
+            _rawData = rawData;
         }
 
         /// <summary> Secret key. </summary>

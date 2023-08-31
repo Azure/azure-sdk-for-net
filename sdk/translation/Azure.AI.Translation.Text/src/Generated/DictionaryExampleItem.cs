@@ -15,6 +15,8 @@ namespace Azure.AI.Translation.Text
     /// <summary> Dictionary Example element. </summary>
     public partial class DictionaryExampleItem
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of DictionaryExampleItem. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term. Generally, this should be identical
@@ -47,11 +49,18 @@ namespace Azure.AI.Translation.Text
         /// to the value of the Translation field at the matching list index in the body of the request.
         /// </param>
         /// <param name="examples"> A list of examples for the (source term, target term) pair. </param>
-        internal DictionaryExampleItem(string normalizedSource, string normalizedTarget, IReadOnlyList<DictionaryExample> examples)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DictionaryExampleItem(string normalizedSource, string normalizedTarget, IReadOnlyList<DictionaryExample> examples, Dictionary<string, BinaryData> rawData)
         {
             NormalizedSource = normalizedSource;
             NormalizedTarget = normalizedTarget;
             Examples = examples;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryExampleItem"/> for deserialization. </summary>
+        internal DictionaryExampleItem()
+        {
         }
 
         /// <summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Information about the AML file system archive. </summary>
     public partial class AmlFileSystemArchive
     {
-        /// <summary> Initializes a new instance of AmlFileSystemArchive. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemArchive"/>. </summary>
         internal AmlFileSystemArchive()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemArchive. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemArchive"/>. </summary>
         /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
         /// <param name="status"> The status of the archive. </param>
-        internal AmlFileSystemArchive(string filesystemPath, AmlFileSystemArchiveStatus status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemArchive(string filesystemPath, AmlFileSystemArchiveStatus status, Dictionary<string, BinaryData> rawData)
         {
             FilesystemPath = filesystemPath;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -13,7 +14,9 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Represents the default category. </summary>
     public partial class TimeSeriesDefaultCategory
     {
-        /// <summary> Initializes a new instance of TimeSeriesDefaultCategory. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDefaultCategory"/>. </summary>
         /// <param name="label"> The name of the default category which will be assigned to the values that does not match any of those that are defined in the 'categories'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> is null. </exception>
         public TimeSeriesDefaultCategory(string label)
@@ -21,6 +24,20 @@ namespace Azure.IoT.TimeSeriesInsights
             Argument.AssertNotNull(label, nameof(label));
 
             Label = label;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDefaultCategory"/>. </summary>
+        /// <param name="label"> The name of the default category which will be assigned to the values that does not match any of those that are defined in the 'categories'. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesDefaultCategory(string label, Dictionary<string, BinaryData> rawData)
+        {
+            Label = label;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDefaultCategory"/> for deserialization. </summary>
+        internal TimeSeriesDefaultCategory()
+        {
         }
 
         /// <summary> The name of the default category which will be assigned to the values that does not match any of those that are defined in the 'categories'. </summary>

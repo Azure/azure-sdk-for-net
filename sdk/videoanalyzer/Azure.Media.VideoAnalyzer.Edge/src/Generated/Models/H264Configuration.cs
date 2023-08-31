@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Class representing the H264 Configuration. </summary>
     public partial class H264Configuration
     {
-        /// <summary> Initializes a new instance of H264Configuration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="H264Configuration"/>. </summary>
         public H264Configuration()
         {
         }
 
-        /// <summary> Initializes a new instance of H264Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="H264Configuration"/>. </summary>
         /// <param name="govLength"> Group of Video frames length. </param>
         /// <param name="profile"> The H264 Profile. </param>
-        internal H264Configuration(float? govLength, H264Profile? profile)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal H264Configuration(float? govLength, H264Profile? profile, Dictionary<string, BinaryData> rawData)
         {
             GovLength = govLength;
             Profile = profile;
+            _rawData = rawData;
         }
 
         /// <summary> Group of Video frames length. </summary>

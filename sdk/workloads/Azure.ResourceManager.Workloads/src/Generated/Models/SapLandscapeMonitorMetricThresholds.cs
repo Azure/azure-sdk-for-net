@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the Threshold Values for Top Metrics Health. </summary>
     public partial class SapLandscapeMonitorMetricThresholds
     {
-        /// <summary> Initializes a new instance of SapLandscapeMonitorMetricThresholds. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorMetricThresholds"/>. </summary>
         public SapLandscapeMonitorMetricThresholds()
         {
         }
 
-        /// <summary> Initializes a new instance of SapLandscapeMonitorMetricThresholds. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorMetricThresholds"/>. </summary>
         /// <param name="name"> Gets or sets the name of the threshold. </param>
         /// <param name="green"> Gets or sets the threshold value for Green. </param>
         /// <param name="yellow"> Gets or sets the threshold value for Yellow. </param>
         /// <param name="red"> Gets or sets the threshold value for Red. </param>
-        internal SapLandscapeMonitorMetricThresholds(string name, float? green, float? yellow, float? red)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapLandscapeMonitorMetricThresholds(string name, float? green, float? yellow, float? red, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Green = green;
             Yellow = yellow;
             Red = red;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the name of the threshold. </summary>

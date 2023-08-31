@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> Error type. </summary>
     public partial class JobRunError
     {
-        /// <summary> Initializes a new instance of JobRunError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobRunError"/>. </summary>
         internal JobRunError()
         {
         }
 
-        /// <summary> Initializes a new instance of JobRunError. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunError"/>. </summary>
         /// <param name="code"> Error code of the given entry. </param>
         /// <param name="message"> Error message of the given entry. </param>
         /// <param name="target"> Target of the given error entry. </param>
-        internal JobRunError(string code, string message, string target)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobRunError(string code, string message, string target, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Target = target;
+            _rawData = rawData;
         }
 
         /// <summary> Error code of the given entry. </summary>

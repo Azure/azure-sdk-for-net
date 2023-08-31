@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the mapping for SID to Environment/Applications. </summary>
     public partial class SapLandscapeMonitorSidMapping
     {
-        /// <summary> Initializes a new instance of SapLandscapeMonitorSidMapping. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorSidMapping"/>. </summary>
         public SapLandscapeMonitorSidMapping()
         {
             TopSid = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SapLandscapeMonitorSidMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorSidMapping"/>. </summary>
         /// <param name="name"> Gets or sets the name of the grouping. </param>
         /// <param name="topSid"> Gets or sets the list of SID's. </param>
-        internal SapLandscapeMonitorSidMapping(string name, IList<string> topSid)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapLandscapeMonitorSidMapping(string name, IList<string> topSid, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             TopSid = topSid;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the name of the grouping. </summary>

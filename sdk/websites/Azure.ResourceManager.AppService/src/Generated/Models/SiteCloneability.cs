@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Represents whether or not an app is cloneable. </summary>
     public partial class SiteCloneability
     {
-        /// <summary> Initializes a new instance of SiteCloneability. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteCloneability"/>. </summary>
         internal SiteCloneability()
         {
             BlockingFeatures = new ChangeTrackingList<SiteCloneabilityCriterion>();
@@ -21,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             BlockingCharacteristics = new ChangeTrackingList<SiteCloneabilityCriterion>();
         }
 
-        /// <summary> Initializes a new instance of SiteCloneability. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteCloneability"/>. </summary>
         /// <param name="result"> Name of app. </param>
         /// <param name="blockingFeatures"> List of features enabled on app that prevent cloning. </param>
         /// <param name="unsupportedFeatures">
@@ -29,12 +32,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// but the features in this list will not be set up on cloned app.
         /// </param>
         /// <param name="blockingCharacteristics"> List of blocking application characteristics. </param>
-        internal SiteCloneability(CloneAbilityResult? result, IReadOnlyList<SiteCloneabilityCriterion> blockingFeatures, IReadOnlyList<SiteCloneabilityCriterion> unsupportedFeatures, IReadOnlyList<SiteCloneabilityCriterion> blockingCharacteristics)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteCloneability(CloneAbilityResult? result, IReadOnlyList<SiteCloneabilityCriterion> blockingFeatures, IReadOnlyList<SiteCloneabilityCriterion> unsupportedFeatures, IReadOnlyList<SiteCloneabilityCriterion> blockingCharacteristics, Dictionary<string, BinaryData> rawData)
         {
             Result = result;
             BlockingFeatures = blockingFeatures;
             UnsupportedFeatures = unsupportedFeatures;
             BlockingCharacteristics = blockingCharacteristics;
+            _rawData = rawData;
         }
 
         /// <summary> Name of app. </summary>

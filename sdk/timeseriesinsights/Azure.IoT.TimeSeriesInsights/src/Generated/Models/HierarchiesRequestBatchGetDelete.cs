@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,24 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to get or delete multiple time series hierarchies. Exactly one of "hierarchyIds" or "names" must be set. </summary>
     internal partial class HierarchiesRequestBatchGetDelete
     {
-        /// <summary> Initializes a new instance of HierarchiesRequestBatchGetDelete. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HierarchiesRequestBatchGetDelete"/>. </summary>
         public HierarchiesRequestBatchGetDelete()
         {
             HierarchyIds = new ChangeTrackingList<string>();
             Names = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HierarchiesRequestBatchGetDelete"/>. </summary>
+        /// <param name="hierarchyIds"> List of hierarchy IDs. </param>
+        /// <param name="names"> List of hierarchy names. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HierarchiesRequestBatchGetDelete(IList<string> hierarchyIds, IList<string> names, Dictionary<string, BinaryData> rawData)
+        {
+            HierarchyIds = hierarchyIds;
+            Names = names;
+            _rawData = rawData;
         }
 
         /// <summary> List of hierarchy IDs. </summary>

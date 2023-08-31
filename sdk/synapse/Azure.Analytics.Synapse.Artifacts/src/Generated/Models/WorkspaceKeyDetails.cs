@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Details of the customer managed key associated with the workspace. </summary>
     public partial class WorkspaceKeyDetails
     {
-        /// <summary> Initializes a new instance of WorkspaceKeyDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceKeyDetails"/>. </summary>
         public WorkspaceKeyDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceKeyDetails"/>. </summary>
         /// <param name="name"> Workspace Key sub-resource name. </param>
         /// <param name="keyVaultUrl"> Workspace Key sub-resource key vault url. </param>
-        internal WorkspaceKeyDetails(string name, string keyVaultUrl)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceKeyDetails(string name, string keyVaultUrl, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             KeyVaultUrl = keyVaultUrl;
+            _rawData = rawData;
         }
 
         /// <summary> Workspace Key sub-resource name. </summary>

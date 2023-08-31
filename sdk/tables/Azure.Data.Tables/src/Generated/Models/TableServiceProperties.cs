@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,27 @@ namespace Azure.Data.Tables.Models
     /// <summary> Table Service Properties. </summary>
     public partial class TableServiceProperties
     {
-        /// <summary> Initializes a new instance of TableServiceProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableServiceProperties"/>. </summary>
         public TableServiceProperties()
         {
             Cors = new ChangeTrackingList<TableCorsRule>();
         }
 
-        /// <summary> Initializes a new instance of TableServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableServiceProperties"/>. </summary>
         /// <param name="logging"> Azure Analytics Logging settings. </param>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for tables. </param>
         /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for tables. </param>
         /// <param name="cors"> The set of CORS rules. </param>
-        internal TableServiceProperties(TableAnalyticsLoggingSettings logging, TableMetrics hourMetrics, TableMetrics minuteMetrics, IList<TableCorsRule> cors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableServiceProperties(TableAnalyticsLoggingSettings logging, TableMetrics hourMetrics, TableMetrics minuteMetrics, IList<TableCorsRule> cors, Dictionary<string, BinaryData> rawData)
         {
             Logging = logging;
             HourMetrics = hourMetrics;
             MinuteMetrics = minuteMetrics;
             Cors = cors;
+            _rawData = rawData;
         }
 
         /// <summary> Azure Analytics Logging settings. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Common error representation. </summary>
     public partial class StreamAnalyticsError
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsError. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsError"/>. </summary>
         internal StreamAnalyticsError()
         {
             Details = new ChangeTrackingList<StreamAnalyticsErrorDetails>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="details"> Error details. </param>
-        internal StreamAnalyticsError(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsError(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
+            _rawData = rawData;
         }
 
         /// <summary> Error code. </summary>

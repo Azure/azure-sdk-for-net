@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The TasksStateTasks. </summary>
     internal partial class TasksStateTasks
     {
-        /// <summary> Initializes a new instance of TasksStateTasks. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>
@@ -31,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             SentimentAnalysisTasks = new ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>();
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasks. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>
@@ -41,7 +44,8 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         /// <param name="keyPhraseExtractionTasks"></param>
         /// <param name="entityLinkingTasks"></param>
         /// <param name="sentimentAnalysisTasks"></param>
-        internal TasksStateTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<TasksStateTasksEntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<TasksStateTasksEntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<TasksStateTasksEntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> sentimentAnalysisTasks)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TasksStateTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<TasksStateTasksEntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<TasksStateTasksEntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<TasksStateTasksEntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> sentimentAnalysisTasks, Dictionary<string, BinaryData> rawData)
         {
             Completed = completed;
             Failed = failed;
@@ -52,6 +56,12 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             KeyPhraseExtractionTasks = keyPhraseExtractionTasks;
             EntityLinkingTasks = entityLinkingTasks;
             SentimentAnalysisTasks = sentimentAnalysisTasks;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasks"/> for deserialization. </summary>
+        internal TasksStateTasks()
+        {
         }
 
         /// <summary> Gets the completed. </summary>

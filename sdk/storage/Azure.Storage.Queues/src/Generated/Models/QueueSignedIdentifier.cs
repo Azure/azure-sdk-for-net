@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
@@ -13,6 +14,19 @@ namespace Azure.Storage.Queues.Models
     /// <summary> signed identifier. </summary>
     public partial class QueueSignedIdentifier
     {
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueueSignedIdentifier"/>. </summary>
+        /// <param name="id"> a unique id. </param>
+        /// <param name="accessPolicy"> The access policy. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueueSignedIdentifier(string id, QueueAccessPolicy accessPolicy, Dictionary<string, BinaryData> rawData)
+        {
+            Id = id;
+            AccessPolicy = accessPolicy;
+            _rawData = rawData;
+        }
+
         /// <summary> a unique id. </summary>
         public string Id { get; set; }
         /// <summary> The access policy. </summary>

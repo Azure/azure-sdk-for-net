@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownImageFormatProperties. </summary>
     internal partial class UnknownImageFormatProperties : ImageFormatProperties
     {
-        /// <summary> Initializes a new instance of UnknownImageFormatProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownImageFormatProperties"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
-        internal UnknownImageFormatProperties(string type) : base(type)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownImageFormatProperties(string type, Dictionary<string, BinaryData> rawData) : base(type, rawData)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownImageFormatProperties"/> for deserialization. </summary>
+        internal UnknownImageFormatProperties()
+        {
         }
     }
 }

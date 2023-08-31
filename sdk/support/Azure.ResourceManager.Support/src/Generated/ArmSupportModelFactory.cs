@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSupportModelFactory
     {
-        /// <summary> Initializes a new instance of SupportAzureServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportAzureServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Support.Models
         {
             resourceTypes ??= new List<string>();
 
-            return new SupportAzureServiceData(id, name, resourceType, systemData, displayName, resourceTypes?.ToList());
+            return new SupportAzureServiceData(id, name, resourceType, systemData, displayName, resourceTypes?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of ProblemClassificationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,20 +41,20 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Support.ProblemClassificationData"/> instance for mocking. </returns>
         public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null)
         {
-            return new ProblemClassificationData(id, name, resourceType, systemData, displayName);
+            return new ProblemClassificationData(id, name, resourceType, systemData, displayName, default);
         }
 
-        /// <summary> Initializes a new instance of SupportNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates whether the name is available. </param>
         /// <param name="reason"> The reason why the name is not available. </param>
         /// <param name="message"> The detailed error message describing why the name is not available. </param>
         /// <returns> A new <see cref="Models.SupportNameAvailabilityResult"/> instance for mocking. </returns>
         public static SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new SupportNameAvailabilityResult(isNameAvailable, reason, message);
+            return new SupportNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
-        /// <summary> Initializes a new instance of SupportTicketData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -82,20 +82,20 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Support.SupportTicketData"/> instance for mocking. </returns>
         public static SupportTicketData SupportTicketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string supportTicketId = null, string description = null, string problemClassificationId = null, string problemClassificationDisplayName = null, SupportSeverityLevel? severity = null, string enrollmentId = null, bool? require24X7Response = null, SupportContactProfile contactDetails = null, SupportServiceLevelAgreement serviceLevelAgreement = null, string supportEngineerEmailAddress = null, string supportPlanType = null, string title = null, DateTimeOffset? problemStartOn = null, string serviceId = null, string serviceDisplayName = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier technicalTicketDetailsResourceId = null, QuotaTicketDetails quotaTicketDetails = null)
         {
-            return new SupportTicketData(id, name, resourceType, systemData, supportTicketId, description, problemClassificationId, problemClassificationDisplayName, severity, enrollmentId, require24X7Response, contactDetails, serviceLevelAgreement, supportEngineerEmailAddress != null ? new SupportEngineer(supportEngineerEmailAddress) : null, supportPlanType, title, problemStartOn, serviceId, serviceDisplayName, status, createdOn, modifiedOn, technicalTicketDetailsResourceId != null ? new TechnicalTicketDetails(technicalTicketDetailsResourceId) : null, quotaTicketDetails);
+            return new SupportTicketData(id, name, resourceType, systemData, supportTicketId, description, problemClassificationId, problemClassificationDisplayName, severity, enrollmentId, require24X7Response, contactDetails, serviceLevelAgreement, supportEngineerEmailAddress != null ? new SupportEngineer(supportEngineerEmailAddress, new Dictionary<string, BinaryData>()) : null, supportPlanType, title, problemStartOn, serviceId, serviceDisplayName, status, createdOn, modifiedOn, technicalTicketDetailsResourceId != null ? new TechnicalTicketDetails(technicalTicketDetailsResourceId, new Dictionary<string, BinaryData>()) : null, quotaTicketDetails, default);
         }
 
-        /// <summary> Initializes a new instance of SupportServiceLevelAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportServiceLevelAgreement"/>. </summary>
         /// <param name="startOn"> Time in UTC (ISO 8601 format) when the service level agreement starts. </param>
         /// <param name="expireOn"> Time in UTC (ISO 8601 format) when the service level agreement expires. </param>
         /// <param name="slaInMinutes"> Service Level Agreement in minutes. </param>
         /// <returns> A new <see cref="Models.SupportServiceLevelAgreement"/> instance for mocking. </returns>
         public static SupportServiceLevelAgreement SupportServiceLevelAgreement(DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, int? slaInMinutes = null)
         {
-            return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes);
+            return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes, default);
         }
 
-        /// <summary> Initializes a new instance of SupportTicketCommunicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Support.SupportTicketCommunicationData"/> instance for mocking. </returns>
         public static SupportTicketCommunicationData SupportTicketCommunicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SupportTicketCommunicationType? communicationType = null, SupportTicketCommunicationDirection? communicationDirection = null, string sender = null, string subject = null, string body = null, DateTimeOffset? createdOn = null)
         {
-            return new SupportTicketCommunicationData(id, name, resourceType, systemData, communicationType, communicationDirection, sender, subject, body, createdOn);
+            return new SupportTicketCommunicationData(id, name, resourceType, systemData, communicationType, communicationDirection, sender, subject, body, createdOn, default);
         }
     }
 }

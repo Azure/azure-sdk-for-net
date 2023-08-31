@@ -15,7 +15,9 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The BlobFlatListSegment. </summary>
     internal partial class BlobFlatListSegment
     {
-        /// <summary> Initializes a new instance of BlobFlatListSegment. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/>. </summary>
         /// <param name="blobItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobItems"/> is null. </exception>
         internal BlobFlatListSegment(IEnumerable<BlobItemInternal> blobItems)
@@ -25,11 +27,18 @@ namespace Azure.Storage.Blobs.Models
             BlobItems = blobItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of BlobFlatListSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/>. </summary>
         /// <param name="blobItems"></param>
-        internal BlobFlatListSegment(IReadOnlyList<BlobItemInternal> blobItems)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobFlatListSegment(IReadOnlyList<BlobItemInternal> blobItems, Dictionary<string, BinaryData> rawData)
         {
             BlobItems = blobItems;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/> for deserialization. </summary>
+        internal BlobFlatListSegment()
+        {
         }
 
         /// <summary> Gets the blob items. </summary>

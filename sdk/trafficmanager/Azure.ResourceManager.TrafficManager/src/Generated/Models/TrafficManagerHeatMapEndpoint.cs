@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
@@ -12,18 +14,22 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class which is a sparse representation of a Traffic Manager endpoint. </summary>
     public partial class TrafficManagerHeatMapEndpoint
     {
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapEndpoint. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapEndpoint"/>. </summary>
         public TrafficManagerHeatMapEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapEndpoint"/>. </summary>
         /// <param name="resourceId"> The ARM Resource ID of this Traffic Manager endpoint. </param>
         /// <param name="endpointId"> A number uniquely identifying this endpoint in query experiences. </param>
-        internal TrafficManagerHeatMapEndpoint(ResourceIdentifier resourceId, int? endpointId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficManagerHeatMapEndpoint(ResourceIdentifier resourceId, int? endpointId, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
             EndpointId = endpointId;
+            _rawData = rawData;
         }
 
         /// <summary> The ARM Resource ID of this Traffic Manager endpoint. </summary>

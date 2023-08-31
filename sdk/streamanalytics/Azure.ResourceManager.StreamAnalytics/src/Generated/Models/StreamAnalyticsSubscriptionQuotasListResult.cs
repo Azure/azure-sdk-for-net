@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Result of the GetQuotas operation. It contains a list of quotas for the subscription in a particular region. </summary>
     internal partial class StreamAnalyticsSubscriptionQuotasListResult
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsSubscriptionQuotasListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSubscriptionQuotasListResult"/>. </summary>
         internal StreamAnalyticsSubscriptionQuotasListResult()
         {
             Value = new ChangeTrackingList<StreamAnalyticsSubscriptionQuota>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsSubscriptionQuotasListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSubscriptionQuotasListResult"/>. </summary>
         /// <param name="value"> List of quotas for the subscription in a particular region. </param>
-        internal StreamAnalyticsSubscriptionQuotasListResult(IReadOnlyList<StreamAnalyticsSubscriptionQuota> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsSubscriptionQuotasListResult(IReadOnlyList<StreamAnalyticsSubscriptionQuota> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of quotas for the subscription in a particular region. </summary>

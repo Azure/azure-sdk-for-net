@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LeaseContainerResponse
+    public partial class LeaseContainerResponse : IUtf8JsonSerializable, IModelJsonSerializable<LeaseContainerResponse>
     {
-        internal static LeaseContainerResponse DeserializeLeaseContainerResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LeaseContainerResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LeaseContainerResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LeaseId))
+            {
+                writer.WritePropertyName("leaseId"u8);
+                writer.WriteStringValue(LeaseId);
+            }
+            if (Optional.IsDefined(LeaseTimeSeconds))
+            {
+                writer.WritePropertyName("leaseTimeSeconds"u8);
+                writer.WriteStringValue(LeaseTimeSeconds);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LeaseContainerResponse DeserializeLeaseContainerResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> leaseId = default;
             Optional<string> leaseTimeSeconds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("leaseId"u8))
@@ -32,8 +71,57 @@ namespace Azure.ResourceManager.Storage.Models
                     leaseTimeSeconds = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LeaseContainerResponse(leaseId.Value, leaseTimeSeconds.Value);
+            return new LeaseContainerResponse(leaseId.Value, leaseTimeSeconds.Value, rawData);
+        }
+
+        LeaseContainerResponse IModelJsonSerializable<LeaseContainerResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLeaseContainerResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LeaseContainerResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LeaseContainerResponse IModelSerializable<LeaseContainerResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLeaseContainerResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LeaseContainerResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LeaseContainerResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLeaseContainerResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

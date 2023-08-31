@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Details of the encryption associated with the workspace. </summary>
     public partial class SynapseEncryptionDetails
     {
-        /// <summary> Initializes a new instance of SynapseEncryptionDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseEncryptionDetails"/>. </summary>
         public SynapseEncryptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEncryptionDetails"/>. </summary>
         /// <param name="isDoubleEncryptionEnabled"> Double Encryption enabled. </param>
         /// <param name="cmk"> Customer Managed Key Details. </param>
-        internal SynapseEncryptionDetails(bool? isDoubleEncryptionEnabled, WorkspaceCustomerManagedKeyDetails cmk)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseEncryptionDetails(bool? isDoubleEncryptionEnabled, WorkspaceCustomerManagedKeyDetails cmk, Dictionary<string, BinaryData> rawData)
         {
             IsDoubleEncryptionEnabled = isDoubleEncryptionEnabled;
             Cmk = cmk;
+            _rawData = rawData;
         }
 
         /// <summary> Double Encryption enabled. </summary>

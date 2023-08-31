@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,16 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class containing endpoint monitoring settings in a Traffic Manager profile. </summary>
     public partial class TrafficManagerMonitorConfig
     {
-        /// <summary> Initializes a new instance of TrafficManagerMonitorConfig. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerMonitorConfig"/>. </summary>
         public TrafficManagerMonitorConfig()
         {
             CustomHeaders = new ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo>();
             ExpectedStatusCodeRanges = new ChangeTrackingList<ExpectedStatusCodeRangeInfo>();
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerMonitorConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerMonitorConfig"/>. </summary>
         /// <param name="profileMonitorStatus"> The profile-level monitoring status of the Traffic Manager profile. </param>
         /// <param name="protocol"> The protocol (HTTP, HTTPS or TCP) used to probe for endpoint health. </param>
         /// <param name="port"> The TCP port used to probe for endpoint health. </param>
@@ -30,7 +33,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="toleratedNumberOfFailures"> The number of consecutive failed health check that Traffic Manager tolerates before declaring an endpoint in this profile Degraded after the next failed health check. </param>
         /// <param name="customHeaders"> List of custom headers. </param>
         /// <param name="expectedStatusCodeRanges"> List of expected status code ranges. </param>
-        internal TrafficManagerMonitorConfig(TrafficManagerProfileMonitorStatus? profileMonitorStatus, TrafficManagerMonitorProtocol? protocol, long? port, string path, long? intervalInSeconds, long? timeoutInSeconds, long? toleratedNumberOfFailures, IList<TrafficManagerMonitorConfigCustomHeaderInfo> customHeaders, IList<ExpectedStatusCodeRangeInfo> expectedStatusCodeRanges)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficManagerMonitorConfig(TrafficManagerProfileMonitorStatus? profileMonitorStatus, TrafficManagerMonitorProtocol? protocol, long? port, string path, long? intervalInSeconds, long? timeoutInSeconds, long? toleratedNumberOfFailures, IList<TrafficManagerMonitorConfigCustomHeaderInfo> customHeaders, IList<ExpectedStatusCodeRangeInfo> expectedStatusCodeRanges, Dictionary<string, BinaryData> rawData)
         {
             ProfileMonitorStatus = profileMonitorStatus;
             Protocol = protocol;
@@ -41,6 +45,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             ToleratedNumberOfFailures = toleratedNumberOfFailures;
             CustomHeaders = customHeaders;
             ExpectedStatusCodeRanges = expectedStatusCodeRanges;
+            _rawData = rawData;
         }
 
         /// <summary> The profile-level monitoring status of the Traffic Manager profile. </summary>

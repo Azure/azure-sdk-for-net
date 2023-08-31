@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,14 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class DeletedSiteData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedSiteData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedSiteData"/>. </summary>
         public DeletedSiteData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="kindPropertiesKind"> Kind of site that was deleted. </param>
         /// <param name="geoRegionName"> Geo Region of the deleted site. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DeletedSiteId = deletedSiteId;
             DeletedTimestamp = deletedTimestamp;
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.AppService
             KindPropertiesKind = kindPropertiesKind;
             GeoRegionName = geoRegionName;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Numeric id for the deleted site. </summary>

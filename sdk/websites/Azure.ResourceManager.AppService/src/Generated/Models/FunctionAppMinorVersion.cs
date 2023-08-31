@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function App stack minor version. </summary>
     public partial class FunctionAppMinorVersion
     {
-        /// <summary> Initializes a new instance of FunctionAppMinorVersion. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionAppMinorVersion"/>. </summary>
         internal FunctionAppMinorVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of FunctionAppMinorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppMinorVersion"/>. </summary>
         /// <param name="displayText"> Function App stack (display only). </param>
         /// <param name="value"> Function App stack name. </param>
         /// <param name="stackSettings"> Settings associated with the minor version. </param>
-        internal FunctionAppMinorVersion(string displayText, string value, FunctionAppRuntimes stackSettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppMinorVersion(string displayText, string value, FunctionAppRuntimes stackSettings, Dictionary<string, BinaryData> rawData)
         {
             DisplayText = displayText;
             Value = value;
             StackSettings = stackSettings;
+            _rawData = rawData;
         }
 
         /// <summary> Function App stack (display only). </summary>

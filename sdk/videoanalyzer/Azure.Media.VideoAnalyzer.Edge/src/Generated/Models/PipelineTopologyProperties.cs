@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Pipeline topology properties. </summary>
     public partial class PipelineTopologyProperties
     {
-        /// <summary> Initializes a new instance of PipelineTopologyProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologyProperties"/>. </summary>
         public PipelineTopologyProperties()
         {
             Parameters = new ChangeTrackingList<ParameterDeclaration>();
@@ -22,7 +25,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Sinks = new ChangeTrackingList<SinkNodeBase>();
         }
 
-        /// <summary> Initializes a new instance of PipelineTopologyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologyProperties"/>. </summary>
         /// <param name="description"> An optional description of the pipeline topology. It is recommended that the expected use of the topology to be described here. </param>
         /// <param name="parameters"> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of "${PARAMETER_NAME}" string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </param>
         /// <param name="sources">
@@ -40,13 +43,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// Please note <see cref="SinkNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileSink"/>, <see cref="IotHubMessageSink"/> and <see cref="VideoSink"/>.
         /// </param>
-        internal PipelineTopologyProperties(string description, IList<ParameterDeclaration> parameters, IList<SourceNodeBase> sources, IList<ProcessorNodeBase> processors, IList<SinkNodeBase> sinks)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineTopologyProperties(string description, IList<ParameterDeclaration> parameters, IList<SourceNodeBase> sources, IList<ProcessorNodeBase> processors, IList<SinkNodeBase> sinks, Dictionary<string, BinaryData> rawData)
         {
             Description = description;
             Parameters = parameters;
             Sources = sources;
             Processors = processors;
             Sinks = sinks;
+            _rawData = rawData;
         }
 
         /// <summary> An optional description of the pipeline topology. It is recommended that the expected use of the topology to be described here. </summary>

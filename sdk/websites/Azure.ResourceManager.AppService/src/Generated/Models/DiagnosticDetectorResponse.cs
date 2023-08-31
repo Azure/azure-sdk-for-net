@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing Response from Diagnostic Detectors. </summary>
     public partial class DiagnosticDetectorResponse : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticDetectorResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponse"/>. </summary>
         public DiagnosticDetectorResponse()
         {
             Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticDetectorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponse"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +39,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="data"> Additional Data that detector wants to send. </param>
         /// <param name="responseMetaData"> Meta Data. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata responseMetaData, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata responseMetaData, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -48,6 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
             Data = data;
             ResponseMetaData = responseMetaData;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Start time of the period. </summary>

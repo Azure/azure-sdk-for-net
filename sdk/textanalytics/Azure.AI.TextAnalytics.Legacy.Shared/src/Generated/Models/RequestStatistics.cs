@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
     internal partial class RequestStatistics
     {
-        /// <summary> Initializes a new instance of RequestStatistics. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RequestStatistics"/>. </summary>
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
@@ -21,6 +26,26 @@ namespace Azure.AI.TextAnalytics.Legacy
             ValidDocumentsCount = validDocumentsCount;
             ErroneousDocumentsCount = erroneousDocumentsCount;
             TransactionsCount = transactionsCount;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequestStatistics"/>. </summary>
+        /// <param name="documentsCount"> Number of documents submitted in the request. </param>
+        /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
+        /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
+        /// <param name="transactionsCount"> Number of transactions for the request. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RequestStatistics(int documentsCount, int validDocumentsCount, int erroneousDocumentsCount, long transactionsCount, Dictionary<string, BinaryData> rawData)
+        {
+            DocumentsCount = documentsCount;
+            ValidDocumentsCount = validDocumentsCount;
+            ErroneousDocumentsCount = erroneousDocumentsCount;
+            TransactionsCount = transactionsCount;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequestStatistics"/> for deserialization. </summary>
+        internal RequestStatistics()
+        {
         }
 
         /// <summary> Number of documents submitted in the request. </summary>

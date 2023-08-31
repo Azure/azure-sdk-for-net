@@ -5,15 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ListFilesAndDirectoriesSegmentResponse
+    internal partial class ListFilesAndDirectoriesSegmentResponse : IXmlSerializable, IModelSerializable<ListFilesAndDirectoriesSegmentResponse>
     {
-        internal static ListFilesAndDirectoriesSegmentResponse DeserializeListFilesAndDirectoriesSegmentResponse(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            writer.WriteStartAttribute("ShareName");
+            writer.WriteValue(ShareName);
+            writer.WriteEndAttribute();
+            if (Optional.IsDefined(ShareSnapshot))
+            {
+                writer.WriteStartAttribute("ShareSnapshot");
+                writer.WriteValue(ShareSnapshot);
+                writer.WriteEndAttribute();
+            }
+            if (Optional.IsDefined(Encoded))
+            {
+                writer.WriteStartAttribute("Encoded");
+                writer.WriteValue(Encoded.Value);
+                writer.WriteEndAttribute();
+            }
+            writer.WriteStartAttribute("DirectoryPath");
+            writer.WriteValue(DirectoryPath);
+            writer.WriteEndAttribute();
+            writer.WriteObjectValue(Prefix, "Prefix");
+            if (Optional.IsDefined(Marker))
+            {
+                writer.WriteStartElement("Marker");
+                writer.WriteValue(Marker);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MaxResults))
+            {
+                writer.WriteStartElement("MaxResults");
+                writer.WriteValue(MaxResults.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteObjectValue(Segment, "Entries");
+            writer.WriteStartElement("NextMarker");
+            writer.WriteValue(NextMarker);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(DirectoryId))
+            {
+                writer.WriteStartElement("DirectoryId");
+                writer.WriteValue(DirectoryId);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ListFilesAndDirectoriesSegmentResponse DeserializeListFilesAndDirectoriesSegmentResponse(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string serviceEndpoint = default;
             string shareName = default;
             string shareSnapshot = default;
@@ -69,7 +127,53 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 directoryId = (string)directoryIdElement;
             }
-            return new ListFilesAndDirectoriesSegmentResponse(serviceEndpoint, shareName, shareSnapshot, encoded, directoryPath, prefix, marker, maxResults, segment, nextMarker, directoryId);
+            return new ListFilesAndDirectoriesSegmentResponse(serviceEndpoint, shareName, shareSnapshot, encoded, directoryPath, prefix, marker, maxResults, segment, nextMarker, directoryId, default);
+        }
+
+        BinaryData IModelSerializable<ListFilesAndDirectoriesSegmentResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ListFilesAndDirectoriesSegmentResponse IModelSerializable<ListFilesAndDirectoriesSegmentResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeListFilesAndDirectoriesSegmentResponse(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(ListFilesAndDirectoriesSegmentResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ListFilesAndDirectoriesSegmentResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeListFilesAndDirectoriesSegmentResponse(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

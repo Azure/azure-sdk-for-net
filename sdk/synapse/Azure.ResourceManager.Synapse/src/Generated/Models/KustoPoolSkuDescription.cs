@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The Kusto SKU description of given resource type. </summary>
     public partial class KustoPoolSkuDescription
     {
-        /// <summary> Initializes a new instance of KustoPoolSkuDescription. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuDescription"/>. </summary>
         internal KustoPoolSkuDescription()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
@@ -22,14 +24,15 @@ namespace Azure.ResourceManager.Synapse.Models
             Restrictions = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of KustoPoolSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuDescription"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="size"> The size of the SKU. </param>
         /// <param name="locations"> The set of locations that the SKU is available. </param>
         /// <param name="locationInfo"> Locations and zones. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. </param>
-        internal KustoPoolSkuDescription(string resourceType, string name, string size, IReadOnlyList<AzureLocation> locations, IReadOnlyList<KustoPoolSkuLocationInfoItem> locationInfo, IReadOnlyList<BinaryData> restrictions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoPoolSkuDescription(string resourceType, string name, string size, IReadOnlyList<AzureLocation> locations, IReadOnlyList<KustoPoolSkuLocationInfoItem> locationInfo, IReadOnlyList<BinaryData> restrictions, Dictionary<string, BinaryData> rawData)
         {
             ResourceType = resourceType;
             Name = name;
@@ -37,6 +40,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Locations = locations;
             LocationInfo = locationInfo;
             Restrictions = restrictions;
+            _rawData = rawData;
         }
 
         /// <summary> The resource type. </summary>

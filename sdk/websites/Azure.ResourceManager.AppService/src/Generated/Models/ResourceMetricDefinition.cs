@@ -15,14 +15,16 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Metadata for the metrics. </summary>
     public partial class ResourceMetricDefinition : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceMetricDefinition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinition"/>. </summary>
         public ResourceMetricDefinition()
         {
             MetricAvailabilities = new ChangeTrackingList<ResourceMetricAvailability>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceMetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinition"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +35,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resourceUri"> Resource URI. </param>
         /// <param name="properties"> Resource metric definition properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, Uri resourceUri, IReadOnlyDictionary<string, string> properties, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, Uri resourceUri, IReadOnlyDictionary<string, string> properties, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceUri = resourceUri;
             Properties = properties;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Unit of the metric. </summary>

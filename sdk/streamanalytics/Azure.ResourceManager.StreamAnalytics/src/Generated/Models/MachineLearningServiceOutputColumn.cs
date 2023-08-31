@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an output column for the Azure Machine Learning web service endpoint. </summary>
     public partial class MachineLearningServiceOutputColumn
     {
-        /// <summary> Initializes a new instance of MachineLearningServiceOutputColumn. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServiceOutputColumn"/>. </summary>
         public MachineLearningServiceOutputColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServiceOutputColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServiceOutputColumn"/>. </summary>
         /// <param name="name"> The name of the output column. </param>
         /// <param name="dataType"> The (Azure Machine Learning supported) data type of the output column. </param>
         /// <param name="mapTo"> The zero based index of the function parameter this input maps to. </param>
-        internal MachineLearningServiceOutputColumn(string name, string dataType, int? mapTo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServiceOutputColumn(string name, string dataType, int? mapTo, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             DataType = dataType;
             MapTo = mapTo;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the output column. </summary>

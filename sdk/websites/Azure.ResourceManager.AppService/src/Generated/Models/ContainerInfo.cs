@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerInfo. </summary>
     public partial class ContainerInfo
     {
-        /// <summary> Initializes a new instance of ContainerInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInfo"/>. </summary>
         public ContainerInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInfo"/>. </summary>
         /// <param name="currentTimeStamp"></param>
         /// <param name="previousTimeStamp"></param>
         /// <param name="currentCpuStats"></param>
@@ -26,7 +29,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"></param>
         /// <param name="id"></param>
         /// <param name="eth0"></param>
-        internal ContainerInfo(DateTimeOffset? currentTimeStamp, DateTimeOffset? previousTimeStamp, ContainerCpuStatistics currentCpuStats, ContainerCpuStatistics previousCpuStats, ContainerMemoryStatistics memoryStats, string name, string id, ContainerNetworkInterfaceStatistics eth0)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerInfo(DateTimeOffset? currentTimeStamp, DateTimeOffset? previousTimeStamp, ContainerCpuStatistics currentCpuStats, ContainerCpuStatistics previousCpuStats, ContainerMemoryStatistics memoryStats, string name, string id, ContainerNetworkInterfaceStatistics eth0, Dictionary<string, BinaryData> rawData)
         {
             CurrentTimeStamp = currentTimeStamp;
             PreviousTimeStamp = previousTimeStamp;
@@ -36,6 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             Name = name;
             Id = id;
             Eth0 = eth0;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the current time stamp. </summary>

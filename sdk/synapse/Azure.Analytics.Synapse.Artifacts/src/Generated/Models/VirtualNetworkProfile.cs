@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Virtual Network Profile. </summary>
     public partial class VirtualNetworkProfile
     {
-        /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkProfile"/>. </summary>
         public VirtualNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkProfile"/>. </summary>
         /// <param name="computeSubnetId"> Subnet ID used for computes in workspace. </param>
-        internal VirtualNetworkProfile(string computeSubnetId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkProfile(string computeSubnetId, Dictionary<string, BinaryData> rawData)
         {
             ComputeSubnetId = computeSubnetId;
+            _rawData = rawData;
         }
 
         /// <summary> Subnet ID used for computes in workspace. </summary>

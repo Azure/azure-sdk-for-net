@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public partial class ExtensionProcessorBase : ProcessorNodeBase
     {
-        /// <summary> Initializes a new instance of ExtensionProcessorBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionProcessorBase"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint">
@@ -40,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.ExtensionProcessorBase";
         }
 
-        /// <summary> Initializes a new instance of ExtensionProcessorBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionProcessorBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
@@ -51,12 +51,18 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// </param>
         /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
         /// <param name="samplingOptions"> Media sampling parameters that define how often media is submitted to the extension plugin. </param>
-        internal ExtensionProcessorBase(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions) : base(type, name, inputs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtensionProcessorBase(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions, Dictionary<string, BinaryData> rawData) : base(type, name, inputs, rawData)
         {
             Endpoint = endpoint;
             Image = image;
             SamplingOptions = samplingOptions;
             Type = type ?? "#Microsoft.VideoAnalyzer.ExtensionProcessorBase";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtensionProcessorBase"/> for deserialization. </summary>
+        internal ExtensionProcessorBase()
+        {
         }
 
         /// <summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapLinuxConfiguration : IUtf8JsonSerializable
+    public partial class SapLinuxConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<SapLinuxConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapLinuxConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapLinuxConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SapLinuxConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisablePasswordAuthentication))
             {
@@ -32,11 +40,25 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SapLinuxConfiguration DeserializeSapLinuxConfiguration(JsonElement element)
+        internal static SapLinuxConfiguration DeserializeSapLinuxConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +67,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<SapSshConfiguration> ssh = default;
             Optional<SapSshKeyPair> sshKeyPair = default;
             SapOSType osType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disablePasswordAuthentication"u8))
@@ -79,8 +102,57 @@ namespace Azure.ResourceManager.Workloads.Models
                     osType = new SapOSType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SapLinuxConfiguration(osType, Optional.ToNullable(disablePasswordAuthentication), ssh.Value, sshKeyPair.Value);
+            return new SapLinuxConfiguration(osType, Optional.ToNullable(disablePasswordAuthentication), ssh.Value, sshKeyPair.Value, rawData);
+        }
+
+        SapLinuxConfiguration IModelJsonSerializable<SapLinuxConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SapLinuxConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapLinuxConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapLinuxConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SapLinuxConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapLinuxConfiguration IModelSerializable<SapLinuxConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SapLinuxConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapLinuxConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SapLinuxConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SapLinuxConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSapLinuxConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

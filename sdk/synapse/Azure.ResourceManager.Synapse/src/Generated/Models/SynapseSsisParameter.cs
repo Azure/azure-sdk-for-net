@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Ssis parameter. </summary>
     public partial class SynapseSsisParameter
     {
-        /// <summary> Initializes a new instance of SynapseSsisParameter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisParameter"/>. </summary>
         internal SynapseSsisParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisParameter"/>. </summary>
         /// <param name="id"> Parameter id. </param>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
@@ -28,7 +33,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="valueType"> Parameter value type. </param>
         /// <param name="valueSet"> Parameter value set. </param>
         /// <param name="variable"> Parameter reference variable. </param>
-        internal SynapseSsisParameter(long? id, string name, string description, string dataType, bool? isRequired, bool? isSensitive, string designDefaultValue, string defaultValue, string sensitiveDefaultValue, string valueType, bool? valueSet, string variable)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSsisParameter(long? id, string name, string description, string dataType, bool? isRequired, bool? isSensitive, string designDefaultValue, string defaultValue, string sensitiveDefaultValue, string valueType, bool? valueSet, string variable, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -42,6 +48,7 @@ namespace Azure.ResourceManager.Synapse.Models
             ValueType = valueType;
             ValueSet = valueSet;
             Variable = variable;
+            _rawData = rawData;
         }
 
         /// <summary> Parameter id. </summary>

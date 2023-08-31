@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Run notebook response. </summary>
     public partial class RunNotebookResponse
     {
-        /// <summary> Initializes a new instance of RunNotebookResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunNotebookResponse"/>. </summary>
         internal RunNotebookResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of RunNotebookResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookResponse"/>. </summary>
         /// <param name="message"> Response message. </param>
         /// <param name="result"> Result of run notebook. </param>
-        internal RunNotebookResponse(string message, RunNotebookResult result)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunNotebookResponse(string message, RunNotebookResult result, Dictionary<string, BinaryData> rawData)
         {
             Message = message;
             Result = result;
+            _rawData = rawData;
         }
 
         /// <summary> Response message. </summary>

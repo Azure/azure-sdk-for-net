@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     /// <summary> The SparkServiceError. </summary>
     public partial class SparkServiceError
     {
-        /// <summary> Initializes a new instance of SparkServiceError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkServiceError"/>. </summary>
         internal SparkServiceError()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkServiceError"/>. </summary>
         /// <param name="message"></param>
         /// <param name="errorCode"></param>
         /// <param name="source"></param>
-        internal SparkServiceError(string message, string errorCode, SparkErrorSource? source)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkServiceError(string message, string errorCode, SparkErrorSource? source, Dictionary<string, BinaryData> rawData)
         {
             Message = message;
             ErrorCode = errorCode;
             Source = source;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the message. </summary>

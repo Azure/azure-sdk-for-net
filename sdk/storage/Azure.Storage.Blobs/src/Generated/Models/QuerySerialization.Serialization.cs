@@ -5,18 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QuerySerialization : IXmlSerializable
+    internal partial class QuerySerialization : IXmlSerializable, IModelSerializable<QuerySerialization>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "QuerySerialization");
             writer.WriteObjectValue(Format, "Format");
             writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static QuerySerialization DeserializeQuerySerialization(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            QueryFormat format = default;
+            if (element.Element("Format") is XElement formatElement)
+            {
+                format = QueryFormat.DeserializeQueryFormat(formatElement);
+            }
+            return new QuerySerialization(format, default);
+        }
+
+        BinaryData IModelSerializable<QuerySerialization>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QuerySerialization IModelSerializable<QuerySerialization>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeQuerySerialization(XElement.Load(data.ToStream()), options);
+        }
+
+        public static implicit operator RequestContent(QuerySerialization model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator QuerySerialization(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeQuerySerialization(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

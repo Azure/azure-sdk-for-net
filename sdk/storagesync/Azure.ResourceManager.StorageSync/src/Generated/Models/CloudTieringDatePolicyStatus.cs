@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Status of the date policy. </summary>
     public partial class CloudTieringDatePolicyStatus
     {
-        /// <summary> Initializes a new instance of CloudTieringDatePolicyStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudTieringDatePolicyStatus"/>. </summary>
         internal CloudTieringDatePolicyStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringDatePolicyStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringDatePolicyStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="tieredFilesMostRecentAccessTimestamp"> Most recent access time of tiered files. </param>
-        internal CloudTieringDatePolicyStatus(DateTimeOffset? lastUpdatedOn, DateTimeOffset? tieredFilesMostRecentAccessTimestamp)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudTieringDatePolicyStatus(DateTimeOffset? lastUpdatedOn, DateTimeOffset? tieredFilesMostRecentAccessTimestamp, Dictionary<string, BinaryData> rawData)
         {
             LastUpdatedOn = lastUpdatedOn;
             TieredFilesMostRecentAccessTimestamp = tieredFilesMostRecentAccessTimestamp;
+            _rawData = rawData;
         }
 
         /// <summary> Last updated timestamp. </summary>

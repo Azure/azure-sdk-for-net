@@ -15,7 +15,9 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The KeyPhraseResult. </summary>
     internal partial class KeyPhraseResult
     {
-        /// <summary> Initializes a new instance of KeyPhraseResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
@@ -31,17 +33,24 @@ namespace Azure.AI.TextAnalytics.Legacy
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of KeyPhraseResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        internal KeyPhraseResult(IReadOnlyList<DocumentKeyPhrases> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyPhraseResult(IReadOnlyList<DocumentKeyPhrases> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, Dictionary<string, BinaryData> rawData)
         {
             Documents = documents;
             Errors = errors;
             Statistics = statistics;
             ModelVersion = modelVersion;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseResult"/> for deserialization. </summary>
+        internal KeyPhraseResult()
+        {
         }
 
         /// <summary> Response by document. </summary>

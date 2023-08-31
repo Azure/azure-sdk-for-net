@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Synapse;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list Kusto cluster principal assignments operation response. </summary>
     internal partial class SynapseClusterPrincipalAssignmentListResult
     {
-        /// <summary> Initializes a new instance of SynapseClusterPrincipalAssignmentListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseClusterPrincipalAssignmentListResult"/>. </summary>
         internal SynapseClusterPrincipalAssignmentListResult()
         {
             Value = new ChangeTrackingList<SynapseClusterPrincipalAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseClusterPrincipalAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseClusterPrincipalAssignmentListResult"/>. </summary>
         /// <param name="value"> The list of Kusto cluster principal assignments. </param>
-        internal SynapseClusterPrincipalAssignmentListResult(IReadOnlyList<SynapseClusterPrincipalAssignmentData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseClusterPrincipalAssignmentListResult(IReadOnlyList<SynapseClusterPrincipalAssignmentData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of Kusto cluster principal assignments. </summary>

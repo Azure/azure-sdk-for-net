@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Defines the Azure Cognitive Services Spatial Analysis operation eventing configuration. </summary>
     public partial class SpatialAnalysisOperationEventBase
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisOperationEventBase. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisOperationEventBase"/>. </summary>
         public SpatialAnalysisOperationEventBase()
         {
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisOperationEventBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisOperationEventBase"/>. </summary>
         /// <param name="threshold"> The event threshold. </param>
         /// <param name="focus"> The operation focus type. </param>
-        internal SpatialAnalysisOperationEventBase(string threshold, SpatialAnalysisOperationFocus? focus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpatialAnalysisOperationEventBase(string threshold, SpatialAnalysisOperationFocus? focus, Dictionary<string, BinaryData> rawData)
         {
             Threshold = threshold;
             Focus = focus;
+            _rawData = rawData;
         }
 
         /// <summary> The event threshold. </summary>

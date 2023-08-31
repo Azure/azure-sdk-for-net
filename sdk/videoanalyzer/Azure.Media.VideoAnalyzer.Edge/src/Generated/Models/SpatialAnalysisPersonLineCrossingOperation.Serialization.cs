@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonLineCrossingOperation : IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonLineCrossingOperation : IUtf8JsonSerializable, IModelJsonSerializable<SpatialAnalysisPersonLineCrossingOperation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SpatialAnalysisPersonLineCrossingOperation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SpatialAnalysisPersonLineCrossingOperation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonLineCrossingOperation>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("lines"u8);
             writer.WriteStartArray();
@@ -60,11 +67,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SpatialAnalysisPersonLineCrossingOperation DeserializeSpatialAnalysisPersonLineCrossingOperation(JsonElement element)
+        internal static SpatialAnalysisPersonLineCrossingOperation DeserializeSpatialAnalysisPersonLineCrossingOperation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +99,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> trackerNodeConfiguration = default;
             Optional<string> enableFaceMaskClassifier = default;
             string type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lines"u8))
@@ -130,8 +152,57 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SpatialAnalysisPersonLineCrossingOperation(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, lines);
+            return new SpatialAnalysisPersonLineCrossingOperation(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, lines, rawData);
+        }
+
+        SpatialAnalysisPersonLineCrossingOperation IModelJsonSerializable<SpatialAnalysisPersonLineCrossingOperation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonLineCrossingOperation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpatialAnalysisPersonLineCrossingOperation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SpatialAnalysisPersonLineCrossingOperation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonLineCrossingOperation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SpatialAnalysisPersonLineCrossingOperation IModelSerializable<SpatialAnalysisPersonLineCrossingOperation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonLineCrossingOperation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSpatialAnalysisPersonLineCrossingOperation(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SpatialAnalysisPersonLineCrossingOperation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SpatialAnalysisPersonLineCrossingOperation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSpatialAnalysisPersonLineCrossingOperation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SapCloudForCustomerSinkConverter))]
-    public partial class SapCloudForCustomerSink : IUtf8JsonSerializable
+    public partial class SapCloudForCustomerSink : IUtf8JsonSerializable, IModelJsonSerializable<SapCloudForCustomerSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapCloudForCustomerSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapCloudForCustomerSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SapCloudForCustomerSink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WriteBehavior))
             {
@@ -64,8 +70,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SapCloudForCustomerSink DeserializeSapCloudForCustomerSink(JsonElement element)
+        internal static SapCloudForCustomerSink DeserializeSapCloudForCustomerSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,6 +162,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SapCloudForCustomerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, Optional.ToNullable(writeBehavior), httpRequestTimeout.Value);
+        }
+
+        SapCloudForCustomerSink IModelJsonSerializable<SapCloudForCustomerSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SapCloudForCustomerSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapCloudForCustomerSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapCloudForCustomerSink>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SapCloudForCustomerSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapCloudForCustomerSink IModelSerializable<SapCloudForCustomerSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SapCloudForCustomerSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapCloudForCustomerSink(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SapCloudForCustomerSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SapCloudForCustomerSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSapCloudForCustomerSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SapCloudForCustomerSinkConverter : JsonConverter<SapCloudForCustomerSink>

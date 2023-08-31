@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsCompileQuery : IUtf8JsonSerializable
+    public partial class StreamAnalyticsCompileQuery : IUtf8JsonSerializable, IModelJsonSerializable<StreamAnalyticsCompileQuery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamAnalyticsCompileQuery>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamAnalyticsCompileQuery>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
@@ -44,7 +52,135 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static StreamAnalyticsCompileQuery DeserializeStreamAnalyticsCompileQuery(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string query = default;
+            Optional<IList<StreamAnalyticsQueryInput>> inputs = default;
+            Optional<IList<StreamAnalyticsQueryFunction>> functions = default;
+            StreamingJobType jobType = default;
+            Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("query"u8))
+                {
+                    query = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("inputs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<StreamAnalyticsQueryInput> array = new List<StreamAnalyticsQueryInput>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(StreamAnalyticsQueryInput.DeserializeStreamAnalyticsQueryInput(item));
+                    }
+                    inputs = array;
+                    continue;
+                }
+                if (property.NameEquals("functions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<StreamAnalyticsQueryFunction> array = new List<StreamAnalyticsQueryFunction>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(StreamAnalyticsQueryFunction.DeserializeStreamAnalyticsQueryFunction(item));
+                    }
+                    functions = array;
+                    continue;
+                }
+                if (property.NameEquals("jobType"u8))
+                {
+                    jobType = new StreamingJobType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("compatibilityLevel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    compatibilityLevel = new StreamingJobCompatibilityLevel(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new StreamAnalyticsCompileQuery(query, Optional.ToList(inputs), Optional.ToList(functions), jobType, Optional.ToNullable(compatibilityLevel), rawData);
+        }
+
+        StreamAnalyticsCompileQuery IModelJsonSerializable<StreamAnalyticsCompileQuery>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsCompileQuery(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamAnalyticsCompileQuery>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamAnalyticsCompileQuery IModelSerializable<StreamAnalyticsCompileQuery>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsCompileQuery(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StreamAnalyticsCompileQuery model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StreamAnalyticsCompileQuery(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamAnalyticsCompileQuery(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

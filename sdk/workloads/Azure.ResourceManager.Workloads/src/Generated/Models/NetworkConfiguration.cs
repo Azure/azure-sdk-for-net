@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Defines the network configuration type for SAP system infrastructure that is being deployed. </summary>
     internal partial class NetworkConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkConfiguration"/>. </summary>
         public NetworkConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfiguration"/>. </summary>
         /// <param name="isSecondaryIPEnabled"> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </param>
-        internal NetworkConfiguration(bool? isSecondaryIPEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkConfiguration(bool? isSecondaryIPEnabled, Dictionary<string, BinaryData> rawData)
         {
             IsSecondaryIPEnabled = isSecondaryIPEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </summary>

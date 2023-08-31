@@ -6,19 +6,38 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
     public partial class BlobGeoReplication
     {
-        /// <summary> Initializes a new instance of BlobGeoReplication. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobGeoReplication"/>. </summary>
         /// <param name="status"> The status of the secondary location. </param>
         /// <param name="lastSyncedOn"> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
         internal BlobGeoReplication(BlobGeoReplicationStatus status, DateTimeOffset? lastSyncedOn)
         {
             Status = status;
             LastSyncedOn = lastSyncedOn;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobGeoReplication"/>. </summary>
+        /// <param name="status"> The status of the secondary location. </param>
+        /// <param name="lastSyncedOn"> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobGeoReplication(BlobGeoReplicationStatus status, DateTimeOffset? lastSyncedOn, Dictionary<string, BinaryData> rawData)
+        {
+            Status = status;
+            LastSyncedOn = lastSyncedOn;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobGeoReplication"/> for deserialization. </summary>
+        internal BlobGeoReplication()
+        {
         }
 
         /// <summary> The status of the secondary location. </summary>

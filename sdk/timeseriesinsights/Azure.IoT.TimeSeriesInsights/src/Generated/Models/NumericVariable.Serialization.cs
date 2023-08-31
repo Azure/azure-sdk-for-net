@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class NumericVariable : IUtf8JsonSerializable
+    public partial class NumericVariable : IUtf8JsonSerializable, IModelJsonSerializable<NumericVariable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NumericVariable>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NumericVariable>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<NumericVariable>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
@@ -31,11 +39,25 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NumericVariable DeserializeNumericVariable(JsonElement element)
+        internal static NumericVariable DeserializeNumericVariable(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +67,7 @@ namespace Azure.IoT.TimeSeriesInsights
             TimeSeriesExpression aggregation = default;
             string kind = default;
             Optional<TimeSeriesExpression> filter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -80,8 +103,57 @@ namespace Azure.IoT.TimeSeriesInsights
                     filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NumericVariable(kind, filter.Value, value, interpolation.Value, aggregation);
+            return new NumericVariable(kind, filter.Value, value, interpolation.Value, aggregation, rawData);
+        }
+
+        NumericVariable IModelJsonSerializable<NumericVariable>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NumericVariable>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNumericVariable(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NumericVariable>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NumericVariable>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NumericVariable IModelSerializable<NumericVariable>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NumericVariable>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNumericVariable(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NumericVariable model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NumericVariable(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNumericVariable(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

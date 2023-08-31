@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The BlockList. </summary>
     public partial class BlockList
     {
-        /// <summary> Initializes a new instance of BlockList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlockList"/>. </summary>
         internal BlockList()
         {
             CommittedBlocks = new ChangeTrackingList<BlobBlock>();
             UncommittedBlocks = new ChangeTrackingList<BlobBlock>();
         }
 
-        /// <summary> Initializes a new instance of BlockList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlockList"/>. </summary>
         /// <param name="committedBlocks"></param>
         /// <param name="uncommittedBlocks"></param>
-        internal BlockList(IEnumerable<BlobBlock> committedBlocks, IEnumerable<BlobBlock> uncommittedBlocks)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlockList(IEnumerable<BlobBlock> committedBlocks, IEnumerable<BlobBlock> uncommittedBlocks, Dictionary<string, BinaryData> rawData)
         {
             CommittedBlocks = committedBlocks;
             UncommittedBlocks = uncommittedBlocks;
+            _rawData = rawData;
         }
     }
 }

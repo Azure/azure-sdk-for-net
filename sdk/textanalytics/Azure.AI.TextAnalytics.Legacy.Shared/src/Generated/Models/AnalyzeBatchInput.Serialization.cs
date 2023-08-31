@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class AnalyzeBatchInput : IUtf8JsonSerializable
+    internal partial class AnalyzeBatchInput : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeBatchInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeBatchInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeBatchInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AnalyzeBatchInput>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("analysisInput"u8);
             writer.WriteObjectValue(AnalysisInput);
@@ -24,7 +32,101 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AnalyzeBatchInput DeserializeAnalyzeBatchInput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MultiLanguageBatchInput analysisInput = default;
+            JobManifestTasks tasks = default;
+            Optional<string> displayName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("analysisInput"u8))
+                {
+                    analysisInput = MultiLanguageBatchInput.DeserializeMultiLanguageBatchInput(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tasks"u8))
+                {
+                    tasks = JobManifestTasks.DeserializeJobManifestTasks(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AnalyzeBatchInput(displayName.Value, analysisInput, tasks, rawData);
+        }
+
+        AnalyzeBatchInput IModelJsonSerializable<AnalyzeBatchInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnalyzeBatchInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeBatchInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeBatchInput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnalyzeBatchInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeBatchInput IModelSerializable<AnalyzeBatchInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnalyzeBatchInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeBatchInput(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AnalyzeBatchInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AnalyzeBatchInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzeBatchInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class LegacyMicrosoftAccount : IUtf8JsonSerializable
+    public partial class LegacyMicrosoftAccount : IUtf8JsonSerializable, IModelJsonSerializable<LegacyMicrosoftAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LegacyMicrosoftAccount>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LegacyMicrosoftAccount>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("validation"u8);
                 writer.WriteObjectValue(Validation);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LegacyMicrosoftAccount DeserializeLegacyMicrosoftAccount(JsonElement element)
+        internal static LegacyMicrosoftAccount DeserializeLegacyMicrosoftAccount(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ClientRegistration> registration = default;
             Optional<LoginScopes> login = default;
             Optional<AllowedAudiencesValidation> validation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -86,8 +109,57 @@ namespace Azure.ResourceManager.AppService.Models
                     validation = AllowedAudiencesValidation.DeserializeAllowedAudiencesValidation(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LegacyMicrosoftAccount(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value);
+            return new LegacyMicrosoftAccount(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, rawData);
+        }
+
+        LegacyMicrosoftAccount IModelJsonSerializable<LegacyMicrosoftAccount>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLegacyMicrosoftAccount(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LegacyMicrosoftAccount>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LegacyMicrosoftAccount IModelSerializable<LegacyMicrosoftAccount>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLegacyMicrosoftAccount(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LegacyMicrosoftAccount model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LegacyMicrosoftAccount(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLegacyMicrosoftAccount(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

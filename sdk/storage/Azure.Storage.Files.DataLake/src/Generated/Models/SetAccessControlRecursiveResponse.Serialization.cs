@@ -5,16 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class SetAccessControlRecursiveResponse
+    internal partial class SetAccessControlRecursiveResponse : IUtf8JsonSerializable, IModelJsonSerializable<SetAccessControlRecursiveResponse>
     {
-        internal static SetAccessControlRecursiveResponse DeserializeSetAccessControlRecursiveResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SetAccessControlRecursiveResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SetAccessControlRecursiveResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DirectoriesSuccessful))
+            {
+                writer.WritePropertyName("directoriesSuccessful"u8);
+                writer.WriteNumberValue(DirectoriesSuccessful.Value);
+            }
+            if (Optional.IsDefined(FilesSuccessful))
+            {
+                writer.WritePropertyName("filesSuccessful"u8);
+                writer.WriteNumberValue(FilesSuccessful.Value);
+            }
+            if (Optional.IsDefined(FailureCount))
+            {
+                writer.WritePropertyName("failureCount"u8);
+                writer.WriteNumberValue(FailureCount.Value);
+            }
+            if (Optional.IsCollectionDefined(FailedEntries))
+            {
+                writer.WritePropertyName("failedEntries"u8);
+                writer.WriteStartArray();
+                foreach (var item in FailedEntries)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SetAccessControlRecursiveResponse DeserializeSetAccessControlRecursiveResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +75,7 @@ namespace Azure.Storage.Files.DataLake.Models
             Optional<int> filesSuccessful = default;
             Optional<int> failureCount = default;
             Optional<IReadOnlyList<AclFailedEntry>> failedEntries = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoriesSuccessful"u8))
@@ -66,8 +119,57 @@ namespace Azure.Storage.Files.DataLake.Models
                     failedEntries = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SetAccessControlRecursiveResponse(Optional.ToNullable(directoriesSuccessful), Optional.ToNullable(filesSuccessful), Optional.ToNullable(failureCount), Optional.ToList(failedEntries));
+            return new SetAccessControlRecursiveResponse(Optional.ToNullable(directoriesSuccessful), Optional.ToNullable(filesSuccessful), Optional.ToNullable(failureCount), Optional.ToList(failedEntries), rawData);
+        }
+
+        SetAccessControlRecursiveResponse IModelJsonSerializable<SetAccessControlRecursiveResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSetAccessControlRecursiveResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SetAccessControlRecursiveResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SetAccessControlRecursiveResponse IModelSerializable<SetAccessControlRecursiveResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSetAccessControlRecursiveResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SetAccessControlRecursiveResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SetAccessControlRecursiveResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSetAccessControlRecursiveResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseClusterPrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseClusterPrincipalAssignmentResource(Client, SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e)), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new SynapseClusterPrincipalAssignmentResource(Client, SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e)), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseClusterPrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseClusterPrincipalAssignmentResource(Client, SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e)), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new SynapseClusterPrincipalAssignmentResource(Client, SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e)), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
